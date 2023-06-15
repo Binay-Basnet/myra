@@ -19,6 +19,7 @@ interface ICalendarCellProps {
 
   minDate?: Date;
   maxDate?: Date;
+  testid?: string;
 }
 
 export const CalendarCell = ({
@@ -29,6 +30,7 @@ export const CalendarCell = ({
   onDateStateChange,
   minDate = new Date('1921-01-01'),
   maxDate = new Date('2042-12-31'),
+  testid,
 }: ICalendarCellProps) => {
   const isInvalid =
     minDate && maxDate
@@ -85,6 +87,7 @@ export const CalendarCell = ({
       fontSize="s2"
       w="40px"
       h="40px"
+      data-testid={testid}
       cursor="pointer"
       borderRadius="br2"
       border={isToday ? '1px' : 'none'}

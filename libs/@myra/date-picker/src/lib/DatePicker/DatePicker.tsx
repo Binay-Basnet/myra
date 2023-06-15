@@ -29,12 +29,12 @@ type DateValue = {
 interface IDatePickerProps {
   calendarType?: 'AD' | 'BS';
   locale?: 'en' | 'ne';
+  name?: string;
 
   value?: DateValue;
   onChange?: (newValue: DateValue) => void;
   label?: string;
   dateFormat?: string;
-
   minDate?: Date;
   maxDate?: Date;
 
@@ -47,6 +47,7 @@ interface IDatePickerProps {
 export const DatePicker = ({
   calendarType = 'AD',
   value,
+  name,
   onChange,
   dateFormat = 'YYYY-MM-DD',
   locale = 'en',
@@ -99,8 +100,14 @@ export const DatePicker = ({
         </Text>
       )}
 
-      <Popover placement="bottom-start" isOpen={isOpen} onClose={onClose} onOpen={onToggle}>
-        <PopoverTrigger>
+      <Popover
+        placement="bottom-start"
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpen={onToggle}
+        data-testid={name}
+      >
+        <PopoverTrigger data-testid="popOverTrigger">
           {trigger ? (
             trigger(isOpen)
           ) : (
@@ -110,6 +117,7 @@ export const DatePicker = ({
                   <Icon color="gray.400" as={CalendarIcon} />
                 </InputLeftElement>
                 <Input
+                  data-testid={name}
                   isInvalid={isInvalid}
                   key={dateState?.current?.toString()}
                   value={
@@ -150,12 +158,13 @@ export const DatePicker = ({
           )}
         </PopoverTrigger>
 
-        <PopoverContent w="100%" border="none" boxShadow="E2">
+        <PopoverContent w="100%" border="none" boxShadow="E2" data-testid={name}>
           <Calendar
             locale={locale}
             calendarType={calendarType}
             value={dateState}
             maxDate={maxDate}
+            name={name}
             minDate={minDate}
             onDateChange={(date) => {
               setDateState(date);
