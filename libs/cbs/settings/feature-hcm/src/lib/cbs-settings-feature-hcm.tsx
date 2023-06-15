@@ -3,6 +3,7 @@ import { Box, Divider, Text } from '@myra-ui';
 import DepartmentsTable from '../components/DepartmentsTable';
 import DesignationsTable from '../components/DesignationsTable';
 import EmployeeHealthInsuranceTable from '../components/EmployeeHealthInsuranceTable';
+import EmployeeLevelTable from '../components/EmployeeLevelTable';
 import EmployeeTypeTable from '../components/EmployeeTypeTable';
 
 export const CbsSettingsFeatureHcm = () => (
@@ -14,6 +15,7 @@ export const CbsSettingsFeatureHcm = () => (
     <Divider />
     <Box display="flex">
       <Box display="flex" flexDir="column" flex={1} gap="s16" mr={200}>
+        <EmployeeLevelTable />
         <DepartmentsTable />
         <DesignationsTable />
         <EmployeeTypeTable />

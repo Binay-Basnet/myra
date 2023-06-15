@@ -1,3 +1,28 @@
+query getEmployeeLevelList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          listEmployeeLevel(filter: $filter, pagination: $pagination) {
+            totalCount
+            edges {
+              node {
+                id
+                name
+                description
+              }
+              cursor
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 query getDepartmentList($filter: Filter, $pagination: Pagination) {
   settings {
     general {

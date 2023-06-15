@@ -5,6 +5,7 @@ import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import {
   ApplicantStatus,
+  JobApplicationInput,
   useGetJobOpeningListQuery,
   useSetJobApplicationMutation,
 } from '@coop/cbs/data-access';
@@ -62,7 +63,7 @@ export const HrRecruitmentJobApplicationAdd = () => {
       promise: mutateAsync({
         id: null,
         input: {
-          ...getValues(),
+          ...(getValues() as JobApplicationInput),
         },
       }),
     });

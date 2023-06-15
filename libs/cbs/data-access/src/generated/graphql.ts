@@ -9444,7 +9444,7 @@ export type JobApplicationInput = {
   applicationStatus?: InputMaybe<ApplicantStatus>;
   educationalDetails?: InputMaybe<Array<InputMaybe<HrEmployeeEducationDetail>>>;
   experienceDetails?: InputMaybe<Array<InputMaybe<ExperienceInput>>>;
-  jobOpening?: InputMaybe<Scalars['ID']>;
+  jobOpening: Scalars['ID'];
   permanentAddress?: InputMaybe<KymAddressInput>;
   personalEmailAddress?: InputMaybe<Scalars['String']>;
   personalPhoneNumber?: InputMaybe<Scalars['String']>;
@@ -9461,17 +9461,17 @@ export type JobApplicationListed = {
 
 export type JobApplicationRecord = {
   applicantName?: Maybe<Scalars['String']>;
-  applicationRating?: Maybe<Scalars['Int']>;
+  applicationRating?: Maybe<Scalars['Float']>;
   applicationStatus?: Maybe<ApplicantStatus>;
   educationalDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
   experienceDetails?: Maybe<Array<Maybe<Experience>>>;
   id: Scalars['ID'];
   jobOpening?: Maybe<Scalars['ID']>;
-  permanentAddress?: Maybe<Address>;
+  permanentAddress?: Maybe<KymAddress>;
   personalEmailAddress?: Maybe<Scalars['String']>;
   personalPhoneNumber?: Maybe<Scalars['String']>;
   tempSameAsPerm?: Maybe<Scalars['Boolean']>;
-  temporaryAddress?: Maybe<Address>;
+  temporaryAddress?: Maybe<KymAddress>;
 };
 
 export type JobApplications = {
@@ -19867,6 +19867,7 @@ export type WarehouseTransferResult = {
 export const WarehouseTransferStatus = {
   Completed: 'COMPLETED',
   OnTransit: 'ON_TRANSIT',
+  Rejected: 'REJECTED',
 } as const;
 
 export type WarehouseTransferStatus =
@@ -22993,6 +22994,34 @@ export type EodActivitiesSetupMutationVariables = Exact<{
 
 export type EodActivitiesSetupMutation = {
   settings: { general?: { setup: { eodAction?: boolean | null } } | null };
+};
+
+export type SetEmployeeLevelMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: NewEmployeeLevel;
+}>;
+
+export type SetEmployeeLevelMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            upsertEmployeeLevel?: {
+              recordId: string;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            } | null;
+          };
+        };
+      } | null;
+    } | null;
+  };
 };
 
 export type SetDepartmentMutationVariables = Exact<{
@@ -35049,6 +35078,30 @@ export type GetEodExceptionsQuery = {
   };
 };
 
+export type GetEmployeeLevelListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeLevelListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          listEmployeeLevel?: {
+            totalCount: number;
+            edges?: Array<{
+              cursor: string;
+              node: { id: string; name: string; description: string };
+            } | null> | null;
+            pageInfo?: PaginationFragment | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type GetDepartmentListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -43404,6 +43457,39 @@ export const useEodActivitiesSetupMutation = <TError = unknown, TContext = unkno
     useAxios<EodActivitiesSetupMutation, EodActivitiesSetupMutationVariables>(
       EodActivitiesSetupDocument
     ),
+    options
+  );
+export const SetEmployeeLevelDocument = `
+    mutation setEmployeeLevel($id: String, $input: NewEmployeeLevel!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertEmployeeLevel(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeLevelMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeLevelMutation,
+    TError,
+    SetEmployeeLevelMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetEmployeeLevelMutation, TError, SetEmployeeLevelMutationVariables, TContext>(
+    ['setEmployeeLevel'],
+    useAxios<SetEmployeeLevelMutation, SetEmployeeLevelMutationVariables>(SetEmployeeLevelDocument),
     options
   );
 export const SetDepartmentDocument = `
@@ -59350,6 +59436,43 @@ export const useGetEodExceptionsQuery = <TData = GetEodExceptionsQuery, TError =
       null,
       variables
     ),
+    options
+  );
+export const GetEmployeeLevelListDocument = `
+    query getEmployeeLevelList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          listEmployeeLevel(filter: $filter, pagination: $pagination) {
+            totalCount
+            edges {
+              node {
+                id
+                name
+                description
+              }
+              cursor
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeLevelListQuery = <TData = GetEmployeeLevelListQuery, TError = unknown>(
+  variables?: GetEmployeeLevelListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeLevelListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeLevelListQuery, TError, TData>(
+    variables === undefined ? ['getEmployeeLevelList'] : ['getEmployeeLevelList', variables],
+    useAxios<GetEmployeeLevelListQuery, GetEmployeeLevelListQueryVariables>(
+      GetEmployeeLevelListDocument
+    ).bind(null, variables),
     options
   );
 export const GetDepartmentListDocument = `

@@ -1,3 +1,22 @@
+mutation setEmployeeLevel($id: String, $input: NewEmployeeLevel!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertEmployeeLevel(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 mutation setDepartment($id: String, $input: NewDepartment!) {
   settings {
     general {
