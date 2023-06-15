@@ -1,5 +1,5 @@
 import React from 'react';
-import { GroupBase, Select } from 'chakra-react-select';
+import { chakraComponents, GroupBase, Select } from 'chakra-react-select';
 
 import { ne } from '../../locale/ne';
 import { useLocale } from '../../locale/useLocale';
@@ -18,6 +18,7 @@ interface IMonthBaseSelectProps {
   calendarType: 'AD' | 'BS';
   locale?: 'en' | 'ne';
   month: number;
+  name?: string;
   onChange: (newMonth: number) => void;
   rightAlignMonth?: boolean;
 }
@@ -26,6 +27,7 @@ const MonthBaseSelect = ({
   calendarType,
   month,
   onChange,
+  name,
   locale = 'en',
   rightAlignMonth = false,
 }: IMonthBaseSelectProps) => {
@@ -45,6 +47,7 @@ const MonthBaseSelect = ({
   return (
     <Select<SelectOption, boolean, GroupBase<SelectOption>>
       options={options}
+      name="month"
       onChange={(newValue) => {
         if (newValue) {
           if ('value' in newValue) {
@@ -175,7 +178,32 @@ const MonthBaseSelect = ({
         }),
       }}
       isSearchable={false}
-      components={{ ClearIndicator: () => null, DropdownIndicator: null }}
+      components={{
+        ClearIndicator: () => null,
+        DropdownIndicator: null,
+        Control: ({ innerProps, ...props }) => (
+          <chakraComponents.Control
+            {...props}
+            innerProps={
+              {
+                ...innerProps,
+                'data-testid': `${name}-month`,
+              } as unknown as Record<string, string>
+            }
+          />
+        ),
+        Option: ({ innerProps, ...props }) => (
+          <chakraComponents.Option
+            {...props}
+            innerProps={
+              {
+                ...innerProps,
+                'data-testid': `${name}-${props?.data?.label}`,
+              } as unknown as Record<string, string>
+            }
+          />
+        ),
+      }}
       value={options.find((option) => option.value === month)}
     />
   );
@@ -185,6 +213,7 @@ interface IMonthSelectProps {
   calendarType: 'AD' | 'BS';
   locale?: 'en' | 'ne';
   rightAlignMonth?: boolean;
+  name?: string;
 
   showNextMonth?: boolean;
   state: TDateState;
@@ -197,12 +226,15 @@ export const MonthSelect = ({
   rightAlignMonth,
   state,
   setState,
+  name,
+
   showNextMonth,
 }: IMonthSelectProps) => (
   <MonthBaseSelect
     locale={locale}
     calendarType={calendarType}
     rightAlignMonth={rightAlignMonth}
+    name={name}
     month={
       showNextMonth
         ? calendarType === 'AD'

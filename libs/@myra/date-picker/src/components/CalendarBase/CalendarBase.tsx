@@ -5,12 +5,14 @@ import { CalendarCell } from '../CalendarCell/CalendarCell';
 import { TDateState } from '../../types/date';
 import { ad2bs } from '../../utils/ad-bs-converter';
 import calendarBuilder from '../../utils/calendar-builder';
+import { convertDate } from '../../utils/functions';
 import nepaliCalendarBuilder from '../../utils/nepali-calendar-builder';
 
 interface ICalendarBase {
   onDateChange?: (newState: TDateState) => void;
   dateState: TDateState;
   setDateState: React.Dispatch<React.SetStateAction<TDateState>>;
+  name?: string;
 
   locale: 'en' | 'ne';
   calendarType: 'AD' | 'BS';
@@ -23,6 +25,7 @@ export const CalendarBase = ({
   setDateState,
   onDateChange,
   locale,
+  name,
   calendarType,
   minDate,
   maxDate,
@@ -60,6 +63,7 @@ export const CalendarBase = ({
             <CalendarCell
               maxDate={maxDate}
               minDate={minDate}
+              testid={`${name}-${convertDate(calendarDate, 'AD')?.en}`}
               locale={locale}
               calendarType="AD"
               dateState={dateState}
@@ -79,6 +83,7 @@ export const CalendarBase = ({
               maxDate={maxDate}
               minDate={minDate}
               locale={locale}
+              testid={`${name}-${convertDate(calendarDate, 'BS')?.en}`}
               calendarType="BS"
               dateState={dateState}
               onDateStateChange={(newDate) => {

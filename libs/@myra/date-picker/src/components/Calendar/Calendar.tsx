@@ -17,6 +17,7 @@ import { isDate } from '../../utils/calendar-builder';
 interface ICalendar {
   calendarType: 'AD' | 'BS';
   locale: 'en' | 'ne';
+  name?: string;
   onDateChange?: (newState: TDateState) => void;
   value: TDateState | null;
 
@@ -43,6 +44,7 @@ const todayDate = {
 export const Calendar = ({
   calendarType = 'AD',
   value,
+  name,
   onDateChange,
   locale,
   minDate,
@@ -100,11 +102,11 @@ export const Calendar = ({
         gap="s16"
       >
         <Box display="flex" gap="s8">
-          <TopButtonWrapper onClick={gotoPreviousMonth}>
+          <TopButtonWrapper onClick={gotoPreviousMonth} data-testid={`${name}-leftMonth`}>
             <Icon as={BsChevronLeft} />
           </TopButtonWrapper>
 
-          <TopButtonWrapper onClick={gotToNextMonth}>
+          <TopButtonWrapper onClick={gotToNextMonth} data-testid={`${name}-rightMonth`}>
             <Icon as={BsChevronRight} />
           </TopButtonWrapper>
 
@@ -113,6 +115,7 @@ export const Calendar = ({
             calendarType={internalCalendarType}
             state={dateState}
             setState={setDateState}
+            name={name}
           />
 
           <YearSelect
@@ -120,6 +123,7 @@ export const Calendar = ({
             calendarType={internalCalendarType}
             state={dateState}
             setState={setDateState}
+            name={name}
           />
 
           <Popover placement="bottom-end">
@@ -193,6 +197,7 @@ export const Calendar = ({
           <CalendarBase
             maxDate={maxDate}
             minDate={minDate}
+            name={name}
             dateState={dateState}
             setDateState={setDateState}
             locale={locale}

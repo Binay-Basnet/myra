@@ -9444,7 +9444,7 @@ export type JobApplicationInput = {
   applicationStatus?: InputMaybe<ApplicantStatus>;
   educationalDetails?: InputMaybe<Array<InputMaybe<HrEmployeeEducationDetail>>>;
   experienceDetails?: InputMaybe<Array<InputMaybe<ExperienceInput>>>;
-  jobOpening?: InputMaybe<Scalars['ID']>;
+  jobOpening: Scalars['ID'];
   permanentAddress?: InputMaybe<KymAddressInput>;
   personalEmailAddress?: InputMaybe<Scalars['String']>;
   personalPhoneNumber?: InputMaybe<Scalars['String']>;
@@ -9461,17 +9461,17 @@ export type JobApplicationListed = {
 
 export type JobApplicationRecord = {
   applicantName?: Maybe<Scalars['String']>;
-  applicationRating?: Maybe<Scalars['Int']>;
+  applicationRating?: Maybe<Scalars['Float']>;
   applicationStatus?: Maybe<ApplicantStatus>;
   educationalDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
   experienceDetails?: Maybe<Array<Maybe<Experience>>>;
   id: Scalars['ID'];
   jobOpening?: Maybe<Scalars['ID']>;
-  permanentAddress?: Maybe<Address>;
+  permanentAddress?: Maybe<KymAddress>;
   personalEmailAddress?: Maybe<Scalars['String']>;
   personalPhoneNumber?: Maybe<Scalars['String']>;
   tempSameAsPerm?: Maybe<Scalars['Boolean']>;
-  temporaryAddress?: Maybe<Address>;
+  temporaryAddress?: Maybe<KymAddress>;
 };
 
 export type JobApplications = {
@@ -19867,6 +19867,7 @@ export type WarehouseTransferResult = {
 export const WarehouseTransferStatus = {
   Completed: 'COMPLETED',
   OnTransit: 'ON_TRANSIT',
+  Rejected: 'REJECTED',
 } as const;
 
 export type WarehouseTransferStatus =
