@@ -191,7 +191,7 @@ export const Interest = () => {
                 </b>
               </Text>
               <Text fontWeight="400" fontSize="r1">
-                Final Account Rate:{' '}
+                Final Interest Rate:{' '}
                 <b>
                   {`${
                     Number(interestRate || 0) +
