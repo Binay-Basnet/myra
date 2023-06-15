@@ -13889,6 +13889,7 @@ export type LoanStatement = {
   particular?: Maybe<Scalars['String']>;
   remainingPrinciple?: Maybe<Scalars['String']>;
   txnId?: Maybe<Scalars['String']>;
+  withdrawPrincipal?: Maybe<Scalars['String']>;
 };
 
 export type LoanStatementFooter = {
@@ -32955,6 +32956,7 @@ export type GetLoanTransactionReportQuery = {
                 particular?: string | null;
                 txnId?: string | null;
                 disbursePrinciple?: string | null;
+                withdrawPrincipal?: string | null;
                 paidPrinciple?: string | null;
                 interestPaid?: string | null;
                 finePaid?: string | null;
@@ -56626,6 +56628,7 @@ export const GetLoanTransactionReportDocument = `
               particular
               txnId
               disbursePrinciple
+              withdrawPrincipal
               paidPrinciple
               interestPaid
               finePaid
