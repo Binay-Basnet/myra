@@ -52,7 +52,7 @@ export const InstallmentData = ({
 
   const remainingInstallments = useMemo(() => {
     const lastUnpaidInstallment = loanInstallments?.find(
-      (installment) => installment?.status && installment?.status !== 'PAID'
+      (installment) => installment?.status !== 'PAID'
     )?.installmentNo;
 
     return lastUnpaidInstallment
