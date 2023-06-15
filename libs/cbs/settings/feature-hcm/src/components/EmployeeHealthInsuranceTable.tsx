@@ -6,6 +6,7 @@ import { BiEdit } from 'react-icons/bi';
 import { asyncToast, Box, Button, Column, Divider, Icon, Modal, Table, Text } from '@myra-ui';
 
 import {
+  useDeleteHcmEmployeeGeneralMutation,
   useGetEmployeeHealthInsuranceListQuery,
   useSetEmployeeHealthInsuranceMutation,
 } from '@coop/cbs/data-access';
@@ -14,19 +15,22 @@ import { FormInput } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const EmployeeHealthInsuranceTable = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedEmpoyeeHealthInsuranceId, setSelectedEmpoyeeHealthInsuranceId] = useState('');
 
   const { data, refetch } = useGetEmployeeHealthInsuranceListQuery({
     pagination: getPaginationQuery(),
   });
   const { mutateAsync, isLoading } = useSetEmployeeHealthInsuranceMutation();
+  const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
 
   const methods = useForm();
   const { getValues, handleSubmit } = methods;
 
   const rowData = useMemo(
-    () => data?.settings?.general?.HCM?.employee?.listEmployeeHealthInsurance?.edges ?? [],
+    () =>
+      data?.settings?.general?.HCM?.employee?.employee?.listEmployeeHealthInsurance?.edges ?? [],
     [data]
   );
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -54,13 +58,23 @@ export const EmployeeHealthInsuranceTable = () => {
               cursor="pointer"
               onClick={() => {
                 setSelectedEmpoyeeHealthInsuranceId(props?.row?.original?.node?.id as string);
-                setIsModalOpen(true);
+                setIsAddModalOpen(true);
               }}
             >
               <Icon as={BiEdit} />
               <Text>Edit</Text>
             </Box>
-            <Box display="flex" alignItems="center" color="red.500" gap="s8" cursor="pointer">
+            <Box
+              display="flex"
+              alignItems="center"
+              color="red.500"
+              gap="s8"
+              cursor="pointer"
+              onClick={() => {
+                setSelectedEmpoyeeHealthInsuranceId(props?.row?.original?.node?.id as string);
+                setIsDeleteModalOpen(true);
+              }}
+            >
               <Icon as={AiOutlineDelete} />
               <Text>Delete</Text>
             </Box>
@@ -71,8 +85,13 @@ export const EmployeeHealthInsuranceTable = () => {
     []
   );
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
+  const handleAddModalClose = () => {
+    setIsAddModalOpen(false);
+    setSelectedEmpoyeeHealthInsuranceId('');
+  };
+
+  const handleDeleteModalClose = () => {
+    setIsDeleteModalOpen(false);
     setSelectedEmpoyeeHealthInsuranceId('');
   };
 
@@ -86,7 +105,7 @@ export const EmployeeHealthInsuranceTable = () => {
         },
         onSuccess: () => {
           refetch();
-          handleModalClose();
+          handleAddModalClose();
         },
         promise: mutateAsync({
           id: selectedEmpoyeeHealthInsuranceId,
@@ -105,7 +124,7 @@ export const EmployeeHealthInsuranceTable = () => {
         },
         onSuccess: () => {
           refetch();
-          handleModalClose();
+          handleAddModalClose();
         },
         promise: mutateAsync({
           id: null,
@@ -117,6 +136,22 @@ export const EmployeeHealthInsuranceTable = () => {
       });
     }
   };
+
+  const onDelete = () => {
+    asyncToast({
+      id: 'delete-employee-health-insurance',
+      msgs: {
+        success: 'Employee health insurance deleted successfully',
+        loading: 'Adding new employee health insurance',
+      },
+      onSuccess: () => {
+        refetch();
+        handleDeleteModalClose();
+      },
+      promise: deleteMutateAsync({ id: selectedEmpoyeeHealthInsuranceId }),
+    });
+  };
+
   return (
     <Box id="employee-health-insurance">
       <SettingsCard
@@ -129,7 +164,7 @@ export const EmployeeHealthInsuranceTable = () => {
             gap="s4"
             color="green.500"
             cursor="pointer"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsAddModalOpen(true)}
           >
             <Icon size="sm" as={AiOutlinePlus} />
             <Text fontSize="r1">Add Empoyee Health Insurance</Text>
@@ -139,8 +174,8 @@ export const EmployeeHealthInsuranceTable = () => {
         <Table isStatic data={rowData} columns={columns} />
       </SettingsCard>
       <Modal
-        open={isModalOpen}
-        onClose={handleModalClose}
+        open={isAddModalOpen}
+        onClose={handleAddModalClose}
         isCentered
         title="Empoyee Health Insurance"
         width="xl"
@@ -162,6 +197,14 @@ export const EmployeeHealthInsuranceTable = () => {
             </Box>
           </form>
         </FormProvider>
+      </Modal>
+      <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">
+        <Box display="flex" flexDir="column" p="s4" gap="s16">
+          <Text fontSize="r2">Are you sure you want to delete this Employee level ?</Text>
+          <Button w="-webkit-fit-content" alignSelf="flex-end" onClick={onDelete}>
+            Confirm
+          </Button>
+        </Box>
       </Modal>
     </Box>
   );

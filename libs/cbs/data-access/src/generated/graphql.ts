@@ -5930,6 +5930,21 @@ export type EmployeeInput = {
   workPhoneNumber?: InputMaybe<Scalars['String']>;
 };
 
+export type EmployeeLeavePolicyNode = {
+  assignedLevel: Scalars['String'];
+  description: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type EmployeeLeaveRecord = {
+  description?: Maybe<Scalars['String']>;
+  effectiveFrom?: Maybe<Scalars['Localized']>;
+  employeeLevelId?: Maybe<Scalars['String']>;
+  leavePolicyDetails?: Maybe<Array<Maybe<LeavePolicyGetDetails>>>;
+  name?: Maybe<Scalars['String']>;
+};
+
 export type EmployeeLeaveType = {
   employeeId: Scalars['String'];
   leaveFrom: Scalars['Localized'];
@@ -7646,6 +7661,29 @@ export type HcmEmployeeLeaveMutationUpsertLeaveTypeArgs = {
   input: LeaveTypeInput;
 };
 
+export type HcmEmployeeLeavePolicyMutation = {
+  upsertLeavePolicy: LeavePolicyOutput;
+};
+
+export type HcmEmployeeLeavePolicyMutationUpsertLeavePolicyArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: LeavePolicyInput;
+};
+
+export type HcmEmployeeLeavePolicyQuery = {
+  getLeavePolicy: LeavePolicyGetOutput;
+  listLeavePolicy: HrEmployeeLeavePolicyConnection;
+};
+
+export type HcmEmployeeLeavePolicyQueryGetLeavePolicyArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeLeavePolicyQueryListLeavePolicyArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type HcmEmployeeLeaveQuery = {
   getLeaveType: LeaveTypeGetOutput;
   listLeaveType: HcmEmployeeLeaveTypeConnection;
@@ -7685,11 +7723,13 @@ export type HcmEmployeeListEdges = {
 export type HcmEmployeeMutation = {
   employee: HcmEmployeeGeneralMutation;
   leave: HcmEmployeeLeaveMutation;
+  leavePolicy: HcmEmployeeLeavePolicyMutation;
 };
 
 export type HcmEmployeeQuery = {
   employee: HcmEmployeeGeneralQuery;
   leave: HcmEmployeeLeaveQuery;
+  leavePolicy: HcmEmployeeLeavePolicyQuery;
 };
 
 export type HcmEmployeeSchema = {
@@ -7703,8 +7743,7 @@ export type HcmSettingsMutation = {
 };
 
 export type HcmSettingsQuery = {
-  employee: HcmEmployeeGeneralQuery;
-  leave: HcmEmployeeLeaveQuery;
+  employee: HcmEmployeeQuery;
 };
 
 export type HrEmployeeKyeMutation = {
@@ -7748,6 +7787,17 @@ export type HrEmployeeLeaveMutation = {
 export type HrEmployeeLeaveMutationUpsertLeaveArgs = {
   id?: InputMaybe<Scalars['String']>;
   input: LeaveInput;
+};
+
+export type HrEmployeeLeavePolicyConnection = {
+  PageInfo?: Maybe<PageInfo>;
+  edges?: Maybe<Array<Maybe<HrEmployeeLeavePolicyEdges>>>;
+  totalCount: Scalars['Int'];
+};
+
+export type HrEmployeeLeavePolicyEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<EmployeeLeavePolicyNode>;
 };
 
 export type HrEmployeeLeaveQuery = {
@@ -11682,6 +11732,34 @@ export type LeaveOutput = {
 export type LeaveOutputType = {
   error?: Maybe<QueryError>;
   record?: Maybe<EmployeeLeaveType>;
+};
+
+export type LeavePolicyDetails = {
+  annualAllocation?: InputMaybe<Scalars['Int']>;
+  leaveTypeId?: InputMaybe<Scalars['String']>;
+};
+
+export type LeavePolicyGetDetails = {
+  annualAllocation?: Maybe<Scalars['Int']>;
+  leaveTypeId?: Maybe<Scalars['String']>;
+};
+
+export type LeavePolicyGetOutput = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<EmployeeLeaveRecord>;
+};
+
+export type LeavePolicyInput = {
+  description?: InputMaybe<Scalars['String']>;
+  effectiveFrom?: InputMaybe<Scalars['Localized']>;
+  employeeLevelId?: InputMaybe<Scalars['String']>;
+  leavePolicyDetails?: InputMaybe<Array<InputMaybe<LeavePolicyDetails>>>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type LeavePolicyOutput = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export const LeaveTypeEnum = {
@@ -23128,6 +23206,31 @@ export type SetEmployeeHealthInsuranceMutation = {
                 | MutationError_ServerError_Fragment
                 | MutationError_ValidationError_Fragment
                 | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type DeleteHcmEmployeeGeneralMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type DeleteHcmEmployeeGeneralMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            deleteHcmEmployeeGeneral: {
+              error:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment;
             };
           };
         };
@@ -35088,14 +35191,16 @@ export type GetEmployeeLevelListQuery = {
     general?: {
       HCM?: {
         employee: {
-          listEmployeeLevel?: {
-            totalCount: number;
-            edges?: Array<{
-              cursor: string;
-              node: { id: string; name: string; description: string };
-            } | null> | null;
-            pageInfo?: PaginationFragment | null;
-          } | null;
+          employee: {
+            listEmployeeLevel?: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: { id: string; name: string; description: string };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            } | null;
+          };
         };
       } | null;
     } | null;
@@ -35112,14 +35217,16 @@ export type GetDepartmentListQuery = {
     general?: {
       HCM?: {
         employee: {
-          listDepartment?: {
-            totalCount: number;
-            edges?: Array<{
-              cursor: string;
-              node: { id: string; name: string; description: string };
-            } | null> | null;
-            pageInfo?: PaginationFragment | null;
-          } | null;
+          employee: {
+            listDepartment?: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: { id: string; name: string; description: string };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            } | null;
+          };
         };
       } | null;
     } | null;
@@ -35136,14 +35243,16 @@ export type GetDesignationListQuery = {
     general?: {
       HCM?: {
         employee: {
-          listDesignation?: {
-            totalCount: number;
-            edges?: Array<{
-              cursor: string;
-              node: { id: string; name: string; description: string };
-            } | null> | null;
-            pageInfo?: PaginationFragment | null;
-          } | null;
+          employee: {
+            listDesignation?: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: { id: string; name: string; description: string };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            } | null;
+          };
         };
       } | null;
     } | null;
@@ -35160,14 +35269,16 @@ export type GetEmployeeTypeListQuery = {
     general?: {
       HCM?: {
         employee: {
-          listEmployeeType?: {
-            totalCount: number;
-            edges?: Array<{
-              cursor: string;
-              node: { id: string; name: string; description: string };
-            } | null> | null;
-            pageInfo?: PaginationFragment | null;
-          } | null;
+          employee: {
+            listEmployeeType?: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: { id: string; name: string; description: string };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            } | null;
+          };
         };
       } | null;
     } | null;
@@ -35184,14 +35295,20 @@ export type GetEmployeeHealthInsuranceListQuery = {
     general?: {
       HCM?: {
         employee: {
-          listEmployeeHealthInsurance?: {
-            totalCount: number;
-            edges?: Array<{
-              cursor: string;
-              node: { id: string; healthInsuranceProvider: string; healthInsuranceNumber: string };
-            } | null> | null;
-            pageInfo?: PaginationFragment | null;
-          } | null;
+          employee: {
+            listEmployeeHealthInsurance?: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: {
+                  id: string;
+                  healthInsuranceProvider: string;
+                  healthInsuranceNumber: string;
+                };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            } | null;
+          };
         };
       } | null;
     } | null;
@@ -43628,6 +43745,45 @@ export const useSetEmployeeHealthInsuranceMutation = <TError = unknown, TContext
     ['setEmployeeHealthInsurance'],
     useAxios<SetEmployeeHealthInsuranceMutation, SetEmployeeHealthInsuranceMutationVariables>(
       SetEmployeeHealthInsuranceDocument
+    ),
+    options
+  );
+export const DeleteHcmEmployeeGeneralDocument = `
+    mutation deleteHcmEmployeeGeneral($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            deleteHcmEmployeeGeneral(id: $id) {
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteHcmEmployeeGeneralMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteHcmEmployeeGeneralMutation,
+    TError,
+    DeleteHcmEmployeeGeneralMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteHcmEmployeeGeneralMutation,
+    TError,
+    DeleteHcmEmployeeGeneralMutationVariables,
+    TContext
+  >(
+    ['deleteHcmEmployeeGeneral'],
+    useAxios<DeleteHcmEmployeeGeneralMutation, DeleteHcmEmployeeGeneralMutationVariables>(
+      DeleteHcmEmployeeGeneralDocument
     ),
     options
   );
@@ -59444,18 +59600,20 @@ export const GetEmployeeLevelListDocument = `
     general {
       HCM {
         employee {
-          listEmployeeLevel(filter: $filter, pagination: $pagination) {
-            totalCount
-            edges {
-              node {
-                id
-                name
-                description
+          employee {
+            listEmployeeLevel(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
               }
-              cursor
-            }
-            pageInfo {
-              ...Pagination
+              pageInfo {
+                ...Pagination
+              }
             }
           }
         }
@@ -59481,18 +59639,20 @@ export const GetDepartmentListDocument = `
     general {
       HCM {
         employee {
-          listDepartment(filter: $filter, pagination: $pagination) {
-            totalCount
-            edges {
-              node {
-                id
-                name
-                description
+          employee {
+            listDepartment(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
               }
-              cursor
-            }
-            pageInfo {
-              ...Pagination
+              pageInfo {
+                ...Pagination
+              }
             }
           }
         }
@@ -59518,18 +59678,20 @@ export const GetDesignationListDocument = `
     general {
       HCM {
         employee {
-          listDesignation(filter: $filter, pagination: $pagination) {
-            totalCount
-            edges {
-              node {
-                id
-                name
-                description
+          employee {
+            listDesignation(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
               }
-              cursor
-            }
-            pageInfo {
-              ...Pagination
+              pageInfo {
+                ...Pagination
+              }
             }
           }
         }
@@ -59555,18 +59717,20 @@ export const GetEmployeeTypeListDocument = `
     general {
       HCM {
         employee {
-          listEmployeeType(filter: $filter, pagination: $pagination) {
-            totalCount
-            edges {
-              node {
-                id
-                name
-                description
+          employee {
+            listEmployeeType(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
               }
-              cursor
-            }
-            pageInfo {
-              ...Pagination
+              pageInfo {
+                ...Pagination
+              }
             }
           }
         }
@@ -59592,18 +59756,20 @@ export const GetEmployeeHealthInsuranceListDocument = `
     general {
       HCM {
         employee {
-          listEmployeeHealthInsurance(filter: $filter, pagination: $pagination) {
-            totalCount
-            edges {
-              node {
-                id
-                healthInsuranceProvider
-                healthInsuranceNumber
+          employee {
+            listEmployeeHealthInsurance(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  healthInsuranceProvider
+                  healthInsuranceNumber
+                }
+                cursor
               }
-              cursor
-            }
-            pageInfo {
-              ...Pagination
+              pageInfo {
+                ...Pagination
+              }
             }
           }
         }

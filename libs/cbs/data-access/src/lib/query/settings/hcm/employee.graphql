@@ -3,18 +3,20 @@ query getEmployeeLevelList($filter: Filter, $pagination: Pagination) {
     general {
       HCM {
         employee {
-          listEmployeeLevel(filter: $filter, pagination: $pagination) {
-            totalCount
-            edges {
-              node {
-                id
-                name
-                description
+          employee {
+            listEmployeeLevel(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
               }
-              cursor
-            }
-            pageInfo {
-              ...Pagination
+              pageInfo {
+                ...Pagination
+              }
             }
           }
         }
@@ -28,18 +30,20 @@ query getDepartmentList($filter: Filter, $pagination: Pagination) {
     general {
       HCM {
         employee {
-          listDepartment(filter: $filter, pagination: $pagination) {
-            totalCount
-            edges {
-              node {
-                id
-                name
-                description
+          employee {
+            listDepartment(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
               }
-              cursor
-            }
-            pageInfo {
-              ...Pagination
+              pageInfo {
+                ...Pagination
+              }
             }
           }
         }
@@ -53,18 +57,20 @@ query getDesignationList($filter: Filter, $pagination: Pagination) {
     general {
       HCM {
         employee {
-          listDesignation(filter: $filter, pagination: $pagination) {
-            totalCount
-            edges {
-              node {
-                id
-                name
-                description
+          employee {
+            listDesignation(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
               }
-              cursor
-            }
-            pageInfo {
-              ...Pagination
+              pageInfo {
+                ...Pagination
+              }
             }
           }
         }
@@ -78,18 +84,20 @@ query getEmployeeTypeList($filter: Filter, $pagination: Pagination) {
     general {
       HCM {
         employee {
-          listEmployeeType(filter: $filter, pagination: $pagination) {
-            totalCount
-            edges {
-              node {
-                id
-                name
-                description
+          employee {
+            listEmployeeType(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
               }
-              cursor
-            }
-            pageInfo {
-              ...Pagination
+              pageInfo {
+                ...Pagination
+              }
             }
           }
         }
@@ -103,18 +111,20 @@ query getEmployeeHealthInsuranceList($filter: Filter, $pagination: Pagination) {
     general {
       HCM {
         employee {
-          listEmployeeHealthInsurance(filter: $filter, pagination: $pagination) {
-            totalCount
-            edges {
-              node {
-                id
-                healthInsuranceProvider
-                healthInsuranceNumber
+          employee {
+            listEmployeeHealthInsurance(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  healthInsuranceProvider
+                  healthInsuranceNumber
+                }
+                cursor
               }
-              cursor
-            }
-            pageInfo {
-              ...Pagination
+              pageInfo {
+                ...Pagination
+              }
             }
           }
         }
