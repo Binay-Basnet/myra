@@ -47,7 +47,7 @@ export const LoanProductCard = ({ productId }: IProductProps) => {
           {productData?.productCode?.prefix}-{productData?.productCode?.initialNo}
         </Text>
         <Text fontWeight="Medium" fontSize="s3">
-          Interest Rate : {productData?.interest?.minRate} -{productData?.interest?.maxRate}
+          Product Premium Rate : {productData?.interest?.minRate} -{productData?.interest?.maxRate}
         </Text>
         <Text fontWeight="Medium" fontSize="s3">
           Product Premium :

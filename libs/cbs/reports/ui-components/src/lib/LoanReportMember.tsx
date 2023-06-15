@@ -97,10 +97,10 @@ export const ClosedLoanReportMeta = ({ meta }: ClosedLoanAccountMetaProps) => (
               {meta?.memberName && <Text>Name of member:</Text>}
               {meta?.address && <Text>Address:</Text>}
               {meta?.branchName && <Text>Branch Name:</Text>}
-              {meta.approvedAmount && <Text>Approved Amount:</Text>}
-              {meta.loanIssuedDate && <Text>Loan Issued Date:</Text>}
-              {meta.memberCode && <Text>Membership No:</Text>}
-              {meta.loanClosedDate && <Text>Loan Closed Date:</Text>}
+              {meta?.approvedAmount && <Text>Approved Amount:</Text>}
+              {meta?.loanIssuedDate && <Text>Loan Issued Date:</Text>}
+              {meta?.memberCode && <Text>Membership No:</Text>}
+              {meta?.loanClosedDate && <Text>Loan Closed Date:</Text>}
             </Box>
           </GridItem>
 
@@ -113,15 +113,15 @@ export const ClosedLoanReportMeta = ({ meta }: ClosedLoanAccountMetaProps) => (
               )}
               {meta?.address && <Text noOfLines={1}>{localizedText(meta?.address)}</Text>}
               {meta?.branchName && <Text noOfLines={1}>{meta?.branchName}</Text>}
-              {meta.approvedAmount && (
-                <Text noOfLines={1}>{amountConverter(meta.approvedAmount ?? 0)}</Text>
+              {meta?.approvedAmount && (
+                <Text noOfLines={1}>{amountConverter(meta?.approvedAmount ?? 0)}</Text>
               )}
-              {meta.loanIssuedDate && (
-                <Text noOfLines={1}> {localizedDate(meta.loanIssuedDate)}</Text>
+              {meta?.loanIssuedDate && (
+                <Text noOfLines={1}> {localizedDate(meta?.loanIssuedDate)}</Text>
               )}
-              {meta.memberCode && <Text noOfLines={1}>{meta.memberCode}</Text>}
-              {meta.loanClosedDate && (
-                <Text noOfLines={1}>{localizedDate(meta.loanClosedDate)}</Text>
+              {meta?.memberCode && <Text noOfLines={1}>{meta?.memberCode}</Text>}
+              {meta?.loanClosedDate && (
+                <Text noOfLines={1}>{localizedDate(meta?.loanClosedDate)}</Text>
               )}
             </Box>
           </GridItem>

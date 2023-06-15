@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { Alert, Box, Text } from '@myra-ui';
 
-import { InterestAuthority } from '@coop/cbs/data-access';
+import { InterestAuthority, useGetCurrentOrganizationRateQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput, FormInput, FormRadioGroup } from '@coop/shared/form';
 
@@ -33,6 +33,8 @@ export const Interest = () => {
   const router = useRouter();
   const loanApplicationId = router.query['id'] as string;
   const { watch, setValue, clearErrors } = useFormContext();
+
+  const { data: orgRateData } = useGetCurrentOrganizationRateQuery();
 
   const { product } = useLoanProductContext();
 
@@ -73,18 +75,20 @@ export const Interest = () => {
   }, [defaultInput, interestAuth, product]);
 
   const maxValue = Number(product?.interest?.maxRate);
+  const interestRate = watch('interestRate');
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" w="100%" background="neutralColorLight.Gray-0">
         <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-60" mb="s16">
           {' '}
-          Interest
+          Account Premium
         </Text>
         <Box display="grid" gridTemplateColumns="repeat(1, 1fr)" gap="s16">
           <InputGroupContainer>
             <FormInput
               name="intrestRate"
+              label="Account Premium Rate"
               type="number"
               textAlign="right"
               isDisabled={!interestAuth || interestAuth === InterestAuthority?.Default}
@@ -128,7 +132,7 @@ export const Interest = () => {
               <Box as="ul" display="flex" flexDir="column" gap="s4">
                 <li>
                   <Text fontWeight="400" fontSize="r1">
-                    Interest Rate:{' '}
+                    Account Premium Rate:{' '}
                     <b>
                       {product?.interest?.minRate} -{product?.interest?.maxRate}%
                     </b>
@@ -138,6 +142,47 @@ export const Interest = () => {
                   <Text fontWeight="400" fontSize="r1">
                     CEO: <b>{product?.interest?.ceoAuthority}%</b> , BOD:{' '}
                     <b>{product?.interest?.boardAuthority}%</b>
+                  </Text>
+                </li>
+              </Box>
+            </Box>
+          </Alert>
+          <Alert status="info" title="Interest Breakdown" hideCloseIcon>
+            <Box display="flex" flexDirection="column" gap="s4">
+              <Box as="ul" display="flex" flexDir="column" gap="s4">
+                <li>
+                  <Text fontWeight="400" fontSize="r1">
+                    Account Premium Rate: <b>{interestRate}</b>
+                  </Text>
+                </li>
+                <li>
+                  <Text fontWeight="400" fontSize="r1">
+                    Product Premium Rate: <b>{product?.productPremiumInterest}%</b>
+                  </Text>
+                </li>
+                <li>
+                  <Text fontWeight="400" fontSize="r1">
+                    Organization Rate:{' '}
+                    <b>
+                      {typeof orgRateData?.settings?.general?.deposit
+                        ?.getCurrentOrganizationRate === 'number'
+                        ? `${orgRateData?.settings?.general?.deposit?.getCurrentOrganizationRate} %`
+                        : 'N/A'}
+                    </b>
+                  </Text>
+                </li>
+                <li>
+                  <Text fontWeight="400" fontSize="r1">
+                    Final Account Rate:{' '}
+                    <b>
+                      {`${
+                        Number(interestRate || 0) +
+                        Number(product?.productPremiumInterest || 0) +
+                        Number(
+                          orgRateData?.settings?.general?.deposit?.getCurrentOrganizationRate || 0
+                        )
+                      } %`}
+                    </b>
                   </Text>
                 </li>
               </Box>

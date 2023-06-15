@@ -47,6 +47,7 @@ export const FormDatePicker = <T,>({
         <Box display="flex" flexDirection="column" gap="s4">
           <DatePicker
             label={label}
+            name={name}
             locale={router.locale as 'en' | 'ne'}
             onChange={(newValue) => {
               if (errors[name]?.type === 'required') {

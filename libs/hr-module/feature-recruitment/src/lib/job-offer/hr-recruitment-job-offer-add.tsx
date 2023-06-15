@@ -63,16 +63,20 @@ export const HrRecruitmentJobOfferAdd = () => {
     );
 
   const departmentOptions =
-    departmentData?.settings?.general?.HCM?.employee?.listDepartment?.edges?.map((item) => ({
-      label: item?.node?.name as string,
-      value: item?.node?.id as string,
-    }));
+    departmentData?.settings?.general?.HCM?.employee?.employee?.listDepartment?.edges?.map(
+      (item) => ({
+        label: item?.node?.name as string,
+        value: item?.node?.id as string,
+      })
+    );
 
   const designationOptions =
-    designationData?.settings?.general?.HCM?.employee?.listDesignation?.edges?.map((item) => ({
-      label: item?.node?.name as string,
-      value: item?.node?.id as string,
-    }));
+    designationData?.settings?.general?.HCM?.employee?.employee?.listDesignation?.edges?.map(
+      (item) => ({
+        label: item?.node?.name as string,
+        value: item?.node?.id as string,
+      })
+    );
 
   const statusOptions = [
     { label: 'Accepted', value: JobStatus?.Accepted },

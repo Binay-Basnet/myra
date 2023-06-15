@@ -28,7 +28,8 @@ export const OnboardingJoiningDetails = () => {
     },
   });
 
-  const degisnation = degisnationData?.settings?.general?.HCM?.employee?.listDesignation?.edges;
+  const degisnation =
+    degisnationData?.settings?.general?.HCM?.employee?.employee?.listDesignation?.edges;
   const degisnationOptions = useMemo(
     () =>
       degisnation?.map((account) => ({

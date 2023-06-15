@@ -131,7 +131,7 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
                         onClick: (row) => router.push(`${viewLink}?id=${row.id}`),
                       },
                       {
-                        title: type === LoanObjState.Approved ? 'Disburse Loan' : 'Approve Loan',
+                        title: type === LoanObjState.Approved ? 'Disburse Loan' : 'Process Loan',
                         onClick: (row) => {
                           type === LoanObjState.Approved
                             ? router.push(`${ROUTES.CBS_LOAN_DISBURSE}?id=${row?.id}`)

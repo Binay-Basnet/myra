@@ -4,10 +4,13 @@ import { useRouter } from 'next/router';
 
 import { Box, Callout, Text } from '@myra-ui';
 
-import { InterestAuthority, useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
+import {
+  InterestAuthority,
+  useGetAccountOpenProductDetailsQuery,
+  useGetCurrentOrganizationRateQuery,
+} from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput, FormInput, FormRadioGroup } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
 
 const radioGroupdata = [
   {
@@ -28,7 +31,6 @@ const radioGroupdata = [
   },
 ];
 export const Interest = () => {
-  const { t } = useTranslation();
   const router = useRouter();
   const [triggerQuery, setTriggerQuery] = useState(false);
   const { watch, setValue, clearErrors } = useFormContext();
@@ -40,6 +42,8 @@ export const Interest = () => {
       enabled: triggerQuery,
     }
   );
+
+  const { data: orgRateData } = useGetCurrentOrganizationRateQuery();
 
   const ProductData = poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
   const [maxValue, setMaxValue] = useState(Number(ProductData?.interest?.defaultRate));
@@ -58,6 +62,8 @@ export const Interest = () => {
   // useEffect(() => {
   //   setValue('interestRate', valueInput);
   // }, [valueInput, setValue]);
+
+  const interestRate = watch('interestRate');
 
   useEffect(() => {
     clearErrors();
@@ -84,24 +90,24 @@ export const Interest = () => {
     <Box display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" w="100%" background="neutralColorLight.Gray-0">
         <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-60" mb="s16">
-          {t['accInterest']}
+          Account Premium
         </Text>
         <Box display="grid" gridTemplateColumns="repeat(1, 1fr)" gap="s16">
           <InputGroupContainer>
             <FormInput
               name="interestRate"
               type="number"
-              label={t['accountOpenInterestRate']}
+              label="Account Premium Rate"
               textAlign="right"
               isDisabled={!interestAuth || interestAuth === InterestAuthority?.Default}
               rules={{
                 max: {
                   value: maxValue,
-                  message: 'Interest Rate is invalid',
+                  message: 'Account Premium Rate is invalid',
                 },
                 min: {
                   value: interestAuth === InterestAuthority?.UpdateInterest ? minRate : defaultRate,
-                  message: 'Interest Rate is invalid',
+                  message: 'Account Premium Rate is invalid',
                 },
               }}
               rightElement={
@@ -133,7 +139,7 @@ export const Interest = () => {
           <Callout status="info" title="Rates">
             <Box display="flex" flexDirection="column" gap="s4">
               <Text fontWeight="400" fontSize="r1">
-                Interest Rate:{' '}
+                Account Premium Rate:{' '}
                 <b>
                   {ProductData?.interest?.minRate} %- {ProductData?.interest?.maxRate} %{' '}
                 </b>
@@ -161,6 +167,40 @@ export const Interest = () => {
                 </Box>
               )}
             </Box>{' '}
+          </Callout>
+          <Callout status="info" title="Interest Breakdown">
+            <Box display="flex" flexDirection="column" gap="s4">
+              <Text fontWeight="400" fontSize="r1">
+                Account Premium: <b>{interestRate} %</b>
+              </Text>
+              <Text fontWeight="400" fontSize="r1">
+                Product Premium{' '}
+                <b>
+                  {typeof ProductData?.productPremiumInterest === 'number'
+                    ? `${ProductData?.productPremiumInterest} %`
+                    : 'N/A'}
+                </b>
+              </Text>
+              <Text fontWeight="400" fontSize="r1">
+                Organization Rate:{' '}
+                <b>
+                  {typeof orgRateData?.settings?.general?.deposit?.getCurrentOrganizationRate ===
+                  'number'
+                    ? `${orgRateData?.settings?.general?.deposit?.getCurrentOrganizationRate} %`
+                    : 'N/A'}
+                </b>
+              </Text>
+              <Text fontWeight="400" fontSize="r1">
+                Final Account Rate:{' '}
+                <b>
+                  {`${
+                    Number(interestRate || 0) +
+                    Number(ProductData?.productPremiumInterest || 0) +
+                    Number(orgRateData?.settings?.general?.deposit?.getCurrentOrganizationRate || 0)
+                  } %`}
+                </b>
+              </Text>
+            </Box>
           </Callout>
         </Box>
       </Box>

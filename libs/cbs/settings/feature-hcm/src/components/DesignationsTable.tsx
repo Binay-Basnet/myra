@@ -5,23 +5,29 @@ import { BiEdit } from 'react-icons/bi';
 
 import { asyncToast, Box, Button, Column, Divider, Icon, Modal, Table, Text } from '@myra-ui';
 
-import { useGetDesignationListQuery, useSetDesignationMutation } from '@coop/cbs/data-access';
+import {
+  useDeleteHcmEmployeeGeneralMutation,
+  useGetDesignationListQuery,
+  useSetDesignationMutation,
+} from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
 import { FormInput } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const DesignationsTable = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedDesignationId, setSelectedDesignationId] = useState('');
 
   const { data, refetch } = useGetDesignationListQuery({ pagination: getPaginationQuery() });
   const { mutateAsync, isLoading } = useSetDesignationMutation();
+  const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
 
   const methods = useForm();
   const { getValues, handleSubmit } = methods;
 
   const rowData = useMemo(
-    () => data?.settings?.general?.HCM?.employee?.listDesignation?.edges ?? [],
+    () => data?.settings?.general?.HCM?.employee?.employee?.listDesignation?.edges ?? [],
     [data]
   );
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -49,13 +55,23 @@ export const DesignationsTable = () => {
               cursor="pointer"
               onClick={() => {
                 setSelectedDesignationId(props?.row?.original?.node?.id as string);
-                setIsModalOpen(true);
+                setIsAddModalOpen(true);
               }}
             >
               <Icon as={BiEdit} />
               <Text>Edit</Text>
             </Box>
-            <Box display="flex" alignItems="center" color="red.500" gap="s8" cursor="pointer">
+            <Box
+              display="flex"
+              alignItems="center"
+              color="red.500"
+              gap="s8"
+              cursor="pointer"
+              onClick={() => {
+                setSelectedDesignationId(props?.row?.original?.node?.id as string);
+                setIsDeleteModalOpen(true);
+              }}
+            >
               <Icon as={AiOutlineDelete} />
               <Text>Delete</Text>
             </Box>
@@ -66,8 +82,13 @@ export const DesignationsTable = () => {
     []
   );
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
+  const handleAddModalClose = () => {
+    setIsAddModalOpen(false);
+    setSelectedDesignationId('');
+  };
+
+  const handleDeleteModalClose = () => {
+    setIsDeleteModalOpen(false);
     setSelectedDesignationId('');
   };
 
@@ -81,7 +102,7 @@ export const DesignationsTable = () => {
         },
         onSuccess: () => {
           refetch();
-          handleModalClose();
+          handleAddModalClose();
         },
         promise: mutateAsync({
           id: selectedDesignationId,
@@ -97,7 +118,7 @@ export const DesignationsTable = () => {
         },
         onSuccess: () => {
           refetch();
-          handleModalClose();
+          handleAddModalClose();
         },
         promise: mutateAsync({
           id: null,
@@ -106,6 +127,22 @@ export const DesignationsTable = () => {
       });
     }
   };
+
+  const onDelete = () => {
+    asyncToast({
+      id: 'delete-designation',
+      msgs: {
+        success: 'Designation deleted successfully',
+        loading: 'Adding new designation',
+      },
+      onSuccess: () => {
+        refetch();
+        handleDeleteModalClose();
+      },
+      promise: deleteMutateAsync({ id: selectedDesignationId }),
+    });
+  };
+
   return (
     <Box id="designation">
       <SettingsCard
@@ -118,7 +155,7 @@ export const DesignationsTable = () => {
             gap="s4"
             color="green.500"
             cursor="pointer"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsAddModalOpen(true)}
           >
             <Icon size="sm" as={AiOutlinePlus} />
             <Text fontSize="r1">Add Designation</Text>
@@ -128,8 +165,8 @@ export const DesignationsTable = () => {
         <Table isStatic data={rowData} columns={columns} />
       </SettingsCard>
       <Modal
-        open={isModalOpen}
-        onClose={handleModalClose}
+        open={isAddModalOpen}
+        onClose={handleAddModalClose}
         isCentered
         title="Designations"
         width="xl"
@@ -151,6 +188,14 @@ export const DesignationsTable = () => {
             </Box>
           </form>
         </FormProvider>
+      </Modal>
+      <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">
+        <Box display="flex" flexDir="column" p="s4" gap="s16">
+          <Text fontSize="r2">Are you sure you want to delete this department ?</Text>
+          <Button w="-webkit-fit-content" alignSelf="flex-end" onClick={onDelete}>
+            Confirm
+          </Button>
+        </Box>
       </Modal>
     </Box>
   );

@@ -5,23 +5,29 @@ import { BiEdit } from 'react-icons/bi';
 
 import { asyncToast, Box, Button, Column, Divider, Icon, Modal, Table, Text } from '@myra-ui';
 
-import { useGetEmployeeTypeListQuery, useSetEmployeeTypeMutation } from '@coop/cbs/data-access';
+import {
+  useDeleteHcmEmployeeGeneralMutation,
+  useGetEmployeeTypeListQuery,
+  useSetEmployeeTypeMutation,
+} from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
 import { FormInput } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const EmployeeTypeTable = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedEmpoymentTypeId, setSelectedEmpoymentTypeId] = useState('');
 
   const { data, refetch } = useGetEmployeeTypeListQuery({ pagination: getPaginationQuery() });
   const { mutateAsync, isLoading } = useSetEmployeeTypeMutation();
+  const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
 
   const methods = useForm();
   const { getValues, handleSubmit } = methods;
 
   const rowData = useMemo(
-    () => data?.settings?.general?.HCM?.employee?.listEmployeeType?.edges ?? [],
+    () => data?.settings?.general?.HCM?.employee?.employee?.listEmployeeType?.edges ?? [],
     [data]
   );
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -49,13 +55,23 @@ export const EmployeeTypeTable = () => {
               cursor="pointer"
               onClick={() => {
                 setSelectedEmpoymentTypeId(props?.row?.original?.node?.id as string);
-                setIsModalOpen(true);
+                setIsAddModalOpen(true);
               }}
             >
               <Icon as={BiEdit} />
               <Text>Edit</Text>
             </Box>
-            <Box display="flex" alignItems="center" color="red.500" gap="s8" cursor="pointer">
+            <Box
+              display="flex"
+              alignItems="center"
+              color="red.500"
+              gap="s8"
+              cursor="pointer"
+              onClick={() => {
+                setSelectedEmpoymentTypeId(props?.row?.original?.node?.id as string);
+                setIsDeleteModalOpen(true);
+              }}
+            >
               <Icon as={AiOutlineDelete} />
               <Text>Delete</Text>
             </Box>
@@ -66,8 +82,13 @@ export const EmployeeTypeTable = () => {
     []
   );
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
+  const handleAddModalClose = () => {
+    setIsAddModalOpen(false);
+    setSelectedEmpoymentTypeId('');
+  };
+
+  const handleDeleteModalClose = () => {
+    setIsDeleteModalOpen(false);
     setSelectedEmpoymentTypeId('');
   };
 
@@ -81,7 +102,7 @@ export const EmployeeTypeTable = () => {
         },
         onSuccess: () => {
           refetch();
-          handleModalClose();
+          handleAddModalClose();
         },
         promise: mutateAsync({
           id: selectedEmpoymentTypeId,
@@ -97,7 +118,7 @@ export const EmployeeTypeTable = () => {
         },
         onSuccess: () => {
           refetch();
-          handleModalClose();
+          handleAddModalClose();
         },
         promise: mutateAsync({
           id: null,
@@ -105,6 +126,21 @@ export const EmployeeTypeTable = () => {
         }),
       });
     }
+  };
+
+  const onDelete = () => {
+    asyncToast({
+      id: 'delete-employee-type',
+      msgs: {
+        success: 'Employee type deleted successfully',
+        loading: 'Adding new employee type',
+      },
+      onSuccess: () => {
+        refetch();
+        handleDeleteModalClose();
+      },
+      promise: deleteMutateAsync({ id: selectedEmpoymentTypeId }),
+    });
   };
   return (
     <Box id="employee-type">
@@ -118,7 +154,7 @@ export const EmployeeTypeTable = () => {
             gap="s4"
             color="green.500"
             cursor="pointer"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsAddModalOpen(true)}
           >
             <Icon size="sm" as={AiOutlinePlus} />
             <Text fontSize="r1">Add Empoyment Type</Text>
@@ -128,8 +164,8 @@ export const EmployeeTypeTable = () => {
         <Table isStatic data={rowData} columns={columns} />
       </SettingsCard>
       <Modal
-        open={isModalOpen}
-        onClose={handleModalClose}
+        open={isAddModalOpen}
+        onClose={handleAddModalClose}
         isCentered
         title="Empoyment Type"
         width="xl"
@@ -151,6 +187,14 @@ export const EmployeeTypeTable = () => {
             </Box>
           </form>
         </FormProvider>
+      </Modal>
+      <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">
+        <Box display="flex" flexDir="column" p="s4" gap="s16">
+          <Text fontSize="r2">Are you sure you want to delete this department ?</Text>
+          <Button w="-webkit-fit-content" alignSelf="flex-end" onClick={onDelete}>
+            Confirm
+          </Button>
+        </Box>
       </Modal>
     </Box>
   );

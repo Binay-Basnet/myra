@@ -5020,7 +5020,10 @@ export type DepositProductSettingsMutation = {
   updateCloseCharge: ProductChargeMutationResult;
   updateOpenCharge: ProductChargeMutationResult;
   updatePenaltyCharge: ProductChargeMutationResult;
+  updatePrematurePenalty: ProductChargeMutationResult;
   updateProductInterest: InterestSetupMutationResult;
+  updateProductTenure: ProductChargeMutationResult;
+  updateWithdrawPenalty?: Maybe<ProductChargeMutationResult>;
 };
 
 export type DepositProductSettingsMutationActivateProductArgs = {
@@ -5084,8 +5087,25 @@ export type DepositProductSettingsMutationUpdatePenaltyChargeArgs = {
   productId: Scalars['ID'];
 };
 
+export type DepositProductSettingsMutationUpdatePrematurePenaltyArgs = {
+  allowPenalty: Scalars['Boolean'];
+  payload?: InputMaybe<PrematurePenalty>;
+  productId: Scalars['ID'];
+};
+
 export type DepositProductSettingsMutationUpdateProductInterestArgs = {
   data: InterestRateSetupInput;
+  productId: Scalars['ID'];
+};
+
+export type DepositProductSettingsMutationUpdateProductTenureArgs = {
+  payload: TenureUpdateData;
+  productId: Scalars['ID'];
+  productType: AccountTypeFilter;
+};
+
+export type DepositProductSettingsMutationUpdateWithdrawPenaltyArgs = {
+  payload?: InputMaybe<WithdrawPenalty>;
   productId: Scalars['ID'];
 };
 
@@ -5928,6 +5948,21 @@ export type EmployeeInput = {
   workEmailAddress?: InputMaybe<Scalars['String']>;
   workExperience?: InputMaybe<Array<InputMaybe<HrEmployeeWorkExperience>>>;
   workPhoneNumber?: InputMaybe<Scalars['String']>;
+};
+
+export type EmployeeLeavePolicyNode = {
+  assignedLevel: Scalars['String'];
+  description: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type EmployeeLeaveRecord = {
+  description?: Maybe<Scalars['String']>;
+  effectiveFrom?: Maybe<Scalars['Localized']>;
+  employeeLevelId?: Maybe<Scalars['String']>;
+  leavePolicyDetails?: Maybe<Array<Maybe<LeavePolicyGetDetails>>>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type EmployeeLeaveType = {
@@ -7646,6 +7681,29 @@ export type HcmEmployeeLeaveMutationUpsertLeaveTypeArgs = {
   input: LeaveTypeInput;
 };
 
+export type HcmEmployeeLeavePolicyMutation = {
+  upsertLeavePolicy: LeavePolicyOutput;
+};
+
+export type HcmEmployeeLeavePolicyMutationUpsertLeavePolicyArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: LeavePolicyInput;
+};
+
+export type HcmEmployeeLeavePolicyQuery = {
+  getLeavePolicy: LeavePolicyGetOutput;
+  listLeavePolicy: HrEmployeeLeavePolicyConnection;
+};
+
+export type HcmEmployeeLeavePolicyQueryGetLeavePolicyArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeLeavePolicyQueryListLeavePolicyArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type HcmEmployeeLeaveQuery = {
   getLeaveType: LeaveTypeGetOutput;
   listLeaveType: HcmEmployeeLeaveTypeConnection;
@@ -7685,11 +7743,13 @@ export type HcmEmployeeListEdges = {
 export type HcmEmployeeMutation = {
   employee: HcmEmployeeGeneralMutation;
   leave: HcmEmployeeLeaveMutation;
+  leavePolicy: HcmEmployeeLeavePolicyMutation;
 };
 
 export type HcmEmployeeQuery = {
   employee: HcmEmployeeGeneralQuery;
   leave: HcmEmployeeLeaveQuery;
+  leavePolicy: HcmEmployeeLeavePolicyQuery;
 };
 
 export type HcmEmployeeSchema = {
@@ -7703,8 +7763,7 @@ export type HcmSettingsMutation = {
 };
 
 export type HcmSettingsQuery = {
-  employee: HcmEmployeeGeneralQuery;
-  leave: HcmEmployeeLeaveQuery;
+  employee: HcmEmployeeQuery;
 };
 
 export type HrEmployeeKyeMutation = {
@@ -7748,6 +7807,17 @@ export type HrEmployeeLeaveMutation = {
 export type HrEmployeeLeaveMutationUpsertLeaveArgs = {
   id?: InputMaybe<Scalars['String']>;
   input: LeaveInput;
+};
+
+export type HrEmployeeLeavePolicyConnection = {
+  PageInfo?: Maybe<PageInfo>;
+  edges?: Maybe<Array<Maybe<HrEmployeeLeavePolicyEdges>>>;
+  totalCount: Scalars['Int'];
+};
+
+export type HrEmployeeLeavePolicyEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<EmployeeLeavePolicyNode>;
 };
 
 export type HrEmployeeLeaveQuery = {
@@ -9444,7 +9514,7 @@ export type JobApplicationInput = {
   applicationStatus?: InputMaybe<ApplicantStatus>;
   educationalDetails?: InputMaybe<Array<InputMaybe<HrEmployeeEducationDetail>>>;
   experienceDetails?: InputMaybe<Array<InputMaybe<ExperienceInput>>>;
-  jobOpening?: InputMaybe<Scalars['ID']>;
+  jobOpening: Scalars['ID'];
   permanentAddress?: InputMaybe<KymAddressInput>;
   personalEmailAddress?: InputMaybe<Scalars['String']>;
   personalPhoneNumber?: InputMaybe<Scalars['String']>;
@@ -9461,17 +9531,17 @@ export type JobApplicationListed = {
 
 export type JobApplicationRecord = {
   applicantName?: Maybe<Scalars['String']>;
-  applicationRating?: Maybe<Scalars['Int']>;
+  applicationRating?: Maybe<Scalars['Float']>;
   applicationStatus?: Maybe<ApplicantStatus>;
   educationalDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
   experienceDetails?: Maybe<Array<Maybe<Experience>>>;
   id: Scalars['ID'];
   jobOpening?: Maybe<Scalars['ID']>;
-  permanentAddress?: Maybe<Address>;
+  permanentAddress?: Maybe<KymAddress>;
   personalEmailAddress?: Maybe<Scalars['String']>;
   personalPhoneNumber?: Maybe<Scalars['String']>;
   tempSameAsPerm?: Maybe<Scalars['Boolean']>;
-  temporaryAddress?: Maybe<Address>;
+  temporaryAddress?: Maybe<KymAddress>;
 };
 
 export type JobApplications = {
@@ -11682,6 +11752,34 @@ export type LeaveOutput = {
 export type LeaveOutputType = {
   error?: Maybe<QueryError>;
   record?: Maybe<EmployeeLeaveType>;
+};
+
+export type LeavePolicyDetails = {
+  annualAllocation?: InputMaybe<Scalars['Int']>;
+  leaveTypeId?: InputMaybe<Scalars['String']>;
+};
+
+export type LeavePolicyGetDetails = {
+  annualAllocation?: Maybe<Scalars['Int']>;
+  leaveTypeId?: Maybe<Scalars['String']>;
+};
+
+export type LeavePolicyGetOutput = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<EmployeeLeaveRecord>;
+};
+
+export type LeavePolicyInput = {
+  description?: InputMaybe<Scalars['String']>;
+  effectiveFrom?: InputMaybe<Scalars['Localized']>;
+  employeeLevelId?: InputMaybe<Scalars['String']>;
+  leavePolicyDetails?: InputMaybe<Array<InputMaybe<LeavePolicyDetails>>>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type LeavePolicyOutput = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export const LeaveTypeEnum = {
@@ -18951,6 +19049,11 @@ export const TellerType = {
 } as const;
 
 export type TellerType = typeof TellerType[keyof typeof TellerType];
+export type TenureUpdateData = {
+  maxTenureUnitNumber?: InputMaybe<Scalars['Int']>;
+  minTenureUnitNumber?: InputMaybe<Scalars['Int']>;
+};
+
 export type TestDbResult = {
   name: Scalars['String'];
 };
@@ -19867,6 +19970,7 @@ export type WarehouseTransferResult = {
 export const WarehouseTransferStatus = {
   Completed: 'COMPLETED',
   OnTransit: 'ON_TRANSIT',
+  Rejected: 'REJECTED',
 } as const;
 
 export type WarehouseTransferStatus =
@@ -22995,6 +23099,34 @@ export type EodActivitiesSetupMutation = {
   settings: { general?: { setup: { eodAction?: boolean | null } } | null };
 };
 
+export type SetEmployeeLevelMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: NewEmployeeLevel;
+}>;
+
+export type SetEmployeeLevelMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            upsertEmployeeLevel?: {
+              recordId: string;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            } | null;
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type SetDepartmentMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
   input: NewDepartment;
@@ -23099,6 +23231,31 @@ export type SetEmployeeHealthInsuranceMutation = {
                 | MutationError_ServerError_Fragment
                 | MutationError_ValidationError_Fragment
                 | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type DeleteHcmEmployeeGeneralMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type DeleteHcmEmployeeGeneralMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            deleteHcmEmployeeGeneral: {
+              error:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment;
             };
           };
         };
@@ -35049,6 +35206,32 @@ export type GetEodExceptionsQuery = {
   };
 };
 
+export type GetEmployeeLevelListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeLevelListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            listEmployeeLevel?: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: { id: string; name: string; description: string };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            } | null;
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type GetDepartmentListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -35059,14 +35242,16 @@ export type GetDepartmentListQuery = {
     general?: {
       HCM?: {
         employee: {
-          listDepartment?: {
-            totalCount: number;
-            edges?: Array<{
-              cursor: string;
-              node: { id: string; name: string; description: string };
-            } | null> | null;
-            pageInfo?: PaginationFragment | null;
-          } | null;
+          employee: {
+            listDepartment?: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: { id: string; name: string; description: string };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            } | null;
+          };
         };
       } | null;
     } | null;
@@ -35083,14 +35268,16 @@ export type GetDesignationListQuery = {
     general?: {
       HCM?: {
         employee: {
-          listDesignation?: {
-            totalCount: number;
-            edges?: Array<{
-              cursor: string;
-              node: { id: string; name: string; description: string };
-            } | null> | null;
-            pageInfo?: PaginationFragment | null;
-          } | null;
+          employee: {
+            listDesignation?: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: { id: string; name: string; description: string };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            } | null;
+          };
         };
       } | null;
     } | null;
@@ -35107,14 +35294,16 @@ export type GetEmployeeTypeListQuery = {
     general?: {
       HCM?: {
         employee: {
-          listEmployeeType?: {
-            totalCount: number;
-            edges?: Array<{
-              cursor: string;
-              node: { id: string; name: string; description: string };
-            } | null> | null;
-            pageInfo?: PaginationFragment | null;
-          } | null;
+          employee: {
+            listEmployeeType?: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: { id: string; name: string; description: string };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            } | null;
+          };
         };
       } | null;
     } | null;
@@ -35131,14 +35320,20 @@ export type GetEmployeeHealthInsuranceListQuery = {
     general?: {
       HCM?: {
         employee: {
-          listEmployeeHealthInsurance?: {
-            totalCount: number;
-            edges?: Array<{
-              cursor: string;
-              node: { id: string; healthInsuranceProvider: string; healthInsuranceNumber: string };
-            } | null> | null;
-            pageInfo?: PaginationFragment | null;
-          } | null;
+          employee: {
+            listEmployeeHealthInsurance?: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: {
+                  id: string;
+                  healthInsuranceProvider: string;
+                  healthInsuranceNumber: string;
+                };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            } | null;
+          };
         };
       } | null;
     } | null;
@@ -43406,6 +43601,39 @@ export const useEodActivitiesSetupMutation = <TError = unknown, TContext = unkno
     ),
     options
   );
+export const SetEmployeeLevelDocument = `
+    mutation setEmployeeLevel($id: String, $input: NewEmployeeLevel!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertEmployeeLevel(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeLevelMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeLevelMutation,
+    TError,
+    SetEmployeeLevelMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetEmployeeLevelMutation, TError, SetEmployeeLevelMutationVariables, TContext>(
+    ['setEmployeeLevel'],
+    useAxios<SetEmployeeLevelMutation, SetEmployeeLevelMutationVariables>(SetEmployeeLevelDocument),
+    options
+  );
 export const SetDepartmentDocument = `
     mutation setDepartment($id: String, $input: NewDepartment!) {
   settings {
@@ -43542,6 +43770,45 @@ export const useSetEmployeeHealthInsuranceMutation = <TError = unknown, TContext
     ['setEmployeeHealthInsurance'],
     useAxios<SetEmployeeHealthInsuranceMutation, SetEmployeeHealthInsuranceMutationVariables>(
       SetEmployeeHealthInsuranceDocument
+    ),
+    options
+  );
+export const DeleteHcmEmployeeGeneralDocument = `
+    mutation deleteHcmEmployeeGeneral($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            deleteHcmEmployeeGeneral(id: $id) {
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteHcmEmployeeGeneralMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteHcmEmployeeGeneralMutation,
+    TError,
+    DeleteHcmEmployeeGeneralMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteHcmEmployeeGeneralMutation,
+    TError,
+    DeleteHcmEmployeeGeneralMutationVariables,
+    TContext
+  >(
+    ['deleteHcmEmployeeGeneral'],
+    useAxios<DeleteHcmEmployeeGeneralMutation, DeleteHcmEmployeeGeneralMutationVariables>(
+      DeleteHcmEmployeeGeneralDocument
     ),
     options
   );
@@ -59352,24 +59619,65 @@ export const useGetEodExceptionsQuery = <TData = GetEodExceptionsQuery, TError =
     ),
     options
   );
+export const GetEmployeeLevelListDocument = `
+    query getEmployeeLevelList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            listEmployeeLevel(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeLevelListQuery = <TData = GetEmployeeLevelListQuery, TError = unknown>(
+  variables?: GetEmployeeLevelListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeLevelListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeLevelListQuery, TError, TData>(
+    variables === undefined ? ['getEmployeeLevelList'] : ['getEmployeeLevelList', variables],
+    useAxios<GetEmployeeLevelListQuery, GetEmployeeLevelListQueryVariables>(
+      GetEmployeeLevelListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetDepartmentListDocument = `
     query getDepartmentList($filter: Filter, $pagination: Pagination) {
   settings {
     general {
       HCM {
         employee {
-          listDepartment(filter: $filter, pagination: $pagination) {
-            totalCount
-            edges {
-              node {
-                id
-                name
-                description
+          employee {
+            listDepartment(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
               }
-              cursor
-            }
-            pageInfo {
-              ...Pagination
+              pageInfo {
+                ...Pagination
+              }
             }
           }
         }
@@ -59395,18 +59703,20 @@ export const GetDesignationListDocument = `
     general {
       HCM {
         employee {
-          listDesignation(filter: $filter, pagination: $pagination) {
-            totalCount
-            edges {
-              node {
-                id
-                name
-                description
+          employee {
+            listDesignation(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
               }
-              cursor
-            }
-            pageInfo {
-              ...Pagination
+              pageInfo {
+                ...Pagination
+              }
             }
           }
         }
@@ -59432,18 +59742,20 @@ export const GetEmployeeTypeListDocument = `
     general {
       HCM {
         employee {
-          listEmployeeType(filter: $filter, pagination: $pagination) {
-            totalCount
-            edges {
-              node {
-                id
-                name
-                description
+          employee {
+            listEmployeeType(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
               }
-              cursor
-            }
-            pageInfo {
-              ...Pagination
+              pageInfo {
+                ...Pagination
+              }
             }
           }
         }
@@ -59469,18 +59781,20 @@ export const GetEmployeeHealthInsuranceListDocument = `
     general {
       HCM {
         employee {
-          listEmployeeHealthInsurance(filter: $filter, pagination: $pagination) {
-            totalCount
-            edges {
-              node {
-                id
-                healthInsuranceProvider
-                healthInsuranceNumber
+          employee {
+            listEmployeeHealthInsurance(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  healthInsuranceProvider
+                  healthInsuranceNumber
+                }
+                cursor
               }
-              cursor
-            }
-            pageInfo {
-              ...Pagination
+              pageInfo {
+                ...Pagination
+              }
             }
           }
         }
