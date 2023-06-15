@@ -5,23 +5,29 @@ import { BiEdit } from 'react-icons/bi';
 
 import { asyncToast, Box, Button, Column, Divider, Icon, Modal, Table, Text } from '@myra-ui';
 
-import { useGetDepartmentListQuery, useSetDepartmentMutation } from '@coop/cbs/data-access';
+import {
+  useDeleteHcmEmployeeGeneralMutation,
+  useGetEmployeeLevelListQuery,
+  useSetEmployeeLevelMutation,
+} from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
 import { FormInput } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const EmployeeLevelTable = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedDepartmentId, setSelectedDepartmentId] = useState('');
+  const [isAddModal, setIsAddModal] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedEmployeeLevelId, setSelectedEmployeeLevelId] = useState('');
 
-  const { data, refetch } = useGetDepartmentListQuery({ pagination: getPaginationQuery() });
-  const { mutateAsync, isLoading } = useSetDepartmentMutation();
+  const { data, refetch } = useGetEmployeeLevelListQuery({ pagination: getPaginationQuery() });
+  const { mutateAsync, isLoading } = useSetEmployeeLevelMutation();
+  const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
 
   const methods = useForm();
   const { getValues, handleSubmit } = methods;
 
   const rowData = useMemo(
-    () => data?.settings?.general?.HCM?.employee?.listDepartment?.edges ?? [],
+    () => data?.settings?.general?.HCM?.employee?.employee?.listEmployeeLevel?.edges ?? [],
     [data]
   );
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -48,14 +54,24 @@ export const EmployeeLevelTable = () => {
               gap="s8"
               cursor="pointer"
               onClick={() => {
-                setSelectedDepartmentId(props?.row?.original?.node?.id as string);
-                setIsModalOpen(true);
+                setSelectedEmployeeLevelId(props?.row?.original?.node?.id as string);
+                setIsAddModal(true);
               }}
             >
               <Icon as={BiEdit} />
               <Text>Edit</Text>
             </Box>
-            <Box display="flex" alignItems="center" color="red.500" gap="s8" cursor="pointer">
+            <Box
+              display="flex"
+              alignItems="center"
+              color="red.500"
+              gap="s8"
+              cursor="pointer"
+              onClick={() => {
+                setSelectedEmployeeLevelId(props?.row?.original?.node?.id as string);
+                setIsDeleteModalOpen(true);
+              }}
+            >
               <Icon as={AiOutlineDelete} />
               <Text>Delete</Text>
             </Box>
@@ -66,25 +82,29 @@ export const EmployeeLevelTable = () => {
     []
   );
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-    setSelectedDepartmentId('');
+  const handleAddModalClose = () => {
+    setIsAddModal(false);
+    setSelectedEmployeeLevelId('');
+  };
+  const handleDeleteModalClose = () => {
+    setIsDeleteModalOpen(false);
+    setSelectedEmployeeLevelId('');
   };
 
   const onSubmit = () => {
-    if (selectedDepartmentId) {
+    if (selectedEmployeeLevelId) {
       asyncToast({
         id: 'edit-department',
         msgs: {
-          success: 'Department edited succesfully',
-          loading: 'Editing department',
+          success: 'Employee Level edited succesfully',
+          loading: 'Editing Employee Level',
         },
         onSuccess: () => {
           refetch();
-          handleModalClose();
+          handleAddModalClose();
         },
         promise: mutateAsync({
-          id: selectedDepartmentId,
+          id: selectedEmployeeLevelId,
           input: { name: getValues()?.name, description: getValues()?.description },
         }),
       });
@@ -92,12 +112,12 @@ export const EmployeeLevelTable = () => {
       asyncToast({
         id: 'new-department',
         msgs: {
-          success: 'New Department added succesfully',
+          success: 'New EmployeeLevel added succesfully',
           loading: 'Adding new department',
         },
         onSuccess: () => {
           refetch();
-          handleModalClose();
+          handleAddModalClose();
         },
         promise: mutateAsync({
           id: null,
@@ -106,8 +126,24 @@ export const EmployeeLevelTable = () => {
       });
     }
   };
+
+  const onDelete = () => {
+    asyncToast({
+      id: 'delete-employee-level',
+      msgs: {
+        success: 'Employee level deleted successfully',
+        loading: 'Adding new employee level',
+      },
+      onSuccess: () => {
+        refetch();
+        handleDeleteModalClose();
+      },
+      promise: deleteMutateAsync({ id: selectedEmployeeLevelId }),
+    });
+  };
+
   return (
-    <Box id="employeeLevel">
+    <Box id="employee-level">
       <SettingsCard
         title="Employee Level"
         subtitle="Extends Fields that can be added to forms for additional input Fields"
@@ -118,16 +154,22 @@ export const EmployeeLevelTable = () => {
             gap="s4"
             color="green.500"
             cursor="pointer"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsAddModal(true)}
           >
             <Icon size="sm" as={AiOutlinePlus} />
-            <Text fontSize="r1">Add Department</Text>
+            <Text fontSize="r1">Add Employee Level</Text>
           </Box>
         }
       >
         <Table isStatic data={rowData} columns={columns} />
       </SettingsCard>
-      <Modal open={isModalOpen} onClose={handleModalClose} isCentered title="Department" width="xl">
+      <Modal
+        open={isAddModal}
+        onClose={handleAddModalClose}
+        isCentered
+        title="Employee Level"
+        width="xl"
+      >
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box display="flex" flexDir="column" gap="s16">
@@ -145,6 +187,14 @@ export const EmployeeLevelTable = () => {
             </Box>
           </form>
         </FormProvider>
+      </Modal>
+      <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">
+        <Box display="flex" flexDir="column" p="s4" gap="s16">
+          <Text fontSize="r2">Are you sure you want to delete this Employee level ?</Text>
+          <Button w="-webkit-fit-content" alignSelf="flex-end" onClick={onDelete}>
+            Confirm
+          </Button>
+        </Box>
       </Modal>
     </Box>
   );

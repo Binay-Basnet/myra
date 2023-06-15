@@ -26,6 +26,11 @@ export const CbsSettingsFeatureHcm = () => (
           <Text fontSize="r2" fontWeight="medium">
             On the Employee Settings
           </Text>
+          <a href="#employee-level">
+            <Text fontSize="r1" fontWeight="medium" color="blue.500" cursor="pointer">
+              Employee Level
+            </Text>
+          </a>
           <a href="#department">
             <Text fontSize="r1" fontWeight="medium" color="blue.500" cursor="pointer">
               Department

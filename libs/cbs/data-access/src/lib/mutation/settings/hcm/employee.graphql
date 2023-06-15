@@ -92,3 +92,21 @@ mutation setEmployeeHealthInsurance($id: String, $input: NewEmployeeHealthInsura
     }
   }
 }
+
+mutation deleteHcmEmployeeGeneral($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            deleteHcmEmployeeGeneral(id: $id) {
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
