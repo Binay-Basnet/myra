@@ -5020,7 +5020,10 @@ export type DepositProductSettingsMutation = {
   updateCloseCharge: ProductChargeMutationResult;
   updateOpenCharge: ProductChargeMutationResult;
   updatePenaltyCharge: ProductChargeMutationResult;
+  updatePrematurePenalty: ProductChargeMutationResult;
   updateProductInterest: InterestSetupMutationResult;
+  updateProductTenure: ProductChargeMutationResult;
+  updateWithdrawPenalty?: Maybe<ProductChargeMutationResult>;
 };
 
 export type DepositProductSettingsMutationActivateProductArgs = {
@@ -5084,8 +5087,25 @@ export type DepositProductSettingsMutationUpdatePenaltyChargeArgs = {
   productId: Scalars['ID'];
 };
 
+export type DepositProductSettingsMutationUpdatePrematurePenaltyArgs = {
+  allowPenalty: Scalars['Boolean'];
+  payload?: InputMaybe<PrematurePenalty>;
+  productId: Scalars['ID'];
+};
+
 export type DepositProductSettingsMutationUpdateProductInterestArgs = {
   data: InterestRateSetupInput;
+  productId: Scalars['ID'];
+};
+
+export type DepositProductSettingsMutationUpdateProductTenureArgs = {
+  payload: TenureUpdateData;
+  productId: Scalars['ID'];
+  productType: AccountTypeFilter;
+};
+
+export type DepositProductSettingsMutationUpdateWithdrawPenaltyArgs = {
+  payload?: InputMaybe<WithdrawPenalty>;
   productId: Scalars['ID'];
 };
 
@@ -19029,6 +19049,11 @@ export const TellerType = {
 } as const;
 
 export type TellerType = typeof TellerType[keyof typeof TellerType];
+export type TenureUpdateData = {
+  maxTenureUnitNumber?: InputMaybe<Scalars['Int']>;
+  minTenureUnitNumber?: InputMaybe<Scalars['Int']>;
+};
+
 export type TestDbResult = {
   name: Scalars['String'];
 };

@@ -11,9 +11,7 @@ import { useCOALeafNodeDetails } from '../hooks';
 export const COALeafDetail = () => {
   const router = useRouter();
 
-  // const tabQuery = router.query['tab'] as string;
-
-  const { tabQuery } = router.query;
+  const tabQuery = router.query['tab'] as string;
 
   const { leafNodeData } = useCOALeafNodeDetails();
 
