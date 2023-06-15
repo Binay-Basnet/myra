@@ -4327,7 +4327,7 @@ export const DefaultAccountType = {
 
 export type DefaultAccountType = typeof DefaultAccountType[keyof typeof DefaultAccountType];
 export type DeleteResponse = {
-  error: MutationError;
+  error?: Maybe<MutationError>;
   responseStatus: Scalars['Boolean'];
 };
 
@@ -5023,6 +5023,7 @@ export type DepositProductSettingsMutation = {
   updatePrematurePenalty: ProductChargeMutationResult;
   updateProductInterest: InterestSetupMutationResult;
   updateProductTenure: ProductChargeMutationResult;
+  updateRebate?: Maybe<ProductChargeMutationResult>;
   updateWithdrawPenalty?: Maybe<ProductChargeMutationResult>;
 };
 
@@ -5102,6 +5103,12 @@ export type DepositProductSettingsMutationUpdateProductTenureArgs = {
   payload: TenureUpdateData;
   productId: Scalars['ID'];
   productType: AccountTypeFilter;
+};
+
+export type DepositProductSettingsMutationUpdateRebateArgs = {
+  isRebateAllowed: Scalars['Boolean'];
+  payload?: InputMaybe<RebateTypeInput>;
+  productId: Scalars['ID'];
 };
 
 export type DepositProductSettingsMutationUpdateWithdrawPenaltyArgs = {
@@ -9308,15 +9315,14 @@ export type InventoryReportNewinventoryStockStatusreportArgs = {
 };
 
 export type InventoryStockStatusData = {
-  lowerItemCode: Scalars['String'];
-  lowerItemName: Scalars['String'];
-  lowerWarehouseId: Scalars['String'];
-  lowerWarehouseName: Scalars['String'];
-  netQuantity: Scalars['String'];
   purchasedDate?: Maybe<Scalars['Localized']>;
   purchasedQuantity: Scalars['String'];
   soldDate?: Maybe<Scalars['Localized']>;
   soldQuantity: Scalars['String'];
+  transferAcceptDate?: Maybe<Scalars['Localized']>;
+  transferAcceptQuantity: Scalars['String'];
+  transferSentDate?: Maybe<Scalars['Localized']>;
+  transferSentQuantity: Scalars['String'];
 };
 
 export type InventoryStockStatusDataList = {
@@ -9341,6 +9347,8 @@ export type InventoryStockStatusTotal = {
   totalNet: Scalars['String'];
   totalPurchased: Scalars['String'];
   totalSoled: Scalars['String'];
+  totalTransferIn: Scalars['String'];
+  totalTransferOut: Scalars['String'];
   warehouseId: Scalars['String'];
   warehouseName: Scalars['String'];
 };
@@ -19945,6 +19953,7 @@ export type WarehouseTransferEdge = {
 
 export type WarehouseTransferFilter = {
   id?: InputMaybe<Scalars['String']>;
+  objState?: InputMaybe<WarehouseTransferStatus>;
   query?: InputMaybe<Scalars['String']>;
   transferType?: InputMaybe<WarehouseTransferType>;
 };
@@ -23250,12 +23259,13 @@ export type DeleteHcmEmployeeGeneralMutation = {
         employee: {
           employee: {
             deleteHcmEmployeeGeneral: {
-              error:
+              error?:
                 | MutationError_AuthorizationError_Fragment
                 | MutationError_BadRequestError_Fragment
                 | MutationError_NotFoundError_Fragment
                 | MutationError_ServerError_Fragment
-                | MutationError_ValidationError_Fragment;
+                | MutationError_ValidationError_Fragment
+                | null;
             };
           };
         };
@@ -32396,15 +32406,14 @@ export type GetInventoryStockStatusReportQuery = {
             totalNet: string;
           } | null;
           lower?: Array<{
-            lowerItemCode: string;
-            lowerItemName: string;
-            lowerWarehouseName: string;
-            lowerWarehouseId: string;
             purchasedQuantity: string;
             soldQuantity: string;
             purchasedDate?: Record<'local' | 'en' | 'np', string> | null;
             soldDate?: Record<'local' | 'en' | 'np', string> | null;
-            netQuantity: string;
+            transferAcceptQuantity: string;
+            transferAcceptDate?: Record<'local' | 'en' | 'np', string> | null;
+            transferSentQuantity: string;
+            transferSentDate?: Record<'local' | 'en' | 'np', string> | null;
           } | null> | null;
         } | null> | null;
         error?:
@@ -55942,15 +55951,14 @@ export const GetInventoryStockStatusReportDocument = `
             totalNet
           }
           lower {
-            lowerItemCode
-            lowerItemName
-            lowerWarehouseName
-            lowerWarehouseId
             purchasedQuantity
             soldQuantity
             purchasedDate
             soldDate
-            netQuantity
+            transferAcceptQuantity
+            transferAcceptDate
+            transferSentQuantity
+            transferSentDate
           }
         }
         error {
