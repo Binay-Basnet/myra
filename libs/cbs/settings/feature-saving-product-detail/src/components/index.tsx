@@ -17,3 +17,8 @@ export * from './ProductServiceCharge';
 export * from './ProductServiceTable';
 export * from './ProductWithdrawPenalty';
 export * from './SideBar';
+export * from './UpdateAccountPremiumModal';
+export * from './UpdatePrematurePenaltyModal';
+export * from './UpdateRebateModal';
+export * from './UpdateTenureModal';
+export * from './UpdateWithdrawPenaltyModal';

@@ -197,3 +197,98 @@ mutation editChequeSettings(
     }
   }
 }
+
+mutation updateSavingLoanProductAccountPremium(
+  $productId: ID!
+  $payload: AccountPremium!
+  $productType: AccountTypeFilter!
+) {
+  settings {
+    general {
+      depositProduct {
+        updateAccountPremium(productId: $productId, payload: $payload, productType: $productType) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation updateSavingLoanProductTenure(
+  $productId: ID!
+  $payload: TenureUpdateData!
+  $productType: AccountTypeFilter!
+) {
+  settings {
+    general {
+      depositProduct {
+        updateProductTenure(productId: $productId, payload: $payload, productType: $productType) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation updateSavingProductPrematurePenalty(
+  $productId: ID!
+  $allowPenalty: Boolean!
+  $payload: PrematurePenalty!
+) {
+  settings {
+    general {
+      depositProduct {
+        updatePrematurePenalty(
+          productId: $productId
+          allowPenalty: $allowPenalty
+          payload: $payload
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation updateWithdrawPenalty($productId: ID!, $payload: WithdrawPenalty!) {
+  settings {
+    general {
+      depositProduct {
+        updateWithdrawPenalty(productId: $productId, payload: $payload) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation updateSavingProductRebate(
+  $productId: ID!
+  $isRebateAllowed: Boolean!
+  $payload: RebateTypeInput!
+) {
+  settings {
+    general {
+      depositProduct {
+        updateRebate(productId: $productId, isRebateAllowed: $isRebateAllowed, payload: $payload) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
 import { HiOutlineRefresh } from 'react-icons/hi';
+import { useDisclosure } from '@chakra-ui/react';
 
 import { Box, DetailPageQuickLinks, Scrollable, Text } from '@myra-ui';
 
-import { SideBar } from '../components';
+import { SideBar, UpdateLoanAccountPremiumModal, UpdateLoanTenureModal } from '../components';
 import UpdateBalanceLimitModal from '../components/LoanDetailsUpdateBalanceLimitModal';
 
 export const GeneralUpdatesPage = () => {
@@ -13,11 +14,32 @@ export const GeneralUpdatesPage = () => {
     setIsUpdateBalanceLimitOpen(false);
   };
 
+  const {
+    isOpen: isAccountPremiumModalOpen,
+    onClose: onAccountPremiumModalClose,
+    onToggle: onAccountPremiumModalToggle,
+  } = useDisclosure();
+  const {
+    isOpen: isUpdateTenureModalOpen,
+    onClose: onUpdateTenureModalClose,
+    onToggle: onUpdateTenureModalToggle,
+  } = useDisclosure();
+
   const updateOptions = useMemo(
     () => [
       {
-        title: 'Update Loan Limit',
+        title: 'Loan Limit',
         onClick: () => setIsUpdateBalanceLimitOpen(true),
+        icon: HiOutlineRefresh,
+      },
+      {
+        title: 'Account Premium',
+        onClick: onAccountPremiumModalToggle,
+        icon: HiOutlineRefresh,
+      },
+      {
+        title: 'Tenure',
+        onClick: onUpdateTenureModalToggle,
         icon: HiOutlineRefresh,
       },
     ],
@@ -55,6 +77,13 @@ export const GeneralUpdatesPage = () => {
         isOpen={isUpdateBalanceLimitOpen}
         onClose={handleUpdateBalanceLimitModalClose}
       />
+
+      <UpdateLoanAccountPremiumModal
+        isOpen={isAccountPremiumModalOpen}
+        onClose={onAccountPremiumModalClose}
+      />
+
+      <UpdateLoanTenureModal isOpen={isUpdateTenureModalOpen} onClose={onUpdateTenureModalClose} />
     </>
   );
 };
