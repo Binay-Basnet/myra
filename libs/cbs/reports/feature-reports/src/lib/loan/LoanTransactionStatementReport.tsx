@@ -117,6 +117,16 @@ export const LoanTransactionStatementReport = () => {
                 ),
               },
 
+              {
+                header: 'Withdraw Principal',
+                accessorKey: 'withdrawPrincipal',
+                cell: (props) => amountConverter(props.getValue() as string),
+                footer: () => amountConverter(0),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+
               // {
               //   header: 'Disburse Principal',
               //   accessorKey: 'disbursePrinciple',

@@ -480,6 +480,7 @@ query getLoanTransactionReport($data: LoanStatementReportSettings!) {
               particular
               txnId
               disbursePrinciple
+              withdrawPrincipal
               paidPrinciple
               interestPaid
               finePaid

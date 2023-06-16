@@ -75,7 +75,7 @@ export const Interest = () => {
   }, [defaultInput, interestAuth, product]);
 
   const maxValue = Number(product?.interest?.maxRate);
-  const interestRate = watch('interestRate');
+  const interestRate = watch('intrestRate');
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">
@@ -152,7 +152,7 @@ export const Interest = () => {
               <Box as="ul" display="flex" flexDir="column" gap="s4">
                 <li>
                   <Text fontWeight="400" fontSize="r1">
-                    Account Premium Rate: <b>{interestRate}</b>
+                    Account Premium Rate: <b>{interestRate}%</b>
                   </Text>
                 </li>
                 <li>
@@ -173,7 +173,7 @@ export const Interest = () => {
                 </li>
                 <li>
                   <Text fontWeight="400" fontSize="r1">
-                    Final Account Rate:{' '}
+                    Final Interest Rate:{' '}
                     <b>
                       {`${
                         Number(interestRate || 0) +

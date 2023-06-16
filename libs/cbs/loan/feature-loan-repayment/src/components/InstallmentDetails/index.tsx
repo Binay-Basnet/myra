@@ -52,7 +52,7 @@ export const InstallmentData = ({
 
   const remainingInstallments = useMemo(() => {
     const lastUnpaidInstallment = loanInstallments?.find(
-      (installment) => installment?.status && installment?.status !== 'PAID'
+      (installment) => installment?.status !== 'PAID'
     )?.installmentNo;
 
     return lastUnpaidInstallment
@@ -121,7 +121,8 @@ export const InstallmentData = ({
             index === 0 &&
             (new Date(installment?.installmentDate?.en).getTime() <
               new Date(transactionDate?.en as string).getTime() ||
-              installment?.status === 'CURRENT')))
+              installment?.status === 'CURRENT' ||
+              (installment?.status === 'PARTIAL' && installment?.remainingInterest !== '0'))))
       ) {
         if (tempAmount >= interest) {
           if (existingIndex !== -1) {

@@ -46,15 +46,14 @@ query getInventoryStockStatusReport($data: InventoryStockStatusFilter) {
             totalNet
           }
           lower {
-            lowerItemCode
-            lowerItemName
-            lowerWarehouseName
-            lowerWarehouseId
             purchasedQuantity
             soldQuantity
             purchasedDate
             soldDate
-            netQuantity
+            transferAcceptQuantity
+            transferAcceptDate
+            transferSentQuantity
+            transferSentDate
           }
         }
         error {
