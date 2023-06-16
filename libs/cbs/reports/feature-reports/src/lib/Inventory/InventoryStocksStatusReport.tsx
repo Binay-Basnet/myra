@@ -25,6 +25,8 @@ type LoanGuranteeData = Partial<{
   warehouseName: string;
   totalPurchased: string;
   totalSoled: string;
+  totalTransferIn: string;
+  totalTransferOut: string;
   totalNet: string;
   lower: InventoryStockStatusData[];
 
@@ -33,6 +35,10 @@ type LoanGuranteeData = Partial<{
   purchasedDate: Record<'local' | 'en' | 'np', string> | null | undefined;
   soldDate: Record<'local' | 'en' | 'np', string> | null | undefined;
   netQuantity: string;
+  transferAcceptQuantity: string;
+  transferAcceptDate: Record<'local' | 'en' | 'np', string> | null | undefined;
+  transferSentQuantity: string;
+  transferSentDate: Record<'local' | 'en' | 'np', string> | null | undefined;
 }>;
 
 type ReportFilter = Omit<InventoryStockStatusFilter, 'warehouseId' | 'itemId'> & {
@@ -187,6 +193,24 @@ export const InventoryStockStatusReport = () => {
                     },
                   },
                   {
+                    header: 'Total Transfer In',
+                    accessorKey: 'totalTransferIn',
+                    cell: (row) =>
+                      row.getValue() ? amountConverter(row.getValue() as string) : '',
+                    meta: {
+                      isNumeric: true,
+                    },
+                  },
+                  {
+                    header: 'Total Transfer Out',
+                    accessorKey: 'totalTransferOut',
+                    cell: (row) =>
+                      row.getValue() ? amountConverter(row.getValue() as string) : '',
+                    meta: {
+                      isNumeric: true,
+                    },
+                  },
+                  {
                     header: 'Net',
                     accessorKey: 'totalNet',
                     cell: (row) =>
@@ -235,6 +259,52 @@ export const InventoryStockStatusReport = () => {
                   {
                     header: 'Sales Quantity',
                     accessorKey: 'soldQuantity',
+                    cell: (row) =>
+                      row.getValue() ? amountConverter(row.getValue() as string) : '-',
+                    meta: {
+                      isNumeric: true,
+                    },
+                  },
+                ],
+              },
+              {
+                header: 'Sent Transfer Information',
+                columns: [
+                  {
+                    header: 'Transfer Sent Date',
+                    accessorKey: 'transferSentDate',
+                    cell: (props) =>
+                      props.row?.original?.transferSentDate
+                        ? localizedDate(props?.row?.original?.transferSentDate)
+                        : '-',
+                  },
+
+                  {
+                    header: 'Transfer Sent Quantity',
+                    accessorKey: 'transferSentQuantity',
+                    cell: (row) =>
+                      row.getValue() ? amountConverter(row.getValue() as string) : '-',
+                    meta: {
+                      isNumeric: true,
+                    },
+                  },
+                ],
+              },
+              {
+                header: 'Accepted Transfer Information',
+                columns: [
+                  {
+                    header: 'Transfer Accepted Date',
+                    accessorKey: 'transferSentDate',
+                    cell: (props) =>
+                      props.row?.original?.transferAcceptDate
+                        ? localizedDate(props?.row?.original?.transferAcceptDate)
+                        : '-',
+                  },
+
+                  {
+                    header: 'Transfer Accepted Quantity',
+                    accessorKey: 'transferAcceptQuantity',
                     cell: (row) =>
                       row.getValue() ? amountConverter(row.getValue() as string) : '-',
                     meta: {

@@ -32550,6 +32550,8 @@ export type GetInventoryStockStatusReportQuery = {
             totalPurchased: string;
             totalSoled: string;
             totalNet: string;
+            totalTransferIn: string;
+            totalTransferOut: string;
           } | null;
           lower?: Array<{
             purchasedQuantity: string;
@@ -56332,6 +56334,8 @@ export const GetInventoryStockStatusReportDocument = `
             totalPurchased
             totalSoled
             totalNet
+            totalTransferIn
+            totalTransferOut
           }
           lower {
             purchasedQuantity
