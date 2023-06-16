@@ -9,11 +9,11 @@ import {
   KymMemberTypesEnum,
   useGetAccountDocumentsListQuery,
   useGetAccountOpenProductDetailsQuery,
-  useGetMemberListQuery,
+  useGetIndividualMemberDetails,
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput } from '@coop/shared/form';
-import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 interface Iprops {
   setFileList: React.Dispatch<React.SetStateAction<FileListType>>;
@@ -35,7 +35,8 @@ type FileListType = {
 
 export const RequiredDocuments = ({ setFileList, id, productId, memberId }: Iprops) => {
   const [triggerQuery, setTriggerQuery] = useState(false);
-  const [triggerMember, setTriggerMember] = useState(false);
+
+  const { memberDetailData } = useGetIndividualMemberDetails({ memberId });
 
   const { t } = useTranslation();
   const methods = useForm();
@@ -135,26 +136,6 @@ export const RequiredDocuments = ({ setFileList, id, productId, memberId }: Ipro
     }
   }, [id]);
 
-  const { data: memberList } = useGetMemberListQuery(
-    {
-      pagination: getPaginationQuery(),
-    },
-    {
-      staleTime: 0,
-      enabled: triggerMember,
-    }
-  );
-
-  useEffect(() => {
-    if (memberId) {
-      setTriggerMember(true);
-    }
-  }, [memberId]);
-
-  const memberListData = memberList?.members?.list?.edges;
-  const memberData =
-    memberListData && memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
-
   return (
     <FormProvider {...methods}>
       <form>
@@ -166,35 +147,35 @@ export const RequiredDocuments = ({ setFileList, id, productId, memberId }: Ipro
             columnGap="s20"
             p="s20"
           >
-            {memberData?.type === KymMemberTypesEnum?.Individual &&
+            {memberDetailData?.type === KymMemberTypesEnum?.Individual &&
               ProductData?.individualDocuments?.includes(photoinc) && (
                 <FormFileInput size="lg" label={t['accPhoto']} name="photo" />
               )}
-            {memberData?.type === KymMemberTypesEnum?.Individual &&
+            {memberDetailData?.type === KymMemberTypesEnum?.Individual &&
               ProductData?.individualDocuments?.includes(signinc) && (
                 <FormFileInput size="lg" label={t['accSignature']} name="signature" />
               )}
-            {memberData?.type === KymMemberTypesEnum?.Individual &&
+            {memberDetailData?.type === KymMemberTypesEnum?.Individual &&
               ProductData?.individualDocuments?.includes(nomineeinc) && (
                 <FormFileInput size="lg" label={t['accNomineeDocument']} name="nominee" />
               )}
-            {memberData?.type === KymMemberTypesEnum?.Individual &&
+            {memberDetailData?.type === KymMemberTypesEnum?.Individual &&
               ProductData?.individualDocuments?.includes(fingerPrintinc) && (
                 <FormFileInput size="lg" label={t['accFingerprintPhoto']} name="fingerprintPhoto" />
               )}
-            {memberData?.type !== KymMemberTypesEnum?.Individual &&
+            {memberDetailData?.type !== KymMemberTypesEnum?.Individual &&
               ProductData?.institutionDocuments?.includes(decIns) && (
                 <FormFileInput size="lg" label="Decision Document" name="decisionDocumentIns" />
               )}
-            {memberData?.type !== KymMemberTypesEnum?.Individual &&
+            {memberDetailData?.type !== KymMemberTypesEnum?.Individual &&
               ProductData?.institutionDocuments?.includes(
                 InstitutionRequiredDocument?.Registered
               ) && <FormFileInput size="lg" label="Registered" name="registeredPhotoIns" />}
-            {memberData?.type !== KymMemberTypesEnum?.Individual &&
+            {memberDetailData?.type !== KymMemberTypesEnum?.Individual &&
               ProductData?.institutionDocuments?.includes(
                 InstitutionRequiredDocument?.Signature
               ) && <FormFileInput size="lg" label="Signature" name="signatureIns" />}
-            {memberData?.type !== KymMemberTypesEnum?.Individual &&
+            {memberDetailData?.type !== KymMemberTypesEnum?.Individual &&
               ProductData?.institutionDocuments?.includes(
                 InstitutionRequiredDocument?.TaxClearance
               ) && <FormFileInput size="lg" label="Tax Clearance" name="taxClearance" />}
