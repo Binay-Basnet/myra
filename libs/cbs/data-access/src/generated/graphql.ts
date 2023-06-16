@@ -13889,6 +13889,7 @@ export type LoanStatement = {
   particular?: Maybe<Scalars['String']>;
   remainingPrinciple?: Maybe<Scalars['String']>;
   txnId?: Maybe<Scalars['String']>;
+  withdrawPrincipal?: Maybe<Scalars['String']>;
 };
 
 export type LoanStatementFooter = {
@@ -32404,6 +32405,8 @@ export type GetInventoryStockStatusReportQuery = {
             totalPurchased: string;
             totalSoled: string;
             totalNet: string;
+            totalTransferIn: string;
+            totalTransferOut: string;
           } | null;
           lower?: Array<{
             purchasedQuantity: string;
@@ -55949,6 +55952,8 @@ export const GetInventoryStockStatusReportDocument = `
             totalPurchased
             totalSoled
             totalNet
+            totalTransferIn
+            totalTransferOut
           }
           lower {
             purchasedQuantity

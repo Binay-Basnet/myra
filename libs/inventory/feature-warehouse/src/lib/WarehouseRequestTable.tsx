@@ -1,25 +1,41 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Column, Table, TablePopover, toast } from '@myra-ui';
+import { asyncToast, Column, PageHeader, Table, TablePopover } from '@myra-ui';
 
 import {
   useGetInventoryWarehouseTransferQuery,
   useSetInventoryWarehouseRequestAcceptHandlerMutation,
   WarehouseRequestResponse,
+  WarehouseTransferStatus,
   WarehouseTransferType,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { TableListPageHeader } from '@coop/myra/components';
-import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 import { WarehouseRequestDetailsModal } from '../component/WareHouseRequestDetails';
 
+const WAREHOUSE_REQUEST_TAB_ITEMS = [
+  {
+    title: 'On-Transit',
+    key: 'ON_TRANSIT',
+  },
+  {
+    title: 'Completed',
+    key: 'COMPLETED',
+  },
+
+  {
+    title: 'Rejected',
+    key: 'REJECTED',
+  },
+];
+
 export const WarehouseRequestTable = () => {
+  const [objStatus, setobjStatus] = useState('ON_TRANSIT');
   const [openDetailModal, setOpenDetailModal] = useState(false);
 
-  const { t } = useTranslation();
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -27,8 +43,14 @@ export const WarehouseRequestTable = () => {
     pagination: getPaginationQuery(),
     filter: {
       transferType: WarehouseTransferType?.Request,
+      objState: (router.query['objState'] ??
+        WarehouseTransferStatus.OnTransit) as WarehouseTransferStatus,
     },
   });
+
+  useEffect(() => {
+    setobjStatus(router?.query['objState'] as string);
+  }, [router]);
 
   const onOpenDetailsModal = () => {
     setOpenDetailModal(true);
@@ -38,52 +60,52 @@ export const WarehouseRequestTable = () => {
     setOpenDetailModal(false);
   };
 
-  const rowItems = data?.inventory?.warehouse?.listTransfers?.edges ?? [];
+  const rowItems = useMemo(() => data?.inventory?.warehouse?.listTransfers?.edges ?? [], [data]);
 
   const { mutateAsync: makeActiveMutation } =
     useSetInventoryWarehouseRequestAcceptHandlerMutation();
 
-  const makeActiveHandler = useCallback(
-    (id: string, response: WarehouseRequestResponse) => {
-      makeActiveMutation({
+  const handleMakeActive = async (id: string, response: WarehouseRequestResponse) => {
+    await asyncToast({
+      id: 'loan-settings',
+      msgs: {
+        success: 'Accepting Warehouse Transfer',
+        loading: 'Warehouse Transfer Accepted',
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['getInventoryWarehouseTransfer']);
+        router.push(`${ROUTES.INVENTORY_WAREHOUSE_REQUEST_LIST}?objState=COMPLETED`);
+      },
+
+      promise: makeActiveMutation({
         data: {
           response,
           transferId: id,
         },
-      }).then(() => {
-        toast({
-          id: 'Accepting Warehouse Transfer',
-          type: 'success',
-          message: 'Warehouse Transfer Accepting',
-        });
+      }),
+    });
+  };
+  const handleReject = async (id: string, response: WarehouseRequestResponse) => {
+    await asyncToast({
+      id: 'loan-settings',
+      msgs: {
+        success: 'Rejecting Warehouse Transfer',
+        loading: 'Warehouse Transfer Rejected',
+      },
+      onSuccess: () => {
         queryClient.invalidateQueries(['getInventoryWarehouseTransfer']);
-        router.push(ROUTES.INVENTORY_WAREHOUSE_REQUEST_LIST);
-      });
-    },
+        router.push(`${ROUTES.INVENTORY_WAREHOUSE_REQUEST_LIST}?objState=REJECTED`);
+      },
 
-    [makeActiveMutation, queryClient, router]
-  );
-
-  const rejectRequestHandler = useCallback(
-    (id: string, response: WarehouseRequestResponse) => {
-      makeActiveMutation({
+      promise: makeActiveMutation({
         data: {
           response,
           transferId: id,
         },
-      }).then(() => {
-        toast({
-          id: 'Rejecting Warehouse Transfer',
-          type: 'warning',
-          message: 'Warehouse Transfer Rejected',
-        });
-        queryClient.invalidateQueries(['getInventoryWarehouseTransfer']);
-        router.push(ROUTES.INVENTORY_WAREHOUSE_TRASFER_LIST);
-      });
-    },
+      }),
+    });
+  };
 
-    [makeActiveMutation, queryClient, router]
-  );
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
@@ -119,20 +141,43 @@ export const WarehouseRequestTable = () => {
         header: '',
         cell: (props) => (
           <TablePopover
-            items={[
-              {
-                title: 'Accept Transfer',
-                aclKey: 'CBS_MEMBERS_MEMBER',
+            items={
+              objStatus === WarehouseTransferStatus.OnTransit || !objStatus
+                ? [
+                    {
+                      title: 'Accept Transfer',
+                      aclKey: 'CBS_MEMBERS_MEMBER',
 
-                onClick: (row) => makeActiveHandler(row?.id, WarehouseRequestResponse?.Accept),
-              },
-              {
-                title: 'Reject Transfer',
-                aclKey: 'CBS_MEMBERS_MEMBER',
+                      onClick: (row) => handleMakeActive(row?.id, WarehouseRequestResponse?.Accept),
+                    },
+                    {
+                      title: 'Reject Transfer',
+                      aclKey: 'CBS_MEMBERS_MEMBER',
 
-                onClick: (row) => rejectRequestHandler(row?.id, WarehouseRequestResponse?.Reject),
-              },
-            ]}
+                      onClick: (row) => handleReject(row?.id, WarehouseRequestResponse?.Reject),
+                    },
+                    {
+                      title: 'View Details',
+                      aclKey: 'CBS_MEMBERS_MEMBER',
+
+                      onClick: (row) => {
+                        router.push(`${ROUTES.INVENTORY_WAREHOUSE_REQUEST_LIST}?id=${row?.id}`);
+                        onOpenDetailsModal();
+                      },
+                    },
+                  ]
+                : [
+                    {
+                      title: 'View Details',
+                      aclKey: 'CBS_MEMBERS_MEMBER',
+
+                      onClick: (row) => {
+                        router.push(`${ROUTES.INVENTORY_WAREHOUSE_REQUEST_LIST}?id=${row?.id}`);
+                        onOpenDetailsModal();
+                      },
+                    },
+                  ]
+            }
             node={props?.row?.original?.node}
           />
         ),
@@ -141,12 +186,12 @@ export const WarehouseRequestTable = () => {
         },
       },
     ],
-    [t]
+    [objStatus, router]
   );
 
   return (
     <>
-      <TableListPageHeader heading="Warehouse Requests" />
+      <PageHeader heading="Warehouse Requests" tabItems={WAREHOUSE_REQUEST_TAB_ITEMS} />
 
       <Table
         isLoading={isFetching}
