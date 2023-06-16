@@ -133,7 +133,7 @@ export const EmployeeTypeTable = () => {
       id: 'delete-employee-type',
       msgs: {
         success: 'Employee type deleted successfully',
-        loading: 'Adding new employee type',
+        loading: 'Deleting employee type',
       },
       onSuccess: () => {
         refetch();

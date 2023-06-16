@@ -133,7 +133,7 @@ export const DesignationsTable = () => {
       id: 'delete-designation',
       msgs: {
         success: 'Designation deleted successfully',
-        loading: 'Adding new designation',
+        loading: 'Deleting designation',
       },
       onSuccess: () => {
         refetch();
