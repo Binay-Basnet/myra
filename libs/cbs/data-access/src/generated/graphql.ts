@@ -13893,9 +13893,11 @@ export type LoanStatement = {
 };
 
 export type LoanStatementFooter = {
+  closingBalance?: Maybe<BalanceValue>;
   disbursePrincipleTotal?: Maybe<Scalars['String']>;
   discountTotal?: Maybe<Scalars['String']>;
   interestPaidTotal?: Maybe<Scalars['String']>;
+  openingBalance?: Maybe<BalanceValue>;
   paidPrincipleTotal?: Maybe<Scalars['String']>;
   penaltyPaidTotal?: Maybe<Scalars['String']>;
   remainingPrincipleTotal?: Maybe<Scalars['String']>;
