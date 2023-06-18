@@ -136,6 +136,22 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
               discount
               remainingPrinciple
             }
+            footer {
+              openingBalance {
+                amount
+                amountType
+              }
+              disbursePrincipleTotal
+              paidPrincipleTotal
+              interestPaidTotal
+              penaltyPaidTotal
+              discountTotal
+              remainingPrincipleTotal
+              closingBalance {
+                amount
+                amountType
+              }
+            }
           }
         }
         error {
