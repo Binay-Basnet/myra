@@ -33122,6 +33122,16 @@ export type GetLoanTransactionReportQuery = {
                 discount?: string | null;
                 remainingPrinciple?: string | null;
               } | null> | null;
+              footer?: {
+                disbursePrincipleTotal?: string | null;
+                paidPrincipleTotal?: string | null;
+                interestPaidTotal?: string | null;
+                penaltyPaidTotal?: string | null;
+                discountTotal?: string | null;
+                remainingPrincipleTotal?: string | null;
+                openingBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+                closingBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+              } | null;
             }
           | {}
           | null;
@@ -57047,6 +57057,22 @@ export const GetLoanTransactionReportDocument = `
               finePaid
               discount
               remainingPrinciple
+            }
+            footer {
+              openingBalance {
+                amount
+                amountType
+              }
+              disbursePrincipleTotal
+              paidPrincipleTotal
+              interestPaidTotal
+              penaltyPaidTotal
+              discountTotal
+              remainingPrincipleTotal
+              closingBalance {
+                amount
+                amountType
+              }
             }
           }
         }
