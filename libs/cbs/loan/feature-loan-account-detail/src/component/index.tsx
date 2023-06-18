@@ -10,3 +10,4 @@ export * from './RecentTransactions';
 export * from './Statistics';
 export * from './TabHeader';
 export * from './UpcomingPayments';
+export * from './UpdateLoanAccountNameModal';

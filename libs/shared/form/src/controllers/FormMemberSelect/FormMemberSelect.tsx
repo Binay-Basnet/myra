@@ -5,7 +5,12 @@ import { debounce } from 'lodash';
 
 import { MemberSelect, MemberSelectProps, Option } from '@myra-ui/forms';
 
-import { KymIndFormStateQuery, useAppSelector, useGetMemberListQuery } from '@coop/cbs/data-access';
+import {
+  KymIndFormStateQuery,
+  MemberType,
+  useAppSelector,
+  useGetMemberListQuery,
+} from '@coop/cbs/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 // import FormCustomSelect from './FormCustomSelect';
@@ -18,6 +23,7 @@ interface IMemberSelectProps extends MemberSelectProps {
   excludeIds?: string[];
   forceEnableAll?: boolean;
   isCurrentBranchMember?: boolean;
+  memberType?: MemberType;
 }
 
 export const FormMemberSelect = ({
@@ -28,6 +34,7 @@ export const FormMemberSelect = ({
   excludeIds,
   forceEnableAll,
   isCurrentBranchMember,
+  memberType,
   ...rest
 }: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
@@ -75,6 +82,7 @@ export const FormMemberSelect = ({
           column: 'ID',
         },
       },
+      /* eslint-disable no-nested-ternary */
       filter: {
         // query: isCurrentBranchMember ? `${currrentBranch} ${IDMember}` : IDMember,
         query: IDMember,
@@ -94,6 +102,11 @@ export const FormMemberSelect = ({
                     comparator: 'EqualTo',
                     value: currrentBranchId,
                   },
+                  {
+                    column: 'type',
+                    comparator: 'EqualTo',
+                    value: memberType || '',
+                  },
                 ],
               },
               {
@@ -108,6 +121,11 @@ export const FormMemberSelect = ({
                     comparator: 'EqualTo',
                     value: currrentBranchId,
                   },
+                  {
+                    column: 'type',
+                    comparator: 'EqualTo',
+                    value: memberType || '',
+                  },
                 ],
               },
             ]
@@ -119,6 +137,11 @@ export const FormMemberSelect = ({
                     comparator: 'EqualTo',
                     value: 'APPROVED',
                   },
+                  {
+                    column: 'type',
+                    comparator: 'EqualTo',
+                    value: memberType || '',
+                  },
                 ],
               },
               {
@@ -127,6 +150,11 @@ export const FormMemberSelect = ({
                     column: 'objState',
                     comparator: 'EqualTo',
                     value: 'DORMANT',
+                  },
+                  {
+                    column: 'type',
+                    comparator: 'EqualTo',
+                    value: memberType || '',
                   },
                 ],
               },

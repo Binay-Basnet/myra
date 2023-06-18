@@ -1,12 +1,16 @@
 /* eslint-disable-next-line */
 import { featureCode, useTranslation } from '@coop/shared/utils';
-import { Box, FormHeader, Text, asyncToast } from '@myra-ui';
+import { Box, FormHeader, FormSection, GridItem, Text, asyncToast } from '@myra-ui';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormLayout } from '@coop/shared/form';
-import React from 'react';
+import { FormCheckbox, FormLayout, FormMemberSelect } from '@coop/shared/form';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSetNewEmployeeMutation } from '@coop/cbs/data-access';
+import {
+  MemberType,
+  useGetIndividualKymEditDataQuery,
+  useSetNewEmployeeMutation,
+} from '@coop/cbs/data-access';
 import { useRouter } from 'next/router';
 import {
   Approvers,
@@ -31,8 +35,48 @@ export const EmployeeAddForm = () => {
   }>();
 
   const methods = useForm();
-  const { getValues } = methods;
+  const { getValues, watch, reset } = methods;
   const { mutateAsync } = useSetNewEmployeeMutation();
+
+  const isCoopMemberWatch = watch('isCoopMember');
+  const memberIdWatch = watch('memberId');
+
+  const { data: editValues } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(memberIdWatch),
+    },
+    { enabled: !!memberIdWatch }
+  );
+
+  const personalInfo = editValues?.members?.individual?.formState?.data?.formData?.basicInformation;
+  const contactInfo = editValues?.members?.individual?.formState?.data?.formData?.contactDetails;
+  const permanentAddressInfo =
+    editValues?.members?.individual?.formState?.data?.formData?.permanentAddress;
+  const temporaryAddressInfo =
+    editValues?.members?.individual?.formState?.data?.formData?.temporaryAddress;
+
+  useEffect(() => {
+    if (personalInfo) {
+      reset({
+        firstName: personalInfo?.firstName?.local,
+        middleName: personalInfo?.middleName?.local,
+        lastName: personalInfo?.lastName?.local,
+        gender: personalInfo?.genderId,
+        dateOfBirth: personalInfo?.dateOfBirth,
+        personalPhoneNumber: contactInfo?.mobileNumber,
+        personalEmailAddress: contactInfo?.email,
+        permanentAddress: {
+          ...permanentAddressInfo,
+          locality: permanentAddressInfo?.locality?.local,
+        },
+        isTemporarySameAsPermanent: temporaryAddressInfo?.sameTempAsPermanentAddress,
+        temporaryAddress: {
+          ...temporaryAddressInfo?.address,
+          locality: temporaryAddressInfo?.address?.locality?.local,
+        },
+      });
+    }
+  }, [JSON.stringify(personalInfo)]);
 
   const onSave = () => {
     asyncToast({
@@ -71,6 +115,18 @@ export const EmployeeAddForm = () => {
               setCurrentSection(employeeSection);
             }}
           >
+            <FormSection>
+              <GridItem colSpan={3}>
+                <FormCheckbox label="Is Member" name="isCoopMember" />
+              </GridItem>
+              {isCoopMemberWatch && (
+                <FormMemberSelect
+                  label="Member"
+                  name="memberId"
+                  memberType={MemberType?.Individual}
+                />
+              )}
+            </FormSection>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 Basic Information{' '}

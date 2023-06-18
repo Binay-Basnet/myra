@@ -142,7 +142,7 @@ export const EmployeeHealthInsuranceTable = () => {
       id: 'delete-employee-health-insurance',
       msgs: {
         success: 'Employee health insurance deleted successfully',
-        loading: 'Adding new employee health insurance',
+        loading: 'Deleting employee health insurance',
       },
       onSuccess: () => {
         refetch();

@@ -132,7 +132,7 @@ export const EmployeeLevelTable = () => {
       id: 'delete-employee-level',
       msgs: {
         success: 'Employee level deleted successfully',
-        loading: 'Adding new employee level',
+        loading: 'Deleting employee level',
       },
       onSuccess: () => {
         refetch();

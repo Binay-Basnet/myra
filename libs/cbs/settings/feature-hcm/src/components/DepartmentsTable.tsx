@@ -133,7 +133,7 @@ export const DepartmentsTable = () => {
       id: 'delete-department',
       msgs: {
         success: 'Department deleted successfully',
-        loading: 'Adding new department',
+        loading: 'Deleting department',
       },
       onSuccess: () => {
         refetch();

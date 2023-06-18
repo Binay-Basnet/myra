@@ -151,7 +151,8 @@ export const LoanRepayment = () => {
   };
   const handleSubmit = () => {
     const values = getValues();
-    let filteredValues = omit(values, ['isFinePaid']);
+
+    let filteredValues = { ...values };
 
     if (values.paymentMethod === LoanRepaymentMethod.LocSaving) {
       filteredValues = omit({ ...filteredValues }, ['account', 'bankVoucher', 'cash']);
@@ -192,29 +193,9 @@ export const LoanRepayment = () => {
       filteredValues = omit({ ...filteredValues }, ['bankVoucher', 'cash', 'account']);
     }
 
-    // asyncToast({
-    //   id: 'share-settings-transfer-id',
-    //   msgs: {
-    //     success: 'Loan has been Repayed',
-    //     loading: 'Repaying Loan',
-    //   },
-    //   onSuccess: () => {
-    //     queryClient.invalidateQueries(['getLoanPreview']);
-    //     router.push('/loan/accounts');
-    //   },
-    //   promise: mutateAsync({
-    //     data: {
-    //       ...(filteredValues as LoanRepaymentInput),
-    //     },
-    //   }),
-    // });
-
-    filteredValues = {
-      ...filteredValues,
-    };
-
     return filteredValues as LoanRepaymentInput;
   };
+
   const loanPreview = useGetLoanPreviewQuery(
     {
       id: loanAccountId,
@@ -315,13 +296,13 @@ export const LoanRepayment = () => {
 
                 <Divider />
 
-                {totalFine ? (
-                  <>
-                    <Discount />
+                {/* {totalFine ? (
+                  <> */}
+                <Discount />
 
-                    <Divider />
-                  </>
-                ) : null}
+                <Divider />
+                {/* </>
+                ) : null} */}
 
                 <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
                   <FormAmountInput isRequired name="amountPaid" label="Amount to Pay" />

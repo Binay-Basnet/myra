@@ -136,6 +136,22 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
               discount
               remainingPrinciple
             }
+            footer {
+              openingBalance {
+                amount
+                amountType
+              }
+              disbursePrincipleTotal
+              paidPrincipleTotal
+              interestPaidTotal
+              penaltyPaidTotal
+              discountTotal
+              remainingPrincipleTotal
+              closingBalance {
+                amount
+                amountType
+              }
+            }
           }
         }
         error {
@@ -486,6 +502,22 @@ query getLoanTransactionReport($data: LoanStatementReportSettings!) {
               finePaid
               discount
               remainingPrinciple
+            }
+            footer {
+              openingBalance {
+                amount
+                amountType
+              }
+              disbursePrincipleTotal
+              paidPrincipleTotal
+              interestPaidTotal
+              penaltyPaidTotal
+              discountTotal
+              remainingPrincipleTotal
+              closingBalance {
+                amount
+                amountType
+              }
             }
           }
         }

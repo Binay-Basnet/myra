@@ -13893,9 +13893,11 @@ export type LoanStatement = {
 };
 
 export type LoanStatementFooter = {
+  closingBalance?: Maybe<BalanceValue>;
   disbursePrincipleTotal?: Maybe<Scalars['String']>;
   discountTotal?: Maybe<Scalars['String']>;
   interestPaidTotal?: Maybe<Scalars['String']>;
+  openingBalance?: Maybe<BalanceValue>;
   paidPrincipleTotal?: Maybe<Scalars['String']>;
   penaltyPaidTotal?: Maybe<Scalars['String']>;
   remainingPrincipleTotal?: Maybe<Scalars['String']>;
@@ -20780,6 +20782,27 @@ export type IssueFdCertificateMutationVariables = Exact<{
 
 export type IssueFdCertificateMutation = { account: { issueFDCertificate: string } };
 
+export type UpdateSavingsLoanAccountNameMutationVariables = Exact<{
+  accountId: Scalars['ID'];
+  name: Scalars['String'];
+  accountType: AccountTypeFilter;
+}>;
+
+export type UpdateSavingsLoanAccountNameMutation = {
+  account: {
+    updateAccountName?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type UpdateAccountInterestMutationVariables = Exact<{
   accountId: Scalars['ID'];
   data: InterestRateSetupInput;
@@ -22966,6 +22989,130 @@ export type EditChequeSettingsMutation = {
       depositProduct?: {
         editChequeSettings?: {
           recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdateSavingLoanProductAccountPremiumMutationVariables = Exact<{
+  productId: Scalars['ID'];
+  payload: AccountPremium;
+  productType: AccountTypeFilter;
+}>;
+
+export type UpdateSavingLoanProductAccountPremiumMutation = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        updateAccountPremium: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdateSavingLoanProductTenureMutationVariables = Exact<{
+  productId: Scalars['ID'];
+  payload: TenureUpdateData;
+  productType: AccountTypeFilter;
+}>;
+
+export type UpdateSavingLoanProductTenureMutation = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        updateProductTenure: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdateSavingProductPrematurePenaltyMutationVariables = Exact<{
+  productId: Scalars['ID'];
+  allowPenalty: Scalars['Boolean'];
+  payload: PrematurePenalty;
+}>;
+
+export type UpdateSavingProductPrematurePenaltyMutation = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        updatePrematurePenalty: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdateWithdrawPenaltyMutationVariables = Exact<{
+  productId: Scalars['ID'];
+  payload: WithdrawPenalty;
+}>;
+
+export type UpdateWithdrawPenaltyMutation = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        updateWithdrawPenalty?: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdateSavingProductRebateMutationVariables = Exact<{
+  productId: Scalars['ID'];
+  isRebateAllowed: Scalars['Boolean'];
+  payload: RebateTypeInput;
+}>;
+
+export type UpdateSavingProductRebateMutation = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        updateRebate?: {
+          record?: string | null;
           error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
@@ -32405,6 +32552,8 @@ export type GetInventoryStockStatusReportQuery = {
             totalPurchased: string;
             totalSoled: string;
             totalNet: string;
+            totalTransferIn: string;
+            totalTransferOut: string;
           } | null;
           lower?: Array<{
             purchasedQuantity: string;
@@ -32571,6 +32720,16 @@ export type GetLoanStatementReportQuery = {
                 discount?: string | null;
                 remainingPrinciple?: string | null;
               } | null> | null;
+              footer?: {
+                disbursePrincipleTotal?: string | null;
+                paidPrincipleTotal?: string | null;
+                interestPaidTotal?: string | null;
+                penaltyPaidTotal?: string | null;
+                discountTotal?: string | null;
+                remainingPrincipleTotal?: string | null;
+                openingBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+                closingBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+              } | null;
             }
           | {}
           | null;
@@ -32963,6 +33122,16 @@ export type GetLoanTransactionReportQuery = {
                 discount?: string | null;
                 remainingPrinciple?: string | null;
               } | null> | null;
+              footer?: {
+                disbursePrincipleTotal?: string | null;
+                paidPrincipleTotal?: string | null;
+                interestPaidTotal?: string | null;
+                penaltyPaidTotal?: string | null;
+                discountTotal?: string | null;
+                remainingPrincipleTotal?: string | null;
+                openingBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+                closingBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+              } | null;
             }
           | {}
           | null;
@@ -39853,6 +40022,38 @@ export const useIssueFdCertificateMutation = <TError = unknown, TContext = unkno
     ),
     options
   );
+export const UpdateSavingsLoanAccountNameDocument = `
+    mutation updateSavingsLoanAccountName($accountId: ID!, $name: String!, $accountType: AccountTypeFilter!) {
+  account {
+    updateAccountName(accountID: $accountId, name: $name, accountType: $accountType) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateSavingsLoanAccountNameMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateSavingsLoanAccountNameMutation,
+    TError,
+    UpdateSavingsLoanAccountNameMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateSavingsLoanAccountNameMutation,
+    TError,
+    UpdateSavingsLoanAccountNameMutationVariables,
+    TContext
+  >(
+    ['updateSavingsLoanAccountName'],
+    useAxios<UpdateSavingsLoanAccountNameMutation, UpdateSavingsLoanAccountNameMutationVariables>(
+      UpdateSavingsLoanAccountNameDocument
+    ),
+    options
+  );
 export const UpdateAccountInterestDocument = `
     mutation updateAccountInterest($accountId: ID!, $data: InterestRateSetupInput!) {
   account {
@@ -43386,6 +43587,210 @@ export const useEditChequeSettingsMutation = <TError = unknown, TContext = unkno
     ['editChequeSettings'],
     useAxios<EditChequeSettingsMutation, EditChequeSettingsMutationVariables>(
       EditChequeSettingsDocument
+    ),
+    options
+  );
+export const UpdateSavingLoanProductAccountPremiumDocument = `
+    mutation updateSavingLoanProductAccountPremium($productId: ID!, $payload: AccountPremium!, $productType: AccountTypeFilter!) {
+  settings {
+    general {
+      depositProduct {
+        updateAccountPremium(
+          productId: $productId
+          payload: $payload
+          productType: $productType
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateSavingLoanProductAccountPremiumMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    UpdateSavingLoanProductAccountPremiumMutation,
+    TError,
+    UpdateSavingLoanProductAccountPremiumMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateSavingLoanProductAccountPremiumMutation,
+    TError,
+    UpdateSavingLoanProductAccountPremiumMutationVariables,
+    TContext
+  >(
+    ['updateSavingLoanProductAccountPremium'],
+    useAxios<
+      UpdateSavingLoanProductAccountPremiumMutation,
+      UpdateSavingLoanProductAccountPremiumMutationVariables
+    >(UpdateSavingLoanProductAccountPremiumDocument),
+    options
+  );
+export const UpdateSavingLoanProductTenureDocument = `
+    mutation updateSavingLoanProductTenure($productId: ID!, $payload: TenureUpdateData!, $productType: AccountTypeFilter!) {
+  settings {
+    general {
+      depositProduct {
+        updateProductTenure(
+          productId: $productId
+          payload: $payload
+          productType: $productType
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateSavingLoanProductTenureMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateSavingLoanProductTenureMutation,
+    TError,
+    UpdateSavingLoanProductTenureMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateSavingLoanProductTenureMutation,
+    TError,
+    UpdateSavingLoanProductTenureMutationVariables,
+    TContext
+  >(
+    ['updateSavingLoanProductTenure'],
+    useAxios<UpdateSavingLoanProductTenureMutation, UpdateSavingLoanProductTenureMutationVariables>(
+      UpdateSavingLoanProductTenureDocument
+    ),
+    options
+  );
+export const UpdateSavingProductPrematurePenaltyDocument = `
+    mutation updateSavingProductPrematurePenalty($productId: ID!, $allowPenalty: Boolean!, $payload: PrematurePenalty!) {
+  settings {
+    general {
+      depositProduct {
+        updatePrematurePenalty(
+          productId: $productId
+          allowPenalty: $allowPenalty
+          payload: $payload
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateSavingProductPrematurePenaltyMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    UpdateSavingProductPrematurePenaltyMutation,
+    TError,
+    UpdateSavingProductPrematurePenaltyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateSavingProductPrematurePenaltyMutation,
+    TError,
+    UpdateSavingProductPrematurePenaltyMutationVariables,
+    TContext
+  >(
+    ['updateSavingProductPrematurePenalty'],
+    useAxios<
+      UpdateSavingProductPrematurePenaltyMutation,
+      UpdateSavingProductPrematurePenaltyMutationVariables
+    >(UpdateSavingProductPrematurePenaltyDocument),
+    options
+  );
+export const UpdateWithdrawPenaltyDocument = `
+    mutation updateWithdrawPenalty($productId: ID!, $payload: WithdrawPenalty!) {
+  settings {
+    general {
+      depositProduct {
+        updateWithdrawPenalty(productId: $productId, payload: $payload) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateWithdrawPenaltyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateWithdrawPenaltyMutation,
+    TError,
+    UpdateWithdrawPenaltyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateWithdrawPenaltyMutation,
+    TError,
+    UpdateWithdrawPenaltyMutationVariables,
+    TContext
+  >(
+    ['updateWithdrawPenalty'],
+    useAxios<UpdateWithdrawPenaltyMutation, UpdateWithdrawPenaltyMutationVariables>(
+      UpdateWithdrawPenaltyDocument
+    ),
+    options
+  );
+export const UpdateSavingProductRebateDocument = `
+    mutation updateSavingProductRebate($productId: ID!, $isRebateAllowed: Boolean!, $payload: RebateTypeInput!) {
+  settings {
+    general {
+      depositProduct {
+        updateRebate(
+          productId: $productId
+          isRebateAllowed: $isRebateAllowed
+          payload: $payload
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateSavingProductRebateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateSavingProductRebateMutation,
+    TError,
+    UpdateSavingProductRebateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateSavingProductRebateMutation,
+    TError,
+    UpdateSavingProductRebateMutationVariables,
+    TContext
+  >(
+    ['updateSavingProductRebate'],
+    useAxios<UpdateSavingProductRebateMutation, UpdateSavingProductRebateMutationVariables>(
+      UpdateSavingProductRebateDocument
     ),
     options
   );
@@ -55951,6 +56356,8 @@ export const GetInventoryStockStatusReportDocument = `
             totalPurchased
             totalSoled
             totalNet
+            totalTransferIn
+            totalTransferOut
           }
           lower {
             purchasedQuantity
@@ -56148,6 +56555,22 @@ export const GetLoanStatementReportDocument = `
               finePaid
               discount
               remainingPrinciple
+            }
+            footer {
+              openingBalance {
+                amount
+                amountType
+              }
+              disbursePrincipleTotal
+              paidPrincipleTotal
+              interestPaidTotal
+              penaltyPaidTotal
+              discountTotal
+              remainingPrincipleTotal
+              closingBalance {
+                amount
+                amountType
+              }
             }
           }
         }
@@ -56634,6 +57057,22 @@ export const GetLoanTransactionReportDocument = `
               finePaid
               discount
               remainingPrinciple
+            }
+            footer {
+              openingBalance {
+                amount
+                amountType
+              }
+              disbursePrincipleTotal
+              paidPrincipleTotal
+              interestPaidTotal
+              penaltyPaidTotal
+              discountTotal
+              remainingPrincipleTotal
+              closingBalance {
+                amount
+                amountType
+              }
             }
           }
         }

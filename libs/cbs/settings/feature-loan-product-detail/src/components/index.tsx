@@ -19,3 +19,5 @@ export * from './ProductRebate';
 export * from './SideBar';
 export * from './UpdateChargesDetailModal';
 export * from './UpdateChargesModal';
+export * from './UpdateLoanAccountPremiumModal';
+export * from './UpdateLoanTenureModal';

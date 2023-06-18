@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { Alert, asyncToast, Box, Button, DetailPageQuickLinks, Modal, Text } from '@myra-ui';
@@ -14,7 +15,7 @@ import {
 import { FormAccountSelect, FormInput } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
-import { TabHeader } from '../component';
+import { TabHeader, UpdateLoanAccountNameModal } from '../component';
 import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
 
 export const GeneralUpdatesPage = () => {
@@ -33,6 +34,12 @@ export const GeneralUpdatesPage = () => {
 
   const [isLocModalOpen, setIsLocModalOpen] = useState(false);
 
+  const {
+    isOpen: isUpdateAccountNameModalOpen,
+    onClose: onUpdateAccountNameModalClose,
+    onToggle: onUpdateAccountNameModalToggle,
+  } = useDisclosure();
+
   const handleLocModalClose = () => {
     setIsLocModalOpen(false);
   };
@@ -48,13 +55,18 @@ export const GeneralUpdatesPage = () => {
   const updateOptions = useMemo(
     () => [
       {
-        title: 'Update LOC amount',
+        title: 'LOC amount',
         onClick: () => setIsLocModalOpen(true),
         icon: HiOutlineRefresh,
       },
       {
-        title: 'Update Linked Account',
+        title: 'Linked Account',
         onClick: () => setIsLinkedAccountModalOpen(true),
+        icon: HiOutlineRefresh,
+      },
+      {
+        title: 'Account Name',
+        onClick: onUpdateAccountNameModalToggle,
         icon: HiOutlineRefresh,
       },
     ],
@@ -184,6 +196,11 @@ export const GeneralUpdatesPage = () => {
           </Modal>
         </form>
       </FormProvider>
+
+      <UpdateLoanAccountNameModal
+        isOpen={isUpdateAccountNameModalOpen}
+        onClose={onUpdateAccountNameModalClose}
+      />
     </>
   );
 };
