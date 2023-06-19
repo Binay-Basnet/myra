@@ -38,7 +38,7 @@ export enum Report {
   SHARE_CERTIFICATE_PRINT = 'Share Certificate Print',
   SHARE_BONUS_DISTRIBUTION_REPORT = 'Share Bonus Distribution Report',
 
-  SAVING_STATEMENT = 'Saving Statement',
+  SAVING_STATEMENT = 'Saving Account Statement',
   SAVING_INTEREST_STATEMENT = 'Interest Statement Report',
   DEPOSIT_CONSOLIDATED_REPORT = 'Deposit Consolidated Report',
   DEPOSIT_DAILY_TRANSACTION_REPORT = 'Deposit Daily Transaction Report',
@@ -61,7 +61,7 @@ export enum Report {
   SAVING_ACCOUNT_ACCRUED_INTEREST_REPORT = 'Saving Account Accrued Interest Report',
   E_TDS_REPORT = 'e-TDS Report',
 
-  LOAN_INDIVIDUAL_STATEMENT = 'Loan Individual Statement',
+  LOAN_INDIVIDUAL_STATEMENT = 'Loan Account Statement',
   LOAN_CONSOLIDATED_REPORT = 'Loan Consolidated Report',
   LOAN_AGING_REPORT = 'Loan Aging Report',
   LOAN_DAILY_TRANSACTION_REPORT = 'Loan Daily Transaction Report',
