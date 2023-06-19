@@ -76,7 +76,7 @@ export const LoanStatementReport = () => {
                 {
                   header: 'S.No.',
                   accessorKey: 'index',
-                  footer: () => <MultiFooter texts={['Total', 'Closing Balance']} />,
+                  footer: () => <MultiFooter texts={['Total', '']} />,
                   meta: {
                     width: '60px',
                     Footer: {
@@ -145,14 +145,7 @@ export const LoanStatementReport = () => {
                   cell: (props) => amountConverter(props.getValue() as string),
                   footer: () => (
                     <MultiFooter
-                      texts={[
-                        amountConverter(loanFooter?.paidPrincipleTotal || '0') as string,
-
-                        debitCreditConverter(
-                          loanFooter?.closingBalance?.amount || '0',
-                          loanFooter?.closingBalance?.amountType as string
-                        ),
-                      ]}
+                      texts={[amountConverter(loanFooter?.paidPrincipleTotal || '0') as string, '']}
                     />
                   ),
                   meta: {
@@ -166,7 +159,10 @@ export const LoanStatementReport = () => {
 
                   footer: () => (
                     <MultiFooter
-                      texts={[amountConverter(loanFooter?.interestPaidTotal || '0'), '']}
+                      texts={[
+                        amountConverter(loanFooter?.interestPaidTotal || '0'),
+                        'Closing Balance',
+                      ]}
                     />
                   ),
                   meta: {
@@ -180,7 +176,13 @@ export const LoanStatementReport = () => {
 
                   footer: () => (
                     <MultiFooter
-                      texts={[amountConverter(loanFooter?.penaltyPaidTotal || '0'), '']}
+                      texts={[
+                        amountConverter(loanFooter?.penaltyPaidTotal || '0'),
+                        debitCreditConverter(
+                          loanFooter?.closingBalance?.amount || '0',
+                          loanFooter?.closingBalance?.amountType as string
+                        ),
+                      ]}
                     />
                   ),
                   meta: {
