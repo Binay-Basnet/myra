@@ -154,6 +154,10 @@ export const LoanRepayment = () => {
 
     let filteredValues = { ...values };
 
+    if (!values?.penalty?.amount) {
+      filteredValues = omit(filteredValues, ['penalty']);
+    }
+
     if (values.paymentMethod === LoanRepaymentMethod.LocSaving) {
       filteredValues = omit({ ...filteredValues }, ['account', 'bankVoucher', 'cash']);
     }

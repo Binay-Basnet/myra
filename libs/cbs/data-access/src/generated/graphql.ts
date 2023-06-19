@@ -12124,6 +12124,7 @@ export type LoanAccReportDetails = {
   loanSubtype?: Maybe<Scalars['String']>;
   loanType?: Maybe<Scalars['String']>;
   openingBalance?: Maybe<Scalars['String']>;
+  tenureUnit?: Maybe<Scalars['String']>;
 };
 
 export type LoanAccount = {
@@ -12736,6 +12737,7 @@ export type LoanAgingStatementReport = {
   matured1To12Months?: Maybe<Scalars['String']>;
   matured1To30Days?: Maybe<Scalars['String']>;
   maturedAbove12Months?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
   memberNo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   nextPaymentDate?: Maybe<Scalars['Localized']>;
