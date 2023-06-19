@@ -12,3 +12,18 @@ mutation setNewEmployee($id: String, $input: EmployeeInput!) {
     }
   }
 }
+
+mutation setNewLeave($id: String, $input: LeaveInput!) {
+  hr {
+    employee {
+      leave {
+        upsertLeave(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

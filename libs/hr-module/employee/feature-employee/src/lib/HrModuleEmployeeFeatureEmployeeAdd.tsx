@@ -35,7 +35,7 @@ export const EmployeeAddForm = () => {
   }>();
 
   const methods = useForm();
-  const { getValues, watch, reset } = methods;
+  const { getValues, watch, reset, setValue } = methods;
   const { mutateAsync } = useSetNewEmployeeMutation();
 
   const isCoopMemberWatch = watch('isCoopMember');
@@ -76,6 +76,7 @@ export const EmployeeAddForm = () => {
         },
       });
     }
+    setValue('isCoopMember', true);
   }, [JSON.stringify(personalInfo)]);
 
   const onSave = () => {
