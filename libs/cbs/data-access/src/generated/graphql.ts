@@ -1093,6 +1093,7 @@ export type AgentFilterMapping = {
 
 export type AgentMutation = {
   addMemberToAgent?: Maybe<DepositLoanAccountData>;
+  agentTemplate?: Maybe<AgentTemplateResult>;
   agentTodayCollection?: Maybe<AgentTodayListResult>;
   agentTodayDeposit?: Maybe<AgentTodayListResult>;
   agentTodayList?: Maybe<AgentTodayListResult>;
@@ -1103,6 +1104,11 @@ export type AgentMutationAddMemberToAgentArgs = {
   agentId: Scalars['String'];
   data?: InputMaybe<AssignMembersInput>;
   override?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type AgentMutationAgentTemplateArgs = {
+  agentId: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<AgentTemplateInput>>>;
 };
 
 export type AgentMutationAgentTodayCollectionArgs = {
@@ -1131,6 +1137,7 @@ export type AgentQuery = {
   listAgent: AccountAgentListConnection;
   listAgentCollection?: Maybe<AgentCollectionListConnection>;
   listAgentTask?: Maybe<AgentTodayListData>;
+  listAgentTemplate?: Maybe<AgentTemplateData>;
   viewAgentList?: Maybe<AgentTransactionViewResult>;
 };
 
@@ -1158,6 +1165,10 @@ export type AgentQueryListAgentTaskArgs = {
   id: Scalars['ID'];
 };
 
+export type AgentQueryListAgentTemplateArgs = {
+  agentId: Scalars['ID'];
+};
+
 export type AgentQueryViewAgentListArgs = {
   agentId: Scalars['ID'];
   date: Scalars['String'];
@@ -1166,6 +1177,29 @@ export type AgentQueryViewAgentListArgs = {
 export type AgentRecord = {
   data?: Maybe<AgentDetails>;
   error?: Maybe<QueryError>;
+};
+
+export type AgentTemplate = {
+  account?: Maybe<DepositAccount>;
+  amount?: Maybe<Scalars['String']>;
+  member?: Maybe<Member>;
+};
+
+export type AgentTemplateData = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<Array<Maybe<AgentTemplate>>>;
+};
+
+export type AgentTemplateInput = {
+  accountId: Scalars['String'];
+  amount?: InputMaybe<Scalars['String']>;
+  memberId: Scalars['String'];
+};
+
+export type AgentTemplateResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  record?: Maybe<Array<Maybe<AgentTemplate>>>;
 };
 
 export type AgentTodayList = {
@@ -5836,6 +5870,12 @@ export type EachStaffRecord = {
   error?: Maybe<QueryError>;
 };
 
+export type EachTransferRecord = {
+  branchArray?: Maybe<Array<Maybe<BranchTransferDetails>>>;
+  departArray?: Maybe<Array<Maybe<DepartTransferDetails>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type EbankingRegistrationReportResult = {
   data?: Maybe<Array<Maybe<EbankingReportResult>>>;
   error?: Maybe<QueryError>;
@@ -6040,6 +6080,28 @@ export type EmployeeOnboardings = {
   node: EmployeeOnboardingListed;
 };
 
+export type EmployeePromotionInput = {
+  date?: InputMaybe<Scalars['Localized']>;
+  employeeId: Scalars['String'];
+  fromThis?: InputMaybe<Scalars['String']>;
+  promotionType: PromotionType;
+  toThis: Scalars['String'];
+};
+
+export type EmployeePromotionNode = {
+  employeeId: Scalars['String'];
+  employeeName: Scalars['String'];
+  id: Scalars['String'];
+  newPromotion: Scalars['String'];
+  promotionDate: Scalars['Localized'];
+  promotionType: Scalars['String'];
+};
+
+export type EmployeePromotionOutput = {
+  error?: Maybe<MutationError>;
+  recordId: Scalars['String'];
+};
+
 export type EmployeeReport = {
   userReport?: Maybe<UserReportResult>;
 };
@@ -6104,6 +6166,47 @@ export const EmployeeStatus = {
 } as const;
 
 export type EmployeeStatus = typeof EmployeeStatus[keyof typeof EmployeeStatus];
+export type EmployeeTransferConnection = {
+  edges?: Maybe<Array<Maybe<EmployeeTransfers>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type EmployeeTransferInput = {
+  destDepServId?: InputMaybe<Scalars['ID']>;
+  employeeId?: InputMaybe<Scalars['ID']>;
+  transferDate?: InputMaybe<Scalars['Localized']>;
+  transferType?: InputMaybe<EmployeeTransferType>;
+};
+
+export type EmployeeTransferListed = {
+  employeeId?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  transferDate?: Maybe<Scalars['Localized']>;
+  transferType?: Maybe<EmployeeTransferType>;
+};
+
+export type EmployeeTransferRecord = {
+  destDepServId?: Maybe<Scalars['ID']>;
+  employeeId?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
+  prevDepServId?: Maybe<Scalars['ID']>;
+  transferDate?: Maybe<Scalars['Localized']>;
+  transferType?: Maybe<EmployeeTransferType>;
+};
+
+export const EmployeeTransferType = {
+  Department: 'DEPARTMENT',
+  ServiceCenter: 'SERVICE_CENTER',
+} as const;
+
+export type EmployeeTransferType = typeof EmployeeTransferType[keyof typeof EmployeeTransferType];
+export type EmployeeTransfers = {
+  cursor: Scalars['Cursor'];
+  node: EmployeeTransferListed;
+};
+
 export type EmployeeType = {
   description: Scalars['String'];
   id: Scalars['String'];
@@ -7797,8 +7900,8 @@ export type HrEmployeeKyeQueryListEmployeeArgs = {
 };
 
 export type HrEmployeeLeaveConnection = {
-  PageInfo?: Maybe<PageInfo>;
   edges?: Maybe<Array<Maybe<HrEmployeeLeaveEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -7864,12 +7967,55 @@ export type HrEmployeeLifecycleEmployeeOnboardingQueryListEmployeeOnboardingArgs
   pagination?: InputMaybe<Pagination>;
 };
 
+export type HrEmployeeLifecycleEmployeeTransferMutation = {
+  insertEmployeeTransfer: ReturnEmployeeTransfer;
+};
+
+export type HrEmployeeLifecycleEmployeeTransferMutationInsertEmployeeTransferArgs = {
+  input: EmployeeTransferInput;
+};
+
+export type HrEmployeeLifecycleEmployeeTransferQuery = {
+  listEmployeeTransfer: EmployeeTransferConnection;
+  queryEmployeeTransfer?: Maybe<EachTransferRecord>;
+};
+
+export type HrEmployeeLifecycleEmployeeTransferQueryListEmployeeTransferArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HrEmployeeLifecycleEmployeeTransferQueryQueryEmployeeTransferArgs = {
+  employeeId: Scalars['ID'];
+};
+
 export type HrEmployeeLifecycleMutation = {
   employeeOnboarding: HrEmployeeLifecycleEmployeeOnboardingMutation;
+  employeePromotion: HrEmployeeLifecyclePromotionMutation;
+  employeeTransfer: HrEmployeeLifecycleEmployeeTransferMutation;
+};
+
+export type HrEmployeeLifecyclePromotionMutation = {
+  addEmployeePromotion: EmployeePromotionOutput;
+};
+
+export type HrEmployeeLifecyclePromotionMutationAddEmployeePromotionArgs = {
+  input: EmployeePromotionInput;
+};
+
+export type HrEmployeeLifecyclePromotionQuery = {
+  listEmployeePromotion: HrEmployeePromotionConnection;
+};
+
+export type HrEmployeeLifecyclePromotionQueryListEmployeePromotionArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HrEmployeeLifecycleQuery = {
   employeeOnboarding: HrEmployeeLifecycleEmployeeOnboardingQuery;
+  employeePromotion: HrEmployeeLifecyclePromotionQuery;
+  employeeTransfer: HrEmployeeLifecycleEmployeeTransferQuery;
 };
 
 export type HrEmployeeListConnection = {
@@ -7886,6 +8032,17 @@ export type HrEmployeeListEdges = {
 export type HrEmployeeMutation = {
   employee: HrEmployeeKyeMutation;
   leave: HrEmployeeLeaveMutation;
+};
+
+export type HrEmployeePromotionConnection = {
+  PageInfo?: Maybe<PageInfo>;
+  edges?: Maybe<Array<Maybe<HrEmployeePromotionEdges>>>;
+  totalCount: Scalars['Int'];
+};
+
+export type HrEmployeePromotionEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<EmployeePromotionNode>;
 };
 
 export type HrEmployeeQuery = {
@@ -16297,6 +16454,12 @@ export type ProductPenaltyQueryResult = {
   error?: Maybe<QueryError>;
 };
 
+export const PromotionType = {
+  Designation: 'DESIGNATION',
+  EmployeeLevel: 'EMPLOYEE_LEVEL',
+} as const;
+
+export type PromotionType = typeof PromotionType[keyof typeof PromotionType];
 export type Province = {
   districts: Array<District>;
   id: Scalars['Int'];
@@ -16898,6 +17061,12 @@ export type ReturnAppointmentLetter = {
 export type ReturnEmployeeOnboarding = {
   error?: Maybe<MutationError>;
   record?: Maybe<EmployeeOnboardingRecord>;
+  recordId: Scalars['ID'];
+};
+
+export type ReturnEmployeeTransfer = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EmployeeTransferRecord>;
   recordId: Scalars['ID'];
 };
 
@@ -20264,6 +20433,18 @@ export const ApplicantStatus = {
 } as const;
 
 export type ApplicantStatus = typeof ApplicantStatus[keyof typeof ApplicantStatus];
+export type BranchTransferDetails = {
+  transferDate?: Maybe<Scalars['Localized']>;
+  transferredFrom?: Maybe<Scalars['String']>;
+  transferredTo?: Maybe<Scalars['String']>;
+};
+
+export type DepartTransferDetails = {
+  transferredDate?: Maybe<Scalars['Localized']>;
+  transferredFrom?: Maybe<Scalars['String']>;
+  transferredTo?: Maybe<Scalars['String']>;
+};
+
 export type Experience = {
   company?: Maybe<Scalars['String']>;
   duration?: Maybe<Scalars['String']>;
