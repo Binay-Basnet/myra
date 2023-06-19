@@ -185,7 +185,7 @@ export const RangedDatePicker = ({
                     py="s16"
                     w="100%"
                   >
-                    <Calendar calendarProps={calendarProps} />
+                    <Calendar calendarProps={calendarProps} showControls />
                     <Calendar calendarProps={calendarProps} nextMonth />
                   </HStack>
                   <DateRangeFooter
