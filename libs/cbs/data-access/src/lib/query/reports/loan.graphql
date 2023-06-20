@@ -504,6 +504,10 @@ query getLoanTransactionReport($data: LoanStatementReportSettings!) {
               finePaid
               discount
               remainingPrinciple
+              ledgerBalance {
+                amount
+                amountType
+              }
             }
             footer {
               openingBalance {

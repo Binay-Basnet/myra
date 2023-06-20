@@ -176,6 +176,19 @@ export const LoanTransactionStatementReport = () => {
                     isNumeric: true,
                   },
                 },
+                {
+                  header: 'Balance',
+                  accessorKey: 'ledgerBalance',
+                  cell: (props) =>
+                    debitCreditConverter(
+                      props.row?.original?.ledgerBalance?.amount || '0',
+                      props?.row?.original?.ledgerBalance?.amountType as string
+                    ),
+
+                  meta: {
+                    isNumeric: true,
+                  },
+                },
                 // {
                 //   header: 'Discount',
                 //   accessorKey: 'discount',

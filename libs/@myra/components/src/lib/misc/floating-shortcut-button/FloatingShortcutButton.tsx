@@ -30,15 +30,23 @@ interface WhatsNewModalProps {
 const whatsNewData = {
   features: {
     title: 'New Features',
-    data: ['Fd Investment statement report', 'Fd investment report'],
+    data: [
+      'Mr can create collection template',
+      'Update min max interest rate',
+      'Update min max of tenure',
+      'Update Rebate',
+      'Update Premature Penalty',
+      'Update Withdraw Penalty',
+      'Inventory Sales Report',
+    ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Leader Group report.',
-      'Create tag in the COA .',
-      'Edit and View details in inventory section like warehouse, inventory, sales section.',
-      'DUE and amount column added in the MR transactions.',
+      'Loan Transaction Statement Fix.',
+      'FD Close 1 paisa issue fix',
+      'Statement print in Portrait',
+      'Withdraw slip book block issue fix',
     ],
   },
   knownBugs: {

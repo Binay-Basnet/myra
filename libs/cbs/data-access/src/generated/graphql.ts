@@ -6020,8 +6020,8 @@ export type EmployeeLeaveRecord = {
 
 export type EmployeeLeaveType = {
   employeeId: Scalars['String'];
+  id: Scalars['String'];
   leaveFrom: Scalars['Localized'];
-  leaveId: Scalars['String'];
   leaveNote: Scalars['String'];
   leaveTo: Scalars['Localized'];
   leaveTypeId: Scalars['String'];
@@ -14101,6 +14101,7 @@ export type LoanStatement = {
   discount?: Maybe<Scalars['String']>;
   finePaid?: Maybe<Scalars['String']>;
   interestPaid?: Maybe<Scalars['String']>;
+  ledgerBalance?: Maybe<BalanceValue>;
   paidPrinciple?: Maybe<Scalars['String']>;
   particular?: Maybe<Scalars['String']>;
   remainingPrinciple?: Maybe<Scalars['String']>;
@@ -28353,7 +28354,6 @@ export type GetLeaveListQuery = {
           edges?: Array<{
             cursor?: string | null;
             node?: {
-              leaveId: string;
               employeeId: string;
               leaveTypeId: string;
               leaveFrom: Record<'local' | 'en' | 'np', string>;
@@ -33578,6 +33578,7 @@ export type GetLoanTransactionReportQuery = {
                 finePaid?: string | null;
                 discount?: string | null;
                 remainingPrinciple?: string | null;
+                ledgerBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
               } | null> | null;
               footer?: {
                 disbursePrincipleTotal?: string | null;
@@ -51067,7 +51068,6 @@ export const GetLeaveListDocument = `
           totalCount
           edges {
             node {
-              leaveId
               employeeId
               leaveTypeId
               leaveFrom
@@ -57889,6 +57889,10 @@ export const GetLoanTransactionReportDocument = `
               finePaid
               discount
               remainingPrinciple
+              ledgerBalance {
+                amount
+                amountType
+              }
             }
             footer {
               openingBalance {
