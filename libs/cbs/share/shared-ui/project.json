@@ -1,5 +1,6 @@
 {
-  "name": "cbs-share-shared-ui",
+  "name": "-cbs-share--shared-ui",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/share/shared-ui/src",
   "projectType": "library",
   "tags": [],

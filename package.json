@@ -13,6 +13,7 @@
     "start:ebanking": "concurrently \"nx serve ebanking\" \"yarn graphql-ebank:codegen\"",
     "start:all": "concurrently \"yarn start:myra\" \"yarn start:neosys-admin\" \"yarn start:ebanking\"",
     "start:csv-viewer": "nx serve csv-viewer",
+    "start:employee-portal": "nx serve employee-portal",
     "storybook": "nx run @myra-ui:storybook",
     "prepare": "husky install",
     "gen:theme-typings": "chakra-cli tokens ./libs/@myra/theme/src/lib/theme/index.ts",
