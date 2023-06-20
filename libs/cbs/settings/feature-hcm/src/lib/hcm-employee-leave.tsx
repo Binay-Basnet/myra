@@ -18,12 +18,12 @@ export const HcmEmployeeLeave = () => (
           <Text fontSize="r2" fontWeight="medium">
             On the Leave Settings
           </Text>
-          <a href="#employee-level">
+          <a href="#leave-type">
             <Text fontSize="r1" fontWeight="medium" color="blue.500" cursor="pointer">
               Leave Type
             </Text>
           </a>
-          <a href="#department">
+          <a href="#leave-policy">
             <Text fontSize="r1" fontWeight="medium" color="blue.500" cursor="pointer">
               Leave Policy
             </Text>

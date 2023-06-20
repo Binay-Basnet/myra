@@ -26,3 +26,29 @@ query getEmployeeList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getLeaveList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employee {
+      leave {
+        listLeave(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              leaveId
+              employeeId
+              leaveTypeId
+              leaveFrom
+              leaveTo
+              leaveNote
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

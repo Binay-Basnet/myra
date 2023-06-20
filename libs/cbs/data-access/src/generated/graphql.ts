@@ -28339,6 +28339,35 @@ export type GetEmployeeListQuery = {
   };
 };
 
+export type GetLeaveListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetLeaveListQuery = {
+  hr: {
+    employee: {
+      leave: {
+        listLeave: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              leaveId: string;
+              employeeId: string;
+              leaveTypeId: string;
+              leaveFrom: Record<'local' | 'en' | 'np', string>;
+              leaveTo: Record<'local' | 'en' | 'np', string>;
+              leaveNote: string;
+            } | null;
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetHrEmployeeOnboardingListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -32975,6 +33004,35 @@ export type GetInventoryStockStatusReportQuery = {
   };
 };
 
+export type GetInventorySalesReportQueryVariables = Exact<{
+  data: SalesReportFilter;
+}>;
+
+export type GetInventorySalesReportQuery = {
+  report: {
+    accountingReport: {
+      salesReport: {
+        data?: Array<{
+          itemId: string;
+          itemName: string;
+          unitName: string;
+          selligPrice: string;
+          soldQuantity: string;
+          totalPrice: string;
+          vatAmount: string;
+          netAmountWithVat: string;
+        } | null> | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
 export type GetLoanBalanceReportQueryVariables = Exact<{
   data: LoanBalanceFilterData;
 }>;
@@ -33024,6 +33082,7 @@ export type GetLoanAgingStatementReportQuery = {
         data?: {
           report?: Array<{
             memberNo?: string | null;
+            memberName?: string | null;
             loanNo?: string | null;
             name?: string | null;
             address?: string | null;
@@ -35962,6 +36021,81 @@ export type GetEmployeeLeavePolicyListQuery = {
                 node?: { id: string; name: string; description: string } | null;
               } | null> | null;
               pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLeaveTypeQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetLeaveTypeQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leave: {
+            getLeaveType: {
+              record?: {
+                id?: string | null;
+                name?: string | null;
+                typeOfLeave?: LeaveTypeEnum | null;
+                description?: string | null;
+                applicableAfter?: number | null;
+                maximumLeaveAllowed?: number | null;
+                maximumContinuousDaysApplicable?: number | null;
+                isCarriedForward?: boolean | null;
+                isPartiallyPaid?: boolean | null;
+                fractionOfDailySalaryPerLeave?: number | null;
+                isOptionalLeave?: boolean | null;
+                includeHolidaysWithLeavesAsLeaves?: boolean | null;
+                isCompensatory?: boolean | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLeavePolicyQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetLeavePolicyQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leavePolicy: {
+            getLeavePolicy: {
+              record?: {
+                name?: string | null;
+                description?: string | null;
+                employeeLevelId?: string | null;
+                effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
+                leavePolicyDetails?: Array<{
+                  leaveTypeId?: string | null;
+                  annualAllocation?: number | null;
+                } | null> | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
             };
           };
         };
@@ -50924,6 +51058,45 @@ export const useGetEmployeeListQuery = <TData = GetEmployeeListQuery, TError = u
     ),
     options
   );
+export const GetLeaveListDocument = `
+    query getLeaveList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employee {
+      leave {
+        listLeave(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              leaveId
+              employeeId
+              leaveTypeId
+              leaveFrom
+              leaveTo
+              leaveNote
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetLeaveListQuery = <TData = GetLeaveListQuery, TError = unknown>(
+  variables?: GetLeaveListQueryVariables,
+  options?: UseQueryOptions<GetLeaveListQuery, TError, TData>
+) =>
+  useQuery<GetLeaveListQuery, TError, TData>(
+    variables === undefined ? ['getLeaveList'] : ['getLeaveList', variables],
+    useAxios<GetLeaveListQuery, GetLeaveListQueryVariables>(GetLeaveListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetHrEmployeeOnboardingListDocument = `
     query getHREmployeeOnboardingList($filter: Filter, $pagination: Pagination) {
   hr {
@@ -57015,6 +57188,43 @@ export const useGetInventoryStockStatusReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetInventorySalesReportDocument = `
+    query getInventorySalesReport($data: SalesReportFilter!) {
+  report {
+    accountingReport {
+      salesReport(data: $data) {
+        data {
+          itemId
+          itemName
+          unitName
+          selligPrice
+          soldQuantity
+          totalPrice
+          vatAmount
+          netAmountWithVat
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventorySalesReportQuery = <
+  TData = GetInventorySalesReportQuery,
+  TError = unknown
+>(
+  variables: GetInventorySalesReportQueryVariables,
+  options?: UseQueryOptions<GetInventorySalesReportQuery, TError, TData>
+) =>
+  useQuery<GetInventorySalesReportQuery, TError, TData>(
+    ['getInventorySalesReport', variables],
+    useAxios<GetInventorySalesReportQuery, GetInventorySalesReportQueryVariables>(
+      GetInventorySalesReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanBalanceReportDocument = `
     query getLoanBalanceReport($data: LoanBalanceFilterData!) {
   report {
@@ -57069,6 +57279,7 @@ export const GetLoanAgingStatementReportDocument = `
         data {
           report {
             memberNo
+            memberName
             loanNo
             name
             address
@@ -60976,6 +61187,93 @@ export const useGetEmployeeLeavePolicyListQuery = <
     useAxios<GetEmployeeLeavePolicyListQuery, GetEmployeeLeavePolicyListQueryVariables>(
       GetEmployeeLeavePolicyListDocument
     ).bind(null, variables),
+    options
+  );
+export const GetLeaveTypeDocument = `
+    query getLeaveType($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leave {
+            getLeaveType(id: $id) {
+              record {
+                id
+                name
+                typeOfLeave
+                description
+                applicableAfter
+                maximumLeaveAllowed
+                maximumContinuousDaysApplicable
+                isCarriedForward
+                isPartiallyPaid
+                fractionOfDailySalaryPerLeave
+                isOptionalLeave
+                includeHolidaysWithLeavesAsLeaves
+                isCompensatory
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetLeaveTypeQuery = <TData = GetLeaveTypeQuery, TError = unknown>(
+  variables: GetLeaveTypeQueryVariables,
+  options?: UseQueryOptions<GetLeaveTypeQuery, TError, TData>
+) =>
+  useQuery<GetLeaveTypeQuery, TError, TData>(
+    ['getLeaveType', variables],
+    useAxios<GetLeaveTypeQuery, GetLeaveTypeQueryVariables>(GetLeaveTypeDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetLeavePolicyDocument = `
+    query getLeavePolicy($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leavePolicy {
+            getLeavePolicy(id: $id) {
+              record {
+                name
+                description
+                employeeLevelId
+                effectiveFrom
+                leavePolicyDetails {
+                  leaveTypeId
+                  annualAllocation
+                }
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetLeavePolicyQuery = <TData = GetLeavePolicyQuery, TError = unknown>(
+  variables: GetLeavePolicyQueryVariables,
+  options?: UseQueryOptions<GetLeavePolicyQuery, TError, TData>
+) =>
+  useQuery<GetLeavePolicyQuery, TError, TData>(
+    ['getLeavePolicy', variables],
+    useAxios<GetLeavePolicyQuery, GetLeavePolicyQueryVariables>(GetLeavePolicyDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const LedgerTagsListDocument = `

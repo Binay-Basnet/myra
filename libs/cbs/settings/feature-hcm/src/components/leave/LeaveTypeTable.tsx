@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { BiEdit } from 'react-icons/bi';
@@ -19,8 +19,10 @@ import {
 
 import {
   LeaveTypeEnum,
+  LeaveTypeInput,
   useDeleteHcmEmployeeGeneralMutation,
   useGetEmployeeLeaveTypeListQuery,
+  useGetLeaveTypeQuery,
   useSetEmployeeLeaveTypeMutation,
 } from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
@@ -31,13 +33,24 @@ export const LeaveTypeTable = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedLeaveTypeId, setSelectedLeaveTypeId] = useState('');
+  const methods = useForm();
+  const { getValues, handleSubmit, watch, reset } = methods;
 
-  const { data, refetch } = useGetEmployeeLeaveTypeListQuery({ pagination: getPaginationQuery() });
+  const { data, refetch } = useGetEmployeeLeaveTypeListQuery({
+    pagination: getPaginationQuery(),
+  });
   const { mutateAsync, isLoading } = useSetEmployeeLeaveTypeMutation();
   const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+  const { data: leaveData } = useGetLeaveTypeQuery(
+    { id: selectedLeaveTypeId },
+    { enabled: !!selectedLeaveTypeId }
+  );
 
-  const methods = useForm();
-  const { getValues, handleSubmit, watch } = methods;
+  const leaveDataEdit = leaveData?.settings?.general?.HCM?.employee?.leave?.getLeaveType?.record;
+
+  useEffect(() => {
+    reset(leaveDataEdit as LeaveTypeInput);
+  }, [leaveDataEdit]);
 
   const rowData = useMemo(
     () => data?.settings?.general?.HCM?.employee?.leave?.listLeaveType?.edges ?? [],
@@ -98,6 +111,7 @@ export const LeaveTypeTable = () => {
   const handleAddModalClose = () => {
     setIsAddModalOpen(false);
     setSelectedLeaveTypeId('');
+    reset();
   };
 
   const handleDeleteModalClose = () => {
@@ -164,7 +178,7 @@ export const LeaveTypeTable = () => {
   const isPartiallyPaidWatch = watch('isPartiallyPaid');
 
   return (
-    <Box id="department">
+    <Box id="leave-type">
       <SettingsCard
         title="Leave Types"
         subtitle="Extends Fields that can be added to forms for additional input Fields"
@@ -188,7 +202,7 @@ export const LeaveTypeTable = () => {
         open={isAddModalOpen}
         onClose={handleAddModalClose}
         isCentered
-        title="New Leave Type"
+        title={selectedLeaveTypeId ? 'Edit Leave Type' : 'New Leave Type'}
         width="5xl"
       >
         <FormProvider {...methods}>

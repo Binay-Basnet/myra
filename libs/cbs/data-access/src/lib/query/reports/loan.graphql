@@ -40,6 +40,8 @@ query getLoanAgingStatementReport($data: LoanAgingStatementInput!) {
         data {
           report {
             memberNo
+            memberName
+
             loanNo
             name
             address
