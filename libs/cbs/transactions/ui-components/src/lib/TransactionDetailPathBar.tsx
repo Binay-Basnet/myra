@@ -137,6 +137,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         ),
         Date: localizedDate(depositDetailData?.transactionDate),
         'Deposit Amount': amountConverter(depositDetailData?.amount || 0),
+        Fine: amountConverter(depositDetailData?.fine || 0),
         Rebate: amountConverter(depositDetailData?.rebate ?? '0'),
         'Payment Mode': depositDetailData?.paymentMode,
         'Deposited By': depositDetailData?.depositedBy,
