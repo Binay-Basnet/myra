@@ -425,6 +425,7 @@ export type AccountWithdrawSlipMutationResult = {
 export type AccountWithdrawSlipQueryResult = {
   data?: Maybe<Array<Maybe<SlipEntry>>>;
   error?: Maybe<QueryError>;
+  slipBookRanges?: Maybe<Array<Maybe<SlipRange>>>;
 };
 
 export type AccountWithdrawSlipRangeQueryResult = {
@@ -12158,6 +12159,7 @@ export type LoanAccReportDetails = {
   loanSubtype?: Maybe<Scalars['String']>;
   loanType?: Maybe<Scalars['String']>;
   openingBalance?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
   tenureUnit?: Maybe<Scalars['String']>;
 };
 
@@ -17656,7 +17658,10 @@ export type SavingStatement = {
 export type SavingStatementMeta = {
   accountNo?: Maybe<Scalars['String']>;
   currentInterestRate?: Maybe<Scalars['Float']>;
+  installments?: Maybe<Scalars['Int']>;
+  productName?: Maybe<Scalars['String']>;
   savingType?: Maybe<Scalars['String']>;
+  tenureUnit?: Maybe<Scalars['String']>;
 };
 
 export type SavingStatementReport = {
