@@ -711,6 +711,7 @@ export type AccountingReport = {
   externalLoanStatementReport: ExternalLoanStatementReportResult;
   fdInvestmentReport: FdInvestmentReportResult;
   fdInvestmentStatementReport: FdInvestmentStatementReportResult;
+  salesReport: SalesReportResult;
 };
 
 export type AccountingReportExternalLoanReportArgs = {
@@ -727,6 +728,10 @@ export type AccountingReportFdInvestmentReportArgs = {
 
 export type AccountingReportFdInvestmentStatementReportArgs = {
   data: FdInvestmentStatementReportFilter;
+};
+
+export type AccountingReportSalesReportArgs = {
+  data: SalesReportFilter;
 };
 
 export type AccountingSalesCreditNoteQueryResult = {
@@ -6160,7 +6165,14 @@ export type EmployeeSeparationInput = {
   employeeId: Scalars['String'];
   separationStatus: SeparationStatusEnum;
   separationType: SeparationTypeEnum;
-  toThis: Scalars['String'];
+};
+
+export type EmployeeSeparationNode = {
+  designation: Scalars['String'];
+  employeeId: Scalars['String'];
+  employeeName: Scalars['String'];
+  id: Scalars['String'];
+  resignationLetterDate: Scalars['Localized'];
 };
 
 export type EmployeeSeparationOutput = {
@@ -8005,6 +8017,7 @@ export type HrEmployeeLifecycleEmployeeTransferQueryQueryEmployeeTransferArgs = 
 export type HrEmployeeLifecycleMutation = {
   employeeOnboarding: HrEmployeeLifecycleEmployeeOnboardingMutation;
   employeePromotion: HrEmployeeLifecyclePromotionMutation;
+  employeeSeparation: HrEmployeeLifecycleSeparationMutation;
   employeeTransfer: HrEmployeeLifecycleEmployeeTransferMutation;
 };
 
@@ -8028,15 +8041,25 @@ export type HrEmployeeLifecyclePromotionQueryListEmployeePromotionArgs = {
 export type HrEmployeeLifecycleQuery = {
   employeeOnboarding: HrEmployeeLifecycleEmployeeOnboardingQuery;
   employeePromotion: HrEmployeeLifecyclePromotionQuery;
+  employeeSeparation: HrEmployeeLifecycleSeparationQuery;
   employeeTransfer: HrEmployeeLifecycleEmployeeTransferQuery;
 };
 
 export type HrEmployeeLifecycleSeparationMutation = {
-  addEmployeePromotion: EmployeePromotionOutput;
+  addEmployeeSeparation: EmployeeSeparationOutput;
 };
 
-export type HrEmployeeLifecycleSeparationMutationAddEmployeePromotionArgs = {
-  input: EmployeePromotionInput;
+export type HrEmployeeLifecycleSeparationMutationAddEmployeeSeparationArgs = {
+  input: EmployeeSeparationInput;
+};
+
+export type HrEmployeeLifecycleSeparationQuery = {
+  listEmployeeSeparation: HrEmployeeSeparationConnection;
+};
+
+export type HrEmployeeLifecycleSeparationQueryListEmployeeSeparationArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HrEmployeeListConnection = {
@@ -8069,6 +8092,17 @@ export type HrEmployeePromotionEdges = {
 export type HrEmployeeQuery = {
   employee: HrEmployeeKyeQuery;
   leave: HrEmployeeLeaveQuery;
+};
+
+export type HrEmployeeSeparationConnection = {
+  PageInfo?: Maybe<PageInfo>;
+  edges?: Maybe<Array<Maybe<HrEmployeeSeparationEdges>>>;
+  totalCount: Scalars['Int'];
+};
+
+export type HrEmployeeSeparationEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<EmployeeSeparationNode>;
 };
 
 export type HrMutation = {
@@ -17420,6 +17454,29 @@ export type SalesCustomerPaymentListEdges = {
   node?: Maybe<SalesCustomerPaymentEntry>;
 };
 
+export type SalesReportDataList = {
+  itemId: Scalars['String'];
+  itemName: Scalars['String'];
+  netAmountWithVat: Scalars['String'];
+  selligPrice: Scalars['String'];
+  soldQuantity: Scalars['String'];
+  totalPrice: Scalars['String'];
+  unitName: Scalars['String'];
+  vatAmount: Scalars['String'];
+};
+
+export type SalesReportFilter = {
+  branchId: Array<Scalars['String']>;
+  creatorIds?: InputMaybe<Array<Scalars['String']>>;
+  itemIds?: InputMaybe<Array<Scalars['String']>>;
+  period: Scalars['Localized'];
+};
+
+export type SalesReportResult = {
+  data?: Maybe<Array<Maybe<SalesReportDataList>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type SalesSaleCreditNote = {
   data?: Maybe<SalesCreditNote>;
   error?: Maybe<QueryError>;
@@ -17750,12 +17807,6 @@ export const SeparationStatusEnum = {
 } as const;
 
 export type SeparationStatusEnum = typeof SeparationStatusEnum[keyof typeof SeparationStatusEnum];
-export const SeparationType = {
-  Active: 'ACTIVE',
-  Inactive: 'INACTIVE',
-} as const;
-
-export type SeparationType = typeof SeparationType[keyof typeof SeparationType];
 export const SeparationTypeEnum = {
   Resigned: 'RESIGNED',
   Retired: 'RETIRED',
@@ -32919,6 +32970,35 @@ export type GetInventoryStockStatusReportQuery = {
   };
 };
 
+export type GetInventorySalesReportQueryVariables = Exact<{
+  data: SalesReportFilter;
+}>;
+
+export type GetInventorySalesReportQuery = {
+  report: {
+    accountingReport: {
+      salesReport: {
+        data?: Array<{
+          itemId: string;
+          itemName: string;
+          unitName: string;
+          selligPrice: string;
+          soldQuantity: string;
+          totalPrice: string;
+          vatAmount: string;
+          netAmountWithVat: string;
+        } | null> | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
 export type GetLoanBalanceReportQueryVariables = Exact<{
   data: LoanBalanceFilterData;
 }>;
@@ -32968,6 +33048,7 @@ export type GetLoanAgingStatementReportQuery = {
         data?: {
           report?: Array<{
             memberNo?: string | null;
+            memberName?: string | null;
             loanNo?: string | null;
             name?: string | null;
             address?: string | null;
@@ -56947,6 +57028,43 @@ export const useGetInventoryStockStatusReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetInventorySalesReportDocument = `
+    query getInventorySalesReport($data: SalesReportFilter!) {
+  report {
+    accountingReport {
+      salesReport(data: $data) {
+        data {
+          itemId
+          itemName
+          unitName
+          selligPrice
+          soldQuantity
+          totalPrice
+          vatAmount
+          netAmountWithVat
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventorySalesReportQuery = <
+  TData = GetInventorySalesReportQuery,
+  TError = unknown
+>(
+  variables: GetInventorySalesReportQueryVariables,
+  options?: UseQueryOptions<GetInventorySalesReportQuery, TError, TData>
+) =>
+  useQuery<GetInventorySalesReportQuery, TError, TData>(
+    ['getInventorySalesReport', variables],
+    useAxios<GetInventorySalesReportQuery, GetInventorySalesReportQueryVariables>(
+      GetInventorySalesReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanBalanceReportDocument = `
     query getLoanBalanceReport($data: LoanBalanceFilterData!) {
   report {
@@ -57001,6 +57119,7 @@ export const GetLoanAgingStatementReportDocument = `
         data {
           report {
             memberNo
+            memberName
             loanNo
             name
             address

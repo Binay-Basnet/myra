@@ -121,6 +121,16 @@ export const LoanAgingStatementsReport = () => {
                 },
               },
               {
+                header: 'Member Name',
+                accessorKey: 'memberName',
+
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
                 header: 'Loan No',
                 accessorKey: 'loanNo',
                 cell: (props) => (
