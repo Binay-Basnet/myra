@@ -21646,6 +21646,30 @@ export type SetNewEmployeeMutation = {
   };
 };
 
+export type SetNewLeaveMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: LeaveInput;
+}>;
+
+export type SetNewLeaveMutation = {
+  hr: {
+    employee: {
+      leave: {
+        upsertLeave: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type SetEmployeeOnboardingUpsertMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: EmployeeOnboardingInput;
@@ -23649,6 +23673,62 @@ export type DeleteHcmEmployeeGeneralMutation = {
         employee: {
           employee: {
             deleteHcmEmployeeGeneral: {
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetEmployeeLeaveTypeMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: LeaveTypeInput;
+}>;
+
+export type SetEmployeeLeaveTypeMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leave: {
+            upsertLeaveType: {
+              recordId: string;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetEmployeeLeavePolicyMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: LeavePolicyInput;
+}>;
+
+export type SetEmployeeLeavePolicyMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leavePolicy: {
+            upsertLeavePolicy: {
+              recordId?: string | null;
               error?:
                 | MutationError_AuthorizationError_Fragment
                 | MutationError_BadRequestError_Fragment
@@ -35782,6 +35862,58 @@ export type GetEmployeeHealthInsuranceListQuery = {
   };
 };
 
+export type GetEmployeeLeaveTypeListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeLeaveTypeListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leave: {
+            listLeaveType: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: { id?: string | null; name?: string | null; description?: string | null };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEmployeeLeavePolicyListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeLeavePolicyListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leavePolicy: {
+            listLeavePolicy: {
+              totalCount: number;
+              edges?: Array<{
+                cursor?: string | null;
+                node?: { id: string; name: string; description: string } | null;
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type LedgerTagsListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -41313,6 +41445,30 @@ export const useSetNewEmployeeMutation = <TError = unknown, TContext = unknown>(
     useAxios<SetNewEmployeeMutation, SetNewEmployeeMutationVariables>(SetNewEmployeeDocument),
     options
   );
+export const SetNewLeaveDocument = `
+    mutation setNewLeave($id: String, $input: LeaveInput!) {
+  hr {
+    employee {
+      leave {
+        upsertLeave(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetNewLeaveMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetNewLeaveMutation, TError, SetNewLeaveMutationVariables, TContext>
+) =>
+  useMutation<SetNewLeaveMutation, TError, SetNewLeaveMutationVariables, TContext>(
+    ['setNewLeave'],
+    useAxios<SetNewLeaveMutation, SetNewLeaveMutationVariables>(SetNewLeaveDocument),
+    options
+  );
 export const SetEmployeeOnboardingUpsertDocument = `
     mutation setEmployeeOnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) {
   hr {
@@ -44511,6 +44667,86 @@ export const useDeleteHcmEmployeeGeneralMutation = <TError = unknown, TContext =
     ['deleteHcmEmployeeGeneral'],
     useAxios<DeleteHcmEmployeeGeneralMutation, DeleteHcmEmployeeGeneralMutationVariables>(
       DeleteHcmEmployeeGeneralDocument
+    ),
+    options
+  );
+export const SetEmployeeLeaveTypeDocument = `
+    mutation setEmployeeLeaveType($id: String, $input: LeaveTypeInput!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leave {
+            upsertLeaveType(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeLeaveTypeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeLeaveTypeMutation,
+    TError,
+    SetEmployeeLeaveTypeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeLeaveTypeMutation,
+    TError,
+    SetEmployeeLeaveTypeMutationVariables,
+    TContext
+  >(
+    ['setEmployeeLeaveType'],
+    useAxios<SetEmployeeLeaveTypeMutation, SetEmployeeLeaveTypeMutationVariables>(
+      SetEmployeeLeaveTypeDocument
+    ),
+    options
+  );
+export const SetEmployeeLeavePolicyDocument = `
+    mutation setEmployeeLeavePolicy($id: String, $input: LeavePolicyInput!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leavePolicy {
+            upsertLeavePolicy(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeLeavePolicyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeLeavePolicyMutation,
+    TError,
+    SetEmployeeLeavePolicyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeLeavePolicyMutation,
+    TError,
+    SetEmployeeLeavePolicyMutationVariables,
+    TContext
+  >(
+    ['setEmployeeLeavePolicy'],
+    useAxios<SetEmployeeLeavePolicyMutation, SetEmployeeLeavePolicyMutationVariables>(
+      SetEmployeeLeavePolicyDocument
     ),
     options
   );
@@ -60583,6 +60819,94 @@ export const useGetEmployeeHealthInsuranceListQuery = <
       : ['getEmployeeHealthInsuranceList', variables],
     useAxios<GetEmployeeHealthInsuranceListQuery, GetEmployeeHealthInsuranceListQueryVariables>(
       GetEmployeeHealthInsuranceListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeLeaveTypeListDocument = `
+    query getEmployeeLeaveTypeList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leave {
+            listLeaveType(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeLeaveTypeListQuery = <
+  TData = GetEmployeeLeaveTypeListQuery,
+  TError = unknown
+>(
+  variables?: GetEmployeeLeaveTypeListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeLeaveTypeListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeLeaveTypeListQuery, TError, TData>(
+    variables === undefined
+      ? ['getEmployeeLeaveTypeList']
+      : ['getEmployeeLeaveTypeList', variables],
+    useAxios<GetEmployeeLeaveTypeListQuery, GetEmployeeLeaveTypeListQueryVariables>(
+      GetEmployeeLeaveTypeListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeLeavePolicyListDocument = `
+    query getEmployeeLeavePolicyList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leavePolicy {
+            listLeavePolicy(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeLeavePolicyListQuery = <
+  TData = GetEmployeeLeavePolicyListQuery,
+  TError = unknown
+>(
+  variables?: GetEmployeeLeavePolicyListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeLeavePolicyListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeLeavePolicyListQuery, TError, TData>(
+    variables === undefined
+      ? ['getEmployeeLeavePolicyList']
+      : ['getEmployeeLeavePolicyList', variables],
+    useAxios<GetEmployeeLeavePolicyListQuery, GetEmployeeLeavePolicyListQueryVariables>(
+      GetEmployeeLeavePolicyListDocument
     ).bind(null, variables),
     options
   );

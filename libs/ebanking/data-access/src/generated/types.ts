@@ -152,6 +152,12 @@ export type BadRequestError = {
   message: Scalars['String'];
 };
 
+export const BalanceType = {
+  Cr: 'CR',
+  Dr: 'DR',
+} as const;
+
+export type BalanceType = typeof BalanceType[keyof typeof BalanceType];
 export type Base = {
   createdAt: Scalars['Time'];
   createdBy: Identity;
@@ -273,6 +279,7 @@ export type CooperativeInformation = {
   logoUrl?: Maybe<Scalars['String']>;
   mobileNo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  organizationCode?: Maybe<Scalars['String']>;
 };
 
 export type Coordinate = {
@@ -424,6 +431,7 @@ export type DepositProductFormStateData = {
   prematurePenalty?: Maybe<PrematurePenaltyFormState>;
   productCode: ProductCodeFormState;
   productName?: Maybe<Scalars['String']>;
+  productPremiumInterest?: Maybe<Scalars['Float']>;
   rebate?: Maybe<Scalars['Boolean']>;
   rebateData?: Maybe<Rebate>;
   serviceCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
@@ -811,11 +819,16 @@ export type EBankingDownloadsQueryFilesArgs = {
 
 export type EBankingLoanAccountQuery = {
   get?: Maybe<EbankingAccountResult>;
+  getLoanPaymentIdealSchedule?: Maybe<LoanInstallments>;
   list?: Maybe<AccountMinimalResult>;
 };
 
 export type EBankingLoanAccountQueryGetArgs = {
   id: Scalars['ID'];
+};
+
+export type EBankingLoanAccountQueryGetLoanPaymentIdealScheduleArgs = {
+  loanAccountId: Scalars['ID'];
 };
 
 export type EBankingLoanHistory = {
@@ -880,6 +893,7 @@ export type EBankingQuery = {
   services?: Maybe<Array<Maybe<Services>>>;
   share?: Maybe<EBankingShareQuery>;
   utilityPayments?: Maybe<Array<Maybe<UtilityPayments>>>;
+  withdraw?: Maybe<EbankingWithdrawQuery>;
 };
 
 export type EBankingRegisterComplaintInput = {
@@ -1066,6 +1080,7 @@ export type EbankingLoginResult = {
 };
 
 export type EbankingMemberProfile = {
+  branch?: Maybe<Scalars['String']>;
   citizenship?: Maybe<Array<Maybe<DocumentDetails>>>;
   dobAD?: Maybe<Scalars['String']>;
   dobBS?: Maybe<Scalars['String']>;
@@ -1199,8 +1214,12 @@ export type EbankingSignUpResult = {
 export type EbankingTransaction = {
   accountId?: Maybe<Scalars['String']>;
   amount: Scalars['String'];
+  balanceType?: Maybe<BalanceType>;
+  countAll?: Maybe<Scalars['String']>;
+  credit?: Maybe<Scalars['String']>;
   currentBalance: Scalars['String'];
   date: Scalars['Localized'];
+  debit?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   month: Scalars['Localized'];
   name: Scalars['String'];
@@ -1254,6 +1273,7 @@ export type EbankingUser = {
   cooperatives?: Maybe<Array<Maybe<CooperativeInformation>>>;
   dob?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  lastLoggedIn?: Maybe<Scalars['Time']>;
   mobile?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
 };
@@ -1271,6 +1291,18 @@ export type EbankingWebUtilityPaymentsMutation = {
 
 export type EbankingWebUtilityPaymentsMutationAccountTransferArgs = {
   data?: InputMaybe<EbankingAccountTransferInput>;
+};
+
+export type EbankingWithdrawQuery = {
+  getAvailableSlips?: Maybe<EbankingWithdrawSlipResult>;
+};
+
+export type EbankingWithdrawQueryGetAvailableSlipsArgs = {
+  accountId: Scalars['String'];
+};
+
+export type EbankingWithdrawSlipResult = {
+  data?: Maybe<Array<SlipEntry>>;
 };
 
 export type Filter = {
@@ -1455,6 +1487,42 @@ export type LedgerMappingFormState = {
   principal?: Maybe<Scalars['String']>;
 };
 
+export type LoanInstallment = {
+  currentRemainingPrincipal: Scalars['String'];
+  fullPrincipal?: Maybe<Scalars['String']>;
+  installmentDate: Scalars['Localized'];
+  installmentNo: Scalars['Int'];
+  interest: Scalars['String'];
+  isPartial?: Maybe<Scalars['Boolean']>;
+  overDueDays?: Maybe<Scalars['Int']>;
+  overdueAmount?: Maybe<Scalars['String']>;
+  paidDate: Scalars['Localized'];
+  payment: Scalars['String'];
+  penalty?: Maybe<Scalars['String']>;
+  principal: Scalars['String'];
+  remainingInterest: Scalars['String'];
+  remainingPrincipal: Scalars['String'];
+  status?: Maybe<LoanInstallmentStatus>;
+};
+
+export const LoanInstallmentStatus = {
+  Current: 'CURRENT',
+  Overdue: 'OVERDUE',
+  Paid: 'PAID',
+  Partial: 'PARTIAL',
+} as const;
+
+export type LoanInstallmentStatus =
+  typeof LoanInstallmentStatus[keyof typeof LoanInstallmentStatus];
+export type LoanInstallments = {
+  duesSince?: Maybe<Scalars['Localized']>;
+  installments?: Maybe<Array<Maybe<LoanInstallment>>>;
+  total: Scalars['String'];
+  totalInterest?: Maybe<Scalars['String']>;
+  totalPrincipal?: Maybe<Scalars['String']>;
+  totalRemainingPayable?: Maybe<Scalars['String']>;
+};
+
 export const LoanInterestMethod = {
   Diminishing: 'DIMINISHING',
   Straight: 'STRAIGHT',
@@ -1511,13 +1579,13 @@ export type LoanProduct = Base & {
   penaltyDayAfterInstallmentDate?: Maybe<Scalars['Int']>;
   penaltyRate?: Maybe<Scalars['Float']>;
   penaltyType?: Maybe<PenaltyType>;
-  postingFrequency?: Maybe<LoanProductInstallment>;
   prematurePenaltySetup?: Maybe<PrematurePenaltyFormState>;
   principalMaxGraceNumber?: Maybe<Scalars['Int']>;
   productCode?: Maybe<ProductCodeType>;
   productCodeString?: Maybe<Scalars['String']>;
   productName: Scalars['String'];
   productNature: NatureOfLoanProduct;
+  productPremiumInterest?: Maybe<Scalars['Float']>;
   productSubType: Scalars['String'];
   productType: Scalars['ID'];
   rebate?: Maybe<Rebate>;
@@ -1782,6 +1850,7 @@ export type NeosysClientMinimalInfo = {
   id?: Maybe<Scalars['String']>;
   localGovernmentId?: Maybe<Scalars['String']>;
   locality?: Maybe<Scalars['String']>;
+  organizationCode?: Maybe<Scalars['String']>;
   provinceId?: Maybe<Scalars['String']>;
   wardNo?: Maybe<Scalars['Int']>;
 };
@@ -1920,6 +1989,13 @@ export type ProductCodeType = {
   prefix: Scalars['String'];
 };
 
+export const ProductOrganizationType = {
+  OrganizationLoan: 'OrganizationLoan',
+  OrganizationSaving: 'OrganizationSaving',
+} as const;
+
+export type ProductOrganizationType =
+  typeof ProductOrganizationType[keyof typeof ProductOrganizationType];
 export type ProductsQuery = {
   depositProductList?: Maybe<DepositProductCategoryList>;
   getDepositProduct?: Maybe<DepositProductFormStateResult>;
@@ -1927,6 +2003,7 @@ export type ProductsQuery = {
   getLoanProduct?: Maybe<LoanProductData>;
   getLoanProductCriteria?: Maybe<LoanProductCriteriaResult>;
   getLoanProductType?: Maybe<LoanSettingsProductTypeData>;
+  getOrganizationRate?: Maybe<Scalars['Float']>;
   loanProductList?: Maybe<LoanProductLists>;
   loanProductSubTypes?: Maybe<Array<Maybe<LoanSettingsProductSubTypeData>>>;
   loanProductTypes?: Maybe<Array<Maybe<LoanSettingsProductTypeData>>>;
@@ -1954,6 +2031,10 @@ export type ProductsQueryGetLoanProductCriteriaArgs = {
 
 export type ProductsQueryGetLoanProductTypeArgs = {
   id: Scalars['ID'];
+};
+
+export type ProductsQueryGetOrganizationRateArgs = {
+  type: ProductOrganizationType;
 };
 
 export type ProductsQueryLoanProductListArgs = {
@@ -2045,6 +2126,12 @@ export type Services = {
   id: Scalars['String'];
   name: Scalars['String'];
   service_id: Scalars['String'];
+};
+
+export type SlipEntry = {
+  date?: Maybe<Scalars['Localized']>;
+  slipNumber: Scalars['String'];
+  state?: Maybe<Scalars['String']>;
 };
 
 export const Transaction_Direction = {

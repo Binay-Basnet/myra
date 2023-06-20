@@ -33,7 +33,7 @@
       "options": {
         "buildTarget": "ebanking:build",
         "dev": true,
-        "port": 4800
+        "port": 4202
       },
       "configurations": {
         "production": {

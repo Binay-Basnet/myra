@@ -33,7 +33,7 @@
       "options": {
         "buildTarget": "neosys-admin:build",
         "dev": true,
-        "port": 4600
+        "port": 4201
       },
       "configurations": {
         "production": {
