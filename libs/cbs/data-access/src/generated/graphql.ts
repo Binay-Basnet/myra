@@ -6155,6 +6155,19 @@ export type EmployeeReturnResult = {
   recordId: Scalars['String'];
 };
 
+export type EmployeeSeparationInput = {
+  date?: InputMaybe<Scalars['Localized']>;
+  employeeId: Scalars['String'];
+  separationStatus: SeparationStatusEnum;
+  separationType: SeparationTypeEnum;
+  toThis: Scalars['String'];
+};
+
+export type EmployeeSeparationOutput = {
+  error?: Maybe<MutationError>;
+  recordId: Scalars['String'];
+};
+
 export const EmployeeStatus = {
   Active: 'ACTIVE',
   Deceased: 'DECEASED',
@@ -7920,8 +7933,8 @@ export type HrEmployeeLeaveMutationUpsertLeaveArgs = {
 };
 
 export type HrEmployeeLeavePolicyConnection = {
-  PageInfo?: Maybe<PageInfo>;
   edges?: Maybe<Array<Maybe<HrEmployeeLeavePolicyEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -8016,6 +8029,14 @@ export type HrEmployeeLifecycleQuery = {
   employeeOnboarding: HrEmployeeLifecycleEmployeeOnboardingQuery;
   employeePromotion: HrEmployeeLifecyclePromotionQuery;
   employeeTransfer: HrEmployeeLifecycleEmployeeTransferQuery;
+};
+
+export type HrEmployeeLifecycleSeparationMutation = {
+  addEmployeePromotion: EmployeePromotionOutput;
+};
+
+export type HrEmployeeLifecycleSeparationMutationAddEmployeePromotionArgs = {
+  input: EmployeePromotionInput;
 };
 
 export type HrEmployeeListConnection = {
@@ -12103,6 +12124,7 @@ export type LoanAccReportDetails = {
   loanSubtype?: Maybe<Scalars['String']>;
   loanType?: Maybe<Scalars['String']>;
   openingBalance?: Maybe<Scalars['String']>;
+  tenureUnit?: Maybe<Scalars['String']>;
 };
 
 export type LoanAccount = {
@@ -12715,6 +12737,7 @@ export type LoanAgingStatementReport = {
   matured1To12Months?: Maybe<Scalars['String']>;
   matured1To30Days?: Maybe<Scalars['String']>;
   maturedAbove12Months?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
   memberNo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   nextPaymentDate?: Maybe<Scalars['Localized']>;
@@ -17721,6 +17744,25 @@ export type SectionWiseError = {
   sectionName?: Maybe<Scalars['String']>;
 };
 
+export const SeparationStatusEnum = {
+  Active: 'ACTIVE',
+  Inactive: 'INACTIVE',
+} as const;
+
+export type SeparationStatusEnum = typeof SeparationStatusEnum[keyof typeof SeparationStatusEnum];
+export const SeparationType = {
+  Active: 'ACTIVE',
+  Inactive: 'INACTIVE',
+} as const;
+
+export type SeparationType = typeof SeparationType[keyof typeof SeparationType];
+export const SeparationTypeEnum = {
+  Resigned: 'RESIGNED',
+  Retired: 'RETIRED',
+  Transferred: 'TRANSFERRED',
+} as const;
+
+export type SeparationTypeEnum = typeof SeparationTypeEnum[keyof typeof SeparationTypeEnum];
 export type SericeCenterStatementResult = {
   data?: Maybe<Array<Maybe<ServiceCenterBalanceEntry>>>;
   error?: Maybe<QueryError>;
@@ -21150,6 +21192,25 @@ export type AgentTodayCollectionMutationVariables = Exact<{
 export type AgentTodayCollectionMutation = {
   agent: {
     agentTodayCollection?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type SetAgentTemplateMutationVariables = Exact<{
+  agentId: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<AgentTemplateInput>> | InputMaybe<AgentTemplateInput>>;
+}>;
+
+export type SetAgentTemplateMutation = {
+  agent: {
+    agentTemplate?: {
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -27139,6 +27200,26 @@ export type ListAgentCollectionQuery = {
         startCursor?: string | null;
         endCursor?: string | null;
       } | null;
+    } | null;
+  };
+};
+
+export type ListAgentTemplateQueryVariables = Exact<{
+  agentId: Scalars['ID'];
+}>;
+
+export type ListAgentTemplateQuery = {
+  agent: {
+    listAgentTemplate?: {
+      record?: Array<{
+        amount?: string | null;
+        member?: {
+          id: string;
+          code: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+        account?: { id: string; installmentAmount?: string | null } | null;
+      } | null> | null;
     } | null;
   };
 };
@@ -40498,6 +40579,30 @@ export const useAgentTodayCollectionMutation = <TError = unknown, TContext = unk
     ),
     options
   );
+export const SetAgentTemplateDocument = `
+    mutation setAgentTemplate($agentId: ID!, $data: [AgentTemplateInput]) {
+  agent {
+    agentTemplate(agentId: $agentId, data: $data) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAgentTemplateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAgentTemplateMutation,
+    TError,
+    SetAgentTemplateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetAgentTemplateMutation, TError, SetAgentTemplateMutationVariables, TContext>(
+    ['setAgentTemplate'],
+    useAxios<SetAgentTemplateMutation, SetAgentTemplateMutationVariables>(SetAgentTemplateDocument),
+    options
+  );
 export const ResetPasswordDocument = `
     mutation resetPassword($userId: String!, $newPassword: String!, $oldPassword: String!) {
   user {
@@ -49341,6 +49446,37 @@ export const useListAgentCollectionQuery = <TData = ListAgentCollectionQuery, TE
     variables === undefined ? ['listAgentCollection'] : ['listAgentCollection', variables],
     useAxios<ListAgentCollectionQuery, ListAgentCollectionQueryVariables>(
       ListAgentCollectionDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListAgentTemplateDocument = `
+    query listAgentTemplate($agentId: ID!) {
+  agent {
+    listAgentTemplate(agentId: $agentId) {
+      record {
+        member {
+          id
+          code
+          name
+        }
+        account {
+          id
+          installmentAmount
+        }
+        amount
+      }
+    }
+  }
+}
+    `;
+export const useListAgentTemplateQuery = <TData = ListAgentTemplateQuery, TError = unknown>(
+  variables: ListAgentTemplateQueryVariables,
+  options?: UseQueryOptions<ListAgentTemplateQuery, TError, TData>
+) =>
+  useQuery<ListAgentTemplateQuery, TError, TData>(
+    ['listAgentTemplate', variables],
+    useAxios<ListAgentTemplateQuery, ListAgentTemplateQueryVariables>(
+      ListAgentTemplateDocument
     ).bind(null, variables),
     options
   );
