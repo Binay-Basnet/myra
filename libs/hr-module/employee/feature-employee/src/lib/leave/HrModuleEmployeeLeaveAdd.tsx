@@ -4,19 +4,13 @@ import { useRouter } from 'next/router';
 import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import {
-  AppointmentLetterInput,
-  AppointmentTermInput,
-  useGetJobApplicationListQuery,
-  useSetAppointmentLetterMutation,
+  LeaveInput,
+  useGetEmployeeLeaveTypeListQuery,
+  useGetEmployeeListQuery,
+  useSetNewLeaveMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import {
-  FormDatePicker,
-  FormEditableTable,
-  FormLayout,
-  FormSelect,
-  FormTextArea,
-} from '@coop/shared/form';
+import { FormDatePicker, FormLayout, FormSelect, FormTextArea } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const HrLeaveAdd = () => {
@@ -24,7 +18,7 @@ export const HrLeaveAdd = () => {
   const router = useRouter();
   const { getValues } = methods;
 
-  const { data: jobApplicationData } = useGetJobApplicationListQuery({
+  const { data: employeeListData } = useGetEmployeeListQuery({
     pagination: {
       ...getPaginationQuery(),
       first: -1,
@@ -35,31 +29,45 @@ export const HrLeaveAdd = () => {
     },
   });
 
-  const { mutateAsync } = useSetAppointmentLetterMutation();
+  const { data: leaveTypeData } = useGetEmployeeLeaveTypeListQuery({
+    pagination: {
+      ...getPaginationQuery(),
+      first: -1,
+      order: {
+        arrange: 'ASC',
+        column: 'ID',
+      },
+    },
+  });
 
-  const jobApplicationOptions =
-    jobApplicationData?.hr?.recruitment?.recruitmentJobApplication?.listJobApplication?.edges?.map(
-      (item) => ({
-        label: item?.node?.name as string,
-        value: item?.node?.id as string,
-      })
-    );
+  const { mutateAsync } = useSetNewLeaveMutation();
+
+  const employeeOptions = employeeListData?.hr?.employee?.employee?.listEmployee?.edges?.map(
+    (item) => ({
+      label: item?.node?.employeeName as string,
+      value: item?.node?.id as string,
+    })
+  );
+
+  const leaveTypeOptions =
+    leaveTypeData?.settings?.general?.HCM?.employee?.leave?.listLeaveType?.edges?.map((item) => ({
+      label: item?.node?.name as string,
+      value: item?.node?.id as string,
+    }));
 
   const submitForm = () => {
     asyncToast({
-      id: 'add-appointment-letter',
+      id: 'add-new-leave',
       msgs: {
-        success: 'new appointment letter added succesfully',
-        loading: 'adding new appointment letter',
+        success: 'new leave added succesfully',
+        loading: 'adding new leave',
       },
       onSuccess: () => {
-        router.push(ROUTES?.HR_RECRUITMENT_APPOINTMENT_LETTER_LIST);
+        router.push(ROUTES?.HRMODULE_LEAVE_LIST);
       },
       promise: mutateAsync({
         id: null,
-        input: {
-          ...(getValues() as AppointmentLetterInput),
-        },
+        input: getValues() as LeaveInput,
       }),
     });
   };
@@ -69,38 +77,17 @@ export const HrLeaveAdd = () => {
 
       <FormLayout.Content>
         <FormLayout.Form>
-          <FormSection templateColumns={3} header="Allocated Leaves" divider>
-            <GridItem colSpan={4}>
-              <FormEditableTable<AppointmentTermInput>
-                name="appointmentTerms"
-                columns={[
-                  {
-                    accessor: 'title',
-                    header: 'Title',
-                    cellWidth: 'lg',
-                  },
-                  {
-                    accessor: 'description',
-                    header: 'Description',
-                    cellWidth: 'lg',
-                  },
-                ]}
-              />
-            </GridItem>
-          </FormSection>
           <FormSection templateColumns={3} divider>
             <GridItem colSpan={2}>
-              <FormSelect
-                name="jobApplication"
-                label="Job Application"
-                options={jobApplicationOptions}
-              />
+              <FormSelect name="employeeId" label="Employee" options={employeeOptions} />
             </GridItem>
-            <FormDatePicker name="appointmentDate" label="Appointment Date" />
+            <FormSelect name="leaveTypeId" label="Leave Type" options={leaveTypeOptions} />
           </FormSection>
           <FormSection templateColumns={3} divider>
+            <FormDatePicker name="leaveFrom" label="From Date" />
+            <FormDatePicker name="leaveTo" label="To Date" />
             <GridItem colSpan={3}>
-              <FormTextArea name="body" label="Body" />
+              <FormTextArea name="leaveNote" label="Reason" />
             </GridItem>
           </FormSection>
         </FormLayout.Form>{' '}

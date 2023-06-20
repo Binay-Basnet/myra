@@ -28334,6 +28334,35 @@ export type GetEmployeeListQuery = {
   };
 };
 
+export type GetLeaveListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetLeaveListQuery = {
+  hr: {
+    employee: {
+      leave: {
+        listLeave: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              leaveId: string;
+              employeeId: string;
+              leaveTypeId: string;
+              leaveFrom: Record<'local' | 'en' | 'np', string>;
+              leaveTo: Record<'local' | 'en' | 'np', string>;
+              leaveNote: string;
+            } | null;
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetHrEmployeeOnboardingListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -50977,6 +51006,45 @@ export const useGetEmployeeListQuery = <TData = GetEmployeeListQuery, TError = u
   useQuery<GetEmployeeListQuery, TError, TData>(
     variables === undefined ? ['getEmployeeList'] : ['getEmployeeList', variables],
     useAxios<GetEmployeeListQuery, GetEmployeeListQueryVariables>(GetEmployeeListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetLeaveListDocument = `
+    query getLeaveList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employee {
+      leave {
+        listLeave(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              leaveId
+              employeeId
+              leaveTypeId
+              leaveFrom
+              leaveTo
+              leaveNote
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetLeaveListQuery = <TData = GetLeaveListQuery, TError = unknown>(
+  variables?: GetLeaveListQueryVariables,
+  options?: UseQueryOptions<GetLeaveListQuery, TError, TData>
+) =>
+  useQuery<GetLeaveListQuery, TError, TData>(
+    variables === undefined ? ['getLeaveList'] : ['getLeaveList', variables],
+    useAxios<GetLeaveListQuery, GetLeaveListQueryVariables>(GetLeaveListDocument).bind(
       null,
       variables
     ),
