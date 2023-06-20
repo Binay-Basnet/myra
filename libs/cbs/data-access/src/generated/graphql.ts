@@ -32999,6 +32999,35 @@ export type GetInventoryStockStatusReportQuery = {
   };
 };
 
+export type GetInventorySalesReportQueryVariables = Exact<{
+  data: SalesReportFilter;
+}>;
+
+export type GetInventorySalesReportQuery = {
+  report: {
+    accountingReport: {
+      salesReport: {
+        data?: Array<{
+          itemId: string;
+          itemName: string;
+          unitName: string;
+          selligPrice: string;
+          soldQuantity: string;
+          totalPrice: string;
+          vatAmount: string;
+          netAmountWithVat: string;
+        } | null> | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
 export type GetLoanBalanceReportQueryVariables = Exact<{
   data: LoanBalanceFilterData;
 }>;
@@ -33048,6 +33077,7 @@ export type GetLoanAgingStatementReportQuery = {
         data?: {
           report?: Array<{
             memberNo?: string | null;
+            memberName?: string | null;
             loanNo?: string | null;
             name?: string | null;
             address?: string | null;
@@ -57141,6 +57171,43 @@ export const useGetInventoryStockStatusReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetInventorySalesReportDocument = `
+    query getInventorySalesReport($data: SalesReportFilter!) {
+  report {
+    accountingReport {
+      salesReport(data: $data) {
+        data {
+          itemId
+          itemName
+          unitName
+          selligPrice
+          soldQuantity
+          totalPrice
+          vatAmount
+          netAmountWithVat
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventorySalesReportQuery = <
+  TData = GetInventorySalesReportQuery,
+  TError = unknown
+>(
+  variables: GetInventorySalesReportQueryVariables,
+  options?: UseQueryOptions<GetInventorySalesReportQuery, TError, TData>
+) =>
+  useQuery<GetInventorySalesReportQuery, TError, TData>(
+    ['getInventorySalesReport', variables],
+    useAxios<GetInventorySalesReportQuery, GetInventorySalesReportQueryVariables>(
+      GetInventorySalesReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanBalanceReportDocument = `
     query getLoanBalanceReport($data: LoanBalanceFilterData!) {
   report {
@@ -57195,6 +57262,7 @@ export const GetLoanAgingStatementReportDocument = `
         data {
           report {
             memberNo
+            memberName
             loanNo
             name
             address
