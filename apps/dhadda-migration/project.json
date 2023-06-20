@@ -27,7 +27,7 @@
       "options": {
         "buildTarget": "dhadda-migration:build",
         "dev": true,
-        "port": 5200
+        "port": 4204
       },
       "configurations": {
         "development": {

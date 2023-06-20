@@ -21254,6 +21254,25 @@ export type AgentTodayCollectionMutation = {
   };
 };
 
+export type SetAgentTemplateMutationVariables = Exact<{
+  agentId: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<AgentTemplateInput>> | InputMaybe<AgentTemplateInput>>;
+}>;
+
+export type SetAgentTemplateMutation = {
+  agent: {
+    agentTemplate?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type ResetPasswordMutationVariables = Exact<{
   userId: Scalars['String'];
   newPassword: Scalars['String'];
@@ -27312,6 +27331,26 @@ export type ListAgentCollectionQuery = {
         startCursor?: string | null;
         endCursor?: string | null;
       } | null;
+    } | null;
+  };
+};
+
+export type ListAgentTemplateQueryVariables = Exact<{
+  agentId: Scalars['ID'];
+}>;
+
+export type ListAgentTemplateQuery = {
+  agent: {
+    listAgentTemplate?: {
+      record?: Array<{
+        amount?: string | null;
+        member?: {
+          id: string;
+          code: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+        account?: { id: string; installmentAmount?: string | null } | null;
+      } | null> | null;
     } | null;
   };
 };
@@ -40798,6 +40837,30 @@ export const useAgentTodayCollectionMutation = <TError = unknown, TContext = unk
     ),
     options
   );
+export const SetAgentTemplateDocument = `
+    mutation setAgentTemplate($agentId: ID!, $data: [AgentTemplateInput]) {
+  agent {
+    agentTemplate(agentId: $agentId, data: $data) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAgentTemplateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAgentTemplateMutation,
+    TError,
+    SetAgentTemplateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetAgentTemplateMutation, TError, SetAgentTemplateMutationVariables, TContext>(
+    ['setAgentTemplate'],
+    useAxios<SetAgentTemplateMutation, SetAgentTemplateMutationVariables>(SetAgentTemplateDocument),
+    options
+  );
 export const ResetPasswordDocument = `
     mutation resetPassword($userId: String!, $newPassword: String!, $oldPassword: String!) {
   user {
@@ -49745,6 +49808,37 @@ export const useListAgentCollectionQuery = <TData = ListAgentCollectionQuery, TE
     variables === undefined ? ['listAgentCollection'] : ['listAgentCollection', variables],
     useAxios<ListAgentCollectionQuery, ListAgentCollectionQueryVariables>(
       ListAgentCollectionDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListAgentTemplateDocument = `
+    query listAgentTemplate($agentId: ID!) {
+  agent {
+    listAgentTemplate(agentId: $agentId) {
+      record {
+        member {
+          id
+          code
+          name
+        }
+        account {
+          id
+          installmentAmount
+        }
+        amount
+      }
+    }
+  }
+}
+    `;
+export const useListAgentTemplateQuery = <TData = ListAgentTemplateQuery, TError = unknown>(
+  variables: ListAgentTemplateQueryVariables,
+  options?: UseQueryOptions<ListAgentTemplateQuery, TError, TData>
+) =>
+  useQuery<ListAgentTemplateQuery, TError, TData>(
+    ['listAgentTemplate', variables],
+    useAxios<ListAgentTemplateQuery, ListAgentTemplateQueryVariables>(
+      ListAgentTemplateDocument
     ).bind(null, variables),
     options
   );
