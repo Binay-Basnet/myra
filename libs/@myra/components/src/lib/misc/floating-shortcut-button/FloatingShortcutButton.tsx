@@ -30,15 +30,23 @@ interface WhatsNewModalProps {
 const whatsNewData = {
   features: {
     title: 'New Features',
-    data: ['Fd Investment statement report', 'Fd investment report'],
+    data: [
+      'Mr can create collection template',
+      'Update min max interest rate',
+      'Update min max of tenure',
+      'Update Rebate',
+      'Update Premature Penalty',
+      'Update Withdraw Penalty',
+      'Inventory Sales Report',
+    ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Leader Group report.',
-      'Create tag in the COA .',
-      'Edit and View details in inventory section like warehouse, inventory, sales section.',
-      'DUE and amount column added in the MR transactions.',
+      'Loan Transaction Statement Fix.',
+      'FD Close 1 paisa issue fix',
+      'Statement print in Portrait',
+      'Withdraw slip book block issue fix',
     ],
   },
   knownBugs: {
@@ -88,8 +96,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.68</Text>
-          <Text fontSize="s3">June 14, 2023</Text>
+          <Text fontSize="r2">Version 1.0.69 </Text>
+          <Text fontSize="s3">20 June, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
