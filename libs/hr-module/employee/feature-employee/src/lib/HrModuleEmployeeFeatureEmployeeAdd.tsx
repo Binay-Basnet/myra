@@ -75,8 +75,8 @@ export const EmployeeAddForm = () => {
           locality: temporaryAddressInfo?.address?.locality?.local,
         },
       });
+      setValue('isCoopMember', true);
     }
-    setValue('isCoopMember', true);
   }, [JSON.stringify(personalInfo)]);
 
   const onSave = () => {
