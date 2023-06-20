@@ -1,92 +1,77 @@
-import { IconType } from 'react-icons';
-import { BsCash } from 'react-icons/bs';
-import { FiBook } from 'react-icons/fi';
-import { ImBlocked } from 'react-icons/im';
-import { IoCashOutline } from 'react-icons/io5';
-import { SiFormstack } from 'react-icons/si';
-import { TbCalendarTime } from 'react-icons/tb';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@chakra-ui/icons';
-import { Skeleton } from '@chakra-ui/react';
 
-import { Box, Button, Divider, Grid, Icon, Text, VStack } from '@myra-ui';
+import { Box, Divider, Icon, Text, VStack } from '@myra-ui';
 
 import { DefaultAccountPopover } from '@coop/ebanking/accounts';
-import { CoopCard, CoopDownloadCard, COOPHeaderCard, InfoCard } from '@coop/ebanking/cards';
-import {
-  useGetCoopChequeServicesQuery,
-  useGetCoopComplaintServicesQuery,
-  useGetCoopDownloadsQuery,
-  useGetCoopLoanServicesQuery,
-} from '@coop/ebanking/data-access';
+import { COOPHeaderCard } from '@coop/ebanking/cards';
 
-const CHEQUE_SERVICE_DICT: Record<string, { icon: IconType; link: string }> = {
-  'Request Withdraw slip': {
-    link: '/coop/cheque/request',
-    icon: FiBook,
-  },
-  'Withdraw via market representative': {
-    icon: IoCashOutline,
-    link: '/coop/cheque/withdraw',
-  },
-  'Block Withdraw slip': {
-    icon: ImBlocked,
-    link: '/coop/cheque/block',
-  },
-};
+// const CHEQUE_SERVICE_DICT: Record<string, { icon: IconType; link: string }> = {
+//   'Request Withdraw slip': {
+//     link: '/coop/cheque/request',
+//     icon: FiBook,
+//   },
+//   'Withdraw via market representative': {
+//     icon: IoCashOutline,
+//     link: '/coop/cheque/withdraw',
+//   },
+//   'Block Withdraw slip': {
+//     icon: ImBlocked,
+//     link: '/coop/cheque/block',
+//   },
+// };
 
-const LOAN_SERVICE_DICT: Record<string, { icon: IconType; link: string }> = {
-  'Apply for loan': {
-    link: '/coop/loan/apply',
-    icon: BsCash,
-  },
-  'View loan schedule': {
-    icon: TbCalendarTime,
-    link: '/coop/loan/schedule',
-  },
-};
+// const LOAN_SERVICE_DICT: Record<string, { icon: IconType; link: string }> = {
+//   'Apply for loan': {
+//     link: '/coop/loan/apply',
+//     icon: BsCash,
+//   },
+//   'View loan schedule': {
+//     icon: TbCalendarTime,
+//     link: '/coop/loan/schedule',
+//   },
+// };
 
-const COMPLAINTS_SERVICE_DICT: Record<string, { icon: IconType; link: string }> = {
-  'Register new grievance': {
-    link: '/coop/complaints/new',
-    icon: BsCash,
-  },
-};
+// const COMPLAINTS_SERVICE_DICT: Record<string, { icon: IconType; link: string }> = {
+//   'Register new grievance': {
+//     link: '/coop/complaints/new',
+//     icon: BsCash,
+//   },
+// };
 
-const DOWNLOADS_DICT: Record<
-  string,
-  {
-    icon: IconType;
-    link: string;
-  }
-> = {
-  Forms: {
-    icon: SiFormstack,
-    link: '/coop/downloads/forms',
-  },
-  Guidelines: {
-    icon: SiFormstack,
-    link: '/coop/downloads/guidelines',
-  },
-  Reports: {
-    icon: SiFormstack,
-    link: '/coop/downloads/reports',
-  },
-  Directives: {
-    icon: SiFormstack,
-    link: '/coop/downloads/directives',
-  },
-};
+// const DOWNLOADS_DICT: Record<
+//   string,
+//   {
+//     icon: IconType;
+//     link: string;
+//   }
+// > = {
+//   Forms: {
+//     icon: SiFormstack,
+//     link: '/coop/downloads/forms',
+//   },
+//   Guidelines: {
+//     icon: SiFormstack,
+//     link: '/coop/downloads/guidelines',
+//   },
+//   Reports: {
+//     icon: SiFormstack,
+//     link: '/coop/downloads/reports',
+//   },
+//   Directives: {
+//     icon: SiFormstack,
+//     link: '/coop/downloads/directives',
+//   },
+// };
 
 export const EbankingFeatureCoop = () => {
   const router = useRouter();
 
-  const { data: chequeServices, isLoading: chequeLoading } = useGetCoopChequeServicesQuery();
-  const { data: loanList, isLoading: loanLoading } = useGetCoopLoanServicesQuery();
-  const { data: complaintList, isLoading: complaintLoading } = useGetCoopComplaintServicesQuery();
+  // const { data: chequeServices, isLoading: chequeLoading } = useGetCoopChequeServicesQuery();
+  // const { data: loanList, isLoading: loanLoading } = useGetCoopLoanServicesQuery();
+  // const { data: complaintList, isLoading: complaintLoading } = useGetCoopComplaintServicesQuery();
 
-  const { data: downloadsList, isLoading: downloadLoading } = useGetCoopDownloadsQuery();
+  // const { data: downloadsList, isLoading: downloadLoading } = useGetCoopDownloadsQuery();
 
   return (
     <Box display="flex" flexDir="column" gap="s16">
@@ -147,7 +132,7 @@ export const EbankingFeatureCoop = () => {
           </Box>
         </VStack>
       </Box>
-      <InfoCard
+      {/* <InfoCard
         title="Cheque Services"
         btn={
           <Link href="/coop/cheque/all">
@@ -178,8 +163,8 @@ export const EbankingFeatureCoop = () => {
               />
             ))}
         </Grid>
-      </InfoCard>
-      <InfoCard
+      </InfoCard> */}
+      {/* <InfoCard
         title="Loan Services"
         btn={
           <Link href="/coop/loan/all">
@@ -210,8 +195,8 @@ export const EbankingFeatureCoop = () => {
               />
             ))}
         </Grid>
-      </InfoCard>
-      <InfoCard
+      </InfoCard> */}
+      {/* <InfoCard
         title="Complaints"
         btn={
           <Link href="/coop/complaints/all">
@@ -262,7 +247,7 @@ export const EbankingFeatureCoop = () => {
               />
             ))}
         </Grid>
-      </InfoCard>
+      </InfoCard> */}
     </Box>
   );
 };
