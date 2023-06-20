@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { Box } from '@myra-ui';
+import { Box, MultiFooter } from '@myra-ui';
 
 import {
   LoanAccReportDetails,
@@ -52,7 +52,7 @@ export const LoanStatementReport = () => {
         <Report.PageHeader
           paths={[
             { label: 'Loan Reports', link: '/reports/cbs/loan' },
-            { label: 'Loan Statement', link: '/reports/cbs/loan/statement/new' },
+            { label: 'Loan Account Statement', link: '/reports/cbs/loan/statement/new' },
           ]}
         />
         <Report.Inputs>
@@ -76,7 +76,7 @@ export const LoanStatementReport = () => {
                 {
                   header: 'S.No.',
                   accessorKey: 'index',
-                  footer: () => <Box textAlign="right">Total</Box>,
+                  footer: () => <MultiFooter texts={['Total', '']} />,
                   meta: {
                     width: '60px',
                     Footer: {
@@ -143,7 +143,11 @@ export const LoanStatementReport = () => {
                   header: 'Paid Principal',
                   accessorKey: 'paidPrinciple',
                   cell: (props) => amountConverter(props.getValue() as string),
-                  footer: () => amountConverter(loanFooter?.paidPrincipleTotal || '0'),
+                  footer: () => (
+                    <MultiFooter
+                      texts={[amountConverter(loanFooter?.paidPrincipleTotal || '0') as string, '']}
+                    />
+                  ),
                   meta: {
                     isNumeric: true,
                   },
@@ -153,7 +157,14 @@ export const LoanStatementReport = () => {
                   accessorKey: 'interestPaid',
                   cell: (props) => amountConverter(props.getValue() as string),
 
-                  footer: () => amountConverter(loanFooter?.interestPaidTotal || '0'),
+                  footer: () => (
+                    <MultiFooter
+                      texts={[
+                        amountConverter(loanFooter?.interestPaidTotal || '0'),
+                        'Closing Balance',
+                      ]}
+                    />
+                  ),
                   meta: {
                     isNumeric: true,
                   },
@@ -163,7 +174,17 @@ export const LoanStatementReport = () => {
                   accessorKey: 'finePaid',
                   cell: (props) => amountConverter(props.getValue() as string),
 
-                  footer: () => amountConverter(loanFooter?.penaltyPaidTotal || '0'),
+                  footer: () => (
+                    <MultiFooter
+                      texts={[
+                        amountConverter(loanFooter?.penaltyPaidTotal || '0'),
+                        debitCreditConverter(
+                          loanFooter?.closingBalance?.amount || '0',
+                          loanFooter?.closingBalance?.amountType as string
+                        ),
+                      ]}
+                    />
+                  ),
                   meta: {
                     isNumeric: true,
                   },
@@ -189,10 +210,6 @@ export const LoanStatementReport = () => {
                 // },
               ]}
             />
-            <Box textAlign="right" px="s16">{`Closing Balance- ${debitCreditConverter(
-              loanFooter?.closingBalance?.amount || '0',
-              loanFooter?.closingBalance?.amountType as string
-            )}`}</Box>
           </Box>
         </Report.Content>
       </Report.Body>

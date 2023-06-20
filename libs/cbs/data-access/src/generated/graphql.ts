@@ -425,6 +425,7 @@ export type AccountWithdrawSlipMutationResult = {
 export type AccountWithdrawSlipQueryResult = {
   data?: Maybe<Array<Maybe<SlipEntry>>>;
   error?: Maybe<QueryError>;
+  slipBookRanges?: Maybe<Array<Maybe<SlipRange>>>;
 };
 
 export type AccountWithdrawSlipRangeQueryResult = {
@@ -711,6 +712,7 @@ export type AccountingReport = {
   externalLoanStatementReport: ExternalLoanStatementReportResult;
   fdInvestmentReport: FdInvestmentReportResult;
   fdInvestmentStatementReport: FdInvestmentStatementReportResult;
+  salesReport: SalesReportResult;
 };
 
 export type AccountingReportExternalLoanReportArgs = {
@@ -727,6 +729,10 @@ export type AccountingReportFdInvestmentReportArgs = {
 
 export type AccountingReportFdInvestmentStatementReportArgs = {
   data: FdInvestmentStatementReportFilter;
+};
+
+export type AccountingReportSalesReportArgs = {
+  data: SalesReportFilter;
 };
 
 export type AccountingSalesCreditNoteQueryResult = {
@@ -1093,6 +1099,7 @@ export type AgentFilterMapping = {
 
 export type AgentMutation = {
   addMemberToAgent?: Maybe<DepositLoanAccountData>;
+  agentTemplate?: Maybe<AgentTemplateResult>;
   agentTodayCollection?: Maybe<AgentTodayListResult>;
   agentTodayDeposit?: Maybe<AgentTodayListResult>;
   agentTodayList?: Maybe<AgentTodayListResult>;
@@ -1103,6 +1110,11 @@ export type AgentMutationAddMemberToAgentArgs = {
   agentId: Scalars['String'];
   data?: InputMaybe<AssignMembersInput>;
   override?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type AgentMutationAgentTemplateArgs = {
+  agentId: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<AgentTemplateInput>>>;
 };
 
 export type AgentMutationAgentTodayCollectionArgs = {
@@ -1131,6 +1143,7 @@ export type AgentQuery = {
   listAgent: AccountAgentListConnection;
   listAgentCollection?: Maybe<AgentCollectionListConnection>;
   listAgentTask?: Maybe<AgentTodayListData>;
+  listAgentTemplate?: Maybe<AgentTemplateData>;
   viewAgentList?: Maybe<AgentTransactionViewResult>;
 };
 
@@ -1158,6 +1171,10 @@ export type AgentQueryListAgentTaskArgs = {
   id: Scalars['ID'];
 };
 
+export type AgentQueryListAgentTemplateArgs = {
+  agentId: Scalars['ID'];
+};
+
 export type AgentQueryViewAgentListArgs = {
   agentId: Scalars['ID'];
   date: Scalars['String'];
@@ -1166,6 +1183,29 @@ export type AgentQueryViewAgentListArgs = {
 export type AgentRecord = {
   data?: Maybe<AgentDetails>;
   error?: Maybe<QueryError>;
+};
+
+export type AgentTemplate = {
+  account?: Maybe<DepositAccount>;
+  amount?: Maybe<Scalars['String']>;
+  member?: Maybe<Member>;
+};
+
+export type AgentTemplateData = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<Array<Maybe<AgentTemplate>>>;
+};
+
+export type AgentTemplateInput = {
+  accountId: Scalars['String'];
+  amount?: InputMaybe<Scalars['String']>;
+  memberId: Scalars['String'];
+};
+
+export type AgentTemplateResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  record?: Maybe<Array<Maybe<AgentTemplate>>>;
 };
 
 export type AgentTodayList = {
@@ -5836,6 +5876,12 @@ export type EachStaffRecord = {
   error?: Maybe<QueryError>;
 };
 
+export type EachTransferRecord = {
+  branchArray?: Maybe<Array<Maybe<BranchTransferDetails>>>;
+  departArray?: Maybe<Array<Maybe<DepartTransferDetails>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type EbankingRegistrationReportResult = {
   data?: Maybe<Array<Maybe<EbankingReportResult>>>;
   error?: Maybe<QueryError>;
@@ -6040,6 +6086,28 @@ export type EmployeeOnboardings = {
   node: EmployeeOnboardingListed;
 };
 
+export type EmployeePromotionInput = {
+  date?: InputMaybe<Scalars['Localized']>;
+  employeeId: Scalars['String'];
+  fromThis?: InputMaybe<Scalars['String']>;
+  promotionType: PromotionType;
+  toThis: Scalars['String'];
+};
+
+export type EmployeePromotionNode = {
+  employeeId: Scalars['String'];
+  employeeName: Scalars['String'];
+  id: Scalars['String'];
+  newPromotion: Scalars['String'];
+  promotionDate: Scalars['Localized'];
+  promotionType: Scalars['String'];
+};
+
+export type EmployeePromotionOutput = {
+  error?: Maybe<MutationError>;
+  recordId: Scalars['String'];
+};
+
 export type EmployeeReport = {
   userReport?: Maybe<UserReportResult>;
 };
@@ -6093,6 +6161,26 @@ export type EmployeeReturnResult = {
   recordId: Scalars['String'];
 };
 
+export type EmployeeSeparationInput = {
+  date?: InputMaybe<Scalars['Localized']>;
+  employeeId: Scalars['String'];
+  separationStatus: SeparationStatusEnum;
+  separationType: SeparationTypeEnum;
+};
+
+export type EmployeeSeparationNode = {
+  designation: Scalars['String'];
+  employeeId: Scalars['String'];
+  employeeName: Scalars['String'];
+  id: Scalars['String'];
+  resignationLetterDate: Scalars['Localized'];
+};
+
+export type EmployeeSeparationOutput = {
+  error?: Maybe<MutationError>;
+  recordId: Scalars['String'];
+};
+
 export const EmployeeStatus = {
   Active: 'ACTIVE',
   Deceased: 'DECEASED',
@@ -6104,6 +6192,47 @@ export const EmployeeStatus = {
 } as const;
 
 export type EmployeeStatus = typeof EmployeeStatus[keyof typeof EmployeeStatus];
+export type EmployeeTransferConnection = {
+  edges?: Maybe<Array<Maybe<EmployeeTransfers>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type EmployeeTransferInput = {
+  destDepServId?: InputMaybe<Scalars['ID']>;
+  employeeId?: InputMaybe<Scalars['ID']>;
+  transferDate?: InputMaybe<Scalars['Localized']>;
+  transferType?: InputMaybe<EmployeeTransferType>;
+};
+
+export type EmployeeTransferListed = {
+  employeeId?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  transferDate?: Maybe<Scalars['Localized']>;
+  transferType?: Maybe<EmployeeTransferType>;
+};
+
+export type EmployeeTransferRecord = {
+  destDepServId?: Maybe<Scalars['ID']>;
+  employeeId?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
+  prevDepServId?: Maybe<Scalars['ID']>;
+  transferDate?: Maybe<Scalars['Localized']>;
+  transferType?: Maybe<EmployeeTransferType>;
+};
+
+export const EmployeeTransferType = {
+  Department: 'DEPARTMENT',
+  ServiceCenter: 'SERVICE_CENTER',
+} as const;
+
+export type EmployeeTransferType = typeof EmployeeTransferType[keyof typeof EmployeeTransferType];
+export type EmployeeTransfers = {
+  cursor: Scalars['Cursor'];
+  node: EmployeeTransferListed;
+};
+
 export type EmployeeType = {
   description: Scalars['String'];
   id: Scalars['String'];
@@ -7797,8 +7926,8 @@ export type HrEmployeeKyeQueryListEmployeeArgs = {
 };
 
 export type HrEmployeeLeaveConnection = {
-  PageInfo?: Maybe<PageInfo>;
   edges?: Maybe<Array<Maybe<HrEmployeeLeaveEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -7817,8 +7946,8 @@ export type HrEmployeeLeaveMutationUpsertLeaveArgs = {
 };
 
 export type HrEmployeeLeavePolicyConnection = {
-  PageInfo?: Maybe<PageInfo>;
   edges?: Maybe<Array<Maybe<HrEmployeeLeavePolicyEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -7864,12 +7993,74 @@ export type HrEmployeeLifecycleEmployeeOnboardingQueryListEmployeeOnboardingArgs
   pagination?: InputMaybe<Pagination>;
 };
 
+export type HrEmployeeLifecycleEmployeeTransferMutation = {
+  insertEmployeeTransfer: ReturnEmployeeTransfer;
+};
+
+export type HrEmployeeLifecycleEmployeeTransferMutationInsertEmployeeTransferArgs = {
+  input: EmployeeTransferInput;
+};
+
+export type HrEmployeeLifecycleEmployeeTransferQuery = {
+  listEmployeeTransfer: EmployeeTransferConnection;
+  queryEmployeeTransfer?: Maybe<EachTransferRecord>;
+};
+
+export type HrEmployeeLifecycleEmployeeTransferQueryListEmployeeTransferArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HrEmployeeLifecycleEmployeeTransferQueryQueryEmployeeTransferArgs = {
+  employeeId: Scalars['ID'];
+};
+
 export type HrEmployeeLifecycleMutation = {
   employeeOnboarding: HrEmployeeLifecycleEmployeeOnboardingMutation;
+  employeePromotion: HrEmployeeLifecyclePromotionMutation;
+  employeeSeparation: HrEmployeeLifecycleSeparationMutation;
+  employeeTransfer: HrEmployeeLifecycleEmployeeTransferMutation;
+};
+
+export type HrEmployeeLifecyclePromotionMutation = {
+  addEmployeePromotion: EmployeePromotionOutput;
+};
+
+export type HrEmployeeLifecyclePromotionMutationAddEmployeePromotionArgs = {
+  input: EmployeePromotionInput;
+};
+
+export type HrEmployeeLifecyclePromotionQuery = {
+  listEmployeePromotion: HrEmployeePromotionConnection;
+};
+
+export type HrEmployeeLifecyclePromotionQueryListEmployeePromotionArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HrEmployeeLifecycleQuery = {
   employeeOnboarding: HrEmployeeLifecycleEmployeeOnboardingQuery;
+  employeePromotion: HrEmployeeLifecyclePromotionQuery;
+  employeeSeparation: HrEmployeeLifecycleSeparationQuery;
+  employeeTransfer: HrEmployeeLifecycleEmployeeTransferQuery;
+};
+
+export type HrEmployeeLifecycleSeparationMutation = {
+  addEmployeeSeparation: EmployeeSeparationOutput;
+};
+
+export type HrEmployeeLifecycleSeparationMutationAddEmployeeSeparationArgs = {
+  input: EmployeeSeparationInput;
+};
+
+export type HrEmployeeLifecycleSeparationQuery = {
+  listEmployeeSeparation: HrEmployeeSeparationConnection;
+};
+
+export type HrEmployeeLifecycleSeparationQueryListEmployeeSeparationArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HrEmployeeListConnection = {
@@ -7888,9 +8079,31 @@ export type HrEmployeeMutation = {
   leave: HrEmployeeLeaveMutation;
 };
 
+export type HrEmployeePromotionConnection = {
+  PageInfo?: Maybe<PageInfo>;
+  edges?: Maybe<Array<Maybe<HrEmployeePromotionEdges>>>;
+  totalCount: Scalars['Int'];
+};
+
+export type HrEmployeePromotionEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<EmployeePromotionNode>;
+};
+
 export type HrEmployeeQuery = {
   employee: HrEmployeeKyeQuery;
   leave: HrEmployeeLeaveQuery;
+};
+
+export type HrEmployeeSeparationConnection = {
+  PageInfo?: Maybe<PageInfo>;
+  edges?: Maybe<Array<Maybe<HrEmployeeSeparationEdges>>>;
+  totalCount: Scalars['Int'];
+};
+
+export type HrEmployeeSeparationEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<EmployeeSeparationNode>;
 };
 
 export type HrMutation = {
@@ -11946,6 +12159,8 @@ export type LoanAccReportDetails = {
   loanSubtype?: Maybe<Scalars['String']>;
   loanType?: Maybe<Scalars['String']>;
   openingBalance?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
+  tenureUnit?: Maybe<Scalars['String']>;
 };
 
 export type LoanAccount = {
@@ -12558,6 +12773,7 @@ export type LoanAgingStatementReport = {
   matured1To12Months?: Maybe<Scalars['String']>;
   matured1To30Days?: Maybe<Scalars['String']>;
   maturedAbove12Months?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
   memberNo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   nextPaymentDate?: Maybe<Scalars['Localized']>;
@@ -16297,6 +16513,12 @@ export type ProductPenaltyQueryResult = {
   error?: Maybe<QueryError>;
 };
 
+export const PromotionType = {
+  Designation: 'DESIGNATION',
+  EmployeeLevel: 'EMPLOYEE_LEVEL',
+} as const;
+
+export type PromotionType = typeof PromotionType[keyof typeof PromotionType];
 export type Province = {
   districts: Array<District>;
   id: Scalars['Int'];
@@ -16901,6 +17123,12 @@ export type ReturnEmployeeOnboarding = {
   recordId: Scalars['ID'];
 };
 
+export type ReturnEmployeeTransfer = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EmployeeTransferRecord>;
+  recordId: Scalars['ID'];
+};
+
 export type ReturnJobApplication = {
   error?: Maybe<MutationError>;
   record?: Maybe<JobApplicationRecord>;
@@ -17228,6 +17456,29 @@ export type SalesCustomerPaymentListEdges = {
   node?: Maybe<SalesCustomerPaymentEntry>;
 };
 
+export type SalesReportDataList = {
+  itemId: Scalars['String'];
+  itemName: Scalars['String'];
+  netAmountWithVat: Scalars['String'];
+  selligPrice: Scalars['String'];
+  soldQuantity: Scalars['String'];
+  totalPrice: Scalars['String'];
+  unitName: Scalars['String'];
+  vatAmount: Scalars['String'];
+};
+
+export type SalesReportFilter = {
+  branchId: Array<Scalars['String']>;
+  creatorIds?: InputMaybe<Array<Scalars['String']>>;
+  itemIds?: InputMaybe<Array<Scalars['String']>>;
+  period: Scalars['Localized'];
+};
+
+export type SalesReportResult = {
+  data?: Maybe<Array<Maybe<SalesReportDataList>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type SalesSaleCreditNote = {
   data?: Maybe<SalesCreditNote>;
   error?: Maybe<QueryError>;
@@ -17407,7 +17658,10 @@ export type SavingStatement = {
 export type SavingStatementMeta = {
   accountNo?: Maybe<Scalars['String']>;
   currentInterestRate?: Maybe<Scalars['Float']>;
+  installments?: Maybe<Scalars['Int']>;
+  productName?: Maybe<Scalars['String']>;
   savingType?: Maybe<Scalars['String']>;
+  tenureUnit?: Maybe<Scalars['String']>;
 };
 
 export type SavingStatementReport = {
@@ -17552,6 +17806,19 @@ export type SectionWiseError = {
   sectionName?: Maybe<Scalars['String']>;
 };
 
+export const SeparationStatusEnum = {
+  Active: 'ACTIVE',
+  Inactive: 'INACTIVE',
+} as const;
+
+export type SeparationStatusEnum = typeof SeparationStatusEnum[keyof typeof SeparationStatusEnum];
+export const SeparationTypeEnum = {
+  Resigned: 'RESIGNED',
+  Retired: 'RETIRED',
+  Transferred: 'TRANSFERRED',
+} as const;
+
+export type SeparationTypeEnum = typeof SeparationTypeEnum[keyof typeof SeparationTypeEnum];
 export type SericeCenterStatementResult = {
   data?: Maybe<Array<Maybe<ServiceCenterBalanceEntry>>>;
   error?: Maybe<QueryError>;
@@ -20264,6 +20531,18 @@ export const ApplicantStatus = {
 } as const;
 
 export type ApplicantStatus = typeof ApplicantStatus[keyof typeof ApplicantStatus];
+export type BranchTransferDetails = {
+  transferDate?: Maybe<Scalars['Localized']>;
+  transferredFrom?: Maybe<Scalars['String']>;
+  transferredTo?: Maybe<Scalars['String']>;
+};
+
+export type DepartTransferDetails = {
+  transferredDate?: Maybe<Scalars['Localized']>;
+  transferredFrom?: Maybe<Scalars['String']>;
+  transferredTo?: Maybe<Scalars['String']>;
+};
+
 export type Experience = {
   company?: Maybe<Scalars['String']>;
   duration?: Maybe<Scalars['String']>;
@@ -20980,6 +21259,25 @@ export type AgentTodayCollectionMutation = {
   };
 };
 
+export type SetAgentTemplateMutationVariables = Exact<{
+  agentId: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<AgentTemplateInput>> | InputMaybe<AgentTemplateInput>>;
+}>;
+
+export type SetAgentTemplateMutation = {
+  agent: {
+    agentTemplate?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type ResetPasswordMutationVariables = Exact<{
   userId: Scalars['String'];
   newPassword: Scalars['String'];
@@ -21391,6 +21689,30 @@ export type SetNewEmployeeMutation = {
       employee: {
         upsertEmployee: {
           recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type SetNewLeaveMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: LeaveInput;
+}>;
+
+export type SetNewLeaveMutation = {
+  hr: {
+    employee: {
+      leave: {
+        upsertLeave: {
+          recordId?: string | null;
           error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
@@ -23407,6 +23729,62 @@ export type DeleteHcmEmployeeGeneralMutation = {
         employee: {
           employee: {
             deleteHcmEmployeeGeneral: {
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetEmployeeLeaveTypeMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: LeaveTypeInput;
+}>;
+
+export type SetEmployeeLeaveTypeMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leave: {
+            upsertLeaveType: {
+              recordId: string;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetEmployeeLeavePolicyMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: LeavePolicyInput;
+}>;
+
+export type SetEmployeeLeavePolicyMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leavePolicy: {
+            upsertLeavePolicy: {
+              recordId?: string | null;
               error?:
                 | MutationError_AuthorizationError_Fragment
                 | MutationError_BadRequestError_Fragment
@@ -26962,6 +27340,26 @@ export type ListAgentCollectionQuery = {
   };
 };
 
+export type ListAgentTemplateQueryVariables = Exact<{
+  agentId: Scalars['ID'];
+}>;
+
+export type ListAgentTemplateQuery = {
+  agent: {
+    listAgentTemplate?: {
+      record?: Array<{
+        amount?: string | null;
+        member?: {
+          id: string;
+          code: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+        account?: { id: string; installmentAmount?: string | null } | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
 export type GetMeQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetMeQuery = {
@@ -27933,6 +28331,35 @@ export type GetEmployeeListQuery = {
               employeeDateOfJoining?: Record<'local' | 'en' | 'np', string> | null;
               employeeAddress?: AddressFragment | null;
             };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetLeaveListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetLeaveListQuery = {
+  hr: {
+    employee: {
+      leave: {
+        listLeave: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              leaveId: string;
+              employeeId: string;
+              leaveTypeId: string;
+              leaveFrom: Record<'local' | 'en' | 'np', string>;
+              leaveTo: Record<'local' | 'en' | 'np', string>;
+              leaveNote: string;
+            } | null;
           } | null> | null;
           pageInfo?: PaginationFragment | null;
         };
@@ -32577,6 +33004,35 @@ export type GetInventoryStockStatusReportQuery = {
   };
 };
 
+export type GetInventorySalesReportQueryVariables = Exact<{
+  data: SalesReportFilter;
+}>;
+
+export type GetInventorySalesReportQuery = {
+  report: {
+    accountingReport: {
+      salesReport: {
+        data?: Array<{
+          itemId: string;
+          itemName: string;
+          unitName: string;
+          selligPrice: string;
+          soldQuantity: string;
+          totalPrice: string;
+          vatAmount: string;
+          netAmountWithVat: string;
+        } | null> | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
 export type GetLoanBalanceReportQueryVariables = Exact<{
   data: LoanBalanceFilterData;
 }>;
@@ -32626,6 +33082,7 @@ export type GetLoanAgingStatementReportQuery = {
         data?: {
           report?: Array<{
             memberNo?: string | null;
+            memberName?: string | null;
             loanNo?: string | null;
             name?: string | null;
             address?: string | null;
@@ -35513,6 +35970,133 @@ export type GetEmployeeHealthInsuranceListQuery = {
               } | null> | null;
               pageInfo?: PaginationFragment | null;
             } | null;
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEmployeeLeaveTypeListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeLeaveTypeListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leave: {
+            listLeaveType: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: { id?: string | null; name?: string | null; description?: string | null };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEmployeeLeavePolicyListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeLeavePolicyListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leavePolicy: {
+            listLeavePolicy: {
+              totalCount: number;
+              edges?: Array<{
+                cursor?: string | null;
+                node?: { id: string; name: string; description: string } | null;
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLeaveTypeQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetLeaveTypeQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leave: {
+            getLeaveType: {
+              record?: {
+                id?: string | null;
+                name?: string | null;
+                typeOfLeave?: LeaveTypeEnum | null;
+                description?: string | null;
+                applicableAfter?: number | null;
+                maximumLeaveAllowed?: number | null;
+                maximumContinuousDaysApplicable?: number | null;
+                isCarriedForward?: boolean | null;
+                isPartiallyPaid?: boolean | null;
+                fractionOfDailySalaryPerLeave?: number | null;
+                isOptionalLeave?: boolean | null;
+                includeHolidaysWithLeavesAsLeaves?: boolean | null;
+                isCompensatory?: boolean | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLeavePolicyQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetLeavePolicyQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leavePolicy: {
+            getLeavePolicy: {
+              record?: {
+                name?: string | null;
+                description?: string | null;
+                employeeLevelId?: string | null;
+                effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
+                leavePolicyDetails?: Array<{
+                  leaveTypeId?: string | null;
+                  annualAllocation?: number | null;
+                } | null> | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
           };
         };
       } | null;
@@ -38985,6 +39569,18 @@ export type GetAvailableSlipsListQuery = {
   };
 };
 
+export type GetAvailableSlipBookRangesQueryVariables = Exact<{
+  accountId: Scalars['ID'];
+}>;
+
+export type GetAvailableSlipBookRangesQuery = {
+  withdrawSlip: {
+    listAvailableSlips?: {
+      slipBookRanges?: Array<{ from: string; to: string } | null> | null;
+    } | null;
+  };
+};
+
 export type GetAvailableRangeQueryVariables = Exact<{
   count: Scalars['Int'];
 }>;
@@ -40317,6 +40913,30 @@ export const useAgentTodayCollectionMutation = <TError = unknown, TContext = unk
     ),
     options
   );
+export const SetAgentTemplateDocument = `
+    mutation setAgentTemplate($agentId: ID!, $data: [AgentTemplateInput]) {
+  agent {
+    agentTemplate(agentId: $agentId, data: $data) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAgentTemplateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAgentTemplateMutation,
+    TError,
+    SetAgentTemplateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetAgentTemplateMutation, TError, SetAgentTemplateMutationVariables, TContext>(
+    ['setAgentTemplate'],
+    useAxios<SetAgentTemplateMutation, SetAgentTemplateMutationVariables>(SetAgentTemplateDocument),
+    options
+  );
 export const ResetPasswordDocument = `
     mutation resetPassword($userId: String!, $newPassword: String!, $oldPassword: String!) {
   user {
@@ -41025,6 +41645,30 @@ export const useSetNewEmployeeMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetNewEmployeeMutation, TError, SetNewEmployeeMutationVariables, TContext>(
     ['setNewEmployee'],
     useAxios<SetNewEmployeeMutation, SetNewEmployeeMutationVariables>(SetNewEmployeeDocument),
+    options
+  );
+export const SetNewLeaveDocument = `
+    mutation setNewLeave($id: String, $input: LeaveInput!) {
+  hr {
+    employee {
+      leave {
+        upsertLeave(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetNewLeaveMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetNewLeaveMutation, TError, SetNewLeaveMutationVariables, TContext>
+) =>
+  useMutation<SetNewLeaveMutation, TError, SetNewLeaveMutationVariables, TContext>(
+    ['setNewLeave'],
+    useAxios<SetNewLeaveMutation, SetNewLeaveMutationVariables>(SetNewLeaveDocument),
     options
   );
 export const SetEmployeeOnboardingUpsertDocument = `
@@ -44225,6 +44869,86 @@ export const useDeleteHcmEmployeeGeneralMutation = <TError = unknown, TContext =
     ['deleteHcmEmployeeGeneral'],
     useAxios<DeleteHcmEmployeeGeneralMutation, DeleteHcmEmployeeGeneralMutationVariables>(
       DeleteHcmEmployeeGeneralDocument
+    ),
+    options
+  );
+export const SetEmployeeLeaveTypeDocument = `
+    mutation setEmployeeLeaveType($id: String, $input: LeaveTypeInput!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leave {
+            upsertLeaveType(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeLeaveTypeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeLeaveTypeMutation,
+    TError,
+    SetEmployeeLeaveTypeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeLeaveTypeMutation,
+    TError,
+    SetEmployeeLeaveTypeMutationVariables,
+    TContext
+  >(
+    ['setEmployeeLeaveType'],
+    useAxios<SetEmployeeLeaveTypeMutation, SetEmployeeLeaveTypeMutationVariables>(
+      SetEmployeeLeaveTypeDocument
+    ),
+    options
+  );
+export const SetEmployeeLeavePolicyDocument = `
+    mutation setEmployeeLeavePolicy($id: String, $input: LeavePolicyInput!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leavePolicy {
+            upsertLeavePolicy(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeLeavePolicyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeLeavePolicyMutation,
+    TError,
+    SetEmployeeLeavePolicyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeLeavePolicyMutation,
+    TError,
+    SetEmployeeLeavePolicyMutationVariables,
+    TContext
+  >(
+    ['setEmployeeLeavePolicy'],
+    useAxios<SetEmployeeLeavePolicyMutation, SetEmployeeLeavePolicyMutationVariables>(
+      SetEmployeeLeavePolicyDocument
     ),
     options
   );
@@ -49163,6 +49887,37 @@ export const useListAgentCollectionQuery = <TData = ListAgentCollectionQuery, TE
     ).bind(null, variables),
     options
   );
+export const ListAgentTemplateDocument = `
+    query listAgentTemplate($agentId: ID!) {
+  agent {
+    listAgentTemplate(agentId: $agentId) {
+      record {
+        member {
+          id
+          code
+          name
+        }
+        account {
+          id
+          installmentAmount
+        }
+        amount
+      }
+    }
+  }
+}
+    `;
+export const useListAgentTemplateQuery = <TData = ListAgentTemplateQuery, TError = unknown>(
+  variables: ListAgentTemplateQueryVariables,
+  options?: UseQueryOptions<ListAgentTemplateQuery, TError, TData>
+) =>
+  useQuery<ListAgentTemplateQuery, TError, TData>(
+    ['listAgentTemplate', variables],
+    useAxios<ListAgentTemplateQuery, ListAgentTemplateQueryVariables>(
+      ListAgentTemplateDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMeDocument = `
     query getMe {
   auth {
@@ -50298,6 +51053,45 @@ export const useGetEmployeeListQuery = <TData = GetEmployeeListQuery, TError = u
   useQuery<GetEmployeeListQuery, TError, TData>(
     variables === undefined ? ['getEmployeeList'] : ['getEmployeeList', variables],
     useAxios<GetEmployeeListQuery, GetEmployeeListQueryVariables>(GetEmployeeListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetLeaveListDocument = `
+    query getLeaveList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employee {
+      leave {
+        listLeave(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              leaveId
+              employeeId
+              leaveTypeId
+              leaveFrom
+              leaveTo
+              leaveNote
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetLeaveListQuery = <TData = GetLeaveListQuery, TError = unknown>(
+  variables?: GetLeaveListQueryVariables,
+  options?: UseQueryOptions<GetLeaveListQuery, TError, TData>
+) =>
+  useQuery<GetLeaveListQuery, TError, TData>(
+    variables === undefined ? ['getLeaveList'] : ['getLeaveList', variables],
+    useAxios<GetLeaveListQuery, GetLeaveListQueryVariables>(GetLeaveListDocument).bind(
       null,
       variables
     ),
@@ -56394,6 +57188,43 @@ export const useGetInventoryStockStatusReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetInventorySalesReportDocument = `
+    query getInventorySalesReport($data: SalesReportFilter!) {
+  report {
+    accountingReport {
+      salesReport(data: $data) {
+        data {
+          itemId
+          itemName
+          unitName
+          selligPrice
+          soldQuantity
+          totalPrice
+          vatAmount
+          netAmountWithVat
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventorySalesReportQuery = <
+  TData = GetInventorySalesReportQuery,
+  TError = unknown
+>(
+  variables: GetInventorySalesReportQueryVariables,
+  options?: UseQueryOptions<GetInventorySalesReportQuery, TError, TData>
+) =>
+  useQuery<GetInventorySalesReportQuery, TError, TData>(
+    ['getInventorySalesReport', variables],
+    useAxios<GetInventorySalesReportQuery, GetInventorySalesReportQueryVariables>(
+      GetInventorySalesReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanBalanceReportDocument = `
     query getLoanBalanceReport($data: LoanBalanceFilterData!) {
   report {
@@ -56448,6 +57279,7 @@ export const GetLoanAgingStatementReportDocument = `
         data {
           report {
             memberNo
+            memberName
             loanNo
             name
             address
@@ -60267,6 +61099,181 @@ export const useGetEmployeeHealthInsuranceListQuery = <
     useAxios<GetEmployeeHealthInsuranceListQuery, GetEmployeeHealthInsuranceListQueryVariables>(
       GetEmployeeHealthInsuranceListDocument
     ).bind(null, variables),
+    options
+  );
+export const GetEmployeeLeaveTypeListDocument = `
+    query getEmployeeLeaveTypeList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leave {
+            listLeaveType(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeLeaveTypeListQuery = <
+  TData = GetEmployeeLeaveTypeListQuery,
+  TError = unknown
+>(
+  variables?: GetEmployeeLeaveTypeListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeLeaveTypeListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeLeaveTypeListQuery, TError, TData>(
+    variables === undefined
+      ? ['getEmployeeLeaveTypeList']
+      : ['getEmployeeLeaveTypeList', variables],
+    useAxios<GetEmployeeLeaveTypeListQuery, GetEmployeeLeaveTypeListQueryVariables>(
+      GetEmployeeLeaveTypeListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeLeavePolicyListDocument = `
+    query getEmployeeLeavePolicyList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leavePolicy {
+            listLeavePolicy(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeLeavePolicyListQuery = <
+  TData = GetEmployeeLeavePolicyListQuery,
+  TError = unknown
+>(
+  variables?: GetEmployeeLeavePolicyListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeLeavePolicyListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeLeavePolicyListQuery, TError, TData>(
+    variables === undefined
+      ? ['getEmployeeLeavePolicyList']
+      : ['getEmployeeLeavePolicyList', variables],
+    useAxios<GetEmployeeLeavePolicyListQuery, GetEmployeeLeavePolicyListQueryVariables>(
+      GetEmployeeLeavePolicyListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLeaveTypeDocument = `
+    query getLeaveType($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leave {
+            getLeaveType(id: $id) {
+              record {
+                id
+                name
+                typeOfLeave
+                description
+                applicableAfter
+                maximumLeaveAllowed
+                maximumContinuousDaysApplicable
+                isCarriedForward
+                isPartiallyPaid
+                fractionOfDailySalaryPerLeave
+                isOptionalLeave
+                includeHolidaysWithLeavesAsLeaves
+                isCompensatory
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetLeaveTypeQuery = <TData = GetLeaveTypeQuery, TError = unknown>(
+  variables: GetLeaveTypeQueryVariables,
+  options?: UseQueryOptions<GetLeaveTypeQuery, TError, TData>
+) =>
+  useQuery<GetLeaveTypeQuery, TError, TData>(
+    ['getLeaveType', variables],
+    useAxios<GetLeaveTypeQuery, GetLeaveTypeQueryVariables>(GetLeaveTypeDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetLeavePolicyDocument = `
+    query getLeavePolicy($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leavePolicy {
+            getLeavePolicy(id: $id) {
+              record {
+                name
+                description
+                employeeLevelId
+                effectiveFrom
+                leavePolicyDetails {
+                  leaveTypeId
+                  annualAllocation
+                }
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetLeavePolicyQuery = <TData = GetLeavePolicyQuery, TError = unknown>(
+  variables: GetLeavePolicyQueryVariables,
+  options?: UseQueryOptions<GetLeavePolicyQuery, TError, TData>
+) =>
+  useQuery<GetLeavePolicyQuery, TError, TData>(
+    ['getLeavePolicy', variables],
+    useAxios<GetLeavePolicyQuery, GetLeavePolicyQueryVariables>(GetLeavePolicyDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const LedgerTagsListDocument = `
@@ -65045,6 +66052,32 @@ export const useGetAvailableSlipsListQuery = <TData = GetAvailableSlipsListQuery
     ['getAvailableSlipsList', variables],
     useAxios<GetAvailableSlipsListQuery, GetAvailableSlipsListQueryVariables>(
       GetAvailableSlipsListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAvailableSlipBookRangesDocument = `
+    query getAvailableSlipBookRanges($accountId: ID!) {
+  withdrawSlip {
+    listAvailableSlips(accountId: $accountId) {
+      slipBookRanges {
+        from
+        to
+      }
+    }
+  }
+}
+    `;
+export const useGetAvailableSlipBookRangesQuery = <
+  TData = GetAvailableSlipBookRangesQuery,
+  TError = unknown
+>(
+  variables: GetAvailableSlipBookRangesQueryVariables,
+  options?: UseQueryOptions<GetAvailableSlipBookRangesQuery, TError, TData>
+) =>
+  useQuery<GetAvailableSlipBookRangesQuery, TError, TData>(
+    ['getAvailableSlipBookRanges', variables],
+    useAxios<GetAvailableSlipBookRangesQuery, GetAvailableSlipBookRangesQueryVariables>(
+      GetAvailableSlipBookRangesDocument
     ).bind(null, variables),
     options
   );

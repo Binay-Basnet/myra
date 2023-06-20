@@ -100,7 +100,7 @@ export const ReportContent = ({ children }: { children: React.ReactNode }) => {
             borderRadius: '0',
           },
           '@page': {
-            size: 'A4 landscape',
+            size: 'A4 potrait',
             margin: '0.2in',
             marginLeft: '0.4in',
             marginBottom: '0',

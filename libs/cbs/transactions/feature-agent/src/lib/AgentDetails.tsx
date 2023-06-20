@@ -4,6 +4,7 @@ import { Scrollable } from '@myra-ui';
 
 import { AgentAssignedMembers } from './AgentAssignedMembers';
 import { AgentDetailOverview } from './AgentDetailOverview';
+import { Templates } from './Templates';
 
 export const AgentDetails = () => {
   const router = useRouter();
@@ -17,6 +18,8 @@ export const AgentDetails = () => {
       )}
 
       {tabQuery === 'assigned members' && <AgentAssignedMembers />}
+
+      {tabQuery === 'templates' && <Templates />}
 
       {/* {tabQuery === 'accounts' && <Account />}
         {tabQuery === 'activity' && <Activity />}

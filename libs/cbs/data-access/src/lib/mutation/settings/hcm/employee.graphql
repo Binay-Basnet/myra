@@ -110,3 +110,41 @@ mutation deleteHcmEmployeeGeneral($id: String!) {
     }
   }
 }
+
+mutation setEmployeeLeaveType($id: String, $input: LeaveTypeInput!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leave {
+            upsertLeaveType(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setEmployeeLeavePolicy($id: String, $input: LeavePolicyInput!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leavePolicy {
+            upsertLeavePolicy(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

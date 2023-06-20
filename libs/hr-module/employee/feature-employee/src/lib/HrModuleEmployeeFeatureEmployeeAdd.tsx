@@ -35,7 +35,7 @@ export const EmployeeAddForm = () => {
   }>();
 
   const methods = useForm();
-  const { getValues, watch, reset } = methods;
+  const { getValues, watch, reset, setValue } = methods;
   const { mutateAsync } = useSetNewEmployeeMutation();
 
   const isCoopMemberWatch = watch('isCoopMember');
@@ -75,6 +75,7 @@ export const EmployeeAddForm = () => {
           locality: temporaryAddressInfo?.address?.locality?.local,
         },
       });
+      setValue('isCoopMember', true);
     }
   }, [JSON.stringify(personalInfo)]);
 

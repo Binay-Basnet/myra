@@ -6,6 +6,7 @@ import {
   SourceOfHire,
   useGetDepartmentListQuery,
   useGetDesignationListQuery,
+  useGetEmployeeLevelListQuery,
 } from '@coop/cbs/data-access';
 import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
@@ -31,6 +32,24 @@ export const EmployeeWorkInformation = () => {
       },
     },
   });
+  const { data: employeeLevelData } = useGetEmployeeLevelListQuery({
+    pagination: {
+      ...getPaginationQuery(),
+      first: -1,
+      order: {
+        arrange: 'ASC',
+        column: 'ID',
+      },
+    },
+  });
+
+  const employeeLevelOptions =
+    employeeLevelData?.settings?.general?.HCM?.employee?.employee?.listEmployeeLevel?.edges?.map(
+      (item) => ({
+        label: item?.node?.name as string,
+        value: item?.node?.id as string,
+      })
+    );
 
   const departmentOptions =
     departmentData?.settings?.general?.HCM?.employee?.employee?.listDepartment?.edges?.map(
@@ -71,7 +90,7 @@ export const EmployeeWorkInformation = () => {
 
   return (
     <FormSection id="Work Information" header="Work Information">
-      <FormSelect name="employeeLevelId" label="Employee Level" />
+      <FormSelect name="employeeLevelId" label="Employee Level" options={employeeLevelOptions} />
       <FormSelect name="departmentId" label="Department" options={departmentOptions} />
       <FormSelect name="designationId" label="Designation" options={designationOptions} />
       <FormBranchSelect name="serviceCenter" label="Service Center" />

@@ -69,17 +69,14 @@ export const GeneralUpdatesPage = () => {
       },
     ];
 
-    if (detailData?.nature === 'RECURRING_SAVING') {
-      options.push({
-        title: 'Tenure',
-        onClick: onTenureModalToggle,
-        icon: HiOutlineRefresh,
-      });
-    }
-
     if (detailData?.nature === 'RECURRING_SAVING' || detailData?.nature === 'TERM_SAVING_OR_FD') {
       options.push(
         ...[
+          {
+            title: 'Tenure',
+            onClick: onTenureModalToggle,
+            icon: HiOutlineRefresh,
+          },
           {
             title: 'Premature Penalty',
             onClick: onPrematurePenaltyModalToggle,

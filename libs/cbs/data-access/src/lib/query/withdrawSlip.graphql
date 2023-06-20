@@ -22,6 +22,17 @@ query getAvailableSlipsList($accountId: ID!) {
   }
 }
 
+query getAvailableSlipBookRanges($accountId: ID!) {
+  withdrawSlip {
+    listAvailableSlips(accountId: $accountId) {
+      slipBookRanges {
+        from
+        to
+      }
+    }
+  }
+}
+
 query getAvailableRange($count: Int!) {
   withdrawSlip {
     getAvailableRange(count: $count) {

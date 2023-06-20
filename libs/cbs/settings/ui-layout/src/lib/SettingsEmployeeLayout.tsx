@@ -12,6 +12,10 @@ const tabList = [
     title: 'General',
     to: ROUTES.HRMODULE_EMPLOYEES_SETTINGS,
   },
+  {
+    title: 'Leave',
+    to: ROUTES.HRMODULE_EMPLOYEES_LEAVE_SETTINGS,
+  },
 ];
 
 interface ISettingsDepositLayout {

@@ -83,7 +83,7 @@ export const UpdateAccountPremiumModal = ({ isOpen, onClose }: IUpdateAccountPre
                 </li>
                 <li>
                   <Text fontSize="s3">
-                    Maximum Balance Limit: {detailData?.interest?.maxRate ?? 'N/A'}
+                    Maximum Interest Rate: {detailData?.interest?.maxRate ?? 'N/A'}
                   </Text>
                 </li>
               </ul>
