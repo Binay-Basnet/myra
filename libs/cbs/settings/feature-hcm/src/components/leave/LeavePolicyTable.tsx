@@ -1,32 +1,106 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { BiEdit } from 'react-icons/bi';
 
-import { asyncToast, Box, Button, Column, Divider, Icon, Modal, Table, Text } from '@myra-ui';
+import {
+  asyncToast,
+  Box,
+  Button,
+  Column,
+  Divider,
+  Grid,
+  GridItem,
+  Icon,
+  Modal,
+  Table,
+  Text,
+} from '@myra-ui';
 
 import {
+  LeavePolicyInput,
   useDeleteHcmEmployeeGeneralMutation,
   useGetEmployeeLeavePolicyListQuery,
+  useGetEmployeeLeaveTypeListQuery,
+  useGetEmployeeLevelListQuery,
+  useGetLeavePolicyQuery,
   useSetEmployeeLeavePolicyMutation,
 } from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
-import { FormInput } from '@coop/shared/form';
+import {
+  FormDatePicker,
+  FormEditableTable,
+  FormInput,
+  FormSelect,
+  FormTextArea,
+} from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
+
+type LeavePolicyType = {
+  leaveTypeId: string;
+  annualAllocation: number;
+};
 
 export const LeavePolicyTable = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [selectedDepartmentId, setSelectedDepartmentId] = useState('');
+  const [selectedLeavePolicyId, setSelectedLeavePolicyId] = useState('');
+
+  const methods = useForm();
+  const { getValues, handleSubmit, reset } = methods;
 
   const { data, refetch } = useGetEmployeeLeavePolicyListQuery({
     pagination: getPaginationQuery(),
   });
   const { mutateAsync, isLoading } = useSetEmployeeLeavePolicyMutation();
   const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+  const { data: leavePolicyData } = useGetLeavePolicyQuery(
+    { id: selectedLeavePolicyId },
+    { enabled: !!selectedLeavePolicyId }
+  );
 
-  const methods = useForm();
-  const { getValues, handleSubmit } = methods;
+  const leavePolicyDataEdit =
+    leavePolicyData?.settings?.general?.HCM?.employee?.leavePolicy?.getLeavePolicy?.record;
+
+  useEffect(() => {
+    reset(leavePolicyDataEdit as LeavePolicyInput);
+  }, [leavePolicyDataEdit]);
+
+  const { data: employeeLevelData } = useGetEmployeeLevelListQuery({
+    pagination: {
+      ...getPaginationQuery(),
+      first: -1,
+      order: {
+        arrange: 'ASC',
+        column: 'ID',
+      },
+    },
+  });
+
+  const { data: leaveTypeData } = useGetEmployeeLeaveTypeListQuery({
+    pagination: {
+      ...getPaginationQuery(),
+      first: -1,
+      order: {
+        arrange: 'ASC',
+        column: 'ID',
+      },
+    },
+  });
+
+  const employeeLevelOptions =
+    employeeLevelData?.settings?.general?.HCM?.employee?.employee?.listEmployeeLevel?.edges?.map(
+      (item) => ({
+        label: item?.node?.name as string,
+        value: item?.node?.id as string,
+      })
+    );
+
+  const leaveTypeOptions =
+    leaveTypeData?.settings?.general?.HCM?.employee?.leave?.listLeaveType?.edges?.map((item) => ({
+      label: item?.node?.name as string,
+      value: item?.node?.id as string,
+    }));
 
   const rowData = useMemo(
     () => data?.settings?.general?.HCM?.employee?.leavePolicy?.listLeavePolicy?.edges ?? [],
@@ -56,7 +130,7 @@ export const LeavePolicyTable = () => {
               gap="s8"
               cursor="pointer"
               onClick={() => {
-                setSelectedDepartmentId(props?.row?.original?.node?.id as string);
+                setSelectedLeavePolicyId(props?.row?.original?.node?.id as string);
                 setIsAddModalOpen(true);
               }}
             >
@@ -70,7 +144,7 @@ export const LeavePolicyTable = () => {
               gap="s8"
               cursor="pointer"
               onClick={() => {
-                setSelectedDepartmentId(props?.row?.original?.node?.id as string);
+                setSelectedLeavePolicyId(props?.row?.original?.node?.id as string);
                 setIsDeleteModalOpen(true);
               }}
             >
@@ -86,18 +160,19 @@ export const LeavePolicyTable = () => {
 
   const handleAddModalClose = () => {
     setIsAddModalOpen(false);
-    setSelectedDepartmentId('');
+    setSelectedLeavePolicyId('');
+    reset();
   };
 
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
-    setSelectedDepartmentId('');
+    setSelectedLeavePolicyId('');
   };
 
   const onSubmit = () => {
-    if (selectedDepartmentId) {
+    if (selectedLeavePolicyId) {
       asyncToast({
-        id: 'edit-employee-policy',
+        id: 'edit-leave-policy',
         msgs: {
           success: 'Leave Policy edited succesfully',
           loading: 'Editing leave policy',
@@ -107,13 +182,13 @@ export const LeavePolicyTable = () => {
           handleAddModalClose();
         },
         promise: mutateAsync({
-          id: selectedDepartmentId,
-          input: { name: getValues()?.name, description: getValues()?.description },
+          id: selectedLeavePolicyId,
+          input: getValues(),
         }),
       });
     } else {
       asyncToast({
-        id: 'new-department',
+        id: 'new-leave-policy',
         msgs: {
           success: 'New Leave Policy added succesfully',
           loading: 'Adding new leave policy',
@@ -124,7 +199,7 @@ export const LeavePolicyTable = () => {
         },
         promise: mutateAsync({
           id: null,
-          input: { name: getValues()?.name, description: getValues()?.description },
+          input: getValues(),
         }),
       });
     }
@@ -141,12 +216,12 @@ export const LeavePolicyTable = () => {
         refetch();
         handleDeleteModalClose();
       },
-      promise: deleteMutateAsync({ id: selectedDepartmentId }),
+      promise: deleteMutateAsync({ id: selectedLeavePolicyId }),
     });
   };
 
   return (
-    <Box id="department">
+    <Box id="leave-policy">
       <SettingsCard
         title="Leave Policy"
         subtitle="Extends Fields that can be added to forms for additional input Fields"
@@ -170,24 +245,60 @@ export const LeavePolicyTable = () => {
         open={isAddModalOpen}
         onClose={handleAddModalClose}
         isCentered
-        title="Department"
-        width="xl"
+        title={selectedLeavePolicyId ? ' Edit leave policy' : 'Add leave policy'}
+        width="5xl"
       >
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Box display="flex" flexDir="column" gap="s16">
-              <FormInput name="name" label="Name" />
-              <FormInput name="description" label="Description" />
-              <Divider />
-              <Button
-                w="-webkit-fit-content"
-                alignSelf="flex-end"
-                type="submit"
-                isLoading={isLoading}
-              >
-                Save
-              </Button>
-            </Box>
+            <Grid templateColumns="repeat(3,1fr)" gap="s16">
+              <GridItem colSpan={2}>
+                <FormInput name="name" label="Name" />
+              </GridItem>
+              <FormSelect
+                name="employeeLevelId"
+                label="Assign to Employee Level"
+                options={employeeLevelOptions}
+              />
+              <GridItem colSpan={3}>
+                <FormTextArea name="description" label="Description" />
+              </GridItem>
+              <FormDatePicker name="effectiveFrom" label="Effective From" />
+
+              <GridItem colSpan={3}>
+                <Divider />
+              </GridItem>
+              <GridItem colSpan={3}>
+                <Box display="flex" flexDir="column" gap="s16">
+                  <Text fontSize="s3">Leave Policy Details</Text>
+
+                  <FormEditableTable<LeavePolicyType>
+                    name="leavePolicyDetails"
+                    columns={[
+                      {
+                        accessor: 'leaveTypeId',
+                        header: 'Leave Type',
+                        cellWidth: 'auto',
+                        fieldType: 'select',
+                        selectOptions: leaveTypeOptions,
+                      },
+                      {
+                        accessor: 'annualAllocation',
+                        header: 'Annual Allocation',
+                      },
+                    ]}
+                  />
+
+                  <Button
+                    w="-webkit-fit-content"
+                    alignSelf="flex-end"
+                    type="submit"
+                    isLoading={isLoading}
+                  >
+                    Save
+                  </Button>
+                </Box>
+              </GridItem>
+            </Grid>
           </form>
         </FormProvider>
       </Modal>

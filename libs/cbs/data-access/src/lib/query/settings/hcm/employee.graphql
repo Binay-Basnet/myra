@@ -186,3 +186,64 @@ query getEmployeeLeavePolicyList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getLeaveType($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leave {
+            getLeaveType(id: $id) {
+              record {
+                id
+                name
+                typeOfLeave
+                description
+                applicableAfter
+                maximumLeaveAllowed
+                maximumContinuousDaysApplicable
+                isCarriedForward
+                isPartiallyPaid
+                fractionOfDailySalaryPerLeave
+                isOptionalLeave
+                includeHolidaysWithLeavesAsLeaves
+                isCompensatory
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLeavePolicy($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leavePolicy {
+            getLeavePolicy(id: $id) {
+              record {
+                name
+                description
+                employeeLevelId
+                effectiveFrom
+                leavePolicyDetails {
+                  leaveTypeId
+                  annualAllocation
+                }
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
