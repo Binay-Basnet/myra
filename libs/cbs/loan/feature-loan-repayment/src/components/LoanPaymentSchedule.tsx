@@ -162,15 +162,12 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     [paymentSchedule]
   );
 
-  const totalOverdueAmount = useMemo(
-    () =>
-      overDueInstallments.reduce((sum, installment) => sum + Number(installment?.overdueAmount), 0),
-    [overDueInstallments]
-  );
-
-  const totalOverduePrincipal = useMemo(
-    () => (totalOverdueAmount - totalOverdueInterest - totalFine).toFixed(2),
-    [totalOverdueInterest, totalOverdueAmount]
+  const { totalOverdueAmount, totalOverduePrincipal } = useMemo(
+    () => ({
+      totalOverdueAmount: paymentSchedule?.totalOverduePayable,
+      totalOverduePrincipal: paymentSchedule?.totalOverduePrincipal,
+    }),
+    [paymentSchedule]
   );
 
   return (
