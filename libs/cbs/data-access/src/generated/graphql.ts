@@ -30263,6 +30263,8 @@ export type GetLoanPreviewQuery = {
           duesSince?: Record<'local' | 'en' | 'np', string> | null;
           totalPayablePrincipal?: string | null;
           totalPayableInterest?: string | null;
+          totalOverduePayable?: string | null;
+          totalOverduePrincipal?: string | null;
           installments?: Array<{
             installmentDate: Record<'local' | 'en' | 'np', string>;
             installmentNo: number;
@@ -53731,6 +53733,8 @@ export const GetLoanPreviewDocument = `
           duesSince
           totalPayablePrincipal
           totalPayableInterest
+          totalOverduePayable
+          totalOverduePrincipal
         }
         statistics {
           remainingPayableAmount

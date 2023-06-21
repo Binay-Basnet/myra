@@ -26,7 +26,7 @@ export const EmployeeHealthInsuranceTable = () => {
   const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
 
   const methods = useForm();
-  const { getValues, handleSubmit } = methods;
+  const { getValues, handleSubmit, reset } = methods;
 
   const rowData = useMemo(
     () =>
@@ -88,6 +88,7 @@ export const EmployeeHealthInsuranceTable = () => {
   const handleAddModalClose = () => {
     setIsAddModalOpen(false);
     setSelectedEmpoyeeHealthInsuranceId('');
+    reset({ healthInsuranceProvider: '', healthInsuranceNumber: '' });
   };
 
   const handleDeleteModalClose = () => {

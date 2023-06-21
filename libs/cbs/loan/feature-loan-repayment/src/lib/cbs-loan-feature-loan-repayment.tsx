@@ -152,7 +152,7 @@ export const LoanRepayment = () => {
   const handleSubmit = () => {
     const values = getValues();
 
-    let filteredValues = { ...values };
+    let filteredValues = omit(values, ['isFinePaid']);
 
     if (!values?.penalty?.amount) {
       filteredValues = omit(filteredValues, ['penalty']);
