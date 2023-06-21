@@ -32,7 +32,7 @@ export const OverviewPage = () => {
     },
     {
       title: 'Loan Statement',
-      link: `${ROUTES.CBS_REPORTS_LOAN_STATEMENT}?memberId=${memberDetails?.memberId}&loanAccountId=${generalInfo?.accountId}`,
+      link: `${ROUTES.CBS_REPORTS_LOAN_ACCOUNT_STATEMENT_REPORT}?memberId=${memberDetails?.memberId}&loanAccountId=${generalInfo?.accountId}`,
       icon: AiOutlineFileText,
     },
   ];
