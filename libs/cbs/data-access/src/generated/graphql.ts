@@ -13131,6 +13131,8 @@ export type LoanInstallments = {
   installments?: Maybe<Array<Maybe<LoanInstallment>>>;
   total: Scalars['String'];
   totalInterest?: Maybe<Scalars['String']>;
+  totalOverduePayable?: Maybe<Scalars['String']>;
+  totalOverduePrincipal?: Maybe<Scalars['String']>;
   totalPayableInterest?: Maybe<Scalars['String']>;
   totalPayablePrincipal?: Maybe<Scalars['String']>;
   totalPrincipal?: Maybe<Scalars['String']>;
@@ -17472,12 +17474,21 @@ export type SalesReportFilter = {
   branchId: Array<Scalars['String']>;
   creatorIds?: InputMaybe<Array<Scalars['String']>>;
   itemIds?: InputMaybe<Array<Scalars['String']>>;
-  period: Scalars['Localized'];
+  period: LocalizedDateFilter;
 };
 
 export type SalesReportResult = {
   data?: Maybe<Array<Maybe<SalesReportDataList>>>;
   error?: Maybe<QueryError>;
+  summationData?: Maybe<SalesResportSummary>;
+};
+
+export type SalesResportSummary = {
+  totalPerQuantityPrice: Scalars['String'];
+  totalPrice: Scalars['String'];
+  totalPriceWithVat: Scalars['String'];
+  totalQuantitySold: Scalars['String'];
+  totalVatAmount: Scalars['String'];
 };
 
 export type SalesSaleCreditNote = {
@@ -30096,6 +30107,8 @@ export type GetLoanPreviewQuery = {
           duesSince?: Record<'local' | 'en' | 'np', string> | null;
           totalPayablePrincipal?: string | null;
           totalPayableInterest?: string | null;
+          totalOverduePayable?: string | null;
+          totalOverduePrincipal?: string | null;
           installments?: Array<{
             installmentDate: Record<'local' | 'en' | 'np', string>;
             installmentNo: number;
@@ -53358,6 +53371,8 @@ export const GetLoanPreviewDocument = `
           duesSince
           totalPayablePrincipal
           totalPayableInterest
+          totalOverduePayable
+          totalOverduePrincipal
         }
         statistics {
           remainingPayableAmount

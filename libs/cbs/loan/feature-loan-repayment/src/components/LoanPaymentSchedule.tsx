@@ -83,9 +83,17 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     [paymentSchedule]
   );
 
-  const currentInstallment = loanInstallments?.find(
-    (installment) => installment?.status === 'CURRENT'
-  );
+  const currentInstallment = useMemo(() => {
+    let current = loanInstallments?.find((installment) => installment?.status === 'CURRENT');
+
+    if (current) return current;
+
+    current = loanInstallments?.find((installment) => !installment?.status);
+
+    if (current?.interest) return current;
+
+    return null;
+  }, [loanInstallments]);
 
   useDeepCompareEffect(() => {
     let tempFine = overDueInstallments?.reduce(
@@ -154,15 +162,12 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     [paymentSchedule]
   );
 
-  const totalOverdueAmount = useMemo(
-    () =>
-      overDueInstallments.reduce((sum, installment) => sum + Number(installment?.overdueAmount), 0),
-    [overDueInstallments]
-  );
-
-  const totalOverduePrincipal = useMemo(
-    () => (totalOverdueAmount - totalOverdueInterest - totalFine).toFixed(2),
-    [totalOverdueInterest, totalOverdueAmount]
+  const { totalOverdueAmount, totalOverduePrincipal } = useMemo(
+    () => ({
+      totalOverdueAmount: paymentSchedule?.totalOverduePayable,
+      totalOverduePrincipal: paymentSchedule?.totalOverduePrincipal,
+    }),
+    [paymentSchedule]
   );
 
   return (
