@@ -12,3 +12,18 @@ mutation setEmployeeOnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) 
     }
   }
 }
+
+mutation setEmployeeTransferUpsert($input: EmployeeTransferInput!) {
+  hr {
+    employeelifecycle {
+      employeeTransfer {
+        insertEmployeeTransfer(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

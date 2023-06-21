@@ -17472,12 +17472,21 @@ export type SalesReportFilter = {
   branchId: Array<Scalars['String']>;
   creatorIds?: InputMaybe<Array<Scalars['String']>>;
   itemIds?: InputMaybe<Array<Scalars['String']>>;
-  period: Scalars['Localized'];
+  period: LocalizedDateFilter;
 };
 
 export type SalesReportResult = {
   data?: Maybe<Array<Maybe<SalesReportDataList>>>;
   error?: Maybe<QueryError>;
+  summationData?: Maybe<SalesResportSummary>;
+};
+
+export type SalesResportSummary = {
+  totalPerQuantityPrice: Scalars['String'];
+  totalPrice: Scalars['String'];
+  totalPriceWithVat: Scalars['String'];
+  totalQuantitySold: Scalars['String'];
+  totalVatAmount: Scalars['String'];
 };
 
 export type SalesSaleCreditNote = {
@@ -21737,6 +21746,29 @@ export type SetEmployeeOnboardingUpsertMutation = {
     employeelifecycle?: {
       employeeOnboarding: {
         upsertEmployeeOnboarding: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
+
+export type SetEmployeeTransferUpsertMutationVariables = Exact<{
+  input: EmployeeTransferInput;
+}>;
+
+export type SetEmployeeTransferUpsertMutation = {
+  hr: {
+    employeelifecycle?: {
+      employeeTransfer: {
+        insertEmployeeTransfer: {
           recordId: string;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -28368,12 +28400,120 @@ export type GetLeaveListQuery = {
   };
 };
 
+export type GetSingleEmployeeDetailsQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetSingleEmployeeDetailsQuery = {
+  hr: {
+    employee: {
+      employee: {
+        getEmployee: {
+          record?: {
+            id?: string | null;
+            firstName?: string | null;
+            middleName?: string | null;
+            lastName?: string | null;
+            dateOfBirth?: Record<'local' | 'en' | 'np', string> | null;
+            age?: number | null;
+            gender?: GenderType | null;
+            maritalStatus?: MaritalStatusType | null;
+            workPhoneNumber?: string | null;
+            workEmailAddress?: string | null;
+            personalPhoneNumber?: string | null;
+            personalEmailAddress?: string | null;
+            isTemporarySameAsPermanent?: boolean | null;
+            employeeLevelId?: string | null;
+            departmentId?: string | null;
+            designationId?: string | null;
+            serviceCenter?: string | null;
+            employmentType?: EmployeeTypeEnum | null;
+            employeeStatus?: EmployeeStatus | null;
+            sourceOfHire?: SourceOfHire | null;
+            salaryPaymentMode?: PaymentMode | null;
+            panNumber?: string | null;
+            providentFundAccount?: string | null;
+            salaryStructureAssignment?: string | null;
+            jobApplicationId?: string | null;
+            jobOffer?: string | null;
+            appointmentLetter?: string | null;
+            dateOfJoining?: Record<'local' | 'en' | 'np', string> | null;
+            reportsToId?: string | null;
+            leaveApproverId?: string | null;
+            expenseApproverId?: string | null;
+            healthInsuranceProviderId?: string | null;
+            healthInsuranceNumberId?: string | null;
+            educationDetails?: Array<{
+              instituteName?: string | null;
+              degree_diploma?: string | null;
+              specialization?: string | null;
+              dateOfCompletion?: Record<'local' | 'en' | 'np', string> | null;
+            } | null> | null;
+            permanentAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+            temporaryAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+            workExperience?: Array<{
+              companyName?: string | null;
+              designation?: string | null;
+              salary?: number | null;
+              address?: string | null;
+            } | null> | null;
+          } | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetHrEmployeeOnboardingListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
 export type GetHrEmployeeOnboardingListQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeOnboarding: {
+        listEmployeeOnboarding: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              activity?: string | null;
+              email?: string | null;
+              id: string;
+              name?: string | null;
+              onboarding_status?: OnboardingStatus | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetEmployeeDetailsIndividualQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeDetailsIndividualQuery = {
   hr: {
     employeelifecycle: {
       employeeOnboarding: {
@@ -41708,6 +41848,42 @@ export const useSetEmployeeOnboardingUpsertMutation = <TError = unknown, TContex
     ),
     options
   );
+export const SetEmployeeTransferUpsertDocument = `
+    mutation setEmployeeTransferUpsert($input: EmployeeTransferInput!) {
+  hr {
+    employeelifecycle {
+      employeeTransfer {
+        insertEmployeeTransfer(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeTransferUpsertMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeTransferUpsertMutation,
+    TError,
+    SetEmployeeTransferUpsertMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeTransferUpsertMutation,
+    TError,
+    SetEmployeeTransferUpsertMutationVariables,
+    TContext
+  >(
+    ['setEmployeeTransferUpsert'],
+    useAxios<SetEmployeeTransferUpsertMutation, SetEmployeeTransferUpsertMutationVariables>(
+      SetEmployeeTransferUpsertDocument
+    ),
+    options
+  );
 export const SetStaffPlanningDocument = `
     mutation setStaffPlanning($id: ID, $input: StaffPlanInput!) {
   hr {
@@ -51097,6 +51273,103 @@ export const useGetLeaveListQuery = <TData = GetLeaveListQuery, TError = unknown
     ),
     options
   );
+export const GetSingleEmployeeDetailsDocument = `
+    query getSingleEmployeeDetails($id: String!) {
+  hr {
+    employee {
+      employee {
+        getEmployee(id: $id) {
+          record {
+            id
+            firstName
+            middleName
+            lastName
+            dateOfBirth
+            age
+            gender
+            maritalStatus
+            workPhoneNumber
+            workEmailAddress
+            personalPhoneNumber
+            personalEmailAddress
+            educationDetails {
+              instituteName
+              degree_diploma
+              specialization
+              dateOfCompletion
+            }
+            permanentAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            isTemporarySameAsPermanent
+            temporaryAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            employeeLevelId
+            departmentId
+            designationId
+            serviceCenter
+            employmentType
+            employeeStatus
+            sourceOfHire
+            workExperience {
+              companyName
+              designation
+              salary
+              address
+            }
+            salaryPaymentMode
+            panNumber
+            providentFundAccount
+            salaryStructureAssignment
+            jobApplicationId
+            jobOffer
+            appointmentLetter
+            dateOfJoining
+            reportsToId
+            leaveApproverId
+            expenseApproverId
+            healthInsuranceProviderId
+            healthInsuranceNumberId
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSingleEmployeeDetailsQuery = <
+  TData = GetSingleEmployeeDetailsQuery,
+  TError = unknown
+>(
+  variables: GetSingleEmployeeDetailsQueryVariables,
+  options?: UseQueryOptions<GetSingleEmployeeDetailsQuery, TError, TData>
+) =>
+  useQuery<GetSingleEmployeeDetailsQuery, TError, TData>(
+    ['getSingleEmployeeDetails', variables],
+    useAxios<GetSingleEmployeeDetailsQuery, GetSingleEmployeeDetailsQueryVariables>(
+      GetSingleEmployeeDetailsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetHrEmployeeOnboardingListDocument = `
     query getHREmployeeOnboardingList($filter: Filter, $pagination: Pagination) {
   hr {
@@ -51136,6 +51409,48 @@ export const useGetHrEmployeeOnboardingListQuery = <
       : ['getHREmployeeOnboardingList', variables],
     useAxios<GetHrEmployeeOnboardingListQuery, GetHrEmployeeOnboardingListQueryVariables>(
       GetHrEmployeeOnboardingListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeDetailsIndividualDocument = `
+    query getEmployeeDetailsIndividual($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeeOnboarding {
+        listEmployeeOnboarding(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              activity
+              email
+              id
+              name
+              onboarding_status
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeDetailsIndividualQuery = <
+  TData = GetEmployeeDetailsIndividualQuery,
+  TError = unknown
+>(
+  variables?: GetEmployeeDetailsIndividualQueryVariables,
+  options?: UseQueryOptions<GetEmployeeDetailsIndividualQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeDetailsIndividualQuery, TError, TData>(
+    variables === undefined
+      ? ['getEmployeeDetailsIndividual']
+      : ['getEmployeeDetailsIndividual', variables],
+    useAxios<GetEmployeeDetailsIndividualQuery, GetEmployeeDetailsIndividualQueryVariables>(
+      GetEmployeeDetailsIndividualDocument
     ).bind(null, variables),
     options
   );

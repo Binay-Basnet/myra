@@ -52,3 +52,85 @@ query getLeaveList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getSingleEmployeeDetails($id: String!) {
+  hr {
+    employee {
+      employee {
+        getEmployee(id: $id) {
+          record {
+            id
+            firstName
+            middleName
+            lastName
+            dateOfBirth
+            age
+            gender
+            maritalStatus
+            workPhoneNumber
+            workEmailAddress
+            personalPhoneNumber
+            personalEmailAddress
+            educationDetails {
+              instituteName
+              degree_diploma
+              specialization
+              dateOfCompletion
+            }
+            permanentAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            isTemporarySameAsPermanent
+            temporaryAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            employeeLevelId
+            departmentId
+            designationId
+            serviceCenter
+            employmentType
+            employeeStatus
+            sourceOfHire
+            workExperience {
+              companyName
+              designation
+              salary
+              address
+            }
+            salaryPaymentMode
+            panNumber
+            providentFundAccount
+            salaryStructureAssignment
+            jobApplicationId
+            jobOffer
+            appointmentLetter
+            dateOfJoining
+            reportsToId
+            leaveApproverId
+            expenseApproverId
+            healthInsuranceProviderId
+            healthInsuranceNumberId
+          }
+        }
+      }
+    }
+  }
+}
