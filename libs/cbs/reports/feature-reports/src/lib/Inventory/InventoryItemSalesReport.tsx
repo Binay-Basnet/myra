@@ -11,8 +11,9 @@ import {
   useGetSettingsUserListDataQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
+import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormBranchSelect, FormDatePicker, FormSelect } from '@coop/shared/form';
+import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter, quantityConverter, useIsCbs } from '@coop/shared/utils';
 
 type InventoryRegisterFilter = {
@@ -74,8 +75,9 @@ export const InventoryItemSalesReport = () => {
   const { data, isFetching } = useGetInventorySalesReportQuery(
     {
       data: {
+        ...filters,
         branchId: branchIds,
-        period: filters?.period?.from,
+
         creatorIds: creatorsIds,
         itemIds: itemsIds,
       } as SalesReportFilter,
@@ -113,11 +115,12 @@ export const InventoryItemSalesReport = () => {
           <GridItem colSpan={1}>
             <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
           </GridItem>
-          <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Select Date" />
-          </GridItem>
+
           <GridItem colSpan={1}>
             <FormSelect isMulti name="itemIds" label="Select Items" options={itemSearchOptions} />
+          </GridItem>
+          <GridItem colSpan={2}>
+            <ReportDateRange />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
