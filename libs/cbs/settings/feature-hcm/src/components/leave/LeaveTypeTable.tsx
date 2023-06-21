@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { BiEdit } from 'react-icons/bi';
+import { omit } from 'lodash';
 
 import {
   asyncToast,
@@ -49,7 +50,7 @@ export const LeaveTypeTable = () => {
   const leaveDataEdit = leaveData?.settings?.general?.HCM?.employee?.leave?.getLeaveType?.record;
 
   useEffect(() => {
-    reset(leaveDataEdit as LeaveTypeInput);
+    reset(omit({ ...leaveDataEdit }, ['id']) as LeaveTypeInput);
   }, [leaveDataEdit]);
 
   const rowData = useMemo(

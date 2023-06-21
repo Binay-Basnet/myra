@@ -7,11 +7,13 @@ import { FormCheckbox, FormLayout, FormMemberSelect } from '@coop/shared/form';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
+  EmployeeInput,
   MemberType,
   useGetIndividualKymEditDataQuery,
   useSetNewEmployeeMutation,
 } from '@coop/cbs/data-access';
 import { useRouter } from 'next/router';
+import { omit } from 'lodash';
 import {
   Approvers,
   EmployeeAddress,
@@ -61,7 +63,7 @@ export const EmployeeAddForm = () => {
         firstName: personalInfo?.firstName?.local,
         middleName: personalInfo?.middleName?.local,
         lastName: personalInfo?.lastName?.local,
-        gender: personalInfo?.genderId,
+        // gender: personalInfo?.genderId,
         dateOfBirth: personalInfo?.dateOfBirth,
         personalPhoneNumber: contactInfo?.mobileNumber,
         personalEmailAddress: contactInfo?.email,
@@ -80,6 +82,7 @@ export const EmployeeAddForm = () => {
   }, [JSON.stringify(personalInfo)]);
 
   const onSave = () => {
+    const values = getValues();
     asyncToast({
       id: 'add-employee',
       msgs: {
@@ -91,9 +94,7 @@ export const EmployeeAddForm = () => {
       },
       promise: mutateAsync({
         id: null,
-        input: {
-          ...getValues(),
-        },
+        input: omit({ ...values }, ['isCoopMember', 'memberId']) as EmployeeInput,
       }),
     });
   };
