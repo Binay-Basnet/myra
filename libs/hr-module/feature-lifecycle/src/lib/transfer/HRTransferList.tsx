@@ -3,36 +3,44 @@ import { useMemo } from 'react';
 import { PageHeader } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetHrEmployeeOnboardingListQuery } from '@coop/cbs/data-access';
+import { EmployeeTransferType, useGetHrTransferListQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
-export const HrLifecycleOnboardingList = () => {
-  const { data: onBoardingData, isLoading } = useGetHrEmployeeOnboardingListQuery({
+export const HrLifecycleTransferList = () => {
+  const { data: onBoardingData, isLoading } = useGetHrTransferListQuery({
     pagination: getPaginationQuery(),
   });
 
   const rowData =
-    onBoardingData?.hr?.employeelifecycle?.employeeOnboarding?.listEmployeeOnboarding?.edges ?? [];
+    onBoardingData?.hr?.employeelifecycle?.employeeTransfer?.listEmployeeTransfer?.edges ?? [];
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        header: 'Employee Id',
+        id: 'Employee id',
+        accessorFn: (props) => props?.node?.employeeId,
+      },
+      {
         header: 'Name',
-        accessorKey: 'node.name',
+        id: 'Name',
+        accessorFn: (props) => props?.node?.name,
         meta: {
-          width: '80%',
+          width: '50%',
         },
       },
       {
-        header: 'Activity',
-        accessorKey: 'node.activity',
+        header: 'Transfer Type',
+        accessorFn: (props) =>
+          props?.node?.transferType === EmployeeTransferType?.Department
+            ? 'Department'
+            : 'Service Center',
+        id: 'TransferType',
       },
       {
-        header: 'Email',
-        accessorKey: 'node.email',
-      },
-      {
-        header: 'Onboarding Status ',
-        accessorKey: 'node.onboarding_status',
+        header: 'Transfer Date',
+        id: 'Date',
+        accessorFn: (props) => localizedDate(props?.node?.transferDate),
       },
     ],
     []
@@ -47,11 +55,10 @@ export const HrLifecycleOnboardingList = () => {
         columns={columns}
         pagination={{
           total:
-            onBoardingData?.hr?.employeelifecycle?.employeeOnboarding?.listEmployeeOnboarding
+            onBoardingData?.hr?.employeelifecycle?.employeeTransfer?.listEmployeeTransfer
               ?.totalCount ?? 'Many',
           pageInfo:
-            onBoardingData?.hr?.employeelifecycle?.employeeOnboarding?.listEmployeeOnboarding
-              ?.pageInfo,
+            onBoardingData?.hr?.employeelifecycle?.employeeTransfer?.listEmployeeTransfer?.pageInfo,
         }}
       />
     </>

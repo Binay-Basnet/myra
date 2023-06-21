@@ -43,3 +43,28 @@ query getHREmployeeTransferHistory($employeeId: ID!) {
     }
   }
 }
+
+query getHRTransferList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeeTransfer {
+        listEmployeeTransfer(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+              id
+              name
+              transferDate
+              transferType
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

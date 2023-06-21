@@ -28535,6 +28535,34 @@ export type GetHrEmployeeTransferHistoryQuery = {
   };
 };
 
+export type GetHrTransferListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetHrTransferListQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeTransfer: {
+        listEmployeeTransfer: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              employeeId?: string | null;
+              id?: string | null;
+              name?: string | null;
+              transferDate?: Record<'local' | 'en' | 'np', string> | null;
+              transferType?: EmployeeTransferType | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetStaffPlanQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -51444,6 +51472,43 @@ export const useGetHrEmployeeTransferHistoryQuery = <
     ['getHREmployeeTransferHistory', variables],
     useAxios<GetHrEmployeeTransferHistoryQuery, GetHrEmployeeTransferHistoryQueryVariables>(
       GetHrEmployeeTransferHistoryDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetHrTransferListDocument = `
+    query getHRTransferList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeeTransfer {
+        listEmployeeTransfer(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+              id
+              name
+              transferDate
+              transferType
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetHrTransferListQuery = <TData = GetHrTransferListQuery, TError = unknown>(
+  variables?: GetHrTransferListQueryVariables,
+  options?: UseQueryOptions<GetHrTransferListQuery, TError, TData>
+) =>
+  useQuery<GetHrTransferListQuery, TError, TData>(
+    variables === undefined ? ['getHRTransferList'] : ['getHRTransferList', variables],
+    useAxios<GetHrTransferListQuery, GetHrTransferListQueryVariables>(
+      GetHrTransferListDocument
     ).bind(null, variables),
     options
   );

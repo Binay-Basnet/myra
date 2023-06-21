@@ -61,7 +61,9 @@ export const TransferDetailsHistory = () => {
       } Transfer History`}
       flexLayout
     >
-      {(rowData?.branchArray || rowData?.departArray) && (
+      {(transferType === EmployeeTransferType.Department
+        ? rowData?.departArray
+        : rowData?.branchArray) && (
         <EmployeeTransferHistoryTable
           transferType={
             transferType === EmployeeTransferType.Department ? 'Department' : 'Service Cente'
