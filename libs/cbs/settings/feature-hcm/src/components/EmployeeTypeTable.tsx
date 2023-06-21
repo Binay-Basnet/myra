@@ -24,7 +24,7 @@ export const EmployeeTypeTable = () => {
   const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
 
   const methods = useForm();
-  const { getValues, handleSubmit } = methods;
+  const { getValues, handleSubmit, reset } = methods;
 
   const rowData = useMemo(
     () => data?.settings?.general?.HCM?.employee?.employee?.listEmployeeType?.edges ?? [],
@@ -85,6 +85,7 @@ export const EmployeeTypeTable = () => {
   const handleAddModalClose = () => {
     setIsAddModalOpen(false);
     setSelectedEmpoymentTypeId('');
+    reset({ name: '', description: '' });
   };
 
   const handleDeleteModalClose = () => {

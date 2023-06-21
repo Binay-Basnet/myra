@@ -24,7 +24,7 @@ export const DesignationsTable = () => {
   const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
 
   const methods = useForm();
-  const { getValues, handleSubmit } = methods;
+  const { getValues, handleSubmit, reset } = methods;
 
   const rowData = useMemo(
     () => data?.settings?.general?.HCM?.employee?.employee?.listDesignation?.edges ?? [],
@@ -85,6 +85,7 @@ export const DesignationsTable = () => {
   const handleAddModalClose = () => {
     setIsAddModalOpen(false);
     setSelectedDesignationId('');
+    reset({ name: '', description: '' });
   };
 
   const handleDeleteModalClose = () => {
