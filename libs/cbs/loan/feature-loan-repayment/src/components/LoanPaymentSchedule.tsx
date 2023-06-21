@@ -83,9 +83,17 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     [paymentSchedule]
   );
 
-  const currentInstallment = loanInstallments?.find(
-    (installment) => installment?.status === 'CURRENT'
-  );
+  const currentInstallment = useMemo(() => {
+    let current = loanInstallments?.find((installment) => installment?.status === 'CURRENT');
+
+    if (current) return current;
+
+    current = loanInstallments?.find((installment) => !installment?.status);
+
+    if (current?.interest) return current;
+
+    return null;
+  }, [loanInstallments]);
 
   useDeepCompareEffect(() => {
     let tempFine = overDueInstallments?.reduce(

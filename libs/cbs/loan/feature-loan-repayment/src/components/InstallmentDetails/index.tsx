@@ -122,7 +122,8 @@ export const InstallmentData = ({
             (new Date(installment?.installmentDate?.en).getTime() <
               new Date(transactionDate?.en as string).getTime() ||
               installment?.status === 'CURRENT' ||
-              (installment?.status === 'PARTIAL' && installment?.remainingInterest !== '0'))))
+              (installment?.status === 'PARTIAL' && installment?.remainingInterest !== '0') ||
+              (!installment?.status && installment?.interest !== '0'))))
       ) {
         if (tempAmount >= interest) {
           if (existingIndex !== -1) {
