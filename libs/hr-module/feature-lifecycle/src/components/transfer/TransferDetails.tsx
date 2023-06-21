@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { FormSection, GridItem } from '@myra-ui';
@@ -12,9 +12,6 @@ import {
 import { FormDatePicker, FormSelect } from '@coop/shared/form';
 
 export const TransferDetails = () => {
-  const [selectOptions, setSelectOptions] = useState<
-    { label: string; value: string }[] | [] | undefined
-  >([]);
   const { watch } = useFormContext<EmployeeTransferInput>();
   const { data: DepartmentData } = useGetDepartmentListQuery({
     pagination: {
@@ -45,14 +42,6 @@ export const TransferDetails = () => {
     label: data?.node?.name as string,
     value: data?.node?.id as string,
   }));
-  useEffect(() => {
-    if (transferType === EmployeeTransferType?.Department) {
-      setSelectOptions(degisnationOptions);
-    }
-    if (transferType === EmployeeTransferType?.ServiceCenter) {
-      setSelectOptions(serviceCenterOptions);
-    }
-  }, [transferType, degisnationOptions, serviceCenterOptions]);
 
   return (
     <FormSection
@@ -68,7 +57,11 @@ export const TransferDetails = () => {
               ? 'Select Department'
               : 'Select Service Center'
           }
-          options={selectOptions}
+          options={
+            transferType === EmployeeTransferType.Department
+              ? degisnationOptions
+              : serviceCenterOptions
+          }
         />
       </GridItem>
       <FormDatePicker name="transferDate" label="Transfer Date" />

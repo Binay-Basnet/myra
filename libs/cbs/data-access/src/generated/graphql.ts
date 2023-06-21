@@ -13131,6 +13131,8 @@ export type LoanInstallments = {
   installments?: Maybe<Array<Maybe<LoanInstallment>>>;
   total: Scalars['String'];
   totalInterest?: Maybe<Scalars['String']>;
+  totalOverduePayable?: Maybe<Scalars['String']>;
+  totalOverduePrincipal?: Maybe<Scalars['String']>;
   totalPayableInterest?: Maybe<Scalars['String']>;
   totalPayablePrincipal?: Maybe<Scalars['String']>;
   totalPrincipal?: Maybe<Scalars['String']>;
@@ -28508,29 +28510,26 @@ export type GetHrEmployeeOnboardingListQuery = {
   };
 };
 
-export type GetEmployeeDetailsIndividualQueryVariables = Exact<{
-  filter?: InputMaybe<Filter>;
-  pagination?: InputMaybe<Pagination>;
+export type GetHrEmployeeTransferHistoryQueryVariables = Exact<{
+  employeeId: Scalars['ID'];
 }>;
 
-export type GetEmployeeDetailsIndividualQuery = {
+export type GetHrEmployeeTransferHistoryQuery = {
   hr: {
     employeelifecycle: {
-      employeeOnboarding: {
-        listEmployeeOnboarding: {
-          totalCount: number;
-          edges?: Array<{
-            cursor: string;
-            node: {
-              activity?: string | null;
-              email?: string | null;
-              id: string;
-              name?: string | null;
-              onboarding_status?: OnboardingStatus | null;
-            };
+      employeeTransfer: {
+        queryEmployeeTransfer?: {
+          branchArray?: Array<{
+            transferredFrom?: string | null;
+            transferredTo?: string | null;
+            transferDate?: Record<'local' | 'en' | 'np', string> | null;
           } | null> | null;
-          pageInfo?: PaginationFragment | null;
-        };
+          departArray?: Array<{
+            transferredFrom?: string | null;
+            transferredTo?: string | null;
+            transferredDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null> | null;
+        } | null;
       };
     };
   };
@@ -51412,45 +51411,39 @@ export const useGetHrEmployeeOnboardingListQuery = <
     ).bind(null, variables),
     options
   );
-export const GetEmployeeDetailsIndividualDocument = `
-    query getEmployeeDetailsIndividual($filter: Filter, $pagination: Pagination) {
+export const GetHrEmployeeTransferHistoryDocument = `
+    query getHREmployeeTransferHistory($employeeId: ID!) {
   hr {
     employeelifecycle {
-      employeeOnboarding {
-        listEmployeeOnboarding(filter: $filter, pagination: $pagination) {
-          totalCount
-          edges {
-            node {
-              activity
-              email
-              id
-              name
-              onboarding_status
-            }
-            cursor
+      employeeTransfer {
+        queryEmployeeTransfer(employeeId: $employeeId) {
+          branchArray {
+            transferredFrom
+            transferredTo
+            transferDate
           }
-          pageInfo {
-            ...Pagination
+          departArray {
+            transferredFrom
+            transferredTo
+            transferredDate
           }
         }
       }
     }
   }
 }
-    ${PaginationFragmentDoc}`;
-export const useGetEmployeeDetailsIndividualQuery = <
-  TData = GetEmployeeDetailsIndividualQuery,
+    `;
+export const useGetHrEmployeeTransferHistoryQuery = <
+  TData = GetHrEmployeeTransferHistoryQuery,
   TError = unknown
 >(
-  variables?: GetEmployeeDetailsIndividualQueryVariables,
-  options?: UseQueryOptions<GetEmployeeDetailsIndividualQuery, TError, TData>
+  variables: GetHrEmployeeTransferHistoryQueryVariables,
+  options?: UseQueryOptions<GetHrEmployeeTransferHistoryQuery, TError, TData>
 ) =>
-  useQuery<GetEmployeeDetailsIndividualQuery, TError, TData>(
-    variables === undefined
-      ? ['getEmployeeDetailsIndividual']
-      : ['getEmployeeDetailsIndividual', variables],
-    useAxios<GetEmployeeDetailsIndividualQuery, GetEmployeeDetailsIndividualQueryVariables>(
-      GetEmployeeDetailsIndividualDocument
+  useQuery<GetHrEmployeeTransferHistoryQuery, TError, TData>(
+    ['getHREmployeeTransferHistory', variables],
+    useAxios<GetHrEmployeeTransferHistoryQuery, GetHrEmployeeTransferHistoryQueryVariables>(
+      GetHrEmployeeTransferHistoryDocument
     ).bind(null, variables),
     options
   );

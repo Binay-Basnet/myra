@@ -23,24 +23,20 @@ query getHREmployeeOnboardingList($filter: Filter, $pagination: Pagination) {
   }
 }
 
-query getEmployeeDetailsIndividual($filter: Filter, $pagination: Pagination) {
+query getHREmployeeTransferHistory($employeeId: ID!) {
   hr {
     employeelifecycle {
-      employeeOnboarding {
-        listEmployeeOnboarding(filter: $filter, pagination: $pagination) {
-          totalCount
-          edges {
-            node {
-              activity
-              email
-              id
-              name
-              onboarding_status
-            }
-            cursor
+      employeeTransfer {
+        queryEmployeeTransfer(employeeId: $employeeId) {
+          branchArray {
+            transferredFrom
+            transferredTo
+            transferDate
           }
-          pageInfo {
-            ...Pagination
+          departArray {
+            transferredFrom
+            transferredTo
+            transferredDate
           }
         }
       }
