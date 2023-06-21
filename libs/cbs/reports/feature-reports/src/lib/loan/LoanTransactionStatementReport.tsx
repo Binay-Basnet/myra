@@ -76,6 +76,7 @@ export const LoanTransactionStatementReport = () => {
               loanFooter?.openingBalance?.amountType as string
             )}`}</Box>
             <Report.Table<LoanStatement & { index: number }>
+              showFooter
               columns={[
                 {
                   header: 'S.No.',
@@ -84,7 +85,7 @@ export const LoanTransactionStatementReport = () => {
                   meta: {
                     width: '60px',
                     Footer: {
-                      colspan: 4,
+                      colspan: 8,
                     },
                   },
                 },
@@ -123,15 +124,22 @@ export const LoanTransactionStatementReport = () => {
                       label={props?.row?.original?.txnId as string}
                     />
                   ),
+                  meta: {
+                    Footer: {
+                      display: 'none',
+                    },
+                  },
                 },
 
                 {
                   header: 'Withdraw Principal',
                   accessorKey: 'withdrawPrincipal',
                   cell: (props) => amountConverter(props.getValue() as string),
-                  footer: () => amountConverter(0),
                   meta: {
                     isNumeric: true,
+                    Footer: {
+                      display: 'none',
+                    },
                   },
                 },
 
@@ -151,9 +159,11 @@ export const LoanTransactionStatementReport = () => {
                   header: 'Paid Principal',
                   accessorKey: 'paidPrinciple',
                   cell: (props) => amountConverter(props.getValue() as string),
-                  footer: () => amountConverter(0),
                   meta: {
                     isNumeric: true,
+                    Footer: {
+                      display: 'none',
+                    },
                   },
                 },
                 {
@@ -161,9 +171,11 @@ export const LoanTransactionStatementReport = () => {
                   accessorKey: 'interestPaid',
                   cell: (props) => amountConverter(props.getValue() as string),
 
-                  footer: () => amountConverter(0),
                   meta: {
                     isNumeric: true,
+                    Footer: {
+                      display: 'none',
+                    },
                   },
                 },
                 {
@@ -171,7 +183,27 @@ export const LoanTransactionStatementReport = () => {
                   accessorKey: 'finePaid',
                   cell: (props) => amountConverter(props.getValue() as string),
 
-                  footer: () => amountConverter(0),
+                  meta: {
+                    isNumeric: true,
+                    Footer: {
+                      display: 'none',
+                    },
+                  },
+                },
+                {
+                  header: 'Balance',
+                  accessorKey: 'ledgerBalance',
+                  cell: (props) =>
+                    debitCreditConverter(
+                      props.row?.original?.ledgerBalance?.amount || '0',
+                      props?.row?.original?.ledgerBalance?.amountType as string
+                    ),
+                  footer: () =>
+                    debitCreditConverter(
+                      loanFooter?.closingBalance?.amount || '0',
+                      loanFooter?.closingBalance?.amountType as string
+                    ),
+
                   meta: {
                     isNumeric: true,
                   },
@@ -197,10 +229,10 @@ export const LoanTransactionStatementReport = () => {
                 // },
               ]}
             />
-            <Box textAlign="right" px="s16">{`Closing Balance- ${debitCreditConverter(
+            {/* <Box textAlign="right" px="s16">{`Closing Balance- ${debitCreditConverter(
               loanFooter?.closingBalance?.amount || '0',
               loanFooter?.closingBalance?.amountType as string
-            )}`}</Box>
+            )}`}</Box> */}
           </Box>
         </Report.Content>
       </Report.Body>
