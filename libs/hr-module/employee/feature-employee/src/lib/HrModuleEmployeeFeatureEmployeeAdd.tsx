@@ -10,6 +10,7 @@ import {
   EmployeeInput,
   MemberType,
   useGetIndividualKymEditDataQuery,
+  useGetSingleEmployeeDetailsQuery,
   useSetNewEmployeeMutation,
 } from '@coop/cbs/data-access';
 import { useRouter } from 'next/router';
@@ -50,6 +51,31 @@ export const EmployeeAddForm = () => {
     { enabled: !!memberIdWatch }
   );
 
+  const { data: employeeEditData } = useGetSingleEmployeeDetailsQuery(
+    {
+      id: router?.query?.['id'] as string,
+    },
+    { enabled: !!router?.query?.['id'] }
+  );
+
+  const employeeDetailData = employeeEditData?.hr?.employee?.employee?.getEmployee?.record;
+
+  useEffect(() => {
+    if (employeeDetailData) {
+      reset({
+        ...employeeDetailData,
+        permanentAddress: {
+          ...employeeDetailData?.permanentAddress,
+          locality: employeeDetailData?.permanentAddress?.locality?.local,
+        },
+        temporaryAddress: {
+          ...employeeDetailData?.temporaryAddress,
+          locality: employeeDetailData?.temporaryAddress?.locality?.local,
+        },
+      });
+    }
+  }, [JSON.stringify(employeeDetailData)]);
+
   const personalInfo = editValues?.members?.individual?.formState?.data?.formData?.basicInformation;
   const contactInfo = editValues?.members?.individual?.formState?.data?.formData?.contactDetails;
   const permanentAddressInfo =
@@ -83,20 +109,38 @@ export const EmployeeAddForm = () => {
 
   const onSave = () => {
     const values = getValues();
-    asyncToast({
-      id: 'add-employee',
-      msgs: {
-        success: 'new employee added succesfully',
-        loading: 'adding new employee',
-      },
-      onSuccess: () => {
-        router.push(ROUTES?.HRMODULE_EMPLOYEES_LIST);
-      },
-      promise: mutateAsync({
-        id: null,
-        input: omit({ ...values }, ['isCoopMember', 'memberId']) as EmployeeInput,
-      }),
-    });
+
+    if (router?.query?.['id']) {
+      asyncToast({
+        id: 'edit-employee',
+        msgs: {
+          success: 'employee edited succesfully',
+          loading: 'editing employee',
+        },
+        onSuccess: () => {
+          router.push(ROUTES?.HRMODULE_EMPLOYEES_LIST);
+        },
+        promise: mutateAsync({
+          id: router?.query?.['id'] as string,
+          input: omit({ ...values }, ['isCoopMember', 'memberId', 'id']) as EmployeeInput,
+        }),
+      });
+    } else {
+      asyncToast({
+        id: 'add-employee',
+        msgs: {
+          success: 'new employee added succesfully',
+          loading: 'adding new employee',
+        },
+        onSuccess: () => {
+          router.push(ROUTES?.HRMODULE_EMPLOYEES_LIST);
+        },
+        promise: mutateAsync({
+          id: null,
+          input: omit({ ...values }, ['isCoopMember', 'memberId']) as EmployeeInput,
+        }),
+      });
+    }
   };
 
   return (

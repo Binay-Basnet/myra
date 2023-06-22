@@ -5851,6 +5851,11 @@ export type EachAppointmentLetterRecords = {
   error: QueryError;
 };
 
+export type EachEmployeeExitRecords = {
+  data: EmployeeExitRecord;
+  error: QueryError;
+};
+
 export type EachEmployeeOnboardingRecord = {
   data: EmployeeOnboardingRecord;
   error: QueryError;
@@ -5951,6 +5956,49 @@ export type EbankingTransactionFilter = {
   accounts?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   date?: InputMaybe<DateFilter>;
   transactionDirection?: InputMaybe<EbankingTransactionCrOrDr>;
+};
+
+export type EmployeeExitConnection = {
+  edges?: Maybe<Array<Maybe<EmployeeExits>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type EmployeeExitInput = {
+  checklists?: InputMaybe<Array<InputMaybe<FieldsInput>>>;
+  exitDate?: InputMaybe<Scalars['Localized']>;
+  exitStatus?: InputMaybe<ExitStatus>;
+  futureIntentions?: InputMaybe<Scalars['String']>;
+  interviewer?: InputMaybe<Scalars['ID']>;
+  others?: InputMaybe<Scalars['String']>;
+  overallExp?: InputMaybe<Scalars['String']>;
+  separationId?: InputMaybe<Scalars['ID']>;
+  suggestions?: InputMaybe<Scalars['String']>;
+};
+
+export type EmployeeExitListed = {
+  employeeId?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
+  interviewer?: Maybe<Scalars['String']>;
+  lastModifiedDate?: Maybe<Scalars['Localized']>;
+  separationDate?: Maybe<Scalars['Localized']>;
+};
+
+export type EmployeeExitRecord = {
+  checklists?: Maybe<Array<Maybe<Fields>>>;
+  exitDate?: Maybe<Scalars['Localized']>;
+  exitStatus?: Maybe<ExitStatus>;
+  futureIntentions?: Maybe<Scalars['String']>;
+  interviewer?: Maybe<Scalars['ID']>;
+  others?: Maybe<Scalars['String']>;
+  overallExp?: Maybe<Scalars['String']>;
+  separationId?: Maybe<Scalars['ID']>;
+  suggestions?: Maybe<Scalars['String']>;
+};
+
+export type EmployeeExits = {
+  cursor: Scalars['Cursor'];
+  node: EmployeeExitListed;
 };
 
 export type EmployeeHealthInsurance = {
@@ -6317,6 +6365,14 @@ export type ExceptionReportShareBalanceReportArgs = {
   data?: InputMaybe<ShareBalanceReportFilter>;
 };
 
+export const ExitStatus = {
+  Active: 'ACTIVE',
+  Exited: 'EXITED',
+  Initiated: 'INITIATED',
+  OnNoticePeriod: 'ON_NOTICE_PERIOD',
+} as const;
+
+export type ExitStatus = typeof ExitStatus[keyof typeof ExitStatus];
 export type ExpenseLedgerTransfer = {
   accountId?: InputMaybe<Scalars['String']>;
   amount?: InputMaybe<Scalars['String']>;
@@ -7632,6 +7688,25 @@ export type GeneralSettingsQuery = {
   valuator?: Maybe<ValuatorSettingsQuery>;
 };
 
+export type GetEmployeeLifecycleDetail = {
+  data?: Maybe<GetEmployeeLifecycleNode>;
+  error?: Maybe<QueryError>;
+};
+
+export type GetEmployeeLifecycleNode = {
+  age?: Maybe<Scalars['Int']>;
+  branch?: Maybe<Scalars['String']>;
+  companyName?: Maybe<Scalars['String']>;
+  contactNumber?: Maybe<Scalars['String']>;
+  department?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  gender?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  joiningDate?: Maybe<Scalars['Localized']>;
+  name?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+};
+
 export type GetInventoryItemResponse = {
   data?: Maybe<FormStateInvItemsInput>;
   error?: Maybe<QueryError>;
@@ -7913,10 +7988,15 @@ export type HrEmployeeKyeMutationUpsertEmployeeArgs = {
 
 export type HrEmployeeKyeQuery = {
   getEmployee: EmployteeResultWithError;
+  getEmployeeLifecycleView: GetEmployeeLifecycleDetail;
   listEmployee: HrEmployeeListConnection;
 };
 
 export type HrEmployeeKyeQueryGetEmployeeArgs = {
+  id: Scalars['String'];
+};
+
+export type HrEmployeeKyeQueryGetEmployeeLifecycleViewArgs = {
   id: Scalars['String'];
 };
 
@@ -8015,7 +8095,31 @@ export type HrEmployeeLifecycleEmployeeTransferQueryQueryEmployeeTransferArgs = 
   employeeId: Scalars['ID'];
 };
 
+export type HrEmployeeLifecycleExitMutation = {
+  upsertEmployeeExit: ReturnEmployeeExit;
+};
+
+export type HrEmployeeLifecycleExitMutationUpsertEmployeeExitArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: EmployeeExitInput;
+};
+
+export type HrEmployeeLifecycleExitQuery = {
+  getEmployeeExit: EachEmployeeExitRecords;
+  listEmployeeExit: EmployeeExitConnection;
+};
+
+export type HrEmployeeLifecycleExitQueryGetEmployeeExitArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrEmployeeLifecycleExitQueryListEmployeeExitArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type HrEmployeeLifecycleMutation = {
+  employeeExit: HrEmployeeLifecycleExitMutation;
   employeeOnboarding: HrEmployeeLifecycleEmployeeOnboardingMutation;
   employeePromotion: HrEmployeeLifecyclePromotionMutation;
   employeeSeparation: HrEmployeeLifecycleSeparationMutation;
@@ -8040,6 +8144,7 @@ export type HrEmployeeLifecyclePromotionQueryListEmployeePromotionArgs = {
 };
 
 export type HrEmployeeLifecycleQuery = {
+  employeeExit: HrEmployeeLifecycleExitQuery;
   employeeOnboarding: HrEmployeeLifecycleEmployeeOnboardingQuery;
   employeePromotion: HrEmployeeLifecyclePromotionQuery;
   employeeSeparation: HrEmployeeLifecycleSeparationQuery;
@@ -15570,7 +15675,7 @@ export type MyraUserQueryFormStateArgs = {
 };
 
 export type MyraUserQueryListArgs = {
-  filter?: InputMaybe<MyraUserSearchFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -17117,6 +17222,12 @@ export type Result = {
 export type ReturnAppointmentLetter = {
   error?: Maybe<MutationError>;
   record?: Maybe<AppointmentLetterRecord>;
+  recordId: Scalars['ID'];
+};
+
+export type ReturnEmployeeExit = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EmployeeExitRecord>;
   recordId: Scalars['ID'];
 };
 
@@ -20573,6 +20684,24 @@ export type ExperienceInput = {
   toDate?: InputMaybe<Scalars['Localized']>;
 };
 
+export type Fields = {
+  activityName?: Maybe<Scalars['String']>;
+  beginsOn?: Maybe<Scalars['Localized']>;
+  done?: Maybe<Scalars['Boolean']>;
+  duration?: Maybe<Scalars['String']>;
+  role?: Maybe<Scalars['String']>;
+  user?: Maybe<Scalars['String']>;
+};
+
+export type FieldsInput = {
+  activityName?: InputMaybe<Scalars['String']>;
+  beginsOn?: InputMaybe<Scalars['Localized']>;
+  done?: InputMaybe<Scalars['Boolean']>;
+  duration?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Scalars['String']>;
+  user?: InputMaybe<Scalars['String']>;
+};
+
 export type LedgerDetails = {
   accountId: Scalars['String'];
   amount?: Maybe<Scalars['String']>;
@@ -21771,6 +21900,29 @@ export type SetEmployeeTransferUpsertMutation = {
     employeelifecycle?: {
       employeeTransfer: {
         insertEmployeeTransfer: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
+
+export type SetEmployeeSeerationUpsertMutationVariables = Exact<{
+  input: EmployeeSeparationInput;
+}>;
+
+export type SetEmployeeSeerationUpsertMutation = {
+  hr: {
+    employeelifecycle?: {
+      employeeSeparation: {
+        addEmployeeSeparation: {
           recordId: string;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -28557,6 +28709,34 @@ export type GetHrTransferListQuery = {
             };
           } | null> | null;
           pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetHrSeperationListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetHrSeperationListQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeSeparation: {
+        listEmployeeSeparation: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              employeeId: string;
+              id: string;
+              designation: string;
+              employeeName: string;
+              resignationLetterDate: Record<'local' | 'en' | 'np', string>;
+            } | null;
+          } | null> | null;
+          PageInfo?: PaginationFragment | null;
         };
       };
     };
@@ -38256,7 +38436,7 @@ export type GetSettingsShareTransferDataQuery = {
 
 export type GetSettingsUserListDataQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
-  filter?: InputMaybe<MyraUserSearchFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetSettingsUserListDataQuery = {
@@ -41910,6 +42090,42 @@ export const useSetEmployeeTransferUpsertMutation = <TError = unknown, TContext 
     ['setEmployeeTransferUpsert'],
     useAxios<SetEmployeeTransferUpsertMutation, SetEmployeeTransferUpsertMutationVariables>(
       SetEmployeeTransferUpsertDocument
+    ),
+    options
+  );
+export const SetEmployeeSeerationUpsertDocument = `
+    mutation setEmployeeSeerationUpsert($input: EmployeeSeparationInput!) {
+  hr {
+    employeelifecycle {
+      employeeSeparation {
+        addEmployeeSeparation(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeSeerationUpsertMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeSeerationUpsertMutation,
+    TError,
+    SetEmployeeSeerationUpsertMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeSeerationUpsertMutation,
+    TError,
+    SetEmployeeSeerationUpsertMutationVariables,
+    TContext
+  >(
+    ['setEmployeeSeerationUpsert'],
+    useAxios<SetEmployeeSeerationUpsertMutation, SetEmployeeSeerationUpsertMutationVariables>(
+      SetEmployeeSeerationUpsertDocument
     ),
     options
   );
@@ -51511,6 +51727,44 @@ export const useGetHrTransferListQuery = <TData = GetHrTransferListQuery, TError
     variables === undefined ? ['getHRTransferList'] : ['getHRTransferList', variables],
     useAxios<GetHrTransferListQuery, GetHrTransferListQueryVariables>(
       GetHrTransferListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetHrSeperationListDocument = `
+    query getHRSeperationList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeeSeparation {
+        listEmployeeSeparation(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+              id
+              designation
+              employeeId
+              employeeName
+              resignationLetterDate
+            }
+            cursor
+          }
+          PageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetHrSeperationListQuery = <TData = GetHrSeperationListQuery, TError = unknown>(
+  variables?: GetHrSeperationListQueryVariables,
+  options?: UseQueryOptions<GetHrSeperationListQuery, TError, TData>
+) =>
+  useQuery<GetHrSeperationListQuery, TError, TData>(
+    variables === undefined ? ['getHRSeperationList'] : ['getHRSeperationList', variables],
+    useAxios<GetHrSeperationListQuery, GetHrSeperationListQueryVariables>(
+      GetHrSeperationListDocument
     ).bind(null, variables),
     options
   );
@@ -64399,7 +64653,7 @@ export const useGetSettingsShareTransferDataQuery = <
     options
   );
 export const GetSettingsUserListDataDocument = `
-    query getSettingsUserListData($paginate: Pagination, $filter: MyraUserSearchFilter) {
+    query getSettingsUserListData($paginate: Pagination, $filter: Filter) {
   settings {
     myraUser {
       list(paginate: $paginate, filter: $filter) {
