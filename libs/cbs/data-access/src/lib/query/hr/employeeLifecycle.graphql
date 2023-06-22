@@ -68,3 +68,29 @@ query getHRTransferList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getHRSeperationList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeeSeparation {
+        listEmployeeSeparation(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+              id
+              designation
+              employeeId
+              employeeName
+              resignationLetterDate
+            }
+            cursor
+          }
+          PageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

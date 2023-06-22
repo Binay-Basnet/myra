@@ -1,6 +1,6 @@
 import { FormSection } from '@myra-ui';
 
-import { GenderInputType } from '@coop/cbs/data-access';
+import { GenderInputType, MaritalStatusInputType } from '@coop/cbs/data-access';
 import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -11,6 +11,12 @@ export const PersonalInformation = () => {
     { label: 'Male', value: GenderInputType?.Male },
     { label: 'Female', value: GenderInputType?.Female },
     { label: 'Other', value: GenderInputType?.Other },
+  ];
+
+  const maritalStatusOptions = [
+    { label: 'Divorced', value: MaritalStatusInputType?.Divorced },
+    { label: 'Married', value: MaritalStatusInputType?.Married },
+    { label: 'Unmarried', value: MaritalStatusInputType?.Unmrarried },
   ];
 
   return (
@@ -24,6 +30,12 @@ export const PersonalInformation = () => {
         name="dateOfBirth"
         label={t['kymIndDateofBirthBS']}
         maxDate={new Date()}
+      />
+      <FormSelect
+        isRequired
+        name="maritalStatus"
+        label="Marital Status"
+        options={maritalStatusOptions}
       />
     </FormSection>
   );

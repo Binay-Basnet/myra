@@ -421,6 +421,8 @@ export const ROUTES = {
   HRMODULE_ATTENDENCE_ADD: '/hr/employee/attendence/add',
   HRMODULE_LEAVE_ADD: '/hr/employee/leave/add',
 
+  HRMODULE_EMPLOYEES_EDIT: '/hr/employee/employee/edit',
+
   HRMODULE_EMPLOYEES_SETTINGS: '/settings/general/hcm/employee',
   HRMODULE_EMPLOYEES_LEAVE_SETTINGS: '/settings/general/hcm/employee/leave',
 
