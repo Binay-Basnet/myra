@@ -26,7 +26,7 @@ export const EmployeeHealthInsuranceTable = () => {
   const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
 
   const methods = useForm();
-  const { getValues, handleSubmit } = methods;
+  const { getValues, handleSubmit, reset } = methods;
 
   const rowData = useMemo(
     () =>
@@ -88,6 +88,7 @@ export const EmployeeHealthInsuranceTable = () => {
   const handleAddModalClose = () => {
     setIsAddModalOpen(false);
     setSelectedEmpoyeeHealthInsuranceId('');
+    reset({ healthInsuranceProvider: '', healthInsuranceNumber: '' });
   };
 
   const handleDeleteModalClose = () => {
@@ -142,7 +143,7 @@ export const EmployeeHealthInsuranceTable = () => {
       id: 'delete-employee-health-insurance',
       msgs: {
         success: 'Employee health insurance deleted successfully',
-        loading: 'Adding new employee health insurance',
+        loading: 'Deleting employee health insurance',
       },
       onSuccess: () => {
         refetch();

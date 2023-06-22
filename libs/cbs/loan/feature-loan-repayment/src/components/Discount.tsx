@@ -1,17 +1,16 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Box, Divider, Grid, Text } from '@myra-ui';
+import { Box, Grid } from '@myra-ui';
 
 import { FormAmountInput, FormCheckbox, FormFileInput } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
 
 export const Discount = () => {
   const { watch, resetField } = useFormContext();
 
   const isFinePaid = watch('isFinePaid');
 
-  const payableFine = watch('discount.amount');
+  // const payableFine = watch('discount.amount');
 
   // const newFine = useMemo(() => totalFine - Number(discountAmount), [totalFine, discountAmount]);
 
@@ -24,7 +23,7 @@ export const Discount = () => {
 
   return (
     <>
-      <FormCheckbox name="isFinePaid" label="Fine to be paid" />
+      <FormCheckbox name="isFinePaid" label="Fine Applicable" />
 
       {isFinePaid && (
         <Box
@@ -40,7 +39,7 @@ export const Discount = () => {
             <FormFileInput name="penalty.doc" label="File Upload" size="sm" />
           </Grid>
 
-          {payableFine ? (
+          {/* {payableFine ? (
             <>
               <Divider />
 
@@ -53,7 +52,7 @@ export const Discount = () => {
                 </Text>
               </Box>
             </>
-          ) : null}
+          ) : null} */}
         </Box>
       )}
     </>

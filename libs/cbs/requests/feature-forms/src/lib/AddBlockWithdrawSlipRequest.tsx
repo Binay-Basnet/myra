@@ -8,6 +8,7 @@ import { asyncToast, FormSection, GridItem } from '@myra-ui';
 import {
   SlipRangeInput,
   useCancelWithdrawSlipRequestMutation,
+  useGetAvailableSlipBookRangesQuery,
   useGetAvailableSlipsListQuery,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -72,6 +73,22 @@ export const AddBlockWithdrawSlipRequest = () => {
     [availableSlipsListQueryData]
   );
 
+  const { data: slipBookRangesData } = useGetAvailableSlipBookRangesQuery(
+    { accountId },
+    { enabled: !!accountId }
+  );
+
+  const availableSlipBookRangesOptions = useMemo(
+    () =>
+      slipBookRangesData?.withdrawSlip?.listAvailableSlips?.slipBookRanges?.map((withdrawSlip) => ({
+        label: `${String(withdrawSlip?.from).padStart(10, '0')} - ${String(
+          withdrawSlip?.to
+        ).padStart(10, '0')}`,
+        value: withdrawSlip?.from as string,
+      })) ?? [],
+    [slipBookRangesData]
+  );
+
   useEffect(() => {
     reset({ memberId, accountId: '', blockMode: 'Number', slipNumber: '', reason: '' });
   }, [memberId]);
@@ -91,8 +108,16 @@ export const AddBlockWithdrawSlipRequest = () => {
         slipRange:
           data.blockMode === 'Book'
             ? {
-                from: Number(availableSlipListOptions[0].value),
-                to: Number(availableSlipListOptions[availableSlipListOptions.length - 1].value),
+                from: Number(
+                  slipBookRangesData?.withdrawSlip?.listAvailableSlips?.slipBookRanges?.find(
+                    (book) => book?.from === data.slipNumber
+                  )?.from
+                ),
+                to: Number(
+                  slipBookRangesData?.withdrawSlip?.listAvailableSlips?.slipBookRanges?.find(
+                    (book) => book?.from === data.slipNumber
+                  )?.to
+                ),
               }
             : null,
         reason: data.reason,
@@ -134,6 +159,14 @@ export const AddBlockWithdrawSlipRequest = () => {
                 name="slipNumber"
                 label="Withdraw Slip No"
                 options={availableSlipListOptions}
+              />
+            )}
+            {blockMode === 'Book' && (
+              <FormSelect
+                isRequired
+                name="slipNumber"
+                label="Withdraw Book"
+                options={availableSlipBookRangesOptions}
               />
             )}
           </FormSection>

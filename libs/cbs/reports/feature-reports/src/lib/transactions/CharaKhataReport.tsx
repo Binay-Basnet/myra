@@ -308,17 +308,39 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
       header: 'Ledger Name',
       accessorKey: 'ledgerName',
       cell: (props) => (
-        <Link
-          target="_blank"
-          href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
-            props.row?.original?.ledgerId
-          }&branch=${JSON.stringify(branchIDs)}`}
-        >
-          <Button variant="link" color="primary.500">
-            {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+        <>
+          <Box
+            sx={{
+              '@media print': {
+                display: 'none',
+              },
+            }}
+          >
+            <Link
+              target="_blank"
+              href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
+                props.row?.original?.ledgerId
+              }&branch=${JSON.stringify(branchIDs)}`}
+            >
+              <Button variant="link" color="primary.500">
+                {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+                {localizedText(props?.row?.original?.ledgerName)}
+              </Button>
+            </Link>
+          </Box>
+          <Text
+            display="none"
+            sx={{
+              '@media print': {
+                display: 'block',
+              },
+            }}
+            px={0}
+            fontSize="s3"
+          >
             {localizedText(props?.row?.original?.ledgerName)}
-          </Button>
-        </Link>
+          </Text>
+        </>
       ),
       meta: {
         width: '80%',

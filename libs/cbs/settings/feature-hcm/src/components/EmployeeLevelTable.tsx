@@ -24,7 +24,7 @@ export const EmployeeLevelTable = () => {
   const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
 
   const methods = useForm();
-  const { getValues, handleSubmit } = methods;
+  const { getValues, handleSubmit, reset } = methods;
 
   const rowData = useMemo(
     () => data?.settings?.general?.HCM?.employee?.employee?.listEmployeeLevel?.edges ?? [],
@@ -85,6 +85,7 @@ export const EmployeeLevelTable = () => {
   const handleAddModalClose = () => {
     setIsAddModal(false);
     setSelectedEmployeeLevelId('');
+    reset({ name: '', description: '' });
   };
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
@@ -132,7 +133,7 @@ export const EmployeeLevelTable = () => {
       id: 'delete-employee-level',
       msgs: {
         success: 'Employee level deleted successfully',
-        loading: 'Adding new employee level',
+        loading: 'Deleting employee level',
       },
       onSuccess: () => {
         refetch();

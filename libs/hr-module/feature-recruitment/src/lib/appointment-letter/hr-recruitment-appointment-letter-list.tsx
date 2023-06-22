@@ -25,10 +25,10 @@ export const HrRecruitmentAppointmentLetterList = () => {
         header: 'Name',
         accessorFn: (row) => row?.node?.name,
       },
-      {
-        header: 'Probation Peroid',
-        accessorFn: (row) => row?.node?.probationPeriod,
-      },
+      // {
+      //   header: 'Probation Peroid',
+      //   accessorFn: (row) => row?.node?.probationPeriod,
+      // },
       {
         header: 'Offer Date',
         accessorFn: (row) => row?.node?.offerDate?.local,

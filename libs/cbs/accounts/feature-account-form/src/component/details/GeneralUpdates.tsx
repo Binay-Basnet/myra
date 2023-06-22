@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { HiOutlineRefresh } from 'react-icons/hi';
+import { useDisclosure } from '@chakra-ui/react';
 
 import { DetailPageQuickLinks } from '@myra-ui';
 
@@ -8,6 +9,7 @@ import { useAccountDetails } from '@coop/cbs/data-access';
 import { AddNomineeModal } from './ChangeNomineeModal';
 import { AddTenureModal } from './ChangeTenureModal';
 import { TabHeader } from './TabHeader';
+import { UpdateAccountNameModal } from './UpdateAccountNameModal';
 import { UpdateInstallmentAmountModal } from './UpdateInstallmentAmountModal';
 import { UpdateSignatureModal } from './UpdateSignatureModal';
 
@@ -18,6 +20,12 @@ export const GeneralUpdates = () => {
   const [isAddTenureModalOpen, setIsAddTenureModalOpen] = useState(false);
   const [isUpdateSinatureModalOpen, setUpdateSinatureModalOpen] = useState(false);
   const [isUpdateInstallmentAmountModalOpen, setUpdateInstallmentAmountModalOpen] = useState(false);
+
+  const {
+    isOpen: isUpdateAccountNameModalOpen,
+    onClose: onUpdateAccountNameModalClose,
+    onToggle: onUpdateAccountNameModalToggle,
+  } = useDisclosure();
 
   const handleNomineeAccountModalClose = () => {
     setIsAddNomineeAccountModalOpen(false);
@@ -39,17 +47,22 @@ export const GeneralUpdates = () => {
     if (accountDetails?.accountType === 'TERM_SAVING_OR_FD') {
       return [
         {
-          title: 'Update Nominee',
+          title: 'Account Name',
+          onClick: onUpdateAccountNameModalToggle,
+          icon: HiOutlineRefresh,
+        },
+        {
+          title: 'Nominee',
           onClick: () => setIsAddNomineeAccountModalOpen(true),
           icon: HiOutlineRefresh,
         },
         {
-          title: 'Update Tenure',
+          title: 'Tenure',
           onClick: () => setIsAddTenureModalOpen(true),
           icon: HiOutlineRefresh,
         },
         {
-          title: 'Update Signature',
+          title: 'Signature',
           onClick: () => setUpdateSinatureModalOpen(true),
           icon: HiOutlineRefresh,
         },
@@ -59,22 +72,27 @@ export const GeneralUpdates = () => {
     if (accountDetails?.accountType === 'RECURRING_SAVING') {
       return [
         {
-          title: 'Update Nominee',
+          title: 'Account Name',
+          onClick: onUpdateAccountNameModalToggle,
+          icon: HiOutlineRefresh,
+        },
+        {
+          title: 'Nominee',
           onClick: () => setIsAddNomineeAccountModalOpen(true),
           icon: HiOutlineRefresh,
         },
         {
-          title: 'Update Tenure',
+          title: 'Tenure',
           onClick: () => setIsAddTenureModalOpen(true),
           icon: HiOutlineRefresh,
         },
         {
-          title: 'Update Signature',
+          title: 'Signature',
           onClick: () => setUpdateSinatureModalOpen(true),
           icon: HiOutlineRefresh,
         },
         {
-          title: 'Update Installment Amount',
+          title: 'Installment Amount',
           onClick: () => setUpdateInstallmentAmountModalOpen(true),
           icon: HiOutlineRefresh,
         },
@@ -84,12 +102,17 @@ export const GeneralUpdates = () => {
     if (accountDetails?.accountType === 'SAVING' && accountDetails?.product?.isMandatorySaving) {
       return [
         {
-          title: 'Update Signature',
+          title: 'Account Name',
+          onClick: onUpdateAccountNameModalToggle,
+          icon: HiOutlineRefresh,
+        },
+        {
+          title: 'Signature',
           onClick: () => setUpdateSinatureModalOpen(true),
           icon: HiOutlineRefresh,
         },
         {
-          title: 'Update Installment Amount',
+          title: 'Installment Amount',
           onClick: () => setUpdateInstallmentAmountModalOpen(true),
           icon: HiOutlineRefresh,
         },
@@ -97,7 +120,12 @@ export const GeneralUpdates = () => {
     }
     return [
       {
-        title: 'Update Signature',
+        title: 'Account Name',
+        onClick: onUpdateAccountNameModalToggle,
+        icon: HiOutlineRefresh,
+      },
+      {
+        title: 'Signature',
         onClick: () => setUpdateSinatureModalOpen(true),
         icon: HiOutlineRefresh,
       },
@@ -130,6 +158,11 @@ export const GeneralUpdates = () => {
       <UpdateInstallmentAmountModal
         isOpen={isUpdateInstallmentAmountModalOpen}
         onClose={handleUpdateInstallmentAmountModalClose}
+      />
+
+      <UpdateAccountNameModal
+        isOpen={isUpdateAccountNameModalOpen}
+        onClose={onUpdateAccountNameModalClose}
       />
     </>
   );

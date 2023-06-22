@@ -44,18 +44,40 @@ query getInventoryStockStatusReport($data: InventoryStockStatusFilter) {
             totalPurchased
             totalSoled
             totalNet
+            totalTransferIn
+            totalTransferOut
           }
           lower {
-            lowerItemCode
-            lowerItemName
-            lowerWarehouseName
-            lowerWarehouseId
             purchasedQuantity
             soldQuantity
             purchasedDate
             soldDate
-            netQuantity
+            transferAcceptQuantity
+            transferAcceptDate
+            transferSentQuantity
+            transferSentDate
           }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+query getInventorySalesReport($data: SalesReportFilter!) {
+  report {
+    accountingReport {
+      salesReport(data: $data) {
+        data {
+          itemId
+          itemName
+          unitName
+          selligPrice
+          soldQuantity
+          totalPrice
+          vatAmount
+          netAmountWithVat
         }
         error {
           ...QueryError

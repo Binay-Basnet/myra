@@ -34,8 +34,8 @@ export const AllowChequeIssue = () => {
               accessor: 'serviceName',
               header: t['depositProductAccServiceTableServiceName'],
               cellWidth: 'auto',
-              fieldType: 'search',
-              searchOptions: chequeList,
+              fieldType: 'select',
+              selectOptions: chequeList,
             },
             {
               accessor: 'ledgerName',

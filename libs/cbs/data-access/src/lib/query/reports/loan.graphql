@@ -40,6 +40,8 @@ query getLoanAgingStatementReport($data: LoanAgingStatementInput!) {
         data {
           report {
             memberNo
+            memberName
+
             loanNo
             name
             address
@@ -135,6 +137,22 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
               finePaid
               discount
               remainingPrinciple
+            }
+            footer {
+              openingBalance {
+                amount
+                amountType
+              }
+              disbursePrincipleTotal
+              paidPrincipleTotal
+              interestPaidTotal
+              penaltyPaidTotal
+              discountTotal
+              remainingPrincipleTotal
+              closingBalance {
+                amount
+                amountType
+              }
             }
           }
         }
@@ -480,11 +498,32 @@ query getLoanTransactionReport($data: LoanStatementReportSettings!) {
               particular
               txnId
               disbursePrinciple
+              withdrawPrincipal
               paidPrinciple
               interestPaid
               finePaid
               discount
               remainingPrinciple
+              ledgerBalance {
+                amount
+                amountType
+              }
+            }
+            footer {
+              openingBalance {
+                amount
+                amountType
+              }
+              disbursePrincipleTotal
+              paidPrincipleTotal
+              interestPaidTotal
+              penaltyPaidTotal
+              discountTotal
+              remainingPrincipleTotal
+              closingBalance {
+                amount
+                amountType
+              }
             }
           }
         }

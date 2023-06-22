@@ -1,11 +1,9 @@
 import { ReactElement } from 'react';
 
-import { Box } from '@myra-ui';
-
+import { HrLifecycleTransferList } from '@coop/hr-module/lifecycle';
 import { HREmployeeLifecycleSidebarLayout, HRLayout } from '@coop/hr-module/ui-layouts';
 
-// TODO ( Update this page when design arrives )
-const AccountingQuickTransferList = () => <Box> HR- Employee</Box>;
+const AccountingQuickTransferList = () => <HrLifecycleTransferList />;
 
 AccountingQuickTransferList.getLayout = function getLayout(page: ReactElement) {
   return (

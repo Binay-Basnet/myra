@@ -13,7 +13,7 @@ import { Report } from '@coop/cbs/reports';
 import { LoanReportInputs, LoanReportMember } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, debitCreditConverter } from '@coop/shared/utils';
 
 export const LoanTransactionStatementReport = () => {
   const [filters, setFilters] = useState<LoanStatementReportSettings | null>(null);
@@ -35,6 +35,9 @@ export const LoanTransactionStatementReport = () => {
   const loanMember = data?.report?.loanReport?.loanTransactionStatementReport?.member;
   const loanAccountMeta =
     loanData && 'loanStatement' in loanData ? (loanData.meta as LoanAccReportDetails) : null;
+
+  const loanFooter = loanData && 'loanStatement' in loanData ? loanData.footer : null;
+
   return (
     <Report
       defaultFilters={{
@@ -67,118 +70,170 @@ export const LoanTransactionStatementReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization />
           <LoanReportMember member={loanMember} account={loanAccountMeta as LoanAccReportDetails} />
-          <Report.Table<LoanStatement & { index: number }>
-            columns={[
-              {
-                header: 'S.No.',
-                accessorKey: 'index',
-                footer: () => <Box textAlign="right">Closing Balance</Box>,
-                meta: {
-                  width: '60px',
-                  Footer: {
-                    colspan: 4,
+          <Box display="flex" flexDir="column" gap="s8">
+            <Box textAlign="right" px="s16">{`Opening Balance- ${debitCreditConverter(
+              loanFooter?.openingBalance?.amount || '0',
+              loanFooter?.openingBalance?.amountType as string
+            )}`}</Box>
+            <Report.Table<LoanStatement & { index: number }>
+              showFooter
+              columns={[
+                {
+                  header: 'S.No.',
+                  accessorKey: 'index',
+                  footer: () => <Box textAlign="right">Closing Balance</Box>,
+                  meta: {
+                    width: '60px',
+                    Footer: {
+                      colspan: 8,
+                    },
                   },
                 },
-              },
-              {
-                header: 'Date',
-                accessorFn: (row) => localizedDate(row?.date),
-                meta: {
-                  Footer: {
-                    display: 'none',
+                {
+                  header: 'Date',
+                  accessorFn: (row) => localizedDate(row?.date),
+                  meta: {
+                    Footer: {
+                      display: 'none',
+                    },
                   },
                 },
-              },
-              {
-                header: 'Particular',
-                accessorKey: 'particular',
-                cell: (props) => (
-                  <Box whiteSpace="pre-line" my="s4">
-                    {props.getValue() as string}
-                  </Box>
-                ),
-                meta: {
-                  width: '100%',
-                  Footer: {
-                    display: 'none',
+                {
+                  header: 'Particular',
+                  accessorKey: 'particular',
+                  cell: (props) => (
+                    <Box whiteSpace="pre-line" my="s4">
+                      {props.getValue() as string}
+                    </Box>
+                  ),
+                  meta: {
+                    width: '100%',
+                    Footer: {
+                      display: 'none',
+                    },
                   },
                 },
-              },
 
-              {
-                header: 'Transaction Id',
-                accessorKey: 'txnId',
-                cell: (props) => (
-                  <RouteToDetailsPage
-                    id={props?.row?.original?.txnId as string}
-                    type="transactions"
-                    label={props?.row?.original?.txnId as string}
-                  />
-                ),
-              },
-
-              // {
-              //   header: 'Disburse Principal',
-              //   accessorKey: 'disbursePrinciple',
-              //   cell: (props) => amountConverter(props.getValue() as string),
-              //   meta: {
-              //     isNumeric: true,
-              //     Footer: {
-              //       display: 'none',
-              //     },
-              //   },
-              // },
-
-              {
-                header: 'Paid Principal',
-                accessorKey: 'paidPrinciple',
-                cell: (props) => amountConverter(props.getValue() as string),
-                footer: () => amountConverter(0),
-                meta: {
-                  isNumeric: true,
+                {
+                  header: 'Transaction Id',
+                  accessorKey: 'txnId',
+                  cell: (props) => (
+                    <RouteToDetailsPage
+                      id={props?.row?.original?.txnId as string}
+                      type="transactions"
+                      label={props?.row?.original?.txnId as string}
+                    />
+                  ),
+                  meta: {
+                    Footer: {
+                      display: 'none',
+                    },
+                  },
                 },
-              },
-              {
-                header: 'Interest Paid',
-                accessorKey: 'interestPaid',
-                cell: (props) => amountConverter(props.getValue() as string),
 
-                footer: () => amountConverter(0),
-                meta: {
-                  isNumeric: true,
+                {
+                  header: 'Withdraw Principal',
+                  accessorKey: 'withdrawPrincipal',
+                  cell: (props) => amountConverter(props.getValue() as string),
+                  meta: {
+                    isNumeric: true,
+                    Footer: {
+                      display: 'none',
+                    },
+                  },
                 },
-              },
-              {
-                header: 'Fine Paid',
-                accessorKey: 'finePaid',
-                cell: (props) => amountConverter(props.getValue() as string),
 
-                footer: () => amountConverter(0),
-                meta: {
-                  isNumeric: true,
+                // {
+                //   header: 'Disburse Principal',
+                //   accessorKey: 'disbursePrinciple',
+                //   cell: (props) => amountConverter(props.getValue() as string),
+                //   meta: {
+                //     isNumeric: true,
+                //     Footer: {
+                //       display: 'none',
+                //     },
+                //   },
+                // },
+
+                {
+                  header: 'Paid Principal',
+                  accessorKey: 'paidPrinciple',
+                  cell: (props) => amountConverter(props.getValue() as string),
+                  meta: {
+                    isNumeric: true,
+                    Footer: {
+                      display: 'none',
+                    },
+                  },
                 },
-              },
-              // {
-              //   header: 'Discount',
-              //   accessorKey: 'discount',
-              //   cell: (props) => amountConverter(props.getValue() as string),
-              //
-              //   footer: () => amountConverter(0),
-              //   meta: {
-              //     isNumeric: true,
-              //   },
-              // },
-              {
-                header: 'Remaining Principal',
-                accessorKey: 'remainingPrinciple',
-                cell: (props) => amountConverter(props.getValue() as string),
-                footer: () => amountConverter(0),
-                meta: {
-                  isNumeric: true,
+                {
+                  header: 'Interest Paid',
+                  accessorKey: 'interestPaid',
+                  cell: (props) => amountConverter(props.getValue() as string),
+
+                  meta: {
+                    isNumeric: true,
+                    Footer: {
+                      display: 'none',
+                    },
+                  },
                 },
-              },
-            ]}
-          />
+                {
+                  header: 'Fine Paid',
+                  accessorKey: 'finePaid',
+                  cell: (props) => amountConverter(props.getValue() as string),
+
+                  meta: {
+                    isNumeric: true,
+                    Footer: {
+                      display: 'none',
+                    },
+                  },
+                },
+                {
+                  header: 'Balance',
+                  accessorKey: 'ledgerBalance',
+                  cell: (props) =>
+                    debitCreditConverter(
+                      props.row?.original?.ledgerBalance?.amount || '0',
+                      props?.row?.original?.ledgerBalance?.amountType as string
+                    ),
+                  footer: () =>
+                    debitCreditConverter(
+                      loanFooter?.closingBalance?.amount || '0',
+                      loanFooter?.closingBalance?.amountType as string
+                    ),
+
+                  meta: {
+                    isNumeric: true,
+                  },
+                },
+                // {
+                //   header: 'Discount',
+                //   accessorKey: 'discount',
+                //   cell: (props) => amountConverter(props.getValue() as string),
+                //
+                //   footer: () => amountConverter(0),
+                //   meta: {
+                //     isNumeric: true,
+                //   },
+                // },
+                // {
+                //   header: 'Remaining Principal',
+                //   accessorKey: 'remainingPrinciple',
+                //   cell: (props) => amountConverter(props.getValue() as string),
+                //   footer: () => amountConverter(0),
+                //   meta: {
+                //     isNumeric: true,
+                //   },
+                // },
+              ]}
+            />
+            {/* <Box textAlign="right" px="s16">{`Closing Balance- ${debitCreditConverter(
+              loanFooter?.closingBalance?.amount || '0',
+              loanFooter?.closingBalance?.amountType as string
+            )}`}</Box> */}
+          </Box>
         </Report.Content>
       </Report.Body>
     </Report>

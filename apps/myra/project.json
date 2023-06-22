@@ -32,7 +32,8 @@
       "executor": "@nrwl/next:server",
       "options": {
         "buildTarget": "myra:build",
-        "dev": true
+        "dev": true,
+        "port": 4200
       },
       "configurations": {
         "production": {

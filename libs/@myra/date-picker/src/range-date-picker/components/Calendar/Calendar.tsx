@@ -29,9 +29,10 @@ interface CalendarProps {
   };
 
   nextMonth?: boolean;
+  showControls?: boolean;
 }
 
-export const Calendar = ({ calendarProps, nextMonth }: CalendarProps) => {
+export const Calendar = ({ calendarProps, nextMonth, showControls }: CalendarProps) => {
   const { gotToNextMonth, gotoPreviousMonth } = useMonthNavigateHook({
     state: calendarProps.state,
     setState: calendarProps.setState,
@@ -42,16 +43,10 @@ export const Calendar = ({ calendarProps, nextMonth }: CalendarProps) => {
     <Box px="s16" display="flex" flexDir="column" gap="s8">
       <Box
         display="flex"
-        justifyContent="space-between"
         alignItems="center"
-        flexDir={nextMonth ? 'row' : 'row-reverse'}
+        flexDir="row"
+        justifyContent={showControls ? 'space-between' : 'end'}
       >
-        <YearSelect
-          calendarType={calendarProps.calendarType}
-          state={calendarProps.state}
-          setState={calendarProps.setState}
-          showNextYear={nextMonth}
-        />
         <Box display="flex" alignItems="center" flexDir={nextMonth ? 'row' : 'row-reverse'}>
           <MonthSelect
             locale={calendarProps.locale}
@@ -66,7 +61,19 @@ export const Calendar = ({ calendarProps, nextMonth }: CalendarProps) => {
             <Icon as={nextMonth ? BsChevronRight : BsChevronLeft} />
           </TopButtonWrapper>
         </Box>
+
+        {showControls ? (
+          <YearSelect
+            calendarType={calendarProps.calendarType}
+            state={calendarProps.state}
+            setState={calendarProps.setState}
+            showNextYear={nextMonth}
+          />
+        ) : (
+          <Box />
+        )}
       </Box>
+
       <CalendarBase
         locale={calendarProps.locale}
         offsetMonth={nextMonth ? 1 : undefined}

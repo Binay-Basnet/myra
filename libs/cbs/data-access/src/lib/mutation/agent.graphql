@@ -51,3 +51,13 @@ mutation agentTodayCollection($agentId: ID!, $data: [AgentTodayListInput]) {
     }
   }
 }
+
+mutation setAgentTemplate($agentId: ID!, $data: [AgentTemplateInput]) {
+  agent {
+    agentTemplate(agentId: $agentId, data: $data) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

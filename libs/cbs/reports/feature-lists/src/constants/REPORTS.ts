@@ -38,7 +38,7 @@ export enum Report {
   SHARE_CERTIFICATE_PRINT = 'Share Certificate Print',
   SHARE_BONUS_DISTRIBUTION_REPORT = 'Share Bonus Distribution Report',
 
-  SAVING_STATEMENT = 'Saving Statement',
+  SAVING_STATEMENT = 'Saving Account Statement',
   SAVING_INTEREST_STATEMENT = 'Interest Statement Report',
   DEPOSIT_CONSOLIDATED_REPORT = 'Deposit Consolidated Report',
   DEPOSIT_DAILY_TRANSACTION_REPORT = 'Deposit Daily Transaction Report',
@@ -61,7 +61,7 @@ export enum Report {
   SAVING_ACCOUNT_ACCRUED_INTEREST_REPORT = 'Saving Account Accrued Interest Report',
   E_TDS_REPORT = 'e-TDS Report',
 
-  LOAN_INDIVIDUAL_STATEMENT = 'Loan Individual Statement',
+  LOAN_INDIVIDUAL_STATEMENT = 'Loan Account Statement',
   LOAN_CONSOLIDATED_REPORT = 'Loan Consolidated Report',
   LOAN_AGING_REPORT = 'Loan Aging Report',
   LOAN_DAILY_TRANSACTION_REPORT = 'Loan Daily Transaction Report',
@@ -74,7 +74,7 @@ export enum Report {
   LOAN_ACCOUNT_ACCRUED_INTEREST_REPORT = 'Loan Account Accrued Interest Report',
 
   LOAN_PERSONAL_GURANTEE_REPORT = 'Personal Guarantee Report',
-  LOAN_TRANSACTION_STATEMENT_REPORT = 'Loan Transaction Statement Report',
+  LOAN_TRANSACTION_STATEMENT_REPORT = 'Loan Account Statement Report',
   LOAN_WRITE_OFF_REPORT = 'Loan write off report',
   LOAN_PRE_INFORM_REPORT = 'Loan pre-inform report',
   LOAN_APPROVAL_REPORT_REJECT = 'Loan Approval Report / Reject Report',
@@ -154,6 +154,7 @@ export enum Report {
   OTHERS_FD_CERTIFICATE_PRINT_REPORT = 'FD-Certificate Report',
 
   INVENTORY_REGISTER_REPORT = 'Inventory Register Report',
+  INVENTORY_SALES_REPORT = 'Inventory Item Sales Report',
   INVENTORY_STOCK_STATUS_REPORT = 'Inventory Stock Status Report',
 
   ACCOUNTING_EXTERNAL_LOAN_STATEMENT_REPORT = 'External Loan Statement Report',
@@ -736,6 +737,11 @@ export const REPORTS = {
       id: '',
       report: Report.INVENTORY_STOCK_STATUS_REPORT,
       link: 'stock-status',
+    },
+    {
+      id: '',
+      report: Report.INVENTORY_SALES_REPORT,
+      link: 'item-sales',
     },
   ],
   [ReportGroup.ACCOUNTING]: [

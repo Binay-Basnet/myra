@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { Button } from '@myra-ui';
+import { Box, Button, Text } from '@myra-ui';
 
 import { ROUTES } from '../constants/ROUTES';
 
@@ -17,7 +17,7 @@ interface IProps {
     | 'loan-product';
 }
 
-export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
+const getLink = ({ label, type, id }: IProps) => {
   switch (type) {
     case 'loan-product':
       return (
@@ -86,3 +86,29 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
       );
   }
 };
+
+export const RouteToDetailsPage = ({ label, type, id }: IProps) => (
+  <>
+    <Box
+      sx={{
+        '@media print': {
+          display: 'none',
+        },
+      }}
+    >
+      {getLink({ label, type, id })}
+    </Box>
+    <Text
+      display="none"
+      sx={{
+        '@media print': {
+          display: 'block',
+        },
+      }}
+      px={0}
+      fontSize="s3"
+    >
+      {label}
+    </Text>
+  </>
+);

@@ -18,6 +18,13 @@ export const Login = () => {
 
   const { mutateAsync, isLoading } = useMutation(setAuth, {
     onSuccess: (res) => {
+      if (res?.data?.error) {
+        toast({
+          id: 'dhadda-login',
+          type: 'error',
+          message: 'Something went wrong',
+        });
+      }
       if (!res?.data?.access_token) {
         return;
       }

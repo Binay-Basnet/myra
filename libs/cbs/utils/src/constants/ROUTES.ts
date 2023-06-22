@@ -261,6 +261,8 @@ export const ROUTES = {
   CBS_REPORTS_LOAN_STATEMENT: '/reports/cbs/loan/statement/new',
   CBS_REPORTS_LOAN_AGEING_REPORT: '/reports/cbs/loan/ageing/new',
 
+  CBS_REPORTS_LOAN_ACCOUNT_STATEMENT_REPORT: '/reports/cbs/loan/loan-transaction-statement/new',
+
   CBS_REPORTS_TRANS_TRIAL_SHEET: '/reports/cbs/transactions/trial-sheet/new',
   CBS_REPORTS_TRANS_CASH_LEDGER: '/reports/cbs/transactions/cash-ledger/new',
   CBS_REPORTS_TRANS_BANK_GL_STATEMENT: '/reports/cbs/transactions/bank-gl-statement/new',
@@ -420,6 +422,8 @@ export const ROUTES = {
   HRMODULE_LEAVE_ADD: '/hr/employee/leave/add',
 
   HRMODULE_EMPLOYEES_SETTINGS: '/settings/general/hcm/employee',
+  HRMODULE_EMPLOYEES_LEAVE_SETTINGS: '/settings/general/hcm/employee/leave',
+
   HRMODULE_ATTENDENCE_SETTINGS: '/hr/employee/attendence/list',
   HRMODULE_LEAVE_SETTINGS: '/hr/employee/leave/list',
 
