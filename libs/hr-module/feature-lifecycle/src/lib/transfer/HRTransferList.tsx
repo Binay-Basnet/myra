@@ -48,7 +48,7 @@ export const HrLifecycleTransferList = () => {
 
   return (
     <>
-      <PageHeader heading="Employee Onboarding" />
+      <PageHeader heading="Employee Transfer" />
       <Table
         isLoading={isLoading}
         data={rowData}

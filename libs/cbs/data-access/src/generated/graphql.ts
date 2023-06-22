@@ -21914,6 +21914,29 @@ export type SetEmployeeTransferUpsertMutation = {
   };
 };
 
+export type SetEmployeeSeerationUpsertMutationVariables = Exact<{
+  input: EmployeeSeparationInput;
+}>;
+
+export type SetEmployeeSeerationUpsertMutation = {
+  hr: {
+    employeelifecycle?: {
+      employeeSeparation: {
+        addEmployeeSeparation: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
+
 export type SetStaffPlanningMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: StaffPlanInput;
@@ -28686,6 +28709,34 @@ export type GetHrTransferListQuery = {
             };
           } | null> | null;
           pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetHrSeperationListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetHrSeperationListQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeSeparation: {
+        listEmployeeSeparation: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              employeeId: string;
+              id: string;
+              designation: string;
+              employeeName: string;
+              resignationLetterDate: Record<'local' | 'en' | 'np', string>;
+            } | null;
+          } | null> | null;
+          PageInfo?: PaginationFragment | null;
         };
       };
     };
@@ -42042,6 +42093,42 @@ export const useSetEmployeeTransferUpsertMutation = <TError = unknown, TContext 
     ),
     options
   );
+export const SetEmployeeSeerationUpsertDocument = `
+    mutation setEmployeeSeerationUpsert($input: EmployeeSeparationInput!) {
+  hr {
+    employeelifecycle {
+      employeeSeparation {
+        addEmployeeSeparation(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeSeerationUpsertMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeSeerationUpsertMutation,
+    TError,
+    SetEmployeeSeerationUpsertMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeSeerationUpsertMutation,
+    TError,
+    SetEmployeeSeerationUpsertMutationVariables,
+    TContext
+  >(
+    ['setEmployeeSeerationUpsert'],
+    useAxios<SetEmployeeSeerationUpsertMutation, SetEmployeeSeerationUpsertMutationVariables>(
+      SetEmployeeSeerationUpsertDocument
+    ),
+    options
+  );
 export const SetStaffPlanningDocument = `
     mutation setStaffPlanning($id: ID, $input: StaffPlanInput!) {
   hr {
@@ -51640,6 +51727,44 @@ export const useGetHrTransferListQuery = <TData = GetHrTransferListQuery, TError
     variables === undefined ? ['getHRTransferList'] : ['getHRTransferList', variables],
     useAxios<GetHrTransferListQuery, GetHrTransferListQueryVariables>(
       GetHrTransferListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetHrSeperationListDocument = `
+    query getHRSeperationList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeeSeparation {
+        listEmployeeSeparation(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+              id
+              designation
+              employeeId
+              employeeName
+              resignationLetterDate
+            }
+            cursor
+          }
+          PageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetHrSeperationListQuery = <TData = GetHrSeperationListQuery, TError = unknown>(
+  variables?: GetHrSeperationListQueryVariables,
+  options?: UseQueryOptions<GetHrSeperationListQuery, TError, TData>
+) =>
+  useQuery<GetHrSeperationListQuery, TError, TData>(
+    variables === undefined ? ['getHRSeperationList'] : ['getHRSeperationList', variables],
+    useAxios<GetHrSeperationListQuery, GetHrSeperationListQueryVariables>(
+      GetHrSeperationListDocument
     ).bind(null, variables),
     options
   );
