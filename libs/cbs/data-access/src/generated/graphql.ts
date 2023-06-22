@@ -7688,6 +7688,25 @@ export type GeneralSettingsQuery = {
   valuator?: Maybe<ValuatorSettingsQuery>;
 };
 
+export type GetEmployeeLifecycleDetail = {
+  data?: Maybe<GetEmployeeLifecycleNode>;
+  error?: Maybe<QueryError>;
+};
+
+export type GetEmployeeLifecycleNode = {
+  age?: Maybe<Scalars['Int']>;
+  branch?: Maybe<Scalars['String']>;
+  companyName?: Maybe<Scalars['String']>;
+  contactNumber?: Maybe<Scalars['String']>;
+  department?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  gender?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  joiningDate?: Maybe<Scalars['Localized']>;
+  name?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+};
+
 export type GetInventoryItemResponse = {
   data?: Maybe<FormStateInvItemsInput>;
   error?: Maybe<QueryError>;
@@ -7969,10 +7988,15 @@ export type HrEmployeeKyeMutationUpsertEmployeeArgs = {
 
 export type HrEmployeeKyeQuery = {
   getEmployee: EmployteeResultWithError;
+  getEmployeeLifecycleView: GetEmployeeLifecycleDetail;
   listEmployee: HrEmployeeListConnection;
 };
 
 export type HrEmployeeKyeQueryGetEmployeeArgs = {
+  id: Scalars['String'];
+};
+
+export type HrEmployeeKyeQueryGetEmployeeLifecycleViewArgs = {
   id: Scalars['String'];
 };
 
@@ -15651,7 +15675,7 @@ export type MyraUserQueryFormStateArgs = {
 };
 
 export type MyraUserQueryListArgs = {
-  filter?: InputMaybe<MyraUserSearchFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -38361,7 +38385,7 @@ export type GetSettingsShareTransferDataQuery = {
 
 export type GetSettingsUserListDataQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
-  filter?: InputMaybe<MyraUserSearchFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetSettingsUserListDataQuery = {
@@ -64504,7 +64528,7 @@ export const useGetSettingsShareTransferDataQuery = <
     options
   );
 export const GetSettingsUserListDataDocument = `
-    query getSettingsUserListData($paginate: Pagination, $filter: MyraUserSearchFilter) {
+    query getSettingsUserListData($paginate: Pagination, $filter: Filter) {
   settings {
     myraUser {
       list(paginate: $paginate, filter: $filter) {

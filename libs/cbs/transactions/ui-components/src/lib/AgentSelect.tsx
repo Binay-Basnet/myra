@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { debounce } from 'lodash';
 
-import { Roles, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
+import { useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
@@ -22,7 +22,7 @@ export const AgentSelect = ({ name, label, __placeholder }: IAgentSelectProps) =
       paginate: getPaginationQuery(),
       filter: {
         query: agentId,
-        role: [Roles.Agent],
+        // role: [Roles.Agent],
       },
     },
     {
