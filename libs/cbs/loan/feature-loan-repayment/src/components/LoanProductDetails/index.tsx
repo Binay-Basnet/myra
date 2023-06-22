@@ -204,27 +204,27 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               Remaining Principal Amount
             </Text>
             <Text fontWeight="600" fontSize="s3">
-              {amountConverter(loanData?.repaymentDetails?.remainingPrincipal as string)}{' '}
+              {amountConverter(loanData?.paymentSchedule?.totalPayablePrincipal as string)}{' '}
             </Text>
           </Box>
-          {loanData?.repaymentDetails?.remainingInterest && (
+          {loanData?.paymentSchedule?.totalPayableInterest && (
             <Box display="flex" justifyContent="space-between">
               <Text fontWeight="400" fontSize="s3">
                 Remaining Interest Amount{' '}
               </Text>
               <Text fontWeight="600" fontSize="s3">
-                {amountConverter(loanData?.repaymentDetails?.remainingInterest)}
+                {amountConverter(loanData?.paymentSchedule?.totalPayableInterest)}
               </Text>
             </Box>
           )}
         </Box>
-        {loanData?.repaymentDetails?.remainingTotal && (
+        {loanData?.paymentSchedule?.totalRemainingPayable && (
           <Box display="flex" justifyContent="space-between" p="s16" bg="border.layout">
             <Text fontWeight="400" fontSize="s3">
               Total Remaining Amount
             </Text>
             <Text fontWeight="600" fontSize="s3">
-              {amountConverter(loanData?.repaymentDetails?.remainingTotal)}
+              {amountConverter(loanData?.paymentSchedule.totalRemainingPayable)}
             </Text>
           </Box>
         )}

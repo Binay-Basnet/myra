@@ -5851,6 +5851,11 @@ export type EachAppointmentLetterRecords = {
   error: QueryError;
 };
 
+export type EachEmployeeExitRecords = {
+  data: EmployeeExitRecord;
+  error: QueryError;
+};
+
 export type EachEmployeeOnboardingRecord = {
   data: EmployeeOnboardingRecord;
   error: QueryError;
@@ -5951,6 +5956,49 @@ export type EbankingTransactionFilter = {
   accounts?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   date?: InputMaybe<DateFilter>;
   transactionDirection?: InputMaybe<EbankingTransactionCrOrDr>;
+};
+
+export type EmployeeExitConnection = {
+  edges?: Maybe<Array<Maybe<EmployeeExits>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type EmployeeExitInput = {
+  checklists?: InputMaybe<Array<InputMaybe<FieldsInput>>>;
+  exitDate?: InputMaybe<Scalars['Localized']>;
+  exitStatus?: InputMaybe<ExitStatus>;
+  futureIntentions?: InputMaybe<Scalars['String']>;
+  interviewer?: InputMaybe<Scalars['ID']>;
+  others?: InputMaybe<Scalars['String']>;
+  overallExp?: InputMaybe<Scalars['String']>;
+  separationId?: InputMaybe<Scalars['ID']>;
+  suggestions?: InputMaybe<Scalars['String']>;
+};
+
+export type EmployeeExitListed = {
+  employeeId?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
+  interviewer?: Maybe<Scalars['String']>;
+  lastModifiedDate?: Maybe<Scalars['Localized']>;
+  separationDate?: Maybe<Scalars['Localized']>;
+};
+
+export type EmployeeExitRecord = {
+  checklists?: Maybe<Array<Maybe<Fields>>>;
+  exitDate?: Maybe<Scalars['Localized']>;
+  exitStatus?: Maybe<ExitStatus>;
+  futureIntentions?: Maybe<Scalars['String']>;
+  interviewer?: Maybe<Scalars['ID']>;
+  others?: Maybe<Scalars['String']>;
+  overallExp?: Maybe<Scalars['String']>;
+  separationId?: Maybe<Scalars['ID']>;
+  suggestions?: Maybe<Scalars['String']>;
+};
+
+export type EmployeeExits = {
+  cursor: Scalars['Cursor'];
+  node: EmployeeExitListed;
 };
 
 export type EmployeeHealthInsurance = {
@@ -6317,6 +6365,14 @@ export type ExceptionReportShareBalanceReportArgs = {
   data?: InputMaybe<ShareBalanceReportFilter>;
 };
 
+export const ExitStatus = {
+  Active: 'ACTIVE',
+  Exited: 'EXITED',
+  Initiated: 'INITIATED',
+  OnNoticePeriod: 'ON_NOTICE_PERIOD',
+} as const;
+
+export type ExitStatus = typeof ExitStatus[keyof typeof ExitStatus];
 export type ExpenseLedgerTransfer = {
   accountId?: InputMaybe<Scalars['String']>;
   amount?: InputMaybe<Scalars['String']>;
@@ -8015,7 +8071,31 @@ export type HrEmployeeLifecycleEmployeeTransferQueryQueryEmployeeTransferArgs = 
   employeeId: Scalars['ID'];
 };
 
+export type HrEmployeeLifecycleExitMutation = {
+  upsertEmployeeExit: ReturnEmployeeExit;
+};
+
+export type HrEmployeeLifecycleExitMutationUpsertEmployeeExitArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: EmployeeExitInput;
+};
+
+export type HrEmployeeLifecycleExitQuery = {
+  getEmployeeExit: EachEmployeeExitRecords;
+  listEmployeeExit: EmployeeExitConnection;
+};
+
+export type HrEmployeeLifecycleExitQueryGetEmployeeExitArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrEmployeeLifecycleExitQueryListEmployeeExitArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type HrEmployeeLifecycleMutation = {
+  employeeExit: HrEmployeeLifecycleExitMutation;
   employeeOnboarding: HrEmployeeLifecycleEmployeeOnboardingMutation;
   employeePromotion: HrEmployeeLifecyclePromotionMutation;
   employeeSeparation: HrEmployeeLifecycleSeparationMutation;
@@ -8040,6 +8120,7 @@ export type HrEmployeeLifecyclePromotionQueryListEmployeePromotionArgs = {
 };
 
 export type HrEmployeeLifecycleQuery = {
+  employeeExit: HrEmployeeLifecycleExitQuery;
   employeeOnboarding: HrEmployeeLifecycleEmployeeOnboardingQuery;
   employeePromotion: HrEmployeeLifecyclePromotionQuery;
   employeeSeparation: HrEmployeeLifecycleSeparationQuery;
@@ -17120,6 +17201,12 @@ export type ReturnAppointmentLetter = {
   recordId: Scalars['ID'];
 };
 
+export type ReturnEmployeeExit = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EmployeeExitRecord>;
+  recordId: Scalars['ID'];
+};
+
 export type ReturnEmployeeOnboarding = {
   error?: Maybe<MutationError>;
   record?: Maybe<EmployeeOnboardingRecord>;
@@ -20571,6 +20658,24 @@ export type ExperienceInput = {
   occupationName?: InputMaybe<Scalars['String']>;
   summary?: InputMaybe<Scalars['String']>;
   toDate?: InputMaybe<Scalars['Localized']>;
+};
+
+export type Fields = {
+  activityName?: Maybe<Scalars['String']>;
+  beginsOn?: Maybe<Scalars['Localized']>;
+  done?: Maybe<Scalars['Boolean']>;
+  duration?: Maybe<Scalars['String']>;
+  role?: Maybe<Scalars['String']>;
+  user?: Maybe<Scalars['String']>;
+};
+
+export type FieldsInput = {
+  activityName?: InputMaybe<Scalars['String']>;
+  beginsOn?: InputMaybe<Scalars['Localized']>;
+  done?: InputMaybe<Scalars['Boolean']>;
+  duration?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Scalars['String']>;
+  user?: InputMaybe<Scalars['String']>;
 };
 
 export type LedgerDetails = {
