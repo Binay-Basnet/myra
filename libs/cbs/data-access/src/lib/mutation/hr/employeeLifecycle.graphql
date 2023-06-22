@@ -27,3 +27,18 @@ mutation setEmployeeTransferUpsert($input: EmployeeTransferInput!) {
     }
   }
 }
+
+mutation setEmployeeSeerationUpsert($input: EmployeeSeparationInput!) {
+  hr {
+    employeelifecycle {
+      employeeSeparation {
+        addEmployeeSeparation(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
