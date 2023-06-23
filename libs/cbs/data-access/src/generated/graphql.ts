@@ -6067,12 +6067,25 @@ export type EmployeeLeaveRecord = {
 };
 
 export type EmployeeLeaveType = {
+  approver?: Maybe<Scalars['String']>;
+  employeeId: Scalars['String'];
+  employeeName: Scalars['String'];
+  id: Scalars['String'];
+  leaveFrom: Scalars['Localized'];
+  leaveTo: Scalars['Localized'];
+  leaveType: Scalars['String'];
+  reason: Scalars['String'];
+  status?: Maybe<Scalars['String']>;
+};
+
+export type EmployeeLeaveTypeGet = {
   employeeId: Scalars['String'];
   id: Scalars['String'];
   leaveFrom: Scalars['Localized'];
-  leaveNote: Scalars['String'];
+  leaveNote?: Maybe<Scalars['String']>;
   leaveTo: Scalars['Localized'];
   leaveTypeId: Scalars['String'];
+  status?: Maybe<Scalars['String']>;
 };
 
 export type EmployeeLevel = {
@@ -12068,6 +12081,7 @@ export type LeaveInput = {
   leaveNote: Scalars['String'];
   leaveTo: Scalars['Localized'];
   leaveTypeId: Scalars['ID'];
+  status?: InputMaybe<LeaveStatusEnum>;
 };
 
 export type LeaveOutput = {
@@ -12077,7 +12091,7 @@ export type LeaveOutput = {
 
 export type LeaveOutputType = {
   error?: Maybe<QueryError>;
-  record?: Maybe<EmployeeLeaveType>;
+  record?: Maybe<EmployeeLeaveTypeGet>;
 };
 
 export type LeavePolicyDetails = {
@@ -12108,6 +12122,13 @@ export type LeavePolicyOutput = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export const LeaveStatusEnum = {
+  Approved: 'APPROVED',
+  Declined: 'DECLINED',
+  Pending: 'PENDING',
+} as const;
+
+export type LeaveStatusEnum = typeof LeaveStatusEnum[keyof typeof LeaveStatusEnum];
 export const LeaveTypeEnum = {
   Paid: 'PAID',
   Unpaid: 'UNPAID',
@@ -12986,11 +13007,14 @@ export type LoanCallReport = {
   totalInstallment?: Maybe<Scalars['String']>;
 };
 
+export type LoanCallReportAdditionalFilters = {
+  amountRange?: InputMaybe<MinMaxFilter>;
+};
+
 export type LoanCallReportFilter = {
   accountTypeId?: InputMaybe<Array<Scalars['String']>>;
-  amountRange?: InputMaybe<MinMaxFilter>;
   branchId?: InputMaybe<Array<Scalars['String']>>;
-  installmentDate?: InputMaybe<Scalars['Localized']>;
+  filter?: InputMaybe<LoanCallReportAdditionalFilters>;
   period: LocalizedDateFilter;
 };
 
@@ -28540,11 +28564,15 @@ export type GetLeaveListQuery = {
           edges?: Array<{
             cursor?: string | null;
             node?: {
+              id: string;
               employeeId: string;
-              leaveTypeId: string;
+              employeeName: string;
+              reason: string;
+              leaveType: string;
               leaveFrom: Record<'local' | 'en' | 'np', string>;
               leaveTo: Record<'local' | 'en' | 'np', string>;
-              leaveNote: string;
+              approver?: string | null;
+              status?: string | null;
             } | null;
           } | null> | null;
           pageInfo?: PaginationFragment | null;
@@ -28743,28 +28771,6 @@ export type GetHrSeperationListQuery = {
   };
 };
 
-export type GetStaffPlanQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type GetStaffPlanQuery = {
-  hr: {
-    recruitment: {
-      recruitment: {
-        getStaffPlan: {
-          data?: { total_vacancies: number; total_cost_estimation: string } | null;
-          error?:
-            | MutationError_AuthorizationError_Fragment
-            | MutationError_BadRequestError_Fragment
-            | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment
-            | null;
-        };
-      };
-    };
-  };
-};
-
 export type GetStaffPlanningListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -28904,6 +28910,194 @@ export type GetJobApplicationListQuery = {
             };
           } | null> | null;
           pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetStaffPlanQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetStaffPlanQuery = {
+  hr: {
+    recruitment: {
+      recruitment: {
+        getStaffPlan: {
+          data?: {
+            id: string;
+            branchId?: string | null;
+            title: string;
+            note?: string | null;
+            total_vacancies: number;
+            total_cost_estimation: string;
+            date: {
+              from: Record<'local' | 'en' | 'np', string>;
+              to: Record<'local' | 'en' | 'np', string>;
+            };
+            staffPlans?: Array<{
+              designation: string;
+              vacancies: number;
+              estimated_cost_per_employee: string;
+              estimated_cost: string;
+            }> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetJobOpeningQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetJobOpeningQuery = {
+  hr: {
+    recruitment: {
+      recruitmentJobOpening: {
+        getJobOpening: {
+          data: {
+            id: string;
+            branchId?: string | null;
+            title: string;
+            staffPlan: string;
+            department: string;
+            designation: string;
+            experienceLevel: Level;
+            description: string;
+            salaryRange: { id: string; min: string; max: string; default: string };
+          };
+          error:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment;
+        };
+      };
+    };
+  };
+};
+
+export type GetJobOfferQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetJobOfferQuery = {
+  hr: {
+    recruitment: {
+      recruitmentJobOffer: {
+        getJobOffer: {
+          data: {
+            id: string;
+            jobApplicant: string;
+            jobStatus: JobStatus;
+            jobDesignation: string;
+            jobDepartment: string;
+            jobOfferDate: Record<'local' | 'en' | 'np', string>;
+            jobOfferTerms: Array<{ sn: string; offerTerm: string; value: string }>;
+          };
+          error:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment;
+        };
+      };
+    };
+  };
+};
+
+export type GetJobApplicationQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetJobApplicationQuery = {
+  hr: {
+    recruitment: {
+      recruitmentJobApplication: {
+        getJobApplication: {
+          data: {
+            id: string;
+            applicantName?: string | null;
+            jobOpening?: string | null;
+            personalEmailAddress?: string | null;
+            personalPhoneNumber?: string | null;
+            tempSameAsPerm?: boolean | null;
+            applicationStatus?: ApplicantStatus | null;
+            applicationRating?: number | null;
+            permanentAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+            temporaryAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+            educationalDetails?: Array<{
+              instituteName?: string | null;
+              degree_diploma?: string | null;
+              specialization?: string | null;
+              dateOfCompletion?: Record<'local' | 'en' | 'np', string> | null;
+            } | null> | null;
+            experienceDetails?: Array<{
+              occupationName?: string | null;
+              company?: string | null;
+              fromDate?: Record<'local' | 'en' | 'np', string> | null;
+              toDate?: Record<'local' | 'en' | 'np', string> | null;
+              duration?: string | null;
+              summary?: string | null;
+            } | null> | null;
+          };
+          error:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment;
+        };
+      };
+    };
+  };
+};
+
+export type GetAppointmentLetterQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetAppointmentLetterQuery = {
+  hr: {
+    recruitment: {
+      recruitmentAppointmentLetter: {
+        getAppointmentLetter: {
+          data: {
+            appointmentLetterID: string;
+            jobApplication: string;
+            appointmentDate: Record<'local' | 'en' | 'np', string>;
+            body: string;
+            appointmentTerms: Array<{ sn: string; title: string; description: string }>;
+          };
+          error:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment;
         };
       };
     };
@@ -51489,11 +51683,15 @@ export const GetLeaveListDocument = `
           totalCount
           edges {
             node {
+              id
               employeeId
-              leaveTypeId
+              employeeName
+              reason
+              leaveType
               leaveFrom
               leaveTo
-              leaveNote
+              approver
+              status
             }
             cursor
           }
@@ -51768,37 +51966,6 @@ export const useGetHrSeperationListQuery = <TData = GetHrSeperationListQuery, TE
     ).bind(null, variables),
     options
   );
-export const GetStaffPlanDocument = `
-    query getStaffPlan($id: ID!) {
-  hr {
-    recruitment {
-      recruitment {
-        getStaffPlan(id: $id) {
-          data {
-            total_vacancies
-            total_cost_estimation
-          }
-          error {
-            ...MutationError
-          }
-        }
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useGetStaffPlanQuery = <TData = GetStaffPlanQuery, TError = unknown>(
-  variables: GetStaffPlanQueryVariables,
-  options?: UseQueryOptions<GetStaffPlanQuery, TError, TData>
-) =>
-  useQuery<GetStaffPlanQuery, TError, TData>(
-    ['getStaffPlan', variables],
-    useAxios<GetStaffPlanQuery, GetStaffPlanQueryVariables>(GetStaffPlanDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
 export const GetStaffPlanningListDocument = `
     query getStaffPlanningList($filter: Filter, $pagination: Pagination) {
   hr {
@@ -51992,6 +52159,245 @@ export const useGetJobApplicationListQuery = <TData = GetJobApplicationListQuery
     variables === undefined ? ['getJobApplicationList'] : ['getJobApplicationList', variables],
     useAxios<GetJobApplicationListQuery, GetJobApplicationListQueryVariables>(
       GetJobApplicationListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetStaffPlanDocument = `
+    query getStaffPlan($id: ID!) {
+  hr {
+    recruitment {
+      recruitment {
+        getStaffPlan(id: $id) {
+          data {
+            id
+            branchId
+            title
+            date {
+              from
+              to
+            }
+            staffPlans {
+              designation
+              vacancies
+              estimated_cost_per_employee
+              estimated_cost
+            }
+            note
+            total_vacancies
+            total_cost_estimation
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetStaffPlanQuery = <TData = GetStaffPlanQuery, TError = unknown>(
+  variables: GetStaffPlanQueryVariables,
+  options?: UseQueryOptions<GetStaffPlanQuery, TError, TData>
+) =>
+  useQuery<GetStaffPlanQuery, TError, TData>(
+    ['getStaffPlan', variables],
+    useAxios<GetStaffPlanQuery, GetStaffPlanQueryVariables>(GetStaffPlanDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetJobOpeningDocument = `
+    query getJobOpening($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobOpening {
+        getJobOpening(id: $id) {
+          data {
+            id
+            branchId
+            title
+            staffPlan
+            department
+            designation
+            experienceLevel
+            description
+            salaryRange {
+              id
+              min
+              max
+              default
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetJobOpeningQuery = <TData = GetJobOpeningQuery, TError = unknown>(
+  variables: GetJobOpeningQueryVariables,
+  options?: UseQueryOptions<GetJobOpeningQuery, TError, TData>
+) =>
+  useQuery<GetJobOpeningQuery, TError, TData>(
+    ['getJobOpening', variables],
+    useAxios<GetJobOpeningQuery, GetJobOpeningQueryVariables>(GetJobOpeningDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetJobOfferDocument = `
+    query getJobOffer($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobOffer {
+        getJobOffer(id: $id) {
+          data {
+            id
+            jobApplicant
+            jobStatus
+            jobDesignation
+            jobDepartment
+            jobOfferDate
+            jobOfferTerms {
+              sn
+              offerTerm
+              value
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetJobOfferQuery = <TData = GetJobOfferQuery, TError = unknown>(
+  variables: GetJobOfferQueryVariables,
+  options?: UseQueryOptions<GetJobOfferQuery, TError, TData>
+) =>
+  useQuery<GetJobOfferQuery, TError, TData>(
+    ['getJobOffer', variables],
+    useAxios<GetJobOfferQuery, GetJobOfferQueryVariables>(GetJobOfferDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetJobApplicationDocument = `
+    query getJobApplication($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobApplication {
+        getJobApplication(id: $id) {
+          data {
+            id
+            applicantName
+            jobOpening
+            personalEmailAddress
+            personalPhoneNumber
+            permanentAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            temporaryAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            tempSameAsPerm
+            educationalDetails {
+              instituteName
+              degree_diploma
+              specialization
+              dateOfCompletion
+            }
+            experienceDetails {
+              occupationName
+              company
+              fromDate
+              toDate
+              duration
+              summary
+            }
+            applicationStatus
+            applicationRating
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetJobApplicationQuery = <TData = GetJobApplicationQuery, TError = unknown>(
+  variables: GetJobApplicationQueryVariables,
+  options?: UseQueryOptions<GetJobApplicationQuery, TError, TData>
+) =>
+  useQuery<GetJobApplicationQuery, TError, TData>(
+    ['getJobApplication', variables],
+    useAxios<GetJobApplicationQuery, GetJobApplicationQueryVariables>(
+      GetJobApplicationDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAppointmentLetterDocument = `
+    query getAppointmentLetter($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentAppointmentLetter {
+        getAppointmentLetter(id: $id) {
+          data {
+            appointmentLetterID
+            jobApplication
+            appointmentDate
+            body
+            appointmentTerms {
+              sn
+              title
+              description
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetAppointmentLetterQuery = <TData = GetAppointmentLetterQuery, TError = unknown>(
+  variables: GetAppointmentLetterQueryVariables,
+  options?: UseQueryOptions<GetAppointmentLetterQuery, TError, TData>
+) =>
+  useQuery<GetAppointmentLetterQuery, TError, TData>(
+    ['getAppointmentLetter', variables],
+    useAxios<GetAppointmentLetterQuery, GetAppointmentLetterQueryVariables>(
+      GetAppointmentLetterDocument
     ).bind(null, variables),
     options
   );

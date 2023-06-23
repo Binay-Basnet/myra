@@ -464,6 +464,13 @@ export const ROUTES = {
   HR_RECRUITMENT_JOB_OFFER_ADD: '/hr/recruitment/job-offer/add',
   HR_RECRUITMENT_APPOINTMENT_LETTER_ADD: '/hr/recruitment/appointment-letter/add',
 
+  HR_RECRUITMENT_STAFF_PLANNING_EDIT: '/hr/recruitment/staff-planning/edit',
+  HR_RECRUITMENT_JOB_OPENING_EDIT: '/hr/recruitment/job-opening/edit',
+  HR_RECRUITMENT_JOB_APPLICATION_EDIT: '/hr/recruitment/job-application/edit',
+  HR_RECRUITMENT_INTERVIEW_EDIT: '/hr/recruitment/interview/edit',
+  HR_RECRUITMENT_JOB_OFFER_EDIT: '/hr/recruitment/job-offer/edit',
+  HR_RECRUITMENT_APPOINTMENT_LETTER_EDIT: '/hr/recruitment/appointment-letter/edit',
+
   HR_RECRUITMENT_SETTINGS: '/hr/recruitment/staff-planning/list',
   HR_INTERVIEW_ROUNDS: '/hr/recruitment/staff-planning/list',
   HR_EMAIL_TEMPLATES: '/hr/recruitment/staff-planning/list',

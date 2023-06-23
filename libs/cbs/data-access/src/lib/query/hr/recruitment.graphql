@@ -1,21 +1,3 @@
-query getStaffPlan($id: ID!) {
-  hr {
-    recruitment {
-      recruitment {
-        getStaffPlan(id: $id) {
-          data {
-            total_vacancies
-            total_cost_estimation
-          }
-          error {
-            ...MutationError
-          }
-        }
-      }
-    }
-  }
-}
-
 query getStaffPlanningList($filter: Filter, $pagination: Pagination) {
   hr {
     recruitment {
@@ -139,6 +121,182 @@ query getJobApplicationList($filter: Filter, $pagination: Pagination) {
           }
           pageInfo {
             ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getStaffPlan($id: ID!) {
+  hr {
+    recruitment {
+      recruitment {
+        getStaffPlan(id: $id) {
+          data {
+            id
+            branchId
+            title
+            date {
+              from
+              to
+            }
+            staffPlans {
+              designation
+              vacancies
+              estimated_cost_per_employee
+              estimated_cost
+            }
+            note
+            total_vacancies
+            total_cost_estimation
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getJobOpening($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobOpening {
+        getJobOpening(id: $id) {
+          data {
+            id
+            branchId
+            title
+            staffPlan
+            department
+            designation
+            experienceLevel
+            description
+            salaryRange {
+              id
+              min
+              max
+              default
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getJobOffer($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobOffer {
+        getJobOffer(id: $id) {
+          data {
+            id
+            jobApplicant
+            jobStatus
+            jobDesignation
+            jobDepartment
+            jobOfferDate
+            jobOfferTerms {
+              sn
+              offerTerm
+              value
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getJobApplication($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobApplication {
+        getJobApplication(id: $id) {
+          data {
+            id
+            applicantName
+            jobOpening
+            personalEmailAddress
+            personalPhoneNumber
+            permanentAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            temporaryAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            tempSameAsPerm
+            educationalDetails {
+              instituteName
+              degree_diploma
+              specialization
+              dateOfCompletion
+            }
+            experienceDetails {
+              occupationName
+              company
+              fromDate
+              toDate
+              duration
+              summary
+            }
+            applicationStatus
+            applicationRating
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAppointmentLetter($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentAppointmentLetter {
+        getAppointmentLetter(id: $id) {
+          data {
+            appointmentLetterID
+            jobApplication
+            appointmentDate
+            body
+            appointmentTerms {
+              sn
+              title
+              description
+            }
+          }
+          error {
+            ...MutationError
           }
         }
       }
