@@ -42,3 +42,18 @@ mutation setEmployeeSeerationUpsert($input: EmployeeSeparationInput!) {
     }
   }
 }
+
+mutation setEmployeePromotionUpsert($input: EmployeePromotionInput!) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        addEmployeePromotion(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
