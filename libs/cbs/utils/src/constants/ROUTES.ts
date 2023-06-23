@@ -444,6 +444,12 @@ export const ROUTES = {
   HR_LIFECYCLE_EMPLOYEE_PROMOTION_ADD: '/hr/lifecycle/promotion/add',
   HR_LIFECYCLE_EMPLOYEE_EXIT_ADD: '/hr/lifecycle/exit/add',
 
+  HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_EDIT: '/hr/lifecycle/employee-onboarding/edit',
+  HR_LIFECYCLE_EMPLOYEE_TRANSFER_EDIT: '/hr/lifecycle/transfer/edit',
+  HR_LIFECYCLE_EMPLOYEE_SEPERATION_EDIT: '/hr/lifecycle/seperation/edit',
+  HR_LIFECYCLE_EMPLOYEE_PROMOTION_EDIT: '/hr/lifecycle/promotion/edit',
+  HR_LIFECYCLE_EMPLOYEE_EXIT_EDIT: '/hr/lifecycle/exit/edit',
+
   HR_RECRUITMENT_STAFF_PLANNING_LIST: '/hr/recruitment/staff-planning/list',
   HR_RECRUITMENT_JOB_OPENING_LIST: '/hr/recruitment/job-opening/list',
   HR_RECRUITMENT_JOB_APPLICATION_LIST: '/hr/recruitment/job-application/list',
