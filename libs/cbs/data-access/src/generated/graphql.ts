@@ -14376,6 +14376,25 @@ export type MBankingTransactionResult = {
   error?: Maybe<QueryError>;
 };
 
+export type MfCenterInput = {
+  Documents: Array<DocumentInsertInput>;
+  branchIds: Array<Scalars['String']>;
+  centerName: Scalars['String'];
+  coordinatorId: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+};
+
+export type MfCenterResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export const MfObjectState = {
+  Active: 'ACTIVE',
+  Inactive: 'INACTIVE',
+} as const;
+
+export type MfObjectState = typeof MfObjectState[keyof typeof MfObjectState];
 export const MrTransactionFilter = {
   Deposit: 'DEPOSIT',
   Withdraw: 'WITHDRAW',
@@ -14848,6 +14867,7 @@ export type MemberMutation = {
   makeInactive?: Maybe<MemberInactiveResult>;
   officialUse?: Maybe<OfficialUseResult>;
   revokeDormancy: MemberDormancyResult;
+  transfer: MemberTransferMutation;
   translate?: Maybe<TranslateData>;
   updateDormancy: MemberDormancyResult;
   updateKym: KymUpdateResult;
@@ -15093,6 +15113,7 @@ export type MemberQuery = {
   memberTypes: MemberTypeResult;
   minorProfile?: Maybe<MinorProfile>;
   officialUse?: Maybe<OfficialUseResult>;
+  transfer: MemberTransferQuery;
   translate: TranslateQueryResult;
 };
 
@@ -15315,6 +15336,86 @@ export const MemberStatus = {
 } as const;
 
 export type MemberStatus = typeof MemberStatus[keyof typeof MemberStatus];
+export type MemberTransferEntry = {
+  approverId?: Maybe<Scalars['ID']>;
+  approverName?: Maybe<Scalars['String']>;
+  docs?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  id: Scalars['ID'];
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['String']>;
+  newBranchId?: Maybe<Scalars['String']>;
+  newBranchName?: Maybe<Scalars['String']>;
+  postNotes?: Maybe<Scalars['String']>;
+  prevBranchId?: Maybe<Scalars['String']>;
+  prevBranchName?: Maybe<Scalars['String']>;
+  reason?: Maybe<Scalars['String']>;
+  state?: Maybe<MemberTransferState>;
+};
+
+export type MemberTransferInput = {
+  docs?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  newBranchId: Scalars['ID'];
+  reason: Scalars['String'];
+};
+
+export type MemberTransferListConnection = {
+  edges?: Maybe<Array<Maybe<MemberTransferListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type MemberTransferListEdges = {
+  cursor: Scalars['Cursor'];
+  node: MemberTransferEntry;
+};
+
+export type MemberTransferMutation = {
+  action: MemberTransferResult;
+  initiate: MemberTransferResult;
+};
+
+export type MemberTransferMutationActionArgs = {
+  notes?: InputMaybe<Scalars['String']>;
+  requestId: Scalars['ID'];
+  state: MemberTransferState;
+};
+
+export type MemberTransferMutationInitiateArgs = {
+  data: MemberTransferInput;
+  memberId: Scalars['ID'];
+};
+
+export type MemberTransferQuery = {
+  get: MemberTrasferQueryResult;
+  list: MemberTransferListConnection;
+};
+
+export type MemberTransferQueryGetArgs = {
+  requestId: Scalars['ID'];
+};
+
+export type MemberTransferQueryListArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type MemberTransferResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export const MemberTransferState = {
+  Applied: 'APPLIED',
+  Approved: 'APPROVED',
+  Rejected: 'REJECTED',
+} as const;
+
+export type MemberTransferState = typeof MemberTransferState[keyof typeof MemberTransferState];
+export type MemberTrasferQueryResult = {
+  data?: Maybe<MemberTransferEntry>;
+  error?: Maybe<QueryError>;
+};
+
 export const MemberType = {
   All: 'ALL',
   Cooperative: 'COOPERATIVE',
@@ -15383,6 +15484,18 @@ export type MembershipRequestConnection = {
 export type MembershipRequestEdges = {
   cursor?: Maybe<Scalars['Cursor']>;
   node?: Maybe<MembershipRequest>;
+};
+
+export type MicroFinanceCenterMutation = {
+  addMFCenter: MfCenterResult;
+};
+
+export type MicroFinanceCenterMutationAddMfCenterArgs = {
+  input: MfCenterInput;
+};
+
+export type MicroFinanceMutation = {
+  center?: Maybe<MicroFinanceCenterMutation>;
 };
 
 export type MinMaxFilter = {
@@ -15546,6 +15659,7 @@ export type Mutation = {
   inventory: InventoryMutation;
   loanAccount: LoanAccountMutation;
   members: MemberMutation;
+  microFinance: MicroFinanceMutation;
   newId: Scalars['String'];
   presignedUrl: PresignedUrlMutation;
   profitToFundManagement: FundManagementMutation;
@@ -16851,6 +16965,7 @@ export const Resource = {
   CbsMembersMember: 'CBS_MEMBERS_MEMBER',
   CbsMembersMemberClose: 'CBS_MEMBERS_MEMBER_CLOSE',
   CbsMembersMemberDetail: 'CBS_MEMBERS_MEMBER_DETAIL',
+  CbsMembersTransfer: 'CBS_MEMBERS_TRANSFER',
   CbsMiscellaneousMarketRepresentatives: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
   CbsMiscellaneousMarketRepresentativesDayClose:
     'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_DAY_CLOSE',
