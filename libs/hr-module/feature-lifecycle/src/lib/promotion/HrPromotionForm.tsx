@@ -1,25 +1,44 @@
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { omit } from 'lodash';
 
 import { asyncToast } from '@myra-ui';
 
 import {
-  EmployeeSeparationInput,
-  useSetEmployeeSeerationUpsertMutation,
+  EmployeePromotionInput,
+  useSetEmployeePromotionUpsertMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
 
 import { EmployeeCard, PromotionBasicDetails, PromotionTable } from '../../components';
 
+type CustomPromotionInput = {
+  activity_details?: {
+    fromThis?: string;
+    toThis: string;
+  }[];
+} & EmployeePromotionInput;
+
 export const HrPromotionUpsert = () => {
-  const methods = useForm<EmployeeSeparationInput>();
+  const methods = useForm<CustomPromotionInput>({
+    defaultValues: {
+      activity_details: [
+        {
+          fromThis: '',
+          toThis: '',
+        },
+      ],
+    },
+  });
   const router = useRouter();
 
-  const { mutateAsync } = useSetEmployeeSeerationUpsertMutation();
+  const { mutateAsync } = useSetEmployeePromotionUpsertMutation();
 
   const submitForm = () => {
     const data = methods.getValues();
+
+    const filteredValues = omit({ ...data }, ['activity_details']);
 
     asyncToast({
       id: 'employee-Promotion',
@@ -30,7 +49,9 @@ export const HrPromotionUpsert = () => {
 
       promise: mutateAsync({
         input: {
-          ...data,
+          ...filteredValues,
+          fromThis: data?.activity_details?.[0]?.fromThis as unknown as string,
+          toThis: data?.activity_details?.[0]?.toThis as unknown as string,
         },
       }),
       onSuccess: () => {

@@ -6067,12 +6067,25 @@ export type EmployeeLeaveRecord = {
 };
 
 export type EmployeeLeaveType = {
+  approver?: Maybe<Scalars['String']>;
+  employeeId: Scalars['String'];
+  employeeName: Scalars['String'];
+  id: Scalars['String'];
+  leaveFrom: Scalars['Localized'];
+  leaveTo: Scalars['Localized'];
+  leaveType: Scalars['String'];
+  reason: Scalars['String'];
+  status?: Maybe<Scalars['String']>;
+};
+
+export type EmployeeLeaveTypeGet = {
   employeeId: Scalars['String'];
   id: Scalars['String'];
   leaveFrom: Scalars['Localized'];
-  leaveNote: Scalars['String'];
+  leaveNote?: Maybe<Scalars['String']>;
   leaveTo: Scalars['Localized'];
   leaveTypeId: Scalars['String'];
+  status?: Maybe<Scalars['String']>;
 };
 
 export type EmployeeLevel = {
@@ -7688,6 +7701,25 @@ export type GeneralSettingsQuery = {
   valuator?: Maybe<ValuatorSettingsQuery>;
 };
 
+export type GetEmployeeLifecycleDetail = {
+  data?: Maybe<GetEmployeeLifecycleNode>;
+  error?: Maybe<QueryError>;
+};
+
+export type GetEmployeeLifecycleNode = {
+  age?: Maybe<Scalars['Int']>;
+  branch?: Maybe<Scalars['String']>;
+  companyName?: Maybe<Scalars['String']>;
+  contactNumber?: Maybe<Scalars['String']>;
+  department?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  gender?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  joiningDate?: Maybe<Scalars['Localized']>;
+  name?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+};
+
 export type GetInventoryItemResponse = {
   data?: Maybe<FormStateInvItemsInput>;
   error?: Maybe<QueryError>;
@@ -7969,10 +8001,15 @@ export type HrEmployeeKyeMutationUpsertEmployeeArgs = {
 
 export type HrEmployeeKyeQuery = {
   getEmployee: EmployteeResultWithError;
+  getEmployeeLifecycleView: GetEmployeeLifecycleDetail;
   listEmployee: HrEmployeeListConnection;
 };
 
 export type HrEmployeeKyeQueryGetEmployeeArgs = {
+  id: Scalars['String'];
+};
+
+export type HrEmployeeKyeQueryGetEmployeeLifecycleViewArgs = {
   id: Scalars['String'];
 };
 
@@ -12044,6 +12081,7 @@ export type LeaveInput = {
   leaveNote: Scalars['String'];
   leaveTo: Scalars['Localized'];
   leaveTypeId: Scalars['ID'];
+  status?: InputMaybe<LeaveStatusEnum>;
 };
 
 export type LeaveOutput = {
@@ -12053,7 +12091,7 @@ export type LeaveOutput = {
 
 export type LeaveOutputType = {
   error?: Maybe<QueryError>;
-  record?: Maybe<EmployeeLeaveType>;
+  record?: Maybe<EmployeeLeaveTypeGet>;
 };
 
 export type LeavePolicyDetails = {
@@ -12084,6 +12122,13 @@ export type LeavePolicyOutput = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export const LeaveStatusEnum = {
+  Approved: 'APPROVED',
+  Declined: 'DECLINED',
+  Pending: 'PENDING',
+} as const;
+
+export type LeaveStatusEnum = typeof LeaveStatusEnum[keyof typeof LeaveStatusEnum];
 export const LeaveTypeEnum = {
   Paid: 'PAID',
   Unpaid: 'UNPAID',
@@ -12962,11 +13007,14 @@ export type LoanCallReport = {
   totalInstallment?: Maybe<Scalars['String']>;
 };
 
+export type LoanCallReportAdditionalFilters = {
+  amountRange?: InputMaybe<MinMaxFilter>;
+};
+
 export type LoanCallReportFilter = {
   accountTypeId?: InputMaybe<Array<Scalars['String']>>;
-  amountRange?: InputMaybe<MinMaxFilter>;
   branchId?: InputMaybe<Array<Scalars['String']>>;
-  installmentDate?: InputMaybe<Scalars['Localized']>;
+  filter?: InputMaybe<LoanCallReportAdditionalFilters>;
   period: LocalizedDateFilter;
 };
 
@@ -15651,7 +15699,7 @@ export type MyraUserQueryFormStateArgs = {
 };
 
 export type MyraUserQueryListArgs = {
-  filter?: InputMaybe<MyraUserSearchFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -21899,6 +21947,29 @@ export type SetEmployeeSeerationUpsertMutation = {
     employeelifecycle?: {
       employeeSeparation: {
         addEmployeeSeparation: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
+
+export type SetEmployeePromotionUpsertMutationVariables = Exact<{
+  input: EmployeePromotionInput;
+}>;
+
+export type SetEmployeePromotionUpsertMutation = {
+  hr: {
+    employeelifecycle?: {
+      employeePromotion: {
+        addEmployeePromotion: {
           recordId: string;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -28517,10 +28588,9 @@ export type GetLeaveListQuery = {
             cursor?: string | null;
             node?: {
               employeeId: string;
-              leaveTypeId: string;
+              leaveType: string;
               leaveFrom: Record<'local' | 'en' | 'np', string>;
               leaveTo: Record<'local' | 'en' | 'np', string>;
-              leaveNote: string;
             } | null;
           } | null> | null;
           pageInfo?: PaginationFragment | null;
@@ -28710,6 +28780,35 @@ export type GetHrSeperationListQuery = {
               designation: string;
               employeeName: string;
               resignationLetterDate: Record<'local' | 'en' | 'np', string>;
+            } | null;
+          } | null> | null;
+          PageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetHrPromotionListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetHrPromotionListQuery = {
+  hr: {
+    employeelifecycle: {
+      employeePromotion: {
+        listEmployeePromotion: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              employeeId: string;
+              id: string;
+              newPromotion: string;
+              promotionDate: Record<'local' | 'en' | 'np', string>;
+              promotionType: string;
+              employeeName: string;
             } | null;
           } | null> | null;
           PageInfo?: PaginationFragment | null;
@@ -38412,7 +38511,7 @@ export type GetSettingsShareTransferDataQuery = {
 
 export type GetSettingsUserListDataQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
-  filter?: InputMaybe<MyraUserSearchFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetSettingsUserListDataQuery = {
@@ -42102,6 +42201,42 @@ export const useSetEmployeeSeerationUpsertMutation = <TError = unknown, TContext
     ['setEmployeeSeerationUpsert'],
     useAxios<SetEmployeeSeerationUpsertMutation, SetEmployeeSeerationUpsertMutationVariables>(
       SetEmployeeSeerationUpsertDocument
+    ),
+    options
+  );
+export const SetEmployeePromotionUpsertDocument = `
+    mutation setEmployeePromotionUpsert($input: EmployeePromotionInput!) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        addEmployeePromotion(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeePromotionUpsertMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeePromotionUpsertMutation,
+    TError,
+    SetEmployeePromotionUpsertMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeePromotionUpsertMutation,
+    TError,
+    SetEmployeePromotionUpsertMutationVariables,
+    TContext
+  >(
+    ['setEmployeePromotionUpsert'],
+    useAxios<SetEmployeePromotionUpsertMutation, SetEmployeePromotionUpsertMutationVariables>(
+      SetEmployeePromotionUpsertDocument
     ),
     options
   );
@@ -51466,10 +51601,9 @@ export const GetLeaveListDocument = `
           edges {
             node {
               employeeId
-              leaveTypeId
+              leaveType
               leaveFrom
               leaveTo
-              leaveNote
             }
             cursor
           }
@@ -51741,6 +51875,45 @@ export const useGetHrSeperationListQuery = <TData = GetHrSeperationListQuery, TE
     variables === undefined ? ['getHRSeperationList'] : ['getHRSeperationList', variables],
     useAxios<GetHrSeperationListQuery, GetHrSeperationListQueryVariables>(
       GetHrSeperationListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetHrPromotionListDocument = `
+    query getHRPromotionList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        listEmployeePromotion(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+              id
+              newPromotion
+              promotionDate
+              promotionType
+              employeeId
+              employeeName
+            }
+            cursor
+          }
+          PageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetHrPromotionListQuery = <TData = GetHrPromotionListQuery, TError = unknown>(
+  variables?: GetHrPromotionListQueryVariables,
+  options?: UseQueryOptions<GetHrPromotionListQuery, TError, TData>
+) =>
+  useQuery<GetHrPromotionListQuery, TError, TData>(
+    variables === undefined ? ['getHRPromotionList'] : ['getHRPromotionList', variables],
+    useAxios<GetHrPromotionListQuery, GetHrPromotionListQueryVariables>(
+      GetHrPromotionListDocument
     ).bind(null, variables),
     options
   );
@@ -64629,7 +64802,7 @@ export const useGetSettingsShareTransferDataQuery = <
     options
   );
 export const GetSettingsUserListDataDocument = `
-    query getSettingsUserListData($paginate: Pagination, $filter: MyraUserSearchFilter) {
+    query getSettingsUserListData($paginate: Pagination, $filter: Filter) {
   settings {
     myraUser {
       list(paginate: $paginate, filter: $filter) {

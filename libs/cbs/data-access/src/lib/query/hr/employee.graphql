@@ -37,10 +37,9 @@ query getLeaveList($filter: Filter, $pagination: Pagination) {
             node {
               # leaveId
               employeeId
-              leaveTypeId
+              leaveType
               leaveFrom
               leaveTo
-              leaveNote
             }
             cursor
           }

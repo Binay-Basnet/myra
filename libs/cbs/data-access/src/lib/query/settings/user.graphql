@@ -1,4 +1,4 @@
-query getSettingsUserListData($paginate: Pagination, $filter: MyraUserSearchFilter) {
+query getSettingsUserListData($paginate: Pagination, $filter: Filter) {
   settings {
     myraUser {
       list(paginate: $paginate, filter: $filter) {

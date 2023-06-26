@@ -94,3 +94,30 @@ query getHRSeperationList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getHRPromotionList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        listEmployeePromotion(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+              id
+              newPromotion
+              promotionDate
+              promotionType
+              employeeId
+              employeeName
+            }
+            cursor
+          }
+          PageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

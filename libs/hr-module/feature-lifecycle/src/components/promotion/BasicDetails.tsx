@@ -1,18 +1,12 @@
 import { FormSection, GridItem } from '@myra-ui';
 
-import { PromotionType, SeparationTypeEnum, useGetEmployeeListQuery } from '@coop/cbs/data-access';
+import { PromotionType, useGetEmployeeListQuery } from '@coop/cbs/data-access';
 import { FormDatePicker, FormSelect } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 const promotionStatus = [
   { label: 'Degisnation', value: PromotionType?.Designation },
   { label: 'Employee Level', value: PromotionType?.EmployeeLevel },
-];
-
-const seperationType = [
-  { label: 'Resigned', value: SeparationTypeEnum?.Resigned },
-  { label: 'Transferred', value: SeparationTypeEnum?.Transferred },
-  { label: 'Retired', value: SeparationTypeEnum?.Retired },
 ];
 
 export const PromotionBasicDetails = () => {
@@ -39,7 +33,6 @@ export const PromotionBasicDetails = () => {
         <FormSelect name="employeeId" label="Employee" options={employeeOptions} />
       </GridItem>
       <FormSelect name="promotionType" label="Promotion Type" options={promotionStatus} />
-      <FormSelect name="separationType" label="Seperation Type" options={seperationType} />
       <FormDatePicker name="date" label="Resignation Letter Date" />
     </FormSection>
   );
