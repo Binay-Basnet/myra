@@ -22076,6 +22076,29 @@ export type SetEmployeeSeerationUpsertMutation = {
   };
 };
 
+export type SetEmployeePromotionUpsertMutationVariables = Exact<{
+  input: EmployeePromotionInput;
+}>;
+
+export type SetEmployeePromotionUpsertMutation = {
+  hr: {
+    employeelifecycle?: {
+      employeePromotion: {
+        addEmployeePromotion: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
+
 export type SetStaffPlanningMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: StaffPlanInput;
@@ -28877,6 +28900,35 @@ export type GetHrSeperationListQuery = {
               designation: string;
               employeeName: string;
               resignationLetterDate: Record<'local' | 'en' | 'np', string>;
+            } | null;
+          } | null> | null;
+          PageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetHrPromotionListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetHrPromotionListQuery = {
+  hr: {
+    employeelifecycle: {
+      employeePromotion: {
+        listEmployeePromotion: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              employeeId: string;
+              id: string;
+              newPromotion: string;
+              promotionDate: Record<'local' | 'en' | 'np', string>;
+              promotionType: string;
+              employeeName: string;
             } | null;
           } | null> | null;
           PageInfo?: PaginationFragment | null;
@@ -42438,6 +42490,42 @@ export const useSetEmployeeSeerationUpsertMutation = <TError = unknown, TContext
     ),
     options
   );
+export const SetEmployeePromotionUpsertDocument = `
+    mutation setEmployeePromotionUpsert($input: EmployeePromotionInput!) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        addEmployeePromotion(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeePromotionUpsertMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeePromotionUpsertMutation,
+    TError,
+    SetEmployeePromotionUpsertMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeePromotionUpsertMutation,
+    TError,
+    SetEmployeePromotionUpsertMutationVariables,
+    TContext
+  >(
+    ['setEmployeePromotionUpsert'],
+    useAxios<SetEmployeePromotionUpsertMutation, SetEmployeePromotionUpsertMutationVariables>(
+      SetEmployeePromotionUpsertDocument
+    ),
+    options
+  );
 export const SetStaffPlanningDocument = `
     mutation setStaffPlanning($id: ID, $input: StaffPlanInput!) {
   hr {
@@ -52078,6 +52166,45 @@ export const useGetHrSeperationListQuery = <TData = GetHrSeperationListQuery, TE
     variables === undefined ? ['getHRSeperationList'] : ['getHRSeperationList', variables],
     useAxios<GetHrSeperationListQuery, GetHrSeperationListQueryVariables>(
       GetHrSeperationListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetHrPromotionListDocument = `
+    query getHRPromotionList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        listEmployeePromotion(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+              id
+              newPromotion
+              promotionDate
+              promotionType
+              employeeId
+              employeeName
+            }
+            cursor
+          }
+          PageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetHrPromotionListQuery = <TData = GetHrPromotionListQuery, TError = unknown>(
+  variables?: GetHrPromotionListQueryVariables,
+  options?: UseQueryOptions<GetHrPromotionListQuery, TError, TData>
+) =>
+  useQuery<GetHrPromotionListQuery, TError, TData>(
+    variables === undefined ? ['getHRPromotionList'] : ['getHRPromotionList', variables],
+    useAxios<GetHrPromotionListQuery, GetHrPromotionListQueryVariables>(
+      GetHrPromotionListDocument
     ).bind(null, variables),
     options
   );
