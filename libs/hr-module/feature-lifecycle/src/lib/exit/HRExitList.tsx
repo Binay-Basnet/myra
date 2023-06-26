@@ -1,19 +1,20 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { PageHeader } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
-import { useGetHrSeperationListQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { useGetHrExitListQuery } from '@coop/cbs/data-access';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const HrLifecycleExitList = () => {
-  const { data: onBoardingData, isLoading } = useGetHrSeperationListQuery({
+  const { data: onBoardingData, isLoading } = useGetHrExitListQuery({
     pagination: getPaginationQuery(),
   });
-
+  const router = useRouter();
   const rowData =
-    onBoardingData?.hr?.employeelifecycle?.employeeSeparation?.listEmployeeSeparation?.edges ?? [];
+    onBoardingData?.hr?.employeelifecycle?.employeeExit?.listEmployeeExit?.edges ?? [];
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -22,22 +23,48 @@ export const HrLifecycleExitList = () => {
         accessorFn: (props) => props?.node?.employeeId,
       },
       {
-        header: 'Name',
+        header: 'Interviewer Name',
         id: 'Name',
-        accessorFn: (props) => props?.node?.employeeName,
+        accessorFn: (props) => props?.node?.interviewer,
         meta: {
           width: '50%',
         },
       },
       {
-        header: 'Designation',
-        accessorFn: (props) => props?.node?.designation,
+        header: 'Seperation Date',
+        accessorFn: (props) => localizedDate(props?.node?.separationDate),
         id: 'designation',
       },
       {
-        header: 'Resignation Letter Date',
+        header: 'Last Modified Date Date',
         id: 'Date',
-        accessorFn: (props) => localizedDate(props?.node?.resignationLetterDate),
+        accessorFn: (props) => localizedDate(props?.node?.lastModifiedDate),
+      },
+      {
+        id: '_actions',
+        header: '',
+
+        cell: (props) =>
+          props?.row?.original && (
+            <TablePopover
+              node={props?.row?.original}
+              items={[
+                {
+                  title: 'Edit',
+                  aclKey: 'CBS_MEMBERS_MEMBER',
+                  action: 'VIEW',
+                  onClick: () => {
+                    router.push(
+                      `${ROUTES?.HR_LIFECYCLE_EMPLOYEE_EXIT_EDIT}?id=${props?.row?.original?.node?.id}`
+                    );
+                  },
+                },
+              ]}
+            />
+          ),
+        meta: {
+          width: '20px',
+        },
       },
     ],
     []
@@ -52,11 +79,9 @@ export const HrLifecycleExitList = () => {
         columns={columns}
         pagination={{
           total:
-            onBoardingData?.hr?.employeelifecycle?.employeeSeparation?.listEmployeeSeparation
-              ?.totalCount ?? 'Many',
-          pageInfo:
-            onBoardingData?.hr?.employeelifecycle?.employeeSeparation?.listEmployeeSeparation
-              ?.PageInfo,
+            onBoardingData?.hr?.employeelifecycle?.employeeExit?.listEmployeeExit?.totalCount ??
+            'Many',
+          pageInfo: onBoardingData?.hr?.employeelifecycle?.employeeExit?.listEmployeeExit?.pageInfo,
         }}
       />
     </>

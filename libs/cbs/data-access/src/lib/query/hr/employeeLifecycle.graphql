@@ -121,3 +121,58 @@ query getHRPromotionList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getHRExitList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        listEmployeeExit(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+
+              id
+              interviewer
+              lastModifiedDate
+              separationDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getHRExistFormState($id: ID!) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        getEmployeeExit(id: $id) {
+          data {
+            exitDate
+            exitStatus
+            futureIntentions
+            interviewer
+            others
+            overallExp
+            separationId
+            suggestions
+            checklists {
+              activityName
+              beginsOn
+              done
+              duration
+              role
+              user
+            }
+          }
+        }
+      }
+    }
+  }
+}

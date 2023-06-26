@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -7,6 +7,7 @@ import { ad2bs } from '@myra-ui/date-picker';
 
 import {
   EmployeeExitInput,
+  useGetHrExistFormStateQuery,
   useGetHrSeperationListQuery,
   useSetEmployeeExitUpsertMutation,
 } from '@coop/cbs/data-access';
@@ -16,9 +17,21 @@ import { FormLayout } from '@coop/shared/form';
 import { EmployeeCard } from '../../components';
 import { ExitBasicDetails, ExitChecklists, ExitQuetionnare } from '../../components/exit';
 
+type CustomExitInput = Omit<EmployeeExitInput, 'checklists'> & {
+  checklists?: {
+    done: boolean;
+    activityName: string;
+    user: string;
+    role: string;
+    beginsOn: string;
+    duration: string;
+  }[];
+};
+
 export const HrExitUpsert = () => {
-  const methods = useForm<EmployeeExitInput>();
+  const methods = useForm<CustomExitInput>();
   const router = useRouter();
+  const id = router?.query['id'];
 
   const { mutateAsync } = useSetEmployeeExitUpsertMutation();
 
@@ -42,10 +55,11 @@ export const HrExitUpsert = () => {
       },
 
       promise: mutateAsync({
+        id: id ? (id as string) : null,
         input: {
           ...data,
-          checklists: { ...activityDetails },
-        },
+          checklists: activityDetails,
+        } as EmployeeExitInput,
       }),
       onSuccess: () => {
         router.push(ROUTES?.HR_LIFECYCLE_EMPLOYEE_EXIT_LIST);
@@ -67,6 +81,27 @@ export const HrExitUpsert = () => {
       )?.node?.employeeId,
     [seperationId, seperationData]
   );
+
+  const itemData = useGetHrExistFormStateQuery({
+    id: id as string,
+  });
+  const itemFormData = itemData?.data?.hr?.employeelifecycle?.employeeExit?.getEmployeeExit?.data;
+
+  useEffect(() => {
+    if (itemFormData) {
+      methods?.reset({
+        ...itemFormData,
+        checklists: itemFormData?.checklists?.map((items) => ({
+          done: items?.done as boolean,
+          activityName: items?.activityName as string,
+          user: items?.user as string,
+          role: items?.role as string,
+          beginsOn: items?.beginsOn?.en as string,
+          duration: items?.duration as string,
+        })),
+      });
+    }
+  }, [id, itemFormData, methods]);
 
   return (
     <FormLayout methods={methods} hasSidebar={!!seperationId}>
