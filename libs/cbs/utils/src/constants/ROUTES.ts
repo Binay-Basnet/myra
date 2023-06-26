@@ -421,6 +421,8 @@ export const ROUTES = {
   HRMODULE_ATTENDENCE_ADD: '/hr/employee/attendence/add',
   HRMODULE_LEAVE_ADD: '/hr/employee/leave/add',
 
+  HRMODULE_EMPLOYEES_EDIT: '/hr/employee/employee/edit',
+
   HRMODULE_EMPLOYEES_SETTINGS: '/settings/general/hcm/employee',
   HRMODULE_EMPLOYEES_LEAVE_SETTINGS: '/settings/general/hcm/employee/leave',
 
@@ -442,6 +444,12 @@ export const ROUTES = {
   HR_LIFECYCLE_EMPLOYEE_PROMOTION_ADD: '/hr/lifecycle/promotion/add',
   HR_LIFECYCLE_EMPLOYEE_EXIT_ADD: '/hr/lifecycle/exit/add',
 
+  HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_EDIT: '/hr/lifecycle/employee-onboarding/edit',
+  HR_LIFECYCLE_EMPLOYEE_TRANSFER_EDIT: '/hr/lifecycle/transfer/edit',
+  HR_LIFECYCLE_EMPLOYEE_SEPERATION_EDIT: '/hr/lifecycle/seperation/edit',
+  HR_LIFECYCLE_EMPLOYEE_PROMOTION_EDIT: '/hr/lifecycle/promotion/edit',
+  HR_LIFECYCLE_EMPLOYEE_EXIT_EDIT: '/hr/lifecycle/exit/edit',
+
   HR_RECRUITMENT_STAFF_PLANNING_LIST: '/hr/recruitment/staff-planning/list',
   HR_RECRUITMENT_JOB_OPENING_LIST: '/hr/recruitment/job-opening/list',
   HR_RECRUITMENT_JOB_APPLICATION_LIST: '/hr/recruitment/job-application/list',
@@ -455,6 +463,13 @@ export const ROUTES = {
   HR_RECRUITMENT_INTERVIEW_ADD: '/hr/recruitment/interview/add',
   HR_RECRUITMENT_JOB_OFFER_ADD: '/hr/recruitment/job-offer/add',
   HR_RECRUITMENT_APPOINTMENT_LETTER_ADD: '/hr/recruitment/appointment-letter/add',
+
+  HR_RECRUITMENT_STAFF_PLANNING_EDIT: '/hr/recruitment/staff-planning/edit',
+  HR_RECRUITMENT_JOB_OPENING_EDIT: '/hr/recruitment/job-opening/edit',
+  HR_RECRUITMENT_JOB_APPLICATION_EDIT: '/hr/recruitment/job-application/edit',
+  HR_RECRUITMENT_INTERVIEW_EDIT: '/hr/recruitment/interview/edit',
+  HR_RECRUITMENT_JOB_OFFER_EDIT: '/hr/recruitment/job-offer/edit',
+  HR_RECRUITMENT_APPOINTMENT_LETTER_EDIT: '/hr/recruitment/appointment-letter/edit',
 
   HR_RECRUITMENT_SETTINGS: '/hr/recruitment/staff-planning/list',
   HR_INTERVIEW_ROUNDS: '/hr/recruitment/staff-planning/list',

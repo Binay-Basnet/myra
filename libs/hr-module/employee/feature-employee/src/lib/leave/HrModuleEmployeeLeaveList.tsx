@@ -19,12 +19,32 @@ export const HrLeaveList = () => {
         accessorFn: (row) => row?.node?.employeeId,
       },
       {
+        header: 'Employee Name',
+        accessorFn: (row) => row?.node?.employeeName,
+      },
+      {
+        header: 'Reason',
+        accessorFn: (row) => row?.node?.reason,
+      },
+      {
+        header: 'Leave Type',
+        accessorFn: (row) => row?.node?.leaveType,
+      },
+      {
         header: 'From Date',
         accessorFn: (row) => row?.node?.leaveFrom?.local,
       },
       {
         header: 'To Date',
         accessorFn: (row) => row?.node?.leaveTo?.local,
+      },
+      {
+        header: 'Approver',
+        accessorFn: (row) => row?.node?.approver,
+      },
+      {
+        header: 'Status',
+        accessorFn: (row) => row?.node?.status,
       },
     ],
     []

@@ -1,11 +1,14 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
-import { Column, PageHeader, Table } from '@myra-ui';
+import { Column, PageHeader, Table, TablePopover } from '@myra-ui';
 
 import { useGetStaffPlanningListQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const HrRecruitmentStaffPlanningList = () => {
+  const router = useRouter();
   const { data, isFetching } = useGetStaffPlanningListQuery({
     pagination: getPaginationQuery(),
   });
@@ -39,6 +42,27 @@ export const HrRecruitmentStaffPlanningList = () => {
       {
         header: 'Date To',
         accessorFn: (row) => row?.node?.date?.to?.local,
+      },
+      {
+        id: '_actions',
+        header: '',
+        cell: (props) =>
+          props?.row?.original?.node && (
+            <TablePopover
+              node={props?.row?.original?.node}
+              items={[
+                {
+                  title: 'Edit',
+                  onClick: (row) => {
+                    router.push(`${ROUTES?.HR_RECRUITMENT_STAFF_PLANNING_EDIT}?id=${row?.id}`);
+                  },
+                },
+              ]}
+            />
+          ),
+        meta: {
+          width: '3.125rem',
+        },
       },
     ],
     []
