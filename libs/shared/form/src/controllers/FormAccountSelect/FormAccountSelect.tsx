@@ -33,6 +33,7 @@ interface IAccountSelectProps extends AccountSelectProps {
   excludeIds?: string[];
   isRequired?: boolean;
   includeLoc?: boolean;
+  natureOfDepositProduct?: NatureOfDepositProduct[];
 }
 
 export const FormAccountSelect = ({
@@ -44,6 +45,7 @@ export const FormAccountSelect = ({
   filterBy,
   excludeIds,
   isRequired,
+  natureOfDepositProduct,
   includeLoc,
   ...rest
 }: IAccountSelectProps) => {
@@ -53,6 +55,7 @@ export const FormAccountSelect = ({
       memberId,
       objState: filterBy ?? null,
       includeLoc,
+      filter: natureOfDepositProduct,
     },
     {
       staleTime: 0,

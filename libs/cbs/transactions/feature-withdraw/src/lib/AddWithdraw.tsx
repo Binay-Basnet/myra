@@ -7,6 +7,7 @@ import { Alert, Box, Button, MemberCard, ResponseDialog, Text } from '@myra-ui';
 
 import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
+  AccountObjState,
   KymMemberTypesEnum,
   NatureOfDepositProduct,
   useGetAccountDetailsDataQuery,
@@ -314,6 +315,12 @@ export const AddWithdraw = () => {
                   name="accountId"
                   label={t['addDepositSelectDepositAccount']}
                   memberId={memberId}
+                  natureOfDepositProduct={[
+                    NatureOfDepositProduct?.Current,
+                    NatureOfDepositProduct?.RecurringSaving,
+                    NatureOfDepositProduct?.Saving,
+                  ]}
+                  filterBy={AccountObjState?.Active}
                   includeLoc
                   isDisabled={!!redirectAccountId}
                 />
