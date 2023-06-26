@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { Box, Button, Text } from '@myra-ui';
+import { Box, Button } from '@myra-ui';
 
 import { ROUTES } from '../constants/ROUTES';
 
@@ -88,27 +88,13 @@ const getLink = ({ label, type, id }: IProps) => {
 };
 
 export const RouteToDetailsPage = ({ label, type, id }: IProps) => (
-  <>
-    <Box
-      sx={{
-        '@media print': {
-          display: 'none',
-        },
-      }}
-    >
-      {getLink({ label, type, id })}
-    </Box>
-    <Text
-      display="none"
-      sx={{
-        '@media print': {
-          display: 'block',
-        },
-      }}
-      px={0}
-      fontSize="s3"
-    >
-      {label}
-    </Text>
-  </>
+  <Box
+    sx={{
+      '@media print': {
+        'a[href]:after': `content: '"none !important"'`,
+      },
+    }}
+  >
+    {getLink({ label, type, id })}
+  </Box>
 );
