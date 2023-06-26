@@ -6,6 +6,7 @@ import { Text } from '@myra-ui/foundations';
 export interface TextAreaInputProps extends TextareaProps {
   label?: string;
   labelColor?: string;
+  noLabel?: boolean;
   __placeholder?: string;
   placeholder?: string;
   id?: string;
@@ -13,10 +14,10 @@ export interface TextAreaInputProps extends TextareaProps {
 }
 
 export const TextAreaInput = forwardRef<HTMLInputElement, TextAreaInputProps>((props, ref) => {
-  const { label, placeholder, errorText, id, isRequired, ...rest } = props;
+  const { label, placeholder, errorText, id, isRequired, noLabel, ...rest } = props;
   return (
     <Flex flexDir="column" gap="s4">
-      {label ? (
+      {noLabel || label ? (
         <Text variant="formLabel" color="gray.800">
           {isRequired ? `${label} *` : label}
         </Text>

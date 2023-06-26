@@ -57,3 +57,18 @@ mutation setEmployeePromotionUpsert($input: EmployeePromotionInput!) {
     }
   }
 }
+
+mutation setEmployeeExitUpsert($input: EmployeeExitInput!) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        upsertEmployeeExit(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

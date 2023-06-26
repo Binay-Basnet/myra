@@ -3,17 +3,17 @@ import { useMemo } from 'react';
 import { PageHeader } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetHrPromotionListQuery } from '@coop/cbs/data-access';
+import { useGetHrSeperationListQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
-export const HrLifecyclePromotionList = () => {
-  const { data: onBoardingData, isLoading } = useGetHrPromotionListQuery({
+export const HrLifecycleExitList = () => {
+  const { data: onBoardingData, isLoading } = useGetHrSeperationListQuery({
     pagination: getPaginationQuery(),
   });
 
   const rowData =
-    onBoardingData?.hr?.employeelifecycle?.employeePromotion?.listEmployeePromotion?.edges ?? [];
+    onBoardingData?.hr?.employeelifecycle?.employeeSeparation?.listEmployeeSeparation?.edges ?? [];
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -30,20 +30,14 @@ export const HrLifecyclePromotionList = () => {
         },
       },
       {
-        header: 'Promotion Type',
-        accessorFn: (props) => props?.node?.promotionType,
-        id: 'promotion Type',
+        header: 'Designation',
+        accessorFn: (props) => props?.node?.designation,
+        id: 'designation',
       },
-      {
-        header: 'New Promotion',
-        id: 'newPromotion',
-        accessorFn: (props) => props?.node?.newPromotion,
-      },
-
       {
         header: 'Resignation Letter Date',
         id: 'Date',
-        accessorFn: (props) => localizedDate(props?.node?.promotionDate),
+        accessorFn: (props) => localizedDate(props?.node?.resignationLetterDate),
       },
     ],
     []
@@ -58,10 +52,10 @@ export const HrLifecyclePromotionList = () => {
         columns={columns}
         pagination={{
           total:
-            onBoardingData?.hr?.employeelifecycle?.employeePromotion?.listEmployeePromotion
+            onBoardingData?.hr?.employeelifecycle?.employeeSeparation?.listEmployeeSeparation
               ?.totalCount ?? 'Many',
           pageInfo:
-            onBoardingData?.hr?.employeelifecycle?.employeePromotion?.listEmployeePromotion
+            onBoardingData?.hr?.employeelifecycle?.employeeSeparation?.listEmployeeSeparation
               ?.PageInfo,
         }}
       />

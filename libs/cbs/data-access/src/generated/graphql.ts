@@ -22099,6 +22099,29 @@ export type SetEmployeePromotionUpsertMutation = {
   };
 };
 
+export type SetEmployeeExitUpsertMutationVariables = Exact<{
+  input: EmployeeExitInput;
+}>;
+
+export type SetEmployeeExitUpsertMutation = {
+  hr: {
+    employeelifecycle?: {
+      employeeExit: {
+        upsertEmployeeExit: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
+
 export type SetStaffPlanningMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: StaffPlanInput;
@@ -42523,6 +42546,42 @@ export const useSetEmployeePromotionUpsertMutation = <TError = unknown, TContext
     ['setEmployeePromotionUpsert'],
     useAxios<SetEmployeePromotionUpsertMutation, SetEmployeePromotionUpsertMutationVariables>(
       SetEmployeePromotionUpsertDocument
+    ),
+    options
+  );
+export const SetEmployeeExitUpsertDocument = `
+    mutation setEmployeeExitUpsert($input: EmployeeExitInput!) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        upsertEmployeeExit(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeExitUpsertMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeExitUpsertMutation,
+    TError,
+    SetEmployeeExitUpsertMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeExitUpsertMutation,
+    TError,
+    SetEmployeeExitUpsertMutationVariables,
+    TContext
+  >(
+    ['setEmployeeExitUpsert'],
+    useAxios<SetEmployeeExitUpsertMutation, SetEmployeeExitUpsertMutationVariables>(
+      SetEmployeeExitUpsertDocument
     ),
     options
   );
