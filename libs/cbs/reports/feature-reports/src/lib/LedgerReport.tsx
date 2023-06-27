@@ -156,7 +156,7 @@ const LedgerReportInputs = () => {
   return (
     <Report.Inputs>
       <GridItem colSpan={1}>
-        <FormBranchSelect name="branchId" label="Select Service Center" />
+        <FormBranchSelect showUserBranchesOnly name="branchId" label="Select Service Center" />
       </GridItem>
 
       <GridItem colSpan={2}>

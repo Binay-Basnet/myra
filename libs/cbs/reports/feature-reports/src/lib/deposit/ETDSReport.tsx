@@ -47,7 +47,7 @@ export const ETDSReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={2}>
-            <FormBranchSelect name="branchId" label="Select Branch" />
+            <FormBranchSelect showUserBranchesOnly name="branchId" label="Select Branch" />
           </GridItem>
           <GridItem colSpan={2}>
             <ReportDateRange label="Tax Deduct Date Period" />

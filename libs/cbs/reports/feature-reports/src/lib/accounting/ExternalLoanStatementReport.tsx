@@ -219,7 +219,12 @@ const ExternalLoanStatementReportInputs = () => {
   return (
     <Report.Inputs>
       <GridItem colSpan={2}>
-        <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
+        <FormBranchSelect
+          showUserBranchesOnly
+          isMulti
+          name="branchId"
+          label="Select Service Center"
+        />
       </GridItem>
       <GridItem colSpan={1}>
         <FormSelect name="loanId" label="Select External Loan" options={loanListSearchOptions} />

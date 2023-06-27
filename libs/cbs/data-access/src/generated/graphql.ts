@@ -39001,6 +39001,11 @@ export type GetSettingsUserListDataQuery = {
             empCode?: string | null;
             profilePicUrl?: string | null;
             lastActiveDate?: Record<'local' | 'en' | 'np', string> | null;
+            linkedBranches?: Array<{
+              id: string;
+              branchCode?: string | null;
+              name: string;
+            } | null> | null;
             role?: Array<{ id: string; name: string } | null> | null;
             branch?: { id: string; name?: string | null } | null;
           } | null;
@@ -65653,6 +65658,11 @@ export const GetSettingsUserListDataDocument = `
             gender
             dob
             empCode
+            linkedBranches {
+              id
+              branchCode
+              name
+            }
             role {
               id
               name
