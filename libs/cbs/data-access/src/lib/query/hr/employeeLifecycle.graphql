@@ -176,3 +176,27 @@ query getHRExistFormState($id: ID!) {
     }
   }
 }
+
+query getHrLifecycleEmployeeView($id: String!) {
+  hr {
+    employee {
+      employee {
+        getEmployeeLifecycleView(id: $id) {
+          data {
+            age
+            status
+            branch
+            companyName
+            contactNumber
+            department
+            email
+            gender
+            id
+            joiningDate
+            name
+          }
+        }
+      }
+    }
+  }
+}

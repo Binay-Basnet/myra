@@ -14376,15 +14376,60 @@ export type MBankingTransactionResult = {
   error?: Maybe<QueryError>;
 };
 
+export type MfCenterEntry = {
+  address?: Maybe<Address>;
+  code: Scalars['String'];
+  createdDate: Scalars['Localized'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  totalMembers: Scalars['String'];
+  totalgroups: Scalars['String'];
+};
+
 export type MfCenterInput = {
   Documents: Array<DocumentInsertInput>;
   branchIds: Array<Scalars['String']>;
+  centerCode: Scalars['String'];
   centerName: Scalars['String'];
   coordinatorId: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
 };
 
+export type MfCenterListConnection = {
+  edges?: Maybe<Array<Maybe<MfCenterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type MfCenterListEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<MfCenterEntry>;
+};
+
 export type MfCenterResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type MfGroupInput = {
+  Documents: Array<DocumentInsertInput>;
+  MaxMmebers?: InputMaybe<Scalars['Int']>;
+  branchId?: InputMaybe<Scalars['String']>;
+  centerId?: InputMaybe<Scalars['String']>;
+  coordinatorId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  groupCode?: InputMaybe<Scalars['String']>;
+  groupName?: InputMaybe<Scalars['String']>;
+  minMembers?: InputMaybe<Scalars['Int']>;
+};
+
+export const MfGroupObjectState = {
+  Active: 'ACTIVE',
+  Inactive: 'INACTIVE',
+} as const;
+
+export type MfGroupObjectState = typeof MfGroupObjectState[keyof typeof MfGroupObjectState];
+export type MfGroupResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['ID']>;
 };
@@ -15494,8 +15539,30 @@ export type MicroFinanceCenterMutationAddMfCenterArgs = {
   input: MfCenterInput;
 };
 
+export type MicroFinanceCenterQuery = {
+  listMFCenter: MfCenterListConnection;
+};
+
+export type MicroFinanceCenterQueryListMfCenterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type MicroFinanceGroupMutation = {
+  addMFGroup: MfGroupResult;
+};
+
+export type MicroFinanceGroupMutationAddMfGroupArgs = {
+  input: MfGroupInput;
+};
+
 export type MicroFinanceMutation = {
   center?: Maybe<MicroFinanceCenterMutation>;
+  group?: Maybe<MicroFinanceGroupMutation>;
+};
+
+export type MicroFinanceQuery = {
+  center: MicroFinanceCenterQuery;
 };
 
 export type MinMaxFilter = {
@@ -16894,6 +16961,7 @@ export type Query = {
   inventory: InventoryQuery;
   loanAccount: LoanAccountQuery;
   members: MemberQuery;
+  microFinance: MicroFinanceQuery;
   permission: PermissionQuery;
   profitToFundManagement: FundManagementQuery;
   report: ReportQuery;
@@ -29017,6 +29085,34 @@ export type GetHrExistFormStateQuery = {
               user?: string | null;
             } | null> | null;
           };
+        };
+      };
+    };
+  };
+};
+
+export type GetHrLifecycleEmployeeViewQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetHrLifecycleEmployeeViewQuery = {
+  hr: {
+    employee: {
+      employee: {
+        getEmployeeLifecycleView: {
+          data?: {
+            age?: number | null;
+            status?: string | null;
+            branch?: string | null;
+            companyName?: string | null;
+            contactNumber?: string | null;
+            department?: string | null;
+            email?: string | null;
+            gender?: string | null;
+            id?: string | null;
+            joiningDate?: Record<'local' | 'en' | 'np', string> | null;
+            name?: string | null;
+          } | null;
         };
       };
     };
@@ -52405,6 +52501,45 @@ export const useGetHrExistFormStateQuery = <TData = GetHrExistFormStateQuery, TE
     ['getHRExistFormState', variables],
     useAxios<GetHrExistFormStateQuery, GetHrExistFormStateQueryVariables>(
       GetHrExistFormStateDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetHrLifecycleEmployeeViewDocument = `
+    query getHrLifecycleEmployeeView($id: String!) {
+  hr {
+    employee {
+      employee {
+        getEmployeeLifecycleView(id: $id) {
+          data {
+            age
+            status
+            branch
+            companyName
+            contactNumber
+            department
+            email
+            gender
+            id
+            joiningDate
+            name
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetHrLifecycleEmployeeViewQuery = <
+  TData = GetHrLifecycleEmployeeViewQuery,
+  TError = unknown
+>(
+  variables: GetHrLifecycleEmployeeViewQueryVariables,
+  options?: UseQueryOptions<GetHrLifecycleEmployeeViewQuery, TError, TData>
+) =>
+  useQuery<GetHrLifecycleEmployeeViewQuery, TError, TData>(
+    ['getHrLifecycleEmployeeView', variables],
+    useAxios<GetHrLifecycleEmployeeViewQuery, GetHrLifecycleEmployeeViewQueryVariables>(
+      GetHrLifecycleEmployeeViewDocument
     ).bind(null, variables),
     options
   );
