@@ -14,7 +14,7 @@ export const ApprovalStatusItem = ({
       h="s10"
       rounded="100%"
       bg={
-        status === RequestStatus.Approved || status === MemberTransferState?.Approved
+        status === RequestStatus.Approved
           ? 'green.300'
           : status === RequestStatus.Declined || status === MemberTransferState?.Rejected
           ? 'red.500'
