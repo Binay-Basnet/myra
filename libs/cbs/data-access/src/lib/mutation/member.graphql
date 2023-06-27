@@ -207,3 +207,29 @@ mutation updateMemberDormancy($memberId: ID!, $data: UpdateDormancyInput!) {
     }
   }
 }
+
+mutation memberTransferInitiate($memberId: ID!, $data: MemberTransferInput!) {
+  members {
+    transfer {
+      initiate(memberId: $memberId, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation memberTransferAction($requestId: ID!, $state: MemberTransferState!, $notes: String) {
+  members {
+    transfer {
+      action(requestId: $requestId, state: $state, notes: $notes) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

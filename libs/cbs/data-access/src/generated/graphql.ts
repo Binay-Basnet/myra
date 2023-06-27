@@ -14376,15 +14376,60 @@ export type MBankingTransactionResult = {
   error?: Maybe<QueryError>;
 };
 
+export type MfCenterEntry = {
+  address?: Maybe<Address>;
+  code: Scalars['String'];
+  createdDate: Scalars['Localized'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  totalMembers: Scalars['String'];
+  totalgroups: Scalars['String'];
+};
+
 export type MfCenterInput = {
   Documents: Array<DocumentInsertInput>;
   branchIds: Array<Scalars['String']>;
+  centerCode: Scalars['String'];
   centerName: Scalars['String'];
   coordinatorId: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
 };
 
+export type MfCenterListConnection = {
+  edges?: Maybe<Array<Maybe<MfCenterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type MfCenterListEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<MfCenterEntry>;
+};
+
 export type MfCenterResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type MfGroupInput = {
+  Documents: Array<DocumentInsertInput>;
+  MaxMmebers?: InputMaybe<Scalars['Int']>;
+  branchId?: InputMaybe<Scalars['String']>;
+  centerId?: InputMaybe<Scalars['String']>;
+  coordinatorId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  groupCode?: InputMaybe<Scalars['String']>;
+  groupName?: InputMaybe<Scalars['String']>;
+  minMembers?: InputMaybe<Scalars['Int']>;
+};
+
+export const MfGroupObjectState = {
+  Active: 'ACTIVE',
+  Inactive: 'INACTIVE',
+} as const;
+
+export type MfGroupObjectState = typeof MfGroupObjectState[keyof typeof MfGroupObjectState];
+export type MfGroupResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['ID']>;
 };
@@ -15494,8 +15539,30 @@ export type MicroFinanceCenterMutationAddMfCenterArgs = {
   input: MfCenterInput;
 };
 
+export type MicroFinanceCenterQuery = {
+  listMFCenter: MfCenterListConnection;
+};
+
+export type MicroFinanceCenterQueryListMfCenterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type MicroFinanceGroupMutation = {
+  addMFGroup: MfGroupResult;
+};
+
+export type MicroFinanceGroupMutationAddMfGroupArgs = {
+  input: MfGroupInput;
+};
+
 export type MicroFinanceMutation = {
   center?: Maybe<MicroFinanceCenterMutation>;
+  group?: Maybe<MicroFinanceGroupMutation>;
+};
+
+export type MicroFinanceQuery = {
+  center: MicroFinanceCenterQuery;
 };
 
 export type MinMaxFilter = {
@@ -16894,6 +16961,7 @@ export type Query = {
   inventory: InventoryQuery;
   loanAccount: LoanAccountQuery;
   members: MemberQuery;
+  microFinance: MicroFinanceQuery;
   permission: PermissionQuery;
   profitToFundManagement: FundManagementQuery;
   report: ReportQuery;
@@ -22983,6 +23051,51 @@ export type UpdateMemberDormancyMutation = {
         | MutationError_ServerError_Fragment
         | MutationError_ValidationError_Fragment
         | null;
+    };
+  };
+};
+
+export type MemberTransferInitiateMutationVariables = Exact<{
+  memberId: Scalars['ID'];
+  data: MemberTransferInput;
+}>;
+
+export type MemberTransferInitiateMutation = {
+  members: {
+    transfer: {
+      initiate: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type MemberTransferActionMutationVariables = Exact<{
+  requestId: Scalars['ID'];
+  state: MemberTransferState;
+  notes?: InputMaybe<Scalars['String']>;
+}>;
+
+export type MemberTransferActionMutation = {
+  members: {
+    transfer: {
+      action: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
     };
   };
 };
@@ -31867,6 +31980,73 @@ export type MemberDormancyDetailsQuery = {
         blockShareTransaction?: boolean | null;
       } | null;
     } | null;
+  };
+};
+
+export type GetMemberTransferListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetMemberTransferListQuery = {
+  members: {
+    transfer: {
+      list: {
+        totalCount: number;
+        edges?: Array<{
+          node: {
+            id: string;
+            memberId?: string | null;
+            memberName?: string | null;
+            prevBranchId?: string | null;
+            prevBranchName?: string | null;
+            newBranchId?: string | null;
+            newBranchName?: string | null;
+            state?: MemberTransferState | null;
+            approverId?: string | null;
+            approverName?: string | null;
+            reason?: string | null;
+            postNotes?: string | null;
+            docs?: Array<{ identifier: string; url: string } | null> | null;
+          };
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      };
+    };
+  };
+};
+
+export type GetMemberTransferQueryVariables = Exact<{
+  requestId: Scalars['ID'];
+}>;
+
+export type GetMemberTransferQuery = {
+  members: {
+    transfer: {
+      get: {
+        data?: {
+          id: string;
+          memberId?: string | null;
+          memberName?: string | null;
+          prevBranchId?: string | null;
+          prevBranchName?: string | null;
+          newBranchId?: string | null;
+          newBranchName?: string | null;
+          state?: MemberTransferState | null;
+          approverId?: string | null;
+          approverName?: string | null;
+          reason?: string | null;
+          postNotes?: string | null;
+          docs?: Array<{ identifier: string; url: string } | null> | null;
+        } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      };
+    };
   };
 };
 
@@ -43956,6 +44136,74 @@ export const useUpdateMemberDormancyMutation = <TError = unknown, TContext = unk
     ['updateMemberDormancy'],
     useAxios<UpdateMemberDormancyMutation, UpdateMemberDormancyMutationVariables>(
       UpdateMemberDormancyDocument
+    ),
+    options
+  );
+export const MemberTransferInitiateDocument = `
+    mutation memberTransferInitiate($memberId: ID!, $data: MemberTransferInput!) {
+  members {
+    transfer {
+      initiate(memberId: $memberId, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useMemberTransferInitiateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    MemberTransferInitiateMutation,
+    TError,
+    MemberTransferInitiateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    MemberTransferInitiateMutation,
+    TError,
+    MemberTransferInitiateMutationVariables,
+    TContext
+  >(
+    ['memberTransferInitiate'],
+    useAxios<MemberTransferInitiateMutation, MemberTransferInitiateMutationVariables>(
+      MemberTransferInitiateDocument
+    ),
+    options
+  );
+export const MemberTransferActionDocument = `
+    mutation memberTransferAction($requestId: ID!, $state: MemberTransferState!, $notes: String) {
+  members {
+    transfer {
+      action(requestId: $requestId, state: $state, notes: $notes) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useMemberTransferActionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    MemberTransferActionMutation,
+    TError,
+    MemberTransferActionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    MemberTransferActionMutation,
+    TError,
+    MemberTransferActionMutationVariables,
+    TContext
+  >(
+    ['memberTransferAction'],
+    useAxios<MemberTransferActionMutation, MemberTransferActionMutationVariables>(
+      MemberTransferActionDocument
     ),
     options
   );
@@ -56074,6 +56322,93 @@ export const useMemberDormancyDetailsQuery = <TData = MemberDormancyDetailsQuery
     ['memberDormancyDetails', variables],
     useAxios<MemberDormancyDetailsQuery, MemberDormancyDetailsQueryVariables>(
       MemberDormancyDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberTransferListDocument = `
+    query getMemberTransferList($filter: Filter, $pagination: Pagination) {
+  members {
+    transfer {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            prevBranchId
+            prevBranchName
+            newBranchId
+            newBranchName
+            state
+            approverId
+            approverName
+            reason
+            postNotes
+            docs {
+              identifier
+              url
+            }
+          }
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetMemberTransferListQuery = <TData = GetMemberTransferListQuery, TError = unknown>(
+  variables?: GetMemberTransferListQueryVariables,
+  options?: UseQueryOptions<GetMemberTransferListQuery, TError, TData>
+) =>
+  useQuery<GetMemberTransferListQuery, TError, TData>(
+    variables === undefined ? ['getMemberTransferList'] : ['getMemberTransferList', variables],
+    useAxios<GetMemberTransferListQuery, GetMemberTransferListQueryVariables>(
+      GetMemberTransferListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberTransferDocument = `
+    query getMemberTransfer($requestId: ID!) {
+  members {
+    transfer {
+      get(requestId: $requestId) {
+        data {
+          id
+          memberId
+          memberName
+          prevBranchId
+          prevBranchName
+          newBranchId
+          newBranchName
+          state
+          approverId
+          approverName
+          reason
+          postNotes
+          docs {
+            identifier
+            url
+          }
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetMemberTransferQuery = <TData = GetMemberTransferQuery, TError = unknown>(
+  variables: GetMemberTransferQueryVariables,
+  options?: UseQueryOptions<GetMemberTransferQuery, TError, TData>
+) =>
+  useQuery<GetMemberTransferQuery, TError, TData>(
+    ['getMemberTransfer', variables],
+    useAxios<GetMemberTransferQuery, GetMemberTransferQueryVariables>(
+      GetMemberTransferDocument
     ).bind(null, variables),
     options
   );

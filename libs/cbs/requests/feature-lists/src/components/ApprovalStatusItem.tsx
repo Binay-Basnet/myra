@@ -1,5 +1,6 @@
-import { RequestStatus } from '@coop/cbs/data-access';
 import { Box, Text } from '@myra-ui';
+
+import { RequestStatus } from '@coop/cbs/data-access';
 
 export const ApprovalStatusItem = ({ status }: { status?: RequestStatus }) => (
   <Box display="flex" alignItems="center" gap="s8">
@@ -9,7 +10,7 @@ export const ApprovalStatusItem = ({ status }: { status?: RequestStatus }) => (
       rounded="100%"
       bg={
         status === RequestStatus.Approved
-          ? 'green.500'
+          ? 'green.300'
           : status === RequestStatus.Declined
           ? 'red.500'
           : 'yellow.500'

@@ -16,6 +16,7 @@ export const ROUTES = {
   CBS_MEMBER_TRANSLATION: '/cbs/members/translation',
   CBS_MEMBER_MINOR_LIST: '/cbs/members/minor/list',
   CBS_MEMBER_DORMANCY: '/cbs/members/dormancy',
+  CBS_MEMBER_TRANSFER: '/cbs/members/transfer',
 
   CBS_SHARE_ISSUE_ADD: '/cbs/share/issue/add',
   CBS_SHARE_RETURN_ADD: '/cbs/share/return/add',
@@ -94,6 +95,8 @@ export const ROUTES = {
   CBS_REQUESTS_MEMBER_LIST: '/cbs/requests/member/list',
   CBS_REQUESTS_WITHDRAW_VIA_COLLECTOR_LIST: '/cbs/requests/withdraw-via-collector/list',
   CBS_REQUESTS_LOAN_LIST: '/cbs/requests/loan/list',
+  CBS_REQUESTS_MEMBER_TRANSFER_LIST: '/cbs/requests/member-transfer/list',
+
   CBS_WITHDRAW_SLIP_LIST: '/cbs/withdraw/withdraw-slip/list',
   CBS_WITHDRAW_SLIP_BOOK_ADD: '/cbs/withdraw/withdraw-slip-book/add',
   CBS_WITHDRAW_SLIP_BOOK_LIST: '/cbs/withdraw/withdraw-slip-book/list',
