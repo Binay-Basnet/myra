@@ -39,11 +39,7 @@ export const HrLifecyclePromotionList = () => {
         id: 'newPromotion',
         accessorFn: (props) => props?.node?.newPromotion,
       },
-      {
-        header: 'New Promotion',
-        id: 'newPromotion',
-        accessorFn: (props) => props?.node?.newPromotion,
-      },
+
       {
         header: 'Resignation Letter Date',
         id: 'Date',

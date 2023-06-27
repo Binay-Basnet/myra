@@ -50,6 +50,7 @@ export const useLoanAccountDetailHooks = () => {
   const isClosed = overviewData?.isClosed;
 
   const length = paymentsListInfo?.installments?.length ?? 0;
+  const isLocAccount = generalInfo?.repaymentScheme === 'LOC';
 
   const generalInfoCardData = [
     { label: 'Account Name', value: generalInfo?.accountName ?? 'N/A' },
@@ -97,6 +98,26 @@ export const useLoanAccountDetailHooks = () => {
     },
   ];
 
+  const locAccountSummary = [
+    {
+      title: 'Total Principal Paid',
+      value: amountConverter(overviewData?.totalPrincipalPaid || 0),
+    },
+    {
+      title: 'Total Interest Paid',
+      value: amountConverter(overviewData?.totalInterestPaid || 0),
+    },
+    {
+      title: 'Remaining Principal Amount',
+      value: amountConverter(overviewData?.totalRemainingPrincipal || 0),
+    },
+    {
+      title: 'WithdrawAble Amount',
+      value: amountConverter(
+        Number(generalInfo?.sanctionedAmount) - Number(overviewData?.totalRemainingPrincipal)
+      ),
+    },
+  ];
   const additionalFeatures = [
     {
       label: 'Allow Partial Installment',
@@ -203,6 +224,8 @@ export const useLoanAccountDetailHooks = () => {
     guaranteeSummary,
     gauranteeListInfo,
     collateralSummary,
+    locAccountSummary,
+    isLocAccount,
     productId,
     isClosed,
     collatListInfo,

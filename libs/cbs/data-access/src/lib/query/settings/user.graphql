@@ -17,6 +17,11 @@ query getSettingsUserListData($paginate: Pagination, $filter: Filter) {
             gender
             dob
             empCode
+            linkedBranches {
+              id
+              branchCode
+              name
+            }
             role {
               id
               name

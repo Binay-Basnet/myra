@@ -119,7 +119,7 @@ export const VaultBalanceReport = () => {
         />
         <Report.Inputs hideDate>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" />
+            <FormBranchSelect showUserBranchesOnly name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <FormDatePicker name="period.from" label="Date" />

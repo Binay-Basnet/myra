@@ -22167,6 +22167,30 @@ export type SetEmployeePromotionUpsertMutation = {
   };
 };
 
+export type SetEmployeeExitUpsertMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: EmployeeExitInput;
+}>;
+
+export type SetEmployeeExitUpsertMutation = {
+  hr: {
+    employeelifecycle?: {
+      employeeExit: {
+        upsertEmployeeExit: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
+
 export type SetStaffPlanningMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: StaffPlanInput;
@@ -29045,6 +29069,95 @@ export type GetHrPromotionListQuery = {
             } | null;
           } | null> | null;
           PageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetHrExitListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetHrExitListQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeExit: {
+        listEmployeeExit: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              employeeId?: string | null;
+              id?: string | null;
+              interviewer?: string | null;
+              lastModifiedDate?: Record<'local' | 'en' | 'np', string> | null;
+              separationDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetHrExistFormStateQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetHrExistFormStateQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeExit: {
+        getEmployeeExit: {
+          data: {
+            exitDate?: Record<'local' | 'en' | 'np', string> | null;
+            exitStatus?: ExitStatus | null;
+            futureIntentions?: string | null;
+            interviewer?: string | null;
+            others?: string | null;
+            overallExp?: string | null;
+            separationId?: string | null;
+            suggestions?: string | null;
+            checklists?: Array<{
+              activityName?: string | null;
+              beginsOn?: Record<'local' | 'en' | 'np', string> | null;
+              done?: boolean | null;
+              duration?: string | null;
+              role?: string | null;
+              user?: string | null;
+            } | null> | null;
+          };
+        };
+      };
+    };
+  };
+};
+
+export type GetHrLifecycleEmployeeViewQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetHrLifecycleEmployeeViewQuery = {
+  hr: {
+    employee: {
+      employee: {
+        getEmployeeLifecycleView: {
+          data?: {
+            age?: number | null;
+            status?: string | null;
+            branch?: string | null;
+            companyName?: string | null;
+            contactNumber?: string | null;
+            department?: string | null;
+            email?: string | null;
+            gender?: string | null;
+            id?: string | null;
+            joiningDate?: Record<'local' | 'en' | 'np', string> | null;
+            name?: string | null;
+          } | null;
         };
       };
     };
@@ -39000,6 +39113,11 @@ export type GetSettingsUserListDataQuery = {
             empCode?: string | null;
             profilePicUrl?: string | null;
             lastActiveDate?: Record<'local' | 'en' | 'np', string> | null;
+            linkedBranches?: Array<{
+              id: string;
+              branchCode?: string | null;
+              name: string;
+            } | null> | null;
             role?: Array<{ id: string; name: string } | null> | null;
             branch?: { id: string; name?: string | null } | null;
           } | null;
@@ -42703,6 +42821,42 @@ export const useSetEmployeePromotionUpsertMutation = <TError = unknown, TContext
     ['setEmployeePromotionUpsert'],
     useAxios<SetEmployeePromotionUpsertMutation, SetEmployeePromotionUpsertMutationVariables>(
       SetEmployeePromotionUpsertDocument
+    ),
+    options
+  );
+export const SetEmployeeExitUpsertDocument = `
+    mutation setEmployeeExitUpsert($id: ID, $input: EmployeeExitInput!) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        upsertEmployeeExit(input: $input, id: $id) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeExitUpsertMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeExitUpsertMutation,
+    TError,
+    SetEmployeeExitUpsertMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeExitUpsertMutation,
+    TError,
+    SetEmployeeExitUpsertMutationVariables,
+    TContext
+  >(
+    ['setEmployeeExitUpsert'],
+    useAxios<SetEmployeeExitUpsertMutation, SetEmployeeExitUpsertMutationVariables>(
+      SetEmployeeExitUpsertDocument
     ),
     options
   );
@@ -52453,6 +52607,124 @@ export const useGetHrPromotionListQuery = <TData = GetHrPromotionListQuery, TErr
     variables === undefined ? ['getHRPromotionList'] : ['getHRPromotionList', variables],
     useAxios<GetHrPromotionListQuery, GetHrPromotionListQueryVariables>(
       GetHrPromotionListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetHrExitListDocument = `
+    query getHRExitList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        listEmployeeExit(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+              id
+              interviewer
+              lastModifiedDate
+              separationDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetHrExitListQuery = <TData = GetHrExitListQuery, TError = unknown>(
+  variables?: GetHrExitListQueryVariables,
+  options?: UseQueryOptions<GetHrExitListQuery, TError, TData>
+) =>
+  useQuery<GetHrExitListQuery, TError, TData>(
+    variables === undefined ? ['getHRExitList'] : ['getHRExitList', variables],
+    useAxios<GetHrExitListQuery, GetHrExitListQueryVariables>(GetHrExitListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetHrExistFormStateDocument = `
+    query getHRExistFormState($id: ID!) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        getEmployeeExit(id: $id) {
+          data {
+            exitDate
+            exitStatus
+            futureIntentions
+            interviewer
+            others
+            overallExp
+            separationId
+            suggestions
+            checklists {
+              activityName
+              beginsOn
+              done
+              duration
+              role
+              user
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetHrExistFormStateQuery = <TData = GetHrExistFormStateQuery, TError = unknown>(
+  variables: GetHrExistFormStateQueryVariables,
+  options?: UseQueryOptions<GetHrExistFormStateQuery, TError, TData>
+) =>
+  useQuery<GetHrExistFormStateQuery, TError, TData>(
+    ['getHRExistFormState', variables],
+    useAxios<GetHrExistFormStateQuery, GetHrExistFormStateQueryVariables>(
+      GetHrExistFormStateDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetHrLifecycleEmployeeViewDocument = `
+    query getHrLifecycleEmployeeView($id: String!) {
+  hr {
+    employee {
+      employee {
+        getEmployeeLifecycleView(id: $id) {
+          data {
+            age
+            status
+            branch
+            companyName
+            contactNumber
+            department
+            email
+            gender
+            id
+            joiningDate
+            name
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetHrLifecycleEmployeeViewQuery = <
+  TData = GetHrLifecycleEmployeeViewQuery,
+  TError = unknown
+>(
+  variables: GetHrLifecycleEmployeeViewQueryVariables,
+  options?: UseQueryOptions<GetHrLifecycleEmployeeViewQuery, TError, TData>
+) =>
+  useQuery<GetHrLifecycleEmployeeViewQuery, TError, TData>(
+    ['getHrLifecycleEmployeeView', variables],
+    useAxios<GetHrLifecycleEmployeeViewQuery, GetHrLifecycleEmployeeViewQueryVariables>(
+      GetHrLifecycleEmployeeViewDocument
     ).bind(null, variables),
     options
   );
@@ -65653,6 +65925,11 @@ export const GetSettingsUserListDataDocument = `
             gender
             dob
             empCode
+            linkedBranches {
+              id
+              branchCode
+              name
+            }
             role {
               id
               name

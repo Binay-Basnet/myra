@@ -88,7 +88,12 @@ export const LoanBalanceReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
+            <FormBranchSelect
+              showUserBranchesOnly
+              isMulti
+              name="branchId"
+              label="Select Service Center"
+            />
           </GridItem>
           <GridItem colSpan={1}>
             <FormDatePicker name="period.from" label="Date" />

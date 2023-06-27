@@ -12,6 +12,13 @@ export const exportVisibleTableToExcel = (
 
     const ws = utils.table_to_sheet(table);
 
+    // eslint-disable-next-line array-callback-return
+    // Object.keys(ws)?.map((keyName) => {
+    //   if (ws[keyName]?.['l']?.['Target']) {
+    //     delete ws[keyName]['l']['Target'];
+    //   }
+    // });
+
     utils.book_append_sheet(wb, ws, table?.dataset?.['tableTitle']);
 
     return writeFileXLSX(wb, `${fileName} - ${new Date().toISOString()}.xlsx`);
@@ -23,6 +30,13 @@ export const exportVisibleTableToExcel = (
 
   Array.prototype.slice.call(tables)?.forEach((table) => {
     const ws = utils.table_to_sheet(table);
+
+    // eslint-disable-next-line array-callback-return
+    // Object.keys(ws)?.map((keyName) => {
+    //   if (ws[keyName]?.['l']?.['Target']) {
+    //     delete ws[keyName]['l']['Target'];
+    //   }
+    // });
 
     // const tableHeads = tables[index]?.querySelectorAll('th > div');
 

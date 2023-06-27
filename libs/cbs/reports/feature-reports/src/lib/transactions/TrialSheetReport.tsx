@@ -118,7 +118,7 @@ export const TrialSheetReport = () => {
 
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
           </GridItem>
 
           <GridItem colSpan={1}>
@@ -402,39 +402,25 @@ export const COATable = ({ data, type, total }: ICOATableProps) => {
           row={props.row}
           value={
             !props.row?.getCanExpand() ? (
-              <>
-                <Box
-                  sx={{
-                    '@media print': {
-                      display: 'none',
-                    },
-                  }}
+              <Box
+                sx={{
+                  '@media print': {
+                    'a[href]:after': `content: '"none !important"'`,
+                  },
+                }}
+              >
+                <Link
+                  target="_blank"
+                  href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
+                    props.row?.original?.ledgerId
+                  }&branch=${JSON.stringify(branchIDs)}`}
                 >
-                  <Link
-                    target="_blank"
-                    href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
-                      props.row?.original?.ledgerId
-                    }&branch=${JSON.stringify(branchIDs)}`}
-                  >
-                    <Button variant="link" color="primary.500">
-                      {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
-                      {localizedText(props?.row?.original?.ledgerName)}
-                    </Button>
-                  </Link>
-                </Box>
-                <Text
-                  display="none"
-                  sx={{
-                    '@media print': {
-                      display: 'block',
-                    },
-                  }}
-                  px={0}
-                  fontSize="s3"
-                >
-                  {localizedText(props?.row?.original?.ledgerName)}
-                </Text>
-              </>
+                  <Button variant="link" color="primary.500">
+                    {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+                    {localizedText(props?.row?.original?.ledgerName)}
+                  </Button>
+                </Link>
+              </Box>
             ) : (
               ` ${props.row.original.ledgerId} ${
                 props?.row?.original?.ledgerName ? '-' : ''
