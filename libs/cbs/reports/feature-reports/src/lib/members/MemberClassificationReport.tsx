@@ -110,7 +110,7 @@ export const MemberClassificationReport = () => {
           </GridItem>
 
           <GridItem colSpan={1}>
-            <FormBranchSelect name="branch" label="Select Branch" />
+            <FormBranchSelect showUserBranchesOnly name="branch" label="Select Branch" />
           </GridItem>
 
           <GridItem colSpan={2}>

@@ -53,7 +53,7 @@ export const CopomisImportMemberReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect isMulti label="Select Branch" name="branchId" />
+            <FormBranchSelect showUserBranchesOnly isMulti label="Select Branch" name="branchId" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange label="Select Period" />

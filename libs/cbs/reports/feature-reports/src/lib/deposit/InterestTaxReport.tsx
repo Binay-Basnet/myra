@@ -63,7 +63,7 @@ export const InterestTaxReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={2}>
-            <FormBranchSelect isMulti name="branchId" label="Select Branch" />
+            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Select Branch" />
           </GridItem>
           <GridItem colSpan={2}>
             <ReportDateRange label="Tax Deduct Date Period" />
