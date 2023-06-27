@@ -16,11 +16,13 @@ import {
 
 import {
   MemberTransferInput,
+  MemberTransferState,
   useGetIndividualMemberDetails,
   useGetMemberKymDetailsAccountsQuery,
   useGetMemberKymDetailsLoanQuery,
   useGetMemberKymDetailsSharesQuery,
   useGetMemberTransferQuery,
+  useMemberTransferActionMutation,
   useMemberTransferInitiateMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -47,7 +49,9 @@ export const MemberTransfer = () => {
     { enabled: !!requestId }
   );
 
-  // const { mutateAsync: memberTransferActionMutateAsync } = useMemberTransferActionMutation();
+  const { mutateAsync } = useMemberTransferInitiateMutation();
+
+  const { mutateAsync: memberTransferActionMutateAsync } = useMemberTransferActionMutation();
 
   const transferEditdata = transferData?.members?.transfer?.get?.data;
 
@@ -89,8 +93,6 @@ export const MemberTransfer = () => {
   const memberLoanAccountsDetailsData =
     memberLoanAccountDetails?.data?.members?.memberOverviewV2?.loan?.data?.accounts;
 
-  const { mutateAsync } = useMemberTransferInitiateMutation();
-
   useEffect(() => {
     if (memberId) {
       reset({
@@ -113,6 +115,23 @@ export const MemberTransfer = () => {
       promise: mutateAsync({
         memberId: memberId as string,
         data: { ...(omit(getValues(), ['memberId', 'currentBranchId']) as MemberTransferInput) },
+      }),
+    });
+  };
+
+  const declineTransfer = () => {
+    asyncToast({
+      id: 'decline-transfer',
+      msgs: {
+        success: 'Member transfer declined successfully',
+        loading: 'Member transfer declining',
+      },
+      onSuccess: () => {
+        router.push(ROUTES?.CBS_REQUESTS_MEMBER_TRANSFER_LIST);
+      },
+      promise: memberTransferActionMutateAsync({
+        requestId: requestId as string,
+        state: MemberTransferState?.Rejected,
       }),
     });
   };
@@ -223,10 +242,22 @@ export const MemberTransfer = () => {
           </Box>
         </FormLayout.Sidebar>
       </FormLayout.Content>
-      {(memberId || isApprove) && (
+      {memberId && (
+        <FormLayout.Footer
+          mainButtonLabel="Request Transfer"
+          mainButtonHandler={handleTransferMember}
+        />
+      )}
+      {isApprove && (
         <FormLayout.Footer
           mainButtonLabel={isApprove ? 'Approve' : 'Request Transfer'}
-          draftButton={isApprove && <Button variant="outline">Decline</Button>}
+          draftButton={
+            isApprove && (
+              <Button variant="outline" onClick={declineTransfer}>
+                Decline
+              </Button>
+            )
+          }
           mainButtonHandler={handleTransferMember}
         />
       )}
