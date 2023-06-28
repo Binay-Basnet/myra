@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -8,6 +9,7 @@ import {
   Level,
   useGetDepartmentListQuery,
   useGetDesignationListQuery,
+  useGetJobOpeningQuery,
   useGetStaffPlanningListQuery,
   useSetJobOpeningMutation,
 } from '@coop/cbs/data-access';
@@ -18,7 +20,21 @@ import { getPaginationQuery } from '@coop/shared/utils';
 export const HrRecruitmentJobOpeningAdd = () => {
   const router = useRouter();
   const methods = useForm();
-  const { getValues } = methods;
+  const { getValues, reset } = methods;
+
+  const { data: jobOpeningData } = useGetJobOpeningQuery(
+    { id: router?.query?.['id'] as string },
+    { enabled: !!router?.query?.['id'] }
+  );
+
+  const jobOpeningEditData =
+    jobOpeningData?.hr?.recruitment?.recruitmentJobOpening?.getJobOpening?.data;
+
+  useEffect(() => {
+    if (jobOpeningEditData) {
+      reset(jobOpeningEditData);
+    }
+  }, [JSON.stringify(jobOpeningEditData)]);
 
   const { data: staffPlanData } = useGetStaffPlanningListQuery({
     pagination: {

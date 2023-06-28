@@ -67,7 +67,13 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
       {' '}
       <Box border="1px solid" borderColor="border.layout" borderRadius="br2">
         <Box w="100%" p="s16" display="flex" flexDirection="column" gap="s4" bg="gray.100">
-          <Box display="flex" flexDirection="column" gap="s4" alignItems="start">
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap="s4"
+            alignItems="start"
+            wordBreak="break-word"
+          >
             <RedirectButton
               label={loanGeneralInfo?.loanProduct as string}
               link={`${ROUTES.SETTINGS_GENERAL_LP_DETAILS}?id=${loanData?.productId}`}

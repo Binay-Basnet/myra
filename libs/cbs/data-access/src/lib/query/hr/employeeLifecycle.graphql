@@ -23,6 +23,32 @@ query getHREmployeeOnboardingList($filter: Filter, $pagination: Pagination) {
   }
 }
 
+query getHROnboardingFormState($id: ID!) {
+  hr {
+    employeelifecycle {
+      employeeOnboarding {
+        getEmployeeOnboarding(id: $id) {
+          data {
+            applicantId
+            serviceCenter
+            dateOfJoining
+            designation
+            onboarding_status
+            activity_details {
+              isDone
+              name
+              userName
+              role
+              beginsOn
+              duration
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 query getHREmployeeTransferHistory($employeeId: ID!) {
   hr {
     employeelifecycle {
@@ -88,6 +114,112 @@ query getHRSeperationList($filter: Filter, $pagination: Pagination) {
           }
           PageInfo {
             ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getHRPromotionList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        listEmployeePromotion(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+              id
+              newPromotion
+              promotionDate
+              promotionType
+              employeeId
+              employeeName
+            }
+            cursor
+          }
+          PageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getHRExitList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        listEmployeeExit(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+
+              id
+              interviewer
+              lastModifiedDate
+              separationDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getHRExistFormState($id: ID!) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        getEmployeeExit(id: $id) {
+          data {
+            exitDate
+            exitStatus
+            futureIntentions
+            interviewer
+            others
+            overallExp
+            separationId
+            suggestions
+            checklists {
+              activityName
+              beginsOn
+              done
+              duration
+              role
+              user
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getHrLifecycleEmployeeView($id: String!) {
+  hr {
+    employee {
+      employee {
+        getEmployeeLifecycleView(id: $id) {
+          data {
+            age
+            status
+            branch
+            companyName
+            contactNumber
+            department
+            email
+            gender
+            id
+            joiningDate
+            name
           }
         }
       }

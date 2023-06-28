@@ -1,7 +1,13 @@
-import { RequestStatus } from '@coop/cbs/data-access';
 import { Box, Text } from '@myra-ui';
 
-export const ApprovalStatusItem = ({ status }: { status?: RequestStatus }) => (
+import { MemberTransferState, RequestStatus } from '@coop/cbs/data-access';
+
+export const ApprovalStatusItem = ({
+  status,
+}: {
+  status?: RequestStatus | MemberTransferState;
+}) => (
+  /* eslint-disable no-nested-ternary */
   <Box display="flex" alignItems="center" gap="s8">
     <Box
       w="s10"
@@ -9,8 +15,8 @@ export const ApprovalStatusItem = ({ status }: { status?: RequestStatus }) => (
       rounded="100%"
       bg={
         status === RequestStatus.Approved
-          ? 'green.500'
-          : status === RequestStatus.Declined
+          ? 'green.300'
+          : status === RequestStatus.Declined || status === MemberTransferState?.Rejected
           ? 'red.500'
           : 'yellow.500'
       }

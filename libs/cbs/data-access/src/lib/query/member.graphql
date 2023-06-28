@@ -530,3 +530,70 @@ query memberDormancyDetails($memberId: ID!) {
     }
   }
 }
+
+query getMemberTransferList($filter: Filter, $pagination: Pagination) {
+  members {
+    transfer {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            prevBranchId
+            prevBranchName
+            newBranchId
+            newBranchName
+            state
+            approverId
+            approverName
+            reason
+            postNotes
+            requestDate
+            approvedDate
+            docs {
+              identifier
+              url
+            }
+          }
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getMemberTransfer($requestId: ID!) {
+  members {
+    transfer {
+      get(requestId: $requestId) {
+        data {
+          id
+          memberId
+          memberName
+          prevBranchId
+          prevBranchName
+          newBranchId
+          newBranchName
+          state
+          approverId
+          approverName
+          reason
+          postNotes
+          requestDate
+          approvedDate
+          docs {
+            identifier
+            url
+          }
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

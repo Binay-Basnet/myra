@@ -48,7 +48,7 @@ export const BulkTransferAccountTable = ({
                 value: productId,
               },
               {
-                column: 'branch',
+                column: 'branchId',
                 comparator: 'EqualTo',
                 value: branchId,
               },

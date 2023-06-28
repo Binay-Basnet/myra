@@ -10,6 +10,7 @@ import {
   useGetMemberKymDetailsOverviewQuery,
   useIssueCertificateMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 
 import { AddMinorModal, MemberDetailsPathBar, MemberDetailsSidebar } from '../components';
 import {
@@ -46,6 +47,10 @@ export const MemberDetails = ({
   const memberDetailsData = useGetMemberKymDetailsOverviewQuery({
     id: memberId as string,
   });
+
+  const branchId =
+    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation?.branchId;
+
   const memberIndividual =
     memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
       ?.__typename === 'IndividualBasicMinInfo'
@@ -106,6 +111,13 @@ export const MemberDetails = ({
                   handler: () => router.push(`/cbs/members/individual/update/${memberId}`),
                 },
                 { label: 'Get Certificate', handler: getCertificate },
+                {
+                  label: 'Transfer Member',
+                  handler: () =>
+                    router.push(
+                      `${ROUTES?.CBS_MEMBER_TRANSFER}?memberId=${memberId}&&branchId=${branchId}`
+                    ),
+                },
               ]
             : [
                 {
@@ -113,6 +125,13 @@ export const MemberDetails = ({
                   handler: () => router.push(`/cbs/members/${memberType}/update/${memberId}`),
                 },
                 { label: 'Get Certificate', handler: getCertificate },
+                {
+                  label: 'Transfer Member',
+                  handler: () =>
+                    router.push(
+                      `${ROUTES?.CBS_MEMBER_TRANSFER}?memberId=${memberId}&&branchId=${branchId}`
+                    ),
+                },
               ]
         }
       />

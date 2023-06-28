@@ -23,6 +23,8 @@ export const OverviewPage = () => {
     isClosed,
     generalInfo,
     memberDetails,
+    isLocAccount,
+    locAccountSummary,
   } = useLoanAccountDetailHooks();
 
   const links = [
@@ -44,7 +46,7 @@ export const OverviewPage = () => {
       {!isClosed && <DetailPageQuickLinks links={links} />}
       {isClosed && <Alert status="error" subtitle="This Account is Closed" />}
 
-      <Statistics statsData={accountSummary} />
+      <Statistics statsData={isLocAccount ? locAccountSummary : accountSummary} />
 
       <GeneralInfoCard
         title="General Information"

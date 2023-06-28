@@ -510,6 +510,11 @@ export const CBS: NavType = {
           aclKey: 'CBS_REQUESTS_LOAN_REQUESTS',
           route: ROUTES.CBS_REQUESTS_LOAN_LIST,
         },
+        {
+          label: 'Member Transfer Request',
+          aclKey: 'CBS_REQUESTS_LOAN_REQUESTS',
+          route: ROUTES.CBS_REQUESTS_MEMBER_TRANSFER_LIST,
+        },
       ],
     },
 

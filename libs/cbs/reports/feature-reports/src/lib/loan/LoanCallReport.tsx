@@ -5,11 +5,11 @@ import { GridItem } from '@myra-ui';
 import {
   LoanCallReport,
   LoanCallReportFilter,
+  LocalizedDateFilter,
   useGetLoanCallSheetReportQuery,
   useGetLoanProductTypeQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { ReportCustomDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, localizedText, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormAmountFilter, FormBranchSelect, FormDatePicker, FormSelect } from '@coop/shared/form';
@@ -43,6 +43,10 @@ export const LoanCallSheetReport = () => {
       data: {
         ...filters,
         branchId: branchIds,
+        period: {
+          from: filters?.period?.from,
+          to: filters?.period?.from,
+        } as LocalizedDateFilter,
         accountTypeId: accountIds,
       } as LoanCallReportFilter,
     },
@@ -71,7 +75,12 @@ export const LoanCallSheetReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={2}>
-            <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
+            <FormBranchSelect
+              showUserBranchesOnly
+              isMulti
+              name="branchId"
+              label="Select Service Center"
+            />
           </GridItem>
           <GridItem colSpan={1}>
             <FormSelect
@@ -85,7 +94,7 @@ export const LoanCallSheetReport = () => {
             />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportCustomDateRange />
+            <FormDatePicker name="period.from" label="Select Date" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
@@ -182,11 +191,8 @@ export const LoanCallSheetReport = () => {
         </Report.Content>
 
         <Report.Filters>
-          <Report.Filter title="Installment Date">
-            <FormDatePicker name="installmentDate" label="Installment Date" />
-          </Report.Filter>
           <Report.Filter title="Amount Wise">
-            <FormAmountFilter name="amountRange" />
+            <FormAmountFilter name="filter.amountRange" />
           </Report.Filter>
         </Report.Filters>
       </Report.Body>

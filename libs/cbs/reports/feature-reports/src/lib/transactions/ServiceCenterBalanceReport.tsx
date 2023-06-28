@@ -60,7 +60,12 @@ export const ServviceCenterBalanceReport = () => {
         />
         <Report.Inputs hideDate>
           <GridItem colSpan={3}>
-            <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
+            <FormBranchSelect
+              showUserBranchesOnly
+              isMulti
+              name="branchId"
+              label="Select Service Center"
+            />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

@@ -143,7 +143,7 @@ export const ShareTransactionsReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange label="Share Transaction Date Period" />

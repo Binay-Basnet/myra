@@ -1,11 +1,14 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { omit } from 'lodash';
 
 import { asyncToast, Box, FormSection, GridItem, Text } from '@myra-ui';
 
 import {
   StaffPlanInput,
   StaffPlanTypesInput,
+  useGetStaffPlanQuery,
   useSetStaffPlanningMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -20,31 +23,63 @@ import {
 export const HrRecruitmentStaffPlanningAdd = () => {
   const router = useRouter();
   const methods = useForm();
-  const { getValues, watch } = methods;
+  const { getValues, watch, reset } = methods;
 
   const { mutateAsync } = useSetStaffPlanningMutation();
+  const { data: staffPlanningData } = useGetStaffPlanQuery(
+    { id: router?.query?.['id'] as string },
+    { enabled: !!router?.query?.['id'] }
+  );
+
+  const staffPlanningEditData = staffPlanningData?.hr?.recruitment?.recruitment?.getStaffPlan?.data;
+  useEffect(() => {
+    if (staffPlanningEditData) {
+      reset(staffPlanningEditData);
+    }
+  }, [JSON.stringify(staffPlanningData)]);
 
   const submitForm = () => {
-    asyncToast({
-      id: 'add-staff-planning',
-      msgs: {
-        success: 'Staff planning added succesfully',
-        loading: 'adding new staff planning',
-      },
-      onSuccess: () => {
-        router.push(ROUTES?.HR_RECRUITMENT_STAFF_PLANNING_LIST);
-      },
-      promise: mutateAsync({
-        id: null,
-        input: {
-          ...getValues(),
-          total_vacancies: 0,
-          total_cost_estimation: 'suyash',
-        } as unknown as StaffPlanInput,
-      }),
-    });
+    if (router?.query?.['id']) {
+      asyncToast({
+        id: 'edit-staff-planning',
+        msgs: {
+          success: 'Staff planning edited succesfully',
+          loading: 'editing staff planning',
+        },
+        onSuccess: () => {
+          router.push(ROUTES?.HR_RECRUITMENT_STAFF_PLANNING_LIST);
+        },
+        promise: mutateAsync({
+          id: router?.query?.['id'] as string,
+          input: {
+            ...omit({ ...getValues() }, ['id']),
+            total_vacancies: 0,
+            total_cost_estimation: 'suyash',
+          } as unknown as StaffPlanInput,
+        }),
+      });
+    } else {
+      asyncToast({
+        id: 'add-staff-planning',
+        msgs: {
+          success: 'Staff planning added succesfully',
+          loading: 'adding new staff planning',
+        },
+        onSuccess: () => {
+          router.push(ROUTES?.HR_RECRUITMENT_STAFF_PLANNING_LIST);
+        },
+        promise: mutateAsync({
+          id: null,
+          input: {
+            ...getValues(),
+            total_vacancies: 0,
+            total_cost_estimation: 'suyash',
+          } as unknown as StaffPlanInput,
+        }),
+      });
+    }
   };
-  const dataWatch = watch('data');
+  const dataWatch = watch('staffPlans');
   const totalVacancies = dataWatch?.reduce(
     (acc: number, curr: StaffPlanTypesInput) => acc + curr.vacancies,
     0

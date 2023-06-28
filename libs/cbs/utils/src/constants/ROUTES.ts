@@ -16,6 +16,7 @@ export const ROUTES = {
   CBS_MEMBER_TRANSLATION: '/cbs/members/translation',
   CBS_MEMBER_MINOR_LIST: '/cbs/members/minor/list',
   CBS_MEMBER_DORMANCY: '/cbs/members/dormancy',
+  CBS_MEMBER_TRANSFER: '/cbs/members/transfer',
 
   CBS_SHARE_ISSUE_ADD: '/cbs/share/issue/add',
   CBS_SHARE_RETURN_ADD: '/cbs/share/return/add',
@@ -94,6 +95,8 @@ export const ROUTES = {
   CBS_REQUESTS_MEMBER_LIST: '/cbs/requests/member/list',
   CBS_REQUESTS_WITHDRAW_VIA_COLLECTOR_LIST: '/cbs/requests/withdraw-via-collector/list',
   CBS_REQUESTS_LOAN_LIST: '/cbs/requests/loan/list',
+  CBS_REQUESTS_MEMBER_TRANSFER_LIST: '/cbs/requests/member-transfer/list',
+
   CBS_WITHDRAW_SLIP_LIST: '/cbs/withdraw/withdraw-slip/list',
   CBS_WITHDRAW_SLIP_BOOK_ADD: '/cbs/withdraw/withdraw-slip-book/add',
   CBS_WITHDRAW_SLIP_BOOK_LIST: '/cbs/withdraw/withdraw-slip-book/list',
@@ -444,6 +447,12 @@ export const ROUTES = {
   HR_LIFECYCLE_EMPLOYEE_PROMOTION_ADD: '/hr/lifecycle/promotion/add',
   HR_LIFECYCLE_EMPLOYEE_EXIT_ADD: '/hr/lifecycle/exit/add',
 
+  HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_EDIT: '/hr/lifecycle/employee-onboarding/edit',
+  HR_LIFECYCLE_EMPLOYEE_TRANSFER_EDIT: '/hr/lifecycle/transfer/edit',
+  HR_LIFECYCLE_EMPLOYEE_SEPERATION_EDIT: '/hr/lifecycle/seperation/edit',
+  HR_LIFECYCLE_EMPLOYEE_PROMOTION_EDIT: '/hr/lifecycle/promotion/edit',
+  HR_LIFECYCLE_EMPLOYEE_EXIT_EDIT: '/hr/lifecycle/exit/edit',
+
   HR_RECRUITMENT_STAFF_PLANNING_LIST: '/hr/recruitment/staff-planning/list',
   HR_RECRUITMENT_JOB_OPENING_LIST: '/hr/recruitment/job-opening/list',
   HR_RECRUITMENT_JOB_APPLICATION_LIST: '/hr/recruitment/job-application/list',
@@ -457,6 +466,13 @@ export const ROUTES = {
   HR_RECRUITMENT_INTERVIEW_ADD: '/hr/recruitment/interview/add',
   HR_RECRUITMENT_JOB_OFFER_ADD: '/hr/recruitment/job-offer/add',
   HR_RECRUITMENT_APPOINTMENT_LETTER_ADD: '/hr/recruitment/appointment-letter/add',
+
+  HR_RECRUITMENT_STAFF_PLANNING_EDIT: '/hr/recruitment/staff-planning/edit',
+  HR_RECRUITMENT_JOB_OPENING_EDIT: '/hr/recruitment/job-opening/edit',
+  HR_RECRUITMENT_JOB_APPLICATION_EDIT: '/hr/recruitment/job-application/edit',
+  HR_RECRUITMENT_INTERVIEW_EDIT: '/hr/recruitment/interview/edit',
+  HR_RECRUITMENT_JOB_OFFER_EDIT: '/hr/recruitment/job-offer/edit',
+  HR_RECRUITMENT_APPOINTMENT_LETTER_EDIT: '/hr/recruitment/appointment-letter/edit',
 
   HR_RECRUITMENT_SETTINGS: '/hr/recruitment/staff-planning/list',
   HR_INTERVIEW_ROUNDS: '/hr/recruitment/staff-planning/list',

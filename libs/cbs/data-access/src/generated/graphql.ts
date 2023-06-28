@@ -2010,6 +2010,7 @@ export type BankGlDataEntry = {
 };
 
 export type BankGlStatementFilter = {
+  bankAccounts?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<GlStatementFilter>;
   period: LocalizedDateFilter;
@@ -6067,12 +6068,25 @@ export type EmployeeLeaveRecord = {
 };
 
 export type EmployeeLeaveType = {
+  approver?: Maybe<Scalars['String']>;
+  employeeId: Scalars['String'];
+  employeeName: Scalars['String'];
+  id: Scalars['String'];
+  leaveFrom: Scalars['Localized'];
+  leaveTo: Scalars['Localized'];
+  leaveType: Scalars['String'];
+  reason: Scalars['String'];
+  status?: Maybe<Scalars['String']>;
+};
+
+export type EmployeeLeaveTypeGet = {
   employeeId: Scalars['String'];
   id: Scalars['String'];
   leaveFrom: Scalars['Localized'];
-  leaveNote: Scalars['String'];
+  leaveNote?: Maybe<Scalars['String']>;
   leaveTo: Scalars['Localized'];
   leaveTypeId: Scalars['String'];
+  status?: Maybe<Scalars['String']>;
 };
 
 export type EmployeeLevel = {
@@ -12068,6 +12082,7 @@ export type LeaveInput = {
   leaveNote: Scalars['String'];
   leaveTo: Scalars['Localized'];
   leaveTypeId: Scalars['ID'];
+  status?: InputMaybe<LeaveStatusEnum>;
 };
 
 export type LeaveOutput = {
@@ -12077,7 +12092,7 @@ export type LeaveOutput = {
 
 export type LeaveOutputType = {
   error?: Maybe<QueryError>;
-  record?: Maybe<EmployeeLeaveType>;
+  record?: Maybe<EmployeeLeaveTypeGet>;
 };
 
 export type LeavePolicyDetails = {
@@ -12108,6 +12123,13 @@ export type LeavePolicyOutput = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export const LeaveStatusEnum = {
+  Approved: 'APPROVED',
+  Declined: 'DECLINED',
+  Pending: 'PENDING',
+} as const;
+
+export type LeaveStatusEnum = typeof LeaveStatusEnum[keyof typeof LeaveStatusEnum];
 export const LeaveTypeEnum = {
   Paid: 'PAID',
   Unpaid: 'UNPAID',
@@ -12986,11 +13008,14 @@ export type LoanCallReport = {
   totalInstallment?: Maybe<Scalars['String']>;
 };
 
+export type LoanCallReportAdditionalFilters = {
+  amountRange?: InputMaybe<MinMaxFilter>;
+};
+
 export type LoanCallReportFilter = {
   accountTypeId?: InputMaybe<Array<Scalars['String']>>;
-  amountRange?: InputMaybe<MinMaxFilter>;
   branchId?: InputMaybe<Array<Scalars['String']>>;
-  installmentDate?: InputMaybe<Scalars['Localized']>;
+  filter?: InputMaybe<LoanCallReportAdditionalFilters>;
   period: LocalizedDateFilter;
 };
 
@@ -14352,6 +14377,70 @@ export type MBankingTransactionResult = {
   error?: Maybe<QueryError>;
 };
 
+export type MfCenterEntry = {
+  address?: Maybe<Address>;
+  code: Scalars['String'];
+  createdDate: Scalars['Localized'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  totalMembers: Scalars['String'];
+  totalgroups: Scalars['String'];
+};
+
+export type MfCenterInput = {
+  Documents: Array<DocumentInsertInput>;
+  branchIds: Array<Scalars['String']>;
+  centerCode: Scalars['String'];
+  centerName: Scalars['String'];
+  coordinatorId: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+};
+
+export type MfCenterListConnection = {
+  edges?: Maybe<Array<Maybe<MfCenterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type MfCenterListEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<MfCenterEntry>;
+};
+
+export type MfCenterResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type MfGroupInput = {
+  Documents: Array<DocumentInsertInput>;
+  MaxMmebers?: InputMaybe<Scalars['Int']>;
+  branchId?: InputMaybe<Scalars['String']>;
+  centerId?: InputMaybe<Scalars['String']>;
+  coordinatorId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  groupCode?: InputMaybe<Scalars['String']>;
+  groupName?: InputMaybe<Scalars['String']>;
+  minMembers?: InputMaybe<Scalars['Int']>;
+};
+
+export const MfGroupObjectState = {
+  Active: 'ACTIVE',
+  Inactive: 'INACTIVE',
+} as const;
+
+export type MfGroupObjectState = typeof MfGroupObjectState[keyof typeof MfGroupObjectState];
+export type MfGroupResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export const MfObjectState = {
+  Active: 'ACTIVE',
+  Inactive: 'INACTIVE',
+} as const;
+
+export type MfObjectState = typeof MfObjectState[keyof typeof MfObjectState];
 export const MrTransactionFilter = {
   Deposit: 'DEPOSIT',
   Withdraw: 'WITHDRAW',
@@ -14824,6 +14913,7 @@ export type MemberMutation = {
   makeInactive?: Maybe<MemberInactiveResult>;
   officialUse?: Maybe<OfficialUseResult>;
   revokeDormancy: MemberDormancyResult;
+  transfer: MemberTransferMutation;
   translate?: Maybe<TranslateData>;
   updateDormancy: MemberDormancyResult;
   updateKym: KymUpdateResult;
@@ -15069,6 +15159,7 @@ export type MemberQuery = {
   memberTypes: MemberTypeResult;
   minorProfile?: Maybe<MinorProfile>;
   officialUse?: Maybe<OfficialUseResult>;
+  transfer: MemberTransferQuery;
   translate: TranslateQueryResult;
 };
 
@@ -15291,6 +15382,104 @@ export const MemberStatus = {
 } as const;
 
 export type MemberStatus = typeof MemberStatus[keyof typeof MemberStatus];
+export type MemberTransferEntry = {
+  approvedDate?: Maybe<Scalars['Localized']>;
+  approverId?: Maybe<Scalars['ID']>;
+  approverName?: Maybe<Scalars['String']>;
+  docs?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  id: Scalars['ID'];
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['String']>;
+  newBranchId?: Maybe<Scalars['String']>;
+  newBranchName?: Maybe<Scalars['String']>;
+  postNotes?: Maybe<Scalars['String']>;
+  prevBranchId?: Maybe<Scalars['String']>;
+  prevBranchName?: Maybe<Scalars['String']>;
+  reason?: Maybe<Scalars['String']>;
+  requestDate?: Maybe<Scalars['Localized']>;
+  state?: Maybe<MemberTransferState>;
+};
+
+export type MemberTransferInput = {
+  docs?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  newBranchId: Scalars['ID'];
+  reason: Scalars['String'];
+};
+
+export type MemberTransferListConnection = {
+  edges?: Maybe<Array<Maybe<MemberTransferListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type MemberTransferListEdges = {
+  cursor: Scalars['Cursor'];
+  node: MemberTransferEntry;
+};
+
+export type MemberTransferMutation = {
+  action: MemberTransferSuccessResult;
+  initiate: MemberTransferResult;
+};
+
+export type MemberTransferMutationActionArgs = {
+  notes?: InputMaybe<Scalars['String']>;
+  requestId: Scalars['ID'];
+  state: MemberTransferState;
+};
+
+export type MemberTransferMutationInitiateArgs = {
+  data: MemberTransferInput;
+  memberId: Scalars['ID'];
+};
+
+export type MemberTransferQuery = {
+  get: MemberTrasferQueryResult;
+  list: MemberTransferListConnection;
+};
+
+export type MemberTransferQueryGetArgs = {
+  requestId: Scalars['ID'];
+};
+
+export type MemberTransferQueryListArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type MemberTransferResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export const MemberTransferState = {
+  Applied: 'APPLIED',
+  Approved: 'APPROVED',
+  Rejected: 'REJECTED',
+} as const;
+
+export type MemberTransferState = typeof MemberTransferState[keyof typeof MemberTransferState];
+export type MemberTransferSuccessData = {
+  loanAccountList?: Maybe<Array<Maybe<Scalars['String']>>>;
+  memberName?: Maybe<Scalars['String']>;
+  newBranch?: Maybe<Scalars['String']>;
+  oldBranch?: Maybe<Scalars['String']>;
+  recordId?: Maybe<Scalars['String']>;
+  savingAccountList?: Maybe<Array<Maybe<Scalars['String']>>>;
+  state?: Maybe<MemberTransferState>;
+  valueDate?: Maybe<Scalars['Localized']>;
+};
+
+export type MemberTransferSuccessResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<MemberTransferSuccessData>;
+};
+
+export type MemberTrasferQueryResult = {
+  data?: Maybe<MemberTransferEntry>;
+  error?: Maybe<QueryError>;
+};
+
 export const MemberType = {
   All: 'ALL',
   Cooperative: 'COOPERATIVE',
@@ -15359,6 +15548,40 @@ export type MembershipRequestConnection = {
 export type MembershipRequestEdges = {
   cursor?: Maybe<Scalars['Cursor']>;
   node?: Maybe<MembershipRequest>;
+};
+
+export type MicroFinanceCenterMutation = {
+  addMFCenter: MfCenterResult;
+};
+
+export type MicroFinanceCenterMutationAddMfCenterArgs = {
+  input: MfCenterInput;
+};
+
+export type MicroFinanceCenterQuery = {
+  listMFCenter: MfCenterListConnection;
+};
+
+export type MicroFinanceCenterQueryListMfCenterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type MicroFinanceGroupMutation = {
+  addMFGroup: MfGroupResult;
+};
+
+export type MicroFinanceGroupMutationAddMfGroupArgs = {
+  input: MfGroupInput;
+};
+
+export type MicroFinanceMutation = {
+  center?: Maybe<MicroFinanceCenterMutation>;
+  group?: Maybe<MicroFinanceGroupMutation>;
+};
+
+export type MicroFinanceQuery = {
+  center: MicroFinanceCenterQuery;
 };
 
 export type MinMaxFilter = {
@@ -15522,6 +15745,7 @@ export type Mutation = {
   inventory: InventoryMutation;
   loanAccount: LoanAccountMutation;
   members: MemberMutation;
+  microFinance: MicroFinanceMutation;
   newId: Scalars['String'];
   presignedUrl: PresignedUrlMutation;
   profitToFundManagement: FundManagementMutation;
@@ -16756,6 +16980,7 @@ export type Query = {
   inventory: InventoryQuery;
   loanAccount: LoanAccountQuery;
   members: MemberQuery;
+  microFinance: MicroFinanceQuery;
   permission: PermissionQuery;
   profitToFundManagement: FundManagementQuery;
   report: ReportQuery;
@@ -16827,6 +17052,7 @@ export const Resource = {
   CbsMembersMember: 'CBS_MEMBERS_MEMBER',
   CbsMembersMemberClose: 'CBS_MEMBERS_MEMBER_CLOSE',
   CbsMembersMemberDetail: 'CBS_MEMBERS_MEMBER_DETAIL',
+  CbsMembersTransfer: 'CBS_MEMBERS_TRANSFER',
   CbsMiscellaneousMarketRepresentatives: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
   CbsMiscellaneousMarketRepresentativesDayClose:
     'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_DAY_CLOSE',
@@ -21937,6 +22163,53 @@ export type SetEmployeeSeerationUpsertMutation = {
   };
 };
 
+export type SetEmployeePromotionUpsertMutationVariables = Exact<{
+  input: EmployeePromotionInput;
+}>;
+
+export type SetEmployeePromotionUpsertMutation = {
+  hr: {
+    employeelifecycle?: {
+      employeePromotion: {
+        addEmployeePromotion: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
+
+export type SetEmployeeExitUpsertMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: EmployeeExitInput;
+}>;
+
+export type SetEmployeeExitUpsertMutation = {
+  hr: {
+    employeelifecycle?: {
+      employeeExit: {
+        upsertEmployeeExit: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
+
 export type SetStaffPlanningMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: StaffPlanInput;
@@ -22821,6 +23094,60 @@ export type UpdateMemberDormancyMutation = {
         | MutationError_ServerError_Fragment
         | MutationError_ValidationError_Fragment
         | null;
+    };
+  };
+};
+
+export type MemberTransferInitiateMutationVariables = Exact<{
+  memberId: Scalars['ID'];
+  data: MemberTransferInput;
+}>;
+
+export type MemberTransferInitiateMutation = {
+  members: {
+    transfer: {
+      initiate: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type MemberTransferActionMutationVariables = Exact<{
+  requestId: Scalars['ID'];
+  state: MemberTransferState;
+  notes?: InputMaybe<Scalars['String']>;
+}>;
+
+export type MemberTransferActionMutation = {
+  members: {
+    transfer: {
+      action: {
+        record?: {
+          recordId?: string | null;
+          memberName?: string | null;
+          valueDate?: Record<'local' | 'en' | 'np', string> | null;
+          oldBranch?: string | null;
+          newBranch?: string | null;
+          state?: MemberTransferState | null;
+          savingAccountList?: Array<string | null> | null;
+          loanAccountList?: Array<string | null> | null;
+        } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
     };
   };
 };
@@ -28540,11 +28867,15 @@ export type GetLeaveListQuery = {
           edges?: Array<{
             cursor?: string | null;
             node?: {
+              id: string;
               employeeId: string;
-              leaveTypeId: string;
+              employeeName: string;
+              reason: string;
+              leaveType: string;
               leaveFrom: Record<'local' | 'en' | 'np', string>;
               leaveTo: Record<'local' | 'en' | 'np', string>;
-              leaveNote: string;
+              approver?: string | null;
+              status?: string | null;
             } | null;
           } | null> | null;
           pageInfo?: PaginationFragment | null;
@@ -28662,6 +28993,36 @@ export type GetHrEmployeeOnboardingListQuery = {
   };
 };
 
+export type GetHrOnboardingFormStateQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetHrOnboardingFormStateQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeOnboarding: {
+        getEmployeeOnboarding: {
+          data: {
+            applicantId?: string | null;
+            serviceCenter?: string | null;
+            dateOfJoining?: Record<'local' | 'en' | 'np', string> | null;
+            designation?: string | null;
+            onboarding_status?: OnboardingStatus | null;
+            activity_details?: Array<{
+              isDone?: boolean | null;
+              name?: string | null;
+              userName?: string | null;
+              role?: string | null;
+              beginsOn?: Record<'local' | 'en' | 'np', string> | null;
+              duration?: string | null;
+            } | null> | null;
+          };
+        };
+      };
+    };
+  };
+};
+
 export type GetHrEmployeeTransferHistoryQueryVariables = Exact<{
   employeeId: Scalars['ID'];
 }>;
@@ -28743,22 +29104,118 @@ export type GetHrSeperationListQuery = {
   };
 };
 
-export type GetStaffPlanQueryVariables = Exact<{
+export type GetHrPromotionListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetHrPromotionListQuery = {
+  hr: {
+    employeelifecycle: {
+      employeePromotion: {
+        listEmployeePromotion: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              employeeId: string;
+              id: string;
+              newPromotion: string;
+              promotionDate: Record<'local' | 'en' | 'np', string>;
+              promotionType: string;
+              employeeName: string;
+            } | null;
+          } | null> | null;
+          PageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetHrExitListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetHrExitListQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeExit: {
+        listEmployeeExit: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              employeeId?: string | null;
+              id?: string | null;
+              interviewer?: string | null;
+              lastModifiedDate?: Record<'local' | 'en' | 'np', string> | null;
+              separationDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetHrExistFormStateQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-export type GetStaffPlanQuery = {
+export type GetHrExistFormStateQuery = {
   hr: {
-    recruitment: {
-      recruitment: {
-        getStaffPlan: {
-          data?: { total_vacancies: number; total_cost_estimation: string } | null;
-          error?:
-            | MutationError_AuthorizationError_Fragment
-            | MutationError_BadRequestError_Fragment
-            | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment
-            | null;
+    employeelifecycle: {
+      employeeExit: {
+        getEmployeeExit: {
+          data: {
+            exitDate?: Record<'local' | 'en' | 'np', string> | null;
+            exitStatus?: ExitStatus | null;
+            futureIntentions?: string | null;
+            interviewer?: string | null;
+            others?: string | null;
+            overallExp?: string | null;
+            separationId?: string | null;
+            suggestions?: string | null;
+            checklists?: Array<{
+              activityName?: string | null;
+              beginsOn?: Record<'local' | 'en' | 'np', string> | null;
+              done?: boolean | null;
+              duration?: string | null;
+              role?: string | null;
+              user?: string | null;
+            } | null> | null;
+          };
+        };
+      };
+    };
+  };
+};
+
+export type GetHrLifecycleEmployeeViewQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetHrLifecycleEmployeeViewQuery = {
+  hr: {
+    employee: {
+      employee: {
+        getEmployeeLifecycleView: {
+          data?: {
+            age?: number | null;
+            status?: string | null;
+            branch?: string | null;
+            companyName?: string | null;
+            contactNumber?: string | null;
+            department?: string | null;
+            email?: string | null;
+            gender?: string | null;
+            id?: string | null;
+            joiningDate?: Record<'local' | 'en' | 'np', string> | null;
+            name?: string | null;
+          } | null;
         };
       };
     };
@@ -28904,6 +29361,194 @@ export type GetJobApplicationListQuery = {
             };
           } | null> | null;
           pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetStaffPlanQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetStaffPlanQuery = {
+  hr: {
+    recruitment: {
+      recruitment: {
+        getStaffPlan: {
+          data?: {
+            id: string;
+            branchId?: string | null;
+            title: string;
+            note?: string | null;
+            total_vacancies: number;
+            total_cost_estimation: string;
+            date: {
+              from: Record<'local' | 'en' | 'np', string>;
+              to: Record<'local' | 'en' | 'np', string>;
+            };
+            staffPlans?: Array<{
+              designation: string;
+              vacancies: number;
+              estimated_cost_per_employee: string;
+              estimated_cost: string;
+            }> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetJobOpeningQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetJobOpeningQuery = {
+  hr: {
+    recruitment: {
+      recruitmentJobOpening: {
+        getJobOpening: {
+          data: {
+            id: string;
+            branchId?: string | null;
+            title: string;
+            staffPlan: string;
+            department: string;
+            designation: string;
+            experienceLevel: Level;
+            description: string;
+            salaryRange: { id: string; min: string; max: string; default: string };
+          };
+          error:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment;
+        };
+      };
+    };
+  };
+};
+
+export type GetJobOfferQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetJobOfferQuery = {
+  hr: {
+    recruitment: {
+      recruitmentJobOffer: {
+        getJobOffer: {
+          data: {
+            id: string;
+            jobApplicant: string;
+            jobStatus: JobStatus;
+            jobDesignation: string;
+            jobDepartment: string;
+            jobOfferDate: Record<'local' | 'en' | 'np', string>;
+            jobOfferTerms: Array<{ sn: string; offerTerm: string; value: string }>;
+          };
+          error:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment;
+        };
+      };
+    };
+  };
+};
+
+export type GetJobApplicationQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetJobApplicationQuery = {
+  hr: {
+    recruitment: {
+      recruitmentJobApplication: {
+        getJobApplication: {
+          data: {
+            id: string;
+            applicantName?: string | null;
+            jobOpening?: string | null;
+            personalEmailAddress?: string | null;
+            personalPhoneNumber?: string | null;
+            tempSameAsPerm?: boolean | null;
+            applicationStatus?: ApplicantStatus | null;
+            applicationRating?: number | null;
+            permanentAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+            temporaryAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+            educationalDetails?: Array<{
+              instituteName?: string | null;
+              degree_diploma?: string | null;
+              specialization?: string | null;
+              dateOfCompletion?: Record<'local' | 'en' | 'np', string> | null;
+            } | null> | null;
+            experienceDetails?: Array<{
+              occupationName?: string | null;
+              company?: string | null;
+              fromDate?: Record<'local' | 'en' | 'np', string> | null;
+              toDate?: Record<'local' | 'en' | 'np', string> | null;
+              duration?: string | null;
+              summary?: string | null;
+            } | null> | null;
+          };
+          error:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment;
+        };
+      };
+    };
+  };
+};
+
+export type GetAppointmentLetterQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetAppointmentLetterQuery = {
+  hr: {
+    recruitment: {
+      recruitmentAppointmentLetter: {
+        getAppointmentLetter: {
+          data: {
+            appointmentLetterID: string;
+            jobApplication: string;
+            appointmentDate: Record<'local' | 'en' | 'np', string>;
+            body: string;
+            appointmentTerms: Array<{ sn: string; title: string; description: string }>;
+          };
+          error:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment;
         };
       };
     };
@@ -31506,6 +32151,77 @@ export type MemberDormancyDetailsQuery = {
         blockShareTransaction?: boolean | null;
       } | null;
     } | null;
+  };
+};
+
+export type GetMemberTransferListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetMemberTransferListQuery = {
+  members: {
+    transfer: {
+      list: {
+        totalCount: number;
+        edges?: Array<{
+          node: {
+            id: string;
+            memberId?: string | null;
+            memberName?: string | null;
+            prevBranchId?: string | null;
+            prevBranchName?: string | null;
+            newBranchId?: string | null;
+            newBranchName?: string | null;
+            state?: MemberTransferState | null;
+            approverId?: string | null;
+            approverName?: string | null;
+            reason?: string | null;
+            postNotes?: string | null;
+            requestDate?: Record<'local' | 'en' | 'np', string> | null;
+            approvedDate?: Record<'local' | 'en' | 'np', string> | null;
+            docs?: Array<{ identifier: string; url: string } | null> | null;
+          };
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      };
+    };
+  };
+};
+
+export type GetMemberTransferQueryVariables = Exact<{
+  requestId: Scalars['ID'];
+}>;
+
+export type GetMemberTransferQuery = {
+  members: {
+    transfer: {
+      get: {
+        data?: {
+          id: string;
+          memberId?: string | null;
+          memberName?: string | null;
+          prevBranchId?: string | null;
+          prevBranchName?: string | null;
+          newBranchId?: string | null;
+          newBranchName?: string | null;
+          state?: MemberTransferState | null;
+          approverId?: string | null;
+          approverName?: string | null;
+          reason?: string | null;
+          postNotes?: string | null;
+          requestDate?: Record<'local' | 'en' | 'np', string> | null;
+          approvedDate?: Record<'local' | 'en' | 'np', string> | null;
+          docs?: Array<{ identifier: string; url: string } | null> | null;
+        } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      };
+    };
   };
 };
 
@@ -38459,6 +39175,11 @@ export type GetSettingsUserListDataQuery = {
             empCode?: string | null;
             profilePicUrl?: string | null;
             lastActiveDate?: Record<'local' | 'en' | 'np', string> | null;
+            linkedBranches?: Array<{
+              id: string;
+              branchCode?: string | null;
+              name: string;
+            } | null> | null;
             role?: Array<{ id: string; name: string } | null> | null;
             branch?: { id: string; name?: string | null } | null;
           } | null;
@@ -42129,6 +42850,78 @@ export const useSetEmployeeSeerationUpsertMutation = <TError = unknown, TContext
     ),
     options
   );
+export const SetEmployeePromotionUpsertDocument = `
+    mutation setEmployeePromotionUpsert($input: EmployeePromotionInput!) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        addEmployeePromotion(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeePromotionUpsertMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeePromotionUpsertMutation,
+    TError,
+    SetEmployeePromotionUpsertMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeePromotionUpsertMutation,
+    TError,
+    SetEmployeePromotionUpsertMutationVariables,
+    TContext
+  >(
+    ['setEmployeePromotionUpsert'],
+    useAxios<SetEmployeePromotionUpsertMutation, SetEmployeePromotionUpsertMutationVariables>(
+      SetEmployeePromotionUpsertDocument
+    ),
+    options
+  );
+export const SetEmployeeExitUpsertDocument = `
+    mutation setEmployeeExitUpsert($id: ID, $input: EmployeeExitInput!) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        upsertEmployeeExit(input: $input, id: $id) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeExitUpsertMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeExitUpsertMutation,
+    TError,
+    SetEmployeeExitUpsertMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeExitUpsertMutation,
+    TError,
+    SetEmployeeExitUpsertMutationVariables,
+    TContext
+  >(
+    ['setEmployeeExitUpsert'],
+    useAxios<SetEmployeeExitUpsertMutation, SetEmployeeExitUpsertMutationVariables>(
+      SetEmployeeExitUpsertDocument
+    ),
+    options
+  );
 export const SetStaffPlanningDocument = `
     mutation setStaffPlanning($id: ID, $input: StaffPlanInput!) {
   hr {
@@ -43559,6 +44352,83 @@ export const useUpdateMemberDormancyMutation = <TError = unknown, TContext = unk
     ['updateMemberDormancy'],
     useAxios<UpdateMemberDormancyMutation, UpdateMemberDormancyMutationVariables>(
       UpdateMemberDormancyDocument
+    ),
+    options
+  );
+export const MemberTransferInitiateDocument = `
+    mutation memberTransferInitiate($memberId: ID!, $data: MemberTransferInput!) {
+  members {
+    transfer {
+      initiate(memberId: $memberId, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useMemberTransferInitiateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    MemberTransferInitiateMutation,
+    TError,
+    MemberTransferInitiateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    MemberTransferInitiateMutation,
+    TError,
+    MemberTransferInitiateMutationVariables,
+    TContext
+  >(
+    ['memberTransferInitiate'],
+    useAxios<MemberTransferInitiateMutation, MemberTransferInitiateMutationVariables>(
+      MemberTransferInitiateDocument
+    ),
+    options
+  );
+export const MemberTransferActionDocument = `
+    mutation memberTransferAction($requestId: ID!, $state: MemberTransferState!, $notes: String) {
+  members {
+    transfer {
+      action(requestId: $requestId, state: $state, notes: $notes) {
+        record {
+          recordId
+          memberName
+          valueDate
+          oldBranch
+          newBranch
+          state
+          savingAccountList
+          loanAccountList
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useMemberTransferActionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    MemberTransferActionMutation,
+    TError,
+    MemberTransferActionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    MemberTransferActionMutation,
+    TError,
+    MemberTransferActionMutationVariables,
+    TContext
+  >(
+    ['memberTransferAction'],
+    useAxios<MemberTransferActionMutation, MemberTransferActionMutationVariables>(
+      MemberTransferActionDocument
     ),
     options
   );
@@ -51489,11 +52359,15 @@ export const GetLeaveListDocument = `
           totalCount
           edges {
             node {
+              id
               employeeId
-              leaveTypeId
+              employeeName
+              reason
+              leaveType
               leaveFrom
               leaveTo
-              leaveNote
+              approver
+              status
             }
             cursor
           }
@@ -51657,6 +52531,47 @@ export const useGetHrEmployeeOnboardingListQuery = <
     ).bind(null, variables),
     options
   );
+export const GetHrOnboardingFormStateDocument = `
+    query getHROnboardingFormState($id: ID!) {
+  hr {
+    employeelifecycle {
+      employeeOnboarding {
+        getEmployeeOnboarding(id: $id) {
+          data {
+            applicantId
+            serviceCenter
+            dateOfJoining
+            designation
+            onboarding_status
+            activity_details {
+              isDone
+              name
+              userName
+              role
+              beginsOn
+              duration
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetHrOnboardingFormStateQuery = <
+  TData = GetHrOnboardingFormStateQuery,
+  TError = unknown
+>(
+  variables: GetHrOnboardingFormStateQueryVariables,
+  options?: UseQueryOptions<GetHrOnboardingFormStateQuery, TError, TData>
+) =>
+  useQuery<GetHrOnboardingFormStateQuery, TError, TData>(
+    ['getHROnboardingFormState', variables],
+    useAxios<GetHrOnboardingFormStateQuery, GetHrOnboardingFormStateQueryVariables>(
+      GetHrOnboardingFormStateDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetHrEmployeeTransferHistoryDocument = `
     query getHREmployeeTransferHistory($employeeId: ID!) {
   hr {
@@ -51768,35 +52683,161 @@ export const useGetHrSeperationListQuery = <TData = GetHrSeperationListQuery, TE
     ).bind(null, variables),
     options
   );
-export const GetStaffPlanDocument = `
-    query getStaffPlan($id: ID!) {
+export const GetHrPromotionListDocument = `
+    query getHRPromotionList($filter: Filter, $pagination: Pagination) {
   hr {
-    recruitment {
-      recruitment {
-        getStaffPlan(id: $id) {
-          data {
-            total_vacancies
-            total_cost_estimation
+    employeelifecycle {
+      employeePromotion {
+        listEmployeePromotion(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+              id
+              newPromotion
+              promotionDate
+              promotionType
+              employeeId
+              employeeName
+            }
+            cursor
           }
-          error {
-            ...MutationError
+          PageInfo {
+            ...Pagination
           }
         }
       }
     }
   }
 }
-    ${MutationErrorFragmentDoc}`;
-export const useGetStaffPlanQuery = <TData = GetStaffPlanQuery, TError = unknown>(
-  variables: GetStaffPlanQueryVariables,
-  options?: UseQueryOptions<GetStaffPlanQuery, TError, TData>
+    ${PaginationFragmentDoc}`;
+export const useGetHrPromotionListQuery = <TData = GetHrPromotionListQuery, TError = unknown>(
+  variables?: GetHrPromotionListQueryVariables,
+  options?: UseQueryOptions<GetHrPromotionListQuery, TError, TData>
 ) =>
-  useQuery<GetStaffPlanQuery, TError, TData>(
-    ['getStaffPlan', variables],
-    useAxios<GetStaffPlanQuery, GetStaffPlanQueryVariables>(GetStaffPlanDocument).bind(
+  useQuery<GetHrPromotionListQuery, TError, TData>(
+    variables === undefined ? ['getHRPromotionList'] : ['getHRPromotionList', variables],
+    useAxios<GetHrPromotionListQuery, GetHrPromotionListQueryVariables>(
+      GetHrPromotionListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetHrExitListDocument = `
+    query getHRExitList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        listEmployeeExit(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+              id
+              interviewer
+              lastModifiedDate
+              separationDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetHrExitListQuery = <TData = GetHrExitListQuery, TError = unknown>(
+  variables?: GetHrExitListQueryVariables,
+  options?: UseQueryOptions<GetHrExitListQuery, TError, TData>
+) =>
+  useQuery<GetHrExitListQuery, TError, TData>(
+    variables === undefined ? ['getHRExitList'] : ['getHRExitList', variables],
+    useAxios<GetHrExitListQuery, GetHrExitListQueryVariables>(GetHrExitListDocument).bind(
       null,
       variables
     ),
+    options
+  );
+export const GetHrExistFormStateDocument = `
+    query getHRExistFormState($id: ID!) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        getEmployeeExit(id: $id) {
+          data {
+            exitDate
+            exitStatus
+            futureIntentions
+            interviewer
+            others
+            overallExp
+            separationId
+            suggestions
+            checklists {
+              activityName
+              beginsOn
+              done
+              duration
+              role
+              user
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetHrExistFormStateQuery = <TData = GetHrExistFormStateQuery, TError = unknown>(
+  variables: GetHrExistFormStateQueryVariables,
+  options?: UseQueryOptions<GetHrExistFormStateQuery, TError, TData>
+) =>
+  useQuery<GetHrExistFormStateQuery, TError, TData>(
+    ['getHRExistFormState', variables],
+    useAxios<GetHrExistFormStateQuery, GetHrExistFormStateQueryVariables>(
+      GetHrExistFormStateDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetHrLifecycleEmployeeViewDocument = `
+    query getHrLifecycleEmployeeView($id: String!) {
+  hr {
+    employee {
+      employee {
+        getEmployeeLifecycleView(id: $id) {
+          data {
+            age
+            status
+            branch
+            companyName
+            contactNumber
+            department
+            email
+            gender
+            id
+            joiningDate
+            name
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetHrLifecycleEmployeeViewQuery = <
+  TData = GetHrLifecycleEmployeeViewQuery,
+  TError = unknown
+>(
+  variables: GetHrLifecycleEmployeeViewQueryVariables,
+  options?: UseQueryOptions<GetHrLifecycleEmployeeViewQuery, TError, TData>
+) =>
+  useQuery<GetHrLifecycleEmployeeViewQuery, TError, TData>(
+    ['getHrLifecycleEmployeeView', variables],
+    useAxios<GetHrLifecycleEmployeeViewQuery, GetHrLifecycleEmployeeViewQueryVariables>(
+      GetHrLifecycleEmployeeViewDocument
+    ).bind(null, variables),
     options
   );
 export const GetStaffPlanningListDocument = `
@@ -51992,6 +53033,245 @@ export const useGetJobApplicationListQuery = <TData = GetJobApplicationListQuery
     variables === undefined ? ['getJobApplicationList'] : ['getJobApplicationList', variables],
     useAxios<GetJobApplicationListQuery, GetJobApplicationListQueryVariables>(
       GetJobApplicationListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetStaffPlanDocument = `
+    query getStaffPlan($id: ID!) {
+  hr {
+    recruitment {
+      recruitment {
+        getStaffPlan(id: $id) {
+          data {
+            id
+            branchId
+            title
+            date {
+              from
+              to
+            }
+            staffPlans {
+              designation
+              vacancies
+              estimated_cost_per_employee
+              estimated_cost
+            }
+            note
+            total_vacancies
+            total_cost_estimation
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetStaffPlanQuery = <TData = GetStaffPlanQuery, TError = unknown>(
+  variables: GetStaffPlanQueryVariables,
+  options?: UseQueryOptions<GetStaffPlanQuery, TError, TData>
+) =>
+  useQuery<GetStaffPlanQuery, TError, TData>(
+    ['getStaffPlan', variables],
+    useAxios<GetStaffPlanQuery, GetStaffPlanQueryVariables>(GetStaffPlanDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetJobOpeningDocument = `
+    query getJobOpening($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobOpening {
+        getJobOpening(id: $id) {
+          data {
+            id
+            branchId
+            title
+            staffPlan
+            department
+            designation
+            experienceLevel
+            description
+            salaryRange {
+              id
+              min
+              max
+              default
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetJobOpeningQuery = <TData = GetJobOpeningQuery, TError = unknown>(
+  variables: GetJobOpeningQueryVariables,
+  options?: UseQueryOptions<GetJobOpeningQuery, TError, TData>
+) =>
+  useQuery<GetJobOpeningQuery, TError, TData>(
+    ['getJobOpening', variables],
+    useAxios<GetJobOpeningQuery, GetJobOpeningQueryVariables>(GetJobOpeningDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetJobOfferDocument = `
+    query getJobOffer($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobOffer {
+        getJobOffer(id: $id) {
+          data {
+            id
+            jobApplicant
+            jobStatus
+            jobDesignation
+            jobDepartment
+            jobOfferDate
+            jobOfferTerms {
+              sn
+              offerTerm
+              value
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetJobOfferQuery = <TData = GetJobOfferQuery, TError = unknown>(
+  variables: GetJobOfferQueryVariables,
+  options?: UseQueryOptions<GetJobOfferQuery, TError, TData>
+) =>
+  useQuery<GetJobOfferQuery, TError, TData>(
+    ['getJobOffer', variables],
+    useAxios<GetJobOfferQuery, GetJobOfferQueryVariables>(GetJobOfferDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetJobApplicationDocument = `
+    query getJobApplication($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobApplication {
+        getJobApplication(id: $id) {
+          data {
+            id
+            applicantName
+            jobOpening
+            personalEmailAddress
+            personalPhoneNumber
+            permanentAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            temporaryAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            tempSameAsPerm
+            educationalDetails {
+              instituteName
+              degree_diploma
+              specialization
+              dateOfCompletion
+            }
+            experienceDetails {
+              occupationName
+              company
+              fromDate
+              toDate
+              duration
+              summary
+            }
+            applicationStatus
+            applicationRating
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetJobApplicationQuery = <TData = GetJobApplicationQuery, TError = unknown>(
+  variables: GetJobApplicationQueryVariables,
+  options?: UseQueryOptions<GetJobApplicationQuery, TError, TData>
+) =>
+  useQuery<GetJobApplicationQuery, TError, TData>(
+    ['getJobApplication', variables],
+    useAxios<GetJobApplicationQuery, GetJobApplicationQueryVariables>(
+      GetJobApplicationDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAppointmentLetterDocument = `
+    query getAppointmentLetter($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentAppointmentLetter {
+        getAppointmentLetter(id: $id) {
+          data {
+            appointmentLetterID
+            jobApplication
+            appointmentDate
+            body
+            appointmentTerms {
+              sn
+              title
+              description
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetAppointmentLetterQuery = <TData = GetAppointmentLetterQuery, TError = unknown>(
+  variables: GetAppointmentLetterQueryVariables,
+  options?: UseQueryOptions<GetAppointmentLetterQuery, TError, TData>
+) =>
+  useQuery<GetAppointmentLetterQuery, TError, TData>(
+    ['getAppointmentLetter', variables],
+    useAxios<GetAppointmentLetterQuery, GetAppointmentLetterQueryVariables>(
+      GetAppointmentLetterDocument
     ).bind(null, variables),
     options
   );
@@ -55426,6 +56706,97 @@ export const useMemberDormancyDetailsQuery = <TData = MemberDormancyDetailsQuery
     ['memberDormancyDetails', variables],
     useAxios<MemberDormancyDetailsQuery, MemberDormancyDetailsQueryVariables>(
       MemberDormancyDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberTransferListDocument = `
+    query getMemberTransferList($filter: Filter, $pagination: Pagination) {
+  members {
+    transfer {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            prevBranchId
+            prevBranchName
+            newBranchId
+            newBranchName
+            state
+            approverId
+            approverName
+            reason
+            postNotes
+            requestDate
+            approvedDate
+            docs {
+              identifier
+              url
+            }
+          }
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetMemberTransferListQuery = <TData = GetMemberTransferListQuery, TError = unknown>(
+  variables?: GetMemberTransferListQueryVariables,
+  options?: UseQueryOptions<GetMemberTransferListQuery, TError, TData>
+) =>
+  useQuery<GetMemberTransferListQuery, TError, TData>(
+    variables === undefined ? ['getMemberTransferList'] : ['getMemberTransferList', variables],
+    useAxios<GetMemberTransferListQuery, GetMemberTransferListQueryVariables>(
+      GetMemberTransferListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberTransferDocument = `
+    query getMemberTransfer($requestId: ID!) {
+  members {
+    transfer {
+      get(requestId: $requestId) {
+        data {
+          id
+          memberId
+          memberName
+          prevBranchId
+          prevBranchName
+          newBranchId
+          newBranchName
+          state
+          approverId
+          approverName
+          reason
+          postNotes
+          requestDate
+          approvedDate
+          docs {
+            identifier
+            url
+          }
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetMemberTransferQuery = <TData = GetMemberTransferQuery, TError = unknown>(
+  variables: GetMemberTransferQueryVariables,
+  options?: UseQueryOptions<GetMemberTransferQuery, TError, TData>
+) =>
+  useQuery<GetMemberTransferQuery, TError, TData>(
+    ['getMemberTransfer', variables],
+    useAxios<GetMemberTransferQuery, GetMemberTransferQueryVariables>(
+      GetMemberTransferDocument
     ).bind(null, variables),
     options
   );
@@ -64670,6 +66041,11 @@ export const GetSettingsUserListDataDocument = `
             gender
             dob
             empCode
+            linkedBranches {
+              id
+              branchCode
+              name
+            }
             role {
               id
               name

@@ -108,7 +108,7 @@ export const TagKhataReport = () => {
 
         <Report.Inputs>
           <GridItem colSpan={2}>
-            <FormBranchSelect isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <FormSelect

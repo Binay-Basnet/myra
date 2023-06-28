@@ -35,12 +35,15 @@ query getLeaveList($filter: Filter, $pagination: Pagination) {
           totalCount
           edges {
             node {
-              # leaveId
+              id
               employeeId
-              leaveTypeId
+              employeeName
+              reason
+              leaveType
               leaveFrom
               leaveTo
-              leaveNote
+              approver
+              status
             }
             cursor
           }

@@ -1,6 +1,3 @@
-import { useState } from 'react';
-import { debounce } from 'lodash';
-
 import { SelectProps } from '@myra-ui';
 
 import { useLedgerTagsListQuery } from '@coop/cbs/data-access';
@@ -14,20 +11,20 @@ interface IFormLedgerTagSelectProps extends SelectProps {
 }
 
 export const FormLedgerTagSelect = ({ name, label, ...rest }: IFormLedgerTagSelectProps) => {
-  const [searchQuery, setSearchQuery] = useState('');
+  // const [searchQuery, setSearchQuery] = useState('');
 
   const { data: ledgerTagsListData, isFetching } = useLedgerTagsListQuery({
     pagination: {
       ...getPaginationQuery(),
-      first: 20,
+      first: -1,
       order: {
         arrange: 'ASC',
         column: 'ID',
       },
     },
-    filter: {
-      query: searchQuery,
-    },
+    // filter: {
+    //   query: searchQuery,
+    // },
   });
 
   const selectOptions =
@@ -41,11 +38,11 @@ export const FormLedgerTagSelect = ({ name, label, ...rest }: IFormLedgerTagSele
       name={name}
       label={label}
       isLoading={isFetching}
-      onInputChange={debounce((term) => {
-        if (term) {
-          setSearchQuery(term);
-        }
-      }, 800)}
+      // onInputChange={debounce((term) => {
+      //   if (term) {
+      //     setSearchQuery(term);
+      //   }
+      // }, 800)}
       options={selectOptions}
       {...rest}
     />
