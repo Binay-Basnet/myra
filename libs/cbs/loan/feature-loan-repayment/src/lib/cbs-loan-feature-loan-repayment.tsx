@@ -449,6 +449,7 @@ export const LoanRepayment = () => {
                   nextInstallmentTotal:
                     Number(result?.nextInstallment?.currentRemainingPrincipal ?? 0) +
                     Number(result?.nextInstallment?.remainingInterest ?? 0),
+                  dublicate: true,
                 };
               }}
               errorCardProps={{
