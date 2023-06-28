@@ -2010,6 +2010,7 @@ export type BankGlDataEntry = {
 };
 
 export type BankGlStatementFilter = {
+  bankAccounts?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<GlStatementFilter>;
   period: LocalizedDateFilter;
@@ -15382,6 +15383,7 @@ export const MemberStatus = {
 
 export type MemberStatus = typeof MemberStatus[keyof typeof MemberStatus];
 export type MemberTransferEntry = {
+  approvedDate?: Maybe<Scalars['Localized']>;
   approverId?: Maybe<Scalars['ID']>;
   approverName?: Maybe<Scalars['String']>;
   docs?: Maybe<Array<Maybe<UploadedDocumentData>>>;
@@ -15394,6 +15396,7 @@ export type MemberTransferEntry = {
   prevBranchId?: Maybe<Scalars['String']>;
   prevBranchName?: Maybe<Scalars['String']>;
   reason?: Maybe<Scalars['String']>;
+  requestDate?: Maybe<Scalars['Localized']>;
   state?: Maybe<MemberTransferState>;
 };
 
@@ -15415,7 +15418,7 @@ export type MemberTransferListEdges = {
 };
 
 export type MemberTransferMutation = {
-  action: MemberTransferResult;
+  action: MemberTransferSuccessResult;
   initiate: MemberTransferResult;
 };
 
@@ -15456,6 +15459,22 @@ export const MemberTransferState = {
 } as const;
 
 export type MemberTransferState = typeof MemberTransferState[keyof typeof MemberTransferState];
+export type MemberTransferSuccessData = {
+  loanAccountList?: Maybe<Array<Maybe<Scalars['String']>>>;
+  memberName?: Maybe<Scalars['String']>;
+  newBranch?: Maybe<Scalars['String']>;
+  oldBranch?: Maybe<Scalars['String']>;
+  recordId?: Maybe<Scalars['String']>;
+  savingAccountList?: Maybe<Array<Maybe<Scalars['String']>>>;
+  state?: Maybe<MemberTransferState>;
+  valueDate?: Maybe<Scalars['Localized']>;
+};
+
+export type MemberTransferSuccessResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<MemberTransferSuccessData>;
+};
+
 export type MemberTrasferQueryResult = {
   data?: Maybe<MemberTransferEntry>;
   error?: Maybe<QueryError>;
@@ -23111,7 +23130,6 @@ export type MemberTransferActionMutation = {
   members: {
     transfer: {
       action: {
-        recordId?: string | null;
         error?:
           | MutationError_AuthorizationError_Fragment
           | MutationError_BadRequestError_Fragment
@@ -28959,6 +28977,36 @@ export type GetHrEmployeeOnboardingListQuery = {
             };
           } | null> | null;
           pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetHrOnboardingFormStateQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetHrOnboardingFormStateQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeOnboarding: {
+        getEmployeeOnboarding: {
+          data: {
+            applicantId?: string | null;
+            serviceCenter?: string | null;
+            dateOfJoining?: Record<'local' | 'en' | 'np', string> | null;
+            designation?: string | null;
+            onboarding_status?: OnboardingStatus | null;
+            activity_details?: Array<{
+              isDone?: boolean | null;
+              name?: string | null;
+              userName?: string | null;
+              role?: string | null;
+              beginsOn?: Record<'local' | 'en' | 'np', string> | null;
+              duration?: string | null;
+            } | null> | null;
+          };
         };
       };
     };
@@ -44332,7 +44380,6 @@ export const MemberTransferActionDocument = `
   members {
     transfer {
       action(requestId: $requestId, state: $state, notes: $notes) {
-        recordId
         error {
           ...MutationError
         }
@@ -52457,6 +52504,47 @@ export const useGetHrEmployeeOnboardingListQuery = <
       : ['getHREmployeeOnboardingList', variables],
     useAxios<GetHrEmployeeOnboardingListQuery, GetHrEmployeeOnboardingListQueryVariables>(
       GetHrEmployeeOnboardingListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetHrOnboardingFormStateDocument = `
+    query getHROnboardingFormState($id: ID!) {
+  hr {
+    employeelifecycle {
+      employeeOnboarding {
+        getEmployeeOnboarding(id: $id) {
+          data {
+            applicantId
+            serviceCenter
+            dateOfJoining
+            designation
+            onboarding_status
+            activity_details {
+              isDone
+              name
+              userName
+              role
+              beginsOn
+              duration
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetHrOnboardingFormStateQuery = <
+  TData = GetHrOnboardingFormStateQuery,
+  TError = unknown
+>(
+  variables: GetHrOnboardingFormStateQueryVariables,
+  options?: UseQueryOptions<GetHrOnboardingFormStateQuery, TError, TData>
+) =>
+  useQuery<GetHrOnboardingFormStateQuery, TError, TData>(
+    ['getHROnboardingFormState', variables],
+    useAxios<GetHrOnboardingFormStateQuery, GetHrOnboardingFormStateQueryVariables>(
+      GetHrOnboardingFormStateDocument
     ).bind(null, variables),
     options
   );

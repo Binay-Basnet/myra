@@ -23,6 +23,32 @@ query getHREmployeeOnboardingList($filter: Filter, $pagination: Pagination) {
   }
 }
 
+query getHROnboardingFormState($id: ID!) {
+  hr {
+    employeelifecycle {
+      employeeOnboarding {
+        getEmployeeOnboarding(id: $id) {
+          data {
+            applicantId
+            serviceCenter
+            dateOfJoining
+            designation
+            onboarding_status
+            activity_details {
+              isDone
+              name
+              userName
+              role
+              beginsOn
+              duration
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 query getHREmployeeTransferHistory($employeeId: ID!) {
   hr {
     employeelifecycle {

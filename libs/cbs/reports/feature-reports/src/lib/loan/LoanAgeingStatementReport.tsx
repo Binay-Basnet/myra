@@ -102,7 +102,7 @@ export const LoanAgingStatementsReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 12,
+                    colspan: 13,
                   },
                 },
               },
