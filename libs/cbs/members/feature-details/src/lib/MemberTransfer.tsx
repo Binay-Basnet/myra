@@ -316,21 +316,25 @@ export const MemberTransfer = () => {
             <Text fontSize="s3">{approvedMemberData?.newBranch}</Text>
           </Box>
           <Box p="s8" display="flex" justifyContent="space-between" bg="gray.100">
-            <Text>Old Service Center</Text>
-            <Text>{approvedMemberData?.oldBranch}</Text>
+            <Text fontSize="s3">Old Service Center</Text>
+            <Text fontSize="s3">{approvedMemberData?.oldBranch}</Text>
           </Box>
           <Divider />
           <Box p="s8" display="flex" bg="gray.100">
-            <Text>List of Saving Accounts Transfered</Text>
+            <Text fontSize="s3" fontWeight="medium">
+              List of Saving Accounts Transfered
+            </Text>
             {approvedMemberData?.savingAccountList?.map((item, index) => (
               <Text>{`${index}. ${item}`}</Text>
             ))}
           </Box>
           <Divider />
           <Box p="s8" display="flex" bg="gray.100">
-            <Text>List of Saving Accounts Transfered</Text>
+            <Text fontSize="s3" fontWeight="medium">
+              List of Saving Accounts Transfered
+            </Text>
             {approvedMemberData?.loanAccountList?.map((item, index) => (
-              <Text>{`${index}. ${item}`}</Text>
+              <Text fontSize="s3">{`${index}. ${item}`}</Text>
             ))}
           </Box>
           <Box display="flex" gap="s16" alignSelf="flex-end" mt="s16">
