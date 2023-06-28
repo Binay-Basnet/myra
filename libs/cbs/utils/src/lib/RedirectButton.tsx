@@ -2,7 +2,7 @@
 import { ReactNode } from 'react';
 import { useRouter } from 'next/router';
 
-import { Button } from '@myra-ui';
+import { Text } from '@myra-ui';
 
 interface IProps {
   label?: string | ReactNode;
@@ -12,8 +12,18 @@ interface IProps {
 export const RedirectButton = ({ label, link }: IProps) => {
   const router = useRouter();
   return (
-    <Button px="0" minW="0" variant="link" onClick={() => router.push(link)}>
+    <Text
+      px="0"
+      minW="0"
+      color="primary.500"
+      fontWeight="600"
+      cursor="pointer"
+      _hover={{ textDecoration: 'underline' }}
+      onClick={() => router.push(link)}
+      overflowWrap="anywhere"
+      // noOfLines={1}
+    >
       {label}
-    </Button>
+    </Text>
   );
 };
