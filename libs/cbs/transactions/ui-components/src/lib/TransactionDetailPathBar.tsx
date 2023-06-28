@@ -291,6 +291,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       tempTotal = Number(loanRepaymentDetailData?.totalRepaymentAmount).toFixed(2);
 
       tempGLTransactions = loanRepaymentDetailData?.glTransaction;
+
+      tempDublicate = true;
     }
 
     if (router?.asPath?.includes('/journal-vouchers/')) {
