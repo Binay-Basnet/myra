@@ -32168,6 +32168,8 @@ export type GetMemberTransferListQuery = {
             approverName?: string | null;
             reason?: string | null;
             postNotes?: string | null;
+            requestDate?: Record<'local' | 'en' | 'np', string> | null;
+            approvedDate?: Record<'local' | 'en' | 'np', string> | null;
             docs?: Array<{ identifier: string; url: string } | null> | null;
           };
         } | null> | null;
@@ -32198,6 +32200,8 @@ export type GetMemberTransferQuery = {
           approverName?: string | null;
           reason?: string | null;
           postNotes?: string | null;
+          requestDate?: Record<'local' | 'en' | 'np', string> | null;
+          approvedDate?: Record<'local' | 'en' | 'np', string> | null;
           docs?: Array<{ identifier: string; url: string } | null> | null;
         } | null;
         error?:
@@ -56705,6 +56709,8 @@ export const GetMemberTransferListDocument = `
             approverName
             reason
             postNotes
+            requestDate
+            approvedDate
             docs {
               identifier
               url
@@ -56748,6 +56754,8 @@ export const GetMemberTransferDocument = `
           approverName
           reason
           postNotes
+          requestDate
+          approvedDate
           docs {
             identifier
             url

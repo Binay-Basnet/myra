@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
@@ -11,12 +11,14 @@ import {
   FormSection,
   GridItem,
   MemberCard,
+  Modal,
   Text,
 } from '@myra-ui';
 
 import {
   MemberTransferInput,
   MemberTransferState,
+  MemberTransferSuccessData,
   useGetIndividualMemberDetails,
   useGetMemberKymDetailsAccountsQuery,
   useGetMemberKymDetailsLoanQuery,
@@ -38,6 +40,8 @@ import { amountConverter } from '@coop/shared/utils';
 export const MemberTransfer = () => {
   const router = useRouter();
   const methods = useForm();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [approvedMemberData, setApprovedMemberData] = useState<MemberTransferSuccessData>();
   const { reset, getValues } = methods;
 
   const memberId = router?.query?.['memberId'];
@@ -134,6 +138,28 @@ export const MemberTransfer = () => {
         state: MemberTransferState?.Rejected,
       }),
     });
+  };
+
+  const approveMember = () => {
+    asyncToast({
+      id: 'approve-transfer',
+      msgs: {
+        success: 'Member approved successfully',
+        loading: 'Member transfer approving',
+      },
+      onSuccess: (res) => {
+        setApprovedMemberData(res?.members?.transfer?.action?.record as MemberTransferSuccessData);
+        setIsModalOpen(true);
+      },
+      promise: memberTransferActionMutateAsync({
+        requestId: requestId as string,
+        state: MemberTransferState?.Approved,
+      }),
+    });
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -258,9 +284,70 @@ export const MemberTransfer = () => {
               </Button>
             )
           }
-          mainButtonHandler={handleTransferMember}
+          mainButtonHandler={approveMember}
         />
       )}
+      <Modal open={isModalOpen} onClose={handleModalClose} isCentered>
+        <Box display="flex" flexDir="column">
+          <Box alignSelf="center">
+            <svg
+              width="76"
+              height="76"
+              viewBox="0 0 76 76"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="0.285645" width="75.4286" height="75.4286" rx="37.7143" fill="#C2DBCA" />
+              <rect x="8.28564" y="8" width="59.4286" height="59.4286" rx="29.7143" fill="white" />
+              <path
+                d="M37.9999 8C21.6156 8 8.28564 21.33 8.28564 37.7143C8.28564 54.0986 21.6156 67.4286 37.9999 67.4286C54.3842 67.4286 67.7142 54.0986 67.7142 37.7143C67.7142 21.33 54.3842 8 37.9999 8ZM32.5714 52.6257L21.0571 39.83L24.4556 36.7714L32.4556 45.66L51.4285 23.0657L54.9342 26L32.5714 52.6257Z"
+                fill="#3D8F5F"
+              />
+            </svg>
+          </Box>
+          <Text fontSize="l1" fontWeight="semibold" alignSelf="center" color="primary.500">
+            Membership Transfer Successful
+          </Text>
+          <Text fontSize="r1" textAlign="center">
+            The member has been transfered successfully. Details of the members is give below
+          </Text>
+          <Box p="s8" display="flex" justifyContent="space-between" bg="gray.100">
+            <Text fontSize="s3">New Service Center</Text>
+            <Text fontSize="s3">{approvedMemberData?.newBranch}</Text>
+          </Box>
+          <Box p="s8" display="flex" justifyContent="space-between" bg="gray.100">
+            <Text>Old Service Center</Text>
+            <Text>{approvedMemberData?.oldBranch}</Text>
+          </Box>
+          <Divider />
+          <Box p="s8" display="flex" bg="gray.100">
+            <Text>List of Saving Accounts Transfered</Text>
+            {approvedMemberData?.savingAccountList?.map((item, index) => (
+              <Text>{`${index}. ${item}`}</Text>
+            ))}
+          </Box>
+          <Divider />
+          <Box p="s8" display="flex" bg="gray.100">
+            <Text>List of Saving Accounts Transfered</Text>
+            {approvedMemberData?.loanAccountList?.map((item, index) => (
+              <Text>{`${index}. ${item}`}</Text>
+            ))}
+          </Box>
+          <Box display="flex" gap="s16" alignSelf="flex-end" mt="s16">
+            <Button
+              variant="outline"
+              onClick={() =>
+                router?.push(`${ROUTES?.CBS_MEMBER_TRANSFER}?requestId=${requestId}&&type=details`)
+              }
+            >
+              Go back to member details
+            </Button>
+            <Button onClick={() => router.push(ROUTES?.CBS_REQUESTS_MEMBER_TRANSFER_LIST)}>
+              Done
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </FormLayout>
   );
 };

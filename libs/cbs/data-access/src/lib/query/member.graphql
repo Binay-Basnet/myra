@@ -550,6 +550,8 @@ query getMemberTransferList($filter: Filter, $pagination: Pagination) {
             approverName
             reason
             postNotes
+            requestDate
+            approvedDate
             docs {
               identifier
               url
@@ -581,6 +583,8 @@ query getMemberTransfer($requestId: ID!) {
           approverName
           reason
           postNotes
+          requestDate
+          approvedDate
           docs {
             identifier
             url

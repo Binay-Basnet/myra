@@ -20,6 +20,14 @@ export const MemberTransferList = () => {
   const columns = React.useMemo<Column<typeof memberTransferData[0]>[]>(
     () => [
       {
+        header: 'Requested Date',
+        accessorFn: (props) => props?.node?.requestDate?.local || '-',
+      },
+      {
+        header: 'Approved Date',
+        accessorFn: (props) => props?.node?.approvedDate?.local || '-',
+      },
+      {
         header: 'Member Id',
         accessorKey: 'node.memberId',
       },
