@@ -180,10 +180,10 @@ query getCOAAccountDetails($id: String!, $branch: String) {
   }
 }
 
-query getCOALeafNodeDetails($id: ID!, $branch: [String]) {
+query getCOALeafNodeDetails($id: ID!, $branch: [String], $snapshot: String) {
   settings {
     chartsOfAccount {
-      coaLeafNodeDetails(id: $id, branch: $branch) {
+      coaLeafNodeDetails(id: $id, branch: $branch, snapshot: $snapshot) {
         data {
           id
           accountName
@@ -209,10 +209,22 @@ query getCOALeafNodeDetails($id: ID!, $branch: [String]) {
   }
 }
 
-query getLedgerList($id: ID!, $pagination: Pagination, $filter: Filter, $branchId: [String!]) {
+query getLedgerList(
+  $id: ID!
+  $pagination: Pagination
+  $filter: Filter
+  $branchId: [String!]
+  $snapshot: String
+) {
   settings {
     chartsOfAccount {
-      coaLedgerList(id: $id, pagination: $pagination, filter: $filter, branchId: $branchId) {
+      coaLedgerList(
+        id: $id
+        pagination: $pagination
+        filter: $filter
+        branchId: $branchId
+        snapshot: $snapshot
+      ) {
         totalCount
         pageInfo {
           hasNextPage

@@ -3015,6 +3015,7 @@ export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
 export type ChartsOfAccountSettingsQueryCoaLeafNodeDetailsArgs = {
   branch?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   id: Scalars['ID'];
+  snapshot?: InputMaybe<Scalars['String']>;
 };
 
 export type ChartsOfAccountSettingsQueryCoaLedgerListArgs = {
@@ -3022,6 +3023,7 @@ export type ChartsOfAccountSettingsQueryCoaLedgerListArgs = {
   filter?: InputMaybe<Filter>;
   id: Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
+  snapshot?: InputMaybe<Scalars['String']>;
 };
 
 export type ChartsOfAccountSettingsQueryLedgerAllTransactionsListArgs = {
@@ -36650,6 +36652,7 @@ export type GetCoaAccountDetailsQuery = {
 export type GetCoaLeafNodeDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
   branch?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
+  snapshot?: InputMaybe<Scalars['String']>;
 }>;
 
 export type GetCoaLeafNodeDetailsQuery = {
@@ -36686,6 +36689,7 @@ export type GetLedgerListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
   branchId?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+  snapshot?: InputMaybe<Scalars['String']>;
 }>;
 
 export type GetLedgerListQuery = {
@@ -62517,10 +62521,10 @@ export const useGetCoaAccountDetailsQuery = <TData = GetCoaAccountDetailsQuery, 
     options
   );
 export const GetCoaLeafNodeDetailsDocument = `
-    query getCOALeafNodeDetails($id: ID!, $branch: [String]) {
+    query getCOALeafNodeDetails($id: ID!, $branch: [String], $snapshot: String) {
   settings {
     chartsOfAccount {
-      coaLeafNodeDetails(id: $id, branch: $branch) {
+      coaLeafNodeDetails(id: $id, branch: $branch, snapshot: $snapshot) {
         data {
           id
           accountName
@@ -62558,7 +62562,7 @@ export const useGetCoaLeafNodeDetailsQuery = <TData = GetCoaLeafNodeDetailsQuery
     options
   );
 export const GetLedgerListDocument = `
-    query getLedgerList($id: ID!, $pagination: Pagination, $filter: Filter, $branchId: [String!]) {
+    query getLedgerList($id: ID!, $pagination: Pagination, $filter: Filter, $branchId: [String!], $snapshot: String) {
   settings {
     chartsOfAccount {
       coaLedgerList(
@@ -62566,6 +62570,7 @@ export const GetLedgerListDocument = `
         pagination: $pagination
         filter: $filter
         branchId: $branchId
+        snapshot: $snapshot
       ) {
         totalCount
         pageInfo {
