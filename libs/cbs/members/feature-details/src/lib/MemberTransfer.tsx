@@ -313,11 +313,15 @@ export const MemberTransfer = () => {
           </Text>
           <Box p="s8" display="flex" justifyContent="space-between" bg="gray.100">
             <Text fontSize="s3">New Service Center</Text>
-            <Text fontSize="s3">{approvedMemberData?.newBranch}</Text>
+            <Text fontSize="s3" fontWeight="medium">
+              {approvedMemberData?.newBranch}
+            </Text>
           </Box>
           <Box p="s8" display="flex" justifyContent="space-between" bg="gray.100">
             <Text fontSize="s3">Old Service Center</Text>
-            <Text fontSize="s3">{approvedMemberData?.oldBranch}</Text>
+            <Text fontSize="s3" fontWeight="medium">
+              {approvedMemberData?.oldBranch}
+            </Text>
           </Box>
           <Divider color="blackAlpha.100" width={2} />
           <Box p="s8" display="flex" bg="gray.100" flexDir="column" gap="s16">
