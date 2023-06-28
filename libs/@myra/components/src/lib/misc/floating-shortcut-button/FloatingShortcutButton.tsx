@@ -31,35 +31,45 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Mr can create collection template',
-      'Update min max interest rate',
-      'Update min max of tenure',
-      'Update Rebate',
-      'Update Premature Penalty',
-      'Update Withdraw Penalty',
-      'Inventory Sales Report',
+      'Member branch transfer(testing yet to be done. Not to test in production).',
+      'Display withdrawn balance in loc detail page.',
+      'User can only see the report of assigned branches.',
+      'Bank Gl statement filter by Bank accounts.',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Loan Transaction Statement Fix.',
-      'FD Close 1 paisa issue fix',
-      'Statement print in Portrait',
-      'Withdraw slip book block issue fix',
+      'Display withdraw-able balance of LOC in LOC Loan Account Detail Page',
+      'Hide FD and Inactive accounts in Withdraw page',
+      'Loan call sheet branch filter',
+      'Display return amount in loan repayment',
+      'Bank GL Statement filter by Bank Account',
+      'Remove link from report as well as print section.',
+      'Loan repayment detail page side bar amount fixations.',
+      'Loan repayment transaction page return amount show fixations.',
+      'Data member id double replicate issue fixations in reports.',
+      'Multiple user creating issue in use section.',
+      'Tag select issue in edit tag.',
+      'Tag select issue in report.',
+      'Automatic pwd change in mr app.',
+      '0.1 paisa difference fixes in report.',
+      'Payable fine required field removed in loan repayment page.',
+      'While withdraw , FD accounts and closed accounts are hidden.',
+      'Total column shift in loan aging report.',
     ],
   },
-  knownBugs: {
-    title: 'Known Bugs',
-    data: [
-      '2 Print voucher in single page.',
-      'Item name are randomly missing in the inventory section.',
-      'Landscape print in report section like loan statement, saving statements.',
-      'Loan Schedule payment print in the overview page.',
-      'loan products filter issue in loan account page.',
-      'String json issue in mr transactions fixes.',
-    ],
-  },
+  // knownBugs: {
+  //   title: 'Known Bugs',
+  //   data: [
+  //     '2 Print voucher in single page.',
+  //     'Item name are randomly missing in the inventory section.',
+  //     'Landscape print in report section like loan statement, saving statements.',
+  //     'Loan Schedule payment print in the overview page.',
+  //     'loan products filter issue in loan account page.',
+  //     'String json issue in mr transactions fixes.',
+  //   ],
+  // },
 };
 
 const WhatsNewModal = (props: WhatsNewModalProps) => {
@@ -96,8 +106,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.69</Text>
-          <Text fontSize="s3">June 20, 2023</Text>
+          <Text fontSize="r2">Version 1.0.70</Text>
+          <Text fontSize="s3">June 28, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
