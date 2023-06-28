@@ -6020,6 +6020,7 @@ export type EmployeeInput = {
   dateOfJoining?: InputMaybe<Scalars['Localized']>;
   departmentId?: InputMaybe<Scalars['String']>;
   designationId?: InputMaybe<Scalars['String']>;
+  documents?: InputMaybe<Array<InputMaybe<DocumentInsertInput>>>;
   educationDetails?: InputMaybe<Array<InputMaybe<HrEmployeeEducationDetail>>>;
   employeeLevelId?: InputMaybe<Scalars['String']>;
   employeeStatus?: InputMaybe<EmployeeStatus>;
@@ -6185,6 +6186,7 @@ export type EmployeeResultResponseType = {
   dateOfJoining?: Maybe<Scalars['Localized']>;
   departmentId?: Maybe<Scalars['String']>;
   designationId?: Maybe<Scalars['String']>;
+  documents?: Maybe<Array<Maybe<UploadedDocument>>>;
   educationDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
   employeeLevelId?: Maybe<Scalars['String']>;
   employeeStatus?: Maybe<EmployeeStatus>;
@@ -6220,7 +6222,7 @@ export type EmployeeResultResponseType = {
 
 export type EmployeeReturnResult = {
   error?: Maybe<MutationError>;
-  recordId: Scalars['String'];
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type EmployeeSeparationInput = {
@@ -22055,7 +22057,7 @@ export type SetNewEmployeeMutation = {
     employee: {
       employee: {
         upsertEmployee: {
-          recordId: string;
+          recordId?: string | null;
           error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
