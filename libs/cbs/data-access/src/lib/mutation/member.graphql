@@ -225,7 +225,7 @@ mutation memberTransferAction($requestId: ID!, $state: MemberTransferState!, $no
   members {
     transfer {
       action(requestId: $requestId, state: $state, notes: $notes) {
-        recordId
+        # recordId
         error {
           ...MutationError
         }
