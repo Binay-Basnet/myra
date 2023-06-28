@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import Link from 'next/link';
 
 import { Box, Button, Column, Text } from '@myra-ui';
 
@@ -308,25 +307,21 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
       header: 'Ledger Name',
       accessorKey: 'ledgerName',
       cell: (props) => (
-        <Box
-          sx={{
-            '@media print': {
-              'a[href]:after': `content: '"none !important"'`,
-            },
-          }}
+        <Button
+          variant="link"
+          color="primary.500"
+          onClick={() =>
+            window.open(
+              `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
+                props.row?.original?.ledgerId
+              }&branch=${JSON.stringify(branchIDs)}`,
+              '_blank'
+            )
+          }
         >
-          <Link
-            target="_blank"
-            href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
-              props.row?.original?.ledgerId
-            }&branch=${JSON.stringify(branchIDs)}`}
-          >
-            <Button variant="link" color="primary.500">
-              {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
-              {localizedText(props?.row?.original?.ledgerName)}
-            </Button>
-          </Link>
-        </Box>
+          {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+          {localizedText(props?.row?.original?.ledgerName)}
+        </Button>
       ),
       meta: {
         width: '80%',
