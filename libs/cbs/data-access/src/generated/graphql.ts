@@ -23130,6 +23130,16 @@ export type MemberTransferActionMutation = {
   members: {
     transfer: {
       action: {
+        record?: {
+          recordId?: string | null;
+          memberName?: string | null;
+          valueDate?: Record<'local' | 'en' | 'np', string> | null;
+          oldBranch?: string | null;
+          newBranch?: string | null;
+          state?: MemberTransferState | null;
+          savingAccountList?: Array<string | null> | null;
+          loanAccountList?: Array<string | null> | null;
+        } | null;
         error?:
           | MutationError_AuthorizationError_Fragment
           | MutationError_BadRequestError_Fragment
@@ -44384,6 +44394,16 @@ export const MemberTransferActionDocument = `
   members {
     transfer {
       action(requestId: $requestId, state: $state, notes: $notes) {
+        record {
+          recordId
+          memberName
+          valueDate
+          oldBranch
+          newBranch
+          state
+          savingAccountList
+          loanAccountList
+        }
         error {
           ...MutationError
         }

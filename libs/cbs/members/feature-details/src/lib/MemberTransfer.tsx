@@ -319,22 +319,22 @@ export const MemberTransfer = () => {
             <Text fontSize="s3">Old Service Center</Text>
             <Text fontSize="s3">{approvedMemberData?.oldBranch}</Text>
           </Box>
-          <Divider />
-          <Box p="s8" display="flex" bg="gray.100">
+          <Divider color="blackAlpha.100" width={2} />
+          <Box p="s8" display="flex" bg="gray.100" flexDir="column" gap="s16">
             <Text fontSize="s3" fontWeight="medium">
               List of Saving Accounts Transfered
             </Text>
             {approvedMemberData?.savingAccountList?.map((item, index) => (
-              <Text>{`${index}. ${item}`}</Text>
+              <Text>{`${index + 1}. ${item}`}</Text>
             ))}
           </Box>
-          <Divider />
-          <Box p="s8" display="flex" bg="gray.100">
+          <Divider color="blackAlpha.100" width={2} />
+          <Box p="s8" display="flex" bg="gray.100" flexDir="column" gap="s16">
             <Text fontSize="s3" fontWeight="medium">
-              List of Saving Accounts Transfered
+              List of Loan Accounts Transfered
             </Text>
             {approvedMemberData?.loanAccountList?.map((item, index) => (
-              <Text fontSize="s3">{`${index}. ${item}`}</Text>
+              <Text fontSize="s3">{`${index + 1}. ${item}`}</Text>
             ))}
           </Box>
           <Box display="flex" gap="s16" alignSelf="flex-end" mt="s16">

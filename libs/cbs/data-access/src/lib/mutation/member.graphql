@@ -225,7 +225,16 @@ mutation memberTransferAction($requestId: ID!, $state: MemberTransferState!, $no
   members {
     transfer {
       action(requestId: $requestId, state: $state, notes: $notes) {
-        # recordId
+        record {
+          recordId
+          memberName
+          valueDate
+          oldBranch
+          newBranch
+          state
+          savingAccountList
+          loanAccountList
+        }
         error {
           ...MutationError
         }
