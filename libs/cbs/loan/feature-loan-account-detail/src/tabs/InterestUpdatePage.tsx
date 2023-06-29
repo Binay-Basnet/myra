@@ -197,15 +197,15 @@ export const InterestUpdatePage = () => {
   return (
     <>
       <TabHeader
-        heading="Interest Update"
+        heading="Account Premium Update"
         headerButton={
           <Button leftIcon={<Icon as={HiOutlineRefresh} size="md" />} onClick={onUpdateModalToggle}>
-            Update Interest
+            Update Account Premium
           </Button>
         }
       />
 
-      <DetailsCard title="Interest Update Schedule" hasTable>
+      <DetailsCard title="Account Premium Update Schedule" hasTable>
         <Table
           isStatic
           isLoading={isFetching}

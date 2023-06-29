@@ -9857,6 +9857,7 @@ export type JobApplicationInput = {
   applicantName?: InputMaybe<Scalars['String']>;
   applicationRating?: InputMaybe<Scalars['Float']>;
   applicationStatus?: InputMaybe<ApplicantStatus>;
+  documents?: InputMaybe<Array<InputMaybe<DocumentInsertInput>>>;
   educationalDetails?: InputMaybe<Array<InputMaybe<HrEmployeeEducationDetail>>>;
   experienceDetails?: InputMaybe<Array<InputMaybe<ExperienceInput>>>;
   jobOpening: Scalars['ID'];
@@ -9878,6 +9879,7 @@ export type JobApplicationRecord = {
   applicantName?: Maybe<Scalars['String']>;
   applicationRating?: Maybe<Scalars['Float']>;
   applicationStatus?: Maybe<ApplicantStatus>;
+  documents?: Maybe<Array<Maybe<UploadedDocument>>>;
   educationalDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
   experienceDetails?: Maybe<Array<Maybe<Experience>>>;
   id: Scalars['ID'];

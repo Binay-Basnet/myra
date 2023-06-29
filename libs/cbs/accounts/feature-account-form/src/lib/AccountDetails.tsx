@@ -71,7 +71,7 @@ export const AccountDetails = () => {
 
             {tabQuery === 'ledger' && <LedgerListTab />}
 
-            {tabQuery === 'interest update' && <InterestUpdateTab />}
+            {tabQuery === 'account premium update' && <InterestUpdateTab />}
 
             {tabQuery === 'general updates' && <GeneralUpdates />}
 
@@ -82,7 +82,7 @@ export const AccountDetails = () => {
                 'transactions',
                 'withdraw slip',
                 'ledger',
-                'interest update',
+                'account premium update',
                 'general updates',
               ].includes(tabQuery) && (
                 <Box h="calc(100vh - 110px)">

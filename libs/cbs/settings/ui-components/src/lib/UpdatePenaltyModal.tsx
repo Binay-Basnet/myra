@@ -75,7 +75,10 @@ export const UpdatePenaltyModal = ({
     >
       <FormProvider {...methods}>
         <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-          <FormNumberInput name="payload.dayAfterInstallmentDate" label="Day from end date" />
+          <FormNumberInput
+            name="payload.dayAfterInstallmentDate"
+            label="Day from installment Date"
+          />
 
           <FormNumberInput
             name="payload.penaltyRate"

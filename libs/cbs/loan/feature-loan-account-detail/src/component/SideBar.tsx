@@ -6,7 +6,14 @@ export const SideBar = () => (
   <>
     <LoanInfo />
     <DetailPageTabs
-      tabs={['Overview', 'Collateral', 'Guarantee', 'Ledger', 'Interest Update', 'General Updates']}
+      tabs={[
+        'Overview',
+        'Collateral',
+        'Guarantee',
+        'Ledger',
+        'Account Premium Update',
+        'General Updates',
+      ]}
     />
   </>
 );
