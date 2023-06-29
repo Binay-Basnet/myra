@@ -203,7 +203,6 @@ query getJobOffer($id: ID!) {
             jobDepartment
             jobOfferDate
             jobOfferTerms {
-              sn
               offerTerm
               value
             }
@@ -290,7 +289,6 @@ query getAppointmentLetter($id: ID!) {
             appointmentDate
             body
             appointmentTerms {
-              sn
               title
               description
             }
