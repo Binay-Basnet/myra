@@ -102,13 +102,16 @@ export const Payment = ({ amountPaid, hasLoc }: PaymentProps) => {
 
   useEffect(() => {
     setValue('cash.cashPaid', String(Math.ceil(Number(amountPaid))));
-    setValue('cash.returned_amount', Math.ceil(Number(amountPaid)) - Number(loanTotal));
+    setValue(
+      'cash.returned_amount',
+      (Math.ceil(Number(amountPaid)) - Number(loanTotal)).toFixed(2)
+    );
     setValue('bankVoucher.amount', loanTotal);
     setValue('account.amount', loanTotal);
   }, [amountPaid, loanTotal, setValue]);
 
   useEffect(() => {
-    setValue('cash.returned_amount', Number(cashPaid) - Number(loanTotal));
+    setValue('cash.returned_amount', (Number(cashPaid) - Number(loanTotal)).toFixed(2));
   }, [cashPaid]);
 
   return (
