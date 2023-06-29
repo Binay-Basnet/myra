@@ -31071,17 +31071,7 @@ export type GetLoanPreviewQuery = {
         } | null;
         repaymentDetails?: {
           lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
-          remainingPrincipal?: string | null;
-          remainingInterest?: string | null;
-          remainingTotal?: string | null;
-          totalInstallmentAmount?: string | null;
           nextInstallmentNo?: number | null;
-          remainingInstallments?: Array<{
-            installmentNo?: number | null;
-            principal?: string | null;
-            fine?: string | null;
-            interestAmount?: string | null;
-          } | null> | null;
         } | null;
         member?: {
           name?: Record<'local' | 'en' | 'np', string> | null;
@@ -55231,16 +55221,6 @@ export const GetLoanPreviewDocument = `
         }
         repaymentDetails {
           lastPaymentDate
-          remainingPrincipal
-          remainingInterest
-          remainingTotal
-          remainingInstallments {
-            installmentNo
-            principal
-            fine
-            interestAmount
-          }
-          totalInstallmentAmount
           nextInstallmentNo
         }
         member {

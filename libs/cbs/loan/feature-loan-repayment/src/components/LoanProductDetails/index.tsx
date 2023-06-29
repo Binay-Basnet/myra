@@ -143,7 +143,9 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               Last Payment Date{' '}
             </Text>
             <Text fontSize="s3" fontWeight="600">
-              {localizedDate(loanData?.repaymentDetails?.lastPaymentDate)}
+              {loanData?.repaymentDetails?.lastPaymentDate?.local
+                ? localizedDate(loanData?.repaymentDetails?.lastPaymentDate)
+                : '-'}
             </Text>
           </Box>
           <Box display="flex" flexDirection="column" gap="s4">
