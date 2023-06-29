@@ -97,7 +97,7 @@ export const AccountDetailsSidebar = () => {
           'Transactions',
           'Withdraw Slip',
           'Ledger',
-          'Interest Update',
+          'Account Premium Update',
           'General Updates',
           // 'ATM',
           // 'Activity',

@@ -13,7 +13,7 @@ export const ProductInterestRate = ({
   productPremium,
   currentOrgRate,
 }: IProductInterestRateProps) => (
-  <DetailsCard title="Interest Rate" hasThreeRows>
+  <DetailsCard title="Interest Breakdown" hasThreeRows>
     <Box px="s16" fontSize="r1">
       <ul>
         <li>
@@ -41,6 +41,18 @@ export const ProductInterestRate = ({
           Board Authentication:&nbsp;
           <b>
             {interestRate?.boardAuthority !== null ? `${interestRate?.boardAuthority} %` : 'N/A'}
+          </b>
+        </li>
+        <li>
+          Effective Interest Rate: &nbsp;
+          <b>
+            {currentOrgRate && productPremium && interestRate?.defaultRate
+              ? `${
+                  Number(currentOrgRate) +
+                  Number(productPremium) +
+                  Number(interestRate?.defaultRate)
+                } %`
+              : 'N/A'}
           </b>
         </li>
       </ul>

@@ -5850,8 +5850,8 @@ export type EtdsReportResult = {
 };
 
 export type EachAppointmentLetterRecords = {
-  data: AppointmentLetterRecord;
-  error: QueryError;
+  data?: Maybe<AppointmentLetterRecord>;
+  error?: Maybe<QueryError>;
 };
 
 export type EachEmployeeExitRecords = {
@@ -5865,18 +5865,18 @@ export type EachEmployeeOnboardingRecord = {
 };
 
 export type EachJobApplicationRecords = {
-  data: JobApplicationRecord;
-  error: QueryError;
+  data?: Maybe<JobApplicationRecord>;
+  error?: Maybe<QueryError>;
 };
 
 export type EachJobOfferRecords = {
-  data: JobOfferRecord;
-  error: QueryError;
+  data?: Maybe<JobOfferRecord>;
+  error?: Maybe<QueryError>;
 };
 
 export type EachJobOpeningRecord = {
-  data: JobOpeningRecord;
-  error: QueryError;
+  data?: Maybe<JobOpeningRecord>;
+  error?: Maybe<QueryError>;
 };
 
 export type EachStaffRecord = {
@@ -29420,7 +29420,7 @@ export type GetJobOpeningQuery = {
     recruitment: {
       recruitmentJobOpening: {
         getJobOpening: {
-          data: {
+          data?: {
             id: string;
             branchId?: string | null;
             title: string;
@@ -29430,12 +29430,13 @@ export type GetJobOpeningQuery = {
             experienceLevel: Level;
             description: string;
             salaryRange: { id: string; min: string; max: string; default: string };
-          };
-          error:
+          } | null;
+          error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
             | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment;
+            | MutationError_ServerError_Fragment
+            | null;
         };
       };
     };
@@ -29451,7 +29452,7 @@ export type GetJobOfferQuery = {
     recruitment: {
       recruitmentJobOffer: {
         getJobOffer: {
-          data: {
+          data?: {
             id: string;
             jobApplicant: string;
             jobStatus: JobStatus;
@@ -29459,12 +29460,13 @@ export type GetJobOfferQuery = {
             jobDepartment: string;
             jobOfferDate: Record<'local' | 'en' | 'np', string>;
             jobOfferTerms: Array<{ sn: string; offerTerm: string; value: string }>;
-          };
-          error:
+          } | null;
+          error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
             | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment;
+            | MutationError_ServerError_Fragment
+            | null;
         };
       };
     };
@@ -29480,7 +29482,7 @@ export type GetJobApplicationQuery = {
     recruitment: {
       recruitmentJobApplication: {
         getJobApplication: {
-          data: {
+          data?: {
             id: string;
             applicantName?: string | null;
             jobOpening?: string | null;
@@ -29521,12 +29523,13 @@ export type GetJobApplicationQuery = {
               duration?: string | null;
               summary?: string | null;
             } | null> | null;
-          };
-          error:
+          } | null;
+          error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
             | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment;
+            | MutationError_ServerError_Fragment
+            | null;
         };
       };
     };
@@ -29542,18 +29545,19 @@ export type GetAppointmentLetterQuery = {
     recruitment: {
       recruitmentAppointmentLetter: {
         getAppointmentLetter: {
-          data: {
+          data?: {
             appointmentLetterID: string;
             jobApplication: string;
             appointmentDate: Record<'local' | 'en' | 'np', string>;
             body: string;
             appointmentTerms: Array<{ sn: string; title: string; description: string }>;
-          };
-          error:
+          } | null;
+          error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
             | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment;
+            | MutationError_ServerError_Fragment
+            | null;
         };
       };
     };
