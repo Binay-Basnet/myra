@@ -1,25 +1,22 @@
-import React, { useCallback } from 'react';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
-import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { Box, Button, FormHeader, Icon, Text, toast } from '@myra-ui';
+import { asyncToast, Box, Button, FormHeader, Icon, Text } from '@myra-ui';
 
 import {
-  addAccountError,
-  addInstitutionDirectorError,
-  addInstitutionError,
-  addSisterError,
-  setInstitutionHasPressedNext,
-  useAppSelector,
-  useGetKymOverallFormStatusQuery,
+  GetInstitutionKymEditDataQuery,
+  KymInsInput,
+  useGetInstitutionKymEditDataQuery,
+  useSetKymInstitutionDataMutation,
 } from '@coop/cbs/data-access';
 import { AccorrdianAddInstitution, KYMUpdateModal } from '@coop/cbs/kym-form/formElements';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { featureCode, getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import {
   AccountHolderDeclarationInstitution,
@@ -37,208 +34,172 @@ import {
   TransactionProfileInstitution,
 } from '../components-form';
 
+const documentFields = [
+  'institutionAgmDocument',
+  'InsRegisteredCertificate',
+  'InsMOA/AOA',
+  'InsPanCertificate',
+  'InsTaxClearance',
+  'InsLatestAuditReport',
+  'companyStamp',
+];
+
+const directorDocFields = ['photograph', 'documentPhotograph'];
+
+const accountOperatorDocFields = ['specimenSignature'];
+
+const getInstitutionData = (data: GetInstitutionKymEditDataQuery | undefined) => {
+  const editData = data?.members?.institution?.formState?.data;
+
+  if (!editData) return {};
+
+  return {
+    ...editData,
+    registeredAddress: {
+      ...editData?.registeredAddress,
+      locality: editData?.registeredAddress?.locality?.local,
+    },
+    operatingOfficeAddress: {
+      ...editData?.operatingOfficeAddress,
+      locality: editData?.operatingOfficeAddress?.locality?.local,
+    },
+    branchOfficeAddress: {
+      ...editData?.branchOfficeAddress,
+      locality: editData?.branchOfficeAddress?.locality?.local,
+    },
+    sisterConcern: editData?.sisterConcern ?? [],
+    director:
+      editData?.director?.map((director) => ({
+        ...director,
+        permanentAddress: {
+          ...director?.permanentAddress,
+          locality: director?.permanentAddress?.locality?.local,
+        },
+        temporaryAddress: {
+          ...director?.temporaryAddress,
+          locality: director?.temporaryAddress?.locality?.local,
+        },
+        documents: directorDocFields?.map((document) => ({
+          fieldId: document,
+          identifiers: director?.documents?.find((d) => d?.fieldId === document)?.identifiers || [],
+        })),
+      })) ?? [],
+    accountOperator:
+      editData?.accountOperator?.map((accountOp) => ({
+        ...accountOp,
+        permanentAddress: {
+          ...accountOp?.permanentAddress,
+          locality: accountOp?.permanentAddress?.locality?.local,
+        },
+        temporaryAddress: {
+          ...accountOp?.temporaryAddress,
+          locality: accountOp?.temporaryAddress?.locality?.local,
+        },
+        documents: accountOperatorDocFields?.map((document) => ({
+          fieldId: document,
+          identifiers:
+            accountOp?.documents?.find((d) => d?.fieldId === document)?.identifiers || [],
+        })),
+      })) ?? [],
+    documents: documentFields?.map((document) => ({
+      fieldId: document,
+      identifiers: editData?.documents?.find((d) => d?.fieldId === document)?.identifiers || [],
+    })),
+    accountHolderAddress: {
+      ...editData?.accountHolderAddress,
+      locality: editData?.accountHolderAddress?.locality?.local,
+    },
+  };
+};
+
 export const KYMInstitutionPage = () => {
   const { t } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const methods = useForm<KymInsInput>({
+    defaultValues: {
+      documents: documentFields?.map((docFieldId) => ({ fieldId: docFieldId, identifiers: [] })),
+      director: [
+        {
+          documents: directorDocFields?.map((document) => ({
+            fieldId: document,
+            identifiers: [],
+          })),
+        },
+      ],
+      accountOperator: [
+        {
+          documents: accountOperatorDocFields?.map((document) => ({
+            fieldId: document,
+            identifiers: [],
+          })),
+        },
+      ],
+    },
+  });
+
+  const { mutateAsync } = useSetKymInstitutionDataMutation();
 
   const [kymCurrentSection, setKymCurrentSection] = React.useState<{
     section: string;
     subSection: string;
   }>();
-  const dispatch = useDispatch();
   const router = useRouter();
-  const id = String(router?.query?.['id']);
   const action = String(router.query['action']);
 
-  const setSection = useCallback(
-    (section?: { section: string; subSection: string }) => setKymCurrentSection(section),
-    []
+  const id = router?.query?.['id'];
+
+  const { data: institutionEditData } = useGetInstitutionKymEditDataQuery(
+    { id: id as string },
+    { enabled: !!id }
   );
 
-  const { refetch } = useGetKymOverallFormStatusQuery(
-    { id, hasPressedNext: true },
-    {
-      enabled: false,
+  useEffect(() => {
+    if (action !== 'add') {
+      methods.reset({ ...methods.getValues(), ...getInstitutionData(institutionEditData) });
     }
-  );
-  const isFormDirty = useAppSelector((state) => state.institution.isFormDirty);
+  }, [action, institutionEditData, methods]);
 
-  // const kymFormStatusQuery = useGetKymFormStatusInstitutionQuery({ id });
-  // const kymFormStatus =
-  //   kymFormStatusQuery?.data?.members?.institution?.formState?.data?.sectionStatus;
-
-  // return (
-  //   <>
-  //     <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-  //       <Container minW="container.xl" height="fit-content">
-  //         <FormHeader
-  //           title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberInstitution}`}
-  //           closeLink={ROUTES.CBS_MEMBER_LIST}
-  //         />
-  //       </Container>
-  //     </Box>
-
-  //     <Container minW="container.xl" height="fit-content">
-  //       <Box>
-  //         <Box
-  //           w={320}
-  //           p="s16"
-  //           pr="s20"
-  //           position="fixed"
-  //           borderRight="1px solid "
-  //           borderColor="border.layout"
-  //           minHeight="100%"
-  //           bg="gray.0"
-  //           zIndex={2}
-  //         >
-  //           <AccorrdianAddInstitution kymCurrentSection={kymCurrentSection} />
-  //         </Box>
-
-  //         <Box zIndex={1} background="gray.0" ml="320" pb="120px">
-  //           <SectionContainer>
-  //             <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-  //               {t['kymIns1InformationofInstitution']}
-  //             </Text>
-  //             <BasicDetailsInstitution setSection={setSection} />
-  //             <RegisteredDetailsInstitution setSection={setSection} />
-  //             <OperatorOfficeAddress setSection={setSection} />
-  //             <BranchOfficeAddress setSection={setSection} />
-  //             <ContactDetailsInstitution setSection={setSection} />
-  //             <BankAccountDetailsInstitution setSection={setSection} />
-  //             <InstitutionKYMSisterConcernDetails setSection={setSection} />
-  //           </SectionContainer>
-
-  //           <SectionContainer>
-  //             <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-  //               {t['kymIns2TransactionProfile']}
-  //             </Text>
-  //             <TransactionProfileInstitution setSection={setSection} />
-  //           </SectionContainer>
-
-  //           <SectionContainer>
-  //             <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-  //               {t['kymIns3DetailsofProprietorpartnersDirectors']}
-  //             </Text>
-  //             <BoardDirectorInfo setSection={setSection} />
-  //             {/* <InstitutionKYMDirectorWithAffiliation /> */}
-  //           </SectionContainer>
-
-  //           <SectionContainer>
-  //             <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-  //               {t['kymIns4AccountOperations']}
-  //             </Text>
-  //             <InstitutionKYMAccountDetail setSection={setSection} />
-  //             <AccountOperationInstitution setSection={setSection} />
-  //           </SectionContainer>
-  //           <SectionContainer>
-  //             <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-  //               {t['kymIns5Declaration']}
-  //             </Text>
-  //             <DocumentDeclarationInstitution setSection={setSection} />
-  //             <AccountHolderDeclarationInstitution setSection={setSection} />
-  //           </SectionContainer>
-  //         </Box>
-  //       </Box>
-  //     </Container>
-
-  //     <Box position="sticky" bottom="0" bg="gray.100" width="100%" zIndex="10">
-  //       <Container minW="container.xl" height="fit-content">
-  //         <KYMUpdateModal isOpen={isOpen} onClose={onClose} />
-
-  //         <FormFooter
-  //           status={
-  //             <Box display="flex" gap="s8">
-  //               <Text as="i" fontSize="r1">
-  //                 {t['formDetails']}
-  //               </Text>
-  //             </Box>
-  //           }
-  //           draftButton={
-  //             <Button
-  //               type="submit"
-  //               variant="ghost"
-  //               onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}
-  //             >
-  //               <Icon as={BiSave} color="primary.500" />
-  //               <Text
-  //                 alignSelf="center"
-  //                 color="primary.500"
-  //                 fontWeight="Medium"
-  //                 fontSize="s2"
-  //                 ml="5px"
-  //               >
-  //                 {t['saveDraft']}
-  //               </Text>
-  //             </Button>
-  //           }
-  //           isMainButtonDisabled={!isFormDirty}
-  //           mainButtonLabel={action === 'update' ? 'Update' : t['next']}
-  //           mainButtonHandler={async () => {
-  //             if (action === 'update') {
-  //               onOpen();
-  //             } else {
-  //               const response = await refetch();
-
-  //               const sectionStatus = response?.data?.members?.institution?.overallFormStatus;
-
-  //               const basicErrors = sectionStatus?.institutionDetails?.errors;
-  //               const accountDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
-  //                 (accountOperator, index) => ({
-  //                   operatorId: String(index),
-  //                   errors: accountOperator?.errors ?? {},
-  //                 })
-  //               );
-
-  //               const directorDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
-  //                 (director, index) => ({
-  //                   directorId: String(index),
-  //                   errors: director?.errors ?? {},
-  //                 })
-  //               );
-  //               const sisterErrors = sectionStatus?.accountOperatorDetails?.map(
-  //                 (sister, index) => ({
-  //                   sisterId: String(index),
-  //                   errors: sister?.errors ?? {},
-  //                 })
-  //               );
-
-  //               if (basicErrors) {
-  //                 dispatch(addInstitutionError(basicErrors));
-  //               }
-  //               if (accountDetailsErrors) {
-  //                 dispatch(addAccountError(accountDetailsErrors));
-  //               }
-
-  //               if (sisterErrors) {
-  //                 dispatch(addSisterError(sisterErrors));
-  //               }
-  //               if (directorDetailsErrors) {
-  //                 dispatch(addInstitutionDirectorError(directorDetailsErrors));
-  //               }
-
-  //               if (response) {
-  //                 dispatch(setInstitutionHasPressedNext(true));
-  //                 if (!basicErrors) {
-  //                   router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}`);
-  //                 } else {
-  //                   toast({
-  //                     id: 'validation-error',
-  //                     message: 'Some fields are empty or have error',
-  //                     type: 'error',
-  //                   });
-  //                 }
-  //               }
-  //             }
-  //           }}
-  //         />
-  //       </Container>
-  //     </Box>
-  //   </>
-  // );
-
+  const submitForm = (forDraft = false) => {
+    methods.handleSubmit(async (data) => {
+      await asyncToast({
+        id: 'individual-add',
+        msgs: {
+          loading: action === 'edit' ? 'Editing Member' : 'Adding Member',
+          success: action === 'edit' ? 'Member Edited Successfully' : 'Member Added Successfully',
+        },
+        promise: mutateAsync({
+          id: router.query['id'] as string,
+          data,
+          forDraft,
+        }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof KymInsInput, {
+                message: error.validationErrorMsg[key][0],
+              })
+            );
+          }
+        },
+        onSuccess: () => {
+          if (forDraft) {
+            router.push(ROUTES.CBS_MEMBER_DRAFT_LIST);
+          } else {
+            router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}?id=${router.query['id']}`);
+          }
+        },
+      });
+    })();
+  };
   return (
-    <>
-      <FormLayout hasSidebar>
+    <form
+      onFocus={(e) => {
+        const kymSection = getKymSectionInstitution(e.target.id);
+        setKymCurrentSection(kymSection);
+      }}
+    >
+      <FormLayout methods={methods} hasSidebar>
         <FormHeader
           title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberInstitution}`}
           closeLink={ROUTES.CBS_MEMBER_LIST}
@@ -256,27 +217,27 @@ export const KYMInstitutionPage = () => {
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymIns1InformationofInstitution']}
               </Text>
-              <BasicDetailsInstitution setSection={setSection} />
-              <RegisteredDetailsInstitution setSection={setSection} />
-              <OperatorOfficeAddress setSection={setSection} />
-              <BranchOfficeAddress setSection={setSection} />
-              <ContactDetailsInstitution setSection={setSection} />
-              <BankAccountDetailsInstitution setSection={setSection} />
-              <InstitutionKYMSisterConcernDetails setSection={setSection} />
+              <BasicDetailsInstitution />
+              <RegisteredDetailsInstitution />
+              <OperatorOfficeAddress />
+              <BranchOfficeAddress />
+              <ContactDetailsInstitution />
+              <BankAccountDetailsInstitution />
+              <InstitutionKYMSisterConcernDetails />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymIns2TransactionProfile']}
               </Text>
-              <TransactionProfileInstitution setSection={setSection} />
+              <TransactionProfileInstitution />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymIns3DetailsofProprietorpartnersDirectors']}
               </Text>
-              <BoardDirectorInfo setSection={setSection} />
+              <BoardDirectorInfo />
               {/* <InstitutionKYMDirectorWithAffiliation /> */}
             </SectionContainer>
 
@@ -284,33 +245,22 @@ export const KYMInstitutionPage = () => {
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymIns4AccountOperations']}
               </Text>
-              <InstitutionKYMAccountDetail setSection={setSection} />
-              <AccountOperationInstitution setSection={setSection} />
+              <InstitutionKYMAccountDetail />
+              <AccountOperationInstitution />
             </SectionContainer>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymIns5Declaration']}
               </Text>
-              <DocumentDeclarationInstitution setSection={setSection} />
-              <AccountHolderDeclarationInstitution setSection={setSection} />
+              <DocumentDeclarationInstitution />
+              <AccountHolderDeclarationInstitution />
             </SectionContainer>
           </FormLayout.Form>
         </FormLayout.Content>
 
         <FormLayout.Footer
-          status={
-            <Box display="flex" gap="s8">
-              <Text as="i" fontSize="r1">
-                {t['formDetails']}
-              </Text>
-            </Box>
-          }
           draftButton={
-            <Button
-              type="submit"
-              variant="ghost"
-              onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}
-            >
+            <Button variant="ghost" onClick={() => submitForm(true)}>
               <Icon as={BiSave} color="primary.500" />
               <Text
                 alignSelf="center"
@@ -323,67 +273,19 @@ export const KYMInstitutionPage = () => {
               </Text>
             </Button>
           }
-          isMainButtonDisabled={!isFormDirty}
+          // isMainButtonDisabled={!isFormDirty}
           mainButtonLabel={action === 'update' ? 'Update' : t['next']}
-          mainButtonHandler={async () => {
+          mainButtonHandler={() => {
             if (action === 'update') {
               onOpen();
             } else {
-              const response = await refetch();
-
-              const sectionStatus = response?.data?.members?.institution?.overallFormStatus;
-
-              const basicErrors = sectionStatus?.institutionDetails?.errors;
-              const accountDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
-                (accountOperator, index) => ({
-                  operatorId: String(index),
-                  errors: accountOperator?.errors ?? {},
-                })
-              );
-
-              const directorDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
-                (director, index) => ({
-                  directorId: String(index),
-                  errors: director?.errors ?? {},
-                })
-              );
-              const sisterErrors = sectionStatus?.accountOperatorDetails?.map((sister, index) => ({
-                sisterId: String(index),
-                errors: sister?.errors ?? {},
-              }));
-
-              if (basicErrors) {
-                dispatch(addInstitutionError(basicErrors));
-              }
-              if (accountDetailsErrors) {
-                dispatch(addAccountError(accountDetailsErrors));
-              }
-
-              if (sisterErrors) {
-                dispatch(addSisterError(sisterErrors));
-              }
-              if (directorDetailsErrors) {
-                dispatch(addInstitutionDirectorError(directorDetailsErrors));
-              }
-
-              if (response) {
-                dispatch(setInstitutionHasPressedNext(true));
-                if (!basicErrors) {
-                  router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}`);
-                } else {
-                  toast({
-                    id: 'validation-error',
-                    message: 'Some fields are empty or have error',
-                    type: 'error',
-                  });
-                }
-              }
+              submitForm();
             }
           }}
         />
       </FormLayout>
       <KYMUpdateModal isOpen={isOpen} onClose={onClose} />
-    </>
+    </form>
   );
 };
 

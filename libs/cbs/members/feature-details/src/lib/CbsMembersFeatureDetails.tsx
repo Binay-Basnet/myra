@@ -108,7 +108,7 @@ export const MemberDetails = ({
                 ...(options || []),
                 {
                   label: 'Update Kym',
-                  handler: () => router.push(`/cbs/members/individual/update/${memberId}`),
+                  handler: () => router.push(`/cbs/members/individual/update?id=${memberId}`),
                 },
                 { label: 'Get Certificate', handler: getCertificate },
                 {
@@ -122,7 +122,7 @@ export const MemberDetails = ({
             : [
                 {
                   label: 'Update Kym',
-                  handler: () => router.push(`/cbs/members/${memberType}/update/${memberId}`),
+                  handler: () => router.push(`/cbs/members/${memberType}/update?id=${memberId}`),
                 },
                 { label: 'Get Certificate', handler: getCertificate },
                 {

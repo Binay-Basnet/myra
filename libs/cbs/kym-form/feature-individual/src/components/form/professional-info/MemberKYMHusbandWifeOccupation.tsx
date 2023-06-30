@@ -1,22 +1,12 @@
-import { useEffect, useState } from 'react';
-import { FormProvider, useForm, useFormContext } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
-import isEqual from 'lodash/isEqual';
-import pickBy from 'lodash/pickBy';
+import { useFormContext } from 'react-hook-form';
 
-import { Box, FormSection, GridItem, Text } from '@myra-ui';
+import { FormSection, GridItem, Text } from '@myra-ui';
 
 import {
   FormFieldSearchTerm,
-  RootState,
-  useAppSelector,
-  useGetIndividualKymFamilyOccupationListQuery,
+  KymIndMemberInput,
   useGetIndividualKymOptionsQuery,
-  useGetNewIdMutation,
-  useSetMemberOccupationMutation,
 } from '@coop/cbs/data-access';
-import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import {
   FormAmountInput,
   FormCheckbox,
@@ -25,247 +15,94 @@ import {
   FormPhoneNumber,
   FormSelect,
 } from '@coop/shared/form';
-import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
-interface DynamicInputProps {
-  // fieldIndex: number;
-  optionIndex: number;
-  option: any;
-}
-
-export const SpouseOccupationInput = ({ option, optionIndex }: DynamicInputProps) => {
-  const { register } = useFormContext();
-
-  useEffect(() => {
-    register(`options.${optionIndex}.id`, {
-      value: option.id,
-    });
-    register(`options.${optionIndex}.value`, {
-      value: '',
-    });
-  }, []);
-
-  return (
-    <FormInputWithType
-      formType={option?.fieldType}
-      name={`options.${optionIndex}.value`}
-      label={option?.name?.local}
-    />
-  );
-};
-
-interface IHusbandWifeOccupationProps {
-  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
-}
-
-const HusbandWifeOccupation = ({ setKymCurrentSection }: IHusbandWifeOccupationProps) => {
-  const methods = useForm();
-
-  const [occupationId, setOccupationId] = useState<string>('');
-
-  const { watch, reset } = methods;
-  // const profession = watch('profession');
-
-  const isOwner = watch(`isOwner`);
-
-  const router = useRouter();
-  const id = String(router?.query?.['id']);
-
-  // const { data: editValues } = useGetIndividualKymEditDataQuery({
-  //   id,
-  // });
-
-  // const profession =
-  //   editValues?.members?.individual?.formState?.data?.formData?.profession
-  //     ?.professionId ?? [];
-
+export const MemberKYMHusbandWifeOccupation = () => {
+  const { t } = useTranslation();
+  const { watch } = useFormContext<KymIndMemberInput>();
   const { data: occupationData } = useGetIndividualKymOptionsQuery({
     searchTerm: FormFieldSearchTerm.Occupation,
   });
 
-  const { t } = useTranslation();
+  const isOwner = watch(`spouseOccupation.isOwner`);
+  const maritalStatusId = watch('maritalStatusId');
 
-  // const occupationFieldNames =
-  //   occupationData?.members.individual?.options.list?.data?.[0]?.options ?? [];
-
-  const {
-    data: familyOccupationListData,
-    refetch,
-    isFetching,
-  } = useGetIndividualKymFamilyOccupationListQuery({
-    id,
-    isSpouse: true,
+  const { data: maritalStatusData } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.MaritalStatus,
   });
 
-  useEffect(() => {
-    if (familyOccupationListData) {
-      const editValueData = familyOccupationListData?.members?.individual?.listOccupation?.data;
-      if (editValueData) {
-        const occupationDetail = editValueData[0];
-
-        setOccupationId(occupationDetail?.id as string);
-
-        if (occupationDetail) {
-          reset({
-            occupationId: occupationDetail?.occupationId,
-            orgName: occupationDetail?.orgName?.local,
-            panVatNo: occupationDetail?.panVatNo,
-            address: occupationDetail?.address?.local,
-            estimatedAnnualIncome: occupationDetail?.estimatedAnnualIncome,
-            establishedDate: occupationDetail?.establishedDate,
-            registrationNo: occupationDetail?.registrationNo,
-            contact: occupationDetail?.contact,
-            isOwner: occupationDetail?.isOwner,
-          });
-        }
-      }
-    }
-  }, [familyOccupationListData]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    if (id) {
-      refetch();
-    }
-  }, [id, preference?.date]);
-
-  const { mutate } = useSetMemberOccupationMutation({
-    onSuccess: () => refetch(),
-  });
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        const occupationDetail = {
-          ...pickBy(
-            (familyOccupationListData?.members?.individual?.listOccupation?.data?.length &&
-              familyOccupationListData?.members?.individual?.listOccupation?.data[0]) ??
-              {},
-            (v) => v !== null
-          ),
-        };
-
-        if (id && occupationId && !isDeepEmpty(data) && !isEqual(data, occupationDetail)) {
-          mutate({
-            id,
-            isSpouse: true,
-            data: { id: occupationId, ...data },
-          });
-        }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady, familyOccupationListData, occupationId]);
-
-  const { mutate: newIDMutate } = useGetNewIdMutation({
-    onSuccess: (res) => {
-      setOccupationId(res.newId);
-    },
-  });
-
-  useEffect(() => {
-    if (
-      !occupationId &&
-      !familyOccupationListData?.members?.individual?.listOccupation?.data?.length &&
-      !isFetching
-    ) {
-      newIDMutate({});
-    }
-  }, [occupationId, familyOccupationListData, isFetching]);
+  if (
+    getFieldOption(maritalStatusData)?.find((m) => m.value === maritalStatusId)?.label !== 'Married'
+  ) {
+    return null;
+  }
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSection(e.target.id);
-          setKymCurrentSection(kymSection);
-        }}
-      >
-        <FormSection header="kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE">
-          <FormSelect
-            name="occupationId"
-            id="spouseOccupationId"
-            label={t['kymIndOccupation']}
-            options={getFieldOption(occupationData)}
+    <FormSection
+      header="kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE"
+      id="kymAccIndMainOccupationofHusabandWife"
+    >
+      <FormSelect
+        name="spouseOccupation.occupationId"
+        id="spouseOccupationId"
+        label={t['kymIndOccupation']}
+        options={getFieldOption(occupationData)}
+      />
+      <GridItem colSpan={2}>
+        <FormInput
+          type="text"
+          name="spouseOccupation.orgName"
+          id="spouseOrgName"
+          label={t['kymIndOrgFirmName']}
+        />
+      </GridItem>
+      <FormInput
+        type="number"
+        name="spouseOccupation.panVatNo"
+        id="spousePanVatNo"
+        label={t['kymIndPanVATNo']}
+      />
+      <FormInput
+        type="text"
+        name="spouseOccupation.address"
+        id="spouseAddress"
+        label={t['kymIndAddress']}
+      />
+      <FormAmountInput
+        type="number"
+        id="spouseEstimatedAnnualIncome"
+        name="spouseOccupation.estimatedAnnualIncome"
+        label={t['kymIndEstimatedAnnualIncome']}
+      />
+
+      <GridItem colSpan={3} display="flex" gap="9px" alignItems="center">
+        <FormCheckbox name="spouseOccupation.isOwner" id="spouseIsOwner" />
+        <Text variant="formLabel">{t['kymIndAreyouowner']}</Text>
+      </GridItem>
+
+      {isOwner && (
+        <>
+          <FormDatePicker
+            id="spouseEstablishedDate"
+            name="spouseOccupation.establishedDate"
+            label={t['kymIndEstablishedDate']}
           />
-          <GridItem colSpan={2}>
-            <FormInput
-              type="text"
-              name="orgName"
-              id="spouseOrgName"
-              label={t['kymIndOrgFirmName']}
-            />
-          </GridItem>
           <FormInput
             type="number"
-            name="panVatNo"
-            id="spousePanVatNo"
-            label={t['kymIndPanVATNo']}
+            id="spouseRegistrationNo"
+            name="spouseOccupation.registrationNo"
+            label={t['kymIndRegistrationNo']}
           />
-          <FormInput type="text" name="address" id="spouseAddress" label={t['kymIndAddress']} />
-          <FormAmountInput
+          <FormPhoneNumber
             type="number"
-            id="spouseEstimatedAnnualIncome"
-            name="estimatedAnnualIncome"
-            label={t['kymIndEstimatedAnnualIncome']}
+            id="spouseContact"
+            name="spouseOccupation.contact"
+            label={t['kymIndContactNo']}
           />
-          {/* {occupationFieldNames.map((option, optionIndex) => {
-                return (
-                  <Fragment key={option.id}>
-                    <SpouseOccupationInput
-                      fieldIndex={fieldIndex}
-                      option={option}
-                      optionIndex={optionIndex}
-                    />
-                  </Fragment>
-                );
-              })} */}
-
-          <GridItem colSpan={3} display="flex" gap="9px" alignItems="center">
-            <FormCheckbox name="isOwner" id="spouseIsOwner" />
-            <Text variant="formLabel">{t['kymIndAreyouowner']}</Text>
-          </GridItem>
-
-          {isOwner && (
-            <>
-              <FormDatePicker
-                id="spouseEstablishedDate"
-                name="establishedDate"
-                label={t['kymIndEstablishedDate']}
-              />
-              <FormInput
-                type="number"
-                id="spouseRegistrationNo"
-                name="registrationNo"
-                label={t['kymIndRegistrationNo']}
-              />
-              <FormPhoneNumber
-                type="number"
-                id="spouseContact"
-                name="contact"
-                label={t['kymIndContactNo']}
-              />
-            </>
-          )}
-        </FormSection>
-      </form>
-    </FormProvider>
+        </>
+      )}
+    </FormSection>
   );
 };
-
-interface IMemberKYMHusbandWifeOccupationProps {
-  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
-}
-
-export const MemberKYMHusbandWifeOccupation = ({
-  setKymCurrentSection,
-}: IMemberKYMHusbandWifeOccupationProps) => (
-  <Box id="kymAccIndMainOccupationofHusabandWife">
-    <HusbandWifeOccupation setKymCurrentSection={setKymCurrentSection} />
-  </Box>
-);

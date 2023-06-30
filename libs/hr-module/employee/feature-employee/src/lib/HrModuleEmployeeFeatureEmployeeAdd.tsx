@@ -9,7 +9,6 @@ import { useForm } from 'react-hook-form';
 import {
   EmployeeInput,
   MemberType,
-  useGetIndividualKymEditDataQuery,
   useGetSingleEmployeeDetailsQuery,
   useSetNewEmployeeMutation,
 } from '@coop/cbs/data-access';
@@ -38,18 +37,18 @@ export const EmployeeAddForm = () => {
   }>();
 
   const methods = useForm();
-  const { getValues, watch, reset, setValue } = methods;
+  const { getValues, watch, reset } = methods;
   const { mutateAsync } = useSetNewEmployeeMutation();
 
   const isCoopMemberWatch = watch('isCoopMember');
-  const memberIdWatch = watch('memberId');
+  // const memberIdWatch = watch('memberId');
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery(
-    {
-      id: String(memberIdWatch),
-    },
-    { enabled: !!memberIdWatch }
-  );
+  // const { data: editValues } = useGetKymIndividualFormDataQuery(
+  //   {
+  //     id: String(memberIdWatch),
+  //   },
+  //   { enabled: !!memberIdWatch }
+  // );
 
   const { data: employeeEditData } = useGetSingleEmployeeDetailsQuery(
     {
@@ -76,36 +75,36 @@ export const EmployeeAddForm = () => {
     }
   }, [JSON.stringify(employeeDetailData)]);
 
-  const personalInfo = editValues?.members?.individual?.formState?.data?.formData?.basicInformation;
-  const contactInfo = editValues?.members?.individual?.formState?.data?.formData?.contactDetails;
-  const permanentAddressInfo =
-    editValues?.members?.individual?.formState?.data?.formData?.permanentAddress;
-  const temporaryAddressInfo =
-    editValues?.members?.individual?.formState?.data?.formData?.temporaryAddress;
+  // const personalInfo = editValues?.members?.individual?.formState?.data?.formData?.basicInformation;
+  // const contactInfo = editValues?.members?.individual?.formState?.data?.formData?.contactDetails;
+  // const permanentAddressInfo =
+  //   editValues?.members?.individual?.formState?.data?.formData?.permanentAddress;
+  // const temporaryAddressInfo =
+  //   editValues?.members?.individual?.formState?.data?.formData?.temporaryAddress;
 
-  useEffect(() => {
-    if (personalInfo) {
-      reset({
-        firstName: personalInfo?.firstName?.local,
-        middleName: personalInfo?.middleName?.local,
-        lastName: personalInfo?.lastName?.local,
-        // gender: personalInfo?.genderId,
-        dateOfBirth: personalInfo?.dateOfBirth,
-        personalPhoneNumber: contactInfo?.mobileNumber,
-        personalEmailAddress: contactInfo?.email,
-        permanentAddress: {
-          ...permanentAddressInfo,
-          locality: permanentAddressInfo?.locality?.local,
-        },
-        isTemporarySameAsPermanent: temporaryAddressInfo?.sameTempAsPermanentAddress,
-        temporaryAddress: {
-          ...temporaryAddressInfo?.address,
-          locality: temporaryAddressInfo?.address?.locality?.local,
-        },
-      });
-      setValue('isCoopMember', true);
-    }
-  }, [JSON.stringify(personalInfo)]);
+  // useEffect(() => {
+  //   if (personalInfo) {
+  //     reset({
+  //       firstName: personalInfo?.firstName?.local,
+  //       middleName: personalInfo?.middleName?.local,
+  //       lastName: personalInfo?.lastName?.local,
+  //       // gender: personalInfo?.genderId,
+  //       dateOfBirth: personalInfo?.dateOfBirth,
+  //       personalPhoneNumber: contactInfo?.mobileNumber,
+  //       personalEmailAddress: contactInfo?.email,
+  //       permanentAddress: {
+  //         ...permanentAddressInfo,
+  //         locality: permanentAddressInfo?.locality?.local,
+  //       },
+  //       isTemporarySameAsPermanent: temporaryAddressInfo?.sameTempAsPermanentAddress,
+  //       temporaryAddress: {
+  //         ...temporaryAddressInfo?.address,
+  //         locality: temporaryAddressInfo?.address?.locality?.local,
+  //       },
+  //     });
+  //     setValue('isCoopMember', true);
+  //   }
+  // }, [JSON.stringify(personalInfo)]);
 
   const onSave = () => {
     const values = getValues();

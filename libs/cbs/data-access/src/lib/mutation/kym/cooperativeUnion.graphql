@@ -1,0 +1,16 @@
+mutation setCooperativeUnionData(
+  $id: ID
+  $data: CoopUnionInstitutionInformationInput!
+  $forDraft: Boolean
+) {
+  members {
+    cooperativeUnion {
+      add(data: $data, id: $id, forDraft: $forDraft) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

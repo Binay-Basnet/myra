@@ -1,56 +1,21 @@
-import { FormProvider, useForm } from 'react-hook-form';
-
-import { KymCooperativeFormInput } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
 import { FormSection } from '@myra-ui';
-import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
-import { useCooperative } from '../../hooks/useCooperative';
+import { FormInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
-interface IProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
-}
-
-export const KymCoopCurrentMembers = (props: IProps) => {
+export const KymCoopCurrentMembers = () => {
   const { t } = useTranslation();
-  const { setSection } = props;
-  const methods = useForm<KymCooperativeFormInput>({
-    defaultValues: {},
-  });
-  useCooperative({ methods });
-
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymCoopSection(e.target.id);
-          setSection(kymSection);
-        }}
-      >
-        <FormSection id="kymCoopAccCurrentMembers" header="kymCoopCurrentMembers">
-          <FormInput
-            type="number"
-            min={0}
-            name="noOfMaleMembers"
-            label={t['kymCoopNoofMalemembers']}
-            __placeholder={t['kymCoopEnternumberofMaleMembers']}
-          />
-          <FormInput
-            type="number"
-            min={0}
-            name="noOfFemaleMembers"
-            label={t['kymCoopNoofFemalemembers']}
-            __placeholder={t['kymCoopEnternumberofFemaleMembers']}
-          />
+    <FormSection id="kymCoopAccCurrentMembers" header="kymCoopCurrentMembers">
+      <FormInput type="number" min={0} name="noOfMaleMembers" label={t['kymCoopNoofMalemembers']} />
+      <FormInput
+        type="number"
+        min={0}
+        name="noOfFemaleMembers"
+        label={t['kymCoopNoofFemalemembers']}
+      />
 
-          <FormInput
-            type="text"
-            name="noOfOtherMembers"
-            label={t['kymCoopNoofOthermembers']}
-            __placeholder={t['kymCoopEnternumberofOthermembers']}
-          />
-        </FormSection>
-      </form>
-    </FormProvider>
+      <FormInput type="text" name="noOfOtherMembers" label={t['kymCoopNoofOthermembers']} />
+    </FormSection>
   );
 };

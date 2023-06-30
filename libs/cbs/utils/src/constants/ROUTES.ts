@@ -1,4 +1,4 @@
-export const ROUTES = {
+  export const ROUTES = {
   HOME: '/',
 
   CBS_NO_MEMBER_CODE: '/no-member-code',
@@ -9,6 +9,8 @@ export const ROUTES = {
   CBS_MEMBER_COOP_ADD: '/cbs/members/coop/add',
   CBS_MEMBER_COOP_UNION_ADD: '/cbs/members/coop_union/add',
   CBS_MEMBER_LIST: '/cbs/members/list',
+  CBS_MEMBER_DRAFT_LIST:
+    '/cbs/members/list?filter=objState%255Bvalue%255D%3DDRAFT%26objState%255Bcompare%255D%3D%253D',
   CBS_MEMBER_INACTIVE_LIST: '/cbs/members/inactive/list',
   CBS_MEMBER_DETAILS: '/cbs/members/details',
   CBS_MEMBER_ACTIVATION: '/cbs/members/activation',

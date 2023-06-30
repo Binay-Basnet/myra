@@ -1,125 +1,36 @@
-import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import { GridItem } from '@chakra-ui/react';
+import { Box, FormSection, GridItem } from '@myra-ui';
 
-import { Box, FormSection } from '@myra-ui';
+import { FormFileInput, FormInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
-import { KymCooperativeFormInput } from '@coop/cbs/data-access';
-import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
-import { FormInput } from '@coop/shared/form';
-import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
-
-import { useCooperative } from '../../hooks/useCooperative';
-
-interface IProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
-}
-
-export const KymAccountHolderDeclaration = (props: IProps) => {
+export const KymAccountHolderDeclaration = () => {
   const { t } = useTranslation();
-  const { setSection } = props;
-  const methods = useForm<KymCooperativeFormInput>({
-    defaultValues: {},
-  });
-  useCooperative({ methods });
 
   return (
     <Box>
-      <FormProvider {...methods}>
-        <form
-          onFocus={(e) => {
-            const kymSection = getKymCoopSection(e.target.id);
-            setSection(kymSection);
-          }}
-        >
-          <FormSection
-            id="kymCoopAccAccountHolderDeclaration"
-            header="kymCoopAccountHolderDeclaration"
-          >
-            <FormInput
-              isRequired
-              type="text"
-              name="accountHoldersName"
-              label={t['kymCoopAccountHolderName']}
-              __placeholder={t['kymCoopEnterAccountHolderName']}
-            />
-          </FormSection>
-        </form>
-      </FormProvider>
-      <Documents setSection={setSection} />
+      <FormSection id="kymCoopAccAccountHolderDeclaration" header="kymCoopAccountHolderDeclaration">
+        <FormInput
+          isRequired
+          type="text"
+          name="accountHoldersName"
+          label={t['kymCoopAccountHolderName']}
+        />
+      </FormSection>
+
+      <Documents />
     </Box>
   );
 };
 
-interface IDocProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
-}
-
-const Documents = ({ setSection }: IDocProps) => {
+const Documents = () => {
   const { t } = useTranslation();
-
-  const router = useRouter();
-
-  const id = String(router?.query?.['id']);
-
   return (
-    // <Grid
-    //   borderBottom={'1px solid'}
-    //   borderBottomColor="border.layout"
-    //   p="s20"
-    //   templateColumns="repeat(2, 1fr)"
-    //   rowGap="s16"
-    //   columnGap="s20"
-    // >
-    //   <GridItem>
-    //     <Box w="124px">
-    //       <KYMDocumentField
-    //         mutationId={id}
-    //         size="md"
-    //         label={t['kymCoopSignature']}
-    //         name="accountHolderSignature"
-    //         getKymSection={getKymCoopSection}
-    //         setKymCurrentSection={setSection}
-    //       />
-    //     </Box>
-    //   </GridItem>
-    //   <GridItem>
-    //     <Box w="124px">
-    //       <KYMDocumentField
-    //         mutationId={id}
-    //         size="md"
-    //         label={t['kymCoopStamp']}
-    //         name="accountHolderStamp"
-    //         getKymSection={getKymCoopSection}
-    //         setKymCurrentSection={setSection}
-    //       />
-    //     </Box>
-    //   </GridItem>
-    // </Grid>
     <FormSection header="kymCoopDOCUMENTDECLARATION" templateColumns={2}>
-      <GridItem>
-        <Box w="124px">
-          <KYMDocumentField
-            mutationId={id}
-            size="md"
-            label={t['kymCoopSignature']}
-            name="accountHolderSignature"
-            getKymSection={getKymCoopSection}
-            setKymCurrentSection={setSection}
-          />
-        </Box>
+      <GridItem w="124px">
+        <FormFileInput label={t['kymCoopSignature']} name="documents.8.identifiers" />
       </GridItem>
-      <GridItem>
-        <Box w="124px">
-          <KYMDocumentField
-            mutationId={id}
-            size="md"
-            label={t['kymCoopStamp']}
-            name="accountHolderStamp"
-            getKymSection={getKymCoopSection}
-            setKymCurrentSection={setSection}
-          />
-        </Box>
+      <GridItem w="124px">
+        <FormFileInput size="md" label={t['kymCoopStamp']} name="documents.9.identifiers" />
       </GridItem>
     </FormSection>
   );

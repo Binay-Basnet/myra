@@ -1,22 +1,21 @@
-import { useFieldArray } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
-import {
-  DynamicBoxContainer,
-  DynamicBoxGroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import { FormDatePicker, FormInput } from '@coop/shared/form';
 import { Box, Button, FormSection, GridItem, Icon } from '@myra-ui';
+
+import { KymCooperativeFormInput } from '@coop/cbs/data-access';
+import { DynamicBoxContainer, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { FormDatePicker, FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAddTraining {
   index: number;
+  parentIndex: number;
   removeTraining: () => void;
 }
 
-const AddSister = ({ index, removeTraining }: IAddTraining) => {
+const AddSister = ({ index, parentIndex, removeTraining }: IAddTraining) => {
   const { t } = useTranslation();
   return (
     <DynamicBoxContainer>
@@ -33,16 +32,16 @@ const AddSister = ({ index, removeTraining }: IAddTraining) => {
       <InputGroupContainer>
         <FormInput
           type="text"
-          name={`coopRelatedTraining.${index}.subjectOfTraining`}
+          name={`accountOperator.${parentIndex}.coopRelatedTraining.${index}.subjectOfTraining`}
           label={t['kymCoopSubjectOfTraining']}
         />
         <FormDatePicker
-          name={`coopRelatedTraining.${index}.dateOfTraining`}
+          name={`accountOperator.${parentIndex}.coopRelatedTraining.${index}.dateOfTraining`}
           label={t['kymCoopDateOfTraining']}
         />
         <FormInput
           type="text"
-          name={`coopRelatedTraining.${index}.trainingOrganization`}
+          name={`accountOperator.${parentIndex}.coopRelatedTraining.${index}.trainingOrganization`}
           label={t['kymCoopTrainingOrganization']}
         />
       </InputGroupContainer>
@@ -50,38 +49,46 @@ const AddSister = ({ index, removeTraining }: IAddTraining) => {
   );
 };
 
-export const DynamicAddtraining = () => {
+interface DynamicAddtrainingProps {
+  index: number;
+}
+
+export const DynamicAddtraining = ({ index: parentIndex }: DynamicAddtrainingProps) => {
   const { t } = useTranslation();
+  const { control } = useFormContext<KymCooperativeFormInput>();
+
   const {
     fields: trainingFields,
     append: trainingAppend,
     remove: trainingRemove,
-  } = useFieldArray({ name: 'coopRelatedTraining' });
+  } = useFieldArray({ name: `accountOperator.${parentIndex}.coopRelatedTraining`, control });
 
   return (
     <FormSection
       header="kymCoopTrainingRelatedToCoop"
       subHeader="kymCoopTrainingRelatedToCoopsubText"
     >
-      <GridItem colSpan={3}>
-        <DynamicBoxGroupContainer>
-          {trainingFields.map((item, index) => (
-            <Box key={item.id}>
-              <AddSister index={index} removeTraining={() => trainingRemove(index)} />
-            </Box>
-          ))}
-          <Button
-            id="accountOperatorButton"
-            alignSelf="start"
-            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-            variant="outline"
-            onClick={() => {
-              trainingAppend({});
-            }}
-          >
-            {t['kymInsNewDetail']}
-          </Button>
-        </DynamicBoxGroupContainer>
+      <GridItem colSpan={3} display="flex" flexDir="column" gap="s16">
+        {trainingFields.map((item, index) => (
+          <Box key={item.id}>
+            <AddSister
+              parentIndex={parentIndex}
+              index={index}
+              removeTraining={() => trainingRemove(index)}
+            />
+          </Box>
+        ))}
+        <Button
+          id="accountOperatorButton"
+          alignSelf="start" 
+          leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+          variant="outline"
+          onClick={() => {
+            trainingAppend({});
+          }}
+        >
+          {t['kymInsNewDetail']}
+        </Button>
       </GridItem>
     </FormSection>
   );
