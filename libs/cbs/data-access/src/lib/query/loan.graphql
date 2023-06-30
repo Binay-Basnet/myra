@@ -476,16 +476,16 @@ query getLoanPreview($id: String!) {
         }
         repaymentDetails {
           lastPaymentDate
-          remainingPrincipal
-          remainingInterest
-          remainingTotal
-          remainingInstallments {
-            installmentNo
-            principal
-            fine
-            interestAmount
-          }
-          totalInstallmentAmount
+          #  remainingPrincipal
+          #  remainingInterest
+          #  remainingTotal
+          #  remainingInstallments {
+          #    installmentNo
+          #    principal
+          #    fine
+          #    interestAmount
+          #  }
+          #  totalInstallmentAmount
           nextInstallmentNo
         }
         member {

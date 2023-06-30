@@ -94,14 +94,16 @@ const temporaryAddress = [
   'temporaryAddress.coordinates',
 ];
 const incaseRented = ['landlordName', 'landlordContact'];
-const familyDetails = [
-  'maritalStatusId',
+const familyDetails = ['maritalStatusId'];
+
+const familyMembers = [
   'familyDetails',
   'addFamilyMemberButton',
   'relationshipId',
   'fullName',
   'familyDetailsDateOfBirth',
 ];
+
 const COOPmembership = ['purposeId', 'memberIdentityLevel', 'kymAccIndMainPurposeofBecomingMember'];
 const anotherCoop = [
   'isMemberOfAnotherCooperative',
@@ -188,10 +190,13 @@ export const getKymSection = (id: string) => {
   if (incaseRented.includes(id)) {
     return {
       section: 'personalDetails',
-      subSection: 'kymAccIndIncaseofresidinginRentedHouse',
+      subSection: 'kymAccIndInCaseOfResidingInRentedHouse',
     };
   }
-  if (familyDetails.includes(id) || familyDetails.includes(id.split('.')[0])) {
+  if (familyMembers.includes(id) || familyMembers.includes(id.split('.')[2])) {
+    return { section: 'personalDetails', subSection: 'kymAccIndFamilyMembers' };
+  }
+  if (familyDetails.includes(id)) {
     return { section: 'personalDetails', subSection: 'kymAccIndFamilyDetails' };
   }
   if (profession.includes(id)) {

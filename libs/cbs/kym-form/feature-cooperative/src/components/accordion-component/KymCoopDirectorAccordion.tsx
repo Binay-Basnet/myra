@@ -1,36 +1,35 @@
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import { Box, Button, Collapse, FormSection, GridItem, Icon, IconButton, Text } from '@myra-ui';
 
-import { KymCoopDirectorDetailsFormInput } from '@coop/cbs/data-access';
-import { DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormAddress, FormDatePicker, FormInput, FormSwitch } from '@coop/shared/form';
-import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
-
-import { Bottomdirectorcoop } from './boardDirectorDocuments';
-import { useCooperativeBOD } from '../hooks/useCooperativeBOD';
+import { KymCooperativeFormInput } from '@coop/cbs/data-access';
+import {
+  FormAddress,
+  FormDatePicker,
+  FormFileInput,
+  FormInput,
+  FormSwitch,
+} from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 interface ICOOPDirector {
-  removeDirector: (sisterId: string) => void;
-  setSection: (section?: { section: string; subSection: string }) => void;
-  directorId: string;
+  index: number;
+  removeDirector: (index: number) => void;
 }
 
-export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDirector) => {
+export const AddDirector = ({ removeDirector, index }: ICOOPDirector) => {
   const { t } = useTranslation();
-  const methods = useForm<KymCoopDirectorDetailsFormInput>();
-
-  const { watch } = methods;
-
-  useCooperativeBOD({ methods, directorId });
+  const { watch } = useFormContext<KymCooperativeFormInput>();
 
   const [isOpen, setIsOpen] = React.useState(true);
 
-  const isPermanentAndTemporaryAddressSame = watch(`isPermanentAndTemporaryAddressSame`);
+  const isPermanentAndTemporaryAddressSame = watch(
+    `directorDetails.${index}.isPermanentAndTemporaryAddressSame`
+  );
 
   return (
     <>
@@ -75,7 +74,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
             icon={<CloseIcon />}
             ml="s16"
             onClick={() => {
-              removeDirector(directorId);
+              removeDirector(index);
             }}
           />
         )}
@@ -90,124 +89,105 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
           borderColor: '#E0E5EB',
         }}
       >
-        <DynamicBoxGroupContainer>
-          <FormProvider {...methods}>
-            <form
-              onFocus={(e) => {
-                const kymSection = getKymCoopSection(e.target.id);
-                setSection(kymSection);
-              }}
-            >
-              <Box display="flex" flexDirection="column">
-                <FormSection>
-                  <FormInput
-                    isRequired
-                    id="boardDirectorCoop"
-                    type="text"
-                    name="nameEn"
-                    label={t['kymCoopFullName']}
-                  />
-                  <FormInput
-                    isRequired
-                    id="boardDirectorCoop"
-                    type="text"
-                    name="designation"
-                    label={t['kymCoopDesignation']}
-                  />
-                </FormSection>
+        <Box display="flex" flexDirection="column">
+          <FormSection>
+            <FormInput
+              isRequired
+              id="boardDirectorCoop"
+              type="text"
+              name={`directorDetails.${index}.nameEn`}
+              label={t['kymCoopFullName']}
+            />
+            <FormInput
+              isRequired
+              id="boardDirectorCoop"
+              type="text"
+              name={`directorDetails.${index}.designation`}
+              label={t['kymCoopDesignation']}
+            />
+          </FormSection>
 
-                <FormAddress
-                  sectionId="boardDirectorCoop"
-                  sectionHeader="kymCoopPermanentAddress"
-                  name="permanentAddress"
-                />
+          <FormAddress
+            sectionId="boardDirectorCoop"
+            sectionHeader="kymCoopPermanentAddress"
+            name={`directorDetails.${index}.permanentAddress`}
+          />
 
-                <FormSection header="kymCoopTemporaryAddress">
-                  <GridItem colSpan={3}>
-                    <FormSwitch
-                      id="boardOfDirectorsDetails"
-                      name="isPermanentAndTemporaryAddressSame"
-                      label={t['kymCoopTemporaryAddressPermanent']}
-                    />
-                  </GridItem>
+          <FormSection header="kymCoopTemporaryAddress">
+            <GridItem colSpan={3}>
+              <FormSwitch
+                id="boardOfDirectorsDetails"
+                name={`directorDetails.${index}.isPermanentAndTemporaryAddressSame`}
+                label={t['kymCoopTemporaryAddressPermanent']}
+              />
+            </GridItem>
 
-                  {!isPermanentAndTemporaryAddressSame && <FormAddress name="temporaryAddress" />}
-                </FormSection>
+            {!isPermanentAndTemporaryAddressSame && (
+              <FormAddress name={`directorDetails.${index}.temporaryAddress`} />
+            )}
+          </FormSection>
 
-                <FormSection>
-                  <FormDatePicker
-                    id="boardDirectorCoop"
-                    type="date"
-                    name="dateOfMembership"
-                    label={t['kymCoopDateOfMembership']}
-                  />
-                  <FormInput
-                    id="boardDirectorCoop"
-                    type="text"
-                    name="highestQualification"
-                    label={t['kymCoopHighestQualification']}
-                  />
-                  <FormInput
-                    isRequired
-                    id="boardDirectorCoop"
-                    type="number"
-                    name="contactNumber"
-                    label={t['kymCoopMobileNo']}
-                  />
-                  <FormInput
-                    isRequired
-                    id="boardDirectorCoop"
-                    type="text"
-                    name="email"
-                    label={t['kymCoopEmail']}
-                  />
-                  <FormInput
-                    id="boardDirectorCoop"
-                    type="string"
-                    name="citizenshipNo"
-                    label={t['kymCoopCitizenshipPassportDrivingLicenseNo']}
-                  />
-                  <FormInput
-                    id="boardDirectorCoop"
-                    type="string"
-                    name="panNo"
-                    label={t['kymCoopPanOrVatNo']}
-                  />
-                </FormSection>
-              </Box>
-            </form>
-          </FormProvider>
+          <FormSection>
+            <FormDatePicker
+              id="boardDirectorCoop"
+              type="date"
+              name={`directorDetails.${index}.dateOfMembership`}
+              label={t['kymCoopDateOfMembership']}
+            />
+            <FormInput
+              id="boardDirectorCoop"
+              type="text"
+              name={`directorDetails.${index}.highestQualification`}
+              label={t['kymCoopHighestQualification']}
+            />
+            <FormInput
+              isRequired
+              id="boardDirectorCoop"
+              type="number"
+              name={`directorDetails.${index}.contactNumber`}
+              label={t['kymCoopMobileNo']}
+            />
+            <FormInput
+              isRequired
+              id="boardDirectorCoop"
+              type="text"
+              name={`directorDetails.${index}.email`}
+              label={t['kymCoopEmail']}
+            />
+            <FormInput
+              id="boardDirectorCoop"
+              type="string"
+              name={`directorDetails.${index}.citizenshipNo`}
+              label={t['kymCoopCitizenshipPassportDrivingLicenseNo']}
+            />
+            <FormInput
+              id="boardDirectorCoop"
+              type="string"
+              name={`directorDetails.${index}.panNo`}
+              label={t['kymCoopPanOrVatNo']}
+            />
+          </FormSection>
+        </Box>
+        <FormSection templateColumns={2}>
+          <FormFileInput
+            size="lg"
+            name={`directorDetails.${index}.documents.0.identifiers`}
+            label={t['kymCoopPhotograph']}
+          />
+          <FormFileInput
+            size="lg"
+            name={`directorDetails.${index}.documents.1.identifiers`}
+            label={t['kymCoopPhotographOfIdentityProofDocument']}
+          />
+          <Box w="124px">
+            <FormFileInput
+              size="md"
+              name={`directorDetails.${index}.documents.2.identifiers`}
+              label={t['kymCoopSignature']}
+            />
+          </Box>
+        </FormSection>
 
-          <Bottomdirectorcoop directorId={directorId} setKymCurrentSection={setSection} />
-
-          {/* <Grid
-                  templateColumns="repeat(2, 1fr)"
-                  rowGap="s32"
-                  columnGap="s20"
-                >
-                  <FormFileInput
-                    size="lg"
-                    label={t['kymCoopPhotograph']}
-                    // control={control}
-                    name={`photograph`}
-                  />
-                  <FormFileInput
-                    size="lg"
-                    label={t['kymCoopPhotographOfIdentityProofDocument']}
-                    // control={control}
-                    name={`identityDocumentPhoto`}
-                  />
-
-                  <Box w="124px">
-                    <FormFileInput
-                      size="md"
-                      label={t['kymCoopSignature']}
-                      // control={control}
-                      name={`signature`}
-                    />
-                  </Box>
-                </Grid> */}
-        </DynamicBoxGroupContainer>
         <Box display="flex" justifyContent="flex-end" py="s10" px="s20">
           <Button
             id="kymCOOPdirectorRemoveButton"
@@ -215,7 +195,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
             shade="danger"
             leftIcon={<AiOutlineDelete height="11px" />}
             onClick={() => {
-              removeDirector(directorId);
+              removeDirector(index);
             }}
           >
             {t['kymInsDelete']}

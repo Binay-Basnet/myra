@@ -1,27 +1,7 @@
-query getKymFormStatusInstitution($id: ID!, $hasPressedNext: Boolean) {
+query getKYMOverallFormStatus($id: ID!, $hasPressedNext: Boolean) {
   members {
     institution(includeRequiredErrors: $hasPressedNext) {
-      formState(id: $id) {
-        data {
-          sectionStatus {
-            id
-            errors
-            sectionStatus {
-              errors
-              incomplete
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-
-query getKYMOverallFormStatus($id: ID!, $hasPressedNext: Boolean){
-  members {
-    institution(includeRequiredErrors: $hasPressedNext){
-      overallFormStatus(id: $id){
+      overallFormStatus(id: $id) {
         accountOperatorDetails {
           id
           errors
@@ -64,250 +44,193 @@ query getInstitutionKymEditData($id: ID!, $hasPressedNext: Boolean) {
     institution(includeRequiredErrors: $hasPressedNext) {
       formState(id: $id) {
         data {
-          lastUpdated {
-            ... on KymInsInformationLUS {
-              information: name
-            }
-            ... on KymInsTransactionLUS {
-              transaction: name
-            }
-            ... on KymInsDirectorDetailsLUS {
-              directorDetails: name
-            }
-            ... on KymInsAccountLUS {
-              account: name
-            }
-            ... on KymInsDeclarationLUS {
-              declaration: name
-            }
-          }
-          sectionStatus {
-            sectionStatus {
-              incomplete
-              errors
-            }
-            errors
-            id
-          }
-          formData {
-            institutionName
-            institutionTypeId
-            natureOfBusiness
-            registrationDate
-            vatOrPanNo
-            operatingOfficeAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-            noOfBranches
-            branchOfficeAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-            registeredAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-            registeredNumber
-            issuingOffice
-            phone
-            fax
-            email
-            website
-            postBoxNo
-            numberOfEmployee
-            dateOfLastAGM
-            bank
-            accountNumber
-            accountName
-            natureOfTransaction
-            annualTurnover
-            initialDepositAmount
-            expectedMonthlyTurnover
-            expectedMonthlyTransaction
-            accountType
-            isCompanyStampCompulsory
-            specialInstruction
-            companyStamp
-            accountHolderName
-            accountHolderPhone
-            accountHolderEmail
-            accountHolderAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-            # accountHolderSignature
-            # accountHolderStamp
-          }
-        }
-      }
-    }
-  }
-}
-
-query getInstitutionSisterDetailsEditList($id: ID!, $includeRequiredErrors: Boolean) {
-  members {
-    institution(includeRequiredErrors: $includeRequiredErrors) {
-      listSisterConcerns(id: $id) {
-        data {
-          id
-          name
+          institutionName
+          institutionTypeId
           natureOfBusiness
-          address
+          registrationDate
+          vatOrPanNo
+          operatingOfficeAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          noOfBranches
+          branchOfficeAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          registeredAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          registeredNumber
+          issuingOffice
           phone
-        }
-        sectionStatus {
-          sectionStatus {
-            errors
-            incomplete
-          }
-          id
-          errors
-        }
-      }
-    }
-  }
-}
-
-query getInsBoardDirectorEditList($id: ID!, $hasRequiredErrors: Boolean) {
-  members {
-    institution(includeRequiredErrors: $hasRequiredErrors) {
-
-      listDirectors(id: $id) {
-        sectionStatus {
-          sectionStatus {
-            errors
-            incomplete
-          }
-          id
-          errors
-        }
-        data {
-          id
-          name
-          designation
-          permanentAddress {
-            provinceId
-            districtId
-            localGovernmentId
-            wardNo
-            locality
-            houseNo
-            coordinates {
-              longitude
-              latitude
-            }
-          }
-          isTemporaryAndPermanentAddressSame
-          temporaryAddress {
-            provinceId
-            districtId
-            localGovernmentId
-            wardNo
-            locality
-            houseNo
-            coordinates {
-              longitude
-              latitude
-            }
-          }
-          dateOfMembership
-          highestQualification
-          mobileNo
+          fax
           email
-          citizenshipNo
-          panNo
-          isHeadOfOrganization
-          isAffiliatedWithOtherFirms
-          firmDetails {
-            directorName
-            institutionName
+          website
+          postBoxNo
+          numberOfEmployee
+          dateOfLastAGM
+          bank
+          accountNumber
+          accountName
+          natureOfTransaction
+          annualTurnover
+          initialDepositAmount
+          expectedMonthlyTurnover
+          expectedMonthlyTransaction
+          accountType
+          isCompanyStampCompulsory
+          specialInstruction
+          companyStamp
+          accountHolderName
+          accountHolderPhone
+          accountHolderEmail
+          accountHolderAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          accountHolderSignature
+          accountHolderStamp
+          sisterConcern {
+            id
+            name
+            natureOfBusiness
             address
+            phone
+          }
+          director {
+            id
+            name
             designation
-            yearlyIncome
+            permanentAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            isTemporaryAndPermanentAddressSame
+            temporaryAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            dateOfMembership
+            highestQualification
+            mobileNo
+            email
+            citizenshipNo
+            panNo
+            isHeadOfOrganization
+            isAffiliatedWithOtherFirms
+            firmDetails {
+              directorName
+              institutionName
+              address
+              designation
+              yearlyIncome
+            }
+            documents {
+              fieldId
+              identifiers: docData {
+                identifier
+                url
+              }
+            }
           }
-        }
-      }
-    }
-  }
-}
 
-query getInsAccountOperatorEditList($id: ID!, $hasRequiredErrors: Boolean) {
-  members {
-    institution(includeRequiredErrors: $hasRequiredErrors) {
-      listAccountOperators(id: $id) {
-        data {
-          id
-          name
-          contact
-          email
-          permanentAddress {
-            provinceId
-            districtId
-            localGovernmentId
-            wardNo
-            locality
-            houseNo
-            coordinates {
-              longitude
-              latitude
+          accountOperator {
+            id
+            name
+            contact
+            email
+            permanentAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            isTemporaryAndPermanentAddressSame
+            temporaryAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            designation
+            panNo
+            documents {
+              fieldId
+              identifiers: docData {
+                identifier
+                url
+              }
             }
           }
-          isTemporaryAndPermanentAddressSame
-          temporaryAddress {
-            provinceId
-            districtId
-            localGovernmentId
-            wardNo
-            locality
-            houseNo
-            coordinates {
-              longitude
-              latitude
+          documents {
+            fieldId
+            identifiers: docData {
+              identifier
+              url
             }
           }
-          designation
-          panNo
-        }
-        sectionStatus {
-          sectionStatus {
-            errors
-            incomplete
-          }
-          id
-          errors
         }
       }
     }

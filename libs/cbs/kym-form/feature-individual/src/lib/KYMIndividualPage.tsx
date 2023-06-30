@@ -1,113 +1,201 @@
 /* eslint-disable-next-line */
-import { featureCode, useTranslation } from '@coop/shared/utils';
-import React, { useEffect, useState } from 'react';
+import { featureCode, getKymSection, useTranslation } from '@coop/shared/utils';
 import { useRouter } from 'next/router';
-import {
-  addIndividualError,
-  FormFieldSearchTerm,
-  reset,
-  RootState,
-  setIndividualHasPressedNext,
-  useAppDispatch,
-  useAppSelector,
-  useGetIndividualKymEditDataQuery,
-  useGetIndividualKymOptionsQuery,
-  useGetKymFormStatusQuery,
-} from '@coop/cbs/data-access';
-import { Box, Button, FormHeader, Icon, Text, toast } from '@myra-ui';
+
+import { asyncToast, Box, Button, FormHeader, Icon, Text } from '@myra-ui';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { AccorrdianAddMember, KYMUpdateModal } from '@coop/cbs/kym-form/formElements';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
 import { useDisclosure } from '@chakra-ui/react';
 import { BiSave } from 'react-icons/bi';
+import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 import {
-  KYMBasiccoopDetails,
+  GetKymIndividualFormDataQuery,
+  KymIndMemberInput,
+  useGetKymIndividualFormDataQuery,
+  useSetKymIndividualDataMutation,
+} from '@coop/cbs/data-access';
+import {
   KYMDeclaration,
   KYMDeclarationAgree,
   KYMDocumentDeclaration,
   KYMEstimatedAmount,
   KYMFinancialTransactionDetails,
-  MemberKYMAddress,
-  MemberKYMBasicInfo,
-  MemberKYMContactDetails,
-  MemberKYMFamilyDetails,
+  KYMIndCoopBasicDetails,
   MemberKYMHusbandWifeOccupation,
-  MemberKYMIdentificationDetails,
-  MemberKYMIncomeSourceDetails,
-  MemberKYMMainOccupation,
   MemberKYMProfession,
 } from '../components/form';
+import { MemberKYMMainOccupation } from '../components/form/professional-info/MemberKYMMainOccupation';
+import { KYMIndPersonalInfo } from '../components/form/personal-info/KYMIndPersonalInfo';
+import { KYMIndIncomeSourceDetails } from '../components/form/professional-info/KYMIndIncomeSourceDetails';
+import { KYMIndCoopDetailsFamilyMember } from '../components/form/coop-membership-form/KYMBasiccoopDetailsFamilyMember';
+
+type KYMSection = {
+  section: string;
+  subSection: string;
+};
+
+const documentMap = ['passport', 'signature', 'citizenship', 'fingerprint'];
+const familyMemberMap = ['file'];
+
+const getIndividualEditData = (data: GetKymIndividualFormDataQuery | undefined) => {
+  if (!data) {
+    return {};
+  }
+  const editValues = data?.members?.individual?.formState?.data;
+  if (!editValues) {
+    return {};
+  }
+
+  return {
+    ...editValues,
+    firstName: editValues?.firstName?.local,
+    middleName: editValues?.middleName?.local,
+    lastName: editValues?.lastName?.local,
+    landlordName: editValues?.landlordName?.local,
+
+    permanentAddress: {
+      ...editValues?.permanentAddress,
+      locality: editValues?.permanentAddress?.locality?.local,
+    },
+
+    temporaryAddress: {
+      ...editValues?.temporaryAddress,
+      locality: editValues?.temporaryAddress?.locality?.local,
+    },
+
+    familyMembers:
+      editValues?.familyMembers?.map((member) => ({
+        ...member,
+        documents: familyMemberMap?.map((d) => ({
+          fieldId: d,
+          identifiers: member?.documents?.find((e) => e?.fieldId === d)?.identifiers || [],
+        })),
+      })) || [],
+
+    incomeSource: editValues?.incomeSource || [],
+
+    familyCoopMembers: editValues?.familyCoopMembers || [],
+
+    documents:
+      documentMap?.map((document) => ({
+        fieldId: document,
+        identifiers: editValues?.documents?.find((d) => d?.fieldId === document)?.identifiers || [],
+      })) || [],
+  };
+};
 
 export const KYMIndividualPage = () => {
-  const { t } = useTranslation();
   const router = useRouter();
-  const id = String(router?.query?.['id']);
 
+  const { data: editData } = useGetKymIndividualFormDataQuery(
+    {
+      id: router.query['id'] as string,
+    },
+    { enabled: !!router.query['id'] }
+  );
+
+  const methods = useForm<KymIndMemberInput>({
+    defaultValues: {
+      identification: [
+        {
+          idType: 'citizenship',
+        },
+        {
+          idType: 'drivingLicense',
+        },
+        {
+          idType: 'nationalId',
+        },
+        {
+          idType: 'passport',
+        },
+        {
+          idType: 'voterCard',
+        },
+      ],
+      documents: documentMap?.map((document) => ({
+        fieldId: document,
+        identifiers: [],
+      })),
+
+      familyMembers: [
+        {
+          relationshipId: null,
+          dateOfBirth: undefined,
+          fullName: undefined,
+          documents: [
+            {
+              fieldId: 'file',
+              identifiers: [],
+            },
+          ],
+        },
+      ],
+    },
+  });
+  const { t } = useTranslation();
+
+  const { mutateAsync } = useSetKymIndividualDataMutation();
+
+  const [kymCurrentSection, setKymCurrentSection] = useState<KYMSection | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [isMarried, setIsMarried] = useState(false);
-
-  const [kymCurrentSection, setKymCurrentSection] = React.useState<{
-    section: string;
-    subSection: string;
-  }>();
-
-  // const kymFormStatusQuery = useGetKymFormStatusQuery({ id }, { enabled: id !== 'undefined' });
-  // const kymFormStatus = kymFormStatusQuery?.data?.members?.individual?.formState?.sectionStatus;
-
-  const { data: editValues, refetch: refetchEdit } = useGetIndividualKymEditDataQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+  const { action } = router.query;
 
   useEffect(() => {
-    refetchEdit();
-  }, [preference?.date]);
-
-  const { data: maritalStatusData } = useGetIndividualKymOptionsQuery({
-    searchTerm: FormFieldSearchTerm.MaritalStatus,
-  });
-
-  const maritialStatus = maritalStatusData?.form?.options?.predefined?.data;
-  const marriedData = editValues?.members?.individual?.formState?.data?.formData?.maritalStatusId;
-
-  useEffect(() => {
-    // refetch();
-    if (marriedData && maritialStatus) {
-      if (maritialStatus[0]?.id === marriedData) {
-        setIsMarried(true);
-      } else {
-        setIsMarried(false);
-      }
+    if (action !== 'add') {
+      methods.reset({
+        ...methods.getValues(),
+        ...getIndividualEditData(editData),
+      });
     }
-  }, [marriedData]);
+  }, [action, editData, methods]);
 
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(reset());
-  }, []);
-
-  const { refetch } = useGetKymFormStatusQuery(
-    { id, hasPressedNext: true },
-    {
-      enabled: false,
-    }
-  );
-
-  const isFormDirty = useAppSelector((state) => state.individual.isFormDirty);
-
-  const action = String(router.query['action']);
+  const submitForm = (forDraft = false) => {
+    methods.handleSubmit(async (data) => {
+      await asyncToast({
+        id: 'individual-add',
+        msgs: {
+          loading: action === 'edit' ? 'Editing Member' : 'Adding Member',
+          success: action === 'edit' ? 'Member Edited Successfully' : 'Member Added Successfully',
+        },
+        promise: mutateAsync({
+          id: router.query['id'] as string,
+          data,
+          forDraft,
+        }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof KymIndMemberInput, {
+                message: error.validationErrorMsg[key][0],
+              })
+            );
+          }
+        },
+        onSuccess: () => {
+          if (forDraft) {
+            router.push(ROUTES.CBS_MEMBER_DRAFT_LIST);
+          } else {
+            router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}?id=${router.query['id']}`);
+          }
+        },
+      });
+    })();
+  };
 
   return (
-    <>
-      <FormLayout hasSidebar>
+    <form
+      onFocus={(e) => {
+        const kymSection = getKymSection(e.target.id);
+
+        if (kymSection) setKymCurrentSection(kymSection);
+      }}
+    >
+      <FormLayout methods={methods} hasSidebar>
         <FormHeader
           title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberIndiviual}`}
           closeLink={ROUTES.CBS_MEMBER_LIST}
@@ -124,45 +212,34 @@ export const KYMIndividualPage = () => {
           </FormLayout.Sidebar>
 
           <FormLayout.Form>
-            <SectionContainer>
-              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                {t['kymInd1PersonalInformation']}
-              </Text>
-              <MemberKYMBasicInfo setKymCurrentSection={setKymCurrentSection} />
-              <MemberKYMContactDetails setKymCurrentSection={setKymCurrentSection} />
-              <MemberKYMIdentificationDetails setKymCurrentSection={setKymCurrentSection} />
-              <MemberKYMAddress setKymCurrentSection={setKymCurrentSection} />
-              <MemberKYMFamilyDetails setKymCurrentSection={setKymCurrentSection} />
-            </SectionContainer>
+            <KYMIndPersonalInfo />
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymInd2ProfessionalInformation']}
               </Text>
-              <MemberKYMProfession setKymCurrentSection={setKymCurrentSection} />
-              <MemberKYMMainOccupation setKymCurrentSection={setKymCurrentSection} />
-              {isMarried && (
-                <MemberKYMHusbandWifeOccupation setKymCurrentSection={setKymCurrentSection} />
-              )}
-
-              <MemberKYMIncomeSourceDetails setKymCurrentSection={setKymCurrentSection} />
+              <MemberKYMProfession />
+              <MemberKYMMainOccupation />
+              <MemberKYMHusbandWifeOccupation />
+              <KYMIndIncomeSourceDetails />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymInd3COOPmembership']}
               </Text>
-              <KYMBasiccoopDetails setKymCurrentSection={setKymCurrentSection} />
-              <KYMFinancialTransactionDetails setKymCurrentSection={setKymCurrentSection} />
-              <KYMEstimatedAmount setKymCurrentSection={setKymCurrentSection} />
+              <KYMIndCoopBasicDetails />
+              <KYMIndCoopDetailsFamilyMember />
+              <KYMFinancialTransactionDetails />
+              <KYMEstimatedAmount />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymInd4Declaration']}
               </Text>
-              <KYMDeclaration setKymCurrentSection={setKymCurrentSection} />
-              <KYMDocumentDeclaration setKymCurrentSection={setKymCurrentSection} />
+              <KYMDeclaration />
+              <KYMDocumentDeclaration />
             </SectionContainer>
 
             <KYMDeclarationAgree />
@@ -170,19 +247,8 @@ export const KYMIndividualPage = () => {
         </FormLayout.Content>
 
         <FormLayout.Footer
-          status={
-            <Box display="flex" gap="s8">
-              <Text as="i" fontSize="r1">
-                {t['formDetails']}
-              </Text>
-            </Box>
-          }
           draftButton={
-            <Button
-              type="submit"
-              variant="ghost"
-              onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}
-            >
+            <Button variant="ghost" onClick={() => submitForm(true)}>
               <Icon as={BiSave} color="primary.500" />
               <Text
                 alignSelf="center"
@@ -195,43 +261,19 @@ export const KYMIndividualPage = () => {
               </Text>
             </Button>
           }
-          isMainButtonDisabled={!isFormDirty}
+          // isMainButtonDisabled={!isFormDirty}
           mainButtonLabel={action === 'update' ? 'Update' : t['next']}
-          mainButtonHandler={async () => {
+          mainButtonHandler={() => {
             if (action === 'update') {
               onOpen();
             } else {
-              const response = await refetch();
-              const sectionStatus =
-                response?.data?.members?.individual?.formState?.sectionStatus?.errors;
-              const basicAllErrors =
-                response?.data?.members?.individual?.formState?.sectionStatus?.errors;
-
-              if (basicAllErrors) {
-                dispatch(addIndividualError(basicAllErrors));
-              } else {
-                dispatch(addIndividualError({}));
-              }
-              if (response) {
-                dispatch(setIndividualHasPressedNext(true));
-                if (!sectionStatus) {
-                  router.push(
-                    `${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}?type=individual`
-                  );
-                } else {
-                  toast({
-                    id: 'validation-error',
-                    message: 'Some fields are empty or have error',
-                    type: 'error',
-                  });
-                }
-              }
+              submitForm();
             }
           }}
         />
       </FormLayout>
       <KYMUpdateModal isOpen={isOpen} onClose={onClose} />
-    </>
+    </form>
   );
 };
 

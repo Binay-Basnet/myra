@@ -1332,8 +1332,9 @@ const en: Record<string, string> = {
 
   kymAccIndPermanentAddress: 'Permanent Address',
   kymAccIndTemporaryAddress: 'Temporary Address',
-  kymAccIndIncaseofresidinginRentedHouse: 'Incase of residing in Rented House',
+  kymAccIndInCaseOfResidingInRentedHouse: 'Incase of residing in Rented House',
   kymAccIndFamilyDetails: 'Family Details',
+  kymAccIndFamilyMembers: 'Family Members',
   kymAccIndMainProfession: 'Main Profession',
   kymAccIndMainPurposeofBecomingMember: 'Main Purpose of Becoming a Member',
   kymAccIndMemberofAnothercooperative: 'Member of Another Cooperative',

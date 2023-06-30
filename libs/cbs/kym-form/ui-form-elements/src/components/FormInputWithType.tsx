@@ -1,9 +1,9 @@
-import React from 'react';
 import { Path } from 'react-hook-form';
+
+import { InputProps } from '@myra-ui';
 
 import { FormFieldType as FIELD_TYPE } from '@coop/cbs/data-access';
 import { FormEmailInput, FormInput } from '@coop/shared/form';
-import { InputProps } from '@myra-ui';
 
 interface FormInputTypeProps<T> extends InputProps {
   formType?: FIELD_TYPE;

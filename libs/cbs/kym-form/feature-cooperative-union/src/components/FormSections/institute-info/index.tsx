@@ -12,11 +12,7 @@ import { InstituteBasicInfo } from './InstituteBasicInfo';
 import { OperatingOfficeAddress } from './OperatingOfficeAddress';
 import { RegisteredDetails } from './RegisteredDetails';
 
-interface IInstitutionInfoProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
-}
-
-export const InstituteInfo = ({ setSection }: IInstitutionInfoProps) => {
+export const InstituteInfo = () => {
   const { t } = useTranslation();
 
   return (
@@ -24,14 +20,14 @@ export const InstituteInfo = ({ setSection }: IInstitutionInfoProps) => {
       <Text p="s20" fontSize="r3" fontWeight="600">
         {t['kymCoopUnionInstitutionInformation']}
       </Text>
-      <InstituteBasicInfo setSection={setSection} />
-      <RegisteredDetails setSection={setSection} />
-      <OperatingOfficeAddress setSection={setSection} />
-      <BranchOfficeAddress setSection={setSection} />
-      <ContactDetails setSection={setSection} />
-      <BankAccountDetails setSection={setSection} />
-      <ApplicantDetails setSection={setSection} />
-      <CooperativeMemberInformation setSection={setSection} />
+      <InstituteBasicInfo />
+      <RegisteredDetails />
+      <OperatingOfficeAddress />
+      <BranchOfficeAddress />
+      <ContactDetails />
+      <BankAccountDetails />
+      <ApplicantDetails />
+      <CooperativeMemberInformation />
     </SectionContainer>
   );
 };

@@ -1,31 +1,14 @@
-import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-
 import { Box, FormSection, Text } from '@myra-ui';
 
-import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
-import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
-import { FormCheckbox } from '@coop/shared/form';
-import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
+import { FormCheckbox, FormFileInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
-import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
-
-interface IDocumentDeclarationInstitutionCOOPUnionProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
-}
-
-export const DocumentDeclarationInstitutionCOOPUnion = ({
-  setSection,
-}: IDocumentDeclarationInstitutionCOOPUnionProps) => {
-  const router = useRouter();
-
-  const id = String(router?.query?.['id']);
-
+export const DocumentDeclarationInstitutionCOOPUnion = () => {
   const { t } = useTranslation();
 
-  const methods = useForm<CoopUnionInstitutionInformationInput>();
+  // const methods = useForm<CoopUnionInstitutionInformationInput>();
 
-  useCoopUnionInstitution({ methods });
+  // useCoopUnionInstitution({ methods });
 
   return (
     <FormSection
@@ -33,61 +16,22 @@ export const DocumentDeclarationInstitutionCOOPUnion = ({
       id="kymCoopUnionAccDocumentsDeclaration"
       header="kymCoopUnionDecDocumentsDeclaration"
     >
-      <KYMDocumentField
-        mutationId={id}
-        name="agmBodDecisionDocument"
+      <FormFileInput
+        name="documents.2.identifiers"
         label={t['kymCoopUnionDecAGMDecisionDocument']}
-        setKymCurrentSection={setSection}
-        getKymSection={getKymSectionCoOperativeUnion}
       />
-      <KYMDocumentField
-        mutationId={id}
-        name="registeredCertificate"
+      <FormFileInput
+        name="documents.3.identifiers"
         label={t['kymCoopUnionDecRegisteredCertificate']}
-        setKymCurrentSection={setSection}
-        getKymSection={getKymSectionCoOperativeUnion}
       />
-      <KYMDocumentField
-        mutationId={id}
-        name="moaAoa"
-        label={t['kymCoopUnionDecMOAAOA']}
-        setKymCurrentSection={setSection}
-        getKymSection={getKymSectionCoOperativeUnion}
-      />
-      <KYMDocumentField
-        mutationId={id}
-        name="panCertificate"
-        label={t['kymCoopUnionDecPANCertificate']}
-        setKymCurrentSection={setSection}
-        getKymSection={getKymSectionCoOperativeUnion}
-      />
-      <KYMDocumentField
-        mutationId={id}
-        name="taxClearance"
-        label={t['kymCoopUnionDecTaxClearance']}
-        setKymCurrentSection={setSection}
-        getKymSection={getKymSectionCoOperativeUnion}
-      />
-      <KYMDocumentField
-        mutationId={id}
-        name="lastAuditReport"
-        label={t['kymCoopUnionDecLatestAuditReport']}
-        setKymCurrentSection={setSection}
-        getKymSection={getKymSectionCoOperativeUnion}
-      />
-      <KYMDocumentField
-        mutationId={id}
-        name="logo"
-        label="Logo"
-        setKymCurrentSection={setSection}
-        getKymSection={getKymSectionCoOperativeUnion}
-      />
-      <KYMDocumentField
-        mutationId={id}
-        name="minuteOfCentralRep"
+      <FormFileInput name="documents.4.identifiers" label={t['kymCoopUnionDecMOAAOA']} />
+      <FormFileInput name="documents.5.identifiers" label={t['kymCoopUnionDecPANCertificate']} />
+      <FormFileInput name="documents.6.identifiers" label={t['kymCoopUnionDecTaxClearance']} />
+      <FormFileInput name="documents.7.identifiers" label={t['kymCoopUnionDecLatestAuditReport']} />
+      <FormFileInput name="documents.8.identifiers" label="Logo" />
+      <FormFileInput
+        name="documents.9.identifiers"
         label={t['kymCoopUnionDecMinuteofCentralRep']}
-        setKymCurrentSection={setSection}
-        getKymSection={getKymSectionCoOperativeUnion}
       />
 
       <Box
@@ -97,25 +41,15 @@ export const DocumentDeclarationInstitutionCOOPUnion = ({
         id="kymCoopUnionAccAccountHolderDeclaration"
         scrollMarginTop="200px"
       >
-        <FormProvider {...methods}>
-          <form
-            onFocus={(e) => {
-              const kymSection = getKymSectionCoOperativeUnion(e.target.id);
-
-              setSection(kymSection);
-            }}
-          >
-            <Box p="s20" display="flex" gap="s16" alignItems="center">
-              <FormCheckbox name="declarationAgreement" fontSize="s3" />
-              <Text variant="formInput" mt="-6px">
-                I/We agree to the&nbsp;
-                <Text as="span" variant="link">
-                  Terms and condition.
-                </Text>
-              </Text>
-            </Box>
-          </form>
-        </FormProvider>
+        <Box p="s20" display="flex" gap="s16" alignItems="center">
+          <FormCheckbox name="declarationAgreement" fontSize="s3" />
+          <Text variant="formInput" mt="-6px">
+            I/We agree to the&nbsp;
+            <Text as="span" variant="link">
+              Terms and condition.
+            </Text>
+          </Text>
+        </Box>
       </Box>
     </FormSection>
   );

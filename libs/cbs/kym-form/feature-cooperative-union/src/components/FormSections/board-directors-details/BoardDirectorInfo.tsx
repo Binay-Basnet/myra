@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import React from 'react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
-import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import {
@@ -17,49 +16,37 @@ import {
   Text,
 } from '@myra-ui';
 
-import {
-  CoopUnionPersonnelInput,
-  RootState,
-  useAppSelector,
-  useDeletePersonnelDetailsMutation,
-  useGetBoardOfDirectorsDetailsListQuery,
-  useGetNewIdMutation,
-} from '@coop/cbs/data-access';
-import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
-import {
-  DynamicBoxGroupContainer,
-  InputGroupContainer,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
+import { InputGroupContainer, SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   FormAddress,
   FormDatePicker,
   FormEmailInput,
+  FormFileInput,
   FormInput,
   FormSwitch,
 } from '@coop/shared/form';
-import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import { BoardOfDirectorRelatedTraining } from './TrainingRelatedToCooperatives';
-import { useCoopUnionBod } from '../../../hooks/useCoopUnionBod';
 
 interface IAddDirectorProps {
-  removeDirector: (directorId: string) => void;
+  removeDirector: () => void;
   index: number;
-  directorId: string;
-  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
-const AddDirector = ({ removeDirector, index, directorId, setSection }: IAddDirectorProps) => {
+const AddDirector = ({ removeDirector, index }: IAddDirectorProps) => {
   const { t } = useTranslation();
 
   const [isOpen, setIsOpen] = React.useState(true);
-  const methods = useForm<CoopUnionPersonnelInput>();
-  const { watch, control } = methods;
+  // const methods = useForm<CoopUnionPersonnelInput>();
+  const { watch, control } = useFormContext();
 
-  useCoopUnionBod({ methods, directorId });
+  // useCoopUnionBod({ methods, directorId });
 
-  const isPermanentAndTemporaryAddressSame = watch(`isPermanentAndTemporaryAddressSame`);
+  const isPermanentAndTemporaryAddressSame = watch(
+    `directors.${index}.isPermanentAndTemporaryAddressSame`
+  );
 
   return (
     <>
@@ -102,7 +89,7 @@ const AddDirector = ({ removeDirector, index, directorId, setSection }: IAddDire
             aria-label="close"
             icon={<CloseIcon />}
             ml="s16"
-            onClick={() => removeDirector(directorId)}
+            onClick={() => removeDirector()}
           />
         )}
       </Box>
@@ -112,132 +99,118 @@ const AddDirector = ({ removeDirector, index, directorId, setSection }: IAddDire
         in={isOpen}
         style={{ marginTop: '0px', border: '1px solid', borderColor: '#E0E5EB' }}
       >
-        <DynamicBoxGroupContainer>
-          <SectionContainer>
-            <FormProvider {...methods}>
-              <form
-                onFocus={(e) => {
-                  const kymSection = getKymSectionCoOperativeUnion(e.target.id);
+        {/* <DynamicBoxGroupContainer> */}
+        <SectionContainer>
+          <Box display="flex" flexDirection="column" gap="s32">
+            <Box display="flex" flexDirection="column" gap="s16">
+              <FormSection>
+                <FormInput
+                  isRequired
+                  type="text"
+                  name={`directors.${index}.fullName`}
+                  id="boardOfDirectors.fullName"
+                  label={t['kymCoopUnionFullName']}
+                />
+                <FormInput
+                  isRequired
+                  type="text"
+                  name={`directors.${index}.designationEn`}
+                  id="boardOfDirectors.designationEn"
+                  label={t['kymCoopUnionDesignation']}
+                />
+              </FormSection>
+              <FormSection header="kymCoopUnionPermanentAddress">
+                <FormAddress name={`directors.${index}.permanentAddress`} />
+              </FormSection>
+            </Box>
 
-                  setSection(kymSection);
-                }}
-              >
-                <Box display="flex" flexDirection="column" gap="s32">
-                  <Box display="flex" flexDirection="column" gap="s16">
-                    <FormSection>
-                      <FormInput
-                        isRequired
-                        type="text"
-                        name="fullName"
-                        id="boardOfDirectors.fullName"
-                        label={t['kymCoopUnionFullName']}
-                      />
-                      <FormInput
-                        isRequired
-                        type="text"
-                        name="designationEn"
-                        id="boardOfDirectors.designationEn"
-                        label={t['kymCoopUnionDesignation']}
-                      />
-                    </FormSection>
-                    <FormSection header="kymCoopUnionPermanentAddress">
-                      <FormAddress name="permanentAddress" />
-                    </FormSection>
-                  </Box>
+            <Box
+              display="flex"
+              flexDirection="column"
+              gap="s16"
+              borderBottom="1px solid"
+              borderBottomColor="border.layout"
+            >
+              <FormSection header="kymCoopUnionTemporaryAddress" id="Temporary Address">
+                <GridItem colSpan={3}>
+                  <FormSwitch
+                    control={control}
+                    id="boardOfDirectors.isPermanentAndTemporaryAddressSame"
+                    name={`directors.${index}.isPermanentAndTemporaryAddressSame`}
+                    label={t['kymCoopUnionTemporaryAddressPermanent']}
+                  />
+                </GridItem>
+                {!isPermanentAndTemporaryAddressSame && (
+                  <FormAddress name={`directors.${index}.temporaryAddress`} />
+                )}
+              </FormSection>
 
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    gap="s16"
-                    borderBottom="1px solid"
-                    borderBottomColor="border.layout"
-                  >
-                    <FormSection header="kymCoopUnionTemporaryAddress" id="Temporary Address">
-                      <GridItem colSpan={3}>
-                        <FormSwitch
-                          control={control}
-                          id="boardOfDirectors.isPermanentAndTemporaryAddressSame"
-                          name="isPermanentAndTemporaryAddressSame"
-                          label={t['kymCoopUnionTemporaryAddressPermanent']}
-                        />
-                      </GridItem>
-                      {!isPermanentAndTemporaryAddressSame && (
-                        <FormAddress name="temporaryAddress" />
-                      )}
-                    </FormSection>
+              <InputGroupContainer p="s16">
+                <FormDatePicker
+                  name={`directors.${index}.dateOfMembership`}
+                  id="boardOfDirectors.dateOfMembership"
+                  label={t['kymCoopUnionDateOfMembership']}
+                />
+                <FormInput
+                  type="text"
+                  name={`directors.${index}.highestQualification`}
+                  id="boardOfDirectors.highestQualification"
+                  label={t['kymCoopUnionHighestQualification']}
+                />
+                <FormInput
+                  isRequired
+                  type="number"
+                  name={`directors.${index}.mobileNumber`}
+                  id="boardOfDirectors.mobileNumber"
+                  label={t['kymCoopUnionMobileNo']}
+                />
+                <FormEmailInput
+                  isRequired
+                  type="text"
+                  name={`directors.${index}.email`}
+                  id="boardOfDirectors.email"
+                  label={t['kymCoopUnionEmail']}
+                />
+                <FormInput
+                  isRequired
+                  type="string"
+                  name={`directors.${index}.citizenshipNo`}
+                  id="boardOfDirectors.citizenshipNo"
+                  label={t['kymCoopUnionCitizenshipPassportDrivingLicenseNo']}
+                />
+                <FormInput
+                  isRequired
+                  type="string"
+                  name={`directors.${index}.panNo`}
+                  id="boardOfDirectors.panNo"
+                  label={t['kymCoopUnionPANNo']}
+                />
+              </InputGroupContainer>
+            </Box>
+            <BoardOfDirectorRelatedTraining directorIndex={index} />
+          </Box>
 
-                    <InputGroupContainer p="s16">
-                      <FormDatePicker
-                        name="dateOfMembership"
-                        id="boardOfDirectors.dateOfMembership"
-                        label={t['kymCoopUnionDateOfMembership']}
-                      />
-                      <FormInput
-                        type="text"
-                        name="highestQualification"
-                        id="boardOfDirectors.highestQualification"
-                        label={t['kymCoopUnionHighestQualification']}
-                      />
-                      <FormInput
-                        isRequired
-                        type="number"
-                        name="mobileNumber"
-                        id="boardOfDirectors.mobileNumber"
-                        label={t['kymCoopUnionMobileNo']}
-                      />
-                      <FormEmailInput
-                        isRequired
-                        type="text"
-                        name="email"
-                        id="boardOfDirectors.email"
-                        label={t['kymCoopUnionEmail']}
-                      />
-                      <FormInput
-                        isRequired
-                        type="string"
-                        name="citizenshipNo"
-                        id="boardOfDirectors.citizenshipNo"
-                        label={t['kymCoopUnionCitizenshipPassportDrivingLicenseNo']}
-                      />
-                      <FormInput
-                        isRequired
-                        type="string"
-                        name="panNo"
-                        id="boardOfDirectors.panNo"
-                        label={t['kymCoopUnionPANNo']}
-                      />
-                    </InputGroupContainer>
-                  </Box>
-                  <BoardOfDirectorRelatedTraining />
-                </Box>
-              </form>
-            </FormProvider>
-
-            <Grid templateColumns="repeat(2, 1fr)" p="s16" mt="s32" rowGap="s32" columnGap="s20">
-              <KYMDocumentField
-                mutationId={directorId}
-                label={t['kymCoopUnionPhotograph']}
-                name="photograph"
-                setKymCurrentSection={setSection}
-                getKymSection={getKymSectionCoOperativeUnion}
-              />
-              <KYMDocumentField
-                mutationId={directorId}
-                label={t['kymCoopUnionPhotographOfIdentityProofDocument']}
-                name="identityDocumentPhoto"
-                setKymCurrentSection={setSection}
-                getKymSection={getKymSectionCoOperativeUnion}
-              />
-            </Grid>
-          </SectionContainer>
-        </DynamicBoxGroupContainer>
+          <Grid templateColumns="repeat(2, 1fr)" p="s16" mt="s32" rowGap="s32" columnGap="s20">
+            <FormFileInput
+              size="lg"
+              label={t['kymCoopUnionPhotograph']}
+              name={`directors.${index}.documents.0.identifiers`}
+            />
+            <FormFileInput
+              size="lg"
+              label={t['kymCoopUnionPhotographOfIdentityProofDocument']}
+              name={`directors.${index}.documents.1.identifiers`}
+            />
+          </Grid>
+        </SectionContainer>
+        {/* </DynamicBoxGroupContainer> */}
 
         <Box display="flex" justifyContent="flex-end" alignItems="center" h="60px" px="s20">
           <Button
             variant="outline"
             shade="danger"
             leftIcon={<AiOutlineDelete height="11px" />}
-            onClick={() => removeDirector(directorId)}
+            onClick={() => removeDirector()}
           >
             {t['kymInsDelete']}
           </Button>
@@ -247,75 +220,12 @@ const AddDirector = ({ removeDirector, index, directorId, setSection }: IAddDire
   );
 };
 
-interface IBoardDirectorInfoProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
-}
-
-export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
+export const BoardDirectorInfo = () => {
   const { t } = useTranslation();
 
-  const router = useRouter();
+  const { control } = useFormContext<CoopUnionInstitutionInformationInput>();
 
-  const id = router?.query?.['id'];
-
-  const [directorIds, setDirectorIds] = useState<string[]>([]);
-
-  const { data: bodEditValues, refetch: refetchEdit } = useGetBoardOfDirectorsDetailsListQuery(
-    {
-      id: String(id),
-    },
-    {
-      enabled: !!id,
-    }
-  );
-
-  useEffect(() => {
-    if (bodEditValues) {
-      const editValueData =
-        bodEditValues?.members?.cooperativeUnion?.formState?.formData?.boardOfDirectorsDetails?.data
-          ?.personnelDetails;
-
-      setDirectorIds(
-        editValueData?.reduce(
-          (prevVal, curVal) => (curVal?.id ? [...prevVal, curVal.id] : prevVal),
-          [] as string[]
-        ) ?? []
-      );
-    }
-  }, [bodEditValues]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetchEdit();
-  }, [preference?.date]);
-
-  const { mutate: newIdMutate } = useGetNewIdMutation({
-    onSuccess: (res) => {
-      setDirectorIds([...directorIds, res.newId]);
-    },
-  });
-
-  const { mutate: deleteMutation } = useDeletePersonnelDetailsMutation({
-    onSuccess: (res) => {
-      const deletedId = String(res?.members?.cooperativeUnion?.deletePersonnel?.recordId);
-
-      const tempDirectorIds = [...directorIds];
-
-      tempDirectorIds.splice(tempDirectorIds.indexOf(deletedId), 1);
-
-      setDirectorIds([...tempDirectorIds]);
-    },
-  });
-
-  const addDirector = () => {
-    newIdMutate({});
-  };
-
-  const removeDirector = (directorId: string) => {
-    deleteMutation({ personnelId: directorId });
-  };
+  const { fields, append, remove } = useFieldArray({ name: 'directors', control });
 
   return (
     <FormSection
@@ -324,20 +234,15 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
     >
       <GridItem colSpan={3}>
         <Grid gap="s16">
-          {directorIds.map((directorId, index) => (
+          {fields.map((field, index) => (
             <Box
-              key={directorId}
+              key={field.id}
               display="flex"
               flexDirection="column"
               id="Details of Proprietor, Partners, Directors."
               scrollMarginTop="200px"
             >
-              <AddDirector
-                index={index}
-                directorId={directorId}
-                removeDirector={removeDirector}
-                setSection={setSection}
-              />
+              <AddDirector index={index} removeDirector={() => remove(index)} />
             </Box>
           ))}
           <GridItem colSpan={1}>
@@ -346,7 +251,14 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
               alignSelf="start"
               leftIcon={<Icon size="md" as={AiOutlinePlus} />}
               variant="outline"
-              onClick={addDirector}
+              onClick={() =>
+                append({
+                  documents: [
+                    { fieldId: 'photograph', identifiers: [] },
+                    { fieldId: 'identityDocumentPhoto', identifiers: [] },
+                  ],
+                })
+              }
             >
               {t['kymCoopUnionAddDirector']}
             </Button>

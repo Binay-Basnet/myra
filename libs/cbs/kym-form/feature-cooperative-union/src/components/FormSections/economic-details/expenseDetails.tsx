@@ -1,27 +1,14 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 
-import { CoopUnionEconomicDetailsInput } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
-import {
-  getKymSectionCoOperativeUnion,
-  useTranslation,
-} from '@coop/shared/utils';
+import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
+import { FormInput, FormNumberInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
-import { useCooperativeUnionEconomicDetails } from '../../../hooks';
-
-interface IExpenseDetailsProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
-}
-
-export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
+export const ExpenseDetails = () => {
   const { t } = useTranslation();
 
-  const methods = useForm<CoopUnionEconomicDetailsInput>();
-
-  const { watch } = methods;
-
-  useCooperativeUnionEconomicDetails({ methods });
+  const { watch } = useFormContext<CoopUnionInstitutionInformationInput>();
 
   //   const cashEquivalent = watch('cashAndCashEquivalent');
   //   const bank = watch('bank');
@@ -48,21 +35,13 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
   //     nonCurrentAssets,
   //   ]);
   const purchase = isNaN(watch('purchase')) ? 0 : watch('purchase');
-  const DirectExpense = isNaN(watch('directExpense'))
-    ? 0
-    : watch('directExpense');
+  const DirectExpense = isNaN(watch('directExpense')) ? 0 : watch('directExpense');
   const administrativeExpense = isNaN(watch('administrativeExpense'))
     ? 0
     : watch('administrativeExpense');
-  const financialCost = isNaN(watch('financialCost'))
-    ? 0
-    : watch('financialCost');
-  const riskManagementCost = isNaN(watch('riskManagementCost'))
-    ? 0
-    : watch('riskManagementCost');
-  const deferredTaxExpense = isNaN(watch('deferredTaxExpense'))
-    ? 0
-    : watch('deferredTaxExpense');
+  const financialCost = isNaN(watch('financialCost')) ? 0 : watch('financialCost');
+  const riskManagementCost = isNaN(watch('riskManagementCost')) ? 0 : watch('riskManagementCost');
+  const deferredTaxExpense = isNaN(watch('deferredTaxExpense')) ? 0 : watch('deferredTaxExpense');
   const totalExpense =
     Number(purchase) +
     Number(DirectExpense) +
@@ -72,250 +51,119 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
     Number(deferredTaxExpense);
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSectionCoOperativeUnion(e.target.id);
+    <Box
+      display="flex"
+      flexDirection="column"
+      id="kymCoopUnionAccExpenseDetails"
+      scrollMarginTop="200px"
+    >
+      <Grid columnGap={40} alignItems="center" px="s14" templateColumns="repeat(2,1fr)">
+        <GridItem>
+          <Text mb="s16" color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="SemiBold">
+            {t['kymCoopUnionExpExpenseDetails']}
+          </Text>
+        </GridItem>
 
-          setSection(kymSection);
-        }}
-      >
-        <Box
-          display="flex"
-          flexDirection="column"
-          id="kymCoopUnionAccExpenseDetails"
-          scrollMarginTop={'200px'}
-        >
-          <Grid
-            columnGap={40}
-            alignItems="center"
-            px="s14"
-            templateColumns="repeat(2,1fr)"
-          >
-            <GridItem>
-              <Text
-                mb="s16"
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="SemiBold"
-              >
-                {t['kymCoopUnionExpExpenseDetails']}
-              </Text>
-            </GridItem>
+        <GridItem>
+          <Text mb="s16" color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="SemiBold">
+            {t['kymCoopUnionExpAmount']}
+          </Text>
+        </GridItem>
+      </Grid>
 
-            <GridItem>
-              <Text
-                mb="s16"
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="SemiBold"
-              >
-                {t['kymCoopUnionExpAmount']}
-              </Text>
-            </GridItem>
-          </Grid>
+      <Divider />
 
-          <Divider />
+      <Grid alignItems="center" px="s8" py="s12" templateColumns="repeat(2,1fr)" columnGap={40}>
+        <GridItem>
+          <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
+            {t['kymCoopUnionExpPurchase']}
+          </Text>
+        </GridItem>
+        <GridItem>
+          <FormNumberInput min={0} name="purchase" __placeholder="0.00" />
+        </GridItem>
+      </Grid>
 
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s12"
-            templateColumns="repeat(2,1fr)"
-            columnGap={40}
-          >
-            <GridItem>
-              <Text
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="Regular"
-              >
-                {t['kymCoopUnionExpPurchase']}
-              </Text>
-            </GridItem>
-            <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="purchase"
-                __placeholder="0.00"
-              />
-            </GridItem>
-          </Grid>
+      <Grid alignItems="center" px="s8" py="s12" templateColumns="repeat(2,1fr)" columnGap={40}>
+        <GridItem>
+          <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
+            {t['kymCoopUnionExpDirectExpense']}
+          </Text>
+        </GridItem>
+        <GridItem>
+          <FormNumberInput name="directExpense" __placeholder="0.00" />
+        </GridItem>
+      </Grid>
 
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s12"
-            templateColumns="repeat(2,1fr)"
-            columnGap={40}
-          >
-            <GridItem>
-              <Text
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="Regular"
-              >
-                {t['kymCoopUnionExpDirectExpense']}
-              </Text>
-            </GridItem>
-            <GridItem>
-              <FormInput
-                textAlign="right"
-                type="text"
-                name="directExpense"
-                __placeholder="0.00"
-              />
-            </GridItem>
-          </Grid>
+      <Grid alignItems="center" px="s8" py="s12" templateColumns="repeat(2,1fr)" columnGap={40}>
+        <GridItem>
+          <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
+            {t['kymCoopUnionExpAdministrativeExpense']}
+          </Text>
+        </GridItem>
 
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s12"
-            templateColumns="repeat(2,1fr)"
-            columnGap={40}
-          >
-            <GridItem>
-              <Text
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="Regular"
-              >
-                {t['kymCoopUnionExpAdministrativeExpense']}
-              </Text>
-            </GridItem>
+        <GridItem>
+          <FormNumberInput min={0} name="administrativeExpense" __placeholder="0.00" />
+        </GridItem>
+      </Grid>
 
-            <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="administrativeExpense"
-                __placeholder="0.00"
-              />
-            </GridItem>
-          </Grid>
+      <Grid alignItems="center" px="s8" py="s12" templateColumns="repeat(2,1fr)" columnGap={40}>
+        <GridItem>
+          <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
+            {t['kymCoopUnionExpFinancialCost']}
+          </Text>
+        </GridItem>
+        <GridItem>
+          <FormNumberInput min={0} name="financialCost" __placeholder="0.00" />
+        </GridItem>
+      </Grid>
 
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s12"
-            templateColumns="repeat(2,1fr)"
-            columnGap={40}
-          >
-            <GridItem>
-              <Text
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="Regular"
-              >
-                {t['kymCoopUnionExpFinancialCost']}
-              </Text>
-            </GridItem>
-            <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="financialCost"
-                __placeholder="0.00"
-              />
-            </GridItem>
-          </Grid>
+      <Grid alignItems="center" px="s8" py="s12" templateColumns="repeat(2,1fr)" columnGap={40}>
+        <GridItem>
+          <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
+            {t['kymCoopUnionExpRiskManagementExpense']}
+          </Text>
+        </GridItem>
 
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s12"
-            templateColumns="repeat(2,1fr)"
-            columnGap={40}
-          >
-            <GridItem>
-              <Text
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="Regular"
-              >
-                {t['kymCoopUnionExpRiskManagementExpense']}
-              </Text>
-            </GridItem>
+        <GridItem>
+          <FormNumberInput min={0} name="riskManagementCost" __placeholder="0.00" />
+        </GridItem>
+      </Grid>
 
-            <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="riskManagementCost"
-                __placeholder="0.00"
-              />
-            </GridItem>
-          </Grid>
+      <Grid alignItems="center" px="s8" py="s12" templateColumns="repeat(2,1fr)" columnGap={40}>
+        <GridItem>
+          <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
+            {t['kymCoopUnionExpDefferedTaxExpense']}
+          </Text>
+        </GridItem>
+        <GridItem>
+          <FormNumberInput min={0} name="deferredTaxExpense" __placeholder="0.00" />
+        </GridItem>
+      </Grid>
 
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s12"
-            templateColumns="repeat(2,1fr)"
-            columnGap={40}
-          >
-            <GridItem>
-              <Text
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="Regular"
-              >
-                {t['kymCoopUnionExpDefferedTaxExpense']}
-              </Text>
-            </GridItem>
-            <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="deferredTaxExpense"
-                __placeholder="0.00"
-              />
-            </GridItem>
-          </Grid>
+      <Divider />
 
-          <Divider />
+      <Grid alignItems="center" px="s8" py="s16" templateColumns="repeat(2,1fr)" columnGap={40}>
+        <GridItem>
+          <Text mb="s16" color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="SemiBold">
+            {t['kymCoopUnionExpTotal']}
+          </Text>
+        </GridItem>
 
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s16"
-            templateColumns="repeat(2,1fr)"
-            columnGap={40}
-          >
-            <GridItem>
-              <Text
-                mb="s16"
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="SemiBold"
-              >
-                {t['kymCoopUnionExpTotal']}
-              </Text>
-            </GridItem>
-
-            <GridItem>
-              <FormInput
-                isDisabled={true}
-                bg="neutralColorLight.Gray-20"
-                border="1px solid"
-                borderColor="disabled.disabled"
-                textAlign="right"
-                type="text"
-                name="totalExpense"
-                value={totalExpense}
-                __placeholder={t['kymCoopUnionExpTotalAssets']}
-              />
-            </GridItem>
-          </Grid>
-        </Box>
-      </form>
-    </FormProvider>
+        <GridItem>
+          <FormInput
+            isDisabled
+            bg="neutralColorLight.Gray-20"
+            border="1px solid"
+            borderColor="disabled.disabled"
+            textAlign="right"
+            type="text"
+            name="totalExpense"
+            value={totalExpense}
+            __placeholder={t['kymCoopUnionExpTotalAssets']}
+          />
+        </GridItem>
+      </Grid>
+    </Box>
   );
 };

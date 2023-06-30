@@ -1,35 +1,22 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 import { Input, Text } from '@myra-ui';
 
-import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import {
   ContainerWithDivider,
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
-import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
-
-interface ICooperativeMemberInformationProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
-}
-
-export const CooperativeMemberInformation = ({
-  setSection,
-}: ICooperativeMemberInformationProps) => {
+export const CooperativeMemberInformation = () => {
   const { t } = useTranslation();
 
   // const [currentTotal, setCurrentTotal] = useState<number>(0);
   // const [targetTotal, setTargetTotal] = useState<number>(0);
 
-  const methods = useForm<CoopUnionInstitutionInformationInput>();
-
-  useCoopUnionInstitution({ methods });
-
-  const { watch } = methods;
+  const { watch } = useFormContext();
 
   const noOfMaleMemberCurrent = isNaN(watch('noOfMaleMemberCurrent'))
     ? 0
@@ -83,110 +70,100 @@ export const CooperativeMemberInformation = ({
   // ]);
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSectionCoOperativeUnion(e.target.id);
+    <GroupContainer p="s20" id="kymCoopUnionAccContactDetails" scrollMarginTop="200px">
+      <Text fontSize="r1" fontWeight="semibold" color="neutralColorLight.Gray-80">
+        {t['kymCoopUnionCooperativeMemberInformation']}
+      </Text>
 
-          setSection(kymSection);
-        }}
-      >
-        <GroupContainer p="s20" id="kymCoopUnionAccContactDetails" scrollMarginTop="200px">
-          <Text fontSize="r1" fontWeight="semibold" color="neutralColorLight.Gray-80">
-            {t['kymCoopUnionCooperativeMemberInformation']}
+      <ContainerWithDivider gap="s8">
+        <InputGroupContainer>
+          <Text fontSize="s3" fontWeight={600} color="neutralColorLight.Gray-80">
+            {t['kymCoopUnionMemberDetails']}
           </Text>
 
-          <ContainerWithDivider gap="s8">
-            <InputGroupContainer>
-              <Text fontSize="s3" fontWeight={600} color="neutralColorLight.Gray-80">
-                {t['kymCoopUnionMemberDetails']}
-              </Text>
+          <Text fontSize="s3" fontWeight={600} color="neutralColorLight.Gray-80">
+            {t['kymCoopUnionCurrent']}
+          </Text>
 
-              <Text fontSize="s3" fontWeight={600} color="neutralColorLight.Gray-80">
-                {t['kymCoopUnionCurrent']}
-              </Text>
+          <Text fontSize="s3" fontWeight={600} color="neutralColorLight.Gray-80">
+            {t['kymCoopUnionTargetFiscalYear']}
+          </Text>
+        </InputGroupContainer>
+        <InputGroupContainer>
+          <Text variant="formHelper" margin="auto 0">
+            {t['kymCoopUnionNoMaleMembers']}
+          </Text>
 
-              <Text fontSize="s3" fontWeight={600} color="neutralColorLight.Gray-80">
-                {t['kymCoopUnionTargetFiscalYear']}
-              </Text>
-            </InputGroupContainer>
-            <InputGroupContainer>
-              <Text variant="formHelper" margin="auto 0">
-                {t['kymCoopUnionNoMaleMembers']}
-              </Text>
+          <FormInput
+            type="number"
+            min={0}
+            name="noOfMaleMemberCurrent"
+            __placeholder={t['kymCoopUnionEnterNoMaleMembers']}
+          />
 
-              <FormInput
-                type="number"
-                min={0}
-                name="noOfMaleMemberCurrent"
-                __placeholder={t['kymCoopUnionEnterNoMaleMembers']}
-              />
+          <FormInput
+            type="number"
+            min={0}
+            name="noOfMaleMemberTarget"
+            __placeholder={t['kymCoopUnionEnterNoMaleMembers']}
+          />
+        </InputGroupContainer>
 
-              <FormInput
-                type="number"
-                min={0}
-                name="noOfMaleMemberTarget"
-                __placeholder={t['kymCoopUnionEnterNoMaleMembers']}
-              />
-            </InputGroupContainer>
+        <InputGroupContainer>
+          <Text variant="formHelper" margin="auto 0">
+            {t['kymCoopUnionNoFemaleMembers']}
+          </Text>
 
-            <InputGroupContainer>
-              <Text variant="formHelper" margin="auto 0">
-                {t['kymCoopUnionNoFemaleMembers']}
-              </Text>
+          <FormInput
+            type="number"
+            min={0}
+            name="noOfFemaleMemberCurrent"
+            __placeholder={t['kymCoopUnionEnterNoFemaleMembers']}
+          />
 
-              <FormInput
-                type="number"
-                min={0}
-                name="noOfFemaleMemberCurrent"
-                __placeholder={t['kymCoopUnionEnterNoFemaleMembers']}
-              />
+          <FormInput
+            type="number"
+            min={0}
+            name="noOfFemaleMemberTarget"
+            __placeholder={t['kymCoopUnionEnterNoFemaleMembers']}
+          />
+        </InputGroupContainer>
 
-              <FormInput
-                type="number"
-                min={0}
-                name="noOfFemaleMemberTarget"
-                __placeholder={t['kymCoopUnionEnterNoFemaleMembers']}
-              />
-            </InputGroupContainer>
+        <InputGroupContainer>
+          <Text variant="formHelper" margin="auto 0">
+            {t['kymCoopUnionNoInstitutionalMembers']}
+          </Text>
 
-            <InputGroupContainer>
-              <Text variant="formHelper" margin="auto 0">
-                {t['kymCoopUnionNoInstitutionalMembers']}
-              </Text>
+          <FormInput
+            type="number"
+            min={0}
+            name="noOfInstitutionalMemberCurrent"
+            __placeholder={t['kymCoopUnionEnterNoInstitutionalMembers']}
+          />
 
-              <FormInput
-                type="number"
-                min={0}
-                name="noOfInstitutionalMemberCurrent"
-                __placeholder={t['kymCoopUnionEnterNoInstitutionalMembers']}
-              />
+          <FormInput
+            type="number"
+            min={0}
+            name="noOfInstitutionalMemberTarget"
+            __placeholder={t['kymCoopUnionEnterNoInstitutionalMembers']}
+          />
+        </InputGroupContainer>
 
-              <FormInput
-                type="number"
-                min={0}
-                name="noOfInstitutionalMemberTarget"
-                __placeholder={t['kymCoopUnionEnterNoInstitutionalMembers']}
-              />
-            </InputGroupContainer>
+        <InputGroupContainer>
+          <Text variant="formLabel" margin="auto 0">
+            {t['kymCoopUnionTotalCurrentMembers']}
+          </Text>
 
-            <InputGroupContainer>
-              <Text variant="formLabel" margin="auto 0">
-                {t['kymCoopUnionTotalCurrentMembers']}
-              </Text>
+          <Input
+            type="number"
+            // __placeholder={'0'}
+            isDisabled
+            value={currentTotal}
+          />
 
-              <Input
-                type="number"
-                // __placeholder={'0'}
-                isDisabled
-                value={currentTotal}
-              />
-
-              <Input type="number" isDisabled value={targetTotal} />
-            </InputGroupContainer>
-          </ContainerWithDivider>
-        </GroupContainer>
-      </form>
-    </FormProvider>
+          <Input type="number" isDisabled value={targetTotal} />
+        </InputGroupContainer>
+      </ContainerWithDivider>
+    </GroupContainer>
   );
 };

@@ -1,40 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import React from 'react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
-import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import { Box, Button, Collapse, FormSection, GridItem, Icon, IconButton, Text } from '@myra-ui';
 
-import {
-  useDeleteAccountOperatorInstitutionMutation,
-  useGetInsAccountOperatorEditListQuery,
-  useGetNewIdMutation,
-} from '@coop/cbs/data-access';
-import { DynamicBoxGroupContainer, SectionContainer } from '@coop/cbs/kym-form/ui-containers';
+import { KymInsInput } from '@coop/cbs/data-access';
+import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormAddress, FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
-import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import { BottomDocument } from './components/BottomComponents';
-import { useAccountOperator } from '../hooks/useAccountOperation';
 
 interface IAddDirector {
-  removeDirector: (directorId: string) => void;
-  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
-  accountId: string;
+  removeDirector: () => void;
+  index: number;
 }
 
-const AddAccountDetails = ({ removeDirector, setKymCurrentSection, accountId }: IAddDirector) => {
+const AddAccountDetails = ({ removeDirector, index }: IAddDirector) => {
   const { t } = useTranslation();
-  const methods = useForm();
-  const { watch } = methods;
 
-  useAccountOperator({ methods, accountOpId: accountId });
+  const { watch } = useFormContext<KymInsInput>();
 
   const [isOpen, setIsOpen] = React.useState(true);
 
-  const isPermanentAndTemporaryAddressSame = watch('isTemporaryAndPermanentAddressSame');
+  const isPermanentAndTemporaryAddressSame = watch(
+    `accountOperator.${index}.isTemporaryAndPermanentAddressSame`
+  );
 
   return (
     <>
@@ -56,7 +49,7 @@ const AddAccountDetails = ({ removeDirector, setKymCurrentSection, accountId }: 
           cursor="pointer"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <Text fontSize="r1">Account Operator</Text>
+          <Text fontSize="r1">Account Operator {index + 1}</Text>
           <Box>
             {isOpen ? (
               <IconButton
@@ -83,7 +76,7 @@ const AddAccountDetails = ({ removeDirector, setKymCurrentSection, accountId }: 
             icon={<CloseIcon />}
             ml="s16"
             onClick={() => {
-              removeDirector(accountId);
+              removeDirector();
             }}
           />
         )}
@@ -98,107 +91,82 @@ const AddAccountDetails = ({ removeDirector, setKymCurrentSection, accountId }: 
           borderBottom="0px"
           pb="s20"
         >
-          {' '}
-          <FormProvider {...methods}>
-            <form
-              onFocus={(e) => {
-                const kymSection = getKymSectionInstitution(e.target.id);
-                setKymCurrentSection(kymSection);
-              }}
+          <Box display="flex" flexDirection="column">
+            <FormSection>
+              <FormInput
+                isRequired
+                id="AccountOperatorInstitution"
+                type="text"
+                name={`accountOperator.${index}.name`}
+                label={t['kymInsFullName']}
+              />
+              <FormInput
+                isRequired
+                id="AccountOperatorInstitution"
+                type="text"
+                name={`accountOperator.${index}.contact`}
+                label={t['kymInsContactNo']}
+              />
+              <FormInput
+                isRequired
+                id="AccountOperatorInstitution"
+                type="text"
+                name={`accountOperator.${index}.email`}
+                label={t['kymInsEmail']}
+              />
+            </FormSection>
+
+            <FormSection header="kymInsPermanentAddress">
+              <FormAddress name={`accountOperator.${index}.permanentAddress`} />
+            </FormSection>
+
+            <Box
+              id="Temporary Address"
+              pt="s20"
+              display="flex"
+              flexDirection="column"
+              scrollMarginTop="200px"
             >
-              <Box display="flex" flexDirection="column">
-                <FormSection>
-                  <FormInput
-                    isRequired
-                    id="AccountOperatorInstitution"
-                    type="text"
-                    name="name"
-                    label={t['kymInsFullName']}
-                  />
-                  <FormInput
-                    isRequired
-                    id="AccountOperatorInstitution"
-                    type="text"
-                    name="contact"
-                    label={t['kymInsContactNo']}
-                  />
-                  <FormInput
-                    isRequired
-                    id="AccountOperatorInstitution"
-                    type="text"
-                    name="email"
-                    label={t['kymInsEmail']}
-                  />
-                </FormSection>
+              <Box display="flex" flexDirection="column" gap="s16" px="s20">
+                <Text fontSize="r1" fontWeight="SemiBold">
+                  {t['kymInsTemporaryAddress']}
+                </Text>
 
-                <FormSection header="kymInsPermanentAddress">
-                  <FormAddress name="permanentAddress" />
-                </FormSection>
-
-                <Box
-                  id="Temporary Address"
-                  pt="s20"
-                  display="flex"
-                  flexDirection="column"
-                  scrollMarginTop="200px"
-                >
-                  <Box display="flex" flexDirection="column" gap="s16" px="s20">
-                    <Text fontSize="r1" fontWeight="SemiBold">
-                      {t['kymInsTemporaryAddress']}
-                    </Text>
-
-                    <FormSwitch
-                      id="AccountOperatorInstitution"
-                      name="isTemporaryAndPermanentAddressSame"
-                      label={t['kymInsTemporaryAddressPermanent']}
-                    />
-                  </Box>
-
-                  <FormSection>
-                    {!isPermanentAndTemporaryAddressSame && (
-                      <FormAddress sectionId="AccountOperatorInstitution" name="temporaryAddress" />
-                    )}
-                  </FormSection>
-                </Box>
+                <FormSwitch
+                  id="AccountOperatorInstitution"
+                  name={`accountOperator.${index}.isTemporaryAndPermanentAddressSame`}
+                  label={t['kymInsTemporaryAddressPermanent']}
+                />
               </Box>
-            </form>
-          </FormProvider>
+
+              <FormSection>
+                {!isPermanentAndTemporaryAddressSame && (
+                  <FormAddress
+                    sectionId="AccountOperatorInstitution"
+                    name={`accountOperator.${index}.temporaryAddress`}
+                  />
+                )}
+              </FormSection>
+            </Box>
+          </Box>
           <Box>
             <Box display="flex" flexDirection="row" justifyContent="flex-start" gap="s16">
-              <FormProvider {...methods}>
-                <form
-                  onFocus={(e) => {
-                    const kymSection = getKymSectionInstitution(e.target.id);
-                    setKymCurrentSection(kymSection);
-                  }}
-                >
-                  <Box
-                    px="s20"
-                    py="s16"
-                    display="grid"
-                    gridTemplateColumns="repeat(3, 1fr)"
-                    gap="s20"
-                  >
-                    <FormSelect
-                      isRequired
-                      id="AccountOperatorInstitution"
-                      name="designation"
-                      label={t['kymInsDesignation']}
-                      options={[
-                        { value: 'President', label: 'President' },
-                        { value: 'Vice President', label: 'Vice-President' },
-                        { value: 'Secretary', label: 'Secretary' },
-                        { value: 'Treasurer', label: 'Treasurer' },
-                      ]}
-                    />
-                    <FormInput name="panNo" label={t['kymInsPanNo']} />
-                    <BottomDocument
-                      accountId={accountId}
-                      setKymCurrentSection={setKymCurrentSection}
-                    />
-                  </Box>
-                </form>
-              </FormProvider>
+              <Box px="s20" py="s16" display="grid" gridTemplateColumns="repeat(3, 1fr)" gap="s20">
+                <FormSelect
+                  isRequired
+                  id="AccountOperatorInstitution"
+                  name={`accountOperator.${index}.designation`}
+                  label={t['kymInsDesignation']}
+                  options={[
+                    { value: 'President', label: 'President' },
+                    { value: 'Vice President', label: 'Vice-President' },
+                    { value: 'Secretary', label: 'Secretary' },
+                    { value: 'Treasurer', label: 'Treasurer' },
+                  ]}
+                />
+                <FormInput name={`accountOperator.${index}.panNo`} label={t['kymInsPanNo']} />
+                <BottomDocument index={index} />
+              </Box>
             </Box>
           </Box>
         </SectionContainer>
@@ -219,7 +187,7 @@ const AddAccountDetails = ({ removeDirector, setKymCurrentSection, accountId }: 
             shade="danger"
             leftIcon={<AiOutlineDelete height="11px" />}
             onClick={() => {
-              removeDirector(accountId);
+              removeDirector();
             }}
           >
             {t['kymInsDelete']}
@@ -230,84 +198,35 @@ const AddAccountDetails = ({ removeDirector, setKymCurrentSection, accountId }: 
   );
 };
 
-interface IProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
-}
-
-export const InstitutionKYMAccountDetail = ({ setSection }: IProps) => {
+export const InstitutionKYMAccountDetail = () => {
   const { t } = useTranslation();
-  const router = useRouter();
-  const id = router?.query?.['id'] as string;
 
-  const [accOperatorIds, setAccOperatorIds] = useState<string[]>([]);
+  const { control } = useFormContext<KymInsInput>();
 
-  const { data: editValues } = useGetInsAccountOperatorEditListQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
-
-  useEffect(() => {
-    if (editValues) {
-      const editValueData = editValues?.members?.institution?.listAccountOperators?.data;
-
-      setAccOperatorIds(
-        editValueData?.reduce(
-          (prevVal, curVal) => (curVal?.id ? [...prevVal, curVal.id] : prevVal),
-          [] as string[]
-        ) ?? []
-      );
-    }
-  }, [editValues]);
-
-  const { mutate: newIdMutate } = useGetNewIdMutation({
-    onSuccess: (res) => {
-      setAccOperatorIds([...accOperatorIds, res.newId]);
-    },
+  const { append, fields, remove } = useFieldArray({
+    control,
+    name: 'accountOperator',
   });
 
-  const { mutate: deleteMutate } = useDeleteAccountOperatorInstitutionMutation({
-    onSuccess: (res) => {
-      const deletedId = String(res?.members?.institution?.accountOperator?.Delete?.recordId);
-      const tempAccountOperatorIds = [...accOperatorIds];
-      tempAccountOperatorIds.splice(tempAccountOperatorIds.indexOf(deletedId), 1);
-      setAccOperatorIds([...tempAccountOperatorIds]);
-    },
-  });
-
-  const addAccountOperator = () => {
-    newIdMutate({});
-  };
-
-  const removeAccountOperator = (accOperatorId: string) => {
-    deleteMutate({ insId: id, acc: accOperatorId });
-  };
   return (
     <FormSection id="kymInsDetailsofAccountOperators" header="kymInsDetailsofAccountOperators">
-      <GridItem colSpan={3}>
-        <DynamicBoxGroupContainer>
-          {accOperatorIds.map((accOperatorId) => (
-            <Box key={accOperatorId} display="flex" flexDirection="column">
-              <AddAccountDetails
-                setKymCurrentSection={setSection}
-                removeDirector={removeAccountOperator}
-                accountId={accOperatorId}
-              />
-            </Box>
-          ))}
-          <Button
-            id="accountOperatorDetailsButton"
-            alignSelf="start"
-            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-            variant="outline"
-            onClick={() => {
-              addAccountOperator();
-            }}
-          >
-            {t['kymInsNewOperator']}
-          </Button>
-        </DynamicBoxGroupContainer>
+      {fields.map((field, index) => (
+        <GridItem colSpan={3} key={field.id} display="flex" flexDirection="column">
+          <AddAccountDetails removeDirector={() => remove(index)} index={index} />
+        </GridItem>
+      ))}
+      <GridItem colSpan={2}>
+        <Button
+          id="accountOperatorDetailsButton"
+          alignSelf="start"
+          leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+          variant="outline"
+          onClick={() => {
+            append({ documents: [{ fieldId: 'specimenSignature', identifiers: [] }] });
+          }}
+        >
+          {t['kymInsNewOperator']}
+        </Button>
       </GridItem>
     </FormSection>
   );

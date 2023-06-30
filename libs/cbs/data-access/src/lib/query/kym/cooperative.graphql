@@ -1,0 +1,210 @@
+query getKYMCooperativeFormData($id: ID!) {
+  members {
+    cooperative {
+      formState(id: $id) {
+        data {
+          documents {
+            identifiers: docData {
+              identifier
+              url
+            }
+            fieldId
+          }
+
+          nameOfOrganization
+          regdNumber
+          regdDate
+          regdOffice
+          registeredAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+
+          operatingAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+
+          email
+          website
+          contactNumber
+          noOfMaleMembers
+          noOfFemaleMembers
+          noOfOtherMembers
+          lastAuditDate
+          lastAgmDate
+          representativeFullName
+          representativeDesignatiton
+          representativeEmail
+          representativeContactNumber
+          representativePanNo
+          permanentRepresentativeAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+
+          isPermanentAndTemporaryAddressSame
+          temporaryRepresentativeAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+
+          cooperativeTypeId
+          mainServiceProduct
+          noOfMaleEmployee
+          noOfFemaleEmployee
+
+          totalEmployee
+          shareCapital
+          reserveAndSurplus
+          savingDeposit
+          loanAccount
+          capitalGrant
+          currentLiabilities
+          nonCurrentLiabilities
+
+          cashAndCashEquivalent
+          bank
+          investments
+          loan
+          nonCurrentAssets
+          otherNonCurrentAssets
+          totalAssets
+
+          accountHoldersName
+
+          hasTCAccepted
+          vatNo
+
+          directorDetails {
+            id
+            nameEn: fullName
+            designation
+            permanentAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            documents {
+              fieldId
+              identifiers: docData {
+                identifier
+                url
+              }
+            }
+            isPermanentAndTemporaryAddressSame
+            temporaryAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            dateOfMembership
+            highestQualification
+            contactNumber
+            email
+            citizenshipNo
+            panNo
+            documents {
+              fieldId
+            }
+          }
+
+          accountOperator {
+            id
+            nameEn: fullName
+            designation
+            permanentAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            documents {
+              fieldId
+              identifiers: docData {
+                identifier
+                url
+              }
+            }
+            isPermanentAndTemporaryAddressSame
+            temporaryAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            dateOfMembership
+            highestQualification
+            contactNumber
+            email
+            citizenshipNo
+            panNo
+            coopRelatedTraining {
+              subjectOfTraining
+              dateOfTraining
+              trainingOrganization
+            }
+          }
+        }
+      }
+    }
+  }
+}

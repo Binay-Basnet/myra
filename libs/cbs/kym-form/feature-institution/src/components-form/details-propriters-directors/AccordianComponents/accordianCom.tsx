@@ -1,117 +1,108 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 import { Box, FormSection, Text } from '@myra-ui';
 
+import { KymInsInput } from '@coop/cbs/data-access';
 import { FormAddress, FormDatePicker, FormInput, FormSwitch } from '@coop/shared/form';
-import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
-
-import { useDirector } from '../../hooks/useDirector';
+import { useTranslation } from '@coop/shared/utils';
 
 interface IAddDirector {
-  removeDirector: (directorId: string) => void;
-  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
-  directorId: string;
+  index: number;
 }
 
-export const DirectorTopPart = ({ setKymCurrentSection, directorId }: IAddDirector) => {
+export const DirectorTopPart = ({ index }: IAddDirector) => {
   const { t } = useTranslation();
-  const methods = useForm();
+  const methods = useFormContext<KymInsInput>();
 
   const { watch } = methods;
-  useDirector({ methods, directorId });
 
-  const isPermanentAndTemporaryAddressSame = watch('isTemporaryAndPermanentAddressSame');
+  const isPermanentAndTemporaryAddressSame = watch(
+    `director.${index}.isTemporaryAndPermanentAddressSame`
+  );
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSectionInstitution(e.target.id);
-          setKymCurrentSection(kymSection);
-        }}
-      >
-        <Box display="flex" flexDirection="column">
-          <FormSection>
-            <FormInput
-              isRequired
-              id="DirectorInstitutionId"
-              type="text"
-              name="name"
-              label={t['kymInsFullName']}
-            />
-            <FormInput
-              isRequired
-              id="DirectorInstitutionId"
-              type="text"
-              name="designation"
-              label={t['kymInsDesignation']}
-            />
-          </FormSection>
+    <Box display="flex" flexDirection="column">
+      <FormSection>
+        <FormInput
+          isRequired
+          id="DirectorInstitutionId"
+          type="text"
+          name={`director.${index}.name`}
+          label={t['kymInsFullName']}
+        />
+        <FormInput
+          isRequired
+          id="DirectorInstitutionId"
+          type="text"
+          name={`director.${index}.designation`}
+          label={t['kymInsDesignation']}
+        />
+      </FormSection>
 
-          <FormAddress
-            sectionId="Permanent Address"
-            sectionHeader="kymInsPermanentAddress"
-            name="permanentAddress"
+      <FormAddress
+        sectionId="Permanent Address"
+        sectionHeader="kymInsPermanentAddress"
+        name={`director.${index}.permanentAddress`}
+      />
+
+      <Box id="Temporary Address" display="flex" flexDirection="column" scrollMarginTop="200px">
+        <Box px="s20" pt="s16" display="flex" flexDirection="column" gap="s16">
+          <Text fontSize="r1" fontWeight="SemiBold">
+            {t['kymInsTemporaryAddress']}
+          </Text>
+
+          <FormSwitch
+            id="isPermanentAndTemporaryAddressSame"
+            name={`director.${index}.isTemporaryAndPermanentAddressSame`}
+            label={t['kymInsTemporaryAddressPermanent']}
           />
-
-          <Box id="Temporary Address" display="flex" flexDirection="column" scrollMarginTop="200px">
-            <Box px="s20" pt="s16" display="flex" flexDirection="column" gap="s16">
-              <Text fontSize="r1" fontWeight="SemiBold">
-                {t['kymInsTemporaryAddress']}
-              </Text>
-
-              <FormSwitch
-                id="isPermanentAndTemporaryAddressSame"
-                name="isTemporaryAndPermanentAddressSame"
-                label={t['kymInsTemporaryAddressPermanent']}
-              />
-            </Box>
-            <FormSection>
-              {!isPermanentAndTemporaryAddressSame && <FormAddress name="temporaryAddress" />}
-            </FormSection>
-          </Box>
-
-          <FormSection>
-            <FormDatePicker
-              id="DirectorInstitutionId"
-              name="dateOfMembership"
-              label={t['kymInsDateOfMembership']}
-            />
-            <FormInput
-              id="DirectorInstitutionId"
-              type="text"
-              name="highestQualification"
-              label={t['kymInsHighestQualification']}
-            />
-            <FormInput
-              isRequired
-              id="DirectorInstitutionId"
-              type="string"
-              name="mobileNo"
-              label={t['kymInsMobileNo']}
-            />
-            <FormInput
-              isRequired
-              id="DirectorInstitutionId"
-              type="text"
-              name="email"
-              label={t['kymInsEmail']}
-            />
-            <FormInput
-              id="DirectorInstitutionId"
-              type="string"
-              name="citizenshipNo"
-              label={t['kymInsCitizenshipPassportDrivingLicenseNo']}
-            />
-            <FormInput
-              id="DirectorInstitutionId"
-              type="string"
-              name="panNo"
-              label={t['kymInsPanNo']}
-            />
-          </FormSection>
         </Box>
-      </form>
-    </FormProvider>
+        <FormSection>
+          {!isPermanentAndTemporaryAddressSame && (
+            <FormAddress name={`director.${index}.temporaryAddress`} />
+          )}
+        </FormSection>
+      </Box>
+
+      <FormSection>
+        <FormDatePicker
+          id="DirectorInstitutionId"
+          name={`director.${index}.dateOfMembership`}
+          label={t['kymInsDateOfMembership']}
+        />
+        <FormInput
+          id="DirectorInstitutionId"
+          type="text"
+          name={`director.${index}.highestQualification`}
+          label={t['kymInsHighestQualification']}
+        />
+        <FormInput
+          isRequired
+          id="DirectorInstitutionId"
+          type="string"
+          name={`director.${index}.mobileNo`}
+          label={t['kymInsMobileNo']}
+        />
+        <FormInput
+          isRequired
+          id="DirectorInstitutionId"
+          type="text"
+          name={`director.${index}.email`}
+          label={t['kymInsEmail']}
+        />
+        <FormInput
+          id="DirectorInstitutionId"
+          type="string"
+          name={`director.${index}.citizenshipNo`}
+          label={t['kymInsCitizenshipPassportDrivingLicenseNo']}
+        />
+        <FormInput
+          id="DirectorInstitutionId"
+          type="string"
+          name={`director.${index}.panNo`}
+          label={t['kymInsPanNo']}
+        />
+      </FormSection>
+    </Box>
   );
 };

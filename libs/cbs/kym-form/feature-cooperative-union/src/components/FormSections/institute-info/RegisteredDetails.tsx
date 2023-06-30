@@ -1,47 +1,28 @@
-import { FormProvider, useForm } from 'react-hook-form';
-
 import { FormSection, GridItem } from '@myra-ui';
 
-import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { FormAddress, FormInput } from '@coop/shared/form';
-import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
-import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
-
-interface IRegisteredDetailsProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
-}
-
-export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {
+export const RegisteredDetails = () => {
   const { t } = useTranslation();
 
-  const methods = useForm<CoopUnionInstitutionInformationInput>();
+  // const methods = useForm<CoopUnionInstitutionInformationInput>();
 
-  useCoopUnionInstitution({ methods });
+  // useCoopUnionInstitution({ methods });
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSectionCoOperativeUnion(e.target.id);
+    <FormSection id="kymCoopUnionAccRegisteredDetails" header="kymCoopUnionRegisteredDetails">
+      <FormInput type="number" name="regdNo" label={t['kymCoopUnionRegisteredNumber']} />
+      <GridItem colSpan={2}>
+        <FormInput
+          isRequired
+          type="text"
+          name="issuingOffice"
+          label={t['kymCoopUnionIssuingOffice']}
+        />
+      </GridItem>
 
-          setSection(kymSection);
-        }}
-      >
-        <FormSection id="kymCoopUnionAccRegisteredDetails" header="kymCoopUnionRegisteredDetails">
-          <FormInput type="number" name="regdNo" label={t['kymCoopUnionRegisteredNumber']} />
-          <GridItem colSpan={2}>
-            <FormInput
-              isRequired
-              type="text"
-              name="issuingOffice"
-              label={t['kymCoopUnionIssuingOffice']}
-            />
-          </GridItem>
-
-          <FormAddress name="regdAddress" />
-        </FormSection>
-      </form>
-    </FormProvider>
+      <FormAddress name="regdAddress" />
+    </FormSection>
   );
 };

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { GridItem } from '@myra-ui';
 
@@ -41,9 +42,7 @@ export const BankGLStatementReport = () => {
     filters?.bankAccounts && filters?.bankAccounts.length !== 0
       ? filters?.bankAccounts?.map((t) => t.value)
       : null;
-  const { data: bankListData } = useGetBankAccountListQuery({
-    pagination: { after: '', first: -1 },
-  });
+
   const { data, isFetching } = useGetBankGlStatementReportQuery(
     {
       data: {
@@ -93,23 +92,7 @@ export const BankGLStatementReport = () => {
           ]}
         />
         <Report.Inputs>
-          <GridItem colSpan={1}>
-            <FormBranchSelect showUserBranchesOnly name="branchId" label="Service Center" isMulti />
-          </GridItem>
-          <GridItem colSpan={2}>
-            <FormSelect
-              name="bankAccounts"
-              label="Select Bank Accounts"
-              isMulti
-              options={bankListData?.accounting?.bankAccounts?.list?.edges?.map((bank) => ({
-                label: bank?.node?.displayName as string,
-                value: bank?.node?.id as string,
-              }))}
-            />
-          </GridItem>
-          <GridItem colSpan={1}>
-            <ReportDateRange />
-          </GridItem>{' '}
+          <BankGlStatementInputs />
         </Report.Inputs>
       </Report.Header>
 
@@ -192,5 +175,52 @@ export const BankGLStatementReport = () => {
         </Report.Filters>
       </Report.Body>
     </Report>
+  );
+};
+
+const BankGlStatementInputs = () => {
+  const [triggerQuery, setTriggerQuery] = useState(false);
+  const methods = useFormContext<Filters>();
+  const { watch } = methods;
+  const branchIds = watch('branchId');
+  const branchesArray = branchIds && branchIds.length !== 0 ? branchIds?.map((t) => t.value) : null;
+  const { data: bankListData } = useGetBankAccountListQuery(
+    {
+      pagination: { after: '', first: -1 },
+      filter: {
+        branchId: branchesArray,
+      },
+    },
+    { enabled: triggerQuery }
+  );
+  useEffect(() => {
+    if (branchIds?.length) {
+      setTriggerQuery(true);
+    }
+  }, [branchIds]);
+  return (
+    <>
+      <GridItem colSpan={1}>
+        <FormBranchSelect showUserBranchesOnly name="branchId" label="Service Center" isMulti />
+      </GridItem>
+      <GridItem colSpan={2}>
+        <FormSelect
+          name="bankAccounts"
+          label="Select Bank Accounts"
+          isMulti
+          options={
+            branchIds
+              ? bankListData?.accounting?.bankAccounts?.list?.edges?.map((bank) => ({
+                  label: bank?.node?.displayName as string,
+                  value: bank?.node?.id as string,
+                }))
+              : undefined
+          }
+        />
+      </GridItem>
+      <GridItem colSpan={1}>
+        <ReportDateRange />
+      </GridItem>{' '}
+    </>
   );
 };

@@ -1,30 +1,26 @@
-import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { FormSection } from '@myra-ui';
-import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
+
+import { FormFileInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 interface IProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
-  directorId: string;
+  index: number;
 }
 
-export const DocumentComponent = ({ setSection, directorId }: IProps) => {
+export const DocumentComponent = ({ index }: IProps) => {
   const { t } = useTranslation();
 
   return (
     <FormSection templateColumns={2}>
-      <KYMDocumentField
-        mutationId={directorId}
-        setKymCurrentSection={setSection}
-        getKymSection={getKymSectionInstitution}
+      <FormFileInput
         label={t['kymInsPhotograph']}
-        name="photograph"
+        name={`director.${index}.documents.0.identifiers`}
+        size="lg"
       />
-      <KYMDocumentField
-        mutationId={directorId}
-        setKymCurrentSection={setSection}
-        getKymSection={getKymSectionInstitution}
+      <FormFileInput
         label={t['kymInsPhotographOfIdentityProofDocument']}
-        name="documentPhotograph"
+        name={`director.${index}.documents.1.identifiers`}
+        size="lg"
       />
     </FormSection>
   );

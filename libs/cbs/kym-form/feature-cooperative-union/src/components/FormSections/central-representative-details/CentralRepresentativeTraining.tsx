@@ -1,12 +1,12 @@
-import { useFieldArray } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import { Box, Button, Icon, Text } from '@myra-ui';
 
+import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import {
   DynamicBoxContainer,
-  DynamicBoxGroupContainer,
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
@@ -35,18 +35,18 @@ const AddRelatedTraining = ({ index, removeRelatedTraining }: IAddRelatedTrainin
       <InputGroupContainer>
         <FormInput
           type="text"
-          name={`trainingAttended.${index}.subjectOfTraining`}
+          name={`centralRepresentative.trainingAttended.${index}.subjectOfTraining`}
           id="centralRepresentative.trainingAttended.subjectOfTraining"
           label={t['kymCoopUnionSubjectOfTraining']}
         />
         <FormDatePicker
-          name={`trainingAttended.${index}.dateOfTraining`}
+          name={`centralRepresentative.trainingAttended.${index}.dateOfTraining`}
           id="centralRepresentative.trainingAttended.dateOfTraining"
           label={t['kymCoopUnionDateOfTraining']}
         />
         <FormInput
           type="text"
-          name={`trainingAttended.${index}.trainingOrganization`}
+          name={`centralRepresentative.trainingAttended.${index}.trainingOrganization`}
           id="centralRepresentative.trainingAttended.trainingOrganization"
           label={t['kymCoopUnionTrainingOrganization']}
         />
@@ -57,12 +57,16 @@ const AddRelatedTraining = ({ index, removeRelatedTraining }: IAddRelatedTrainin
 
 export const CentralRepresentativeTraining = () => {
   const { t } = useTranslation();
+
+  const { control } = useFormContext<CoopUnionInstitutionInformationInput>();
+
   const {
     fields: relatedFields,
     append: relatedAppend,
     remove: relatedRemove,
   } = useFieldArray({
-    name: `trainingAttended`,
+    name: `centralRepresentative.trainingAttended`,
+    control,
   });
 
   return (
@@ -74,29 +78,24 @@ export const CentralRepresentativeTraining = () => {
         <Text variant="bodyRegular">{t['kymCoopUnionTrainingAttended']}</Text>
       </Box>
 
-      <div>
-        <DynamicBoxGroupContainer>
-          {relatedFields.map((item, index) => (
-            <Box key={item.id}>
-              <AddRelatedTraining
-                index={index}
-                removeRelatedTraining={() => relatedRemove(index)}
-              />
-            </Box>
-          ))}
-          <Button
-            alignSelf="start"
-            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-            variant="outline"
-            onClick={() => {
-              relatedAppend({});
-            }}
-            id="centralRepresentative.relatedTrainingButton"
-          >
-            {t['kymInsNewDetail']}
-          </Button>
-        </DynamicBoxGroupContainer>
-      </div>
+      <Box display="flex" flexDirection="column" gap="s20">
+        {relatedFields.map((item, index) => (
+          <Box key={item.id}>
+            <AddRelatedTraining index={index} removeRelatedTraining={() => relatedRemove(index)} />
+          </Box>
+        ))}
+        <Button
+          alignSelf="start"
+          leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+          variant="outline"
+          onClick={() => {
+            relatedAppend({});
+          }}
+          id="centralRepresentative.relatedTrainingButton"
+        >
+          {t['kymInsNewDetail']}
+        </Button>
+      </Box>
     </GroupContainer>
   );
 };

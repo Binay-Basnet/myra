@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { omit } from 'lodash';
 
 import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
@@ -10,6 +12,7 @@ import {
   useGetDepartmentListQuery,
   useGetDesignationListQuery,
   useGetJobApplicationListQuery,
+  useGetJobOfferQuery,
   useSetJobOfferMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -19,7 +22,7 @@ import { getPaginationQuery } from '@coop/shared/utils';
 export const HrRecruitmentJobOfferAdd = () => {
   const methods = useForm();
   const router = useRouter();
-  const { getValues } = methods;
+  const { getValues, reset } = methods;
 
   const { data: jobApplicationData } = useGetJobApplicationListQuery({
     pagination: {
@@ -54,6 +57,18 @@ export const HrRecruitmentJobOfferAdd = () => {
 
   const { mutateAsync } = useSetJobOfferMutation();
 
+  const { data: jobOfferData } = useGetJobOfferQuery(
+    { id: router?.query?.['id'] as string },
+    { enabled: !!router?.query?.['id'] }
+  );
+  const jobOfferEditData = jobOfferData?.hr?.recruitment?.recruitmentJobOffer?.getJobOffer?.data;
+
+  useEffect(() => {
+    if (jobOfferEditData) {
+      reset(jobOfferEditData);
+    }
+  }, [JSON.stringify(jobOfferEditData)]);
+
   const jobApplicationOptions =
     jobApplicationData?.hr?.recruitment?.recruitmentJobApplication?.listJobApplication?.edges?.map(
       (item) => ({
@@ -85,22 +100,41 @@ export const HrRecruitmentJobOfferAdd = () => {
   ];
 
   const submitForm = () => {
-    asyncToast({
-      id: 'add-job-offering',
-      msgs: {
-        success: 'new job offering added succesfully',
-        loading: 'adding new job offering',
-      },
-      onSuccess: () => {
-        router.push(ROUTES?.HR_RECRUITMENT_JOB_OFFER_LIST);
-      },
-      promise: mutateAsync({
-        id: null,
-        input: {
-          ...getValues(),
-        } as JobOfferInput,
-      }),
-    });
+    if (router?.query?.['id']) {
+      asyncToast({
+        id: 'edit-job-offering',
+        msgs: {
+          success: 'job offering edited succesfully',
+          loading: 'editing job offering',
+        },
+        onSuccess: () => {
+          router.push(ROUTES?.HR_RECRUITMENT_JOB_OFFER_LIST);
+        },
+        promise: mutateAsync({
+          id: router?.query?.['id'] as string,
+          input: {
+            ...(omit({ ...getValues() }, ['id']) as JobOfferInput),
+          },
+        }),
+      });
+    } else {
+      asyncToast({
+        id: 'add-job-offering',
+        msgs: {
+          success: 'new job offering added succesfully',
+          loading: 'adding new job offering',
+        },
+        onSuccess: () => {
+          router.push(ROUTES?.HR_RECRUITMENT_JOB_OFFER_LIST);
+        },
+        promise: mutateAsync({
+          id: null,
+          input: {
+            ...getValues(),
+          } as JobOfferInput,
+        }),
+      });
+    }
   };
   return (
     <FormLayout methods={methods}>

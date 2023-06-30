@@ -46,7 +46,7 @@ export const CbsLoanFeatureLoanAccountDetail = () => {
             {tabQuery === 'guarantee' && <GuaranteePage />}
             {tabQuery === 'documents' && <DocumentPage />}
             {tabQuery === 'ledger' && <LedgerPage />}
-            {tabQuery === 'interest update' && <InterestUpdatePage />}
+            {tabQuery === 'account premium update' && <InterestUpdatePage />}
             {tabQuery === 'general updates' && <GeneralUpdatesPage />}
           </Box>
         </Scrollable>

@@ -1,10 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+type KYMSection = {
+  section: string;
+  subSection: string;
+};
+
 // Define a type for the slice state
 interface IndividualState {
   isFormDirty: boolean;
   hasPressedNext: boolean;
   isFormLoading: boolean;
+  kymCurrentSection: KYMSection | undefined;
   basic: {
     errors: Record<string, string[]>;
   };
@@ -14,6 +20,7 @@ interface IndividualState {
 const initialState: () => IndividualState = () => ({
   hasPressedNext: false,
   isFormDirty: false,
+  kymCurrentSection: undefined,
   isFormLoading: false,
   basic: {
     errors: {},
@@ -43,10 +50,14 @@ export const individuialSLice = createSlice({
     setFormLoading: (state, action: PayloadAction<boolean>) => {
       state.isFormLoading = action.payload;
     },
+    setKYMIndSection: (state, action: PayloadAction<KYMSection>) => {
+      state.kymCurrentSection = action.payload;
+    },
   },
 });
 
 export const {
+  setKYMIndSection,
   addIndividualError,
   setIndividualFormDirty,
   setIndividualHasPressedNext,
