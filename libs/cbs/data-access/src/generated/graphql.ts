@@ -1789,6 +1789,7 @@ export type BankAccountFilter = {
   bankDisplayName?: InputMaybe<Scalars['String']>;
   bankId?: InputMaybe<Scalars['String']>;
   bankName?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
 };
@@ -9933,7 +9934,6 @@ export type JobOfferRecord = {
 
 export type JobOfferTerm = {
   offerTerm: Scalars['String'];
-  sn: Scalars['ID'];
   value: Scalars['String'];
 };
 
@@ -19194,8 +19194,6 @@ export type StaffPlanInput = {
   note?: InputMaybe<Scalars['String']>;
   staffPlans?: InputMaybe<Array<StaffPlanTypesInput>>;
   title: Scalars['String'];
-  total_cost_estimation?: InputMaybe<Scalars['String']>;
-  total_vacancies?: InputMaybe<Scalars['Int']>;
 };
 
 export type StaffPlanRecord = {
