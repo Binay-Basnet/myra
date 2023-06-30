@@ -29333,7 +29333,7 @@ export type GetAppointmentLetterListQuery = {
           edges?: Array<{
             cursor: string;
             node: {
-              applicantId: string;
+              id: string;
               name: string;
               probationPeriod: string;
               offerDate: Record<'local' | 'en' | 'np', string>;
@@ -52970,7 +52970,7 @@ export const GetAppointmentLetterListDocument = `
           totalCount
           edges {
             node {
-              applicantId
+              id
               name
               probationPeriod
               offerDate

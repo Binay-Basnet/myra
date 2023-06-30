@@ -53,8 +53,6 @@ export const HrRecruitmentStaffPlanningAdd = () => {
           id: router?.query?.['id'] as string,
           input: {
             ...omit({ ...getValues() }, ['id']),
-            total_vacancies: 0,
-            total_cost_estimation: 'suyash',
           } as unknown as StaffPlanInput,
         }),
       });
@@ -72,8 +70,6 @@ export const HrRecruitmentStaffPlanningAdd = () => {
           id: null,
           input: {
             ...getValues(),
-            total_vacancies: 0,
-            total_cost_estimation: 'suyash',
           } as unknown as StaffPlanInput,
         }),
       });

@@ -86,7 +86,7 @@ query getAppointmentLetterList($filter: Filter, $pagination: Pagination) {
           totalCount
           edges {
             node {
-              applicantId
+              id
               name
               probationPeriod
               offerDate

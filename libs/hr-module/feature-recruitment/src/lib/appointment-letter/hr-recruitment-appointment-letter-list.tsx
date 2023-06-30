@@ -21,8 +21,8 @@ export const HrRecruitmentAppointmentLetterList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Application ID',
-        accessorFn: (row) => row?.node?.applicantId,
+        header: 'Appointment ID',
+        accessorFn: (row) => row?.node?.id,
       },
       {
         header: 'Name',
@@ -55,9 +55,7 @@ export const HrRecruitmentAppointmentLetterList = () => {
                 {
                   title: 'Edit',
                   onClick: (row) => {
-                    router.push(
-                      `${ROUTES?.HR_RECRUITMENT_APPOINTMENT_LETTER_EDIT}?id=${row?.applicantId}`
-                    );
+                    router.push(`${ROUTES?.HR_RECRUITMENT_APPOINTMENT_LETTER_EDIT}?id=${row?.id}`);
                   },
                 },
               ]}
