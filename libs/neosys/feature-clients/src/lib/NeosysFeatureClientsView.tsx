@@ -214,7 +214,7 @@ export const NeosysFeatureClientView = () => {
             id: 'update-env-error',
             type: 'error',
             state: 'error',
-            message: (res?.error as { message: string }[])[0]?.message,
+            message: 'Environment version update unsuccesssful',
           });
           setIsUpdateEnvironmentOpen(false);
         } else {

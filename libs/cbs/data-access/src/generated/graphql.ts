@@ -4248,6 +4248,7 @@ export type DashboardQuery = {
 };
 
 export type DataMigration = {
+  allLoanSchedule?: Maybe<Scalars['String']>;
   dumpAccountInterest?: Maybe<Scalars['String']>;
   dumpProductCharges?: Maybe<Scalars['String']>;
   updateSavingEndDate?: Maybe<Scalars['String']>;
