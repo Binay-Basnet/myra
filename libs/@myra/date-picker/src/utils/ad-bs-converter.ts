@@ -106,7 +106,8 @@ export const bs2ad = (year: number, month: number, day: number) => {
   }
 
   let prevMonthCumulativeTotal = 0;
-  const prevYearCumulativeTotal = cumulativeData[+year - 1];
+  const prevYearCumulativeTotal = cumulativeData[+year - 1] || 0;
+
   for (let i = 0; i < +month - 1; i += 1) {
     prevMonthCumulativeTotal += BS_YEAR_MONTH_DAYS[+year as EachBSYear][i];
   }
@@ -128,7 +129,7 @@ export const bs2ad = (year: number, month: number, day: number) => {
  * Get Days is the given month and year
  */
 export const getBSMonthDays = (month: number, year: number) =>
-  BS_YEAR_MONTH_DAYS[year as EachBSYear][month - 1];
+  BS_YEAR_MONTH_DAYS[year as EachBSYear]?.[month - 1];
 
 /**
  * Get Days is the given month and year
