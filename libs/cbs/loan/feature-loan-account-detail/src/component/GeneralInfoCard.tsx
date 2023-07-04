@@ -23,7 +23,7 @@ export const GeneralInfoCard = ({ title, items, productId }: IGeneralInfoCardPro
                 {item.label}
               </Text>
               <Text fontSize="r1" fontWeight="600" color="neutralColorLight.Gray-80">
-                {item.value}
+                {typeof item.value === 'number' ? item.value.toFixed(2) : item.value}
               </Text>
             </Box>
           )}

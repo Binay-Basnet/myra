@@ -110,6 +110,7 @@ query getKYMIndividualFormData($id: String!) {
               latitude
             }
           }
+          sameTempAsPermanentAddress
           temporaryAddress {
             provinceId
             districtId

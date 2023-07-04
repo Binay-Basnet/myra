@@ -7,8 +7,10 @@ import { FormCheckbox, FormLayout, FormMemberSelect } from '@coop/shared/form';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
+  DocumentInsertInput,
   EmployeeInput,
   MemberType,
+  useGetKymIndividualFormDataQuery,
   useGetSingleEmployeeDetailsQuery,
   useSetNewEmployeeMutation,
 } from '@coop/cbs/data-access';
@@ -16,6 +18,7 @@ import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 import {
   Approvers,
+  Declarations,
   EmployeeAddress,
   EmployeeContactDetails,
   EmployeeHealthInsurance,
@@ -29,6 +32,8 @@ import {
 import { getEmployeeSection } from '../utils/getSectionEmployee';
 import { EducationalDetails } from '../components/EducationalDetails';
 
+const documentMap = ['passport', 'signature', 'citizenship', 'fingerprint'];
+
 export const EmployeeAddForm = () => {
   const router = useRouter();
   const [kymCurrentSection, setCurrentSection] = React.useState<{
@@ -37,18 +42,19 @@ export const EmployeeAddForm = () => {
   }>();
 
   const methods = useForm();
-  const { getValues, watch, reset } = methods;
+
+  const { getValues, watch, reset, setValue } = methods;
   const { mutateAsync } = useSetNewEmployeeMutation();
 
   const isCoopMemberWatch = watch('isCoopMember');
-  // const memberIdWatch = watch('memberId');
+  const memberIdWatch = watch('memberId');
 
-  // const { data: editValues } = useGetKymIndividualFormDataQuery(
-  //   {
-  //     id: String(memberIdWatch),
-  //   },
-  //   { enabled: !!memberIdWatch }
-  // );
+  const { data: editValues } = useGetKymIndividualFormDataQuery(
+    {
+      id: String(memberIdWatch),
+    },
+    { enabled: !!memberIdWatch }
+  );
 
   const { data: employeeEditData } = useGetSingleEmployeeDetailsQuery(
     {
@@ -71,40 +77,42 @@ export const EmployeeAddForm = () => {
           ...employeeDetailData?.temporaryAddress,
           locality: employeeDetailData?.temporaryAddress?.locality?.local,
         },
+        documents:
+          documentMap?.map((document) => ({
+            fieldId: document,
+            identifiers:
+              employeeDetailData?.documents?.find((d) => d?.fieldId === document)?.identifiers ||
+              [],
+          })) || [],
       });
     }
   }, [JSON.stringify(employeeDetailData)]);
 
-  // const personalInfo = editValues?.members?.individual?.formState?.data?.formData?.basicInformation;
-  // const contactInfo = editValues?.members?.individual?.formState?.data?.formData?.contactDetails;
-  // const permanentAddressInfo =
-  //   editValues?.members?.individual?.formState?.data?.formData?.permanentAddress;
-  // const temporaryAddressInfo =
-  //   editValues?.members?.individual?.formState?.data?.formData?.temporaryAddress;
+  const basicInfo = editValues?.members?.individual?.formState?.data;
 
-  // useEffect(() => {
-  //   if (personalInfo) {
-  //     reset({
-  //       firstName: personalInfo?.firstName?.local,
-  //       middleName: personalInfo?.middleName?.local,
-  //       lastName: personalInfo?.lastName?.local,
-  //       // gender: personalInfo?.genderId,
-  //       dateOfBirth: personalInfo?.dateOfBirth,
-  //       personalPhoneNumber: contactInfo?.mobileNumber,
-  //       personalEmailAddress: contactInfo?.email,
-  //       permanentAddress: {
-  //         ...permanentAddressInfo,
-  //         locality: permanentAddressInfo?.locality?.local,
-  //       },
-  //       isTemporarySameAsPermanent: temporaryAddressInfo?.sameTempAsPermanentAddress,
-  //       temporaryAddress: {
-  //         ...temporaryAddressInfo?.address,
-  //         locality: temporaryAddressInfo?.address?.locality?.local,
-  //       },
-  //     });
-  //     setValue('isCoopMember', true);
-  //   }
-  // }, [JSON.stringify(personalInfo)]);
+  useEffect(() => {
+    if (basicInfo) {
+      reset({
+        firstName: basicInfo?.firstName?.local,
+        middleName: basicInfo?.middleName?.local,
+        lastName: basicInfo?.lastName?.local,
+        // gender: personalInfo?.genderId,
+        dateOfBirth: basicInfo?.dateOfBirth,
+        personalPhoneNumber: basicInfo?.mobileNumber,
+        personalEmailAddress: basicInfo?.email,
+        permanentAddress: {
+          ...basicInfo?.permanentAddress,
+          locality: basicInfo?.permanentAddress?.locality?.local,
+        },
+        isTemporarySameAsPermanent: basicInfo?.sameTempAsPermanentAddress,
+        temporaryAddress: {
+          ...basicInfo?.temporaryAddress,
+          locality: basicInfo?.temporaryAddress?.locality?.local,
+        },
+      });
+      setValue('isCoopMember', true);
+    }
+  }, [JSON.stringify(basicInfo)]);
 
   const onSave = () => {
     const values = getValues();
@@ -121,7 +129,16 @@ export const EmployeeAddForm = () => {
         },
         promise: mutateAsync({
           id: router?.query?.['id'] as string,
-          input: omit({ ...values }, ['isCoopMember', 'memberId', 'id']) as EmployeeInput,
+          input: omit(
+            {
+              ...values,
+              documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
+                fieldId: documentMap[index],
+                identifiers: item?.identifiers || [],
+              })),
+            },
+            ['isCoopMember', 'memberId', 'id']
+          ) as EmployeeInput,
         }),
       });
     } else {
@@ -136,7 +153,16 @@ export const EmployeeAddForm = () => {
         },
         promise: mutateAsync({
           id: null,
-          input: omit({ ...values }, ['isCoopMember', 'memberId']) as EmployeeInput,
+          input: omit(
+            {
+              ...values,
+              documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
+                fieldId: documentMap[index],
+                identifiers: item?.identifiers || [],
+              })),
+            },
+            ['isCoopMember', 'memberId']
+          ) as EmployeeInput,
         }),
       });
     }
@@ -197,12 +223,12 @@ export const EmployeeAddForm = () => {
               <Approvers />
               <EmployeeHealthInsurance />
             </SectionContainer>
-            {/* <SectionContainer>
+            <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 Declarations
               </Text>
-              <Declerations />
-            </SectionContainer> */}
+              <Declarations />
+            </SectionContainer>
           </Box>
         </FormLayout.Form>
       </FormLayout.Content>

@@ -27531,6 +27531,10 @@ export type GetSingleEmployeeDetailsQuery = {
               salary?: number | null;
               address?: string | null;
             } | null> | null;
+            documents?: Array<{
+              fieldId?: string | null;
+              identifiers: Array<{ identifier: string; url: string } | null>;
+            } | null> | null;
           } | null;
         };
       };
@@ -29288,6 +29292,7 @@ export type GetKymIndividualFormDataQuery = {
           hasForeignResidentialPermit?: boolean | null;
           foreignResidentialPermitTypeId?: string | null;
           declarationAgreement?: boolean | null;
+          sameTempAsPermanentAddress?: boolean | null;
           identificationSelection?: Array<string | null> | null;
           mainOccupation?: {
             registrationNo?: string | null;
@@ -49754,6 +49759,13 @@ export const GetSingleEmployeeDetailsDocument = `
             expenseApproverId
             healthInsuranceProviderId
             healthInsuranceNumberId
+            documents {
+              fieldId
+              identifiers: docData {
+                identifier
+                url
+              }
+            }
           }
         }
       }
@@ -52179,6 +52191,7 @@ export const GetKymIndividualFormDataDocument = `
               latitude
             }
           }
+          sameTempAsPermanentAddress
           temporaryAddress {
             provinceId
             districtId
