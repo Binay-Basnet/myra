@@ -131,6 +131,13 @@ query getSingleEmployeeDetails($id: String!) {
             expenseApproverId
             healthInsuranceProviderId
             healthInsuranceNumberId
+            documents {
+              fieldId
+              docData {
+                identifier
+                url
+              }
+            }
           }
         }
       }
