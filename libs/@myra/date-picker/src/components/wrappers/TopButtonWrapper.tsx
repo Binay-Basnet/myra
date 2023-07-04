@@ -1,10 +1,9 @@
-import { ComponentProps } from 'react';
-import { Box } from '@chakra-ui/react';
+import { Button, ButtonProps } from '@myra-ui';
 
-type TopButtonWrapperProps = ComponentProps<'div'>;
-
-export const TopButtonWrapper = (props: TopButtonWrapperProps) => (
-  <Box
+export const TopButtonWrapper = (props: ButtonProps) => (
+  <Button
+    as="button"
+    variant="unstyled"
     w="s32"
     h="s32"
     display="flex"
@@ -14,6 +13,7 @@ export const TopButtonWrapper = (props: TopButtonWrapperProps) => (
     cursor="pointer"
     bg="gray.50"
     borderRadius="br1"
+    minW="none"
     _hover={{ bg: 'gray.100' }}
     {...props}
   />

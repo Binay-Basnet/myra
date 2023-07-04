@@ -13,6 +13,7 @@ import { useMonthNavigateHook } from '../../hooks/useMonthNavigateHook';
 import { TDateState } from '../../types/date';
 import { ad2bs } from '../../utils/ad-bs-converter';
 import { isDate } from '../../utils/calendar-builder';
+import { maxBsYear, minBsYear } from '../../utils/constants';
 
 interface ICalendar {
   calendarType: 'AD' | 'BS';
@@ -102,11 +103,19 @@ export const Calendar = ({
         gap="s16"
       >
         <Box display="flex" gap="s8">
-          <TopButtonWrapper onClick={gotoPreviousMonth} data-testid={`${name}-leftMonth`}>
+          <TopButtonWrapper
+            isDisabled={dateState?.bs.year === minBsYear && dateState?.bs?.month === 1}
+            onClick={gotoPreviousMonth}
+            data-testid={`${name}-leftMonth`}
+          >
             <Icon as={BsChevronLeft} />
           </TopButtonWrapper>
 
-          <TopButtonWrapper onClick={gotToNextMonth} data-testid={`${name}-rightMonth`}>
+          <TopButtonWrapper
+            isDisabled={dateState?.bs.year === maxBsYear && dateState?.bs?.month === 12}
+            onClick={gotToNextMonth}
+            data-testid={`${name}-rightMonth`}
+          >
             <Icon as={BsChevronRight} />
           </TopButtonWrapper>
 

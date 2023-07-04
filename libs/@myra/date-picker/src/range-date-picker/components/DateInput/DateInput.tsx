@@ -1,10 +1,10 @@
 import { IoMdClose } from 'react-icons/io';
 import { CalendarIcon, Icon } from '@chakra-ui/icons';
 import { Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react';
-import NepaliDate from 'nepali-date-converter';
 
 import { DateRange } from '../../../types/date';
-import { ordinal } from '../../../utils/constants';
+import { formatBs, ordinal } from '../../../utils/constants';
+// import NepaliDate from '../../../utils/nepali-date-converter/nepali-date-converter';
 
 interface IDateInputProps {
   isOpen: boolean;
@@ -30,16 +30,10 @@ export const DateInput = ({
     <Input
       value={
         calendarType === 'BS'
-          ? value?.from?.np
+          ? value?.from?.np && value?.to?.np
             ? locale === 'en'
-              ? `${new NepaliDate(value?.from?.np).format('YYYY-MM-DD')} - ${new NepaliDate(
-                  value?.to?.np
-                ).format('YYYY-MM-DD')}`
-              : ordinal(
-                  `${new NepaliDate(value?.from?.np).format('YYYY-MM-DD')} - ${new NepaliDate(
-                    value?.to?.np
-                  ).format('YYYY-MM-DD')}`
-                )
+              ? `${formatBs(value?.from?.np, locale)} - ${formatBs(value?.to?.np, locale)}`
+              : ordinal(`${formatBs(value?.from?.np, locale)} - ${formatBs(value?.to?.np, locale)}`)
             : ''
           : value?.from?.en
           ? locale === 'en'

@@ -5,7 +5,7 @@ import { CalendarBuilderDate } from '../types/date';
 export default (month = 8, year = 2079): CalendarBuilderDate[] => {
   // Get number of days in the month and the month's first day
 
-  const monthDays = getBSMonthDays(month, year);
+  const monthDays = getBSMonthDays(month, year) || 30;
   const monthFirstDay = getStartingDayOfBsMonth(year, month);
 
   // Get number of days to be displayed from previous and next months

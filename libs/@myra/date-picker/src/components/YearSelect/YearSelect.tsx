@@ -4,7 +4,7 @@ import { chakraComponents, GroupBase, Select } from 'chakra-react-select';
 import { TDateState } from '../../types/date';
 import { ad2bs, bs2ad } from '../../utils/ad-bs-converter';
 import { getNextMonth } from '../../utils/calendar-builder';
-import { calendarData, ordinal } from '../../utils/constants';
+import { BS_YEAR_MONTH_DAYS, maxBsYear, minBsYear, ordinal } from '../../utils/constants';
 
 interface SelectOption {
   label: string | number;
@@ -29,11 +29,11 @@ export const YearBaseSelect = ({
 }: IYearBaseSelectProps) => {
   const options =
     calendarType === 'BS'
-      ? Object.keys(calendarData).map((fullYear) => ({
+      ? Object.keys(BS_YEAR_MONTH_DAYS).map((fullYear) => ({
           label: locale === 'ne' ? ordinal(String(fullYear)) : String(fullYear),
           value: Number(fullYear),
         }))
-      : Array.from(Array(100), (_, x) => x + 1943).map((fullYear) => ({
+      : Array.from(Array(maxBsYear - minBsYear), (_, x) => x + 1913).map((fullYear) => ({
           label: locale === 'ne' ? ordinal(String(fullYear)) : String(fullYear),
           value: Number(fullYear),
         }));

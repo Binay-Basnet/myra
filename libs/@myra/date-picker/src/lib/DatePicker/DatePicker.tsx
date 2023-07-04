@@ -14,10 +14,10 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import dayjs from 'dayjs';
-import NepaliDate from 'nepali-date-converter';
 
 import { Calendar } from '../../components/Calendar';
 import { TDateState } from '../../types/date';
+import { formatDate } from '../../utils/constants';
 import { convertValueToDate } from '../../utils/functions';
 
 type DateValue = {
@@ -126,7 +126,7 @@ export const DatePicker = ({
                         ? dayjs(dateState?.current).format(dateFormat)
                         : undefined
                       : dateState?.current
-                      ? new NepaliDate(dateState?.current).format(dateFormat)
+                      ? formatDate(dateState.bs, dateFormat, 'en')
                       : undefined
                   }
                   isReadOnly
@@ -173,7 +173,7 @@ export const DatePicker = ({
                   onChange({
                     date: date.current,
                     ad: dayjs(date.current).format(dateFormat),
-                    bs: new NepaliDate(date.current).format(dateFormat),
+                    bs: formatDate(date.bs, dateFormat, 'en'),
                   });
                   onToggle();
                 }
