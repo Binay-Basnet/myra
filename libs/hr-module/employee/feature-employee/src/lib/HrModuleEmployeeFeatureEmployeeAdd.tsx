@@ -7,6 +7,7 @@ import { FormCheckbox, FormLayout, FormMemberSelect } from '@coop/shared/form';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
+  DocumentInsertInput,
   EmployeeInput,
   MemberType,
   useGetKymIndividualFormDataQuery,
@@ -40,14 +41,7 @@ export const EmployeeAddForm = () => {
     subSection: string;
   }>();
 
-  const methods = useForm<EmployeeInput & { isCoopMember: boolean; memberId: string }>({
-    defaultValues: {
-      documents: documentMap?.map((document) => ({
-        fieldId: document,
-        identifiers: [],
-      })),
-    },
-  });
+  const methods = useForm();
 
   const { getValues, watch, reset, setValue } = methods;
   const { mutateAsync } = useSetNewEmployeeMutation();
@@ -83,7 +77,14 @@ export const EmployeeAddForm = () => {
           ...employeeDetailData?.temporaryAddress,
           locality: employeeDetailData?.temporaryAddress?.locality?.local,
         },
-      } as EmployeeInput);
+        documents:
+          documentMap?.map((document) => ({
+            fieldId: document,
+            identifiers:
+              employeeDetailData?.documents?.find((d) => d?.fieldId === document)?.identifiers ||
+              [],
+          })) || [],
+      });
     }
   }, [JSON.stringify(employeeDetailData)]);
 
@@ -131,7 +132,7 @@ export const EmployeeAddForm = () => {
           input: omit(
             {
               ...values,
-              documents: values?.documents?.map((item, index) => ({
+              documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
                 fieldId: documentMap[index],
                 identifiers: item?.identifiers || [],
               })),
@@ -155,10 +156,9 @@ export const EmployeeAddForm = () => {
           input: omit(
             {
               ...values,
-              documents: documentMap?.map((document) => ({
-                fieldId: document,
-                identifiers:
-                  values?.documents?.find((d) => d?.fieldId === document)?.identifiers || [],
+              documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
+                fieldId: documentMap[index],
+                identifiers: item?.identifiers || [],
               })),
             },
             ['isCoopMember', 'memberId']

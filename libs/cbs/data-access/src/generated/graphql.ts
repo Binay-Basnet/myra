@@ -27484,7 +27484,7 @@ export type GetSingleEmployeeDetailsQuery = {
             } | null> | null;
             documents?: Array<{
               fieldId?: string | null;
-              docData: Array<{ identifier: string; url: string } | null>;
+              identifiers: Array<{ identifier: string; url: string } | null>;
             } | null> | null;
           } | null;
         };
@@ -49643,7 +49643,7 @@ export const GetSingleEmployeeDetailsDocument = `
             healthInsuranceNumberId
             documents {
               fieldId
-              docData {
+              identifiers: docData {
                 identifier
                 url
               }

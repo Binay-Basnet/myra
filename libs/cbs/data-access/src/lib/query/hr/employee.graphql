@@ -133,7 +133,7 @@ query getSingleEmployeeDetails($id: String!) {
             healthInsuranceNumberId
             documents {
               fieldId
-              docData {
+              identifiers: docData {
                 identifier
                 url
               }
