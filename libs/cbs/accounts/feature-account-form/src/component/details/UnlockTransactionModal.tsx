@@ -11,7 +11,10 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { asyncToast, Button, Text } from '@myra-ui';
 
-import { useAccountDetails, useDisableTransactionRestrictMutation } from '@coop/cbs/data-access';
+import {
+  useAccountDetails,
+  useDisableAccountingTransactionRestrictMutation,
+} from '@coop/cbs/data-access';
 
 interface IUnlockTransactionModalProps {
   isOpen: boolean;
@@ -28,7 +31,7 @@ export const UnlockTransactionModal = ({
 
   const { accountDetails } = useAccountDetails();
 
-  const { mutateAsync } = useDisableTransactionRestrictMutation();
+  const { mutateAsync } = useDisableAccountingTransactionRestrictMutation();
 
   const handleConfirm = () => {
     asyncToast({

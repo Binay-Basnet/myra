@@ -218,7 +218,7 @@ mutation bulkTransfer($data: BulkTransferInput!) {
   }
 }
 
-mutation restrictTransaction($id: ID, $data: RestrictTransactionInput!) {
+mutation restrictAccountingTransaction($id: ID, $data: RestrictTransactionInput!) {
   transaction {
     restrictAccounting {
       restrict(id: $id, data: $data) {
@@ -231,7 +231,7 @@ mutation restrictTransaction($id: ID, $data: RestrictTransactionInput!) {
   }
 }
 
-mutation disableTransactionRestrict($id: ID!) {
+mutation disableAccountingTransactionRestrict($id: ID!) {
   transaction {
     restrictAccounting {
       disable(id: $id) {

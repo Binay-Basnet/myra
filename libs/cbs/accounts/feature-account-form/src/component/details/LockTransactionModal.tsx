@@ -13,7 +13,7 @@ import {
   store,
   useAccountDetails,
   useGetEndOfDayDateDataQuery,
-  useRestrictTransactionMutation,
+  useRestrictAccountingTransactionMutation,
 } from '@coop/cbs/data-access';
 import { FormDatePicker, FormSelect } from '@coop/shared/form';
 
@@ -56,7 +56,7 @@ export const LockTransactionModal = ({ isOpen, onClose }: ILockTransactionModalP
   const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
   const closingDate = useMemo(() => endOfDayData?.transaction?.endOfDayDate?.value, [endOfDayData]);
 
-  const { mutateAsync } = useRestrictTransactionMutation();
+  const { mutateAsync } = useRestrictAccountingTransactionMutation();
 
   const handleLockTransaction = () => {
     const values = methods.getValues();

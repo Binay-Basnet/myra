@@ -24799,12 +24799,12 @@ export type BulkTransferMutation = {
   };
 };
 
-export type RestrictTransactionMutationVariables = Exact<{
+export type RestrictAccountingTransactionMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: RestrictTransactionInput;
 }>;
 
-export type RestrictTransactionMutation = {
+export type RestrictAccountingTransactionMutation = {
   transaction: {
     restrictAccounting?: {
       restrict?: {
@@ -24821,11 +24821,11 @@ export type RestrictTransactionMutation = {
   };
 };
 
-export type DisableTransactionRestrictMutationVariables = Exact<{
+export type DisableAccountingTransactionRestrictMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-export type DisableTransactionRestrictMutation = {
+export type DisableAccountingTransactionRestrictMutation = {
   transaction: {
     restrictAccounting?: {
       disable?: {
@@ -46228,8 +46228,8 @@ export const useBulkTransferMutation = <TError = unknown, TContext = unknown>(
     useAxios<BulkTransferMutation, BulkTransferMutationVariables>(BulkTransferDocument),
     options
   );
-export const RestrictTransactionDocument = `
-    mutation restrictTransaction($id: ID, $data: RestrictTransactionInput!) {
+export const RestrictAccountingTransactionDocument = `
+    mutation restrictAccountingTransaction($id: ID, $data: RestrictTransactionInput!) {
   transaction {
     restrictAccounting {
       restrict(id: $id, data: $data) {
@@ -46242,23 +46242,28 @@ export const RestrictTransactionDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useRestrictTransactionMutation = <TError = unknown, TContext = unknown>(
+export const useRestrictAccountingTransactionMutation = <TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
-    RestrictTransactionMutation,
+    RestrictAccountingTransactionMutation,
     TError,
-    RestrictTransactionMutationVariables,
+    RestrictAccountingTransactionMutationVariables,
     TContext
   >
 ) =>
-  useMutation<RestrictTransactionMutation, TError, RestrictTransactionMutationVariables, TContext>(
-    ['restrictTransaction'],
-    useAxios<RestrictTransactionMutation, RestrictTransactionMutationVariables>(
-      RestrictTransactionDocument
+  useMutation<
+    RestrictAccountingTransactionMutation,
+    TError,
+    RestrictAccountingTransactionMutationVariables,
+    TContext
+  >(
+    ['restrictAccountingTransaction'],
+    useAxios<RestrictAccountingTransactionMutation, RestrictAccountingTransactionMutationVariables>(
+      RestrictAccountingTransactionDocument
     ),
     options
   );
-export const DisableTransactionRestrictDocument = `
-    mutation disableTransactionRestrict($id: ID!) {
+export const DisableAccountingTransactionRestrictDocument = `
+    mutation disableAccountingTransactionRestrict($id: ID!) {
   transaction {
     restrictAccounting {
       disable(id: $id) {
@@ -46271,24 +46276,28 @@ export const DisableTransactionRestrictDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useDisableTransactionRestrictMutation = <TError = unknown, TContext = unknown>(
+export const useDisableAccountingTransactionRestrictMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
   options?: UseMutationOptions<
-    DisableTransactionRestrictMutation,
+    DisableAccountingTransactionRestrictMutation,
     TError,
-    DisableTransactionRestrictMutationVariables,
+    DisableAccountingTransactionRestrictMutationVariables,
     TContext
   >
 ) =>
   useMutation<
-    DisableTransactionRestrictMutation,
+    DisableAccountingTransactionRestrictMutation,
     TError,
-    DisableTransactionRestrictMutationVariables,
+    DisableAccountingTransactionRestrictMutationVariables,
     TContext
   >(
-    ['disableTransactionRestrict'],
-    useAxios<DisableTransactionRestrictMutation, DisableTransactionRestrictMutationVariables>(
-      DisableTransactionRestrictDocument
-    ),
+    ['disableAccountingTransactionRestrict'],
+    useAxios<
+      DisableAccountingTransactionRestrictMutation,
+      DisableAccountingTransactionRestrictMutationVariables
+    >(DisableAccountingTransactionRestrictDocument),
     options
   );
 export const GetAccountMemberListDocument = `
