@@ -2,9 +2,14 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { Box, Text } from '@myra-ui';
 
-import { LoanProductInstallment, PenaltyType, useGetLoanPreviewQuery } from '@coop/cbs/data-access';
+import {
+  LoanProductInstallment,
+  PenaltyType,
+  useGetLoanAccountDetailsQuery,
+  useGetLoanPreviewQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 interface IProductProps {
   loanAccountId: string;
@@ -25,6 +30,17 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
       enabled: triggerQuery,
     }
   );
+
+  const { data: loanAccountDetailsQueryData } = useGetLoanAccountDetailsQuery(
+    {
+      loanAccountId: loanAccountId as string,
+      paginate: getPaginationQuery(),
+    },
+    { enabled: triggerQuery }
+  );
+
+  const overviewData = loanAccountDetailsQueryData?.loanAccount?.loanAccountDetails?.overView;
+
   const loanData = loanPreview?.data?.loanAccount?.loanPreview?.data;
   useEffect(() => {
     if (loanAccountId) {
@@ -43,7 +59,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
       },
       {
         label: 'Days After Installment Date',
-        value: String(penaltyGeneralInfo?.penaltyDayAfterInstallmentDate),
+        value: String(penaltyGeneralInfo?.penaltyDayAfterInstallmentDate ?? '-'),
       },
       {
         label: 'Penalty Rate',
@@ -207,6 +223,21 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
           borderColor="border.layout"
           borderRadius="br2"
         >
+          {loanData?.loanDetails?.loanRepaymentScheme === 'LOC' && (
+            <Box display="flex" justifyContent="space-between">
+              <Text fontWeight="400" fontSize="s3">
+                Withdrawable Amount
+              </Text>
+              <Text fontWeight="600" fontSize="s3">
+                {amountConverter(
+                  (
+                    Number(overviewData?.generalInformation?.sanctionedAmount) -
+                    Number(overviewData?.totalRemainingPrincipal)
+                  ).toFixed(2)
+                )}
+              </Text>
+            </Box>
+          )}
           <Box display="flex" justifyContent="space-between">
             <Text fontWeight="400" fontSize="s3">
               Remaining Principal Amount

@@ -112,7 +112,7 @@ export const useLoanAccountDetailHooks = () => {
       value: amountConverter(overviewData?.totalRemainingPrincipal || 0),
     },
     {
-      title: 'WithdrawAble Amount',
+      title: 'Withdrawable Amount',
       value: amountConverter(
         Number(generalInfo?.sanctionedAmount) - Number(overviewData?.totalRemainingPrincipal)
       ),
