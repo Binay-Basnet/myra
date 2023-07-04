@@ -2,15 +2,12 @@ import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
-import NepaliDate from 'nepali-date-converter';
 
 import { asyncToast, Box, Modal } from '@myra-ui';
 
 import {
   CoaTypeOfTransaction,
-  DateType,
   RestrictTransactionInput,
-  store,
   useAccountDetails,
   useGetEndOfDayDateDataQuery,
   useRestrictAccountingTransactionMutation,
@@ -50,8 +47,6 @@ export const LockTransactionModal = ({ isOpen, onClose }: ILockTransactionModalP
   const effectiveSince = methods.watch('effectiveSince');
 
   // const txnType = methods.watch('txnType');
-
-  const dateType = store.getState().auth?.preference?.date || DateType.Ad;
 
   const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
   const closingDate = useMemo(() => endOfDayData?.transaction?.endOfDayDate?.value, [endOfDayData]);
@@ -121,24 +116,15 @@ export const LockTransactionModal = ({ isOpen, onClose }: ILockTransactionModalP
           <FormDatePicker
             name="effectiveSince"
             label="Effective From"
-            minDate={
-              closingDate?.local
-                ? dateType === 'BS'
-                  ? new NepaliDate(closingDate?.np ?? '').toJsDate()
-                  : new Date(closingDate?.en ?? '')
-                : new Date()
-            }
+            minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
+
             // isDisabled={txnType !== accountDetails?.transactionConstraints?.transactionType}
           />
 
           <FormDatePicker
             name="effectiveTill"
             label="Effective Till"
-            minDate={
-              dateType === 'BS'
-                ? new NepaliDate(effectiveSince?.np ?? '').toJsDate()
-                : new Date(effectiveSince?.en ?? '')
-            }
+            minDate={new Date(effectiveSince?.en ?? '')}
             // isDisabled={txnType !== accountDetails?.transactionConstraints?.transactionType}
           />
         </Box>
