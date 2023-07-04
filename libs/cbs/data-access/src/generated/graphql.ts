@@ -28046,6 +28046,10 @@ export type GetJobApplicationQuery = {
               duration?: string | null;
               summary?: string | null;
             } | null> | null;
+            documents?: Array<{
+              fieldId?: string | null;
+              identifiers: Array<{ identifier: string; url: string } | null>;
+            } | null> | null;
           } | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -50396,6 +50400,13 @@ export const GetJobApplicationDocument = `
             }
             applicationStatus
             applicationRating
+            documents {
+              fieldId
+              identifiers: docData {
+                identifier
+                url
+              }
+            }
           }
           error {
             ...MutationError

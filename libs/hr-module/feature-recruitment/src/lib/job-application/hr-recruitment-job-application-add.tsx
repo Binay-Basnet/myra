@@ -7,6 +7,7 @@ import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import {
   ApplicantStatus,
+  DocumentInsertInput,
   JobApplicationInput,
   useGetJobApplicationQuery,
   useGetJobOpeningListQuery,
@@ -16,6 +17,7 @@ import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAddress,
   FormEmailInput,
+  FormFileInput,
   FormInput,
   FormLayout,
   FormPhoneNumber,
@@ -27,6 +29,8 @@ import { getPaginationQuery } from '@coop/shared/utils';
 
 import { EducationalDetailsAdd } from '../../components/EducationDetailsAdd';
 import { ExperienceDetailsAdd } from '../../components/ExperienceDetailsAdd';
+
+const documentMap = ['resume', 'coverLetter'];
 
 export const HrRecruitmentJobApplicationAdd = () => {
   const router = useRouter();
@@ -58,6 +62,13 @@ export const HrRecruitmentJobApplicationAdd = () => {
           ...jobApplicationEditData?.temporaryAddress,
           locality: jobApplicationEditData?.temporaryAddress?.locality?.en,
         },
+        documents:
+          documentMap?.map((document) => ({
+            fieldId: document,
+            identifiers:
+              jobApplicationEditData?.documents?.find((d) => d?.fieldId === document)
+                ?.identifiers || [],
+          })) || [],
       });
     }
   }, [JSON.stringify(jobApplicationEditData)]);
@@ -78,6 +89,7 @@ export const HrRecruitmentJobApplicationAdd = () => {
   const isTempSameAsPerm = watch('tempSameAsPerm');
 
   const submitForm = () => {
+    const values = getValues();
     if (router?.query?.['id']) {
       asyncToast({
         id: 'edit-job-application',
@@ -91,7 +103,16 @@ export const HrRecruitmentJobApplicationAdd = () => {
         promise: mutateAsync({
           id: router?.query?.['id'] as string,
           input: {
-            ...(omit({ ...getValues() }, ['id']) as JobApplicationInput),
+            ...(omit(
+              {
+                ...values,
+                documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
+                  fieldId: documentMap[index],
+                  identifiers: item?.identifiers || [],
+                })),
+              },
+              ['id']
+            ) as JobApplicationInput),
           },
         }),
       });
@@ -108,8 +129,12 @@ export const HrRecruitmentJobApplicationAdd = () => {
         promise: mutateAsync({
           id: null,
           input: {
-            ...(getValues() as JobApplicationInput),
-          },
+            ...values,
+            documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
+              fieldId: documentMap[index],
+              identifiers: item?.identifiers || [],
+            })),
+          } as JobApplicationInput,
         }),
       });
     }
@@ -152,10 +177,10 @@ export const HrRecruitmentJobApplicationAdd = () => {
             </GridItem>
             {!isTempSameAsPerm && <FormAddress name="temporaryAddress" />}
           </FormSection>
-          {/* <FormSection templateColumns={2} header="Document" divider>
-            <FormFileInput size="sm" name="resume" label="Resume/CV" />
-            <FormFileInput size="sm" name="coverLetter" label="Cover Letter" />
-          </FormSection> */}
+          <FormSection templateColumns={2} header="Document" divider>
+            <FormFileInput size="sm" name="documents.0.identifiers" label="Resume/CV" />
+            <FormFileInput size="sm" name="documents.1.identifiers" label="Cover Letter" />
+          </FormSection>
           <EducationalDetailsAdd />
           <ExperienceDetailsAdd />
           <FormSection templateColumns={2} header="Impression" divider>
