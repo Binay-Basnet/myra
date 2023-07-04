@@ -24799,6 +24799,49 @@ export type BulkTransferMutation = {
   };
 };
 
+export type RestrictAccountingTransactionMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  data: RestrictTransactionInput;
+}>;
+
+export type RestrictAccountingTransactionMutation = {
+  transaction: {
+    restrictAccounting?: {
+      restrict?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type DisableAccountingTransactionRestrictMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type DisableAccountingTransactionRestrictMutation = {
+  transaction: {
+    restrictAccounting?: {
+      disable?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetAccountMemberListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -25409,6 +25452,12 @@ export type GetAccountDetailsDataQuery = {
           fine?: string | null;
           totalDue?: string | null;
           dueInstallments?: number | null;
+        } | null;
+        transactionConstraints?: {
+          blockId?: string | null;
+          transactionType?: CoaTypeOfTransaction | null;
+          effectiveSince?: Record<'local' | 'en' | 'np', string> | null;
+          effectiveTill?: Record<'local' | 'en' | 'np', string> | null;
         } | null;
       } | null;
     } | null;
@@ -46183,6 +46232,78 @@ export const useBulkTransferMutation = <TError = unknown, TContext = unknown>(
     useAxios<BulkTransferMutation, BulkTransferMutationVariables>(BulkTransferDocument),
     options
   );
+export const RestrictAccountingTransactionDocument = `
+    mutation restrictAccountingTransaction($id: ID, $data: RestrictTransactionInput!) {
+  transaction {
+    restrictAccounting {
+      restrict(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useRestrictAccountingTransactionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    RestrictAccountingTransactionMutation,
+    TError,
+    RestrictAccountingTransactionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    RestrictAccountingTransactionMutation,
+    TError,
+    RestrictAccountingTransactionMutationVariables,
+    TContext
+  >(
+    ['restrictAccountingTransaction'],
+    useAxios<RestrictAccountingTransactionMutation, RestrictAccountingTransactionMutationVariables>(
+      RestrictAccountingTransactionDocument
+    ),
+    options
+  );
+export const DisableAccountingTransactionRestrictDocument = `
+    mutation disableAccountingTransactionRestrict($id: ID!) {
+  transaction {
+    restrictAccounting {
+      disable(id: $id) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDisableAccountingTransactionRestrictMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    DisableAccountingTransactionRestrictMutation,
+    TError,
+    DisableAccountingTransactionRestrictMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DisableAccountingTransactionRestrictMutation,
+    TError,
+    DisableAccountingTransactionRestrictMutationVariables,
+    TContext
+  >(
+    ['disableAccountingTransactionRestrict'],
+    useAxios<
+      DisableAccountingTransactionRestrictMutation,
+      DisableAccountingTransactionRestrictMutationVariables
+    >(DisableAccountingTransactionRestrictDocument),
+    options
+  );
 export const GetAccountMemberListDocument = `
     query getAccountMemberList($filter: Filter, $pagination: Pagination) {
   members {
@@ -46955,6 +47076,12 @@ export const GetAccountDetailsDataDocument = `
         lastTransactionDate
         accountExpiryDate
         closedAt
+        transactionConstraints {
+          blockId
+          transactionType
+          effectiveSince
+          effectiveTill
+        }
       }
     }
   }

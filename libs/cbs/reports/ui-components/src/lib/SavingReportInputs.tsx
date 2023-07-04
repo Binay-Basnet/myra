@@ -29,6 +29,7 @@ export const SavingReportInputs = () => {
           memberId={memberId}
           label="Select Account"
           isDisabled={!!redirectAccountId}
+          filterBy="ACTIVE"
         />
       </GridItem>
       <GridItem colSpan={1}>

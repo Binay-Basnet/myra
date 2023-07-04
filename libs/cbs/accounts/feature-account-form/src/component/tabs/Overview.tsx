@@ -1,9 +1,10 @@
+import { useMemo } from 'react';
 import { AiOutlineFileText } from 'react-icons/ai';
 
 import { Alert, DetailPageQuickLinks } from '@myra-ui';
 
 import { NatureOfDepositProduct, ObjState, useAccountDetails } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 
 import {
   AccountStatistics,
@@ -105,10 +106,49 @@ export const Overview = () => {
     installmentAmount: accountDetails?.installmentAmount,
   };
 
+  const { lockedTransaction, from, to } = useMemo(() => {
+    if (!accountDetails?.transactionConstraints) return { lockedTransaction: '', from: '', to: '' };
+
+    if (accountDetails.transactionConstraints?.transactionType === 'BOTH') {
+      return {
+        lockedTransaction: 'Deposit and Withdraw',
+        from: localizedDate(accountDetails.transactionConstraints?.effectiveSince),
+        to: localizedDate(accountDetails.transactionConstraints?.effectiveTill),
+      };
+    }
+
+    if (accountDetails.transactionConstraints?.transactionType === 'CREDIT') {
+      return {
+        lockedTransaction: 'Deposit',
+        from: localizedDate(accountDetails.transactionConstraints?.effectiveSince),
+        to: localizedDate(accountDetails.transactionConstraints?.effectiveTill),
+      };
+    }
+
+    if (accountDetails.transactionConstraints?.transactionType === 'DEBIT') {
+      return {
+        lockedTransaction: 'Withdraw',
+        from: localizedDate(accountDetails.transactionConstraints?.effectiveSince),
+        to: localizedDate(accountDetails.transactionConstraints?.effectiveTill),
+      };
+    }
+
+    return { lockedTransaction: '', from: '', to: '' };
+  }, [accountDetails?.transactionConstraints]);
+
   return (
     <>
       <TabHeader heading="Overview" />
+
       {isClosed && <Alert status="error" subtitle="This Account has been Closed" hideCloseIcon />}
+
+      {lockedTransaction && (
+        <Alert
+          status="info"
+          title={`${lockedTransaction} locked in this account from ${from} to ${to}`}
+          hideCloseIcon
+        />
+      )}
 
       {!isTermSaving && !isClosed && <DetailPageQuickLinks links={links} />}
 
