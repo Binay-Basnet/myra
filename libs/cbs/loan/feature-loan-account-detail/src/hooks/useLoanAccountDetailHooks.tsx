@@ -58,7 +58,7 @@ export const useLoanAccountDetailHooks = () => {
     { label: 'Account Open Date', value: generalInfo?.accountOpenDate?.local ?? 'N/A' },
     { label: 'Loan Account Open Branch', value: generalInfo?.loanAccountOpenBranchName ?? 'N/A' },
     { label: 'Payment Scheme', value: generalInfo?.repaymentScheme ?? 'N/A' },
-    { label: 'Interest Rate', value: `${generalInfo?.interestRate}%` ?? 'N/A' },
+    { label: 'Interest Rate', value: `${generalInfo?.interestRate.toFixed(2)}%` ?? 'N/A' },
     { label: 'Interest Accrued', value: generalInfo?.interestAccrued ?? 'N/A' },
     {
       label: 'Sanctioned Amount',
