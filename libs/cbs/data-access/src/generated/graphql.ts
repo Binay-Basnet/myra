@@ -544,6 +544,7 @@ export type AccountingMutation = {
   externalLoan: ExternalLoanMutation;
   investment: AccountingInvestmentMutation;
   journalVoucher: JournalVoucherMutation;
+  ledgerBalanceTransfer: LedgerBalanceTransferMutation;
   organization: AccountingOrganizationMutation;
   purchase: AccountingPurchaseMutation;
   sales: AccountingSalesMutation;
@@ -691,6 +692,7 @@ export type AccountingQuery = {
   externalLoan: ExternalLoanQuery;
   investment: AccountingInvestmentQuery;
   journalVoucher: JournalVoucherQuery;
+  ledgerBalanceTransfer: LedgerBalanceTransferQuery;
   organization: AccountingOrganizationQuery;
   purchase: AccountingPurchaseQuery;
   sales: AccountingSalesQuery;
@@ -11296,6 +11298,87 @@ export type LedgerAllTransactionConnection = {
 export type LedgerAllTransactionEdge = {
   cursor: Scalars['Cursor'];
   node?: Maybe<CoaDetailsRecentTxns>;
+};
+
+export const LedgerAmountTransferMode = {
+  All: 'ALL',
+  Even: 'EVEN',
+  Manual: 'MANUAL',
+} as const;
+
+export type LedgerAmountTransferMode =
+  typeof LedgerAmountTransferMode[keyof typeof LedgerAmountTransferMode];
+export type LedgerBalanceEntry = {
+  currentBalance: Scalars['String'];
+  ledgerId: Scalars['String'];
+  ledgerName: Scalars['String'];
+  newBalance: Scalars['String'];
+  transferBalance: Scalars['String'];
+};
+
+export type LedgerBalanceListConnection = {
+  edges?: Maybe<Array<Maybe<LedgerBalanceListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  summationData?: Maybe<LedgerBalanceSum>;
+  totalCount: Scalars['Int'];
+};
+
+export type LedgerBalanceListEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<LedgerBalanceEntry>;
+};
+
+export type LedgerBalanceSum = {
+  coaHeadName?: Maybe<Scalars['String']>;
+  totalLedgerAccounts?: Maybe<Scalars['String']>;
+  totalTransferBalance?: Maybe<Scalars['String']>;
+};
+
+export type LedgerBalanceTransferInput = {
+  amount?: InputMaybe<Scalars['String']>;
+  tagChoosen: Scalars['Boolean'];
+  transferMode: LedgerAmountTransferMode;
+};
+
+export type LedgerBalanceTransferMutation = {
+  initiateTransferRequest: LedgerBalanceTransferRequestResult;
+};
+
+export type LedgerBalanceTransferMutationInitiateTransferRequestArgs = {
+  input: LedgerBalanceTransferRequestInput;
+};
+
+export type LedgerBalanceTransferQuery = {
+  getLedgerList: LedgerBalanceListConnection;
+};
+
+export type LedgerBalanceTransferQueryGetLedgerListArgs = {
+  filter?: InputMaybe<Filter>;
+  input: LedgerBalanceTransferInput;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type LedgerBalanceTransferRequestEntry = {
+  currentBalance: Scalars['String'];
+  ledgerId?: InputMaybe<Scalars['String']>;
+  ledgerName?: InputMaybe<Scalars['String']>;
+  newBalance?: InputMaybe<Scalars['String']>;
+  transferBalance?: InputMaybe<Scalars['String']>;
+};
+
+export type LedgerBalanceTransferRequestInput = {
+  amount?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Scalars['String']>;
+  coaHead: Scalars['String'];
+  destinationLedgerId?: InputMaybe<Scalars['String']>;
+  transferData: Array<LedgerBalanceTransferRequestEntry>;
+  transferMode: LedgerAmountTransferMode;
+};
+
+export type LedgerBalanceTransferRequestResult = {
+  data?: Maybe<Array<Maybe<LedgerBalanceEntry>>>;
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type LedgerList = {
