@@ -4,28 +4,18 @@ import { Box, Collapse, Text } from '@chakra-ui/react';
 
 import { useTranslation } from '@coop/shared/utils';
 
-const PersonalInformation = [
-  'kymAccIndBasicInformation',
-  'kymAccIndContactDetails',
-  'kymAccIndIdentificationDetails',
-  'kymAccIndPermanentAddress',
-  'kymAccIndTemporaryAddress',
-  'kymAccIndIncaseofresidinginRentedHouse',
-  'kymAccIndFamilyDetails',
-];
+import { KYMSection } from '../../constants/KYMSection';
 
-// const personalInfoEnum: Record<
-//   typeof PersonalInformation[number],
-//   KymIndPersonalSection
-// > = {
-//   kymAccIndBasicInformation: KymIndPersonalSection.BasicInformation,
-//   kymAccIndContactDetails: KymIndPersonalSection.ContactDetails,
-//   kymAccIndIdentificationDetails: KymIndPersonalSection.IdentificationDetails,
-//   kymAccIndPermanentAddress: KymIndPersonalSection.PermanentAddress,
-//   kymAccIndTemporaryAddress: KymIndPersonalSection.TemporaryAddress,
-//   kymAccIndIncaseofresidinginRentedHouse: KymIndPersonalSection.RentedHouse,
-//   kymAccIndFamilyDetails: KymIndPersonalSection.FamilyDetails,
-// };
+const INDIVIDUAL_PERSONAL_INFORMATION = [
+  KYMSection.INDIVIDUAL_BASIC_INFORMATION,
+  KYMSection.INDIVIDUAL_CONTACT_DETAILS,
+  KYMSection.INDIVIDUAL_IDENTIFICATION_DETAILS,
+  KYMSection.INDIVIDUAL_PERMANENT_ADDRESS,
+  KYMSection.INDIVIDUAL_TEMPORARY_ADDRESS,
+  KYMSection.INDIVIDUAL_IN_CASE_OF_RESIDING_IN_RENTED_HOUSE,
+  KYMSection.INDIVIDUAL_FAMILY_DETAILS,
+  KYMSection.INDIVIDUAL_FAMILY_MEMBERS,
+];
 
 const ProfessionalDetails: string[] = [
   'kymAccIndProfession',
@@ -53,7 +43,7 @@ interface AccordianProps {
   kymCurrentSection?: {
     section: string;
     subSection: string;
-  };
+  } | null;
 }
 
 export const AccorrdianAddMember = (props: AccordianProps) => {
@@ -61,6 +51,7 @@ export const AccorrdianAddMember = (props: AccordianProps) => {
   // const { formStatus, kymCurrentSection } = props;
   const { kymCurrentSection } = props;
   const subsection = kymCurrentSection?.subSection;
+
   const [isOpenPersonal, setIsOpenPersonal] = React.useState(false);
   const [isOpenProfessional, setIsOpenProfessional] = React.useState(false);
   const [isOpenCoopMemberShip, setIsOpenCoopMembership] = React.useState(false);
@@ -92,7 +83,7 @@ export const AccorrdianAddMember = (props: AccordianProps) => {
 
       <Collapse in={isOpenPersonal} style={{ marginTop: '0px' }}>
         <Box display="flex" flexDirection="column">
-          {PersonalInformation.map((item) => (
+          {INDIVIDUAL_PERSONAL_INFORMATION.map((item) => (
             <Box
               key={`${item}${Math.random()}`}
               display="flex"

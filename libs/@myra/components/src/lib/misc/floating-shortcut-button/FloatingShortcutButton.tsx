@@ -31,32 +31,27 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Member branch transfer(testing yet to be done. Not to test in production).',
-      'Display withdrawn balance in loc detail page.',
-      'User can only see the report of assigned branches.',
-      'Bank Gl statement filter by Bank accounts.',
+      'Withdraw/ deposit lock transaction.',
+      'KYM refactor.',
+      'Member transfer request.(you can test now)',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Display withdraw-able balance of LOC in LOC Loan Account Detail Page',
-      'Hide FD and Inactive accounts in Withdraw page',
-      'Loan call sheet branch filter',
-      'Display return amount in loan repayment',
-      'Bank GL Statement filter by Bank Account',
-      'Remove link from report as well as print section.',
-      'Loan repayment detail page side bar amount fixations.',
-      'Loan repayment transaction page return amount show fixations.',
-      'Data member id double replicate issue fixations in reports.',
-      'Multiple user creating issue in use section.',
-      'Tag select issue in edit tag.',
-      'Tag select issue in report.',
-      'Automatic pwd change in mr app.',
-      '0.1 paisa difference fixes in report.',
-      'Payable fine required field removed in loan repayment page.',
-      'While withdraw , FD accounts and closed accounts are hidden.',
-      'Total column shift in loan aging report.',
+      'MR templates static page issues fixes.',
+      'Interest rate float amount fixes in loan account overview page.',
+      'Fine calculation fixes in the loan repayment page.',
+      'Closed account filter in the saving account report.',
+      'Calendar date issue fixations.',
+      'Member transfer request fixations as DR CR amount.',
+      'Member transfer fixations as multiple time transfer of member.',
+      'All Kym form refactor fixations.',
+      'Withdraw amount section added in loan repayment section.',
+      'Loc loan interest amount fixations in loan repayment page.',
+      'Amount differentiation in the loan repayment success card.',
+      'MR template Id issue fixation in ERP.',
+      'IBT transfer revert restrictions.',
     ],
   },
   // knownBugs: {
@@ -106,8 +101,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.70</Text>
-          <Text fontSize="s3">June 28, 2023</Text>
+          <Text fontSize="r2">Version 1.0.71</Text>
+          <Text fontSize="s3">July 5, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>

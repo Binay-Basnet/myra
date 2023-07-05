@@ -4,16 +4,10 @@ import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Spinner } from '@chakra-ui/react';
 import format from 'date-fns/format';
-import NepaliDate from 'nepali-date-converter';
 
 import { Box, Button, Chips, Icon, Text } from '@myra-ui';
 
-import {
-  DateType,
-  store,
-  useEodHistoryQuery,
-  useGetEndOfDayDateDataQuery,
-} from '@coop/cbs/data-access';
+import { useEodHistoryQuery, useGetEndOfDayDateDataQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/settings/ui-containers';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormDatePicker } from '@coop/shared/form';
@@ -24,8 +18,6 @@ export const EodList = () => {
   const [stopFetch, setStopFetch] = useState(false);
 
   const methods = useForm();
-
-  const dateType = store.getState().auth?.preference?.date || DateType.Ad;
 
   const transactionDate = methods.watch('transactionDate');
 
@@ -51,13 +43,7 @@ export const EodList = () => {
           <FormDatePicker
             name="transactionDate"
             label="Transaction Date"
-            minDate={
-              closingDate?.local
-                ? dateType === 'BS'
-                  ? new NepaliDate(closingDate?.np ?? '').toJsDate()
-                  : new Date(closingDate?.en ?? '')
-                : new Date()
-            }
+            minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
           />
         </InputGroupContainer>
       </FormProvider>

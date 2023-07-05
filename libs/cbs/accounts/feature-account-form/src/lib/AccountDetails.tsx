@@ -1,4 +1,6 @@
+import { useMemo, useRef } from 'react';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 
 import { Box, Scrollable, WIPState } from '@myra-ui';
 
@@ -10,8 +12,10 @@ import {
   GeneralUpdates,
   InterestUpdateTab,
   LedgerListTab,
+  LockTransactionModal,
   Overview,
   Transactions,
+  UnlockTransactionModal,
   WithdrawSlip,
 } from '../component';
 
@@ -20,28 +24,57 @@ export const AccountDetails = () => {
 
   const tabQuery = router.query['tab'] as string;
 
+  const {
+    isOpen: isLockModalOpen,
+    onClose: onLockModalClose,
+    onToggle: onLockModalToggle,
+  } = useDisclosure();
+
+  const {
+    isOpen: isUnlockModalOpen,
+    onClose: onUnlockModalClose,
+    onToggle: onUnlockModalToggle,
+  } = useDisclosure();
+
+  const confirmCancelRef = useRef<HTMLButtonElement | null>(null);
+
   const { accountDetails } = useAccountDetails();
 
   const { mutateAsync } = useIssueFdCertificateMutation();
 
+  const accountOptions = useMemo(() => {
+    const temp = [
+      {
+        label: accountDetails?.transactionConstraints?.blockId
+          ? 'Update Transaction Lock'
+          : 'Lock Transaction',
+        handler: () => onLockModalToggle(),
+      },
+    ];
+
+    if (accountDetails?.accountType === 'TERM_SAVING_OR_FD') {
+      temp.push({
+        label: 'Issue FD Certificate',
+        handler: () =>
+          mutateAsync({ accountId: router?.query?.['id'] as string }).then((res) =>
+            window.open(res?.account?.issueFDCertificate, '_blank')
+          ),
+      });
+    }
+
+    if (accountDetails?.transactionConstraints) {
+      temp.push({
+        label: 'Unlock Transaction',
+        handler: () => onUnlockModalToggle(),
+      });
+    }
+
+    return temp;
+  }, [accountDetails]);
+
   return (
     <>
-      <AccountDetailsPathBar
-        title="Savings Account List"
-        options={
-          accountDetails?.accountType === 'TERM_SAVING_OR_FD'
-            ? [
-                {
-                  label: 'Issue FD Certificate',
-                  handler: () =>
-                    mutateAsync({ accountId: router?.query?.['id'] as string }).then((res) =>
-                      window.open(res?.account?.issueFDCertificate, '_blank')
-                    ),
-                },
-              ]
-            : []
-        }
-      />
+      <AccountDetailsPathBar title="Savings Account List" options={accountOptions} />
       <Box display="flex">
         <Box
           w="320px"
@@ -71,7 +104,7 @@ export const AccountDetails = () => {
 
             {tabQuery === 'ledger' && <LedgerListTab />}
 
-            {tabQuery === 'interest update' && <InterestUpdateTab />}
+            {tabQuery === 'account premium update' && <InterestUpdateTab />}
 
             {tabQuery === 'general updates' && <GeneralUpdates />}
 
@@ -82,7 +115,7 @@ export const AccountDetails = () => {
                 'transactions',
                 'withdraw slip',
                 'ledger',
-                'interest update',
+                'account premium update',
                 'general updates',
               ].includes(tabQuery) && (
                 <Box h="calc(100vh - 110px)">
@@ -102,6 +135,14 @@ export const AccountDetails = () => {
           </Box>
         </Scrollable>
       </Box>
+
+      <LockTransactionModal isOpen={isLockModalOpen} onClose={onLockModalClose} />
+
+      <UnlockTransactionModal
+        isOpen={isUnlockModalOpen}
+        onClose={onUnlockModalClose}
+        cancelRef={confirmCancelRef}
+      />
     </>
   );
 };

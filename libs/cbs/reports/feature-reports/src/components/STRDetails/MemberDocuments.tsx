@@ -1,6 +1,6 @@
 import { DetailCardContent, DetailsCard, GridItem, Text } from '@myra-ui';
 
-import { localizedDate, localizedText } from '@coop/cbs/utils';
+import { localizedDate } from '@coop/cbs/utils';
 
 import { useSTRDetails } from '../../hooks/useSTRDetails';
 
@@ -30,12 +30,12 @@ export const MemberDocuments = () => {
             <Text>{String(index + 1)}.</Text>
             <Text>{identificationLabels[identification?.idType as string]}</Text>
           </GridItem>
-          <DetailCardContent title="Document No" subtitle={identification?.idNo ?? 'N/A'} />
-          <DetailCardContent title="Issued Date" subtitle={localizedDate(identification?.date)} />
           <DetailCardContent
-            title="Issued Place"
-            subtitle={localizedText(identification?.place) ?? 'N/A'}
+            title="Document No"
+            subtitle={identification?.identificationNo ?? 'N/A'}
           />
+          <DetailCardContent title="Issued Date" subtitle={localizedDate(identification?.date)} />
+          <DetailCardContent title="Issued Place" subtitle={identification?.place ?? 'N/A'} />
         </>
       ))}
     </DetailsCard>

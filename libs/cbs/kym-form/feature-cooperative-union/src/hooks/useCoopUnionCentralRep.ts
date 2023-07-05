@@ -3,18 +3,8 @@ import { UseFormReturn } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
-import omit from 'lodash/omit';
-import pickBy from 'lodash/pickBy';
 
-import {
-  addCentralRepError,
-  CooperativeUnionPersonnelSection,
-  CoopUnionPersonnelInput,
-  useAppDispatch,
-  useAppSelector,
-  useGetCentralRepresentativeDetailsQuery,
-  useSetPersonnelDetailsMutation,
-} from '@coop/cbs/data-access';
+import { CoopUnionPersonnelInput, useAppDispatch, useAppSelector } from '@coop/cbs/data-access';
 import { isDeepEmpty } from '@coop/shared/utils';
 
 interface IUseCoopUnionCentralRep {
@@ -34,31 +24,30 @@ export const useCoopUnionCentralRep = ({ methods }: IUseCoopUnionCentralRep) => 
   const { errors } = useAppSelector((state) => state.coopUnion.centralRepresentative);
   const hasPressedNext = useAppSelector((state) => state.coopUnion.hasPressedNext);
 
-  const { mutate } = useSetPersonnelDetailsMutation({
-    onSuccess: () => refetch(),
-  });
+  // const { mutate } = useSetPersonnelDetailsMutation({
+  //   onSuccess: () => refetch(),
+  // });
 
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
         if (id && data && !isDeepEmpty(data)) {
-          if (!data?.notAmongDirectors) {
-            mutate({
-              id,
-              personnelId: null,
-              sectionType: CooperativeUnionPersonnelSection.CentralRepresentative,
-              data,
-            });
-          }
-
-          if (data?.notAmongDirectors && crId) {
-            mutate({
-              id,
-              personnelId: crId,
-              sectionType: CooperativeUnionPersonnelSection.CentralRepresentative,
-              data: omit(data, ['centralRepID']),
-            });
-          }
+          // if (!data?.notAmongDirectors) {
+          //   mutate({
+          //     id,
+          //     personnelId: null,
+          //     sectionType: CooperativeUnionPersonnelSection.CentralRepresentative,
+          //     data,
+          //   });
+          // }
+          // if (data?.notAmongDirectors && crId) {
+          //   mutate({
+          //     id,
+          //     personnelId: crId,
+          //     sectionType: CooperativeUnionPersonnelSection.CentralRepresentative,
+          //     data: omit(data, ['centralRepID']),
+          //   });
+          // }
         }
       }, 800)
     );
@@ -66,50 +55,50 @@ export const useCoopUnionCentralRep = ({ methods }: IUseCoopUnionCentralRep) => 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady, crId]);
 
-  const { data: crDetailsEditData, refetch } = useGetCentralRepresentativeDetailsQuery(
-    {
-      id: String(id),
-      includeRequiredErrors: hasPressedNext,
-    },
-    {
-      enabled: !!id,
-      onSuccess: (response) => {
-        const errorObj =
-          response?.members?.cooperativeUnion?.formState?.formData?.centralRepresentativeDetails
-            ?.sectionStatus?.errors;
+  // const { data: crDetailsEditData, refetch } = useGetCentralRepresentativeDetailsQuery(
+  //   {
+  //     id: String(id),
+  //     includeRequiredErrors: hasPressedNext,
+  //   },
+  //   {
+  //     enabled: !!id,
+  //     onSuccess: (response) => {
+  //       const errorObj =
+  //         response?.members?.cooperativeUnion?.formState?.formData?.centralRepresentativeDetails
+  //           ?.sectionStatus?.errors;
 
-        // Add Error If New Error Is Detected
-        if (errorObj) {
-          dispatch(addCentralRepError(errorObj));
-        } else {
-          dispatch(addCentralRepError(null));
-        }
-      },
-    }
-  );
+  //       // Add Error If New Error Is Detected
+  //       if (errorObj) {
+  //         dispatch(addCentralRepError(errorObj));
+  //       } else {
+  //         dispatch(addCentralRepError(null));
+  //       }
+  //     },
+  //   }
+  // );
 
-  useDeepCompareEffect(() => {
-    if (crDetailsEditData) {
-      const crDetail =
-        crDetailsEditData?.members?.cooperativeUnion?.formState?.formData
-          ?.centralRepresentativeDetails?.data;
+  // useDeepCompareEffect(() => {
+  //   if (crDetailsEditData) {
+  //     const crDetail =
+  //       crDetailsEditData?.members?.cooperativeUnion?.formState?.formData
+  //         ?.centralRepresentativeDetails?.data;
 
-      if (crDetail) {
-        reset({
-          ...omit(
-            pickBy(crDetail, (v) => v !== undefined && v !== null),
-            ['id']
-          ),
-        });
+  //     if (crDetail) {
+  //       reset({
+  //         ...omit(
+  //           pickBy(crDetail, (v) => v !== undefined && v !== null),
+  //           ['id']
+  //         ),
+  //       });
 
-        if (crDetail?.id) {
-          setCRId(crDetail?.id);
-        }
+  //       if (crDetail?.id) {
+  //         setCRId(crDetail?.id);
+  //       }
 
-        setNotAmongDirectors(crDetail.notAmongDirectors ?? false);
-      }
-    }
-  }, [crDetailsEditData]);
+  //       setNotAmongDirectors(crDetail.notAmongDirectors ?? false);
+  //     }
+  //   }
+  // }, [crDetailsEditData]);
 
   useDeepCompareEffect(() => {
     // Cleanup Previous Errors

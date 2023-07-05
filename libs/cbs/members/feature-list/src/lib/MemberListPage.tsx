@@ -192,7 +192,7 @@ export const MemberListPage = () => {
                         action: 'UPDATE',
                         onClick: (node) => {
                           router.push(
-                            `/cbs/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
+                            `/cbs/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit?id=${
                               node?.id
                             }`
                           );
@@ -214,7 +214,7 @@ export const MemberListPage = () => {
                         action: 'UPDATE',
                         onClick: (node) => {
                           router.push(
-                            `/cbs/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
+                            `/cbs/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit?id=${
                               node?.id
                             }`
                           );
@@ -229,8 +229,8 @@ export const MemberListPage = () => {
                         action: 'UPDATE',
                         onClick: (node) => {
                           objState === 'VALIDATED'
-                            ? router.push(`${ROUTES.CBS_MEMBER_ACTIVATION}/${node?.id}`)
-                            : router.push(`${ROUTES.CBS_MEMBER_INACTIVATION}/${node?.id}`);
+                            ? router.push(`${ROUTES.CBS_MEMBER_ACTIVATION}?id=${node?.id}`)
+                            : router.push(`${ROUTES.CBS_MEMBER_INACTIVATION}?id={node?.id}`);
                         },
                       },
                     ]
@@ -248,7 +248,7 @@ export const MemberListPage = () => {
                         action: 'UPDATE',
                         onClick: (node) => {
                           router.push(
-                            `/cbs/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
+                            `/cbs/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit?id=${
                               node?.id
                             }`
                           );
@@ -263,13 +263,14 @@ export const MemberListPage = () => {
                         action: 'UPDATE',
                         onClick: (node) => {
                           objState === 'VALIDATED'
-                            ? router.push(`${ROUTES.CBS_MEMBER_ACTIVATION}/${node?.id}`)
-                            : router.push(`${ROUTES.CBS_MEMBER_INACTIVATION}/${node?.id}`);
+                            ? router.push(`${ROUTES.CBS_MEMBER_ACTIVATION}?id=${node?.id}`)
+                            : router.push(`${ROUTES.CBS_MEMBER_INACTIVATION}?id=${node?.id}`);
                         },
                       },
                       {
                         title: 'Make Dormant',
-                        onClick: (node) => router.push(`${ROUTES.CBS_MEMBER_DORMANCY}/${node?.id}`),
+                        onClick: (node) =>
+                          router.push(`${ROUTES.CBS_MEMBER_DORMANCY}?id=${node?.id}`),
                       },
                     ]
               }

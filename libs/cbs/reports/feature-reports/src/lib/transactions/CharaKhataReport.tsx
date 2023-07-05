@@ -280,6 +280,8 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
   const { getValues } = useFormContext<TrialSheetReportFilters>();
   const branchIDs = getValues()?.branchId?.map((a) => a.value);
 
+  const datePeriod = getValues()?.period;
+
   const { data: branchListQueryData } = useGetBranchListQuery({
     paginate: {
       after: '',
@@ -314,7 +316,7 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
             window.open(
               `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
                 props.row?.original?.ledgerId
-              }&branch=${JSON.stringify(branchIDs)}`,
+              }&branch=${JSON.stringify(branchIDs)}&date=${datePeriod.to.en}`,
               '_blank'
             )
           }

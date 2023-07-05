@@ -53,8 +53,6 @@ export const HrRecruitmentStaffPlanningAdd = () => {
           id: router?.query?.['id'] as string,
           input: {
             ...omit({ ...getValues() }, ['id']),
-            total_vacancies: 0,
-            total_cost_estimation: 'suyash',
           } as unknown as StaffPlanInput,
         }),
       });
@@ -72,8 +70,6 @@ export const HrRecruitmentStaffPlanningAdd = () => {
           id: null,
           input: {
             ...getValues(),
-            total_vacancies: 0,
-            total_cost_estimation: 'suyash',
           } as unknown as StaffPlanInput,
         }),
       });
@@ -81,12 +77,12 @@ export const HrRecruitmentStaffPlanningAdd = () => {
   };
   const dataWatch = watch('staffPlans');
   const totalVacancies = dataWatch?.reduce(
-    (acc: number, curr: StaffPlanTypesInput) => acc + curr.vacancies,
+    (acc: number, curr: StaffPlanTypesInput) => Number(acc) + Number(curr.vacancies),
     0
   );
 
   const totalCostEstimation = dataWatch?.reduce(
-    (acc: number, curr: StaffPlanTypesInput) => acc + curr.estimated_cost,
+    (acc: number, curr: StaffPlanTypesInput) => Number(acc) + Number(curr.estimated_cost),
     0
   );
 

@@ -1,12 +1,12 @@
-import { useFieldArray } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import { Box, Button, Icon, Text } from '@myra-ui';
 
+import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import {
   DynamicBoxContainer,
-  DynamicBoxGroupContainer,
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
@@ -16,9 +16,14 @@ import { useTranslation } from '@coop/shared/utils';
 interface IAddRelatedTrainingConcern {
   index: number;
   removeRelatedTraining: () => void;
+  directorIndex: number;
 }
 
-const AddRelatedTraining = ({ index, removeRelatedTraining }: IAddRelatedTrainingConcern) => {
+const AddRelatedTraining = ({
+  index,
+  removeRelatedTraining,
+  directorIndex,
+}: IAddRelatedTrainingConcern) => {
   const { t } = useTranslation();
   return (
     <DynamicBoxContainer>
@@ -35,18 +40,18 @@ const AddRelatedTraining = ({ index, removeRelatedTraining }: IAddRelatedTrainin
       <InputGroupContainer>
         <FormInput
           type="text"
-          name={`trainingAttended.${index}.subjectOfTraining`}
+          name={`directors.${directorIndex}.trainingAttended.${index}.subjectOfTraining`}
           id="boardOfDirectors.trainingAttended.subjectOfTraining"
           label={t['kymCoopUnionSubjectOfTraining']}
         />
         <FormDatePicker
-          name={`trainingAttended.${index}.dateOfTraining`}
+          name={`directors.${directorIndex}.trainingAttended.${index}.dateOfTraining`}
           id="boardOfDirectors.trainingAttended.dateOfTraining"
           label={t['kymCoopUnionDateOfTraining']}
         />
         <FormInput
           type="text"
-          name={`trainingAttended.${index}.trainingOrganization`}
+          name={`directors.${directorIndex}.trainingAttended.${index}.trainingOrganization`}
           id="boardOfDirectors.trainingAttended.trainingOrganization"
           label={t['kymCoopUnionTrainingOrganization']}
         />
@@ -55,14 +60,18 @@ const AddRelatedTraining = ({ index, removeRelatedTraining }: IAddRelatedTrainin
   );
 };
 
-export const BoardOfDirectorRelatedTraining = () => {
+export const BoardOfDirectorRelatedTraining = ({ directorIndex }: { directorIndex: number }) => {
   const { t } = useTranslation();
+
+  const { control } = useFormContext<CoopUnionInstitutionInformationInput>();
+
   const {
     fields: relatedFields,
     append: relatedAppend,
     remove: relatedRemove,
   } = useFieldArray({
-    name: `trainingAttended`,
+    name: `directors.${directorIndex}.trainingAttended`,
+    control,
   });
 
   return (
@@ -80,29 +89,28 @@ export const BoardOfDirectorRelatedTraining = () => {
         <Text variant="bodyRegular">{t['kymCoopUnionTrainingAttended']}</Text>
       </Box>
 
-      <div>
-        <DynamicBoxGroupContainer>
-          {relatedFields.map((item, index) => (
-            <Box key={item.id}>
-              <AddRelatedTraining
-                index={index}
-                removeRelatedTraining={() => relatedRemove(index)}
-              />
-            </Box>
-          ))}
-          <Button
-            id="boardOfDirectorRelatedTrainig"
-            alignSelf="start"
-            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-            variant="outline"
-            onClick={() => {
-              relatedAppend({});
-            }}
-          >
-            {t['kymInsNewDetail']}
-          </Button>
-        </DynamicBoxGroupContainer>
-      </div>
+      <Box display="flex" flexDirection="column" gap="s16">
+        {relatedFields.map((item, index) => (
+          <Box key={item.id}>
+            <AddRelatedTraining
+              index={index}
+              directorIndex={directorIndex}
+              removeRelatedTraining={() => relatedRemove(index)}
+            />
+          </Box>
+        ))}
+        <Button
+          id="boardOfDirectorRelatedTrainig"
+          alignSelf="start"
+          leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+          variant="outline"
+          onClick={() => {
+            relatedAppend({});
+          }}
+        >
+          {t['kymInsNewDetail']}
+        </Button>
+      </Box>
     </GroupContainer>
   );
 };

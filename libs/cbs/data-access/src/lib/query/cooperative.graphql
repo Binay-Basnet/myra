@@ -1,270 +1,270 @@
-query getCoOperativeKymEditData($id: ID!, $hasPressedNext: Boolean) {
-  members {
-    cooperative(includeRequiredErrors: $hasPressedNext) {
-      formState(id: $id) {
-        data {
-          formData {
-            nameOfOrganization
-            regdNumber
-            regdDate
-            regdOffice
-            registeredAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-
-            operatingAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-
-            email
-            website
-            contactNumber
-            noOfMaleMembers
-            noOfFemaleMembers
-            noOfOtherMembers
-            lastAuditDate
-            lastAgmDate
-            representativeFullName
-            representativeDesignatiton
-            representativeEmail
-            representativeContactNumber
-            representativePanNo
-            permanentRepresentativeAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-
-            isPermanentAndTemporaryAddressSame
-            temporaryRepresentativeAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-
-            cooperativeTypeId
-            mainServiceProduct
-            noOfMaleEmployee
-            noOfFemaleEmployee
-            totalEmployee
-            shareCapital
-            reserveAndSurplus
-            savingDeposit
-            loanAccount
-            capitalGrant
-            currentLiabilities
-            nonCurrentLiabilities
-            # totalEquityAndLiabilities
-            cashAndCashEquivalent
-            bank
-            investments
-            loan
-            nonCurrentAssets
-            otherNonCurrentAssets
-            totalAssets
-
-            accountHoldersName
-            # accountHolderSignature
-            # accountHolderStamp
-            hasTCAccepted
-            vatNo
-          }
-
-          sectionStatus {
-            errors
-            sectionStatus {
-              errors
-              incomplete
-            }
-          }
-        }
-      }
-      overallFormStatus(id: $id) {
-        coopDetails {
-          id
-
-          sectionStatus {
-            errors
-            incomplete
-          }
-        }
-      }
-    }
-  }
-}
-
-query getCoOperativeDirectorEditData($id: ID!, $hasPressedNext: Boolean) {
-  members {
-    cooperative(includeRequiredErrors: $hasPressedNext) {
-      listDirectors(id: $id) {
-        data {
-          id
-          fullName
-          designation
-          permanentAddress {
-            provinceId
-            districtId
-            localGovernmentId
-            wardNo
-            locality
-            houseNo
-            coordinates {
-              longitude
-              latitude
-            }
-          }
-          isPermanentAndTemporaryAddressSame
-          temporaryAddress {
-            provinceId
-            districtId
-            localGovernmentId
-            wardNo
-            locality
-            houseNo
-            coordinates {
-              longitude
-              latitude
-            }
-          }
-          dateOfMembership
-          highestQualification
-          contactNumber
-          email
-          citizenshipNo
-          panNo
-        }
-
-        sectionStatus {
-          errors
-          sectionStatus {
-            errors
-            incomplete
-          }
-        }
-      }
-    }
-  }
-}
-
-query getCoOperativeAccountOperatorEditData($id: ID!, $hasPressedNext: Boolean) {
-  members {
-    cooperative(includeRequiredErrors: $hasPressedNext) {
-      listAccountOperators(id: $id) {
-        data {
-          id
-          fullName
-          designation
-          permanentAddress {
-            provinceId
-            districtId
-            localGovernmentId
-            wardNo
-            locality
-            houseNo
-            coordinates {
-              longitude
-              latitude
-            }
-          }
-          isPermanentAndTemporaryAddressSame
-          temporaryAddress {
-            provinceId
-            districtId
-            localGovernmentId
-            wardNo
-            locality
-            houseNo
-            coordinates {
-              longitude
-              latitude
-            }
-          }
-          dateOfMembership
-          highestQualification
-          contactNumber
-          email
-          citizenshipNo
-          panNo
-          coopRelatedTraining {
-            subjectOfTraining
-            dateOfTraining
-            trainingOrganization
-          }
-        }
-
-        sectionStatus {
-          errors
-          sectionStatus {
-            errors
-            incomplete
-          }
-        }
-      }
-    }
-  }
-}
-
-query getKYMCooperativeOverallFormStatus($id: ID!, $hasPressedNext: Boolean) {
-  members {
-    cooperative(includeRequiredErrors: $hasPressedNext) {
-      overallFormStatus(id: $id) {
-        coopDetails {
-          id
-          errors
-          sectionStatus {
-            errors
-            incomplete
-          }
-        }
-        directorsDetails {
-          id
-          errors
-          sectionStatus {
-            errors
-            incomplete
-          }
-        }
-        accountOperatorDetails {
-          id
-          errors
-          sectionStatus {
-            errors
-            incomplete
-          }
-        }
-      }
-    }
-  }
-}
+#query getCoOperativeKymEditData($id: ID!, $hasPressedNext: Boolean) {
+#  members {
+#    cooperative(includeRequiredErrors: $hasPressedNext) {
+#      formState(id: $id) {
+#        data {
+#          formData {
+#            nameOfOrganization
+#            regdNumber
+#            regdDate
+#            regdOffice
+#            registeredAddress {
+#              provinceId
+#              districtId
+#              localGovernmentId
+#              wardNo
+#              locality
+#              houseNo
+#              coordinates {
+#                longitude
+#                latitude
+#              }
+#            }
+#
+#            operatingAddress {
+#              provinceId
+#              districtId
+#              localGovernmentId
+#              wardNo
+#              locality
+#              houseNo
+#              coordinates {
+#                longitude
+#                latitude
+#              }
+#            }
+#
+#            email
+#            website
+#            contactNumber
+#            noOfMaleMembers
+#            noOfFemaleMembers
+#            noOfOtherMembers
+#            lastAuditDate
+#            lastAgmDate
+#            representativeFullName
+#            representativeDesignatiton
+#            representativeEmail
+#            representativeContactNumber
+#            representativePanNo
+#            permanentRepresentativeAddress {
+#              provinceId
+#              districtId
+#              localGovernmentId
+#              wardNo
+#              locality
+#              houseNo
+#              coordinates {
+#                longitude
+#                latitude
+#              }
+#            }
+#
+#            isPermanentAndTemporaryAddressSame
+#            temporaryRepresentativeAddress {
+#              provinceId
+#              districtId
+#              localGovernmentId
+#              wardNo
+#              locality
+#              houseNo
+#              coordinates {
+#                longitude
+#                latitude
+#              }
+#            }
+#
+#            cooperativeTypeId
+#            mainServiceProduct
+#            noOfMaleEmployee
+#            noOfFemaleEmployee
+#            totalEmployee
+#            shareCapital
+#            reserveAndSurplus
+#            savingDeposit
+#            loanAccount
+#            capitalGrant
+#            currentLiabilities
+#            nonCurrentLiabilities
+#            # totalEquityAndLiabilities
+#            cashAndCashEquivalent
+#            bank
+#            investments
+#            loan
+#            nonCurrentAssets
+#            otherNonCurrentAssets
+#            totalAssets
+#
+#            accountHoldersName
+#            # accountHolderSignature
+#            # accountHolderStamp
+#            hasTCAccepted
+#            vatNo
+#          }
+#
+#          sectionStatus {
+#            errors
+#            sectionStatus {
+#              errors
+#              incomplete
+#            }
+#          }
+#        }
+#      }
+#      overallFormStatus(id: $id) {
+#        coopDetails {
+#          id
+#
+#          sectionStatus {
+#            errors
+#            incomplete
+#          }
+#        }
+#      }
+#    }
+#  }
+#}
+#
+#query getCoOperativeDirectorEditData($id: ID!, $hasPressedNext: Boolean) {
+#  members {
+#    cooperative(includeRequiredErrors: $hasPressedNext) {
+#      listDirectors(id: $id) {
+#        data {
+#          id
+#          fullName
+#          designation
+#          permanentAddress {
+#            provinceId
+#            districtId
+#            localGovernmentId
+#            wardNo
+#            locality
+#            houseNo
+#            coordinates {
+#              longitude
+#              latitude
+#            }
+#          }
+#          isPermanentAndTemporaryAddressSame
+#          temporaryAddress {
+#            provinceId
+#            districtId
+#            localGovernmentId
+#            wardNo
+#            locality
+#            houseNo
+#            coordinates {
+#              longitude
+#              latitude
+#            }
+#          }
+#          dateOfMembership
+#          highestQualification
+#          contactNumber
+#          email
+#          citizenshipNo
+#          panNo
+#        }
+#
+#        sectionStatus {
+#          errors
+#          sectionStatus {
+#            errors
+#            incomplete
+#          }
+#        }
+#      }
+#    }
+#  }
+#}
+#
+#query getCoOperativeAccountOperatorEditData($id: ID!, $hasPressedNext: Boolean) {
+#  members {
+#    cooperative(includeRequiredErrors: $hasPressedNext) {
+#      listAccountOperators(id: $id) {
+#        data {
+#          id
+#          fullName
+#          designation
+#          permanentAddress {
+#            provinceId
+#            districtId
+#            localGovernmentId
+#            wardNo
+#            locality
+#            houseNo
+#            coordinates {
+#              longitude
+#              latitude
+#            }
+#          }
+#          isPermanentAndTemporaryAddressSame
+#          temporaryAddress {
+#            provinceId
+#            districtId
+#            localGovernmentId
+#            wardNo
+#            locality
+#            houseNo
+#            coordinates {
+#              longitude
+#              latitude
+#            }
+#          }
+#          dateOfMembership
+#          highestQualification
+#          contactNumber
+#          email
+#          citizenshipNo
+#          panNo
+#          coopRelatedTraining {
+#            subjectOfTraining
+#            dateOfTraining
+#            trainingOrganization
+#          }
+#        }
+#
+#        sectionStatus {
+#          errors
+#          sectionStatus {
+#            errors
+#            incomplete
+#          }
+#        }
+#      }
+#    }
+#  }
+#}
+#
+#query getKYMCooperativeOverallFormStatus($id: ID!, $hasPressedNext: Boolean) {
+#  members {
+#    cooperative(includeRequiredErrors: $hasPressedNext) {
+#      overallFormStatus(id: $id) {
+#        coopDetails {
+#          id
+#          errors
+#          sectionStatus {
+#            errors
+#            incomplete
+#          }
+#        }
+#        directorsDetails {
+#          id
+#          errors
+#          sectionStatus {
+#            errors
+#            incomplete
+#          }
+#        }
+#        accountOperatorDetails {
+#          id
+#          errors
+#          sectionStatus {
+#            errors
+#            incomplete
+#          }
+#        }
+#      }
+#    }
+#  }
+#}

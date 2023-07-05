@@ -1,25 +1,37 @@
-import { baseAd, baseBs, calendarData } from './constants';
+// eslint-disable-next-line import/no-cycle
+import { baseAd, baseBs, BS_YEAR_MONTH_DAYS } from './constants';
 
-export type EachBSYear = keyof typeof calendarData;
+export type EachBSYear = keyof typeof BS_YEAR_MONTH_DAYS;
 
+/**
+ * Stores how many days has passed from the beginning in each year object
+ */
 export const cache = {
-  // stores the number of days to the end of corresponding year from the base date i.e. date.base_bs
-  // TODO memoize
-  getCumulativeTotal: () => {
-    const years = Object.keys(calendarData);
-    const startingYear = +years[0];
-    const totalYears = years.length;
-    // TODO: Type Partial<Record<EachBSYear, number>>
-    const obj: any = {};
+  getCumulativeTotal: (() => {
+    const memo: { result?: Record<number, number> } = {};
 
-    for (let i = 0; i < totalYears; i += 1) {
-      const yearIndex = startingYear + i;
+    return () => {
+      if (Object.prototype.hasOwnProperty.call(memo, 'result')) {
+        return memo.result;
+      }
 
-      obj[yearIndex] =
-        (i === 0 ? 0 : obj[yearIndex - 1]) + calendarData[yearIndex as EachBSYear].slice(-1)[0];
-    }
-    return obj;
-  },
+      const years = Object.keys(BS_YEAR_MONTH_DAYS);
+      const startingYear = +years[0];
+      const totalYears = years.length;
+      const obj: Record<number, number> = {};
+
+      for (let i = 0; i < totalYears; i += 1) {
+        const yearIndex = startingYear + i;
+
+        obj[yearIndex] =
+          (i === 0 ? 0 : obj[yearIndex - 1]) +
+          BS_YEAR_MONTH_DAYS[yearIndex as EachBSYear].slice(-1)[0];
+      }
+
+      memo.result = obj;
+      return obj;
+    };
+  })(),
 };
 
 /**
@@ -45,10 +57,17 @@ const countBSDaysFromBaseDateUsingAdDate = (year: number, month: number, day: nu
   return dayCount;
 };
 
+/**
+ * Convert AD To BS date
+ */
 export const ad2bs = (years: number, months: number, date: number) => {
   const dayCount = countBSDaysFromBaseDateUsingAdDate(years, months, date);
 
   const cumulativeData = cache.getCumulativeTotal();
+
+  if (!cumulativeData) {
+    throw new Error("The date doesn't fall within 1975/01/01 - 2092/12/30");
+  }
 
   const values = Object.values(cumulativeData);
   const yearIndex = values.findIndex((value) => (value as number) >= dayCount);
@@ -58,9 +77,9 @@ export const ad2bs = (years: number, months: number, date: number) => {
 
   let month = 0;
 
-  while (calendarData[year as EachBSYear]?.[month] <= offsetDays) {
+  while (BS_YEAR_MONTH_DAYS[year as EachBSYear]?.[month] <= offsetDays) {
     // check
-    offsetDays -= calendarData[year as EachBSYear][month];
+    offsetDays -= BS_YEAR_MONTH_DAYS[year as EachBSYear][month];
     month += 1;
   }
   if (+month === 12) {
@@ -76,13 +95,21 @@ export const ad2bs = (years: number, months: number, date: number) => {
   };
 };
 
+/**
+ * Convert BS To AD date
+ */
 export const bs2ad = (year: number, month: number, day: number) => {
   const cumulativeData = cache.getCumulativeTotal();
 
+  if (!cumulativeData) {
+    throw new Error("The date doesn't fall within 1975/01/01 - 2092/12/30");
+  }
+
   let prevMonthCumulativeTotal = 0;
-  const prevYearCumulativeTotal = cumulativeData[+year - 1];
+  const prevYearCumulativeTotal = cumulativeData[+year - 1] || 0;
+
   for (let i = 0; i < +month - 1; i += 1) {
-    prevMonthCumulativeTotal += calendarData[+year as EachBSYear][i];
+    prevMonthCumulativeTotal += BS_YEAR_MONTH_DAYS[+year as EachBSYear][i];
   }
 
   const countDays = prevYearCumulativeTotal + prevMonthCumulativeTotal + +day - 1;
@@ -98,16 +125,27 @@ export const bs2ad = (year: number, month: number, day: number) => {
   };
 };
 
+/**
+ * Get Days is the given month and year
+ */
 export const getBSMonthDays = (month: number, year: number) =>
-  calendarData[year as EachBSYear][month - 1];
+  BS_YEAR_MONTH_DAYS[year as EachBSYear]?.[month - 1];
 
+/**
+ * Get Days is the given month and year
+ */
 export const getStartingDayOfBsMonth = (year: number, month: number) => {
   const monthIndex = month - 1;
   const cumulativeData = cache.getCumulativeTotal();
+
+  if (!cumulativeData) {
+    throw new Error("The date doesn't fall within 1975/01/01 - 2092/12/30");
+  }
+
   const prevYearTotal = cumulativeData[year - 1] || 0;
   let days = 0;
   for (let i = 0; i < monthIndex; i += 1) {
-    days += calendarData[year as EachBSYear][i];
+    days += BS_YEAR_MONTH_DAYS[year as EachBSYear][i];
   }
   const daysCount = prevYearTotal + days;
   return getDayIndex(daysCount);

@@ -1,12 +1,7 @@
-import { ReactElement } from 'react';
+import { DatePicker } from '@myra-ui/date-picker';
 
-import { HrLifecycleOnboardingAdd } from '@coop/hr-module/lifecycle';
-import { HRLayout } from '@coop/hr-module/ui-layouts';
+const JobApplicationAdd = () => (
+  <DatePicker calendarType="BS" minDate={new Date('2023-07-04')} maxDate={new Date('2023-07-05')} />
+);
 
-// TODO ( Update this page when design arrives )
-const JobApplicationAdd = () => <HrLifecycleOnboardingAdd />;
-
-JobApplicationAdd.getLayout = function getLayout(page: ReactElement) {
-  return <HRLayout>{page}</HRLayout>;
-};
 export default JobApplicationAdd;

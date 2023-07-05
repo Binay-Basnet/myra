@@ -122,7 +122,7 @@ export const getComponents: (
         innerProps={
           {
             ...props.innerProps,
-            'data-testid': `${name}-${props.data.label.toString().toLowerCase()}`,
+            'data-testid': `${name}-${props?.data?.label?.toString().toLowerCase()}`,
           } as unknown as Record<string, string>
         }
       >

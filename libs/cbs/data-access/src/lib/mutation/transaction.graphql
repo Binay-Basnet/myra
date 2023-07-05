@@ -217,3 +217,29 @@ mutation bulkTransfer($data: BulkTransferInput!) {
     }
   }
 }
+
+mutation restrictAccountingTransaction($id: ID, $data: RestrictTransactionInput!) {
+  transaction {
+    restrictAccounting {
+      restrict(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation disableAccountingTransactionRestrict($id: ID!) {
+  transaction {
+    restrictAccounting {
+      disable(id: $id) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

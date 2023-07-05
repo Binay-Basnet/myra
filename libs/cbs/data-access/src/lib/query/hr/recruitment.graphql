@@ -86,7 +86,7 @@ query getAppointmentLetterList($filter: Filter, $pagination: Pagination) {
           totalCount
           edges {
             node {
-              applicantId
+              id
               name
               probationPeriod
               offerDate
@@ -203,7 +203,6 @@ query getJobOffer($id: ID!) {
             jobDepartment
             jobOfferDate
             jobOfferTerms {
-              sn
               offerTerm
               value
             }
@@ -269,6 +268,13 @@ query getJobApplication($id: ID!) {
             }
             applicationStatus
             applicationRating
+            documents {
+              fieldId
+              identifiers: docData {
+                identifier
+                url
+              }
+            }
           }
           error {
             ...MutationError
@@ -290,7 +296,6 @@ query getAppointmentLetter($id: ID!) {
             appointmentDate
             body
             appointmentTerms {
-              sn
               title
               description
             }

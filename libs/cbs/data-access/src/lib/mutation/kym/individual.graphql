@@ -1,0 +1,25 @@
+mutation setKYMIndividualData($id: ID, $data: KymIndMemberInput!, $forDraft: Boolean) {
+  members {
+    individual {
+      add(data: $data, id: $id, forDraft: $forDraft) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation addFamilyMember($id: ID!, $data: KYMIndFamilyMemberInput!) {
+  members {
+    individual {
+      addMinorFamliyMember(memberId: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

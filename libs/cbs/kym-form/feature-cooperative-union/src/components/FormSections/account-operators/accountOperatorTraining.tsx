@@ -6,7 +6,6 @@ import { Box, Button, Icon, Text } from '@myra-ui';
 
 import {
   DynamicBoxContainer,
-  DynamicBoxGroupContainer,
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
@@ -16,9 +15,14 @@ import { useTranslation } from '@coop/shared/utils';
 interface IAddRelatedTrainingConcern {
   index: number;
   removeRelatedTraining: () => void;
+  accountOperatorIndex: number;
 }
 
-const AddRelatedTraining = ({ index, removeRelatedTraining }: IAddRelatedTrainingConcern) => {
+const AddRelatedTraining = ({
+  index,
+  removeRelatedTraining,
+  accountOperatorIndex,
+}: IAddRelatedTrainingConcern) => {
   const { t } = useTranslation();
   return (
     <DynamicBoxContainer>
@@ -35,18 +39,18 @@ const AddRelatedTraining = ({ index, removeRelatedTraining }: IAddRelatedTrainin
       <InputGroupContainer>
         <FormInput
           type="text"
-          name={`trainingAttended.${index}.subjectOfTraining`}
+          name={`accountOperators.${accountOperatorIndex}.trainingAttended.${index}.subjectOfTraining`}
           id="accountOperator.trainingAttended.subjectOfTraining"
           label={t['kymCoopUnionSubjectOfTraining']}
         />
         <FormDatePicker
-          name={`trainingAttended.${index}.dateOfTraining`}
+          name={`accountOperators.${accountOperatorIndex}.trainingAttended.${index}.dateOfTraining`}
           id="accountOperator.trainingAttended.dateOfTraining"
           label={t['kymCoopUnionDateOfTraining']}
         />
         <FormInput
           type="text"
-          name={`trainingAttended.${index}.trainingOrganization`}
+          name={`accountOperators.${accountOperatorIndex}.trainingAttended.${index}.trainingOrganization`}
           id="accountOperator.trainingAttended.trainingOrganization"
           label={t['kymCoopUnionTrainingOrganization']}
         />
@@ -55,14 +59,18 @@ const AddRelatedTraining = ({ index, removeRelatedTraining }: IAddRelatedTrainin
   );
 };
 
-export const AccountOperatorTraining = () => {
+export const AccountOperatorTraining = ({
+  accountOperatorIndex,
+}: {
+  accountOperatorIndex: number;
+}) => {
   const { t } = useTranslation();
   const {
     fields: relatedFields,
     append: relatedAppend,
     remove: relatedRemove,
   } = useFieldArray({
-    name: `trainingAttended`,
+    name: `accountOperators.${accountOperatorIndex}.trainingAttended`,
   });
 
   return (
@@ -74,29 +82,28 @@ export const AccountOperatorTraining = () => {
         <Text variant="bodyRegular">{t['kymCoopUnionTrainingAttended']}</Text>
       </Box>
 
-      <div>
-        <DynamicBoxGroupContainer>
-          {relatedFields.map((item, index) => (
-            <Box key={item.id}>
-              <AddRelatedTraining
-                index={index}
-                removeRelatedTraining={() => relatedRemove(index)}
-              />
-            </Box>
-          ))}
-          <Button
-            id="accountOperator.relatedTrainingButton"
-            alignSelf="start"
-            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-            variant="outline"
-            onClick={() => {
-              relatedAppend({});
-            }}
-          >
-            {t['kymInsNewDetail']}
-          </Button>
-        </DynamicBoxGroupContainer>
-      </div>
+      <Box display="flex" flexDirection="column" gap="s16">
+        {relatedFields.map((item, index) => (
+          <Box key={item.id}>
+            <AddRelatedTraining
+              accountOperatorIndex={accountOperatorIndex}
+              index={index}
+              removeRelatedTraining={() => relatedRemove(index)}
+            />
+          </Box>
+        ))}
+        <Button
+          id="accountOperator.relatedTrainingButton"
+          alignSelf="start"
+          leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+          variant="outline"
+          onClick={() => {
+            relatedAppend({});
+          }}
+        >
+          {t['kymInsNewDetail']}
+        </Button>
+      </Box>
     </GroupContainer>
   );
 };

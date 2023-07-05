@@ -259,7 +259,7 @@ export const SharePurchaseForm = () => {
               <FormSection>
                 <GridItem colSpan={3}>
                   <FormMemberSelect
-                    allMembers={redirectPath && redirectPath.includes('/members/activation/')}
+                    allMembers={redirectPath && redirectPath.includes('/members/activation')}
                     name="memberId"
                     label={t['sharePurchaseSelectMember']}
                     isDisabled={!!redirectMemberId}

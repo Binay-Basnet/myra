@@ -91,7 +91,7 @@ export const AppSidebar = ({ module = 'CBS', menu, forms }: ISidebarProps) => {
                         onClick={() => {
                           if (item.idType) {
                             mutateAsync({ idType: item?.idType ?? null }).then((res) =>
-                              router.push(`${item.route}/${res?.newId}`)
+                              router.push(`${item.route}?id=${res?.newId}`)
                             );
                           } else {
                             router.push(item.route);

@@ -1,15 +1,9 @@
 import { useEffect, useMemo } from 'react';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
-import NepaliDate from 'nepali-date-converter';
 
 import { Grid, GridItem, Modal, Text } from '@myra-ui';
 
-import {
-  DateType,
-  ProductPenaltyData,
-  store,
-  useGetEndOfDayDateDataQuery,
-} from '@coop/cbs/data-access';
+import { ProductPenaltyData, useGetEndOfDayDateDataQuery } from '@coop/cbs/data-access';
 import {
   FormAmountInput,
   FormDatePicker,
@@ -36,7 +30,6 @@ export const UpdatePenaltyModal = ({
   methods,
   penalty,
 }: IUpdatePenaltyModalProps) => {
-  const dateType = store.getState().auth?.preference?.date || DateType.Ad;
   const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
   const closingDate = useMemo(() => endOfDayData?.transaction?.endOfDayDate?.value, [endOfDayData]);
 
@@ -75,7 +68,10 @@ export const UpdatePenaltyModal = ({
     >
       <FormProvider {...methods}>
         <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-          <FormNumberInput name="payload.dayAfterInstallmentDate" label="Day from end date" />
+          <FormNumberInput
+            name="payload.dayAfterInstallmentDate"
+            label="Day from installment Date"
+          />
 
           <FormNumberInput
             name="payload.penaltyRate"
@@ -92,13 +88,7 @@ export const UpdatePenaltyModal = ({
           <FormDatePicker
             name="additionalData.effectiveDate"
             label="Effective Date"
-            minDate={
-              closingDate?.local
-                ? dateType === 'BS'
-                  ? new NepaliDate(closingDate?.np ?? '').toJsDate()
-                  : new Date(closingDate?.en ?? '')
-                : new Date()
-            }
+            minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
           />
 
           <GridItem colSpan={2}>

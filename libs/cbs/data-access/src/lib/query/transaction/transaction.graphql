@@ -461,7 +461,7 @@ query getSTRTransactionDetail($transactionId: ID!) {
           }
           identificationDetail {
             id
-            idNo
+            identificationNo
             idType
             place
             date

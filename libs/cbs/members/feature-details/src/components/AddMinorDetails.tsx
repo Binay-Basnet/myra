@@ -1,13 +1,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Grid, GridItem, Modal } from '@myra-ui';
+import { Grid, GridItem, Modal } from '@myra-ui';
 
 import {
   FormFieldSearchTerm,
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
-  useSetMemberFamilyDetailsMutation,
+  // useSetMemberFamilyDetailsMutation,
 } from '@coop/cbs/data-access';
 import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
@@ -33,32 +33,32 @@ export const AddMinorModal = ({ isOpen, onClose, memberId }: IAddMinorModalProps
 
   const { mutateAsync: newIDMutate } = useGetNewIdMutation();
 
-  const { mutateAsync: setMinor } = useSetMemberFamilyDetailsMutation();
+  // const { mutateAsync: setMinor } = useSetMemberFamilyDetailsMutation();
 
   const handleSave = () => {
     const values = methods.getValues();
 
-    asyncToast({
-      id: 'account-open-add-minor',
-      promise: newIDMutate({}).then((res) =>
-        setMinor({
-          id: memberId,
-          data: {
-            id: res.newId,
-            ...values,
-          },
-        })
-      ),
-      msgs: {
-        loading: 'Adding Minor',
-        success: 'Minor Added',
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries(['getAccountOpenMinorList']);
-        onClose();
-        // router.push('/accounting/investment/investment-transaction/list');
-      },
-    });
+    // asyncToast({
+    //   id: 'account-open-add-minor',
+    //   promise: newIDMutate({}).then((res) =>
+    //     setMinor({
+    //       id: memberId,
+    //       data: {
+    //         id: res.newId,
+    //         ...values,
+    //       },
+    //     })
+    //   ),
+    //   msgs: {
+    //     loading: 'Adding Minor',
+    //     success: 'Minor Added',
+    //   },
+    //   onSuccess: () => {
+    //     queryClient.invalidateQueries(['getAccountOpenMinorList']);
+    //     onClose();
+    //     // router.push('/accounting/investment/investment-transaction/list');
+    //   },
+    // });
   };
 
   return isOpen ? (

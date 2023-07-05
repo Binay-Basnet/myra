@@ -1,9 +1,8 @@
 import dayjs from 'dayjs';
-import NepaliDate from 'nepali-date-converter';
 
 import { ad2bs, bs2ad, EachBSYear } from './ad-bs-converter';
 import { zeroPad } from './calendar-builder';
-import { calendarData } from './constants';
+import { BS_YEAR_MONTH_DAYS } from './constants';
 import { CalendarBuilderDate } from '../types/date';
 
 export const getTodayDate = () => {
@@ -46,23 +45,26 @@ export const convertValueToDate = (value: DateValue) => {
   }
 
   if (value.bs) {
-    const bsJSDate = new NepaliDate(value?.bs);
-    const bsDate = {
-      year: bsJSDate.getYear(),
-      month: bsJSDate.getMonth() + 1,
-      day: bsJSDate.getDate(),
-      dayOfWeek: bsJSDate.getDay(),
-    };
+    // TODO! Update the function when a function is created to convert a BS Date to JS Date
+    // const bsJSDate = new NepaliDate(value?.bs);
+    // const bsDate = {
+    //   year: bsJSDate.getYear(),
+    //   month: bsJSDate.getMonth() + 1,
+    //   day: bsJSDate.getDate(),
+    //   dayOfWeek: bsJSDate.getDay(),
+    // };
 
-    const adDate = bs2ad(bsDate.year, bsDate.month, bsDate.day);
-    const adJSDate = new Date(adDate.year, adDate.month - 1, adDate.day);
+    // const adDate = bs2ad(bsDate.year, bsDate.month, bsDate.day);
+    // const adJSDate = new Date(adDate.year, adDate.month - 1, adDate.day);
 
-    return {
-      current: adJSDate,
-      today: new Date(),
-      ad: adDate,
-      bs: bsDate,
-    };
+    // return {
+    //   current: adJSDate,
+    //   today: new Date(),
+    //   ad: adDate,
+    //   bs: bsDate,
+    // };
+
+    return null;
   }
 
   if (value.date) {
@@ -142,7 +144,7 @@ export const getFiscalYears = (date: Date, calendarType: 'AD' | 'BS' = 'AD') => 
   return years?.map((year) => {
     if (calendarType === 'AD') {
       const fiscalYearStartInAd = bs2ad(year, 4, 1);
-      const fiscalYearEndInAd = bs2ad(year + 1, 3, calendarData[(year + 1) as EachBSYear][2]);
+      const fiscalYearEndInAd = bs2ad(year + 1, 3, BS_YEAR_MONTH_DAYS[(year + 1) as EachBSYear][2]);
       return {
         start: {
           year: fiscalYearStartInAd.year,
@@ -171,7 +173,7 @@ export const getFiscalYears = (date: Date, calendarType: 'AD' | 'BS' = 'AD') => 
       end: {
         year: year + 1,
         month: '03',
-        day: String(calendarData[(year + 1) as EachBSYear][2]),
+        day: String(BS_YEAR_MONTH_DAYS[(year + 1) as EachBSYear][2]),
         dayOfWeek: 1,
       },
     };
@@ -212,8 +214,3 @@ export const convertTillDate = (date: Date, calendarType: 'AD' | 'BS') => {
     dayOfWeek: tillBsDate.dayOfWeek,
   };
 };
-
-// export const convertCalendarDate = (date: CalendarBuilderDate, calendarType: 'AD' | 'BS') => {
-//   if (calendarType === 'AD') {
-//   }
-// };

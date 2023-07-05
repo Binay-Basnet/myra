@@ -11,7 +11,7 @@ export const SideBar = () => (
         'Account List',
         'Active Accounts',
         'Inactive Accounts',
-        'Interest Update',
+        'Product Premium',
         'Penalty Update',
         'Fee and Charges Update',
         'General Updates',

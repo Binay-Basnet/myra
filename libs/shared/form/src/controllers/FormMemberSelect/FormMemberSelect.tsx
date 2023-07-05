@@ -5,12 +5,7 @@ import { debounce } from 'lodash';
 
 import { MemberSelect, MemberSelectProps, Option } from '@myra-ui/forms';
 
-import {
-  KymIndFormStateQuery,
-  MemberType,
-  useAppSelector,
-  useGetMemberListQuery,
-} from '@coop/cbs/data-access';
+import { MemberType, useAppSelector, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 // import FormCustomSelect from './FormCustomSelect';
@@ -175,7 +170,6 @@ export const FormMemberSelect = ({
         return prevVal;
       }
 
-      const profileData = curVal?.node?.profile as KymIndFormStateQuery;
       return [
         ...prevVal,
         {
@@ -186,9 +180,9 @@ export const FormMemberSelect = ({
             memberId: curVal?.node?.id,
             code: curVal?.node?.code,
             memberName: curVal?.node?.name?.local,
-            age: profileData?.data?.formData?.basicInformation?.age,
-            gender: profileData?.data?.formData?.basicInformation?.gender?.local,
-            maritialStatus: profileData?.data?.formData?.maritalStatus?.local,
+            age: curVal?.node?.age,
+            gender: curVal?.node?.gender || 'N/A',
+            maritialStatus: curVal?.node?.maritalStatus || 'N/A',
             profilePicUrl: curVal?.node?.profilePicUrl,
             branch: curVal?.node?.branch,
           },

@@ -3,7 +3,7 @@ export type TDate = {
   month: number;
   day: number;
   // dayOfWeek: 0 for sunday, 1 for monday and so on
-  dayOfWeek: number;
+  dayOfWeek?: number;
 };
 
 export type CalendarBuilderDate = {

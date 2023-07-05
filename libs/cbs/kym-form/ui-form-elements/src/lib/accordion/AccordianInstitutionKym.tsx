@@ -9,7 +9,7 @@ const OrganizationInformation = [
   'kymInsBasicInformation',
   'kymInsRegisteredDetails',
   'kymInsOperatorOfficeAddress',
-  'serviceCenterOfficeAddress',
+  'kymInsbranchOfficeAddress',
   'kymInsContactDetails',
   'kymInsBankAccountDetails',
   'kymInsDetailsofsisterconcern',

@@ -1,0 +1,12 @@
+mutation setKYMInstitutionData($id: ID, $data: KymInsInput!, $forDraft: Boolean) {
+  members {
+    institution {
+      add(data: $data, id: $id, forDraft: $forDraft) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,171 @@
+query getKYMIndividualFormData($id: String!) {
+  members {
+    individual(id: $id) {
+      formState {
+        data {
+          firstName
+          middleName
+          lastName
+          genderId
+          dateOfBirth
+          ethnicityId
+          nationalityId
+          educationQualificationId
+          religionId
+          educationQualificationId
+          religionId
+          panNo
+
+          mobileNumber
+          phoneNumber
+          email
+
+          landlordName
+          landlordContact
+
+          maritalStatusId
+
+          professionId
+          otherProfession
+
+          isForeignEmployment
+          foreignEmpCountryId
+          typeOfVisaId
+          foreignEstimatedAnnualIncome
+
+          annualIncomeSourceId
+          purposeId
+          isMemberOfAnotherCooperative
+          otherCoopName
+          otherCoopBranchId
+          otherCoopMemberId
+
+          firstIntroducerId
+          secondIntroducerId
+
+          isFamilyAMember
+
+          initialShare
+          initialSaving
+          initialLoan
+          otherFinancialAmount
+
+          estimatedAnnualTransactionAmount
+          estimatedAnnualLoanAmount
+          estimatedAnnualTransactionFrequencyId
+          estimatedAnnualDepositAmount
+
+          isPoliticallyExposed
+          politicallyExposedDetails
+          hasBeneficialOwner
+          beneficialRelationshipId
+          beneficialFullName
+          isConvicted
+          convictedDetails
+          hasForeignResidentialPermit
+          foreignResidentialPermitTypeId
+          declarationAgreement
+
+          mainOccupation {
+            registrationNo
+            address
+            contact
+            establishedDate
+            estimatedAnnualIncome
+            id
+            isOwner
+            occupationId
+            orgName
+            panVatNo
+          }
+
+          incomeSource {
+            amount
+            id
+            incomeSource
+          }
+
+          spouseOccupation {
+            registrationNo
+            address
+            contact
+            establishedDate
+            estimatedAnnualIncome
+            id
+            isOwner
+            occupationId
+            orgName
+            panVatNo
+          }
+
+          permanentAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          sameTempAsPermanentAddress
+          temporaryAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+
+          identificationSelection
+
+          identification {
+            date
+            id
+            identificationNo
+            idType
+            place
+          }
+
+          familyCoopMembers {
+            dateOfBirth
+            familyMemberId
+            fullName
+            id
+            relationshipId
+          }
+
+          familyMembers {
+            dateOfBirth
+            documents {
+              identifiers: docData {
+                identifier
+                url
+              }
+              fieldId
+            }
+            familyMemberId
+            fullName
+            id
+            relationshipId
+          }
+
+          documents {
+            identifiers: docData {
+              identifier
+              url
+            }
+            fieldId
+          }
+        }
+      }
+    }
+  }
+}

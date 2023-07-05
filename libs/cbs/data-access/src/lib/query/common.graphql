@@ -49,13 +49,6 @@ fragment QueryError on QueryError {
   }
 }
 
-fragment KYMFieldData on KYMFieldData {
-  id
-  options {
-    id
-    value
-  }
-}
 
 fragment Pagination on PageInfo {
   startCursor

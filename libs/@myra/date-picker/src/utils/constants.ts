@@ -1,6 +1,8 @@
 // np= nepali, rm="roman" , en="english"
 import dayjs from 'dayjs';
-import NepaliDate from 'nepali-date-converter';
+
+// eslint-disable-next-line import/no-cycle
+import { ad2bs } from './ad-bs-converter';
 
 export const lang = ['np', 'rm', 'en'];
 export const variant = ['long', 'short', 'min'];
@@ -104,20 +106,30 @@ export const nums = {
 export const ordinal = (n: number | string) =>
   `${n}`.replace(/\d/g, (i) => '०१२३४५६७८९'[i as unknown as number]);
 
-export const minBsYear = 1978;
-export const maxBsYear = 2100; // TODO
-export const minAdYear = 1921;
+export const minBsYear = 1970;
+export const maxBsYear = 2099;
+export const minAdYear = 1913;
 export const minAdMonth = 3;
 export const minAdDate = 13;
-export const maxAdYear = 2043; // TODo
+export const maxAdYear = 2043;
 export const daysInYear = 365;
 export const minMonth = 1;
 export const minDays = 1;
 export const maxMonth = 12;
 export const maxDays = 32;
-export const baseAd = { year: 1921, month: 3, day: 13, dayOfWeek: 3 }; // dayOfWeek: 0 for sunday, 1 for monday and so on
-export const baseBs = { year: 1978, month: 0, day: 1, dayOfWeek: 3 };
-export const calendarData = {
+
+export const baseAd = { year: 1913, month: 3, day: 13, dayOfWeek: 0 }; // dayOfWeek: 0 for sunday, 1 for monday and so on
+export const baseBs = { year: 1970, month: 0, day: 1, dayOfWeek: 0 };
+
+export const BS_YEAR_MONTH_DAYS = {
+  1970: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30, 365],
+  1971: [31, 31, 32, 31, 32, 30, 30, 29, 30, 29, 30, 30, 365],
+  1972: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31, 366],
+  1973: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31, 365],
+  1974: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30, 365],
+  1975: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30, 365],
+  1976: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31, 366],
+  1977: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31, 365],
   1978: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30, 365],
   1979: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30, 365],
   1980: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31, 366],
@@ -129,11 +141,11 @@ export const calendarData = {
   1986: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30, 365],
   1987: [31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30, 365],
   1988: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31, 366],
-  1989: [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30, 365],
+  1989: [31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30, 365],
   1990: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30, 365],
-  1991: [31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30, 365],
+  1991: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30, 365],
   1992: [31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31, 366],
-  1993: [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30, 365],
+  1993: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30, 365],
   1994: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30, 365],
   1995: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30, 365],
   1996: [31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31, 366],
@@ -144,7 +156,7 @@ export const calendarData = {
   2001: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30, 365],
   2002: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30, 365],
   2003: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31, 366],
-  2004: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31, 365],
+  2004: [30, 32, 31, 32, 31, 30, 30, 30, 30, 29, 29, 31, 365],
   2005: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30, 365],
   2006: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30, 365],
   2007: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31, 366],
@@ -202,7 +214,7 @@ export const calendarData = {
   2059: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30, 365],
   2060: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30, 365],
   2061: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31, 366],
-  2062: [30, 32, 31, 32, 31, 31, 29, 30, 29, 30, 29, 31, 365],
+  2062: [31, 31, 31, 32, 31, 31, 29, 30, 29, 30, 29, 31, 365],
   2063: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30, 365],
   2064: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30, 365],
   2065: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31, 366],
@@ -221,33 +233,26 @@ export const calendarData = {
   2078: [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30, 365],
   2079: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30, 365],
   2080: [31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30, 365],
-  2081: [31, 31, 32, 32, 31, 30, 30, 30, 29, 30, 30, 30, 366],
-  2082: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30, 365],
+  2081: [31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31, 366],
+  2082: [31, 31, 32, 31, 31, 30, 30, 30, 29, 30, 30, 30, 365],
   2083: [31, 31, 32, 31, 31, 30, 30, 30, 29, 30, 30, 30, 365],
   2084: [31, 31, 32, 31, 31, 30, 30, 30, 29, 30, 30, 30, 365],
   2085: [31, 32, 31, 32, 30, 31, 30, 30, 29, 30, 30, 30, 366],
   2086: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30, 365],
-  2087: [31, 31, 32, 31, 31, 31, 30, 30, 29, 30, 30, 30, 366],
+  2087: [31, 31, 32, 31, 31, 31, 30, 29, 30, 30, 30, 30, 366],
   2088: [30, 31, 32, 32, 30, 31, 30, 30, 29, 30, 30, 30, 365],
   2089: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30, 365],
   2090: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30, 365],
   2091: [31, 31, 32, 31, 31, 31, 30, 30, 29, 30, 30, 30, 366],
-  2092: [31, 31, 32, 32, 31, 30, 30, 30, 29, 30, 30, 30, 366],
+  2092: [30, 31, 32, 32, 31, 30, 30, 30, 29, 30, 30, 30, 365],
+  2093: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30, 365],
+  2094: [31, 31, 32, 31, 31, 30, 30, 30, 29, 30, 30, 30, 365],
+  2095: [31, 31, 32, 31, 31, 31, 30, 29, 30, 30, 30, 30, 366],
+  2096: [30, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30, 364],
+  2097: [31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30, 366],
+  2098: [31, 31, 32, 31, 31, 31, 29, 30, 29, 30, 29, 31, 365],
+  2099: [31, 31, 32, 31, 31, 31, 30, 29, 29, 30, 30, 30, 365],
 };
-
-/*
- * gathered data below; if anybody can validate below, thanks!
- * A hacky way is to iterate for the unknown dates is to use daysPerYear and loop through
- *
- '2093': [ 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30, 366 ],
- '2094': [ 31, 31, 32, 31, 31, 30, 30, 30, 29, 30, 30, 30, 365 ],
- '2095': [ 31, 31, 32, 31, 31, 31, 30, 29, 30, 30, 30, 30, 366 ],
- '2096': [ 30, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30, 364 ],
- '2097': [ 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30, 366 ],
- '2098': [ 31, 31, 32, 31, 31, 31, 29, 30, 29, 30, 30, 31, 366 ],
- '2099': [ 31, 31, 32, 31, 31, 31, 30, 29, 29, 30, 30, 30, 365 ],
- '2100': [ 31, 32, 31, 32, 30, 31, 30, 29, 30, 29, 30, 30, 365 ]
- */
 
 const convertDate = (date: Date) => {
   const _date = dayjs(date);
@@ -260,25 +265,22 @@ const convertDate = (date: Date) => {
   };
 };
 
-const convertNepaliDate = (date: NepaliDate) => ({
-  year: date.getYear(),
-  month: String(Number(date.getMonth()) + 1),
-  day: String(date.getDate()),
-  dayOfWeek: date.getDay(),
-});
+const convertNepaliDate = (date: Date) => {
+  const adDate = convertDate(date);
+  const bsDate = ad2bs(adDate.year, Number(adDate.month), Number(adDate.day));
+
+  return {
+    year: bsDate?.year,
+    month: String(Number(bsDate?.month) + 1),
+    day: String(bsDate?.day),
+    dayOfWeek: bsDate?.dayOfWeek,
+  };
+};
 
 export const today = convertDate(dayjs(new Date()).toDate());
 export const yesterday = convertDate(dayjs(new Date()).subtract(1, 'day')?.toDate());
 export const last7Days = convertDate(dayjs(new Date()).subtract(7, 'day')?.toDate());
 export const last30Days = convertDate(dayjs(new Date()).subtract(30, 'day')?.toDate());
-
-export const bsToday = convertNepaliDate(new NepaliDate(dayjs(new Date()).toDate()));
-export const bsLast7Days = convertNepaliDate(
-  new NepaliDate(dayjs(new Date()).subtract(7, 'day')?.toDate())
-);
-export const bsLast30Days = convertNepaliDate(
-  new NepaliDate(dayjs(new Date()).subtract(30, 'day')?.toDate())
-);
 
 export const getPeriodDate = (
   numberOfDays: number,
@@ -288,7 +290,7 @@ export const getPeriodDate = (
   if (calendarType === 'AD') {
     return convertDate(dayjs(baseDate).subtract(numberOfDays, 'day')?.toDate());
   }
-  return convertNepaliDate(new NepaliDate(dayjs(baseDate).subtract(numberOfDays, 'day')?.toDate()));
+  return convertNepaliDate(dayjs(baseDate).subtract(numberOfDays, 'day')?.toDate());
 };
 
 export const DEFAULT_PERIODS = [
@@ -317,3 +319,136 @@ export const DEFAULT_PERIODS = [
     closePopover: false,
   },
 ];
+
+/**
+ * Format Object
+ */
+export const formatObj = {
+  en: {
+    day: {
+      short: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      long: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    },
+    month: {
+      short: ['Bai', 'Jes', 'Asa', 'Shr', 'Bhd', 'Asw', 'Kar', 'Man', 'Pou', 'Mag', 'Fal', 'Cha'],
+      long: [
+        'Baisakh',
+        'Jestha',
+        'Asar',
+        'Shrawan',
+        'Bhadra',
+        'Aswin',
+        'Kartik',
+        'Mangsir',
+        'Poush',
+        'Magh',
+        'Falgun',
+        'Chaitra',
+      ],
+    },
+    date: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+  },
+  ne: {
+    day: {
+      short: ['आइत', 'सोम', 'मंगल', 'बुध', 'बिहि', 'शुक्र', 'शनि'],
+      long: ['आइतबार', 'सोमबार', 'मंगलबार', 'बुधबार', 'बिहिबार', 'शुक्रबार', 'शनिबार'],
+    },
+    month: {
+      short: ['बै', 'जे', 'अ', 'श्रा', 'भा', 'आ', 'का', 'मं', 'पौ', 'मा', 'फा', 'चै'],
+      long: [
+        'बैशाख',
+        'जेठ',
+        'असार',
+        'श्रावण',
+        'भाद्र',
+        'आश्विन',
+        'कार्तिक',
+        'मंसिर',
+        'पौष',
+        'माघ',
+        'फाल्गुण',
+        'चैत्र',
+      ],
+    },
+    date: ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'],
+  },
+};
+
+export interface IYearMonthDate {
+  year: number;
+  month: number;
+  day: number;
+  dayOfWeek?: number;
+}
+
+function mapLanguageNumber(dateNumber: string, language: 'en' | 'ne'): string {
+  return dateNumber
+    .split('')
+    .map((num) => formatObj[language].date[parseInt(num, 10)])
+    .join('');
+}
+
+export function formatDate(
+  bsDate: IYearMonthDate,
+  stringFormat: string,
+  language: 'en' | 'ne'
+): string {
+  return stringFormat
+    .replace(/((\\[MDYd])|D{1,2}|M{1,4}|Y{2,4}|d{1,3})/g, (match, _, matchedString) => {
+      switch (match) {
+        case 'D':
+          return mapLanguageNumber(bsDate.day.toString(), language);
+        case 'DD':
+          return mapLanguageNumber(bsDate.day.toString().padStart(2, '0'), language);
+        case 'M':
+          return mapLanguageNumber(bsDate.month.toString(), language);
+        case 'MM':
+          return mapLanguageNumber(bsDate.month.toString().padStart(2, '0'), language);
+        case 'MMM':
+          return formatObj[language].month.short[bsDate.month];
+        case 'MMMM':
+          return formatObj[language].month.long[bsDate.month];
+        case 'YY':
+          return mapLanguageNumber(bsDate.year.toString().slice(-2), language);
+        case 'YYY':
+          return mapLanguageNumber(bsDate.year.toString().slice(-3), language);
+        case 'YYYY':
+          return mapLanguageNumber(bsDate.year.toString(), language);
+        case 'd':
+          return mapLanguageNumber(bsDate.dayOfWeek?.toString() || '0', language);
+        case 'dd':
+          return formatObj[language].day.short[bsDate.dayOfWeek || 0];
+        case 'ddd':
+          return formatObj[language].day.long[bsDate.dayOfWeek || 0];
+        default:
+          return matchedString.replace('/', '');
+      }
+    })
+    .replace(/\\/g, '');
+}
+
+export function parse(dateString: string) {
+  const OFFICIAL_FORMAT = /(\d{4})\s*([/-]|\s+)\s*(\d{1,2})\s*([/-]|\s+)\s*(\d{1,2})/;
+  const GEORGIAN_FORMAT = /(\d{1,2})\s*([/-]|\s+)\s*(\d{1,2})\s*([/-]|\s+)\s*(\d{4})/;
+  let match: RegExpMatchArray | null;
+  match = dateString.match(OFFICIAL_FORMAT);
+  if (match !== null) {
+    return {
+      year: parseInt(match[1], 10),
+      month: parseInt(match[3], 10) - 1,
+      day: parseInt(match[5], 10),
+    };
+  }
+  match = dateString.match(GEORGIAN_FORMAT);
+  if (match !== null) {
+    return {
+      year: parseInt(match[5], 10),
+      month: parseInt(match[3], 10) - 1,
+      day: parseInt(match[1], 10),
+    };
+  }
+  throw new Error('Invalid date format');
+}
+
+export const formatBs = (dateString: string, locale: 'en' | 'ne') =>
+  formatDate(parse(dateString), 'YYYY-MM-DD', locale);

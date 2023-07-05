@@ -208,20 +208,30 @@ export const NeosysFeatureClientView = () => {
       environmentId: currentId,
       version: updateEnvGetValues()?.['version'],
     })
-      .then(() => {
-        toast({
-          id: 'update-env',
-          type: 'success',
-          state: 'success',
-          message: 'Environment version update successsful',
-        });
-        setCurrentId('');
-        setIsUpdateEnvironmentOpen(false);
-        refetch();
+      .then((res) => {
+        if (typeof res === 'object' && 'error' in res) {
+          toast({
+            id: 'update-env-error',
+            type: 'error',
+            state: 'error',
+            message: 'Environment version update unsuccesssful',
+          });
+          setIsUpdateEnvironmentOpen(false);
+        } else {
+          toast({
+            id: 'update-env',
+            type: 'success',
+            state: 'success',
+            message: 'Environment version update successsful',
+          });
+          setCurrentId('');
+          setIsUpdateEnvironmentOpen(false);
+          refetch();
+        }
       })
       .catch(() => {
         toast({
-          id: 'update-env',
+          id: 'update-env-error',
           type: 'error',
           state: 'error',
           message: 'Environment version update unsuccessful',

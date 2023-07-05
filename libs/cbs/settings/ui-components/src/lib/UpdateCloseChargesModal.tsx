@@ -3,13 +3,10 @@ import { FormProvider, UseFormReturn } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
-import NepaliDate from 'nepali-date-converter';
 
 import { Alert, asyncToast, Box, Modal } from '@myra-ui';
 
 import {
-  DateType,
-  store,
   useGetCloseChargeListQuery,
   useGetEndOfDayDateDataQuery,
   useUpdateCloseChargeMutation,
@@ -32,7 +29,6 @@ export const UpdateCloseChargesModal = ({ isOpen, onClose, methods }: IUpdatePen
   const router = useRouter();
   const { mutateAsync } = useUpdateCloseChargeMutation();
   const queryClient = useQueryClient();
-  const dateType = store.getState().auth?.preference?.date || DateType.Ad;
 
   const { data: closeServiceChargeData } = useGetCloseChargeListQuery({
     productId: router?.query?.['id'] as string,
@@ -141,13 +137,7 @@ export const UpdateCloseChargesModal = ({ isOpen, onClose, methods }: IUpdatePen
               <FormDatePicker
                 name="additionalData.effectiveDate"
                 label="Effective From"
-                minDate={
-                  closingDate?.local
-                    ? dateType === 'BS'
-                      ? new NepaliDate(closingDate?.np ?? '').toJsDate()
-                      : new Date(closingDate?.en ?? '')
-                    : new Date()
-                }
+                minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
               />
             </Box>
             <FormFileInput name="additionalData.fileUploads" label="File Upload" />

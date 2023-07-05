@@ -592,6 +592,12 @@ query getAccountDetailsData($id: ID!) {
         lastTransactionDate
         accountExpiryDate
         closedAt
+        transactionConstraints {
+          blockId
+          transactionType
+          effectiveSince
+          effectiveTill
+        }
       }
     }
   }
