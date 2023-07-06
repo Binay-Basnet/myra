@@ -2967,6 +2967,7 @@ export type ChartsOfAccountSettingsQuery = {
   fullView: CoaFullView;
   ledgerAllTransactionsList?: Maybe<LedgerAllTransactionConnection>;
   ledgersForJVPosting?: Maybe<LedgersForJvListResult>;
+  listLeafCoaHeads: LeafCoaHeadsListConnection;
   search?: Maybe<CoaMinimalResult>;
   tag?: Maybe<SettingLedgerTagQuery>;
 };
@@ -3017,6 +3018,11 @@ export type ChartsOfAccountSettingsQueryLedgerAllTransactionsListArgs = {
 
 export type ChartsOfAccountSettingsQueryLedgersForJvPostingArgs = {
   filter?: InputMaybe<CoaListFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ChartsOfAccountSettingsQueryListLeafCoaHeadsArgs = {
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -11188,6 +11194,22 @@ export const Language = {
 } as const;
 
 export type Language = typeof Language[keyof typeof Language];
+export type LeafCoaHeads = {
+  Name: Scalars['String'];
+  accountCode: Scalars['String'];
+};
+
+export type LeafCoaHeadsEdge = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<LeafCoaHeads>;
+};
+
+export type LeafCoaHeadsListConnection = {
+  edges?: Maybe<Array<Maybe<LeafCoaHeadsEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
 export type LeaveInput = {
   employeeId: Scalars['String'];
   leaveFrom: Scalars['Localized'];
@@ -11308,11 +11330,18 @@ export const LedgerAmountTransferMode = {
 
 export type LedgerAmountTransferMode =
   typeof LedgerAmountTransferMode[keyof typeof LedgerAmountTransferMode];
+export const LedgerAmountTransferType = {
+  Credit: 'CREDIT',
+  Debit: 'DEBIT',
+} as const;
+
+export type LedgerAmountTransferType =
+  typeof LedgerAmountTransferType[keyof typeof LedgerAmountTransferType];
 export type LedgerBalanceEntry = {
-  currentBalance: Scalars['String'];
+  currentBalance: BalanceValue;
   ledgerId: Scalars['String'];
   ledgerName: Scalars['String'];
-  newBalance: Scalars['String'];
+  newBalance: BalanceValue;
   transferBalance: Scalars['String'];
 };
 
@@ -11341,7 +11370,7 @@ export type LedgerBalanceTransferInput = {
 };
 
 export type LedgerBalanceTransferMutation = {
-  initiateTransferRequest: LedgerBalanceTransferRequestResult;
+  initiateTransferRequest: LedgerBalanceTransferResult;
 };
 
 export type LedgerBalanceTransferMutationInitiateTransferRequestArgs = {
@@ -11349,7 +11378,12 @@ export type LedgerBalanceTransferMutationInitiateTransferRequestArgs = {
 };
 
 export type LedgerBalanceTransferQuery = {
+  getLedgerAccounts: LedgerBalanceTransferRequestResult;
   getLedgerList: LedgerBalanceListConnection;
+};
+
+export type LedgerBalanceTransferQueryGetLedgerAccountsArgs = {
+  input: LedgerBalanceTransferRequestInput;
 };
 
 export type LedgerBalanceTransferQueryGetLedgerListArgs = {
@@ -11358,20 +11392,14 @@ export type LedgerBalanceTransferQueryGetLedgerListArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
-export type LedgerBalanceTransferRequestEntry = {
-  currentBalance: Scalars['String'];
-  ledgerId?: InputMaybe<Scalars['String']>;
-  ledgerName?: InputMaybe<Scalars['String']>;
-  newBalance?: InputMaybe<Scalars['String']>;
-  transferBalance?: InputMaybe<Scalars['String']>;
-};
-
 export type LedgerBalanceTransferRequestInput = {
   amount?: InputMaybe<Scalars['String']>;
+  amountType?: InputMaybe<LedgerAmountTransferType>;
   branchId?: InputMaybe<Scalars['String']>;
-  coaHead: Scalars['String'];
+  coaHead: Array<Scalars['String']>;
   destinationLedgerId?: InputMaybe<Scalars['String']>;
-  transferData: Array<LedgerBalanceTransferRequestEntry>;
+  ledgerType: LedgerType;
+  tagId?: InputMaybe<Scalars['String']>;
   transferMode: LedgerAmountTransferMode;
 };
 
@@ -11379,6 +11407,20 @@ export type LedgerBalanceTransferRequestResult = {
   data?: Maybe<Array<Maybe<LedgerBalanceEntry>>>;
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['ID']>;
+  totalLedgerAccounts: Scalars['String'];
+  totalTransferBalance: BalanceValue;
+};
+
+export type LedgerBalanceTransferResult = {
+  data?: Maybe<LedgerBalanceTransferResultData>;
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type LedgerBalanceTransferResultData = {
+  destinationLedgerName: Scalars['String'];
+  totalLedgerAccounts: Scalars['String'];
+  totalTransferBalance: BalanceValue;
 };
 
 export type LedgerList = {
@@ -11428,6 +11470,13 @@ export type LedgerTagsResult = {
   error?: Maybe<QueryError>;
 };
 
+export const LedgerType = {
+  Both: 'BOTH',
+  Credit: 'CREDIT',
+  Debit: 'DEBIT',
+} as const;
+
+export type LedgerType = typeof LedgerType[keyof typeof LedgerType];
 export type LedgersForJvListEdges = {
   cursor: Scalars['Cursor'];
   node?: Maybe<CoaAccount>;
@@ -20273,6 +20322,32 @@ export type UpdateBankAccountsMutation = {
   };
 };
 
+export type InitiateLedgerBalanceTransferMutationVariables = Exact<{
+  input: LedgerBalanceTransferRequestInput;
+}>;
+
+export type InitiateLedgerBalanceTransferMutation = {
+  accounting: {
+    ledgerBalanceTransfer: {
+      initiateTransferRequest: {
+        recordId?: string | null;
+        data?: {
+          totalLedgerAccounts: string;
+          destinationLedgerName: string;
+          totalTransferBalance: { amount?: string | null; amountType?: BalanceType | null };
+        } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
 export type SetExternalLoanMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
   data?: InputMaybe<ExternalLoanApplicationInput>;
@@ -26069,6 +26144,28 @@ export type GetJournalVoucherDetailQuery = {
           } | null> | null;
         } | null;
       } | null;
+    };
+  };
+};
+
+export type GetLedgerAccountsForTransferQueryVariables = Exact<{
+  input: LedgerBalanceTransferRequestInput;
+}>;
+
+export type GetLedgerAccountsForTransferQuery = {
+  accounting: {
+    ledgerBalanceTransfer: {
+      getLedgerAccounts: {
+        totalLedgerAccounts: string;
+        totalTransferBalance: { amount?: string | null; amountType?: BalanceType | null };
+        data?: Array<{
+          ledgerId: string;
+          ledgerName: string;
+          transferBalance: string;
+          currentBalance: { amount?: string | null; amountType?: BalanceType | null };
+          newBalance: { amount?: string | null; amountType?: BalanceType | null };
+        } | null> | null;
+      };
     };
   };
 };
@@ -35319,6 +35416,21 @@ export type GetTagListForReportQuery = {
   };
 };
 
+export type ListLeafCoaHeadsQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type ListLeafCoaHeadsQuery = {
+  settings: {
+    chartsOfAccount?: {
+      listLeafCoaHeads: {
+        edges?: Array<{ node?: { accountCode: string; Name: string } | null } | null> | null;
+      };
+    } | null;
+  };
+};
+
 export type ListCbsShareCodesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ListCbsShareCodesQuery = {
@@ -39591,6 +39703,48 @@ export const useUpdateBankAccountsMutation = <TError = unknown, TContext = unkno
     ['updateBankAccounts'],
     useAxios<UpdateBankAccountsMutation, UpdateBankAccountsMutationVariables>(
       UpdateBankAccountsDocument
+    ),
+    options
+  );
+export const InitiateLedgerBalanceTransferDocument = `
+    mutation initiateLedgerBalanceTransfer($input: LedgerBalanceTransferRequestInput!) {
+  accounting {
+    ledgerBalanceTransfer {
+      initiateTransferRequest(input: $input) {
+        recordId
+        data {
+          totalLedgerAccounts
+          totalTransferBalance {
+            amount
+            amountType
+          }
+          destinationLedgerName
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useInitiateLedgerBalanceTransferMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    InitiateLedgerBalanceTransferMutation,
+    TError,
+    InitiateLedgerBalanceTransferMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    InitiateLedgerBalanceTransferMutation,
+    TError,
+    InitiateLedgerBalanceTransferMutationVariables,
+    TContext
+  >(
+    ['initiateLedgerBalanceTransfer'],
+    useAxios<InitiateLedgerBalanceTransferMutation, InitiateLedgerBalanceTransferMutationVariables>(
+      InitiateLedgerBalanceTransferDocument
     ),
     options
   );
@@ -47906,6 +48060,48 @@ export const useGetJournalVoucherDetailQuery = <
     ['getJournalVoucherDetail', variables],
     useAxios<GetJournalVoucherDetailQuery, GetJournalVoucherDetailQueryVariables>(
       GetJournalVoucherDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLedgerAccountsForTransferDocument = `
+    query getLedgerAccountsForTransfer($input: LedgerBalanceTransferRequestInput!) {
+  accounting {
+    ledgerBalanceTransfer {
+      getLedgerAccounts(input: $input) {
+        totalLedgerAccounts
+        totalTransferBalance {
+          amount
+          amountType
+        }
+        data {
+          ledgerId
+          ledgerName
+          currentBalance {
+            amount
+            amountType
+          }
+          transferBalance
+          newBalance {
+            amount
+            amountType
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLedgerAccountsForTransferQuery = <
+  TData = GetLedgerAccountsForTransferQuery,
+  TError = unknown
+>(
+  variables: GetLedgerAccountsForTransferQueryVariables,
+  options?: UseQueryOptions<GetLedgerAccountsForTransferQuery, TError, TData>
+) =>
+  useQuery<GetLedgerAccountsForTransferQuery, TError, TData>(
+    ['getLedgerAccountsForTransfer', variables],
+    useAxios<GetLedgerAccountsForTransferQuery, GetLedgerAccountsForTransferQueryVariables>(
+      GetLedgerAccountsForTransferDocument
     ).bind(null, variables),
     options
   );
@@ -59900,6 +60096,34 @@ export const useGetTagListForReportQuery = <TData = GetTagListForReportQuery, TE
     useAxios<GetTagListForReportQuery, GetTagListForReportQueryVariables>(
       GetTagListForReportDocument
     ).bind(null, variables),
+    options
+  );
+export const ListLeafCoaHeadsDocument = `
+    query listLeafCoaHeads($pagination: Pagination, $filter: Filter) {
+  settings {
+    chartsOfAccount {
+      listLeafCoaHeads(pagination: $pagination, filter: $filter) {
+        edges {
+          node {
+            accountCode
+            Name
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListLeafCoaHeadsQuery = <TData = ListLeafCoaHeadsQuery, TError = unknown>(
+  variables?: ListLeafCoaHeadsQueryVariables,
+  options?: UseQueryOptions<ListLeafCoaHeadsQuery, TError, TData>
+) =>
+  useQuery<ListLeafCoaHeadsQuery, TError, TData>(
+    variables === undefined ? ['listLeafCoaHeads'] : ['listLeafCoaHeads', variables],
+    useAxios<ListLeafCoaHeadsQuery, ListLeafCoaHeadsQueryVariables>(ListLeafCoaHeadsDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const ListCbsShareCodesDocument = `
