@@ -72,7 +72,7 @@ export const AccountingFeatureAddLedgerBalanceTransfer = () => {
                 type: 'Ledger Transfer',
                 title: 'Ledger Balance Transfer Successful',
                 details: {
-                  'Total Ledger Acccounts': quantityConverter(
+                  'Total Source Ledger Acccounts': quantityConverter(
                     result?.data?.totalLedgerAccounts ?? 0
                   ),
                   'Destination Ledger': result?.data?.destinationLedgerName,
