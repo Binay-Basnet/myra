@@ -16629,6 +16629,7 @@ export type ResetPasswordResult = {
 
 export type RestrictTransactionInput = {
   accountId?: InputMaybe<Scalars['String']>;
+  accountType?: InputMaybe<Scalars['String']>;
   effectiveSince: Scalars['Localized'];
   effectiveTill: Scalars['Localized'];
   ledgerId?: InputMaybe<Scalars['String']>;
@@ -16678,6 +16679,7 @@ export type RestrictTransactionResult = {
 export type RestrictTransactionResultEntry = {
   accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
+  accountType?: Maybe<Scalars['String']>;
   effectiveSince: Scalars['Localized'];
   effectiveTill: Scalars['Localized'];
   id?: Maybe<Scalars['String']>;
