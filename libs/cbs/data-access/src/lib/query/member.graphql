@@ -111,6 +111,8 @@ query getMemberIndividualData($id: ID!) {
           identificationNo
           place
         }
+        gender
+        age
       }
     }
   }

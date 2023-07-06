@@ -175,7 +175,6 @@ query getJobOpening($id: ID!) {
             experienceLevel
             description
             salaryRange {
-              id
               min
               max
               default

@@ -28086,7 +28086,7 @@ export type GetJobOpeningQuery = {
             designation: string;
             experienceLevel: Level;
             description: string;
-            salaryRange: { id: string; min: string; max: string; default: string };
+            salaryRange: { min: string; max: string; default: string };
           } | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -30529,6 +30529,8 @@ export type GetMemberIndividualDataQuery = {
         dateJoined?: Record<'local' | 'en' | 'np', string> | null;
         signaturePicUrl?: string | null;
         citizenshipPicUrl?: string | null;
+        gender?: string | null;
+        age?: number | null;
         address?: {
           state?: Record<'local' | 'en' | 'np', string> | null;
           district?: Record<'local' | 'en' | 'np', string> | null;
@@ -50493,7 +50495,6 @@ export const GetJobOpeningDocument = `
             experienceLevel
             description
             salaryRange {
-              id
               min
               max
               default
@@ -53692,6 +53693,8 @@ export const GetMemberIndividualDataDocument = `
           identificationNo
           place
         }
+        gender
+        age
       }
     }
   }
