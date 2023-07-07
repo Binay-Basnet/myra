@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useGetJobOpeningOptions } from '@hr/common';
 import omit from 'lodash/omit';
 
 import { asyncToast, FormSection, GridItem } from '@myra-ui';
@@ -10,7 +11,6 @@ import {
   DocumentInsertInput,
   JobApplicationInput,
   useGetJobApplicationQuery,
-  useGetJobOpeningListQuery,
   useSetJobApplicationMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -25,7 +25,6 @@ import {
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import { getPaginationQuery } from '@coop/shared/utils';
 
 import { EducationalDetailsAdd } from '../../components/EducationDetailsAdd';
 import { ExperienceDetailsAdd } from '../../components/ExperienceDetailsAdd';
@@ -36,11 +35,10 @@ export const HrRecruitmentJobApplicationAdd = () => {
   const router = useRouter();
   const methods = useForm();
   const { watch, getValues, reset } = methods;
-  const { data, isFetching } = useGetJobOpeningListQuery({
-    pagination: getPaginationQuery(),
-  });
 
   const { mutateAsync } = useSetJobApplicationMutation();
+
+  const { jobOpeningOptions } = useGetJobOpeningOptions();
 
   const { data: jobApplicationData } = useGetJobApplicationQuery(
     { id: router?.query?.['id'] as string },
@@ -72,12 +70,6 @@ export const HrRecruitmentJobApplicationAdd = () => {
       });
     }
   }, [JSON.stringify(jobApplicationEditData)]);
-
-  const jobOpeningOptions =
-    data?.hr?.recruitment?.recruitmentJobOpening?.listJobOpening?.edges?.map((item) => ({
-      label: item?.node?.title as string,
-      value: item?.node?.id as string,
-    }));
 
   const applicationStatusOptions = [
     { label: 'Accepted', value: ApplicantStatus?.Accepted },
@@ -149,12 +141,7 @@ export const HrRecruitmentJobApplicationAdd = () => {
             <GridItem colSpan={2}>
               <FormInput name="applicantName" type="text" label="Applicant Name" />
             </GridItem>
-            <FormSelect
-              name="jobOpening"
-              label="Job Opening"
-              options={jobOpeningOptions}
-              isLoading={isFetching}
-            />
+            <FormSelect name="jobOpening" label="Job Opening" options={jobOpeningOptions} />
           </FormSection>
           <FormSection templateColumns={3} header="Contact Details" divider>
             <FormEmailInput
