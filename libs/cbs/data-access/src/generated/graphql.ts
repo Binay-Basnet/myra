@@ -4033,6 +4033,59 @@ export type DeclarationUpdateResult = {
   record?: Maybe<Declaration>;
 };
 
+export type DeductionComponentConnection = {
+  edges?: Maybe<Array<Maybe<DeductionComponents>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type DeductionComponentInput = {
+  abbr?: InputMaybe<Scalars['String']>;
+  deductionFrequency?: InputMaybe<DeductionFrequency>;
+  description?: InputMaybe<Scalars['String']>;
+  formula?: InputMaybe<Scalars['String']>;
+  makeThisActive?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+  roundToNearestInteger?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type DeductionComponentListed = {
+  deductionFrequency?: Maybe<DeductionFrequency>;
+  name?: Maybe<Scalars['String']>;
+  status?: Maybe<DeductionComponentStatus>;
+};
+
+export type DeductionComponentRecord = {
+  abbr?: Maybe<Scalars['String']>;
+  deductionFrequency?: Maybe<DeductionFrequency>;
+  description?: Maybe<Scalars['String']>;
+  formula?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  name?: Maybe<Scalars['String']>;
+  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
+};
+
+export const DeductionComponentStatus = {
+  Disabled: 'DISABLED',
+  Enabled: 'ENABLED',
+} as const;
+
+export type DeductionComponentStatus =
+  typeof DeductionComponentStatus[keyof typeof DeductionComponentStatus];
+export type DeductionComponents = {
+  cursor: Scalars['Cursor'];
+  node: DeductionComponentListed;
+};
+
+export const DeductionFrequency = {
+  HalfYearly: 'HALF_YEARLY',
+  Monthly: 'MONTHLY',
+  Quarterly: 'QUARTERLY',
+  Yearly: 'YEARLY',
+} as const;
+
+export type DeductionFrequency = typeof DeductionFrequency[keyof typeof DeductionFrequency];
 export const DefaultAccountType = {
   Current: 'CURRENT',
   Saving: 'SAVING',
@@ -5498,6 +5551,16 @@ export type EachAppointmentLetterRecords = {
   error?: Maybe<QueryError>;
 };
 
+export type EachDeductionComponentRecords = {
+  data: DeductionComponentRecord;
+  error: QueryError;
+};
+
+export type EachEarningComponentRecords = {
+  data?: Maybe<EarningComponentRecord>;
+  error?: Maybe<QueryError>;
+};
+
 export type EachEmployeeExitRecords = {
   data: EmployeeExitRecord;
   error: QueryError;
@@ -5523,9 +5586,19 @@ export type EachJobOpeningRecord = {
   error?: Maybe<QueryError>;
 };
 
+export type EachSalaryStructureRecords = {
+  data: SalaryStructureRecord;
+  error: QueryError;
+};
+
 export type EachStaffRecord = {
   data?: Maybe<StaffPlanRecord>;
   error?: Maybe<QueryError>;
+};
+
+export type EachTaxSlabRecords = {
+  data: TaxSlabRecord;
+  error: QueryError;
 };
 
 export type EachTransferRecord = {
@@ -5534,6 +5607,53 @@ export type EachTransferRecord = {
   error?: Maybe<QueryError>;
 };
 
+export type EarningComponentInput = {
+  abbr?: InputMaybe<Scalars['String']>;
+  base_multiple?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  isTaxApplicable?: InputMaybe<Scalars['Boolean']>;
+  makeThisActive?: InputMaybe<Scalars['Boolean']>;
+  multiplier?: InputMaybe<Scalars['Float']>;
+  name?: InputMaybe<Scalars['String']>;
+  roundToNearestInteger?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type EarningComponentListConnection = {
+  edges?: Maybe<Array<Maybe<EarningComponentListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type EarningComponentListEdges = {
+  cursor: Scalars['Cursor'];
+  node: EarningComponentNode;
+};
+
+export type EarningComponentNode = {
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  status?: Maybe<EarningComponentStatus>;
+};
+
+export type EarningComponentRecord = {
+  abbr?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  formula?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  isTaxApplicable?: Maybe<Scalars['Boolean']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  name?: Maybe<Scalars['String']>;
+  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
+};
+
+export const EarningComponentStatus = {
+  Disabled: 'DISABLED',
+  Enabled: 'ENABLED',
+} as const;
+
+export type EarningComponentStatus =
+  typeof EarningComponentStatus[keyof typeof EarningComponentStatus];
 export type EbankingRegistrationReportResult = {
   data?: Maybe<Array<Maybe<EbankingReportResult>>>;
   error?: Maybe<QueryError>;
@@ -7632,12 +7752,115 @@ export type HcmEmployeeSchema = {
   name: Scalars['String'];
 };
 
+export type HcmPayrollDeductionComponentMutation = {
+  upsertDeductionComponent: ReturnDeductionComponent;
+};
+
+export type HcmPayrollDeductionComponentMutationUpsertDeductionComponentArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: DeductionComponentInput;
+};
+
+export type HcmPayrollDeductionComponentQuery = {
+  getDeductionComponent: EachDeductionComponentRecords;
+  listDeductionComponent: DeductionComponentConnection;
+};
+
+export type HcmPayrollDeductionComponentQueryGetDeductionComponentArgs = {
+  id: Scalars['ID'];
+};
+
+export type HcmPayrollEarningComponentMutation = {
+  upsertEarningComponent: ReturnEarningComponent;
+};
+
+export type HcmPayrollEarningComponentMutationUpsertEarningComponentArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: EarningComponentInput;
+};
+
+export type HcmPayrollEarningComponentQuery = {
+  getEarningComponent: EachEarningComponentRecords;
+  listEarningComponent: EarningComponentListConnection;
+};
+
+export type HcmPayrollEarningComponentQueryGetEarningComponentArgs = {
+  id: Scalars['ID'];
+};
+
+export type HcmPayrollEarningComponentQueryListEarningComponentArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HcmPayrollMutation = {
+  deductionComponent: HcmPayrollDeductionComponentMutation;
+  earningComponent: HcmPayrollEarningComponentMutation;
+  salaryStructure: HcmPayrollSalaryStructureMutation;
+  taxSlab: HcmPayrollTaxSlabMutation;
+};
+
+export type HcmPayrollQuery = {
+  deductionComponent: HcmPayrollDeductionComponentQuery;
+  earningComponent: HcmPayrollEarningComponentQuery;
+  salaryStructure: HcmPayrollSalaryStructureQuery;
+  taxSlab: HcmPayrollTaxSlabQuery;
+};
+
+export type HcmPayrollSalaryStructureMutation = {
+  upsertSalaryStructure: ReturnSalaryStructure;
+};
+
+export type HcmPayrollSalaryStructureMutationUpsertSalaryStructureArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: SalaryStructureInput;
+};
+
+export type HcmPayrollSalaryStructureQuery = {
+  getSalaryStructure: EachSalaryStructureRecords;
+  listSalaryStructure: SalaryStructureConnection;
+};
+
+export type HcmPayrollSalaryStructureQueryGetSalaryStructureArgs = {
+  id: Scalars['ID'];
+};
+
+export type HcmPayrollSalaryStructureQueryListSalaryStructureArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HcmPayrollTaxSlabMutation = {
+  upsertTaxSlab: ReturnTaxSlab;
+};
+
+export type HcmPayrollTaxSlabMutationUpsertTaxSlabArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: TaxSlabInput;
+};
+
+export type HcmPayrollTaxSlabQuery = {
+  getTaxSlab: EachTaxSlabRecords;
+  listTaxSlab: TaxSlabConnection;
+};
+
+export type HcmPayrollTaxSlabQueryGetTaxSlabArgs = {
+  id: Scalars['ID'];
+};
+
+export type HcmPayrollTaxSlabQueryListTaxSlabArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type HcmSettingsMutation = {
   employee: HcmEmployeeMutation;
+  payroll: HcmPayrollMutation;
 };
 
 export type HcmSettingsQuery = {
   employee: HcmEmployeeQuery;
+  payroll: HcmPayrollQuery;
 };
 
 export type HrEmployeeKyeMutation = {
@@ -14906,6 +15129,13 @@ export type MobileBankingReportMbankingRegistrationReportArgs = {
   data?: InputMaybe<EbankingReportFilter>;
 };
 
+export const ModeOfPayment = {
+  BankTransfer: 'BANK_TRANSFER',
+  Cash: 'CASH',
+  Cheque: 'CHEQUE',
+} as const;
+
+export type ModeOfPayment = typeof ModeOfPayment[keyof typeof ModeOfPayment];
 export type MoneyLedgerResult = {
   error?: Maybe<MutationError>;
   recordId: Scalars['ID'];
@@ -15705,6 +15935,14 @@ export const PaymentMode = {
 } as const;
 
 export type PaymentMode = typeof PaymentMode[keyof typeof PaymentMode];
+export const PayrollFrequency = {
+  HalfYearly: 'HALF_YEARLY',
+  Monthly: 'MONTHLY',
+  Quarterly: 'QUARTERLY',
+  Yearly: 'YEARLY',
+} as const;
+
+export type PayrollFrequency = typeof PayrollFrequency[keyof typeof PayrollFrequency];
 export type PearlsConfiguration = {
   denominator: Scalars['String'];
   denominatorVariables: Scalars['Map'];
@@ -16756,6 +16994,16 @@ export type ReturnAppointmentLetter = {
   recordId: Scalars['ID'];
 };
 
+export type ReturnDeductionComponent = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type ReturnEarningComponent = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type ReturnEmployeeExit = {
   error?: Maybe<MutationError>;
   record?: Maybe<EmployeeExitRecord>;
@@ -16792,10 +17040,22 @@ export type ReturnJobOpening = {
   recordId: Scalars['ID'];
 };
 
+export type ReturnSalaryStructure = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<SalaryStructureRecord>;
+  recordId: Scalars['ID'];
+};
+
 export type ReturnStaffPlan = {
   error?: Maybe<MutationError>;
   record?: Maybe<StaffPlanRecord>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type ReturnTaxSlab = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<TaxSlabRecord>;
+  recordId: Scalars['ID'];
 };
 
 export type ReturnWarehouseInput = {
@@ -16918,6 +17178,53 @@ export type SalaryRangeInput = {
   default: Scalars['String'];
   max: Scalars['String'];
   min: Scalars['String'];
+};
+
+export type SalaryStructureConnection = {
+  edges?: Maybe<Array<Maybe<SalaryStructures>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SalaryStructureInput = {
+  deductions?: InputMaybe<Array<InputMaybe<EarningInput>>>;
+  description?: InputMaybe<Scalars['String']>;
+  earnings?: InputMaybe<Array<InputMaybe<EarningInput>>>;
+  makeThisActive?: InputMaybe<Scalars['Boolean']>;
+  modeOfPayment?: InputMaybe<Array<InputMaybe<ModeOfPayment>>>;
+  name?: InputMaybe<Scalars['String']>;
+  paymentAccount?: InputMaybe<Scalars['ID']>;
+  payrollFrequency?: InputMaybe<PayrollFrequency>;
+};
+
+export type SalaryStructureListed = {
+  description?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  status?: Maybe<SalaryStructureStatus>;
+};
+
+export type SalaryStructureRecord = {
+  deductions?: Maybe<Array<Maybe<Earning>>>;
+  description?: Maybe<Scalars['String']>;
+  earnings?: Maybe<Array<Maybe<Earning>>>;
+  id?: Maybe<Scalars['ID']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  modeOfPayment?: Maybe<Array<Maybe<ModeOfPayment>>>;
+  name?: Maybe<Scalars['String']>;
+  paymentAccount?: Maybe<Scalars['ID']>;
+  payrollFrequency?: Maybe<PayrollFrequency>;
+};
+
+export const SalaryStructureStatus = {
+  Disabled: 'DISABLED',
+  Enabled: 'ENABLED',
+} as const;
+
+export type SalaryStructureStatus =
+  typeof SalaryStructureStatus[keyof typeof SalaryStructureStatus];
+export type SalaryStructures = {
+  cursor: Scalars['Cursor'];
+  node: SalaryStructureListed;
 };
 
 export type SaleProduct = {
@@ -18722,6 +19029,60 @@ export const TaxPayerOptions = {
 } as const;
 
 export type TaxPayerOptions = typeof TaxPayerOptions[keyof typeof TaxPayerOptions];
+export type TaxSlabConnection = {
+  edges?: Maybe<Array<Maybe<TaxSlabs>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type TaxSlabInput = {
+  effectiveFrom?: InputMaybe<Scalars['Localized']>;
+  fiscalYear?: InputMaybe<Scalars['String']>;
+  makeThisActive?: InputMaybe<Scalars['Boolean']>;
+  marriedTaxableSalary?: InputMaybe<Array<InputMaybe<TaxTermInput>>>;
+  name?: InputMaybe<Scalars['String']>;
+  unmarriedTaxableSalary?: InputMaybe<Array<InputMaybe<TaxTermInput>>>;
+};
+
+export type TaxSlabListed = {
+  effectiveFrom?: Maybe<Scalars['Localized']>;
+  name?: Maybe<Scalars['String']>;
+  status?: Maybe<TaxSlabStatus>;
+};
+
+export type TaxSlabRecord = {
+  effectiveFrom?: Maybe<Scalars['Localized']>;
+  fiscalYear?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  marriedTaxableSalary?: Maybe<Array<Maybe<TaxTerm>>>;
+  name?: Maybe<Scalars['String']>;
+  unmarriedTaxableSalary?: Maybe<Array<Maybe<TaxTerm>>>;
+};
+
+export const TaxSlabStatus = {
+  Disabled: 'DISABLED',
+  Enabled: 'ENABLED',
+} as const;
+
+export type TaxSlabStatus = typeof TaxSlabStatus[keyof typeof TaxSlabStatus];
+export type TaxSlabs = {
+  cursor: Scalars['Cursor'];
+  node: TaxSlabListed;
+};
+
+export type TaxTerm = {
+  fromAmount?: Maybe<Scalars['String']>;
+  percentageDeduction?: Maybe<Scalars['String']>;
+  toAmount?: Maybe<Scalars['String']>;
+};
+
+export type TaxTermInput = {
+  fromAmount?: InputMaybe<Scalars['String']>;
+  percentageDeduction?: InputMaybe<Scalars['String']>;
+  toAmount?: InputMaybe<Scalars['String']>;
+};
+
 export type TellerActivityEntry = {
   ID: Scalars['ID'];
   amount?: Maybe<Scalars['String']>;
@@ -20188,6 +20549,20 @@ export type DepartTransferDetails = {
   transferredDate?: Maybe<Scalars['Localized']>;
   transferredFrom?: Maybe<Scalars['String']>;
   transferredTo?: Maybe<Scalars['String']>;
+};
+
+export type Earning = {
+  abbr?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  component?: Maybe<Scalars['String']>;
+  formula?: Maybe<Scalars['String']>;
+};
+
+export type EarningInput = {
+  abbr?: InputMaybe<Scalars['String']>;
+  amount?: InputMaybe<Scalars['String']>;
+  component?: InputMaybe<Scalars['String']>;
+  formula?: InputMaybe<Scalars['String']>;
 };
 
 export type Experience = {

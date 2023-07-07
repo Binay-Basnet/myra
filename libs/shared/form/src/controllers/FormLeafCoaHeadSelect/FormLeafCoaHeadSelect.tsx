@@ -42,9 +42,9 @@ export const FormLeafCoaHeadSelect = ({ name, label, ...rest }: IFormLeafCoaHead
       label={label}
       isLoading={isFetching}
       onInputChange={debounce((term) => {
-        if (term) {
-          setSearchQuery(term);
-        }
+        // if (term) {
+        setSearchQuery(term);
+        // }
       }, 800)}
       options={selectOptions}
       {...rest}
