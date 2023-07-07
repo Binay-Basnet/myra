@@ -31,27 +31,24 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Withdraw/ deposit lock transaction.',
-      'KYM refactor.',
-      'Member transfer request.(you can test now)',
+      'Enhancement of member transfer as it can be done directly from member request section.',
+      'Ledger balance transfer section.',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'MR templates static page issues fixes.',
-      'Interest rate float amount fixes in loan account overview page.',
-      'Fine calculation fixes in the loan repayment page.',
-      'Closed account filter in the saving account report.',
-      'Calendar date issue fixations.',
-      'Member transfer request fixations as DR CR amount.',
-      'Member transfer fixations as multiple time transfer of member.',
-      'All Kym form refactor fixations.',
-      'Withdraw amount section added in loan repayment section.',
-      'Loc loan interest amount fixations in loan repayment page.',
-      'Amount differentiation in the loan repayment success card.',
-      'MR template Id issue fixation in ERP.',
-      'IBT transfer revert restrictions.',
+      'Mr template edit override issue fix.',
+      'Date issue fixations.',
+      'Kym coop registration number validation fix.',
+      'Date select issue in Kim coop form.',
+      'COA head search is not working properly.',
+      'COA head  list should be in order of ascending.',
+      'Dr Cr issue in ledger balance transfer.',
+      'Date for closing balance is not available.',
+      'Cannot remove the ledger from list.',
+      'Ledger list should be in order of txn date.',
+      'Rename template to collection list in mr list.',
     ],
   },
   // knownBugs: {
@@ -101,8 +98,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.71</Text>
-          <Text fontSize="s3">July 5, 2023</Text>
+          <Text fontSize="r2">Version 1.0.72</Text>
+          <Text fontSize="s3">July 7, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>

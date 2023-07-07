@@ -19,7 +19,7 @@ export const AgentDetails = () => {
 
       {tabQuery === 'assigned members' && <AgentAssignedMembers />}
 
-      {tabQuery === 'templates' && <Templates />}
+      {tabQuery === 'collection list' && <Templates />}
 
       {/* {tabQuery === 'accounts' && <Account />}
         {tabQuery === 'activity' && <Activity />}
