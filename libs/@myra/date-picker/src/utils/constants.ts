@@ -435,7 +435,7 @@ export function parse(dateString: string) {
   if (match !== null) {
     return {
       year: parseInt(match[1], 10),
-      month: parseInt(match[3], 10) - 1,
+      month: parseInt(match[3], 10),
       day: parseInt(match[5], 10),
     };
   }
@@ -443,7 +443,7 @@ export function parse(dateString: string) {
   if (match !== null) {
     return {
       year: parseInt(match[5], 10),
-      month: parseInt(match[3], 10) - 1,
+      month: parseInt(match[3], 10),
       day: parseInt(match[1], 10),
     };
   }
