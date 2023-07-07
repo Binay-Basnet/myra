@@ -85,7 +85,12 @@ export const MemberTransferList = () => {
   return (
     <Box display="flex" flexDir="column">
       <Box position="sticky" top="0" zIndex={3}>
-        <PageHeader heading="Member Transfer List" />
+        <PageHeader
+          heading="Member Transfer List"
+          buttonTitle="New Member Transfer"
+          onClick={() => router?.push(ROUTES?.CBS_MEMBER_TRANSFER)}
+          button
+        />
       </Box>
 
       <Table
