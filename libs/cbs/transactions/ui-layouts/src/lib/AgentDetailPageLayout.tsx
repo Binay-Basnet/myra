@@ -82,7 +82,7 @@ export const AgentDetailPageLayout = ({ children }: AgentDetailPageLayoutProps) 
             </Box>
           </Box>
           <Divider />
-          <DetailPageTabs tabs={['Overview', 'Assigned Members', 'Templates']} />
+          <DetailPageTabs tabs={['Overview', 'Assigned Members', 'Collection List']} />
         </Box>
       </Box>
       <Box bg="background.500" ml="250px" minHeight="calc(100vh - 160px)" p="s16">

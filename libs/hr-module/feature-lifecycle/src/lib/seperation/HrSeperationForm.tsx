@@ -12,6 +12,8 @@ import { FormLayout } from '@coop/shared/form';
 
 import { EmployeeCard, SeperationBasicDetails } from '../../components';
 
+const documentMap = ['resignationLetter'];
+
 export const HrSeperationUpsert = () => {
   const methods = useForm<EmployeeSeparationInput>();
   const router = useRouter();
@@ -31,6 +33,10 @@ export const HrSeperationUpsert = () => {
       promise: mutateAsync({
         input: {
           ...data,
+          document: data?.document?.map((item, index) => ({
+            fieldId: documentMap[index],
+            identifiers: item?.identifiers || [],
+          })),
         },
       }),
       onSuccess: () => {

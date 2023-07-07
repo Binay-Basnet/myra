@@ -692,7 +692,7 @@ const en: Record<string, string> = {
 
   kymCoopNameofOrganization: 'Name of Organization',
   kymCoopEnterNameofOrganization: 'Enter Name of Organization',
-  kymCoopRegisrationNo: 'Regisration No',
+  kymCoopRegisrationNo: 'Registration No',
   kymCoopEnterRegisteredNumber: 'Enter Registered Number',
   kymCoopRegistrationoffice: 'Registration Office',
   kymCoopEnterRegisteredAddress: 'Enter Registered Address',

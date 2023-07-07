@@ -151,6 +151,7 @@
       "@coop/hr-module/lifecycle": ["libs/hr-module/feature-lifecycle/src/index.ts"],
       "@coop/hr-module/ui-layouts": ["libs/hr-module/ui-layouts/src/index.ts"],
       "@coop/hr/employee": ["libs/hr-module/employee/feature-employee/src/index.ts"],
+      "@coop/hr/payroll": ["libs/hr-module/feature-payroll/src/index.ts"],
       "@coop/inventory/inventory": ["libs/inventory/feature-inventory/src/index.ts"],
       "@coop/inventory/warehouse": ["libs/inventory/feature-warehouse/src/index.ts"],
       "@coop/loan/account-details": ["libs/cbs/loan/feature-loan-account-detail/src/index.ts"],

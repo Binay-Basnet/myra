@@ -59,3 +59,25 @@ mutation updateBankAccounts($data: UpdateBankAccountInput) {
     }
   }
 }
+
+mutation initiateLedgerBalanceTransfer($input: LedgerBalanceTransferRequestInput!) {
+  accounting {
+    ledgerBalanceTransfer {
+      initiateTransferRequest(input: $input) {
+        recordId
+        data {
+          transactionId
+          totalLedgerAccounts
+          totalTransferBalance {
+            amount
+            amountType
+          }
+          destinationLedgerName
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

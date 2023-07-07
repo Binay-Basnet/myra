@@ -46,7 +46,7 @@ export const SeperationBasicDetails = () => {
       <FormSelect name="separationType" label="Seperation Type" options={seperationType} />
       <FormDatePicker name="date" label="Resignation Letter Date" />
       <GridItem colSpan={3}>
-        <FormFileInput name="documents.0.identifiers" label="Resignation Letter" />
+        <FormFileInput name="document.0.identifiers" label="Resignation Letter" />
       </GridItem>
     </FormSection>
   );

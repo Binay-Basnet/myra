@@ -20,12 +20,12 @@ import { CalendarBuilderDate, DateRange, Period, TDateState } from '../../types/
 import { DEFAULT_PERIODS } from '../../utils/constants';
 import { convertTillDate, todayDate } from '../../utils/functions';
 
-const todayObj = [
+const last30Days = [
   {
-    title: 'today',
-    key: 'TODAY',
-    lastDays: 0,
-    closePopover: true,
+    title: 'last30Days',
+    key: 'LAST_30_DAYS',
+    lastDays: 30,
+    closePopover: false,
   },
 ];
 
@@ -88,7 +88,7 @@ export const RangedDatePicker = ({
   };
 
   const periodProps = {
-    periods: !showPeriods ? todayObj : periods,
+    periods: !showPeriods ? last30Days : periods,
     baseDate,
     locale,
     onToggle,
