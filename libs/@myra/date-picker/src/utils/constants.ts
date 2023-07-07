@@ -271,7 +271,7 @@ const convertNepaliDate = (date: Date) => {
 
   return {
     year: bsDate?.year,
-    month: String(Number(bsDate?.month) + 1),
+    month: String(Number(bsDate?.month)),
     day: String(bsDate?.day),
     dayOfWeek: bsDate?.dayOfWeek,
   };
