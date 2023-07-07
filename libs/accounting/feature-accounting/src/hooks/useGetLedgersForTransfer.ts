@@ -1,17 +1,21 @@
 import { useFormContext } from 'react-hook-form';
 
-import { useAppSelector, useGetLedgerAccountsForTransferQuery } from '@coop/cbs/data-access';
+import {
+  LedgerBalanceTransferRequestInput,
+  useAppSelector,
+  useGetLedgerAccountsForTransferQuery,
+} from '@coop/cbs/data-access';
 
 export const useGetLedgersForTransfer = () => {
   const user = useAppSelector((state) => state?.auth?.user);
 
-  const { watch } = useFormContext();
+  const { watch } = useFormContext<LedgerBalanceTransferRequestInput>();
 
   const coaHead = watch('coaHead');
 
   const transferMode = watch('transferMode');
 
-  // const amountFilter = watch('amountFilter');
+  const closingDate = watch('closingDate');
 
   const tagId = watch('tagId');
 
@@ -22,17 +26,16 @@ export const useGetLedgersForTransfer = () => {
   const { data: ledgerAccountsListData } = useGetLedgerAccountsForTransferQuery(
     {
       input: {
-        coaHead: coaHead?.map((head: { value: string }) => head?.value),
+        coaHead: coaHead?.map((head) => (head as unknown as { value: string })?.value),
         transferMode,
         tagId,
         branchId: user?.currentBranch?.id,
         ledgerType,
+        closingDate,
       },
     },
     {
-      enabled: Boolean(
-        coaHead?.length && !!transferMode && transferMode !== 'undefined' && ledgerType
-      ),
+      enabled: Boolean(coaHead?.length && !!transferMode && ledgerType && closingDate?.en),
     }
   );
 

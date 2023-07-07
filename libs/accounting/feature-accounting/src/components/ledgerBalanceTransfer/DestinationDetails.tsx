@@ -75,7 +75,7 @@ export const DestinationDetails = () => {
 
     return newBalance > 0
       ? debitCreditConverter(newBalance, 'CR')
-      : debitCreditConverter(newBalance, 'DR');
+      : debitCreditConverter(Math.abs(newBalance), 'DR');
   }, [accountQueryData, ledgerAccountsListData]);
 
   const transferSummary = useMemo(

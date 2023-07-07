@@ -11396,6 +11396,7 @@ export type LedgerBalanceTransferRequestInput = {
   amount?: InputMaybe<Scalars['String']>;
   amountType?: InputMaybe<LedgerAmountTransferType>;
   branchId?: InputMaybe<Scalars['String']>;
+  closingDate: Scalars['Localized'];
   coaHead: Array<Scalars['String']>;
   destinationLedgerId?: InputMaybe<Scalars['String']>;
   ledgerType: LedgerType;
@@ -11421,6 +11422,7 @@ export type LedgerBalanceTransferResultData = {
   destinationLedgerName: Scalars['String'];
   totalLedgerAccounts: Scalars['String'];
   totalTransferBalance: BalanceValue;
+  transactionId: Scalars['String'];
 };
 
 export type LedgerList = {
@@ -20332,6 +20334,7 @@ export type InitiateLedgerBalanceTransferMutation = {
       initiateTransferRequest: {
         recordId?: string | null;
         data?: {
+          transactionId: string;
           totalLedgerAccounts: string;
           destinationLedgerName: string;
           totalTransferBalance: { amount?: string | null; amountType?: BalanceType | null };
@@ -39713,6 +39716,7 @@ export const InitiateLedgerBalanceTransferDocument = `
       initiateTransferRequest(input: $input) {
         recordId
         data {
+          transactionId
           totalLedgerAccounts
           totalTransferBalance {
             amount

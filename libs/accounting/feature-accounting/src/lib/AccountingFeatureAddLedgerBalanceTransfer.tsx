@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { Button, ResponseDialog } from '@myra-ui';
+import { Button, ResponseDialog, Text } from '@myra-ui';
 
 import {
   LedgerBalanceTransferRequestInput,
@@ -20,12 +20,16 @@ export const AccountingFeatureAddLedgerBalanceTransfer = () => {
   const user = useAppSelector((state) => state?.auth?.user);
 
   const methods = useForm<LedgerBalanceTransferRequestInput>({
-    defaultValues: { branchId: user?.currentBranch?.id },
+    defaultValues: { transferMode: 'ALL' },
   });
 
   const { watch } = methods;
 
   const coaHead = watch('coaHead');
+
+  const ledgerType = watch('ledgerType');
+
+  const closingDate = watch('closingDate');
 
   const { mutateAsync } = useInitiateLedgerBalanceTransferMutation();
 
@@ -38,6 +42,7 @@ export const AccountingFeatureAddLedgerBalanceTransfer = () => {
       coaHead: values?.coaHead?.map((head) => (head as unknown as { value: string })?.value),
       tagId: values?.tagId,
       ledgerType: values?.ledgerType,
+      closingDate: values?.closingDate,
       destinationLedgerId: values?.destinationLedgerId,
     };
   };
@@ -50,7 +55,7 @@ export const AccountingFeatureAddLedgerBalanceTransfer = () => {
         <FormLayout.Form>
           <SourceDetails />
 
-          {coaHead?.length ? (
+          {coaHead?.length && ledgerType && closingDate ? (
             <>
               <TransferDetails />
 
@@ -72,6 +77,11 @@ export const AccountingFeatureAddLedgerBalanceTransfer = () => {
                 type: 'Ledger Transfer',
                 title: 'Ledger Balance Transfer Successful',
                 details: {
+                  'Transaction Id': (
+                    <Text fontSize="s3" color="primary.500" fontWeight="600">
+                      {result?.data?.transactionId}
+                    </Text>
+                  ),
                   'Total Source Ledger Acccounts': quantityConverter(
                     result?.data?.totalLedgerAccounts ?? 0
                   ),

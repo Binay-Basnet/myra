@@ -89,7 +89,12 @@ export const TransferDetails = () => {
     //   ?.join(', ')}`}
     // subHeader="Uncheck ledger/s or Modify as per requierment"
     >
-      <FormSelect name="transferMode" label="Amount Input Mode" options={transferModeOptions} />
+      <FormSelect
+        name="transferMode"
+        label="Amount Input Mode"
+        options={transferModeOptions}
+        isDisabled
+      />
 
       {transferMode === 'EVEN' && (
         <FormNumberInput name="amount" label="Amount to be Transferred" />
