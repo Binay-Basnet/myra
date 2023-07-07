@@ -49,6 +49,7 @@ export const MemberTransfer = () => {
   const memberId = router?.query?.['memberId'];
   const requestId = router?.query?.['requestId'];
   const isApprove = router?.query?.['type'] === 'approve';
+  const isDetail = router?.query?.['type'] === 'details';
 
   const { data: transferData } = useGetMemberTransferQuery(
     { requestId: requestId as string },
@@ -302,7 +303,7 @@ export const MemberTransfer = () => {
           </Box>
         </FormLayout.Sidebar>
       </FormLayout.Content>
-      {memberId && (
+      {!isDetail && !isApprove && (
         <FormLayout.Footer
           mainButtonLabel="Request Transfer"
           mainButtonHandler={handleTransferMember}
