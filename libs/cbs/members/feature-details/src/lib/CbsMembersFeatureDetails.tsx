@@ -113,10 +113,7 @@ export const MemberDetails = ({
                 { label: 'Get Certificate', handler: getCertificate },
                 {
                   label: 'Transfer Member',
-                  handler: () =>
-                    router.push(
-                      `${ROUTES?.CBS_MEMBER_TRANSFER}?memberId=${memberId}&&branchId=${branchId}`
-                    ),
+                  handler: () => router.push(`${ROUTES?.CBS_MEMBER_TRANSFER}?memberId=${memberId}`),
                 },
               ]
             : [
@@ -127,10 +124,7 @@ export const MemberDetails = ({
                 { label: 'Get Certificate', handler: getCertificate },
                 {
                   label: 'Transfer Member',
-                  handler: () =>
-                    router.push(
-                      `${ROUTES?.CBS_MEMBER_TRANSFER}?memberId=${memberId}&&branchId=${branchId}`
-                    ),
+                  handler: () => router.push(`${ROUTES?.CBS_MEMBER_TRANSFER}?memberId=${memberId}`),
                 },
               ]
         }

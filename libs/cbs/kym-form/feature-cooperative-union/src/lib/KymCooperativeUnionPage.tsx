@@ -235,8 +235,9 @@ export const KYMCooperativeUnionPage = () => {
       <form
         onFocus={(e) => {
           const kymSection = getKymSectionCoOperativeUnion(e.target.id);
-
-          setSection(kymSection);
+          if (kymSection.subSection === kymCurrentSection?.subSection) {
+            setSection(kymSection);
+          }
         }}
       >
         <FormLayout methods={methods} hasSidebar>
