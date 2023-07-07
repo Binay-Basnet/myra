@@ -66,6 +66,7 @@ mutation initiateLedgerBalanceTransfer($input: LedgerBalanceTransferRequestInput
       initiateTransferRequest(input: $input) {
         recordId
         data {
+          transactionId
           totalLedgerAccounts
           totalTransferBalance {
             amount

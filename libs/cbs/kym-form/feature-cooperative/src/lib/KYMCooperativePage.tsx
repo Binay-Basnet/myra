@@ -224,7 +224,9 @@ export const KYMCooperativePage = () => {
     <form
       onFocus={(e) => {
         const kymSection = getKymCoopSection(e.target.id);
-        setKymCurrentSection(kymSection);
+        if (kymSection.subSection === kymCurrentSection?.subSection) {
+          setKymCurrentSection(kymSection);
+        }
       }}
     >
       <FormLayout methods={methods} hasSidebar>
