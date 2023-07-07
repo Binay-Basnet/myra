@@ -40,6 +40,10 @@ export const useRefreshToken = (url: string) => {
         refresh_token: refreshToken,
       })
       .then((res) => {
+        if ('error' in res.data) {
+          dispatch(logout());
+        }
+
         const tokens = res.data;
 
         if (tokens) {

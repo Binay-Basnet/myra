@@ -131,6 +131,7 @@ export const MemberTransfer = () => {
   }, [branchId]);
 
   const handleTransferMember = () => {
+    const values = getValues();
     asyncToast({
       id: 'member-transfer-id',
       msgs: {
@@ -141,8 +142,8 @@ export const MemberTransfer = () => {
         router.push(ROUTES?.CBS_REQUESTS_MEMBER_TRANSFER_LIST);
       },
       promise: mutateAsync({
-        memberId: memberId as string,
-        data: { ...(omit(getValues(), ['memberId', 'currentBranchId']) as MemberTransferInput) },
+        memberId: values?.['memberId'],
+        data: { ...(omit(values, ['memberId', 'currentBranchId']) as MemberTransferInput) },
       }),
     });
   };
