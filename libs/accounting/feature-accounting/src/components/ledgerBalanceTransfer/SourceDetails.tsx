@@ -22,7 +22,7 @@ export const SourceDetails = () => {
 
   return (
     <FormSection header="Source Details" templateColumns={3}>
-      <FormLeafCoaHeadSelect name="coaHead" label="COA Head" isMulti />
+      <FormLeafCoaHeadSelect name="coaHead" label="Select COA Head" isMulti />
 
       <FormLedgerTagSelect name="tagId" label="Reporting Tags" />
 
