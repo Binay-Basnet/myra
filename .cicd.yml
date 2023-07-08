@@ -580,6 +580,35 @@ trigger:
     - tag
 
 ---
+
+kind: pipeline
+type: exec
+name: Create new release
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+  - name: Creating release
+    commands:
+      - cd /drone
+      - ./create-new-config.sh FE $DRONE_TAG
+      - cd /drone
+      - ./push-cluster-config.fe.sh $DRONE_TAG
+
+trigger:
+  branch:
+    - main
+  event:
+    - tag
+
+depends_on:
+  - Build and Push myra
+  - Build and Push neosys
+  - Build and Push ebanking
+
+---
 #########################################################################################################
 #########################################################################################################
 ###############                 D H A D D A - M I G R A T I O N                               ###########
