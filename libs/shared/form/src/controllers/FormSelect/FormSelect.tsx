@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Control, Controller, FieldValues, useFormContext } from 'react-hook-form';
 import { ControllerRenderProps, UseControllerProps } from 'react-hook-form/dist/types/controller';
 import { MultiValue, SingleValue } from 'chakra-react-select';
@@ -54,6 +54,8 @@ const FormControl = <T extends Record<string, unknown>>({
   showAll,
   ...rest
 }: FormControlProps<T>) => {
+  const [filteredValue, setFilteredValue] = useState<SelectOption[]>([]);
+
   const options = showAll
     ? [{ label: 'All', value: 'ALL' }, ...(selectOptions || [])]
     : selectOptions;
@@ -63,13 +65,13 @@ const FormControl = <T extends Record<string, unknown>>({
   const methods = useFormContext();
   const { clearErrors } = methods;
 
-  const filteredValue = rest.isMulti
-    ? options?.filter(
-        (option) =>
-          value?.some((v: SelectOption) => v?.value === option.value) ||
-          value?.includes(option?.value)
-      )
-    : [];
+  // const filteredValue = rest.isMulti
+  //   ? options?.filter(
+  //       (option) =>
+  //         value?.some((v: SelectOption) => v?.value === option.value) ||
+  //         value?.includes(option?.value)
+  //     )
+  //   : [];
 
   useEffect(() => {
     if (rest.isMulti) {
@@ -92,6 +94,8 @@ const FormControl = <T extends Record<string, unknown>>({
           clearErrors(name);
         }
         if (Array.isArray(newValue)) {
+          setFilteredValue(newValue);
+
           onChange(newValue);
           onChangeAction && onChangeAction(newValue);
         } else {
