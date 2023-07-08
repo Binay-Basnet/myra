@@ -1,4 +1,4 @@
-  export const ROUTES = {
+export const ROUTES = {
   HOME: '/',
 
   CBS_NO_MEMBER_CODE: '/no-member-code',
@@ -339,6 +339,9 @@
   ACCOUNTING_COA_LIST: '/accounting/accounting/charts-of-account',
   ACCOUNTING_INTER_SERVICE_TRANS_LIST: '/accounting/accounting/service-center-transactions/list',
   ACCOUNTING_INTER_SERVICE_TRANS_ADD: '/accounting/accounting/service-center-transactions/add',
+
+  ACCOUNTING_LEDGER_BALANCE_TRANSFER_LIST: '/accounting/accounting/ledger-balance-transfer/list',
+  ACCOUNTING_LEDGER_BALANCE_TRANSFER_ADD: '/accounting/accounting/ledger-balance-transfer/add',
 
   ACCOUNTING_CHAR_KHATA_REPORT: '/accounting/reports/transactions/charkhata/new',
   ACCOUNTING_DAY_BOOK_REPORT: '/accounting/reports/transactions/day-book/new',

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useGetDesignationOptions } from '@hr/common';
 import { omit } from 'lodash';
 
 import { asyncToast, Box, FormSection, GridItem, Text } from '@myra-ui';
@@ -24,6 +25,8 @@ export const HrRecruitmentStaffPlanningAdd = () => {
   const router = useRouter();
   const methods = useForm();
   const { getValues, watch, reset } = methods;
+
+  const { designationOptions } = useGetDesignationOptions();
 
   const { mutateAsync } = useSetStaffPlanningMutation();
   const { data: staffPlanningData } = useGetStaffPlanQuery(
@@ -52,7 +55,7 @@ export const HrRecruitmentStaffPlanningAdd = () => {
         promise: mutateAsync({
           id: router?.query?.['id'] as string,
           input: {
-            ...omit({ ...getValues() }, ['id']),
+            ...omit({ ...getValues() }, ['id', 'total_cost_estimation', 'total_vacancies']),
           } as unknown as StaffPlanInput,
         }),
       });
@@ -69,7 +72,7 @@ export const HrRecruitmentStaffPlanningAdd = () => {
         promise: mutateAsync({
           id: null,
           input: {
-            ...getValues(),
+            ...omit({ ...getValues() }, ['total_cost_estimation', 'total_vacancies']),
           } as unknown as StaffPlanInput,
         }),
       });
@@ -105,6 +108,8 @@ export const HrRecruitmentStaffPlanningAdd = () => {
                   {
                     accessor: 'designation',
                     header: 'Designation',
+                    fieldType: 'select',
+                    selectOptions: designationOptions,
                   },
                   {
                     accessor: 'vacancies',

@@ -5,7 +5,7 @@ import {
   SeparationTypeEnum,
   useGetEmployeeListQuery,
 } from '@coop/cbs/data-access';
-import { FormDatePicker, FormSelect } from '@coop/shared/form';
+import { FormDatePicker, FormFileInput, FormSelect } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 const seperationStatus = [
@@ -45,6 +45,9 @@ export const SeperationBasicDetails = () => {
       <FormSelect name="separationStatus" label="Seperation Status" options={seperationStatus} />
       <FormSelect name="separationType" label="Seperation Type" options={seperationType} />
       <FormDatePicker name="date" label="Resignation Letter Date" />
+      <GridItem colSpan={3}>
+        <FormFileInput name="document.0.identifiers" label="Resignation Letter" />
+      </GridItem>
     </FormSection>
   );
 };

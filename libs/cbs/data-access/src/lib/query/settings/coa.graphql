@@ -299,3 +299,18 @@ query getTagListForReport {
     }
   }
 }
+
+query listLeafCoaHeads($pagination: Pagination, $filter: Filter) {
+  settings {
+    chartsOfAccount {
+      listLeafCoaHeads(pagination: $pagination, filter: $filter) {
+        edges {
+          node {
+            accountCode
+            Name
+          }
+        }
+      }
+    }
+  }
+}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 import {
   asyncToast,
@@ -22,6 +23,7 @@ import {
   useGetIndividualMemberDetails,
   useGetMemberKymDetailsAccountsQuery,
   useGetMemberKymDetailsLoanQuery,
+  useGetMemberKymDetailsOverviewQuery,
   useGetMemberKymDetailsSharesQuery,
   useGetMemberTransferQuery,
   useMemberTransferActionMutation,
@@ -42,11 +44,12 @@ export const MemberTransfer = () => {
   const methods = useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [approvedMemberData, setApprovedMemberData] = useState<MemberTransferSuccessData>();
-  const { reset, getValues } = methods;
+  const { reset, getValues, setValue, watch } = methods;
 
   const memberId = router?.query?.['memberId'];
   const requestId = router?.query?.['requestId'];
   const isApprove = router?.query?.['type'] === 'approve';
+  const isDetail = router?.query?.['type'] === 'details';
 
   const { data: transferData } = useGetMemberTransferQuery(
     { requestId: requestId as string },
@@ -65,13 +68,28 @@ export const MemberTransfer = () => {
     }
   }, [JSON.stringify(transferEditdata)]);
 
-  const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
-    useGetIndividualMemberDetails({
-      memberId: (memberId as string) || (transferEditdata?.memberId as string),
-    });
+  const memberIdWatch = watch('memberId');
+
+  const { memberDetailData } = useGetIndividualMemberDetails({
+    memberId: (memberId as string) || (transferEditdata?.memberId as string) || memberIdWatch,
+  });
+
+  const memberDetailsData = useGetMemberKymDetailsOverviewQuery({
+    id: (memberId as string) || (transferEditdata?.memberId as string) || memberIdWatch,
+  });
+
+  const branchId =
+    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation?.branchId;
+
+  // useEffect(() => {
+  //   if (branchId) {
+  //     console.log;
+
+  //   }
+  // }, [branchId]);
 
   const memberShareDetails = useGetMemberKymDetailsSharesQuery({
-    id: (memberId as string) || (transferEditdata?.memberId as string),
+    id: (memberId as string) || (transferEditdata?.memberId as string) || memberIdWatch,
   });
   const memberShareDetailsData =
     memberShareDetails?.data?.members?.memberOverviewV2?.share?.data?.shareInfo;
@@ -84,14 +102,14 @@ export const MemberTransfer = () => {
   ];
 
   const memberSavingAccountDetails = useGetMemberKymDetailsAccountsQuery({
-    id: (memberId as string) || (transferEditdata?.memberId as string),
+    id: (memberId as string) || (transferEditdata?.memberId as string) || memberIdWatch,
   });
 
   const memberSavingAccountsDetailsData =
     memberSavingAccountDetails?.data?.members?.memberOverviewV2?.accounts?.data?.accounts;
 
   const memberLoanAccountDetails = useGetMemberKymDetailsLoanQuery({
-    id: (memberId as string) || (transferEditdata?.memberId as string),
+    id: (memberId as string) || (transferEditdata?.memberId as string) || memberIdWatch,
   });
 
   const memberLoanAccountsDetailsData =
@@ -101,12 +119,19 @@ export const MemberTransfer = () => {
     if (memberId) {
       reset({
         memberId: memberId as string,
-        currentBranchId: router?.query?.['branchId'],
+        currentBranchId: branchId,
       });
     }
-  }, []);
+  }, [branchId]);
+
+  useEffect(() => {
+    if (!memberId && memberIdWatch) {
+      setValue('currentBranchId', branchId);
+    }
+  }, [branchId]);
 
   const handleTransferMember = () => {
+    const values = getValues();
     asyncToast({
       id: 'member-transfer-id',
       msgs: {
@@ -117,8 +142,8 @@ export const MemberTransfer = () => {
         router.push(ROUTES?.CBS_REQUESTS_MEMBER_TRANSFER_LIST);
       },
       promise: mutateAsync({
-        memberId: memberId as string,
-        data: { ...(omit(getValues(), ['memberId', 'currentBranchId']) as MemberTransferInput) },
+        memberId: values?.['memberId'],
+        data: { ...(omit(values, ['memberId', 'currentBranchId']) as MemberTransferInput) },
       }),
     });
   };
@@ -170,11 +195,21 @@ export const MemberTransfer = () => {
         <FormLayout.Form>
           <FormSection>
             <GridItem colSpan={3}>
-              <FormMemberSelect name="memberId" label="Member" isDisabled />
+              <FormMemberSelect
+                name="memberId"
+                label="Member"
+                isDisabled={!!memberId || !!transferEditdata?.memberId}
+              />
             </GridItem>
+
             <GridItem colSpan={3}>
-              <FormBranchSelect name="currentBranchId" label="Current Service Center" isDisabled />
+              <FormBranchSelect
+                name="currentBranchId"
+                label="Current Service Center"
+                isDisabled={!!branchId}
+              />
             </GridItem>
+
             <GridItem colSpan={3}>
               <FormBranchSelect
                 name="newBranchId"
@@ -198,14 +233,11 @@ export const MemberTransfer = () => {
                 code: memberDetailData?.code,
                 gender: memberDetailData?.gender,
                 age: memberDetailData?.age,
-                maritalStatus: memberDetailData?.maritalStatus,
                 dateJoined: memberDetailData?.dateJoined?.en,
                 phoneNo: memberDetailData?.contact,
                 email: memberDetailData?.email,
                 address: memberDetailData?.address,
               }}
-              signaturePath={memberSignatureUrl}
-              citizenshipPath={memberCitizenshipUrl}
             />
             <Box m="s16" p="s16" border="1px solid" borderColor="gray.200" borderRadius={5}>
               <Text fontSize="s3" fontWeight="medium" mb="s16">
@@ -219,56 +251,60 @@ export const MemberTransfer = () => {
                 </Box>
               ))}
             </Box>
-            <Box m="s16" p="s16" border="1px solid" borderColor="gray.200" borderRadius={5}>
-              <Text fontSize="s3" fontWeight="medium" mb="s16">
-                Saving Account List
-              </Text>
-              <Box display="flex" justifyContent="space-between" p="s8" bg="gray.100">
-                <Text fontSize="s3" fontWeight="medium">
-                  Account Name
+            {!isEmpty(memberSavingAccountsDetailsData) && (
+              <Box m="s16" p="s16" border="1px solid" borderColor="gray.200" borderRadius={5}>
+                <Text fontSize="s3" fontWeight="medium" mb="s16">
+                  Saving Account List
                 </Text>
-                <Text fontSize="s3" fontWeight="medium">
-                  Balance
-                </Text>
+                <Box display="flex" justifyContent="space-between" p="s8" bg="gray.100">
+                  <Text fontSize="s3" fontWeight="medium">
+                    Account Name
+                  </Text>
+                  <Text fontSize="s3" fontWeight="medium">
+                    Balance
+                  </Text>
+                </Box>
+                <Divider />
+                {memberSavingAccountsDetailsData?.map((item) => (
+                  <>
+                    <Box p="s8" display="flex" justifyContent="space-between">
+                      <Text fontSize="s3">{item?.accountName}</Text>
+                      <Text fontSize="s3">{amountConverter(item?.totalBalance as string)}</Text>
+                    </Box>
+                    <Divider />
+                  </>
+                ))}
               </Box>
-              <Divider />
-              {memberSavingAccountsDetailsData?.map((item) => (
-                <>
-                  <Box p="s8" display="flex" justifyContent="space-between">
-                    <Text fontSize="s3">{item?.accountName}</Text>
-                    <Text fontSize="s3">{amountConverter(item?.totalBalance as string)}</Text>
-                  </Box>
-                  <Divider />
-                </>
-              ))}
-            </Box>
-            <Box m="s16" p="s16" border="1px solid" borderColor="gray.200" borderRadius={5}>
-              <Text fontSize="s3" fontWeight="medium" mb="s16">
-                Loan Account List
-              </Text>
-              <Box display="flex" justifyContent="space-between" p="s8" bg="gray.100">
-                <Text fontSize="s3" fontWeight="medium">
-                  Account Name
+            )}
+            {!isEmpty(memberLoanAccountsDetailsData) && (
+              <Box m="s16" p="s16" border="1px solid" borderColor="gray.200" borderRadius={5}>
+                <Text fontSize="s3" fontWeight="medium" mb="s16">
+                  Loan Account List
                 </Text>
-                <Text fontSize="s3" fontWeight="medium">
-                  Amount
-                </Text>
+                <Box display="flex" justifyContent="space-between" p="s8" bg="gray.100">
+                  <Text fontSize="s3" fontWeight="medium">
+                    Account Name
+                  </Text>
+                  <Text fontSize="s3" fontWeight="medium">
+                    Amount
+                  </Text>
+                </Box>
+                <Divider />
+                {memberLoanAccountsDetailsData?.map((item) => (
+                  <>
+                    <Box p="s8" display="flex" justifyContent="space-between">
+                      <Text fontSize="s3">{item?.accountName}</Text>
+                      <Text fontSize="s3">{amountConverter(item?.totalBalance as string)}</Text>
+                    </Box>
+                    <Divider />
+                  </>
+                ))}
               </Box>
-              <Divider />
-              {memberLoanAccountsDetailsData?.map((item) => (
-                <>
-                  <Box p="s8" display="flex" justifyContent="space-between">
-                    <Text fontSize="s3">{item?.accountName}</Text>
-                    <Text fontSize="s3">{amountConverter(item?.totalBalance as string)}</Text>
-                  </Box>
-                  <Divider />
-                </>
-              ))}
-            </Box>
+            )}
           </Box>
         </FormLayout.Sidebar>
       </FormLayout.Content>
-      {memberId && (
+      {!isDetail && !isApprove && (
         <FormLayout.Footer
           mainButtonLabel="Request Transfer"
           mainButtonHandler={handleTransferMember}

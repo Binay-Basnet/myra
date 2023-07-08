@@ -53,7 +53,7 @@ export const ProjectDetails = () => {
         setErrorData={errorDataSet}
       />
       <MigrateExcel validationStatus={data?.data?.data?.validation_status || false} />
-      {data?.data?.data?.transformation_status && (
+      {data?.data?.data?.transformation_status && data?.data?.data?.validation_status && (
         <>
           <DownloadCsvs />
           <ViewAllCsvs />

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useGetJobApplicantOptions } from '@hr/common';
 import { omit } from 'lodash';
 
 import { asyncToast, FormSection, GridItem } from '@myra-ui';
@@ -9,7 +10,6 @@ import {
   AppointmentLetterInput,
   AppointmentTermInput,
   useGetAppointmentLetterQuery,
-  useGetJobApplicationListQuery,
   useSetAppointmentLetterMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -20,23 +20,13 @@ import {
   FormSelect,
   FormTextArea,
 } from '@coop/shared/form';
-import { getPaginationQuery } from '@coop/shared/utils';
 
 export const HrRecruitmentAppointmentLetterAdd = () => {
   const methods = useForm();
   const router = useRouter();
   const { getValues, reset } = methods;
 
-  const { data: jobApplicationData } = useGetJobApplicationListQuery({
-    pagination: {
-      ...getPaginationQuery(),
-      first: -1,
-      order: {
-        arrange: 'ASC',
-        column: 'ID',
-      },
-    },
-  });
+  const { jobApplicationOptions } = useGetJobApplicantOptions();
 
   const { mutateAsync } = useSetAppointmentLetterMutation();
   const { data: appointmentLetterData } = useGetAppointmentLetterQuery(
@@ -53,14 +43,6 @@ export const HrRecruitmentAppointmentLetterAdd = () => {
       reset(appointmentLetterEditData);
     }
   }, [JSON.stringify(appointmentLetterEditData)]);
-
-  const jobApplicationOptions =
-    jobApplicationData?.hr?.recruitment?.recruitmentJobApplication?.listJobApplication?.edges?.map(
-      (item) => ({
-        label: item?.node?.name as string,
-        value: item?.node?.id as string,
-      })
-    );
 
   const submitForm = () => {
     if (router?.query?.['id']) {

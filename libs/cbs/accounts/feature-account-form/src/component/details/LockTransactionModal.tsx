@@ -73,6 +73,7 @@ export const LockTransactionModal = ({ isOpen, onClose }: ILockTransactionModalP
             data: {
               accountId: id as string,
               ...values,
+              accountType: 'DepositAccount',
             } as RestrictTransactionInput,
           })
         : mutateAsync({
