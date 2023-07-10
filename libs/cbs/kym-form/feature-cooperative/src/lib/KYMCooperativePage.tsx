@@ -334,7 +334,17 @@ export const KYMCooperativePage = () => {
           }}
         />
 
-        <KYMUpdateModal isOpen={isOpen} onClose={onClose} />
+        <KYMUpdateModal
+          isOpen={isOpen}
+          onClose={onClose}
+          onUpdateClick={() =>
+            mutateAsync({
+              id: router.query['id'] as string,
+              data: methods.getValues(),
+              forDraft: false,
+            })
+          }
+        />
       </FormLayout>
     </form>
   );

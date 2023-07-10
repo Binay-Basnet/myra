@@ -147,7 +147,7 @@ export const Overview = () => {
     },
     {
       title: 'Edit KYM',
-      link: `${ROUTES.CBS_MEMBER}/${memberType}/edit/${id}`,
+      link: `${ROUTES.CBS_MEMBER}/${memberType}/edit?id=${id}`,
       icon: IoCreateOutline,
     },
   ];
