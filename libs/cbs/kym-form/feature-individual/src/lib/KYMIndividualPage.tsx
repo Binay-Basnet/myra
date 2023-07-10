@@ -272,7 +272,17 @@ export const KYMIndividualPage = () => {
           }}
         />
       </FormLayout>
-      <KYMUpdateModal isOpen={isOpen} onClose={onClose} />
+      <KYMUpdateModal
+        isOpen={isOpen}
+        onClose={onClose}
+        onUpdateClick={() =>
+          mutateAsync({
+            id: router.query['id'] as string,
+            data: methods.getValues(),
+            forDraft: false,
+          })
+        }
+      />
     </form>
   );
 };
