@@ -37,6 +37,7 @@ type KYMSection = {
   subSection: string;
 };
 
+const identificationMap = ['citizenship', 'drivingLicense', 'nationalId', 'passport', 'voterCard'];
 const documentMap = ['passport', 'signature', 'citizenship', 'fingerprint'];
 const familyMemberMap = ['file'];
 
@@ -55,6 +56,11 @@ const getIndividualEditData = (data: GetKymIndividualFormDataQuery | undefined) 
     middleName: editValues?.middleName?.local,
     lastName: editValues?.lastName?.local,
     landlordName: editValues?.landlordName?.local,
+
+    identification: identificationMap?.map((identification) => ({
+      idType: identification,
+      ...editValues?.identification,
+    })),
 
     permanentAddress: {
       ...editValues?.permanentAddress,
