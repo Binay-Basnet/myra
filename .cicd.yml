@@ -26,6 +26,8 @@ steps:
         path: /drone/src/apps/myra/dist
       - name: neosys-admin-app
         path: /drone/src/apps/neosys-admin/dist
+      - name: dhadda-migration-app
+        path: /drone/src/apps/dhadda-migration/dist
     commands:
       - yarn --pure-lockfile
       - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
@@ -55,6 +57,9 @@ volumes:
   - name: neosys-admin-app
     host:
       path: /build-cache/myra-ui-${DRONE_BRANCH}/neosys-admin-app
+  - name: dhadda-migration-app
+    host:
+      path: /build-cache/myra-ui-${DRONE_BRANCH}/dhadda-migration-app
 
 trigger:
   branch:
@@ -281,6 +286,9 @@ volumes:
   - name: env file
     host:
       path: /build-cache/dhadda-migration/fe/.env
+  - name: dhadda-migration-app
+    host:
+      path: /build-cache/myra-ui-${DRONE_BRANCH}/dhadda-migration-app
   - name: docker-sock
     host:
       path: /var/run/docker.sock
@@ -369,6 +377,7 @@ depends_on:
   - Publish myra-app
   - Publish neosys-admin-app
   - Publish ebanking-app
+  - Publish dhadda-migration
 #- Publish storybook
 
 trigger:
