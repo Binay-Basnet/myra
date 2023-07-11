@@ -2077,6 +2077,7 @@ export type Branch = {
   category?: Maybe<BranchCategory>;
   contactNumber?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  eodReady?: Maybe<Scalars['Boolean']>;
   estDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   location?: Maybe<LocationCoordinate>;
@@ -15817,6 +15818,7 @@ export type PlEntry = {
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
   ledgerId?: Maybe<Scalars['String']>;
+  ledgerName?: Maybe<Scalars['String']>;
 };
 
 export type PageInfo = {
@@ -18679,7 +18681,7 @@ export const SlipState = {
 export type SlipState = typeof SlipState[keyof typeof SlipState];
 export const SourceOfHire = {
   Direct: 'DIRECT',
-  Referral: 'REFERRAL',
+  Referel: 'REFEREL',
   Vacancy: 'VACANCY',
 } as const;
 

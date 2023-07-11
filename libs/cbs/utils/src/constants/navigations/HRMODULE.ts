@@ -180,7 +180,7 @@ export const HRMODULE: NavType = {
       ],
       pages: [
         {
-          label: 'Staff Planing',
+          label: 'Staff Planning',
           route: ROUTES.HR_RECRUITMENT_STAFF_PLANNING_LIST,
           aclKey: 'HCM_RECRUITMENT_STAFF_PLANNING',
           addRoute: ROUTES.HR_RECRUITMENT_STAFF_PLANNING_ADD,
