@@ -82,15 +82,10 @@ query getCOAAccountsUnderLeafList($parentId: [String]!, $currentBranch: Boolean)
   }
 }
 
-query getCoaAccountList(
-  $branchId: [String!]
-  $pagination: Pagination
-  $filter: COAListFilter
-  $flag: COAListFlag
-) {
+query getCoaAccountList($pagination: Pagination, $filter: Filter, $flag: COAListFlag) {
   settings {
     chartsOfAccount {
-      coaAccountList(branchId: $branchId, pagination: $pagination, filter: $filter, flag: $flag) {
+      coaAccountList(pagination: $pagination, filter: $filter, flag: $flag) {
         edges {
           node {
             accountCode
