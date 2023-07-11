@@ -451,6 +451,19 @@ export const TopLevelHeader = () => {
                               {t['alternativeChannelsAndCrossConnectivity']}
                             </AppSwitcherText>
                           </AppSwitcherIconWrapper>
+                          <AppSwitcherIconWrapper
+                            onClick={() => router.push(ROUTES?.HRMODULE_EMPLOYEES_LIST)}
+                          >
+                            <Image
+                              width={32}
+                              height={32}
+                              src="/btcd.svg"
+                              alt="Hr Training and Capacity Management"
+                            />
+                            <AppSwitcherText>
+                              {t['hrTrainingAndCapacityManagement']}
+                            </AppSwitcherText>
+                          </AppSwitcherIconWrapper>
                         </Box>
                         <Divider my="s8" />
                         <Box>
