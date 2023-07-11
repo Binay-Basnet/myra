@@ -244,6 +244,58 @@ trigger:
     - push
 
 ---
+
+kind: pipeline
+name: Publish dhadda-migration
+type: docker
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+  - name: publishing dhadda-migration
+    image: bentolor/docker-dind-awscli:dind
+    environment:
+      aws_access_key:
+        from_secret: aws_access_key
+      aws_secret_key:
+        from_secret: aws_secret_key
+    commands:
+      - aws configure set aws_access_key_id $aws_access_key
+      - aws configure set aws_secret_access_key $aws_secret_key
+      - aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.ap-south-1.amazonaws.com
+      - docker compose -f docker-compose.${DRONE_BRANCH}.yaml build dhadda-migration
+      - docker compose -f docker-compose.${DRONE_BRANCH}.yaml push dhadda-migration
+    volumes:
+      - name: env file
+        path: /drone/src/apps/dhadda-migration/.env
+      - name: env file
+        path: /drone/src/apps/.env
+      - name: dhadda-migration-app
+        path: /drone/src/apps/dhadda-migration/dist
+
+volumes:
+  - name: env file
+    host:
+      path: /build-cache/dhadda-migration/fe/.env
+  - name: docker-sock
+    host:
+      path: /var/run/docker.sock
+  - name: dhadda-migration-app
+    temp: {}
+
+depends_on:
+  - Build all the apps
+
+trigger:
+  branch:
+    - dev
+  event:
+    - push
+
+---
+
 #kind: pipeline
 #name: Publish storybook
 #type: docker
@@ -372,56 +424,6 @@ trigger:
 #    - push
 #
 #---
-kind: pipeline
-name: Publish dhadda-migration
-type: docker
-
-platform:
-  arch: amd64
-  os: linux
-
-steps:
-  - name: publishing dhadda-migration
-    image: bentolor/docker-dind-awscli:dind
-    environment:
-      aws_access_key:
-        from_secret: aws_access_key
-      aws_secret_key:
-        from_secret: aws_secret_key
-    commands:
-      - aws configure set aws_access_key_id $aws_access_key
-      - aws configure set aws_secret_access_key $aws_secret_key
-      - aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.ap-south-1.amazonaws.com
-      - docker compose -f docker-compose.${DRONE_BRANCH}.yaml build dhadda-migration
-      - docker compose -f docker-compose.${DRONE_BRANCH}.yaml push dhadda-migration
-    volumes:
-      - name: env file
-        path: /drone/src/apps/dhadda-migration/.env
-      - name: env file
-        path: /drone/src/apps/.env
-      - name: dhadda-migration-app
-        path: /drone/src/apps/dhadda-migration/dist
-
-volumes:
-  - name: env file
-    host:
-      path: /build-cache/dhadda-migration/fe/.env
-  - name: docker-sock
-    host:
-      path: /var/run/docker.sock
-  - name: dhadda-migration-app
-    temp: {}
-
-depends_on:
-  - Build all the apps
-
-trigger:
-  branch:
-    - dev
-  event:
-    - push
-
----
 kind: pipeline
 type: docker
 name: Update last successful build commit SHA
