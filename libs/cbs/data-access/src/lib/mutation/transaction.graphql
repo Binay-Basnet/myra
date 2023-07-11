@@ -243,3 +243,14 @@ mutation disableAccountingTransactionRestrict($id: ID!) {
     }
   }
 }
+
+mutation yearEndSettlement($destinationCOALeaf: ID!) {
+  transaction {
+    yearEndSettlement(destinationCOALeaf: $destinationCOALeaf) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

@@ -89,6 +89,7 @@ query getEndOfDayDateData {
   transaction {
     endOfDayDate {
       value
+      isYearEnd
       hasErrors
       isInitialized
       headOfficeReady
@@ -696,6 +697,45 @@ query getTagKhataReport($data: TagKhataReportFilter!) {
               netBalance
               closingBalance
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+query yearEndLedgerAccountList {
+  transaction {
+    yearEnd {
+      getCurrentState {
+        data {
+          expenseEntries {
+            ledgerId
+            ledgerName
+            branchId
+            branchName
+            balance {
+              amount
+              amountType
+            }
+          }
+          totalExpense {
+            amount
+            amountType
+          }
+          incomeEntries {
+            ledgerId
+            ledgerName
+            branchId
+            branchName
+            balance {
+              amount
+              amountType
+            }
+          }
+          totalIncome {
+            amount
+            amountType
           }
         }
       }

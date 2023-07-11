@@ -409,6 +409,8 @@ export const ROUTES = {
 
   BRANCH_READINESS: '/branch-readiness',
 
+  YEAR_END_CLOSE: '/year-end-close',
+
   ACCOUNTING_INVESTMENT_ORGANIZTION_LIST: '/accounting/investment/organizations/list',
   ACCOUNTING_INVESTMENT_ORGANIZATION_ADD: '/accounting/investment/organizations/add',
   ACCOUNTING_INVESTMENT_ORGANIZATION_EDIT: '/accounting/investment/organizations/edit',
