@@ -9853,7 +9853,7 @@ export type JournalVoucherQuery = {
 };
 
 export type JournalVoucherQueryListArgs = {
-  filter?: InputMaybe<JournalVoucherFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -26306,7 +26306,7 @@ export type GetInvestmentTransactionsListDataQuery = {
 
 export type GetJournalVoucherListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<JournalVoucherFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetJournalVoucherListQuery = {
@@ -48203,7 +48203,7 @@ export const useGetInvestmentTransactionsListDataQuery = <
     options
   );
 export const GetJournalVoucherListDocument = `
-    query getJournalVoucherList($pagination: Pagination, $filter: JournalVoucherFilter) {
+    query getJournalVoucherList($pagination: Pagination, $filter: Filter) {
   accounting {
     journalVoucher {
       list(filter: $filter, pagination: $pagination) {

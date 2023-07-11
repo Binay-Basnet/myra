@@ -1,4 +1,4 @@
-query getJournalVoucherList($pagination: Pagination, $filter: JournalVoucherFilter) {
+ query getJournalVoucherList($pagination: Pagination, $filter: Filter) {
   accounting {
     journalVoucher {
       list(filter: $filter, pagination: $pagination) {
