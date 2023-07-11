@@ -3,10 +3,12 @@ import { BsCheckCircleFill } from 'react-icons/bs';
 import { FiLoader } from 'react-icons/fi';
 import { Spinner, useDisclosure } from '@chakra-ui/react';
 
-import { Alert, Box, Icon, Modal, Text } from '@myra-ui';
+import { Alert, Box, Button, Icon, Modal, Text } from '@myra-ui';
 
-import { EodState } from '@coop/cbs/data-access';
+import { EodState, useGetEodStatusQuery } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
+
+import { BranchReadinessModal } from './BranchReadinessModal';
 
 interface IStatusListProps {
   statusList: {
@@ -37,9 +39,17 @@ export const StatusList = ({ statusList }: IStatusListProps) => {
 
   const { isOpen, onClose, onToggle } = useDisclosure();
 
+  const {
+    isOpen: isAllBranchModalOpen,
+    onClose: onAllBranchModalClose,
+    onToggle: onAllBranchModalToggle,
+  } = useDisclosure();
+
   const [selectedErrors, setSelectedErrors] = useState<string[]>([]);
 
   const [selectedTitle, setSelectedTitle] = useState<string>('');
+
+  const { data: eodStatusQueryData } = useGetEodStatusQuery();
 
   const eodStatusText = (status: EodState | undefined | null, title: string) => {
     let statusText = '';
@@ -97,11 +107,20 @@ export const StatusList = ({ statusList }: IStatusListProps) => {
                     onClick={() => handleShowErrors(errors, t[title] ?? title)}
                   >{`${errors.length} Errors in ${t[title] ?? title}`}</Text>
                 ) : null}
-                <Box display="flex" gap="s8" alignItems="center">
-                  {eodStatusIcon(status)}
-                  <Text fontSize="r1" fontWeight={400} color="gray.700" lineHeight="150%">
-                    {eodStatusText(status, title)}
-                  </Text>
+                <Box display="flex" gap="s8" alignItems="center" justifyContent="space-between">
+                  <Box display="flex" gap="s8" alignItems="center">
+                    {eodStatusIcon(status)}
+                    <Text fontSize="r1" fontWeight={400} color="gray.700" lineHeight="150%">
+                      {eodStatusText(status, title)}
+                    </Text>
+                  </Box>
+
+                  {title === 'Branch Readiness' &&
+                    eodStatusQueryData?.transaction?.eodStatus?.stage === 'PRE' && (
+                      <Button variant="outline" onClick={onAllBranchModalToggle}>
+                        View all branch
+                      </Button>
+                    )}
                 </Box>
               </Box>
             </Box>
@@ -114,6 +133,8 @@ export const StatusList = ({ statusList }: IStatusListProps) => {
         errors={selectedErrors}
         title={selectedTitle}
       />
+
+      <BranchReadinessModal isOpen={isAllBranchModalOpen} onClose={onAllBranchModalClose} />
     </>
   );
 };

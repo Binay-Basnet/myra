@@ -2094,6 +2094,7 @@ export type Branch = {
   category?: Maybe<BranchCategory>;
   contactNumber?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  eodReady?: Maybe<Scalars['Boolean']>;
   estDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   location?: Maybe<LocationCoordinate>;
@@ -19325,7 +19326,7 @@ export type TransactionMutationEndOfDayArgs = {
 };
 
 export type TransactionMutationReadyBranchEodArgs = {
-  revert?: InputMaybe<Scalars['Boolean']>;
+  revertBranchId?: InputMaybe<Scalars['ID']>;
 };
 
 export type TransactionMutationRevertTransactionArgs = {
@@ -25109,7 +25110,9 @@ export type SetTellerTransferActionMutation = {
   };
 };
 
-export type ReadyBranchEodMutationVariables = Exact<{ [key: string]: never }>;
+export type ReadyBranchEodMutationVariables = Exact<{
+  revertBranchId?: InputMaybe<Scalars['ID']>;
+}>;
 
 export type ReadyBranchEodMutation = {
   transaction: { readyBranchEOD?: Array<string | null> | null };
@@ -35289,6 +35292,7 @@ export type GetBranchListQuery = {
               plTransferId?: string | null;
               tdsTransaferId?: string | null;
               branchStatus?: boolean | null;
+              eodReady?: boolean | null;
               address?: {
                 state?: Record<'local' | 'en' | 'np', string> | null;
                 district?: Record<'local' | 'en' | 'np', string> | null;
@@ -46630,9 +46634,9 @@ export const useSetTellerTransferActionMutation = <TError = unknown, TContext = 
     options
   );
 export const ReadyBranchEodDocument = `
-    mutation readyBranchEOD {
+    mutation readyBranchEOD($revertBranchId: ID) {
   transaction {
-    readyBranchEOD
+    readyBranchEOD(revertBranchId: $revertBranchId)
   }
 }
     `;
@@ -59910,6 +59914,7 @@ export const GetBranchListDocument = `
               plTransferId
               tdsTransaferId
               branchStatus
+              eodReady
             }
           }
         }
