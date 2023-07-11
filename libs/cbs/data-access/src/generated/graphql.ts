@@ -16551,7 +16551,6 @@ export const Resource = {
   CbsTransactionRevert: 'CBS_TRANSACTION_REVERT',
   CbsTransactionYearEnd: 'CBS_TRANSACTION_YEAR_END',
   CbsTransfers: 'CBS_TRANSFERS',
-  CbsTransfersBankTransfer: 'CBS_TRANSFERS_BANK_TRANSFER',
   CbsTransfersCashInTransitTransfer: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
   CbsTransfersServiceCenterCashTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
   CbsTransfersServiceCenterTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_TRANSFER',
