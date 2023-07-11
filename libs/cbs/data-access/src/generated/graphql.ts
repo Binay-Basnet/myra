@@ -1302,24 +1302,41 @@ export type AllTransactionResult = {
 };
 
 export const AllTransactionType = {
+  AccountingExternalLoan: 'ACCOUNTING_EXTERNAL_LOAN',
+  AccountingInvestment: 'ACCOUNTING_INVESTMENT',
   AccountClose: 'ACCOUNT_CLOSE',
   AlternateChannel: 'ALTERNATE_CHANNEL',
+  BranchTransfer: 'BRANCH_TRANSFER',
+  BulkTransfer: 'BULK_TRANSFER',
+  CashInTransit: 'CASH_IN_TRANSIT',
+  CreditNote: 'CREDIT_NOTE',
+  DebitNote: 'DEBIT_NOTE',
   Deposit: 'DEPOSIT',
   Ebanking: 'EBANKING',
+  Expenses: 'EXPENSES',
   InterestBooking: 'INTEREST_BOOKING',
   InterestPosting: 'INTEREST_POSTING',
   InterBranchTransfer: 'INTER_BRANCH_TRANSFER',
+  InventoryPurchase: 'INVENTORY_PURCHASE',
+  InventorySell: 'INVENTORY_SELL',
   JournalVoucher: 'JOURNAL_VOUCHER',
+  LedgerBalanceTransfer: 'LEDGER_BALANCE_TRANSFER',
   LoanDisbursment: 'LOAN_DISBURSMENT',
+  LoanLossProvision: 'LOAN_LOSS_PROVISION',
   LoanRepayment: 'LOAN_REPAYMENT',
+  LocLimit: 'LOC_LIMIT',
   Membership: 'MEMBERSHIP',
+  MemberTransfer: 'MEMBER_TRANSFER',
   Migration: 'MIGRATION',
   OpeningBalance: 'OPENING_BALANCE',
   SharePurchase: 'SHARE_PURCHASE',
   ShareReturn: 'SHARE_RETURN',
+  TellerBankTransfer: 'TELLER_BANK_TRANSFER',
   TellerTransfer: 'TELLER_TRANSFER',
+  TransactionRevert: 'TRANSACTION_REVERT',
   Transfer: 'TRANSFER',
   Withdraw: 'WITHDRAW',
+  YearEnd: 'YEAR_END',
 } as const;
 
 export type AllTransactionType = typeof AllTransactionType[keyof typeof AllTransactionType];
@@ -2077,6 +2094,7 @@ export type Branch = {
   category?: Maybe<BranchCategory>;
   contactNumber?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  eodReady?: Maybe<Scalars['Boolean']>;
   estDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   location?: Maybe<LocationCoordinate>;
@@ -15817,6 +15835,7 @@ export type PlEntry = {
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
   ledgerId?: Maybe<Scalars['String']>;
+  ledgerName?: Maybe<Scalars['String']>;
 };
 
 export type PageInfo = {
@@ -18678,7 +18697,7 @@ export const SlipState = {
 export type SlipState = typeof SlipState[keyof typeof SlipState];
 export const SourceOfHire = {
   Direct: 'DIRECT',
-  Referral: 'REFERRAL',
+  Referel: 'REFEREL',
   Vacancy: 'VACANCY',
 } as const;
 
@@ -25232,6 +25251,25 @@ export type DisableAccountingTransactionRestrictMutation = {
           | MutationError_ValidationError_Fragment
           | null;
       } | null;
+    } | null;
+  };
+};
+
+export type YearEndSettlementMutationVariables = Exact<{
+  destinationCOALeaf: Scalars['ID'];
+}>;
+
+export type YearEndSettlementMutation = {
+  transaction: {
+    yearEndSettlement?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
     } | null;
   };
 };
@@ -38601,6 +38639,7 @@ export type GetEndOfDayDateDataQuery = {
   transaction: {
     endOfDayDate: {
       value: Record<'local' | 'en' | 'np', string>;
+      isYearEnd: boolean;
       hasErrors: boolean;
       isInitialized: boolean;
       headOfficeReady?: boolean | null;
@@ -39228,6 +39267,35 @@ export type GetTagKhataReportQuery = {
         };
       };
     };
+  };
+};
+
+export type YearEndLedgerAccountListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type YearEndLedgerAccountListQuery = {
+  transaction: {
+    yearEnd?: {
+      getCurrentState?: {
+        data?: {
+          expenseEntries?: Array<{
+            ledgerId?: string | null;
+            ledgerName?: string | null;
+            branchId?: string | null;
+            branchName?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          } | null> | null;
+          totalExpense?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          incomeEntries?: Array<{
+            ledgerId?: string | null;
+            ledgerName?: string | null;
+            branchId?: string | null;
+            branchName?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          } | null> | null;
+          totalIncome?: { amount?: string | null; amountType?: BalanceType | null } | null;
+        } | null;
+      } | null;
+    } | null;
   };
 };
 
@@ -46778,6 +46846,33 @@ export const useDisableAccountingTransactionRestrictMutation = <
       DisableAccountingTransactionRestrictMutation,
       DisableAccountingTransactionRestrictMutationVariables
     >(DisableAccountingTransactionRestrictDocument),
+    options
+  );
+export const YearEndSettlementDocument = `
+    mutation yearEndSettlement($destinationCOALeaf: ID!) {
+  transaction {
+    yearEndSettlement(destinationCOALeaf: $destinationCOALeaf) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useYearEndSettlementMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    YearEndSettlementMutation,
+    TError,
+    YearEndSettlementMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<YearEndSettlementMutation, TError, YearEndSettlementMutationVariables, TContext>(
+    ['yearEndSettlement'],
+    useAxios<YearEndSettlementMutation, YearEndSettlementMutationVariables>(
+      YearEndSettlementDocument
+    ),
     options
   );
 export const GetAccountMemberListDocument = `
@@ -64476,6 +64571,7 @@ export const GetEndOfDayDateDataDocument = `
   transaction {
     endOfDayDate {
       value
+      isYearEnd
       hasErrors
       isInitialized
       headOfficeReady
@@ -65347,6 +65443,62 @@ export const useGetTagKhataReportQuery = <TData = GetTagKhataReportQuery, TError
     ['getTagKhataReport', variables],
     useAxios<GetTagKhataReportQuery, GetTagKhataReportQueryVariables>(
       GetTagKhataReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const YearEndLedgerAccountListDocument = `
+    query yearEndLedgerAccountList {
+  transaction {
+    yearEnd {
+      getCurrentState {
+        data {
+          expenseEntries {
+            ledgerId
+            ledgerName
+            branchId
+            branchName
+            balance {
+              amount
+              amountType
+            }
+          }
+          totalExpense {
+            amount
+            amountType
+          }
+          incomeEntries {
+            ledgerId
+            ledgerName
+            branchId
+            branchName
+            balance {
+              amount
+              amountType
+            }
+          }
+          totalIncome {
+            amount
+            amountType
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useYearEndLedgerAccountListQuery = <
+  TData = YearEndLedgerAccountListQuery,
+  TError = unknown
+>(
+  variables?: YearEndLedgerAccountListQueryVariables,
+  options?: UseQueryOptions<YearEndLedgerAccountListQuery, TError, TData>
+) =>
+  useQuery<YearEndLedgerAccountListQuery, TError, TData>(
+    variables === undefined
+      ? ['yearEndLedgerAccountList']
+      : ['yearEndLedgerAccountList', variables],
+    useAxios<YearEndLedgerAccountListQuery, YearEndLedgerAccountListQueryVariables>(
+      YearEndLedgerAccountListDocument
     ).bind(null, variables),
     options
   );

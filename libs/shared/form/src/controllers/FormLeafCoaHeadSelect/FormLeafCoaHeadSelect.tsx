@@ -19,7 +19,7 @@ export const FormLeafCoaHeadSelect = ({ name, label, ...rest }: IFormLeafCoaHead
   const { data: leafCoaHeadsListData, isFetching } = useListLeafCoaHeadsQuery({
     pagination: {
       ...getPaginationQuery(),
-      first: -1,
+      // first: -1,
       order: {
         arrange: 'ASC',
         column: 'accountCode',

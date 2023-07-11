@@ -84,7 +84,7 @@ export const EmployeeWorkInformation = () => {
 
   const sourceOfHireOptions = [
     { label: 'Direct', value: SourceOfHire?.Direct },
-    { label: 'Referral', value: SourceOfHire?.Referral },
+    { label: 'Referral', value: SourceOfHire?.Referel },
     { label: 'Vacancy', value: SourceOfHire?.Vacancy },
   ];
 
