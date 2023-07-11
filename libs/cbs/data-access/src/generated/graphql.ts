@@ -16570,6 +16570,7 @@ export const Resource = {
   CbsTransactionRevert: 'CBS_TRANSACTION_REVERT',
   CbsTransactionYearEnd: 'CBS_TRANSACTION_YEAR_END',
   CbsTransfers: 'CBS_TRANSFERS',
+  CbsTransfersBankTransfer: 'CBS_TRANSFERS_BANK_TRANSFER',
   CbsTransfersCashInTransitTransfer: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
   CbsTransfersServiceCenterCashTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
   CbsTransfersServiceCenterTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_TRANSFER',
@@ -19325,7 +19326,7 @@ export type TransactionMutationEndOfDayArgs = {
 };
 
 export type TransactionMutationReadyBranchEodArgs = {
-  revert?: InputMaybe<Scalars['Boolean']>;
+  revertBranchId?: InputMaybe<Scalars['ID']>;
 };
 
 export type TransactionMutationRevertTransactionArgs = {
@@ -25109,7 +25110,9 @@ export type SetTellerTransferActionMutation = {
   };
 };
 
-export type ReadyBranchEodMutationVariables = Exact<{ [key: string]: never }>;
+export type ReadyBranchEodMutationVariables = Exact<{
+  revertBranchId?: InputMaybe<Scalars['ID']>;
+}>;
 
 export type ReadyBranchEodMutation = {
   transaction: { readyBranchEOD?: Array<string | null> | null };
@@ -35289,6 +35292,7 @@ export type GetBranchListQuery = {
               plTransferId?: string | null;
               tdsTransaferId?: string | null;
               branchStatus?: boolean | null;
+              eodReady?: boolean | null;
               address?: {
                 state?: Record<'local' | 'en' | 'np', string> | null;
                 district?: Record<'local' | 'en' | 'np', string> | null;
@@ -46630,9 +46634,9 @@ export const useSetTellerTransferActionMutation = <TError = unknown, TContext = 
     options
   );
 export const ReadyBranchEodDocument = `
-    mutation readyBranchEOD {
+    mutation readyBranchEOD($revertBranchId: ID) {
   transaction {
-    readyBranchEOD
+    readyBranchEOD(revertBranchId: $revertBranchId)
   }
 }
     `;
@@ -59910,6 +59914,7 @@ export const GetBranchListDocument = `
               plTransferId
               tdsTransaferId
               branchStatus
+              eodReady
             }
           }
         }
