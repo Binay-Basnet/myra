@@ -25,6 +25,7 @@ interface IPeriodsProps {
   showFiscalPeriod: boolean;
   showCustomPeriod: boolean;
   showTillDatePeriod: boolean;
+  showFiscalYearOnly?: boolean;
   // eslint-disable-next-line react/no-unused-prop-types
   showPeriods: boolean;
 
@@ -50,7 +51,7 @@ export const Periods = ({
   showFiscalPeriod,
   showCustomPeriod,
   showTillDatePeriod,
-
+  showFiscalYearOnly,
   onChange,
   setState,
   baseDate,
@@ -60,7 +61,7 @@ export const Periods = ({
 
   return (
     <Box flexShrink={0} w="12rem" borderRight="1px" borderColor="border.layout" p="s8">
-      {periods.map((defaultPeriod) => (
+      {periods?.map((defaultPeriod) => (
         <Fragment key={defaultPeriod.key}>
           <PeriodWrapper
             title={t[defaultPeriod.title] || defaultPeriod.title}
@@ -94,7 +95,7 @@ export const Periods = ({
       {showFiscalPeriod && (
         <PeriodWrapper
           title={t['fiscalYear']}
-          isSelected={selectedPeriod === 'FISCAL_YEAR'}
+          isSelected={selectedPeriod === 'FISCAL_YEAR' || showFiscalYearOnly}
           onClick={() => {
             setSelectedPeriod('FISCAL_YEAR');
             setRangeStartDate(null);

@@ -162,11 +162,11 @@ export const HRMODULE: NavType = {
           aclKey: 'HCM_RECRUITMENT_JOB_APPLICATION',
           route: ROUTES.HR_RECRUITMENT_JOB_APPLICATION_ADD,
         },
-        {
-          label: 'New Interview',
-          aclKey: 'HCM_RECRUITMENT_INTERVIEW',
-          route: ROUTES.HR_RECRUITMENT_INTERVIEW_ADD,
-        },
+        // {
+        //   label: 'New Interview',
+        //   aclKey: 'HCM_RECRUITMENT_INTERVIEW',
+        //   route: ROUTES.HR_RECRUITMENT_INTERVIEW_ADD,
+        // },
         {
           label: 'New Job Offer',
           aclKey: 'HCM_RECRUITMENT_JOB_OFFER',
@@ -180,7 +180,7 @@ export const HRMODULE: NavType = {
       ],
       pages: [
         {
-          label: 'Staff Planing',
+          label: 'Staff Planning',
           route: ROUTES.HR_RECRUITMENT_STAFF_PLANNING_LIST,
           aclKey: 'HCM_RECRUITMENT_STAFF_PLANNING',
           addRoute: ROUTES.HR_RECRUITMENT_STAFF_PLANNING_ADD,
@@ -197,12 +197,12 @@ export const HRMODULE: NavType = {
           aclKey: 'HCM_RECRUITMENT_JOB_APPLICATION',
           addRoute: ROUTES.HR_RECRUITMENT_JOB_APPLICATION_ADD,
         },
-        {
-          label: 'Interview',
-          route: ROUTES.HR_RECRUITMENT_INTERVIEW_LIST,
-          aclKey: 'HCM_RECRUITMENT_INTERVIEW',
-          addRoute: ROUTES.HR_RECRUITMENT_INTERVIEW_ADD,
-        },
+        // {
+        //   label: 'Interview',
+        //   route: ROUTES.HR_RECRUITMENT_INTERVIEW_LIST,
+        //   aclKey: 'HCM_RECRUITMENT_INTERVIEW',
+        //   addRoute: ROUTES.HR_RECRUITMENT_INTERVIEW_ADD,
+        // },
         {
           label: 'Job Offer',
           route: ROUTES.HR_RECRUITMENT_JOB_OFFER_LIST,
