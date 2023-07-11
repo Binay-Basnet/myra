@@ -1302,24 +1302,41 @@ export type AllTransactionResult = {
 };
 
 export const AllTransactionType = {
+  AccountingExternalLoan: 'ACCOUNTING_EXTERNAL_LOAN',
+  AccountingInvestment: 'ACCOUNTING_INVESTMENT',
   AccountClose: 'ACCOUNT_CLOSE',
   AlternateChannel: 'ALTERNATE_CHANNEL',
+  BranchTransfer: 'BRANCH_TRANSFER',
+  BulkTransfer: 'BULK_TRANSFER',
+  CashInTransit: 'CASH_IN_TRANSIT',
+  CreditNote: 'CREDIT_NOTE',
+  DebitNote: 'DEBIT_NOTE',
   Deposit: 'DEPOSIT',
   Ebanking: 'EBANKING',
+  Expenses: 'EXPENSES',
   InterestBooking: 'INTEREST_BOOKING',
   InterestPosting: 'INTEREST_POSTING',
   InterBranchTransfer: 'INTER_BRANCH_TRANSFER',
+  InventoryPurchase: 'INVENTORY_PURCHASE',
+  InventorySell: 'INVENTORY_SELL',
   JournalVoucher: 'JOURNAL_VOUCHER',
+  LedgerBalanceTransfer: 'LEDGER_BALANCE_TRANSFER',
   LoanDisbursment: 'LOAN_DISBURSMENT',
+  LoanLossProvision: 'LOAN_LOSS_PROVISION',
   LoanRepayment: 'LOAN_REPAYMENT',
+  LocLimit: 'LOC_LIMIT',
   Membership: 'MEMBERSHIP',
+  MemberTransfer: 'MEMBER_TRANSFER',
   Migration: 'MIGRATION',
   OpeningBalance: 'OPENING_BALANCE',
   SharePurchase: 'SHARE_PURCHASE',
   ShareReturn: 'SHARE_RETURN',
+  TellerBankTransfer: 'TELLER_BANK_TRANSFER',
   TellerTransfer: 'TELLER_TRANSFER',
+  TransactionRevert: 'TRANSACTION_REVERT',
   Transfer: 'TRANSFER',
   Withdraw: 'WITHDRAW',
+  YearEnd: 'YEAR_END',
 } as const;
 
 export type AllTransactionType = typeof AllTransactionType[keyof typeof AllTransactionType];
@@ -16553,6 +16570,7 @@ export const Resource = {
   CbsTransactionRevert: 'CBS_TRANSACTION_REVERT',
   CbsTransactionYearEnd: 'CBS_TRANSACTION_YEAR_END',
   CbsTransfers: 'CBS_TRANSFERS',
+  CbsTransfersBankTransfer: 'CBS_TRANSFERS_BANK_TRANSFER',
   CbsTransfersCashInTransitTransfer: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
   CbsTransfersServiceCenterCashTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
   CbsTransfersServiceCenterTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_TRANSFER',
@@ -19308,7 +19326,7 @@ export type TransactionMutationEndOfDayArgs = {
 };
 
 export type TransactionMutationReadyBranchEodArgs = {
-  revert?: InputMaybe<Scalars['Boolean']>;
+  branchId?: InputMaybe<Scalars['String']>;
 };
 
 export type TransactionMutationRevertTransactionArgs = {
