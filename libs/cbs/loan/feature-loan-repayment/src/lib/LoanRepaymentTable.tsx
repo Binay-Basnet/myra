@@ -4,11 +4,12 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, PageHeader, TablePopover, Text, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Filter_Mode, useGetLoanRepaymentListQuery } from '@coop/cbs/data-access';
+import { useGetLoanFilterMappingQuery, useGetLoanRepaymentListQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
+  getFilterQuery,
   getPaginationQuery,
   getUrl,
   useTranslation,
@@ -18,21 +19,13 @@ export const CBSLoanRepaymentList = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
-  const searchTerm = router?.query['search'] as string;
+  const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
 
   const { data, isLoading } = useGetLoanRepaymentListQuery(
     {
       paginate: getPaginationQuery(),
 
-      filter: {
-        loanAccountId: searchTerm,
-        memberId: searchTerm,
-        memberCode: searchTerm,
-        accountName: searchTerm,
-        productName: searchTerm,
-        memberName: searchTerm,
-        filterMode: Filter_Mode.Or,
-      },
+      filter: getFilterQuery(),
     },
     {
       staleTime: 0,
@@ -44,8 +37,13 @@ export const CBSLoanRepaymentList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'paymentDate',
         header: 'Payment Date',
+        accessorFn: (row) => row?.node?.paymentDate,
+
         cell: (props) => localizedDate(props?.row?.original?.node?.paymentDate),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Transaction Id',
@@ -61,8 +59,15 @@ export const CBSLoanRepaymentList = () => {
         cell: (props) => <Tooltip title={props?.row?.original?.node?.loanAccountName as string} />,
       },
       {
+        id: 'productName',
         header: 'Product Name',
         accessorFn: (row) => row?.node?.loanProductName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: loanFilterMapping?.loanAccount?.filterMapping?.productName,
+          },
+        },
       },
       {
         header: 'Member Name',
@@ -91,11 +96,14 @@ export const CBSLoanRepaymentList = () => {
         accessorKey: 'node.branchName',
       },
       {
+        id: 'amount',
         header: 'Amount',
         meta: {
           isNumeric: true,
         },
         accessorFn: (row) => amountConverter(row?.node?.amount ?? 0),
+        enableColumnFilter: true,
+        filterFn: 'amount',
       },
 
       {
@@ -130,7 +138,7 @@ export const CBSLoanRepaymentList = () => {
         },
       },
     ],
-    [t]
+    [t, loanFilterMapping?.loanAccount?.filterMapping]
   );
 
   return (

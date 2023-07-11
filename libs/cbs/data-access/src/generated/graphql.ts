@@ -12218,7 +12218,7 @@ export type LoanAccountQueryRemainingPaymentsArgs = {
 };
 
 export type LoanAccountQueryRepaymentListArgs = {
-  filter?: InputMaybe<LoanRepaymentFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -13355,16 +13355,6 @@ export type LoanRepaymentDetail = {
 export type LoanRepaymentEdge = {
   cursor: Scalars['Cursor'];
   node?: Maybe<LoanRepaymentDetail>;
-};
-
-export type LoanRepaymentFilter = {
-  accountName?: InputMaybe<Scalars['String']>;
-  filterMode?: InputMaybe<Filter_Mode>;
-  loanAccountId?: InputMaybe<Scalars['String']>;
-  memberCode?: InputMaybe<Scalars['String']>;
-  memberId?: InputMaybe<Scalars['String']>;
-  memberName?: InputMaybe<Scalars['String']>;
-  productName?: InputMaybe<Scalars['String']>;
 };
 
 export type LoanRepaymentInput = {
@@ -30352,7 +30342,7 @@ export type GetLoanPreviewQuery = {
 
 export type GetLoanRepaymentListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
-  filter?: InputMaybe<LoanRepaymentFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetLoanRepaymentListQuery = {
@@ -53387,7 +53377,7 @@ export const useGetLoanPreviewQuery = <TData = GetLoanPreviewQuery, TError = unk
     options
   );
 export const GetLoanRepaymentListDocument = `
-    query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) {
+    query getLoanRepaymentList($paginate: Pagination, $filter: Filter) {
   loanAccount {
     repaymentList(paginate: $paginate, filter: $filter) {
       totalCount
