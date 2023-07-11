@@ -19402,7 +19402,7 @@ export type TransactionQueryListServiceCenterCashTransferArgs = {
 };
 
 export type TransactionQueryListTellerTransactionArgs = {
-  filter?: InputMaybe<TellerTransactionFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -38598,7 +38598,7 @@ export type GetEndOfDayDateDataQuery = {
 };
 
 export type GetTellerTransactionListDataQueryVariables = Exact<{
-  filter?: InputMaybe<TellerTransactionFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -64479,7 +64479,7 @@ export const useGetEndOfDayDateDataQuery = <TData = GetEndOfDayDateDataQuery, TE
     options
   );
 export const GetTellerTransactionListDataDocument = `
-    query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination: Pagination) {
+    query getTellerTransactionListData($filter: Filter, $pagination: Pagination) {
   transaction {
     listTellerTransaction(filter: $filter, pagination: $pagination) {
       totalCount
