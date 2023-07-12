@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useGetDesignationOptions } from '@hr/common';
 import { omit } from 'lodash';
 
-import { asyncToast, Box, FormSection, GridItem, Text } from '@myra-ui';
+import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import {
   StaffPlanInput,
@@ -24,7 +24,7 @@ import {
 export const HrRecruitmentStaffPlanningAdd = () => {
   const router = useRouter();
   const methods = useForm();
-  const { getValues, watch, reset } = methods;
+  const { getValues, reset } = methods;
 
   const { designationOptions } = useGetDesignationOptions();
 
@@ -78,16 +78,16 @@ export const HrRecruitmentStaffPlanningAdd = () => {
       });
     }
   };
-  const dataWatch = watch('staffPlans');
-  const totalVacancies = dataWatch?.reduce(
-    (acc: number, curr: StaffPlanTypesInput) => Number(acc) + Number(curr.vacancies),
-    0
-  );
+  // const dataWatch = watch('staffPlans');
+  // const totalVacancies = dataWatch?.reduce(
+  //   (acc: number, curr: StaffPlanTypesInput) => Number(acc) + Number(curr.vacancies),
+  //   0
+  // );
 
-  const totalCostEstimation = dataWatch?.reduce(
-    (acc: number, curr: StaffPlanTypesInput) => Number(acc) + Number(curr.estimated_cost),
-    0
-  );
+  // const totalCostEstimation = dataWatch?.reduce(
+  //   (acc: number, curr: StaffPlanTypesInput) => Number(acc) + Number(curr.estimated_cost),
+  //   0
+  // );
 
   return (
     <FormLayout methods={methods}>
@@ -128,7 +128,7 @@ export const HrRecruitmentStaffPlanningAdd = () => {
                 ]}
               />
             </GridItem>
-            <GridItem colSpan={4}>
+            {/* <GridItem colSpan={4}>
               <Box
                 display="flex"
                 justifyContent="space-between"
@@ -156,7 +156,7 @@ export const HrRecruitmentStaffPlanningAdd = () => {
                 </Text>
                 <Text fontSize="r1">{totalCostEstimation || 0}</Text>
               </Box>
-            </GridItem>
+            </GridItem> */}
             <GridItem colSpan={4}>
               <FormTextArea label="Note" name="note" />
             </GridItem>

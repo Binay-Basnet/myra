@@ -31,24 +31,29 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Enhancement of member transfer as it can be done directly from member request section.',
-      'Ledger balance transfer section.',
+      'Recurring product with no deposit frequency in product section.',
+      'Installment amount update in recurring and mandatory products.',
+      'Year end transfer and block related transactions during year end.',
+      'Branch readiness and reversal in day end section',
+      'Branch transactions restrictions on branch ready.',
+      'All transactions restrictions on ongoing day end.',
+      'Shift money posting value date from T to T-1.',
+      'Year end status and entires as view part.',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Mr template edit override issue fix.',
-      'Date issue fixations.',
-      'Kym coop registration number validation fix.',
-      'Date select issue in Kim coop form.',
-      'COA head search is not working properly.',
-      'COA head  list should be in order of ascending.',
-      'Dr Cr issue in ledger balance transfer.',
-      'Date for closing balance is not available.',
-      'Cannot remove the ledger from list.',
-      'Ledger list should be in order of txn date.',
-      'Rename template to collection list in mr list.',
+      'Loan loss provision ui issue "0" value appearing in screen.',
+      'Kym form temporary field issue fix in temp. Address.',
+      'Kym coop form registration number character issue fix.',
+      '404 found error in member overview page fix.',
+      'Update kym in member overview page fix.',
+      'Date not selecting issue in coop form fix.',
+      'Inventory sales report not generating issue fixed.',
+      'Remove role for others except teller and head teller as teller vault access.',
+      'Block duplicate adding account in MR collection and today’s list.',
+      'Member id issue while on boarding member fixed.',
     ],
   },
   // knownBugs: {
@@ -98,8 +103,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.72</Text>
-          <Text fontSize="s3">July 7, 2023</Text>
+          <Text fontSize="r2">Version 1.0.73</Text>
+          <Text fontSize="s3">July 12, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>

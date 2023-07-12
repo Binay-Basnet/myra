@@ -61,9 +61,17 @@ mutation setupdateSignature($accountID: ID!, $data: [String!]!) {
   }
 }
 
-mutation setupdateInstallmentAmount($accountId: ID!, $newInstallmentAmount: String!) {
+mutation setupdateInstallmentAmount(
+  $accountId: ID!
+  $newInstallmentAmount: String!
+  $effectiveDate: Localized!
+) {
   account {
-    updateInstallmentAmount(accountId: $accountId, newInstallmentAmount: $newInstallmentAmount) {
+    updateInstallmentAmount(
+      accountId: $accountId
+      newInstallmentAmount: $newInstallmentAmount
+      effectiveDate: $effectiveDate
+    ) {
       recordId
       error {
         ...MutationError

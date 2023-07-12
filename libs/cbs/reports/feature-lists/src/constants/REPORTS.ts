@@ -90,6 +90,7 @@ export enum Report {
 
   THRESHOLD_TRANSACTION_REPORT = 'Threshold Transaction ',
   TRANSACTION_TRIAL_SHEET = 'Trial Balance',
+  TRANSACTION_FISCAL_YEAR = 'Fiscal Year Transactions Report',
   TRANSACTION_INCOME_STATEMENT = 'Income Statement',
   TRANSACTION_CASH_FLOW_STATEMENT = 'Cash Flow Statement',
   TRANSACTION_CHANGE_OF_EQUITY = 'Change of Equity',
@@ -628,6 +629,12 @@ export const REPORTS = {
     {
       report: Report.TRANSACTION_TAG_KHATA_REPORT,
       link: 'tag-khata',
+    },
+    {
+      id: '7.7.3',
+      report: Report.TRANSACTION_FISCAL_YEAR,
+
+      link: 'fiscal-year',
     },
   ],
   [ReportGroup.BRANCHLESS_BANKING]: [

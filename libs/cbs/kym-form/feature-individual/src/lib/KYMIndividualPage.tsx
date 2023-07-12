@@ -37,6 +37,7 @@ type KYMSection = {
   subSection: string;
 };
 
+const identificationMap = ['citizenship', 'drivingLicense', 'nationalId', 'passport', 'voterCard'];
 const documentMap = ['passport', 'signature', 'citizenship', 'fingerprint'];
 const familyMemberMap = ['file'];
 
@@ -55,6 +56,11 @@ const getIndividualEditData = (data: GetKymIndividualFormDataQuery | undefined) 
     middleName: editValues?.middleName?.local,
     lastName: editValues?.lastName?.local,
     landlordName: editValues?.landlordName?.local,
+
+    identification: identificationMap?.map((identification) => ({
+      idType: identification,
+      ...editValues?.identification,
+    })),
 
     permanentAddress: {
       ...editValues?.permanentAddress,
@@ -272,7 +278,17 @@ export const KYMIndividualPage = () => {
           }}
         />
       </FormLayout>
-      <KYMUpdateModal isOpen={isOpen} onClose={onClose} />
+      <KYMUpdateModal
+        isOpen={isOpen}
+        onClose={onClose}
+        onUpdateClick={() =>
+          mutateAsync({
+            id: router.query['id'] as string,
+            data: methods.getValues(),
+            forDraft: false,
+          })
+        }
+      />
     </form>
   );
 };

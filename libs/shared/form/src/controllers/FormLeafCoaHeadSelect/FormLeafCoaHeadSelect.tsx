@@ -19,7 +19,7 @@ export const FormLeafCoaHeadSelect = ({ name, label, ...rest }: IFormLeafCoaHead
   const { data: leafCoaHeadsListData, isFetching } = useListLeafCoaHeadsQuery({
     pagination: {
       ...getPaginationQuery(),
-      first: -1,
+      // first: -1,
       order: {
         arrange: 'ASC',
         column: 'accountCode',
@@ -41,10 +41,10 @@ export const FormLeafCoaHeadSelect = ({ name, label, ...rest }: IFormLeafCoaHead
       name={name}
       label={label}
       isLoading={isFetching}
-      onInputChange={debounce((term) => {
-        // if (term) {
-        setSearchQuery(term);
-        // }
+      onInputChange={debounce((term, searchEvent) => {
+        if (searchEvent.action === 'input-change') {
+          setSearchQuery(term);
+        }
       }, 800)}
       options={selectOptions}
       {...rest}

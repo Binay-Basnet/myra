@@ -40,8 +40,10 @@ export const ReportCustomDateRange = ({ label = 'Select Period', name }: IReport
             })
           }
           tillDateStart={new Date('2014-07-14')}
-          showFiscalPeriod={false}
+          // showFiscalPeriod={fa}
+          showFiscalYearOnly
           showPeriods={false}
+          showCustomPeriod={false}
           showTillDatePeriod={false}
         />
       )}

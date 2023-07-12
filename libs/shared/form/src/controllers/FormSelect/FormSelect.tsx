@@ -63,17 +63,17 @@ const FormControl = <T extends Record<string, unknown>>({
   const methods = useFormContext();
   const { clearErrors } = methods;
 
-  const filteredValue = rest.isMulti
-    ? options?.filter(
-        (option) =>
-          value?.some((v: SelectOption) => v?.value === option.value) ||
-          value?.includes(option?.value)
-      )
-    : [];
+  // const filteredValue = rest.isMulti
+  //   ? options?.filter(
+  //       (option) =>
+  //         value?.some((v: SelectOption) => v?.value === option.value) ||
+  //         value?.includes(option?.value)
+  //     )
+  //   : [];
 
   useEffect(() => {
     if (rest.isMulti) {
-      onChange(filteredValue);
+      onChange(value);
     }
   }, []);
 
@@ -83,7 +83,7 @@ const FormControl = <T extends Record<string, unknown>>({
       errorText={name ? (get(errors, name)?.message as string) : undefined}
       options={options}
       name={name}
-      value={rest.isMulti ? filteredValue : foundValue}
+      value={rest.isMulti ? value : foundValue}
       inputId={name}
       isClearable
       {...rest}
@@ -92,6 +92,8 @@ const FormControl = <T extends Record<string, unknown>>({
           clearErrors(name);
         }
         if (Array.isArray(newValue)) {
+          // setFilteredValue(newValue);
+
           onChange(newValue);
           onChangeAction && onChangeAction(newValue);
         } else {

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { useGetJobApplicantOptions } from '@hr/common';
+import { useGetJobOfferOptions } from '@hr/common';
 import { omit } from 'lodash';
 
 import { asyncToast, FormSection, GridItem } from '@myra-ui';
@@ -26,7 +26,7 @@ export const HrRecruitmentAppointmentLetterAdd = () => {
   const router = useRouter();
   const { getValues, reset } = methods;
 
-  const { jobApplicationOptions } = useGetJobApplicantOptions();
+  const { jobOfferOptions } = useGetJobOfferOptions();
 
   const { mutateAsync } = useSetAppointmentLetterMutation();
   const { data: appointmentLetterData } = useGetAppointmentLetterQuery(
@@ -89,11 +89,7 @@ export const HrRecruitmentAppointmentLetterAdd = () => {
         <FormLayout.Form>
           <FormSection templateColumns={3} divider>
             <GridItem colSpan={2}>
-              <FormSelect
-                name="jobApplication"
-                label="Job Application"
-                options={jobApplicationOptions}
-              />
+              <FormSelect name="jobApplication" label="Job Application" options={jobOfferOptions} />
             </GridItem>
             <FormDatePicker name="appointmentDate" label="Appointment Date" />
           </FormSection>
