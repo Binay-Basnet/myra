@@ -103,17 +103,9 @@ query getCashInTransitDetail($transitID: ID!) {
   }
 }
 
-query getServiceCenterTransferList(
-  $filter: ServiceCenterTransactionFilter
-  $pagination: Pagination
-  $transferMode: IBTType!
-) {
+query getServiceCenterTransferList($filter: Filter, $pagination: Pagination) {
   transaction {
-    listServiceCenterCashTransfer(
-      filter: $filter
-      pagination: $pagination
-      transferMode: $transferMode
-    ) {
+    listServiceCenterCashTransfer(filter: $filter, pagination: $pagination) {
       totalCount
       pageInfo {
         startCursor
