@@ -17481,10 +17481,10 @@ export type SalesReportDataList = {
 };
 
 export type SalesReportFilter = {
-  branchId: Array<Scalars['String']>;
   creatorIds?: InputMaybe<Array<Scalars['String']>>;
   itemIds?: InputMaybe<Array<Scalars['String']>>;
   period: LocalizedDateFilter;
+  warehouseId: Array<Scalars['String']>;
 };
 
 export type SalesReportResult = {
@@ -33140,6 +33140,13 @@ export type GetInventorySalesReportQuery = {
   report: {
     accountingReport: {
       salesReport: {
+        summationData?: {
+          totalPerQuantityPrice: string;
+          totalPrice: string;
+          totalPriceWithVat: string;
+          totalQuantitySold: string;
+          totalVatAmount: string;
+        } | null;
         data?: Array<{
           itemId: string;
           itemName: string;
@@ -57087,6 +57094,13 @@ export const GetInventorySalesReportDocument = `
   report {
     accountingReport {
       salesReport(data: $data) {
+        summationData {
+          totalPerQuantityPrice
+          totalPrice
+          totalPriceWithVat
+          totalQuantitySold
+          totalVatAmount
+        }
         data {
           itemId
           itemName
