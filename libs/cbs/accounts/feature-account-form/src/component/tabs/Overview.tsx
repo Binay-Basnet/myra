@@ -166,7 +166,8 @@ export const Overview = () => {
 
       <RecentTransactions isClosed={isClosed} />
 
-      {(accountDetails?.accountType === NatureOfDepositProduct.RecurringSaving ||
+      {((accountDetails?.accountType === NatureOfDepositProduct.RecurringSaving &&
+        accountDetails?.product?.depositFrequency) ||
         (accountDetails?.accountType === NatureOfDepositProduct.Saving &&
           accountDetails?.isMandatory &&
           !isClosed)) && <UpcomingInstallments />}

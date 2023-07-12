@@ -4542,6 +4542,7 @@ export type DepositProduct = {
   createdAt: Scalars['Localized'];
   createdBy: Identity;
   createdDate?: Maybe<Scalars['String']>;
+  depositFrequency?: Maybe<Frequency>;
   id: Scalars['ID'];
   interest?: Maybe<Scalars['Float']>;
   isMandatorySaving?: Maybe<Scalars['Boolean']>;
@@ -17481,10 +17482,10 @@ export type SalesReportDataList = {
 };
 
 export type SalesReportFilter = {
-  branchId: Array<Scalars['String']>;
   creatorIds?: InputMaybe<Array<Scalars['String']>>;
   itemIds?: InputMaybe<Array<Scalars['String']>>;
   period: LocalizedDateFilter;
+  warehouseId: Array<Scalars['String']>;
 };
 
 export type SalesReportResult = {
@@ -26010,6 +26011,7 @@ export type GetAccountDetailsDataQuery = {
           isMandatorySaving?: boolean | null;
           withdrawRestricted?: boolean | null;
           interest?: number | null;
+          depositFrequency?: Frequency | null;
           accountClosingCharge?: Array<{
             serviceName?: string | null;
             ledgerName?: string | null;
@@ -47778,6 +47780,7 @@ export const GetAccountDetailsDataDocument = `
             penaltyRate
           }
           interest
+          depositFrequency
         }
         dues {
           fine
