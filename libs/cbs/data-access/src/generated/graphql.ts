@@ -19014,7 +19014,7 @@ export type TellerBankTransferQuery = {
 };
 
 export type TellerBankTransferQueryListArgs = {
-  filter?: InputMaybe<TellerBankTransferFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -39375,7 +39375,7 @@ export type GetServiceCenterTransferListQuery = {
 };
 
 export type GetBankTransferListQueryVariables = Exact<{
-  filter?: InputMaybe<TellerBankTransferFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -65533,7 +65533,7 @@ export const useGetServiceCenterTransferListQuery = <
     options
   );
 export const GetBankTransferListDocument = `
-    query getBankTransferList($filter: TellerBankTransferFilter, $pagination: Pagination) {
+    query getBankTransferList($filter: Filter, $pagination: Pagination) {
   transaction {
     tellerBankTransfer {
       list(filter: $filter, pagination: $pagination) {

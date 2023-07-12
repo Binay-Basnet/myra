@@ -146,7 +146,7 @@ query getServiceCenterTransferList(
   }
 }
 
-query getBankTransferList($filter: TellerBankTransferFilter, $pagination: Pagination) {
+query getBankTransferList($filter: Filter, $pagination: Pagination) {
   transaction {
     tellerBankTransfer {
       list(filter: $filter, pagination: $pagination) {
