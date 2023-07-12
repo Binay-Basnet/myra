@@ -598,6 +598,7 @@ query getAccountDetailsData($id: ID!) {
           effectiveSince
           effectiveTill
         }
+        lastInstallmentUpdatedDate
       }
     }
   }

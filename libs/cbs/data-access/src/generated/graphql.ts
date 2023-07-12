@@ -4423,6 +4423,7 @@ export type DepositLoanAccountMutationUpdateAccountNameArgs = {
 
 export type DepositLoanAccountMutationUpdateInstallmentAmountArgs = {
   accountId: Scalars['ID'];
+  effectiveDate: Scalars['Localized'];
   newInstallmentAmount: Scalars['String'];
 };
 
@@ -7500,6 +7501,23 @@ export type GetInventoryItemResponse = {
   error?: Maybe<QueryError>;
 };
 
+export type GetSalaryStructureSchema = {
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  modeOfPayment?: Maybe<PaymentModeEnum>;
+  name?: Maybe<Scalars['String']>;
+  payrollFrequency?: Maybe<PayrollFrequencyEnum>;
+  salaryDeduction?: Maybe<Array<Maybe<SalaryStructureDeductionDetailsType>>>;
+  salaryEarnings?: Maybe<Array<Maybe<SalaryStructureEarningDetailsType>>>;
+  salaryPaymentLedger?: Maybe<LedgerPaymentEnum>;
+};
+
+export type GetSalaryStructureSchemaWithError = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<GetSalaryStructureSchema>;
+};
+
 export type GetSupplierResponse = {
   data?: Maybe<FormStateInvSupplierInput>;
   error?: Maybe<QueryError>;
@@ -7806,11 +7824,13 @@ export type HcmPayrollEarningComponentQueryListEarningComponentArgs = {
 export type HcmPayrollMutation = {
   deductionComponent: HcmPayrollDeductionComponentMutation;
   earningComponent: HcmPayrollEarningComponentMutation;
+  salaryStructure: HcmPayrollSalaryStructureMutation;
 };
 
 export type HcmPayrollQuery = {
   deductionComponent: HcmPayrollDeductionComponentQuery;
   earningComponent: HcmPayrollEarningComponentQuery;
+  salaryStructure: HcmPayrollSalaryStructureQuery;
 };
 
 export type HcmSettingsMutation = {
@@ -8211,6 +8231,29 @@ export type HcmEmployeeHealthInsuranceListEdges = {
   node: EmployeeHealthInsurance;
 };
 
+export type HcmPayrollSalaryStructureMutation = {
+  upsertSalaryStructure: SalaryStructureOutput;
+};
+
+export type HcmPayrollSalaryStructureMutationUpsertSalaryStructureArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: InputSalaryStructure;
+};
+
+export type HcmPayrollSalaryStructureQuery = {
+  getSalaryStructure: GetSalaryStructureSchemaWithError;
+  listSalaryStructure: SalaryStructureListConnection;
+};
+
+export type HcmPayrollSalaryStructureQueryGetSalaryStructureArgs = {
+  id: Scalars['ID'];
+};
+
+export type HcmPayrollSalaryStructureQueryListSalaryStructureArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type HrEmployeeEducationDetail = {
   dateOfCompletion?: InputMaybe<Scalars['Localized']>;
   degree_diploma?: InputMaybe<Scalars['String']>;
@@ -8444,6 +8487,17 @@ export type InputDeductionComponent = {
   multiplier?: InputMaybe<Scalars['Float']>;
   name?: InputMaybe<Scalars['String']>;
   roundToNearestInteger?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type InputSalaryStructure = {
+  description?: InputMaybe<Scalars['String']>;
+  makeThisActive?: InputMaybe<Scalars['Boolean']>;
+  modeOfPayment?: InputMaybe<PaymentModeEnum>;
+  name?: InputMaybe<Scalars['String']>;
+  payrollFrequency?: InputMaybe<PayrollFrequencyEnum>;
+  salaryDeduction?: InputMaybe<Array<InputMaybe<SalaryStructureDeductionDetails>>>;
+  salaryEarnings?: InputMaybe<Array<InputMaybe<SalaryStructureEarningDetails>>>;
+  salaryPaymentLedger?: InputMaybe<LedgerPaymentEnum>;
 };
 
 export type InsBankAcDetails = {
@@ -11653,6 +11707,12 @@ export type LedgerMappingFormState = {
   principal?: Maybe<Scalars['String']>;
 };
 
+export const LedgerPaymentEnum = {
+  LedgerPayment_1: 'LEDGER_PAYMENT_1',
+  LedgerPayment_2: 'LEDGER_PAYMENT_2',
+} as const;
+
+export type LedgerPaymentEnum = typeof LedgerPaymentEnum[keyof typeof LedgerPaymentEnum];
 export type LedgerTag = {
   createdAt?: Maybe<Scalars['Localized']>;
   description?: Maybe<Scalars['String']>;
@@ -14028,6 +14088,7 @@ export type MemberAccountDetails = {
   interestTax?: Maybe<Scalars['String']>;
   isForMinors?: Maybe<Scalars['Boolean']>;
   isMandatory?: Maybe<Scalars['Boolean']>;
+  lastInstallmentUpdatedDate?: Maybe<Scalars['Localized']>;
   lastTransactionDate?: Maybe<Scalars['Localized']>;
   member?: Maybe<Member>;
   monthlyInterestCompulsory?: Maybe<Scalars['Boolean']>;
@@ -15924,6 +15985,19 @@ export const PaymentMode = {
 } as const;
 
 export type PaymentMode = typeof PaymentMode[keyof typeof PaymentMode];
+export const PaymentModeEnum = {
+  BankTransfer: 'BANK_TRANSFER',
+  Cash: 'CASH',
+  Check: 'CHECK',
+} as const;
+
+export type PaymentModeEnum = typeof PaymentModeEnum[keyof typeof PaymentModeEnum];
+export const PayrollFrequencyEnum = {
+  Monthly: 'MONTHLY',
+  Yearly: 'YEARLY',
+} as const;
+
+export type PayrollFrequencyEnum = typeof PayrollFrequencyEnum[keyof typeof PayrollFrequencyEnum];
 export type PearlsConfiguration = {
   denominator: Scalars['String'];
   denominatorVariables: Scalars['Map'];
@@ -17152,6 +17226,68 @@ export type SalaryRangeInput = {
   min: Scalars['String'];
 };
 
+export type SalaryStructureDeductionDetails = {
+  abbr: Scalars['String'];
+  amount?: InputMaybe<Scalars['Int']>;
+  baseMultiple?: InputMaybe<Scalars['String']>;
+  component?: InputMaybe<Scalars['String']>;
+  multiplier?: InputMaybe<Scalars['Float']>;
+};
+
+export type SalaryStructureDeductionDetailsType = {
+  abbr: Scalars['String'];
+  amount?: Maybe<Scalars['Int']>;
+  baseMultiple?: Maybe<Scalars['String']>;
+  component?: Maybe<Scalars['String']>;
+  multiplier?: Maybe<Scalars['Float']>;
+};
+
+export type SalaryStructureEarningDetails = {
+  abbr: Scalars['String'];
+  amount?: InputMaybe<Scalars['Int']>;
+  baseMultiple?: InputMaybe<Scalars['String']>;
+  component?: InputMaybe<Scalars['String']>;
+  multiplier?: InputMaybe<Scalars['Float']>;
+};
+
+export type SalaryStructureEarningDetailsType = {
+  abbr: Scalars['String'];
+  amount?: Maybe<Scalars['Int']>;
+  baseMultiple?: Maybe<Scalars['String']>;
+  component?: Maybe<Scalars['String']>;
+  multiplier?: Maybe<Scalars['Float']>;
+};
+
+export type SalaryStructureListConnection = {
+  edges?: Maybe<Array<Maybe<SalaryStructureListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SalaryStructureListEdges = {
+  cursor: Scalars['Cursor'];
+  node: SalaryStructureNode;
+};
+
+export type SalaryStructureNode = {
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  status?: Maybe<SalaryStructureStatusEnum>;
+};
+
+export type SalaryStructureOutput = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export const SalaryStructureStatusEnum = {
+  Disabled: 'DISABLED',
+  Enabled: 'ENABLED',
+} as const;
+
+export type SalaryStructureStatusEnum =
+  typeof SalaryStructureStatusEnum[keyof typeof SalaryStructureStatusEnum];
 export type SaleProduct = {
   amount?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
@@ -20981,6 +21117,7 @@ export type SetupdateSignatureMutation = {
 export type SetupdateInstallmentAmountMutationVariables = Exact<{
   accountId: Scalars['ID'];
   newInstallmentAmount: Scalars['String'];
+  effectiveDate: Scalars['Localized'];
 }>;
 
 export type SetupdateInstallmentAmountMutation = {
@@ -25844,6 +25981,7 @@ export type GetAccountDetailsDataQuery = {
         lastTransactionDate?: Record<'local' | 'en' | 'np', string> | null;
         accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
         closedAt?: string | null;
+        lastInstallmentUpdatedDate?: Record<'local' | 'en' | 'np', string> | null;
         member?: {
           id: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
@@ -40640,11 +40778,12 @@ export const useSetupdateSignatureMutation = <TError = unknown, TContext = unkno
     options
   );
 export const SetupdateInstallmentAmountDocument = `
-    mutation setupdateInstallmentAmount($accountId: ID!, $newInstallmentAmount: String!) {
+    mutation setupdateInstallmentAmount($accountId: ID!, $newInstallmentAmount: String!, $effectiveDate: Localized!) {
   account {
     updateInstallmentAmount(
       accountId: $accountId
       newInstallmentAmount: $newInstallmentAmount
+      effectiveDate: $effectiveDate
     ) {
       recordId
       error {
@@ -47657,6 +47796,7 @@ export const GetAccountDetailsDataDocument = `
           effectiveSince
           effectiveTill
         }
+        lastInstallmentUpdatedDate
       }
     }
   }

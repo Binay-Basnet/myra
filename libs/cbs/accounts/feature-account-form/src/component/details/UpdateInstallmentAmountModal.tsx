@@ -1,11 +1,16 @@
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Alert, asyncToast, Box, Button, Modal, Text } from '@myra-ui';
+import { Alert, asyncToast, Box, Button, Grid, GridItem, Modal, Text } from '@myra-ui';
 
-import { useSetupdateInstallmentAmountMutation } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
+import {
+  useGetEndOfDayDateDataQuery,
+  useSetupdateInstallmentAmountMutation,
+} from '@coop/cbs/data-access';
+import { FormAmountInput, FormDatePicker } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 import { useAccountDetails } from '../../hooks/useAccountDetails';
 
@@ -16,6 +21,9 @@ interface IUpdateInstallmentProps {
 
 export const UpdateInstallmentAmountModal = ({ isOpen, onClose }: IUpdateInstallmentProps) => {
   const { accountDetails } = useAccountDetails();
+
+  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+  const closingDate = useMemo(() => endOfDayData?.transaction?.endOfDayDate?.value, [endOfDayData]);
 
   const queryClient = useQueryClient();
 
@@ -39,19 +47,25 @@ export const UpdateInstallmentAmountModal = ({ isOpen, onClose }: IUpdateInstall
       onSuccess: () => {
         queryClient.invalidateQueries(['getAccountDetailsData']);
 
-        onClose();
+        handleClose();
       },
       promise: mutateAsync({
         accountId: router?.query?.['id'] as string,
         newInstallmentAmount: values?.['newInstallmentAmount'],
+        effectiveDate: values?.['effectiveDate'],
       }),
     });
+  };
+
+  const handleClose = () => {
+    methods.reset({ newInstallmentAmount: '', effectiveDate: null });
+    onClose();
   };
 
   return isOpen ? (
     <Modal
       open={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       isCentered
       title={
         <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
@@ -66,14 +80,25 @@ export const UpdateInstallmentAmountModal = ({ isOpen, onClose }: IUpdateInstall
       width="xl"
     >
       <FormProvider {...methods}>
-        <Box display="flex" flexDir="column" gap={5}>
-          <Alert status="info" hideCloseIcon>
-            <Box display="flex" justifyContent="space-between">
-              <Text>Existing installment no: {accountDetails?.installmentAmount}</Text>
-            </Box>
-          </Alert>
-          <FormInput label="New Installment Amount" name="newInstallmentAmount" w={300} />
-        </Box>
+        <Grid templateColumns="repeat(2, 1fr)" gap={5}>
+          <GridItem colSpan={2}>
+            <Alert status="info" hideCloseIcon>
+              <Box display="flex" justifyContent="space-between">
+                <Text>
+                  Existing installment amount:{' '}
+                  {amountConverter(accountDetails?.installmentAmount || 0)}
+                </Text>
+              </Box>
+            </Alert>
+          </GridItem>
+          <FormAmountInput label="New Installment Amount" name="newInstallmentAmount" />
+
+          <FormDatePicker
+            name="effectiveDate"
+            label="Effective Date"
+            minDate={closingDate?.local ? new Date(closingDate?.en) : new Date()}
+          />
+        </Grid>
       </FormProvider>
     </Modal>
   ) : null;

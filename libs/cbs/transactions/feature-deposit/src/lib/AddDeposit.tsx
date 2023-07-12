@@ -578,6 +578,7 @@ export const AddDeposit = () => {
                             selectedAccount?.product?.isMandatorySaving)
                             ? selectedAccount?.installmentAmount
                             : null,
+                        lastInstallmentUpdatedDate: selectedAccount?.lastInstallmentUpdatedDate,
                       }
                     : null
                 }

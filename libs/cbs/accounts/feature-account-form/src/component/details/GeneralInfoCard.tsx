@@ -108,11 +108,10 @@ export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => {
         <DetailCardContent
           title="Installment Amount"
           subtitle={
-            data?.accountType === NatureOfDepositProduct?.Current ||
-            data?.accountType === NatureOfDepositProduct?.TermSavingOrFd ||
+            (data?.accountType === NatureOfDepositProduct?.Saving && data?.isMandatory) ||
             data?.accountType === NatureOfDepositProduct?.RecurringSaving
-              ? '-'
-              : amountConverter(data?.installmentAmount || 0)
+              ? amountConverter(data?.installmentAmount || 0)
+              : '-'
           }
         />
         <Text
