@@ -16821,27 +16821,27 @@ export type RequestsList = {
 };
 
 export type RequestsListBlockChequeArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListChequeBookRequestArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListLoanRequestArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListMembershipRequestArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListWithdrawViaCollectorArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -34891,7 +34891,7 @@ export type GetMrTransactionReportQuery = {
 
 export type GetChequeBookRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetChequeBookRequestsQuery = {
@@ -34929,7 +34929,7 @@ export type GetChequeBookRequestsQuery = {
 
 export type GetWithdrawViaCollectorQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetWithdrawViaCollectorQuery = {
@@ -34961,7 +34961,7 @@ export type GetWithdrawViaCollectorQuery = {
 
 export type GetLoanRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetLoanRequestsQuery = {
@@ -34990,7 +34990,7 @@ export type GetLoanRequestsQuery = {
 
 export type GetBlockChequeListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetBlockChequeListQuery = {
@@ -35021,7 +35021,7 @@ export type GetBlockChequeListQuery = {
 
 export type GetMemberRequestListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetMemberRequestListQuery = {
@@ -59299,7 +59299,7 @@ export const useGetMrTransactionReportQuery = <
     options
   );
 export const GetChequeBookRequestsDocument = `
-    query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
+    query getChequeBookRequests($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       chequeBookRequest(paginate: $pagination, filter: $filter) {
@@ -59346,7 +59346,7 @@ export const useGetChequeBookRequestsQuery = <TData = GetChequeBookRequestsQuery
     options
   );
 export const GetWithdrawViaCollectorDocument = `
-    query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter) {
+    query getWithdrawViaCollector($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       withdrawViaCollector(paginate: $pagination, filter: $filter) {
@@ -59390,7 +59390,7 @@ export const useGetWithdrawViaCollectorQuery = <
     options
   );
 export const GetLoanRequestsDocument = `
-    query getLoanRequests($pagination: Pagination, $filter: RequestFilter) {
+    query getLoanRequests($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       loanRequest(filter: $filter, paginate: $pagination) {
@@ -59429,7 +59429,7 @@ export const useGetLoanRequestsQuery = <TData = GetLoanRequestsQuery, TError = u
     options
   );
 export const GetBlockChequeListDocument = `
-    query getBlockChequeList($pagination: Pagination, $filter: RequestFilter) {
+    query getBlockChequeList($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       blockCheque(filter: $filter, paginate: $pagination) {
@@ -59469,7 +59469,7 @@ export const useGetBlockChequeListQuery = <TData = GetBlockChequeListQuery, TErr
     options
   );
 export const GetMemberRequestListDocument = `
-    query getMemberRequestList($pagination: Pagination, $filter: RequestFilter) {
+    query getMemberRequestList($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       membershipRequest(filter: $filter, paginate: $pagination) {
