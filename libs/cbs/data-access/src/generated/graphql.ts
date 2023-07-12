@@ -5620,6 +5620,7 @@ export type EarningComponentListEdges = {
 };
 
 export type EarningComponentNode = {
+  abbr?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
