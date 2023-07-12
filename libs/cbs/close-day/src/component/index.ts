@@ -1,3 +1,3 @@
-export * from './BranchReadinessModal';
+export * from './AllBranchReadiness';
 export * from './LedgerAccountTable';
 export * from './StatusList';
