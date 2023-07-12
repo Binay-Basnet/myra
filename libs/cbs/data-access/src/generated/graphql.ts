@@ -1801,7 +1801,7 @@ export type BankAccountQueryDetailsArgs = {
 
 export type BankAccountQueryListArgs = {
   currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
-  filter?: InputMaybe<BankAccountFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -26018,7 +26018,7 @@ export type GetAllAccountsFilterMappingQuery = {
 };
 
 export type GetBankAccountListQueryVariables = Exact<{
-  filter?: InputMaybe<BankAccountFilter>;
+  filter?: InputMaybe<Filter>;
   currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -47827,7 +47827,7 @@ export const useGetAllAccountsFilterMappingQuery = <
     options
   );
 export const GetBankAccountListDocument = `
-    query getBankAccountList($filter: BankAccountFilter, $currentBranchOnly: Boolean, $pagination: Pagination) {
+    query getBankAccountList($filter: Filter, $currentBranchOnly: Boolean, $pagination: Pagination) {
   accounting {
     bankAccounts {
       list(

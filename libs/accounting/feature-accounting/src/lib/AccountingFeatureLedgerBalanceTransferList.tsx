@@ -5,9 +5,14 @@ import { Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { Filter_Mode, useGetJournalVoucherListQuery } from '@coop/cbs/data-access';
+import { useGetJournalVoucherListQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  getFilterQuery,
+  getPaginationQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingFeatureLedgerBalanceTransferListProps {}
@@ -16,18 +21,10 @@ export const AccountingFeatureLedgerBalanceTransferList = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
-  const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching } = useGetJournalVoucherListQuery({
     pagination: getPaginationQuery(),
-    filter: {
-      id: searchTerm,
-      transactionId: searchTerm,
-      filterMode: Filter_Mode.Or,
-    },
-    // filter: {
-    //   objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    // },
+    filter: getFilterQuery(),
   });
 
   const rowData = useMemo(() => data?.accounting?.journalVoucher?.list?.edges ?? [], [data]);

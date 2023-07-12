@@ -1,5 +1,5 @@
 query getBankAccountList(
-  $filter: BankAccountFilter
+  $filter: Filter
   $currentBranchOnly: Boolean
   $pagination: Pagination
 ) {
