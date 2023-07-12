@@ -34,13 +34,9 @@ query getTransferDetail($transferID: ID!) {
   }
 }
 
-query getCashInTransitList(
-  $transferType: CashInTransitTransferType!
-  $filter: CashInTransitFilter
-  $pagination: Pagination
-) {
+query getCashInTransitList($filter: Filter, $pagination: Pagination) {
   transaction {
-    cashInTransit(transferType: $transferType, filter: $filter, pagination: $pagination) {
+    cashInTransit(filter: $filter, pagination: $pagination) {
       totalCount
       pageInfo {
         hasNextPage
