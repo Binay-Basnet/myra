@@ -1,5 +1,5 @@
 query getLoanHistory($memberId: ID!, $filter: EBankingCooperativeServiceFilter) {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       loan {
         history(memberId: $memberId, filter: $filter) {

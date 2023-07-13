@@ -134,7 +134,7 @@ export const useChangeMyraPasswordMutation = <
     );
 export const SetChequeRequestDataDocument = `
     mutation setChequeRequestData($memberID: String!, $data: EBankingChequeRequestInput) {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       cheque {
         request(memberID: $memberID, data: $data) {

@@ -1,5 +1,5 @@
 mutation accountTransfer($data: EbankingAccountTransferInput) {
-  eBanking {
+  eBanking(source: EBANKING) {
     webUtilityPayments {
       accountTransfer(data: $data) {
         record {
@@ -21,7 +21,7 @@ mutation accountTransfer($data: EbankingAccountTransferInput) {
 }
 
 mutation checkForSendMoney($data: EbankingSendMoneyInput) {
-  eBanking {
+  eBanking(source: EBANKING) {
     webUtilityPayments {
       sendMoney {
         check(data: $data) {
@@ -36,7 +36,7 @@ mutation checkForSendMoney($data: EbankingSendMoneyInput) {
 }
 
 mutation completeSendMoney($data: EbankingSendMoneyInput, $transactionPin: String!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     webUtilityPayments {
       sendMoney {
         proceed(data: $data, transactionPin: $transactionPin) {

@@ -1,5 +1,5 @@
 query getCoopStats {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       coopStatistics {
         totalBranches
@@ -11,7 +11,7 @@ query getCoopStats {
 }
 
 query getCoopChequeServices {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       cheque {
         options {
@@ -24,7 +24,7 @@ query getCoopChequeServices {
 }
 
 query getCoopLoanServices {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       loan {
         options {
@@ -38,7 +38,7 @@ query getCoopLoanServices {
 }
 
 query getCoopComplaintServices {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       complaint {
         options {
@@ -52,7 +52,7 @@ query getCoopComplaintServices {
 }
 
 query getCoopDownloads {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       downloads {
         options {
@@ -66,7 +66,7 @@ query getCoopDownloads {
 }
 
 query getCoopPastChequeRequests($memberId: ID!, $filter: EBankingCooperativeServiceFilter) {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       cheque {
         pastRequests(memberId: $memberId, filter: $filter) {
@@ -93,7 +93,7 @@ query getCoopPastChequeRequests($memberId: ID!, $filter: EBankingCooperativeServ
 }
 
 query getComplaintsList($memberId: ID!, $filter: EBankingCooperativeServiceFilter) {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       complaint {
         history(memberID: $memberId, filter: $filter) {
@@ -109,7 +109,7 @@ query getComplaintsList($memberId: ID!, $filter: EBankingCooperativeServiceFilte
 }
 
 query getDownloadCoopList($filter: EBankingDownloadsFilter) {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       downloads {
         files(filter: $filter) {
@@ -126,8 +126,8 @@ query getDownloadCoopList($filter: EBankingDownloadsFilter) {
 }
 
 
-query getBranchListEbanking {
-  eBanking {
+query getBranchListeBanking(source: EBANKING) {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       cheque {
         branchList {
@@ -142,8 +142,8 @@ query getBranchListEbanking {
   }
 }
 
-query getCollectorListEbanking {
-  eBanking {
+query getCollectorListeBanking(source: EBANKING) {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       cheque {
         collectors {

@@ -1,5 +1,5 @@
 mutation setDefaultAccount($accountId: String!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     account {
       setDefaultAccount(accountId: $accountId) {
         recordId

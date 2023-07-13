@@ -1,5 +1,5 @@
 query getAccountList($transactionPagination: Pagination) {
-  eBanking {
+  eBanking(source: EBANKING) {
     account {
       list {
         totalBalance
@@ -35,7 +35,7 @@ query getAccountList($transactionPagination: Pagination) {
 }
 
 query getAccountSummary {
-  eBanking {
+  eBanking(source: EBANKING) {
     account {
       summary {
         totalSaving
@@ -46,7 +46,7 @@ query getAccountSummary {
 }
 
 query getTransactionLists($filter: EbankingTransactionFilter, $pagination: Pagination) {
-  eBanking {
+  eBanking(source: EBANKING) {
     account {
       list {
         accounts {
@@ -79,7 +79,7 @@ query getTransactionLists($filter: EbankingTransactionFilter, $pagination: Pagin
 }
 
 query getAccountDetails($id: ID!, $transactionPagination: Pagination) {
-  eBanking {
+  eBanking(source: EBANKING) {
     account {
       get(id: $id) {
         data {
@@ -123,7 +123,7 @@ query getAccountDetails($id: ID!, $transactionPagination: Pagination) {
 }
 
 query getEbankingLoanAccounts {
-  eBanking {
+  eBanking(source: EBANKING) {
     loanAccount {
       list {
         totalBalance
@@ -142,7 +142,7 @@ query getEbankingLoanAccounts {
 }
 
 query getEbankLoanAccountDetails($id: ID!, $transactionPagination: Pagination) {
-  eBanking {
+  eBanking(source: EBANKING) {
     loanAccount {
       get(id: $id) {
         data {
@@ -186,7 +186,7 @@ query getEbankLoanAccountDetails($id: ID!, $transactionPagination: Pagination) {
 }
 
 query getTotalExpense {
-  eBanking {
+  eBanking(source: EBANKING) {
     account {
       list {
         recentTransactions(paginate: {after: "", first: 1}){

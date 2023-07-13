@@ -1,5 +1,5 @@
 query getMyraMe {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth {
       meMyraUser {
         data {
@@ -20,7 +20,7 @@ query getMyraMe {
 }
 
 query getCoopList {
-  eBanking {
+  eBanking(source: EBANKING) {
     neosysClientsList {
       id
       clientName

@@ -1,5 +1,5 @@
 query getAnnouncementList {
-  eBanking {
+  eBanking(source: EBANKING) {
     notification {
       announcements {
         list {
