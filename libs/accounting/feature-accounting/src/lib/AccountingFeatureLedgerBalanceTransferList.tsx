@@ -1,100 +1,117 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Text } from '@myra-ui';
-import { Column, Table, TablePopover } from '@myra-ui/table';
+import { Tooltip } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { useGetJournalVoucherListQuery } from '@coop/cbs/data-access';
-import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
-  amountConverter,
-  getFilterQuery,
-  getPaginationQuery,
-  useTranslation,
-} from '@coop/shared/utils';
+  AllTransactionType,
+  useGetAllTransactionFilterMappingQuery,
+  useGetAllTransactionsListQuery,
+} from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
+import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
-export interface AccountingFeatureLedgerBalanceTransferListProps {}
+export interface DepositListProps {}
 
 export const AccountingFeatureLedgerBalanceTransferList = () => {
-  const { t } = useTranslation();
-
   const router = useRouter();
 
-  const { data, isFetching } = useGetJournalVoucherListQuery({
+  const { data: allTransactionFilterMapping } = useGetAllTransactionFilterMappingQuery();
+  const { data, isFetching } = useGetAllTransactionsListQuery({
     pagination: getPaginationQuery(),
-    filter: getFilterQuery(),
+    filter: {
+      orConditions: [
+        {
+          andConditions: [
+            {
+              column: 'txnType',
+              comparator: 'EqualTo',
+              value: AllTransactionType.LedgerBalanceTransfer,
+            },
+          ],
+        },
+      ],
+    },
   });
 
-  const rowData = useMemo(() => data?.accounting?.journalVoucher?.list?.edges ?? [], [data]);
-
-  const baseRoute = router?.pathname?.includes('transactions')
-    ? 'transactions/journal-vouchers'
-    : 'accounting/accounting';
+  const rowData = useMemo(() => data?.transaction?.listAllTransactions?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'date',
         header: 'Date',
-        cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.transactionDate)}</Text>,
+        cell: (props) => props?.row?.original?.node?.date?.local?.split(' ')[0] ?? 'N/A',
+        accessorKey: 'node.date.local',
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Transaction Id',
-        accessorFn: (row) => row?.node?.transactionCode,
+        accessorFn: (row) => row?.node?.id,
       },
+      // {
+      //   id: 'txnType',
+      //   accessorFn: (row) => row?.node?.transactionType,
+      //   header: 'Type',
+      //   cell: (props) => (
+      //     <Box textTransform="capitalize">
+      //       {props?.cell?.row?.original?.node?.transactionType?.toLowerCase()?.replace(/_/g, ' ')}
+      //     </Box>
+      //   ),
+      //   enableColumnFilter: true,
+      //   meta: {
+      //     filterMaps: {
+      //       list: allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.txnType,
+      //     },
+      //   },
+      // },
       {
         header: 'Note',
-        accessorFn: (row) => row?.node?.note,
+        accessorFn: (row) => row?.node?.narration,
+        cell: (props) => <Tooltip title={props?.row?.original?.node?.narration as string} />,
+        meta: {
+          width: '50%',
+        },
       },
       {
+        id: 'branchId',
         header: 'Service Center',
         accessorFn: (row) => row?.node?.branchName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.branchId,
+          },
+        },
       },
+
       {
+        id: 'amount',
         header: 'Amount',
+        accessorFn: (row) => row?.node?.amount,
+        cell: (props) => amountConverter(props.getValue() as string),
+
         meta: {
           isNumeric: true,
-          width: '15%',
+          width: '2%',
         },
-        accessorFn: (row) => amountConverter(row?.node?.amount || 0),
-      },
-      {
-        id: '_actions',
-        header: '',
-        accessorKey: 'actions',
-        cell: (props) =>
-          props?.row?.original?.node && (
-            <TablePopover
-              node={props?.row?.original?.node}
-              items={[
-                {
-                  title: 'View Details',
-                  onClick: (row) => {
-                    router?.pathname?.includes('transactions')
-                      ? router.push(
-                          `/${ROUTES.CBS_TRANS_JOURNAL_VOUCHER_DETAILS}?id=${row?.transactionCode}`
-                        )
-                      : router.push(
-                          `/${baseRoute}/journal-vouchers/view?id=${row?.transactionCode}`
-                        );
-                  },
-                },
-              ]}
-            />
-          ),
+        enableColumnFilter: true,
+        filterFn: 'amount',
       },
     ],
-    [t]
+    [
+      allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.branchId,
+      // allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.txnType,
+    ]
   );
 
   return (
     <>
-      <AccountingPageHeader
-        heading="Ledger Balance Transfer"
-        // buttonLabel={t['accountingJournalVouchersListNewJournalVoucher']}
-        // buttonHandler={() => router.push('/accounting/accounting/journal-vouchers/add')}
-      />
+      <AccountingPageHeader heading="Ledger Balance Transfer" />
 
       <Table
         data={rowData}
@@ -102,17 +119,14 @@ export const AccountingFeatureLedgerBalanceTransferList = () => {
         isLoading={isFetching}
         columns={columns}
         rowOnClick={(row) =>
-          router?.pathname?.includes('transactions')
-            ? router.push(
-                `/${ROUTES.CBS_TRANS_JOURNAL_VOUCHER_DETAILS}?id=${row?.node?.transactionCode}`
-              )
-            : router.push(`/${baseRoute}/journal-vouchers/view?id=${row?.node?.transactionCode}`)
+          router.push(`${ROUTES.ACCOUNTING_LEDGER_BALANCE_TRANSFER_DETAILS}?id=${row?.node?.id}`)
         }
         pagination={{
-          total: data?.accounting?.journalVoucher?.list?.totalCount ?? 'Many',
-          pageInfo: data?.accounting?.journalVoucher?.list?.pageInfo,
+          total: data?.transaction?.listAllTransactions?.totalCount ?? 'Many',
+          pageInfo: data?.transaction?.listAllTransactions?.pageInfo,
         }}
-        menu="TRANSACTIONS"
+        // searchPlaceholder="Search all transactions"
+        // menu="TRANSACTIONS"
       />
     </>
   );
