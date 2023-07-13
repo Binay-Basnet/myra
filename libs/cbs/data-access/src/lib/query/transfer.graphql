@@ -34,13 +34,9 @@ query getTransferDetail($transferID: ID!) {
   }
 }
 
-query getCashInTransitList(
-  $transferType: CashInTransitTransferType!
-  $filter: CashInTransitFilter
-  $pagination: Pagination
-) {
+query getCashInTransitList($filter: Filter, $pagination: Pagination) {
   transaction {
-    cashInTransit(transferType: $transferType, filter: $filter, pagination: $pagination) {
+    cashInTransit(filter: $filter, pagination: $pagination) {
       totalCount
       pageInfo {
         hasNextPage
@@ -107,17 +103,9 @@ query getCashInTransitDetail($transitID: ID!) {
   }
 }
 
-query getServiceCenterTransferList(
-  $filter: ServiceCenterTransactionFilter
-  $pagination: Pagination
-  $transferMode: IBTType!
-) {
+query getServiceCenterTransferList($filter: Filter, $pagination: Pagination) {
   transaction {
-    listServiceCenterCashTransfer(
-      filter: $filter
-      pagination: $pagination
-      transferMode: $transferMode
-    ) {
+    listServiceCenterCashTransfer(filter: $filter, pagination: $pagination) {
       totalCount
       pageInfo {
         startCursor
@@ -146,7 +134,7 @@ query getServiceCenterTransferList(
   }
 }
 
-query getBankTransferList($filter: TellerBankTransferFilter, $pagination: Pagination) {
+query getBankTransferList($filter: Filter, $pagination: Pagination) {
   transaction {
     tellerBankTransfer {
       list(filter: $filter, pagination: $pagination) {

@@ -4,11 +4,7 @@ import debounce from 'lodash/debounce';
 
 import { BankSelect, BankSelectProps } from '@myra-ui/forms';
 
-import {
-  AccountingBankAccountType,
-  Filter_Mode,
-  useGetBankAccountListQuery,
-} from '@coop/cbs/data-access';
+import { AccountingBankAccountType, useGetBankAccountListQuery } from '@coop/cbs/data-access';
 import { debitCreditConverter, getPaginationQuery } from '@coop/shared/utils';
 
 interface Option {
@@ -38,12 +34,7 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
   const { data: bankAccountListQueryData, isFetching } = useGetBankAccountListQuery({
     pagination: { ...getPaginationQuery(), first: 20 },
     filter: {
-      id: searchQuery,
-      bankId: searchQuery,
-      bankName: searchQuery,
-      bankDisplayName: searchQuery,
-      accountName: searchQuery,
-      filterMode: Filter_Mode.Or,
+      query: searchQuery,
     },
     currentBranchOnly,
   });

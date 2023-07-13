@@ -1818,7 +1818,7 @@ export type BankAccountQueryDetailsArgs = {
 
 export type BankAccountQueryListArgs = {
   currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
-  filter?: InputMaybe<BankAccountFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -3015,8 +3015,7 @@ export type ChartsOfAccountSettingsQueryCoaAccountDetailsArgs = {
 };
 
 export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
-  branchId?: InputMaybe<Array<Scalars['String']>>;
-  filter?: InputMaybe<CoaListFilter>;
+  filter?: InputMaybe<Filter>;
   flag?: InputMaybe<CoaListFlag>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -9928,7 +9927,7 @@ export type JournalVoucherQuery = {
 };
 
 export type JournalVoucherQueryListArgs = {
-  filter?: InputMaybe<JournalVoucherFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -12299,7 +12298,7 @@ export type LoanAccountQueryRemainingPaymentsArgs = {
 };
 
 export type LoanAccountQueryRepaymentListArgs = {
-  filter?: InputMaybe<LoanRepaymentFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -13436,16 +13435,6 @@ export type LoanRepaymentDetail = {
 export type LoanRepaymentEdge = {
   cursor: Scalars['Cursor'];
   node?: Maybe<LoanRepaymentDetail>;
-};
-
-export type LoanRepaymentFilter = {
-  accountName?: InputMaybe<Scalars['String']>;
-  filterMode?: InputMaybe<Filter_Mode>;
-  loanAccountId?: InputMaybe<Scalars['String']>;
-  memberCode?: InputMaybe<Scalars['String']>;
-  memberId?: InputMaybe<Scalars['String']>;
-  memberName?: InputMaybe<Scalars['String']>;
-  productName?: InputMaybe<Scalars['String']>;
 };
 
 export type LoanRepaymentInput = {
@@ -16928,27 +16917,27 @@ export type RequestsList = {
 };
 
 export type RequestsListBlockChequeArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListChequeBookRequestArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListLoanRequestArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListMembershipRequestArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListWithdrawViaCollectorArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -19183,7 +19172,7 @@ export type TellerBankTransferQuery = {
 };
 
 export type TellerBankTransferQueryListArgs = {
-  filter?: InputMaybe<TellerBankTransferFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -19540,9 +19529,8 @@ export type TransactionQuery = {
 };
 
 export type TransactionQueryCashInTransitArgs = {
-  filter?: InputMaybe<CashInTransitFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
-  transferType: CashInTransitTransferType;
 };
 
 export type TransactionQueryCashInTransitDetailArgs = {
@@ -19565,13 +19553,12 @@ export type TransactionQueryListDepositArgs = {
 };
 
 export type TransactionQueryListServiceCenterCashTransferArgs = {
-  filter?: InputMaybe<ServiceCenterTransactionFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
-  transferMode: IbtType;
 };
 
 export type TransactionQueryListTellerTransactionArgs = {
-  filter?: InputMaybe<TellerTransactionFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -26213,7 +26200,7 @@ export type GetAllAccountsFilterMappingQuery = {
 };
 
 export type GetBankAccountListQueryVariables = Exact<{
-  filter?: InputMaybe<BankAccountFilter>;
+  filter?: InputMaybe<Filter>;
   currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -26498,7 +26485,7 @@ export type GetInvestmentTransactionsListDataQuery = {
 
 export type GetJournalVoucherListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<JournalVoucherFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetJournalVoucherListQuery = {
@@ -30534,7 +30521,7 @@ export type GetLoanPreviewQuery = {
 
 export type GetLoanRepaymentListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
-  filter?: InputMaybe<LoanRepaymentFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetLoanRepaymentListQuery = {
@@ -35093,7 +35080,7 @@ export type GetMrTransactionReportQuery = {
 
 export type GetChequeBookRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetChequeBookRequestsQuery = {
@@ -35131,7 +35118,7 @@ export type GetChequeBookRequestsQuery = {
 
 export type GetWithdrawViaCollectorQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetWithdrawViaCollectorQuery = {
@@ -35163,7 +35150,7 @@ export type GetWithdrawViaCollectorQuery = {
 
 export type GetLoanRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetLoanRequestsQuery = {
@@ -35192,7 +35179,7 @@ export type GetLoanRequestsQuery = {
 
 export type GetBlockChequeListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetBlockChequeListQuery = {
@@ -35223,7 +35210,7 @@ export type GetBlockChequeListQuery = {
 
 export type GetMemberRequestListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetMemberRequestListQuery = {
@@ -35608,9 +35595,8 @@ export type GetCoaAccountsUnderLeafListQuery = {
 };
 
 export type GetCoaAccountListQueryVariables = Exact<{
-  branchId?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<CoaListFilter>;
+  filter?: InputMaybe<Filter>;
   flag?: InputMaybe<CoaListFlag>;
 }>;
 
@@ -38801,7 +38787,7 @@ export type GetEndOfDayDateDataQuery = {
 };
 
 export type GetTellerTransactionListDataQueryVariables = Exact<{
-  filter?: InputMaybe<TellerTransactionFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -39492,8 +39478,7 @@ export type GetTransferDetailQuery = {
 };
 
 export type GetCashInTransitListQueryVariables = Exact<{
-  transferType: CashInTransitTransferType;
-  filter?: InputMaybe<CashInTransitFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -39570,9 +39555,8 @@ export type GetCashInTransitDetailQuery = {
 };
 
 export type GetServiceCenterTransferListQueryVariables = Exact<{
-  filter?: InputMaybe<ServiceCenterTransactionFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
-  transferMode: IbtType;
 }>;
 
 export type GetServiceCenterTransferListQuery = {
@@ -39607,7 +39591,7 @@ export type GetServiceCenterTransferListQuery = {
 };
 
 export type GetBankTransferListQueryVariables = Exact<{
-  filter?: InputMaybe<TellerBankTransferFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -48093,7 +48077,7 @@ export const useGetAllAccountsFilterMappingQuery = <
     options
   );
 export const GetBankAccountListDocument = `
-    query getBankAccountList($filter: BankAccountFilter, $currentBranchOnly: Boolean, $pagination: Pagination) {
+    query getBankAccountList($filter: Filter, $currentBranchOnly: Boolean, $pagination: Pagination) {
   accounting {
     bankAccounts {
       list(
@@ -48463,7 +48447,7 @@ export const useGetInvestmentTransactionsListDataQuery = <
     options
   );
 export const GetJournalVoucherListDocument = `
-    query getJournalVoucherList($pagination: Pagination, $filter: JournalVoucherFilter) {
+    query getJournalVoucherList($pagination: Pagination, $filter: Filter) {
   accounting {
     journalVoucher {
       list(filter: $filter, pagination: $pagination) {
@@ -53637,7 +53621,7 @@ export const useGetLoanPreviewQuery = <TData = GetLoanPreviewQuery, TError = unk
     options
   );
 export const GetLoanRepaymentListDocument = `
-    query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) {
+    query getLoanRepaymentList($paginate: Pagination, $filter: Filter) {
   loanAccount {
     repaymentList(paginate: $paginate, filter: $filter) {
       totalCount
@@ -59572,7 +59556,7 @@ export const useGetMrTransactionReportQuery = <
     options
   );
 export const GetChequeBookRequestsDocument = `
-    query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
+    query getChequeBookRequests($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       chequeBookRequest(paginate: $pagination, filter: $filter) {
@@ -59619,7 +59603,7 @@ export const useGetChequeBookRequestsQuery = <TData = GetChequeBookRequestsQuery
     options
   );
 export const GetWithdrawViaCollectorDocument = `
-    query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter) {
+    query getWithdrawViaCollector($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       withdrawViaCollector(paginate: $pagination, filter: $filter) {
@@ -59663,7 +59647,7 @@ export const useGetWithdrawViaCollectorQuery = <
     options
   );
 export const GetLoanRequestsDocument = `
-    query getLoanRequests($pagination: Pagination, $filter: RequestFilter) {
+    query getLoanRequests($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       loanRequest(filter: $filter, paginate: $pagination) {
@@ -59702,7 +59686,7 @@ export const useGetLoanRequestsQuery = <TData = GetLoanRequestsQuery, TError = u
     options
   );
 export const GetBlockChequeListDocument = `
-    query getBlockChequeList($pagination: Pagination, $filter: RequestFilter) {
+    query getBlockChequeList($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       blockCheque(filter: $filter, paginate: $pagination) {
@@ -59742,7 +59726,7 @@ export const useGetBlockChequeListQuery = <TData = GetBlockChequeListQuery, TErr
     options
   );
 export const GetMemberRequestListDocument = `
-    query getMemberRequestList($pagination: Pagination, $filter: RequestFilter) {
+    query getMemberRequestList($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       membershipRequest(filter: $filter, paginate: $pagination) {
@@ -60293,15 +60277,10 @@ export const useGetCoaAccountsUnderLeafListQuery = <
     options
   );
 export const GetCoaAccountListDocument = `
-    query getCoaAccountList($branchId: [String!], $pagination: Pagination, $filter: COAListFilter, $flag: COAListFlag) {
+    query getCoaAccountList($pagination: Pagination, $filter: Filter, $flag: COAListFlag) {
   settings {
     chartsOfAccount {
-      coaAccountList(
-        branchId: $branchId
-        pagination: $pagination
-        filter: $filter
-        flag: $flag
-      ) {
+      coaAccountList(pagination: $pagination, filter: $filter, flag: $flag) {
         edges {
           node {
             accountCode
@@ -64755,7 +64734,7 @@ export const useGetEndOfDayDateDataQuery = <TData = GetEndOfDayDateDataQuery, TE
     options
   );
 export const GetTellerTransactionListDataDocument = `
-    query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination: Pagination) {
+    query getTellerTransactionListData($filter: Filter, $pagination: Pagination) {
   transaction {
     listTellerTransaction(filter: $filter, pagination: $pagination) {
       totalCount
@@ -65715,13 +65694,9 @@ export const useGetTransferDetailQuery = <TData = GetTransferDetailQuery, TError
     options
   );
 export const GetCashInTransitListDocument = `
-    query getCashInTransitList($transferType: CashInTransitTransferType!, $filter: CashInTransitFilter, $pagination: Pagination) {
+    query getCashInTransitList($filter: Filter, $pagination: Pagination) {
   transaction {
-    cashInTransit(
-      transferType: $transferType
-      filter: $filter
-      pagination: $pagination
-    ) {
+    cashInTransit(filter: $filter, pagination: $pagination) {
       totalCount
       pageInfo {
         hasNextPage
@@ -65755,11 +65730,11 @@ export const GetCashInTransitListDocument = `
 }
     `;
 export const useGetCashInTransitListQuery = <TData = GetCashInTransitListQuery, TError = unknown>(
-  variables: GetCashInTransitListQueryVariables,
+  variables?: GetCashInTransitListQueryVariables,
   options?: UseQueryOptions<GetCashInTransitListQuery, TError, TData>
 ) =>
   useQuery<GetCashInTransitListQuery, TError, TData>(
-    ['getCashInTransitList', variables],
+    variables === undefined ? ['getCashInTransitList'] : ['getCashInTransitList', variables],
     useAxios<GetCashInTransitListQuery, GetCashInTransitListQueryVariables>(
       GetCashInTransitListDocument
     ).bind(null, variables),
@@ -65815,13 +65790,9 @@ export const useGetCashInTransitDetailQuery = <
     options
   );
 export const GetServiceCenterTransferListDocument = `
-    query getServiceCenterTransferList($filter: ServiceCenterTransactionFilter, $pagination: Pagination, $transferMode: IBTType!) {
+    query getServiceCenterTransferList($filter: Filter, $pagination: Pagination) {
   transaction {
-    listServiceCenterCashTransfer(
-      filter: $filter
-      pagination: $pagination
-      transferMode: $transferMode
-    ) {
+    listServiceCenterCashTransfer(filter: $filter, pagination: $pagination) {
       totalCount
       pageInfo {
         startCursor
@@ -65854,18 +65825,20 @@ export const useGetServiceCenterTransferListQuery = <
   TData = GetServiceCenterTransferListQuery,
   TError = unknown
 >(
-  variables: GetServiceCenterTransferListQueryVariables,
+  variables?: GetServiceCenterTransferListQueryVariables,
   options?: UseQueryOptions<GetServiceCenterTransferListQuery, TError, TData>
 ) =>
   useQuery<GetServiceCenterTransferListQuery, TError, TData>(
-    ['getServiceCenterTransferList', variables],
+    variables === undefined
+      ? ['getServiceCenterTransferList']
+      : ['getServiceCenterTransferList', variables],
     useAxios<GetServiceCenterTransferListQuery, GetServiceCenterTransferListQueryVariables>(
       GetServiceCenterTransferListDocument
     ).bind(null, variables),
     options
   );
 export const GetBankTransferListDocument = `
-    query getBankTransferList($filter: TellerBankTransferFilter, $pagination: Pagination) {
+    query getBankTransferList($filter: Filter, $pagination: Pagination) {
   transaction {
     tellerBankTransfer {
       list(filter: $filter, pagination: $pagination) {
