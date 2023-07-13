@@ -5629,11 +5629,12 @@ export type EarningComponentNode = {
 
 export type EarningComponentRecord = {
   abbr?: Maybe<Scalars['String']>;
+  base_multiple?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
-  formula?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   isTaxApplicable?: Maybe<Scalars['Boolean']>;
   makeThisActive?: Maybe<Scalars['Boolean']>;
+  multiplier?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
   roundToNearestInteger?: Maybe<Scalars['Boolean']>;
 };

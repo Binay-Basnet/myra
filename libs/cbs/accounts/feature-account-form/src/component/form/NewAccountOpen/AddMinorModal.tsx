@@ -56,7 +56,6 @@ export const AddMinorModal = ({ isOpen, onClose, memberId }: IAddMinorModalProps
       onSuccess: () => {
         queryClient.invalidateQueries(['getAccountOpenMinorList']);
         onClose();
-        // router.push('/accounting/investment/investment-transaction/list');
       },
     });
   };
