@@ -1371,6 +1371,7 @@ export type AlternativeChannelCharges = {
   amount?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   ledgerId?: Maybe<Scalars['String']>;
+  restrictTransaction?: Maybe<Scalars['Boolean']>;
   serviceType?: Maybe<AlternativeChannelServiceType>;
 };
 
@@ -1378,6 +1379,7 @@ export type AlternativeChannelChargesInput = {
   amount?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   ledgerId?: InputMaybe<Scalars['String']>;
+  restrictTransaction?: InputMaybe<Scalars['Boolean']>;
   serviceType?: InputMaybe<AlternativeChannelServiceType>;
 };
 
@@ -16703,6 +16705,7 @@ export const Resource = {
   SettingsSavingProducts: 'SETTINGS_SAVING_PRODUCTS',
   SettingsServiceCenter: 'SETTINGS_SERVICE_CENTER',
   SettingsShare: 'SETTINGS_SHARE',
+  SettingsTransactionConstraint: 'SETTINGS_TRANSACTION_CONSTRAINT',
   SettingsUsers: 'SETTINGS_USERS',
   UserUser: 'USER_USER',
   UserUserPassword: 'USER_USER_PASSWORD',
@@ -18090,11 +18093,17 @@ export type SettingsQuery = {
   general?: Maybe<GeneralSettingsQuery>;
   getPrintCount: Scalars['Int'];
   myraUser?: Maybe<MyraUserQuery>;
+  transactionConstraint: TransactionConstraintList;
 };
 
 export type SettingsQueryGetPrintCountArgs = {
   objectId: Scalars['ID'];
   type: PrintType;
+};
+
+export type SettingsQueryTransactionConstraintArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type SetupMutation = {
@@ -19362,6 +19371,34 @@ export type TotalReport = {
   totalCr?: Maybe<Scalars['Int']>;
   totalDr?: Maybe<Scalars['Int']>;
   totalShares?: Maybe<Scalars['Int']>;
+};
+
+export type TransactionConstraintList = {
+  edges?: Maybe<Array<Maybe<TransactionConstraintListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type TransactionConstraintListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<TransactionConstraints>;
+};
+
+export type TransactionConstraints = {
+  account?: Maybe<AllAccount>;
+  accountType?: Maybe<Scalars['String']>;
+  branch?: Maybe<Branch>;
+  coaHead?: Maybe<Scalars['String']>;
+  effectiveSince?: Maybe<Scalars['Localized']>;
+  effectiveTill?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  initiationType?: Maybe<Scalars['String']>;
+  ledgerId?: Maybe<Scalars['String']>;
+  member?: Maybe<Member>;
+  objState?: Maybe<ObjState>;
+  txnType?: Maybe<LedgerType>;
+  user?: Maybe<Scalars['String']>;
+  valueDate?: Maybe<Scalars['Localized']>;
 };
 
 export type TransactionConstraintsStatus = {
@@ -35450,6 +35487,7 @@ export type GetAlternativeFeeAndChargesQuery = {
             serviceType?: AlternativeChannelServiceType | null;
             ledgerId?: string | null;
             amount?: string | null;
+            restrictTransaction?: boolean | null;
           } | null> | null;
         } | null;
       } | null;
@@ -36526,6 +36564,7 @@ export type GetDeductionComponentListQuery = {
                   name?: string | null;
                   status?: DeductionStatusEnum | null;
                   deductionFrequency?: DeductionFrequencyEnum | null;
+                  abbr?: string | null;
                 };
               } | null> | null;
               pageInfo?: PaginationFragment | null;
@@ -60397,6 +60436,7 @@ export const GetAlternativeFeeAndChargesDocument = `
             serviceType
             ledgerId
             amount
+            restrictTransaction
           }
         }
       }
@@ -61894,6 +61934,7 @@ export const GetDeductionComponentListDocument = `
                   name
                   status
                   deductionFrequency
+                  abbr
                 }
                 cursor
               }
