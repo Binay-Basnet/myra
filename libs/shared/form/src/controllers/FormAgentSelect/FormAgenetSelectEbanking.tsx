@@ -1,4 +1,4 @@
-import { useGetCollectorListEbankingQuery } from '@coop/ebanking/data-access';
+import { useGetCollectorListeBankingQuery } from '@coop/ebanking/data-access';
 import { FormSelect } from '@coop/shared/form';
 
 interface IFormAgentSelectProps {
@@ -9,7 +9,7 @@ interface IFormAgentSelectProps {
 type OptionType = { label: string; value: string };
 
 export const FormAgentSelectEbanking = ({ name, label }: IFormAgentSelectProps) => {
-  const { data: agentListQueryData, isFetching } = useGetCollectorListEbankingQuery({});
+  const { data: agentListQueryData, isFetching } = useGetCollectorListeBankingQuery({});
 
   const agentList = agentListQueryData?.eBanking?.cooperativeServices?.cheque?.collectors?.data;
 
