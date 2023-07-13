@@ -4068,6 +4068,7 @@ export type DeductionComponentListEdges = {
 };
 
 export type DeductionComponentNode = {
+  abbr?: Maybe<Scalars['String']>;
   deductionFrequency?: Maybe<DeductionFrequencyEnum>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
@@ -6580,6 +6581,7 @@ export type FianancialTransactionReport = {
   bankGLStatementReport: BankGlStatementResult;
   charKhataReport: TrialSheetReportResult;
   dayBookReport: DayBookReportResult;
+  fiscalTrialSheetReport: TrialSheetReportResult;
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
   serviceCenterBalanceReport: SericeCenterStatementResult;
   tagKhataReport: TagKhataReportResult;
@@ -6606,6 +6608,10 @@ export type FianancialTransactionReportCharKhataReportArgs = {
 
 export type FianancialTransactionReportDayBookReportArgs = {
   data: DayBookReportFilter;
+};
+
+export type FianancialTransactionReportFiscalTrialSheetReportArgs = {
+  data: TrialSheetReportFilter;
 };
 
 export type FianancialTransactionReportMrTransactionReportArgs = {
@@ -17262,7 +17268,9 @@ export type SalaryStructureListEdges = {
 };
 
 export type SalaryStructureNode = {
+  deduction?: Maybe<Array<Maybe<SalaryStructureDeductionDetailsType>>>;
   description?: Maybe<Scalars['String']>;
+  earnings?: Maybe<Array<Maybe<SalaryStructureEarningDetailsType>>>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   status?: Maybe<SalaryStructureStatusEnum>;
@@ -36456,6 +36464,7 @@ export type GetDeductionComponentListQuery = {
                   name?: string | null;
                   status?: DeductionStatusEnum | null;
                   deductionFrequency?: DeductionFrequencyEnum | null;
+                  abbr?: string | null;
                 };
               } | null> | null;
               pageInfo?: PaginationFragment | null;
@@ -61751,6 +61760,7 @@ export const GetDeductionComponentListDocument = `
                   name
                   status
                   deductionFrequency
+                  abbr
                 }
                 cursor
               }
