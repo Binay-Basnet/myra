@@ -342,6 +342,8 @@ export const ROUTES = {
 
   ACCOUNTING_LEDGER_BALANCE_TRANSFER_LIST: '/accounting/accounting/ledger-balance-transfer/list',
   ACCOUNTING_LEDGER_BALANCE_TRANSFER_ADD: '/accounting/accounting/ledger-balance-transfer/add',
+  ACCOUNTING_LEDGER_BALANCE_TRANSFER_DETAILS:
+    '/accounting/accounting/ledger-balance-transfer/details',
 
   ACCOUNTING_CHAR_KHATA_REPORT: '/accounting/reports/transactions/charkhata/new',
   ACCOUNTING_DAY_BOOK_REPORT: '/accounting/reports/transactions/day-book/new',

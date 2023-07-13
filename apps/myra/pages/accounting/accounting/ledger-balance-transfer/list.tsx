@@ -1,15 +1,10 @@
 import { ReactElement } from 'react';
 
-import { Box, WIPState } from '@myra-ui';
-
+import { AccountingFeatureLedgerBalanceTransferList } from '@coop/accounting/accounting';
 import { AccountingLayout, AccountingSidebarLayout } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingLedgerBalanceTransferList = () => (
-  <Box pt="s60">
-    <WIPState />
-  </Box>
-);
+const AccountingLedgerBalanceTransferList = () => <AccountingFeatureLedgerBalanceTransferList />;
 
 AccountingLedgerBalanceTransferList.getLayout = function getLayout(page: ReactElement) {
   return (
