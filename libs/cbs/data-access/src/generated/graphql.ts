@@ -4068,6 +4068,7 @@ export type DeductionComponentListEdges = {
 };
 
 export type DeductionComponentNode = {
+  abbr?: Maybe<Scalars['String']>;
   deductionFrequency?: Maybe<DeductionFrequencyEnum>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
@@ -6580,6 +6581,7 @@ export type FianancialTransactionReport = {
   bankGLStatementReport: BankGlStatementResult;
   charKhataReport: TrialSheetReportResult;
   dayBookReport: DayBookReportResult;
+  fiscalTrialSheetReport: TrialSheetReportResult;
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
   serviceCenterBalanceReport: SericeCenterStatementResult;
   tagKhataReport: TagKhataReportResult;
@@ -6606,6 +6608,10 @@ export type FianancialTransactionReportCharKhataReportArgs = {
 
 export type FianancialTransactionReportDayBookReportArgs = {
   data: DayBookReportFilter;
+};
+
+export type FianancialTransactionReportFiscalTrialSheetReportArgs = {
+  data: TrialSheetReportFilter;
 };
 
 export type FianancialTransactionReportMrTransactionReportArgs = {
@@ -17262,7 +17268,9 @@ export type SalaryStructureListEdges = {
 };
 
 export type SalaryStructureNode = {
+  deduction?: Maybe<Array<Maybe<SalaryStructureDeductionDetailsType>>>;
   description?: Maybe<Scalars['String']>;
+  earnings?: Maybe<Array<Maybe<SalaryStructureEarningDetailsType>>>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   status?: Maybe<SalaryStructureStatusEnum>;
@@ -35157,6 +35165,68 @@ export type GetMrTransactionReportQuery = {
             | QueryError_ServerError_Fragment
             | null;
         } | null;
+      };
+    };
+  };
+};
+
+export type GetFiscalYearTrialBalanceQueryVariables = Exact<{
+  data: TrialSheetReportFilter;
+}>;
+
+export type GetFiscalYearTrialBalanceQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        fiscalTrialSheetReport: {
+          data?: {
+            equityAndLiablitiesTotal?: Record<string, string> | null;
+            assetsTotal?: Record<string, string> | null;
+            expenseTotal?: Record<string, string> | null;
+            incomeTotal?: Record<string, string> | null;
+            offBalanceTotal?: Record<string, string> | null;
+            orphanTotal?: Record<string, string> | null;
+            totalAssetExpense?: Record<string, string> | null;
+            totalLiablitiesIncome?: Record<string, string> | null;
+            totalProfitLoss?: Record<string, string> | null;
+            equityAndLiablities?: Array<{
+              balance?: Record<string, string> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            expenses?: Array<{
+              balance?: Record<string, string> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            income?: Array<{
+              balance?: Record<string, string> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            assets?: Array<{
+              balance?: Record<string, string> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            offBalance?: Array<{
+              balance?: Record<string, string> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            orphanEntries?: Array<{
+              balance?: Record<string, string> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+          } | null;
+        };
       };
     };
   };
@@ -59960,6 +60030,79 @@ export const useGetMrTransactionReportQuery = <
     ['getMrTransactionReport', variables],
     useAxios<GetMrTransactionReportQuery, GetMrTransactionReportQueryVariables>(
       GetMrTransactionReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetFiscalYearTrialBalanceDocument = `
+    query getFiscalYearTrialBalance($data: TrialSheetReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        fiscalTrialSheetReport(data: $data) {
+          data {
+            equityAndLiablities {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            expenses {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            income {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            assets {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            offBalance {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            orphanEntries {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            equityAndLiablitiesTotal
+            assetsTotal
+            expenseTotal
+            incomeTotal
+            offBalanceTotal
+            orphanTotal
+            totalAssetExpense
+            totalLiablitiesIncome
+            totalProfitLoss
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetFiscalYearTrialBalanceQuery = <
+  TData = GetFiscalYearTrialBalanceQuery,
+  TError = unknown
+>(
+  variables: GetFiscalYearTrialBalanceQueryVariables,
+  options?: UseQueryOptions<GetFiscalYearTrialBalanceQuery, TError, TData>
+) =>
+  useQuery<GetFiscalYearTrialBalanceQuery, TError, TData>(
+    ['getFiscalYearTrialBalance', variables],
+    useAxios<GetFiscalYearTrialBalanceQuery, GetFiscalYearTrialBalanceQueryVariables>(
+      GetFiscalYearTrialBalanceDocument
     ).bind(null, variables),
     options
   );
