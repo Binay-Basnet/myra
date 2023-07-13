@@ -1,5 +1,5 @@
 query getCoopMe {
-  eBanking(source: EBANKING) {
+  eBanking {
     auth {
       meCooperativeUser {
         data {

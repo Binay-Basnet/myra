@@ -1,5 +1,5 @@
 query getMemberProfile {
-  eBanking(source: EBANKING) {
+  eBanking {
     profile {
       data {
         memberId

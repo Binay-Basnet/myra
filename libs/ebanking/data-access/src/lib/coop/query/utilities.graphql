@@ -1,5 +1,5 @@
 query getUtilityList {
-  eBanking(source: EBANKING) {
+  eBanking {
     utilityPayments {
       id
       name

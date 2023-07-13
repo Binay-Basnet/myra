@@ -1,5 +1,5 @@
 query getHomeServiceList {
-  eBanking(source: EBANKING) {
+  eBanking {
     services {
       id
       name

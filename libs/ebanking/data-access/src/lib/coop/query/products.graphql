@@ -1,5 +1,5 @@
 query getEbankingDepositProducts($filter: NatureOfDepositProduct!) {
-  eBanking(source: EBANKING) {
+  eBanking {
     products {
       depositProductList(filter: $filter) {
         data {
@@ -11,7 +11,7 @@ query getEbankingDepositProducts($filter: NatureOfDepositProduct!) {
   }
 }
 query getEbankingDepositProduct($id: ID!) {
-  eBanking(source: EBANKING) {
+  eBanking {
     products {
       getDepositProduct(id: $id) {
         data {
@@ -164,7 +164,7 @@ query getEbankingDepositProduct($id: ID!) {
 }
 
 query getEbankingDepositProductCriteria($id: ID!) {
-  eBanking(source: EBANKING) {
+  eBanking {
     products {
       getDepositProductCriteria(productId: $id) {
         data {
@@ -186,7 +186,7 @@ query getEbankingDepositProductCriteria($id: ID!) {
 }
 
 query getEbankingLoanProductTypeList {
-  eBanking(source: EBANKING) {
+  eBanking {
     products {
       loanProductTypes {
         id
@@ -197,7 +197,7 @@ query getEbankingLoanProductTypeList {
   }
 }
 query getEbankingLoanProductSubType {
-  eBanking(source: EBANKING) {
+  eBanking {
     products {
       loanProductSubTypes {
         id
@@ -208,7 +208,7 @@ query getEbankingLoanProductSubType {
   }
 }
 query getEbankingLoanProducts($id: ID!) {
-  eBanking(source: EBANKING) {
+  eBanking {
     products {
       loanProductList(productSubTypeId: $id) {
         data {
@@ -220,7 +220,7 @@ query getEbankingLoanProducts($id: ID!) {
   }
 }
 query getEbankingLoanProduct($id: ID!) {
-  eBanking(source: EBANKING) {
+  eBanking {
     products {
       getLoanProduct(id: $id) {
         data {
@@ -308,7 +308,7 @@ query getEbankingLoanProduct($id: ID!) {
   }
 }
 query getEbankingLoanProductCriteria($id: ID!) {
-  eBanking(source: EBANKING) {
+  eBanking {
     products {
       getLoanProductCriteria(productId: $id) {
         data {

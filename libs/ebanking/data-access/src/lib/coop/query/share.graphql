@@ -1,5 +1,5 @@
 query getShareSummary {
-  eBanking(source: EBANKING) {
+  eBanking {
     share {
       summary {
         totalShare
@@ -10,7 +10,7 @@ query getShareSummary {
 }
 
 query getEbankingShareHistory {
-  eBanking(source: EBANKING) {
+  eBanking {
     share {
       history {
         id
