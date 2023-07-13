@@ -39,6 +39,8 @@ const whatsNewData = {
       'All transactions restrictions on ongoing day end.',
       'Shift money posting value date from T to T-1.',
       'Year end status and entires as view part.',
+      'Alternative channel blocking in both mobile and banking.',
+      'Ledger balance transfer list and detail [From all transaction LEDGER_BALANCE_TRANSFER]',
     ],
   },
   bugsSquashed: {
@@ -54,6 +56,9 @@ const whatsNewData = {
       'Remove role for others except teller and head teller as teller vault access.',
       'Block duplicate adding account in MR collection and today’s list.',
       'Member id issue while on boarding member fixed.',
+      'Branch-wise filter(User Login Branch) in transfer, deposit, withdraw, loan disburse, loan repayment.',
+      'Notes Text changes.',
+      'Minor account create and validation issue fixes.',
     ],
   },
   // knownBugs: {
@@ -103,8 +108,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.73</Text>
-          <Text fontSize="s3">July 12, 2023</Text>
+          <Text fontSize="r2">Version 1.0.75</Text>
+          <Text fontSize="s3">July 13, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>

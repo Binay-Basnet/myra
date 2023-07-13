@@ -68,7 +68,7 @@ export const PaginationFragmentDoc = `
     `;
 export const SignUpDocument = `
     mutation signUp($mobileNo: String!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth(type: EBANKING) {
       signUp(mobileNo: $mobileNo) {
         error {
@@ -95,7 +95,7 @@ export const useSignUpMutation = <TError = unknown, TContext = unknown>(
   );
 export const VerifyOtpDocument = `
     mutation verifyOTP($data: EbankingOtpInput!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth(type: EBANKING) {
       verifyOtp(data: $data) {
         error {
@@ -122,7 +122,7 @@ export const useVerifyOtpMutation = <TError = unknown, TContext = unknown>(
   );
 export const EBankingLoginDocument = `
     mutation eBankingLogin($data: EbankingLoginInput!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth(type: EBANKING) {
       login(data: $data) {
         recordId
@@ -169,7 +169,7 @@ export const useEBankingLoginMutation = <TError = unknown, TContext = unknown>(
   );
 export const CheckAccountDocument = `
     mutation checkAccount($id: ID!, $mobileNumber: String!, $pin: Int!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth(type: EBANKING) {
       checkAccount(coopId: $id, mobileNumber: $mobileNumber, pin: $pin) {
         success
@@ -196,7 +196,7 @@ export const useCheckAccountMutation = <TError = unknown, TContext = unknown>(
   );
 export const SetNewPinDocument = `
     mutation setNewPin($data: CooperativeConnectInput) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth(type: EBANKING) {
       setNewPin(data: $data) {
         record {
@@ -231,7 +231,7 @@ export const useSetNewPinMutation = <TError = unknown, TContext = unknown>(
   );
 export const LoginToCooperativeDocument = `
     mutation loginToCooperative($cooperativeId: ID!, $pinCode: String!, $mobileNumber: String!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth(type: EBANKING) {
       loginToCooperative(
         cooperativeId: $cooperativeId
@@ -289,7 +289,7 @@ export const useLoginToCooperativeMutation = <TError = unknown, TContext = unkno
   );
 export const ResendOtpDocument = `
     mutation resendOTP($mobile: String!, $otpFor: OtpFor!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth {
       resendOtp(mobile: $mobile, otpFor: $otpFor) {
         success
@@ -316,7 +316,7 @@ export const useResendOtpMutation = <TError = unknown, TContext = unknown>(
   );
 export const ResetPasswordDocument = `
     mutation resetPassword($mobileNo: String!, $newPassword: String!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth {
       resetPassword(mobileNo: $mobileNo, newPassword: $newPassword) {
         success
@@ -345,7 +345,7 @@ export const useResetPasswordMutation = <TError = unknown, TContext = unknown>(
   );
 export const NewMembershipRequestDocument = `
     mutation newMembershipRequest($cooperativeId: String!, $data: MembershipRequestInput) {
-  eBanking {
+  eBanking(source: EBANKING) {
     membershipRequest {
       new(data: $data, cooperativeId: $cooperativeId) {
         error {

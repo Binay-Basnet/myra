@@ -1753,6 +1753,10 @@ export type Mutation = {
   presignedUrl: PresignedUrlMutation;
 };
 
+export type MutationEBankingArgs = {
+  source?: InputMaybe<RequestSource>;
+};
+
 export type MutationError =
   | AuthorizationError
   | BadRequestError
@@ -2954,9 +2958,9 @@ export type GetDownloadCoopListQuery = {
   };
 };
 
-export type GetBranchListEbankingQueryVariables = Exact<{ [key: string]: never }>;
+export type GetBranchListeBankingQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetBranchListEbankingQuery = {
+export type GetBranchListeBankingQuery = {
   eBanking: {
     cooperativeServices?: {
       cheque?: {
@@ -2972,9 +2976,9 @@ export type GetBranchListEbankingQuery = {
   };
 };
 
-export type GetCollectorListEbankingQueryVariables = Exact<{ [key: string]: never }>;
+export type GetCollectorListeBankingQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetCollectorListEbankingQuery = {
+export type GetCollectorListeBankingQuery = {
   eBanking: {
     cooperativeServices?: {
       cheque?: {

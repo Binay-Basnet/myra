@@ -317,7 +317,7 @@ const TableListCheckbox = React.memo(
       display="flex"
       alignItems="center"
       px="s12"
-      justifyContent="space-between"
+      h="s48"
       bg={isChecked ? 'highlight.500' : 'inherit'}
       _hover={{ background: 'highlight.500' }}
       cursor="pointer"
@@ -329,7 +329,7 @@ const TableListCheckbox = React.memo(
           : setSelectedData((prev) => prev.filter((item) => item.value !== listItem.value));
       }}
     >
-      <Text cursor="pointer" paddingY="12px" fontWeight="normal" noOfLines={1} maxWidth={48}>
+      <Text cursor="pointer" paddingY="12px" fontWeight="normal" flex={1}>
         {listItem.label}
       </Text>
       <Checkbox colorScheme="green" isChecked={isChecked} />

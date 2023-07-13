@@ -54,12 +54,12 @@ export const HRMODULE: NavType = {
         {
           label: 'Attendance Settings',
           aclKey: 'HCM_EMPLOYEE_ATTENDANCE',
-          route: ROUTES.HRMODULE_LEAVE_SETTINGS,
+          route: ROUTES.HRMODULE_EMPLOYEES_LEAVE_SETTINGS,
         },
         {
           label: 'Leave Settings',
           aclKey: 'HCM_EMPLOYEE_LEAVE',
-          route: ROUTES.HRMODULE_ATTENDENCE_SETTINGS,
+          route: ROUTES.HRMODULE_EMPLOYEES_LEAVE_SETTINGS,
         },
       ],
     },
@@ -134,12 +134,12 @@ export const HRMODULE: NavType = {
         {
           label: 'Attendance Settings',
           aclKey: 'HCM_EMPLOYEE_ATTENDANCE',
-          route: ROUTES.HRMODULE_LEAVE_SETTINGS,
+          route: ROUTES.HRMODULE_EMPLOYEES_LEAVE_SETTINGS,
         },
         {
           label: 'Leave Settings',
           aclKey: 'HCM_EMPLOYEE_LEAVE',
-          route: ROUTES.HRMODULE_ATTENDENCE_SETTINGS,
+          route: ROUTES.HRMODULE_EMPLOYEES_LEAVE_SETTINGS,
         },
       ],
     },

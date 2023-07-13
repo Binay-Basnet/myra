@@ -360,7 +360,7 @@ export const ReportTable = <T,>({
         variant="report"
         size="report"
         isStatic
-        noDataTitle="No Reports Found"
+        noDataTitle="Reports"
         getSubRows={getSubRows || ((row) => (row as { children: T[] })['children'])}
         data={
           ((tableData

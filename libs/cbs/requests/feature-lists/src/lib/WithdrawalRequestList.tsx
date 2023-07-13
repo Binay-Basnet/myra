@@ -27,9 +27,12 @@ export const WithdrawViaCollectorList = () => {
   const columns = React.useMemo<Column<typeof withdrawalRequests[0]>[]>(
     () => [
       {
+        id: 'requestedDate',
         header: 'Requested Date',
         accessorFn: (row) => row?.node?.requestedDate,
         cell: (props) => props?.row?.original?.node?.requestedDate,
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Request ID',
@@ -80,9 +83,19 @@ export const WithdrawViaCollectorList = () => {
         cell: (props) => amountConverter(props.getValue() as string),
       },
       {
+        id: 'status',
         header: 'Approval Status',
         accessorFn: (row) => row?.node?.approvalStatus,
         cell: (props) => <ApprovalStatusItem status={props.row.original?.node?.approvalStatus} />,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: [
+              { label: 'Approved', value: 'Completed' },
+              { label: 'Pending', value: 'Active' },
+            ],
+          },
+        },
       },
 
       {

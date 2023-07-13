@@ -150,6 +150,11 @@ const hcmTabList: TabList[] = [
     route: ROUTES.HRMODULE_EMPLOYEES_SETTINGS,
     aclKey: 'SETTINGS_INDEXING',
   },
+  {
+    label: 'Payroll',
+    route: ROUTES.HRMODULE_PAYROLL_SALARY_COMPONENTS_SETTINGS,
+    aclKey: 'SETTINGS_INDEXING',
+  },
 ];
 
 export const SettingSideBar = () => {

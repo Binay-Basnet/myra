@@ -20,7 +20,7 @@ import {
   useGetChequeBookRequestsQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { featureCode, getPaginationQuery } from '@coop/shared/utils';
+import { featureCode, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { ApproveDeclineModal } from '../components/ApproveDeclineModal';
@@ -37,6 +37,7 @@ export const ChequeBookRequestList = () => {
   const { data, isFetching } = useGetChequeBookRequestsQuery(
     {
       pagination: getPaginationQuery(),
+      filter: getFilterQuery(),
     },
     { staleTime: 0 }
   );
@@ -49,9 +50,12 @@ export const ChequeBookRequestList = () => {
   const columns = React.useMemo<Column<typeof chequeBookRequests[0]>[]>(
     () => [
       {
+        id: 'requestedDate',
         header: 'Requested Date',
         accessorFn: (row) => localizedDate(row?.node?.requestedDate),
         cell: (props) => localizedDate(props?.row?.original?.node?.requestedDate),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Request ID',
@@ -93,9 +97,19 @@ export const ChequeBookRequestList = () => {
         },
       },
       {
+        id: 'status',
         header: 'Approval Status',
         accessorFn: (row) => row?.node?.approvalStatus,
         cell: (props) => <ApprovalStatusItem status={props.row.original?.node?.approvalStatus} />,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: [
+              { label: 'Approved', value: 'Completed' },
+              { label: 'Pending', value: 'Active' },
+            ],
+          },
+        },
       },
 
       {

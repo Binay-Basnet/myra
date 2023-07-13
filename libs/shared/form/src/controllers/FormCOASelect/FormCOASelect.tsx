@@ -22,15 +22,23 @@ export const FormCOASelect = (props: IFormBranchSelectProps) => {
 
   const { data: branchListQueryData, isFetching } = useGetCoaAccountListQuery(
     {
-      branchId,
-
       pagination: {
         after: '',
         first: 20,
       },
       filter: {
-        name: coaName,
-        ledgerId: coaName,
+        query: coaName,
+        orConditions: [
+          {
+            andConditions: [
+              {
+                column: 'branch',
+                comparator: 'EqualTo',
+                value: branchId,
+              },
+            ],
+          },
+        ],
       },
     },
     {

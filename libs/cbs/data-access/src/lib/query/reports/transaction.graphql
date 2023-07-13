@@ -382,3 +382,63 @@ query getMrTransactionReport($data: MRTransactionReportFilter!) {
     }
   }
 }
+
+query getFiscalYearTrialBalance($data: TrialSheetReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        fiscalTrialSheetReport(data: $data) {
+          data {
+            equityAndLiablities {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            expenses {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            income {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            assets {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            offBalance {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            orphanEntries {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+
+            equityAndLiablitiesTotal
+            assetsTotal
+            expenseTotal
+            incomeTotal
+            offBalanceTotal
+            orphanTotal
+
+            totalAssetExpense
+            totalLiablitiesIncome
+            totalProfitLoss
+          }
+        }
+      }
+    }
+  }
+}

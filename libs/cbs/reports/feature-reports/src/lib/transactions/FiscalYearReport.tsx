@@ -9,7 +9,7 @@ import {
   Scalars,
   TrialSheetReportFilter,
   useGetBranchListQuery,
-  useGetTrialSheetReportQuery,
+  useGetFiscalYearTrialBalanceQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { ReportCustomDateRange } from '@coop/cbs/reports/components';
@@ -44,7 +44,7 @@ export const FiscalYearReport = () => {
 
   const { isCbs } = useIsCbs();
 
-  const { data, isFetching } = useGetTrialSheetReportQuery(
+  const { data, isFetching } = useGetFiscalYearTrialBalanceQuery(
     {
       data: {
         period: {
@@ -61,29 +61,29 @@ export const FiscalYearReport = () => {
   );
 
   const assetsReport = sortCoa(
-    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.assets ??
+    (data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data?.assets ??
       []) as unknown as TrialSheetReportDataEntry[]
   );
   const equityAndLiablities = sortCoa(
-    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.equityAndLiablities ??
-      []) as unknown as TrialSheetReportDataEntry[]
+    (data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data
+      ?.equityAndLiablities ?? []) as unknown as TrialSheetReportDataEntry[]
   );
   const incomeReport = sortCoa(
-    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.income ??
+    (data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data?.income ??
       []) as unknown as TrialSheetReportDataEntry[]
   );
   const expensesReport = sortCoa(
-    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.expenses ??
+    (data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data?.expenses ??
       []) as unknown as TrialSheetReportDataEntry[]
   );
 
   const offBalanceSheetReport = sortCoa(
-    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.offBalance ??
+    (data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data?.offBalance ??
       []) as unknown as TrialSheetReportDataEntry[]
   );
 
   const unMappedCoaHeads = sortCoa(
-    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.orphanEntries ??
+    (data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data?.orphanEntries ??
       []) as unknown as TrialSheetReportDataEntry[]
   );
 
@@ -108,7 +108,7 @@ export const FiscalYearReport = () => {
               link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
             },
             {
-              label: 'Fiscal Year Transactions Report',
+              label: 'Fiscal Year Trial Balance',
               link: isCbs
                 ? '/reports/cbs/transactions/fiscal-year/new'
                 : '/accounting/reports/transactions/fiscal-year/new',
@@ -139,7 +139,7 @@ export const FiscalYearReport = () => {
               <COATable
                 type="Liabilities"
                 total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                  data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data
                     ?.equityAndLiablitiesTotal as unknown as TrialBalance
                 }
                 data={equityAndLiablities as TrialSheetReportDataEntry[]}
@@ -154,7 +154,7 @@ export const FiscalYearReport = () => {
               </Text>
               <COATable
                 total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                  data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data
                     ?.assetsTotal as unknown as TrialBalance
                 }
                 type="Assets"
@@ -171,7 +171,7 @@ export const FiscalYearReport = () => {
 
               <COATable
                 total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                  data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data
                     ?.expenseTotal as unknown as TrialBalance
                 }
                 type="Expenses"
@@ -187,7 +187,7 @@ export const FiscalYearReport = () => {
               </Text>
               <COATable
                 total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                  data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data
                     ?.incomeTotal as unknown as TrialBalance
                 }
                 type="Income"
@@ -204,7 +204,7 @@ export const FiscalYearReport = () => {
               <COATable
                 type="Off Balance"
                 total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                  data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data
                     ?.offBalanceTotal as unknown as TrialBalance
                 }
                 data={offBalanceSheetReport as TrialSheetReportDataEntry[]}
@@ -219,7 +219,7 @@ export const FiscalYearReport = () => {
               </Text>
               <COATable
                 total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                  data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data
                     ?.orphanTotal as unknown as TrialBalance
                 }
                 type="Unmapped COA Heads"
@@ -230,11 +230,11 @@ export const FiscalYearReport = () => {
 
           <CoaTotalTable
             totals={[
-              data?.report?.transactionReport?.financial?.trialSheetReport?.data?.totalProfitLoss ||
-                {},
-              data?.report?.transactionReport?.financial?.trialSheetReport?.data
+              data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data
+                ?.totalProfitLoss || {},
+              data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data
                 ?.totalAssetExpense || {},
-              data?.report?.transactionReport?.financial?.trialSheetReport?.data
+              data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data
                 ?.totalLiablitiesIncome || {},
             ]}
           />
