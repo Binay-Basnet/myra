@@ -17,6 +17,7 @@ type ChargesEditTable = {
   serviceType: AlternativeChannelServiceType;
   ledgerId: string;
   amount: string;
+  restrictTransaction: boolean;
 };
 
 export const AlternativeChannels = () => {
@@ -89,6 +90,12 @@ export const AlternativeChannels = () => {
                 header: 'Amount',
                 isNumeric: true,
                 cellWidth: 'auto',
+              },
+              {
+                accessor: 'restrictTransaction',
+                header: 'Restrict Transaction',
+                cellWidth: 'auto',
+                fieldType: 'switch',
               },
             ]}
           />

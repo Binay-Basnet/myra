@@ -1371,6 +1371,7 @@ export type AlternativeChannelCharges = {
   amount?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   ledgerId?: Maybe<Scalars['String']>;
+  restrictTransaction?: Maybe<Scalars['Boolean']>;
   serviceType?: Maybe<AlternativeChannelServiceType>;
 };
 
@@ -1378,6 +1379,7 @@ export type AlternativeChannelChargesInput = {
   amount?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   ledgerId?: InputMaybe<Scalars['String']>;
+  restrictTransaction?: InputMaybe<Scalars['Boolean']>;
   serviceType?: InputMaybe<AlternativeChannelServiceType>;
 };
 
@@ -4068,6 +4070,7 @@ export type DeductionComponentListEdges = {
 };
 
 export type DeductionComponentNode = {
+  abbr?: Maybe<Scalars['String']>;
   deductionFrequency?: Maybe<DeductionFrequencyEnum>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
@@ -6580,6 +6583,7 @@ export type FianancialTransactionReport = {
   bankGLStatementReport: BankGlStatementResult;
   charKhataReport: TrialSheetReportResult;
   dayBookReport: DayBookReportResult;
+  fiscalTrialSheetReport: TrialSheetReportResult;
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
   serviceCenterBalanceReport: SericeCenterStatementResult;
   tagKhataReport: TagKhataReportResult;
@@ -6606,6 +6610,10 @@ export type FianancialTransactionReportCharKhataReportArgs = {
 
 export type FianancialTransactionReportDayBookReportArgs = {
   data: DayBookReportFilter;
+};
+
+export type FianancialTransactionReportFiscalTrialSheetReportArgs = {
+  data: TrialSheetReportFilter;
 };
 
 export type FianancialTransactionReportMrTransactionReportArgs = {
@@ -17262,7 +17270,9 @@ export type SalaryStructureListEdges = {
 };
 
 export type SalaryStructureNode = {
+  deduction?: Maybe<Array<Maybe<SalaryStructureDeductionDetailsType>>>;
   description?: Maybe<Scalars['String']>;
+  earnings?: Maybe<Array<Maybe<SalaryStructureEarningDetailsType>>>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   status?: Maybe<SalaryStructureStatusEnum>;
@@ -35380,6 +35390,7 @@ export type GetAlternativeFeeAndChargesQuery = {
             serviceType?: AlternativeChannelServiceType | null;
             ledgerId?: string | null;
             amount?: string | null;
+            restrictTransaction?: boolean | null;
           } | null> | null;
         } | null;
       } | null;
@@ -60254,6 +60265,7 @@ export const GetAlternativeFeeAndChargesDocument = `
             serviceType
             ledgerId
             amount
+            restrictTransaction
           }
         }
       }
