@@ -1,0 +1,183 @@
+query getEarningComponent($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          earningComponent {
+            getEarningComponent(id: $id) {
+              data {
+                id
+                name
+                abbr
+                description
+                base_multiple
+                multiplier
+                isTaxApplicable
+                roundToNearestInteger
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getEarningComponentList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          earningComponent {
+            listEarningComponent(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  status
+                  description
+                  abbr
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getDeductionComponent($id: String!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          deductionComponent {
+            getDeductionComponent(id: $id) {
+              record {
+                id
+                name
+                abbr
+                description
+                deductionFrequency
+                baseMultiple
+                multiplier
+                roundToNearestInteger
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getDeductionComponentList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          deductionComponent {
+            listDeductionComponent(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  status
+                  deductionFrequency
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSalaryStructure($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          salaryStructure {
+            getSalaryStructure(id: $id) {
+              record {
+                id
+                name
+                payrollFrequency
+                description
+                salaryEarnings {
+                  component
+                  abbr
+                  amount
+                  baseMultiple
+                  multiplier
+                }
+                salaryDeduction {
+                  component
+                  abbr
+                  amount
+                  baseMultiple
+                  multiplier
+                }
+                modeOfPayment
+                salaryPaymentLedger
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSalaryStructureList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          salaryStructure {
+            listSalaryStructure(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                  status
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

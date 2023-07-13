@@ -23808,6 +23808,90 @@ export type SetEmployeeLeavePolicyMutation = {
   };
 };
 
+export type SetEarningComponentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: EarningComponentInput;
+}>;
+
+export type SetEarningComponentMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          earningComponent: {
+            upsertEarningComponent: {
+              recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetDeductionComponentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: InputDeductionComponent;
+}>;
+
+export type SetDeductionComponentMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          deductionComponent: {
+            upsertDeductionComponent: {
+              recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSalaryStructureMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: InputSalaryStructure;
+}>;
+
+export type SetSalaryStructureMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          salaryStructure: {
+            upsertSalaryStructure: {
+              recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type UpsertLedgerTagMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: LedgerTagInput;
@@ -36248,6 +36332,220 @@ export type GetLeavePolicyQuery = {
   };
 };
 
+export type GetEarningComponentQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetEarningComponentQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          earningComponent: {
+            getEarningComponent: {
+              data?: {
+                id?: string | null;
+                name?: string | null;
+                abbr?: string | null;
+                description?: string | null;
+                base_multiple?: string | null;
+                multiplier?: number | null;
+                isTaxApplicable?: boolean | null;
+                roundToNearestInteger?: boolean | null;
+                makeThisActive?: boolean | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEarningComponentListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEarningComponentListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          earningComponent: {
+            listEarningComponent: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: {
+                  id?: string | null;
+                  name?: string | null;
+                  status?: EarningComponentStatus | null;
+                  description?: string | null;
+                  abbr?: string | null;
+                };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDeductionComponentQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetDeductionComponentQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          deductionComponent: {
+            getDeductionComponent: {
+              record?: {
+                id?: string | null;
+                name?: string | null;
+                abbr: string;
+                description?: string | null;
+                deductionFrequency?: DeductionFrequencyEnum | null;
+                baseMultiple?: string | null;
+                multiplier?: number | null;
+                roundToNearestInteger?: boolean | null;
+                makeThisActive?: boolean | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDeductionComponentListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetDeductionComponentListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          deductionComponent: {
+            listDeductionComponent: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: {
+                  id?: string | null;
+                  name?: string | null;
+                  status?: DeductionStatusEnum | null;
+                  deductionFrequency?: DeductionFrequencyEnum | null;
+                };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSalaryStructureQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetSalaryStructureQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          salaryStructure: {
+            getSalaryStructure: {
+              record?: {
+                id?: string | null;
+                name?: string | null;
+                payrollFrequency?: PayrollFrequencyEnum | null;
+                description?: string | null;
+                modeOfPayment?: PaymentModeEnum | null;
+                salaryPaymentLedger?: LedgerPaymentEnum | null;
+                makeThisActive?: boolean | null;
+                salaryEarnings?: Array<{
+                  component?: string | null;
+                  abbr: string;
+                  amount?: number | null;
+                  baseMultiple?: string | null;
+                  multiplier?: number | null;
+                } | null> | null;
+                salaryDeduction?: Array<{
+                  component?: string | null;
+                  abbr: string;
+                  amount?: number | null;
+                  baseMultiple?: string | null;
+                  multiplier?: number | null;
+                } | null> | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSalaryStructureListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetSalaryStructureListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          salaryStructure: {
+            listSalaryStructure: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: {
+                  id?: string | null;
+                  name?: string | null;
+                  description?: string | null;
+                  status?: SalaryStructureStatusEnum | null;
+                };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type LedgerTagsListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -44677,6 +44975,116 @@ export const useSetEmployeeLeavePolicyMutation = <TError = unknown, TContext = u
     ['setEmployeeLeavePolicy'],
     useAxios<SetEmployeeLeavePolicyMutation, SetEmployeeLeavePolicyMutationVariables>(
       SetEmployeeLeavePolicyDocument
+    ),
+    options
+  );
+export const SetEarningComponentDocument = `
+    mutation setEarningComponent($id: ID, $input: EarningComponentInput!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          earningComponent {
+            upsertEarningComponent(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEarningComponentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEarningComponentMutation,
+    TError,
+    SetEarningComponentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetEarningComponentMutation, TError, SetEarningComponentMutationVariables, TContext>(
+    ['setEarningComponent'],
+    useAxios<SetEarningComponentMutation, SetEarningComponentMutationVariables>(
+      SetEarningComponentDocument
+    ),
+    options
+  );
+export const SetDeductionComponentDocument = `
+    mutation setDeductionComponent($id: ID, $input: InputDeductionComponent!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          deductionComponent {
+            upsertDeductionComponent(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetDeductionComponentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDeductionComponentMutation,
+    TError,
+    SetDeductionComponentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetDeductionComponentMutation,
+    TError,
+    SetDeductionComponentMutationVariables,
+    TContext
+  >(
+    ['setDeductionComponent'],
+    useAxios<SetDeductionComponentMutation, SetDeductionComponentMutationVariables>(
+      SetDeductionComponentDocument
+    ),
+    options
+  );
+export const SetSalaryStructureDocument = `
+    mutation setSalaryStructure($id: String, $input: InputSalaryStructure!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          salaryStructure {
+            upsertSalaryStructure(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSalaryStructureMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalaryStructureMutation,
+    TError,
+    SetSalaryStructureMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetSalaryStructureMutation, TError, SetSalaryStructureMutationVariables, TContext>(
+    ['setSalaryStructure'],
+    useAxios<SetSalaryStructureMutation, SetSalaryStructureMutationVariables>(
+      SetSalaryStructureDocument
     ),
     options
   );
@@ -61200,6 +61608,273 @@ export const useGetLeavePolicyQuery = <TData = GetLeavePolicyQuery, TError = unk
       null,
       variables
     ),
+    options
+  );
+export const GetEarningComponentDocument = `
+    query getEarningComponent($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          earningComponent {
+            getEarningComponent(id: $id) {
+              data {
+                id
+                name
+                abbr
+                description
+                base_multiple
+                multiplier
+                isTaxApplicable
+                roundToNearestInteger
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEarningComponentQuery = <TData = GetEarningComponentQuery, TError = unknown>(
+  variables: GetEarningComponentQueryVariables,
+  options?: UseQueryOptions<GetEarningComponentQuery, TError, TData>
+) =>
+  useQuery<GetEarningComponentQuery, TError, TData>(
+    ['getEarningComponent', variables],
+    useAxios<GetEarningComponentQuery, GetEarningComponentQueryVariables>(
+      GetEarningComponentDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEarningComponentListDocument = `
+    query getEarningComponentList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          earningComponent {
+            listEarningComponent(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  status
+                  description
+                  abbr
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEarningComponentListQuery = <
+  TData = GetEarningComponentListQuery,
+  TError = unknown
+>(
+  variables?: GetEarningComponentListQueryVariables,
+  options?: UseQueryOptions<GetEarningComponentListQuery, TError, TData>
+) =>
+  useQuery<GetEarningComponentListQuery, TError, TData>(
+    variables === undefined ? ['getEarningComponentList'] : ['getEarningComponentList', variables],
+    useAxios<GetEarningComponentListQuery, GetEarningComponentListQueryVariables>(
+      GetEarningComponentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDeductionComponentDocument = `
+    query getDeductionComponent($id: String!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          deductionComponent {
+            getDeductionComponent(id: $id) {
+              record {
+                id
+                name
+                abbr
+                description
+                deductionFrequency
+                baseMultiple
+                multiplier
+                roundToNearestInteger
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetDeductionComponentQuery = <TData = GetDeductionComponentQuery, TError = unknown>(
+  variables: GetDeductionComponentQueryVariables,
+  options?: UseQueryOptions<GetDeductionComponentQuery, TError, TData>
+) =>
+  useQuery<GetDeductionComponentQuery, TError, TData>(
+    ['getDeductionComponent', variables],
+    useAxios<GetDeductionComponentQuery, GetDeductionComponentQueryVariables>(
+      GetDeductionComponentDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDeductionComponentListDocument = `
+    query getDeductionComponentList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          deductionComponent {
+            listDeductionComponent(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  status
+                  deductionFrequency
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetDeductionComponentListQuery = <
+  TData = GetDeductionComponentListQuery,
+  TError = unknown
+>(
+  variables?: GetDeductionComponentListQueryVariables,
+  options?: UseQueryOptions<GetDeductionComponentListQuery, TError, TData>
+) =>
+  useQuery<GetDeductionComponentListQuery, TError, TData>(
+    variables === undefined
+      ? ['getDeductionComponentList']
+      : ['getDeductionComponentList', variables],
+    useAxios<GetDeductionComponentListQuery, GetDeductionComponentListQueryVariables>(
+      GetDeductionComponentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalaryStructureDocument = `
+    query getSalaryStructure($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          salaryStructure {
+            getSalaryStructure(id: $id) {
+              record {
+                id
+                name
+                payrollFrequency
+                description
+                salaryEarnings {
+                  component
+                  abbr
+                  amount
+                  baseMultiple
+                  multiplier
+                }
+                salaryDeduction {
+                  component
+                  abbr
+                  amount
+                  baseMultiple
+                  multiplier
+                }
+                modeOfPayment
+                salaryPaymentLedger
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetSalaryStructureQuery = <TData = GetSalaryStructureQuery, TError = unknown>(
+  variables: GetSalaryStructureQueryVariables,
+  options?: UseQueryOptions<GetSalaryStructureQuery, TError, TData>
+) =>
+  useQuery<GetSalaryStructureQuery, TError, TData>(
+    ['getSalaryStructure', variables],
+    useAxios<GetSalaryStructureQuery, GetSalaryStructureQueryVariables>(
+      GetSalaryStructureDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalaryStructureListDocument = `
+    query getSalaryStructureList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          salaryStructure {
+            listSalaryStructure(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                  status
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSalaryStructureListQuery = <
+  TData = GetSalaryStructureListQuery,
+  TError = unknown
+>(
+  variables?: GetSalaryStructureListQueryVariables,
+  options?: UseQueryOptions<GetSalaryStructureListQuery, TError, TData>
+) =>
+  useQuery<GetSalaryStructureListQuery, TError, TData>(
+    variables === undefined ? ['getSalaryStructureList'] : ['getSalaryStructureList', variables],
+    useAxios<GetSalaryStructureListQuery, GetSalaryStructureListQueryVariables>(
+      GetSalaryStructureListDocument
+    ).bind(null, variables),
     options
   );
 export const LedgerTagsListDocument = `
