@@ -5,17 +5,30 @@ import { TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { useGetBankAccountListQuery } from '@coop/cbs/data-access';
+import {
+  useGetBankAccountListQuery,
+  useGetBankListQuery,
+  useGetMemberFilterMappingQuery,
+} from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { debitCreditConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import {
+  debitCreditConverter,
+  getFilterQuery,
+  getPaginationQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 export const AccountingFeatureBankAccountsList = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
 
+  const { data: bankListData } = useGetBankListQuery();
+  const { data: filterMapping } = useGetMemberFilterMappingQuery();
+
   const { data, isLoading, refetch } = useGetBankAccountListQuery({
     pagination: getPaginationQuery(),
+    filter: getFilterQuery(),
   });
 
   const rowData = useMemo(() => data?.accounting?.bankAccounts?.list?.edges ?? [], [data]);
@@ -34,22 +47,38 @@ export const AccountingFeatureBankAccountsList = () => {
         },
       },
       {
+        id: 'bankId',
         accessorFn: (row) => row?.node?.bankName,
         header: t['bankAccountsBankName'],
+        enableColumnFilter: true,
+
         meta: {
           width: '25%',
+          filterMaps: {
+            list: bankListData?.bank?.bank?.list?.map((b) => ({ label: b?.name, value: b?.id })),
+          },
         },
       },
       {
+        id: 'branchId',
         accessorFn: (row) => row?.node?.branchName,
         header: 'Service Center',
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: filterMapping?.members?.filterMapping?.serviceCenter || [],
+          },
+        },
       },
 
       {
+        id: 'balance',
         header: t['bankAccountsBankBalance'],
         meta: {
           isNumeric: true,
         },
+        enableColumnFilter: true,
+        filterFn: 'amount',
         accessorFn: (row) =>
           debitCreditConverter(row?.node?.balance as string, row?.node?.balanceType as string),
       },
@@ -73,7 +102,7 @@ export const AccountingFeatureBankAccountsList = () => {
           ),
       },
     ],
-    [t]
+    [t, filterMapping, bankListData]
   );
 
   useEffect(() => {

@@ -108,7 +108,7 @@ export const FiscalYearReport = () => {
               link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
             },
             {
-              label: 'Fiscal Year Transactions Report',
+              label: 'Fiscal Year Trial Balance',
               link: isCbs
                 ? '/reports/cbs/transactions/fiscal-year/new'
                 : '/accounting/reports/transactions/fiscal-year/new',

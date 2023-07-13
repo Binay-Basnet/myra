@@ -97,7 +97,7 @@ query getEndOfDayDateData {
   }
 }
 
-query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination: Pagination) {
+query getTellerTransactionListData($filter: Filter, $pagination: Pagination) {
   transaction {
     listTellerTransaction(filter: $filter, pagination: $pagination) {
       totalCount

@@ -1,0 +1,56 @@
+mutation setEarningComponent($id: ID, $input: EarningComponentInput!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          earningComponent {
+            upsertEarningComponent(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setDeductionComponent($id: ID, $input: InputDeductionComponent!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          deductionComponent {
+            upsertDeductionComponent(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setSalaryStructure($id: String, $input: InputSalaryStructure!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          salaryStructure {
+            upsertSalaryStructure(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

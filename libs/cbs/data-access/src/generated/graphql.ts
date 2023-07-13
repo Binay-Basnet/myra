@@ -1818,7 +1818,7 @@ export type BankAccountQueryDetailsArgs = {
 
 export type BankAccountQueryListArgs = {
   currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
-  filter?: InputMaybe<BankAccountFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -3015,8 +3015,7 @@ export type ChartsOfAccountSettingsQueryCoaAccountDetailsArgs = {
 };
 
 export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
-  branchId?: InputMaybe<Array<Scalars['String']>>;
-  filter?: InputMaybe<CoaListFilter>;
+  filter?: InputMaybe<Filter>;
   flag?: InputMaybe<CoaListFlag>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -9928,7 +9927,7 @@ export type JournalVoucherQuery = {
 };
 
 export type JournalVoucherQueryListArgs = {
-  filter?: InputMaybe<JournalVoucherFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -12299,7 +12298,7 @@ export type LoanAccountQueryRemainingPaymentsArgs = {
 };
 
 export type LoanAccountQueryRepaymentListArgs = {
-  filter?: InputMaybe<LoanRepaymentFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -13436,16 +13435,6 @@ export type LoanRepaymentDetail = {
 export type LoanRepaymentEdge = {
   cursor: Scalars['Cursor'];
   node?: Maybe<LoanRepaymentDetail>;
-};
-
-export type LoanRepaymentFilter = {
-  accountName?: InputMaybe<Scalars['String']>;
-  filterMode?: InputMaybe<Filter_Mode>;
-  loanAccountId?: InputMaybe<Scalars['String']>;
-  memberCode?: InputMaybe<Scalars['String']>;
-  memberId?: InputMaybe<Scalars['String']>;
-  memberName?: InputMaybe<Scalars['String']>;
-  productName?: InputMaybe<Scalars['String']>;
 };
 
 export type LoanRepaymentInput = {
@@ -16928,27 +16917,27 @@ export type RequestsList = {
 };
 
 export type RequestsListBlockChequeArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListChequeBookRequestArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListLoanRequestArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListMembershipRequestArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListWithdrawViaCollectorArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -19183,7 +19172,7 @@ export type TellerBankTransferQuery = {
 };
 
 export type TellerBankTransferQueryListArgs = {
-  filter?: InputMaybe<TellerBankTransferFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -19540,9 +19529,8 @@ export type TransactionQuery = {
 };
 
 export type TransactionQueryCashInTransitArgs = {
-  filter?: InputMaybe<CashInTransitFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
-  transferType: CashInTransitTransferType;
 };
 
 export type TransactionQueryCashInTransitDetailArgs = {
@@ -19565,13 +19553,12 @@ export type TransactionQueryListDepositArgs = {
 };
 
 export type TransactionQueryListServiceCenterCashTransferArgs = {
-  filter?: InputMaybe<ServiceCenterTransactionFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
-  transferMode: IbtType;
 };
 
 export type TransactionQueryListTellerTransactionArgs = {
-  filter?: InputMaybe<TellerTransactionFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -23821,6 +23808,90 @@ export type SetEmployeeLeavePolicyMutation = {
   };
 };
 
+export type SetEarningComponentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: EarningComponentInput;
+}>;
+
+export type SetEarningComponentMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          earningComponent: {
+            upsertEarningComponent: {
+              recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetDeductionComponentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: InputDeductionComponent;
+}>;
+
+export type SetDeductionComponentMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          deductionComponent: {
+            upsertDeductionComponent: {
+              recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSalaryStructureMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: InputSalaryStructure;
+}>;
+
+export type SetSalaryStructureMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          salaryStructure: {
+            upsertSalaryStructure: {
+              recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type UpsertLedgerTagMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: LedgerTagInput;
@@ -26213,7 +26284,7 @@ export type GetAllAccountsFilterMappingQuery = {
 };
 
 export type GetBankAccountListQueryVariables = Exact<{
-  filter?: InputMaybe<BankAccountFilter>;
+  filter?: InputMaybe<Filter>;
   currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -26498,7 +26569,7 @@ export type GetInvestmentTransactionsListDataQuery = {
 
 export type GetJournalVoucherListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<JournalVoucherFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetJournalVoucherListQuery = {
@@ -30534,7 +30605,7 @@ export type GetLoanPreviewQuery = {
 
 export type GetLoanRepaymentListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
-  filter?: InputMaybe<LoanRepaymentFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetLoanRepaymentListQuery = {
@@ -35093,7 +35164,7 @@ export type GetMrTransactionReportQuery = {
 
 export type GetChequeBookRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetChequeBookRequestsQuery = {
@@ -35131,7 +35202,7 @@ export type GetChequeBookRequestsQuery = {
 
 export type GetWithdrawViaCollectorQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetWithdrawViaCollectorQuery = {
@@ -35163,7 +35234,7 @@ export type GetWithdrawViaCollectorQuery = {
 
 export type GetLoanRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetLoanRequestsQuery = {
@@ -35192,7 +35263,7 @@ export type GetLoanRequestsQuery = {
 
 export type GetBlockChequeListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetBlockChequeListQuery = {
@@ -35223,7 +35294,7 @@ export type GetBlockChequeListQuery = {
 
 export type GetMemberRequestListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetMemberRequestListQuery = {
@@ -35608,9 +35679,8 @@ export type GetCoaAccountsUnderLeafListQuery = {
 };
 
 export type GetCoaAccountListQueryVariables = Exact<{
-  branchId?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<CoaListFilter>;
+  filter?: InputMaybe<Filter>;
   flag?: InputMaybe<CoaListFlag>;
 }>;
 
@@ -36254,6 +36324,220 @@ export type GetLeavePolicyQuery = {
                 | MutationError_NotFoundError_Fragment
                 | MutationError_ServerError_Fragment
                 | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEarningComponentQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetEarningComponentQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          earningComponent: {
+            getEarningComponent: {
+              data?: {
+                id?: string | null;
+                name?: string | null;
+                abbr?: string | null;
+                description?: string | null;
+                base_multiple?: string | null;
+                multiplier?: number | null;
+                isTaxApplicable?: boolean | null;
+                roundToNearestInteger?: boolean | null;
+                makeThisActive?: boolean | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEarningComponentListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEarningComponentListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          earningComponent: {
+            listEarningComponent: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: {
+                  id?: string | null;
+                  name?: string | null;
+                  status?: EarningComponentStatus | null;
+                  description?: string | null;
+                  abbr?: string | null;
+                };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDeductionComponentQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetDeductionComponentQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          deductionComponent: {
+            getDeductionComponent: {
+              record?: {
+                id?: string | null;
+                name?: string | null;
+                abbr: string;
+                description?: string | null;
+                deductionFrequency?: DeductionFrequencyEnum | null;
+                baseMultiple?: string | null;
+                multiplier?: number | null;
+                roundToNearestInteger?: boolean | null;
+                makeThisActive?: boolean | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDeductionComponentListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetDeductionComponentListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          deductionComponent: {
+            listDeductionComponent: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: {
+                  id?: string | null;
+                  name?: string | null;
+                  status?: DeductionStatusEnum | null;
+                  deductionFrequency?: DeductionFrequencyEnum | null;
+                };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSalaryStructureQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetSalaryStructureQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          salaryStructure: {
+            getSalaryStructure: {
+              record?: {
+                id?: string | null;
+                name?: string | null;
+                payrollFrequency?: PayrollFrequencyEnum | null;
+                description?: string | null;
+                modeOfPayment?: PaymentModeEnum | null;
+                salaryPaymentLedger?: LedgerPaymentEnum | null;
+                makeThisActive?: boolean | null;
+                salaryEarnings?: Array<{
+                  component?: string | null;
+                  abbr: string;
+                  amount?: number | null;
+                  baseMultiple?: string | null;
+                  multiplier?: number | null;
+                } | null> | null;
+                salaryDeduction?: Array<{
+                  component?: string | null;
+                  abbr: string;
+                  amount?: number | null;
+                  baseMultiple?: string | null;
+                  multiplier?: number | null;
+                } | null> | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSalaryStructureListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetSalaryStructureListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          salaryStructure: {
+            listSalaryStructure: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: {
+                  id?: string | null;
+                  name?: string | null;
+                  description?: string | null;
+                  status?: SalaryStructureStatusEnum | null;
+                };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
             };
           };
         };
@@ -38801,7 +39085,7 @@ export type GetEndOfDayDateDataQuery = {
 };
 
 export type GetTellerTransactionListDataQueryVariables = Exact<{
-  filter?: InputMaybe<TellerTransactionFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -39492,8 +39776,7 @@ export type GetTransferDetailQuery = {
 };
 
 export type GetCashInTransitListQueryVariables = Exact<{
-  transferType: CashInTransitTransferType;
-  filter?: InputMaybe<CashInTransitFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -39570,9 +39853,8 @@ export type GetCashInTransitDetailQuery = {
 };
 
 export type GetServiceCenterTransferListQueryVariables = Exact<{
-  filter?: InputMaybe<ServiceCenterTransactionFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
-  transferMode: IbtType;
 }>;
 
 export type GetServiceCenterTransferListQuery = {
@@ -39607,7 +39889,7 @@ export type GetServiceCenterTransferListQuery = {
 };
 
 export type GetBankTransferListQueryVariables = Exact<{
-  filter?: InputMaybe<TellerBankTransferFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -44696,6 +44978,116 @@ export const useSetEmployeeLeavePolicyMutation = <TError = unknown, TContext = u
     ),
     options
   );
+export const SetEarningComponentDocument = `
+    mutation setEarningComponent($id: ID, $input: EarningComponentInput!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          earningComponent {
+            upsertEarningComponent(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEarningComponentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEarningComponentMutation,
+    TError,
+    SetEarningComponentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetEarningComponentMutation, TError, SetEarningComponentMutationVariables, TContext>(
+    ['setEarningComponent'],
+    useAxios<SetEarningComponentMutation, SetEarningComponentMutationVariables>(
+      SetEarningComponentDocument
+    ),
+    options
+  );
+export const SetDeductionComponentDocument = `
+    mutation setDeductionComponent($id: ID, $input: InputDeductionComponent!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          deductionComponent {
+            upsertDeductionComponent(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetDeductionComponentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDeductionComponentMutation,
+    TError,
+    SetDeductionComponentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetDeductionComponentMutation,
+    TError,
+    SetDeductionComponentMutationVariables,
+    TContext
+  >(
+    ['setDeductionComponent'],
+    useAxios<SetDeductionComponentMutation, SetDeductionComponentMutationVariables>(
+      SetDeductionComponentDocument
+    ),
+    options
+  );
+export const SetSalaryStructureDocument = `
+    mutation setSalaryStructure($id: String, $input: InputSalaryStructure!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          salaryStructure {
+            upsertSalaryStructure(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSalaryStructureMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalaryStructureMutation,
+    TError,
+    SetSalaryStructureMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetSalaryStructureMutation, TError, SetSalaryStructureMutationVariables, TContext>(
+    ['setSalaryStructure'],
+    useAxios<SetSalaryStructureMutation, SetSalaryStructureMutationVariables>(
+      SetSalaryStructureDocument
+    ),
+    options
+  );
 export const UpsertLedgerTagDocument = `
     mutation upsertLedgerTag($id: ID, $data: LedgerTagInput!) {
   settings {
@@ -48093,7 +48485,7 @@ export const useGetAllAccountsFilterMappingQuery = <
     options
   );
 export const GetBankAccountListDocument = `
-    query getBankAccountList($filter: BankAccountFilter, $currentBranchOnly: Boolean, $pagination: Pagination) {
+    query getBankAccountList($filter: Filter, $currentBranchOnly: Boolean, $pagination: Pagination) {
   accounting {
     bankAccounts {
       list(
@@ -48463,7 +48855,7 @@ export const useGetInvestmentTransactionsListDataQuery = <
     options
   );
 export const GetJournalVoucherListDocument = `
-    query getJournalVoucherList($pagination: Pagination, $filter: JournalVoucherFilter) {
+    query getJournalVoucherList($pagination: Pagination, $filter: Filter) {
   accounting {
     journalVoucher {
       list(filter: $filter, pagination: $pagination) {
@@ -53637,7 +54029,7 @@ export const useGetLoanPreviewQuery = <TData = GetLoanPreviewQuery, TError = unk
     options
   );
 export const GetLoanRepaymentListDocument = `
-    query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) {
+    query getLoanRepaymentList($paginate: Pagination, $filter: Filter) {
   loanAccount {
     repaymentList(paginate: $paginate, filter: $filter) {
       totalCount
@@ -59572,7 +59964,7 @@ export const useGetMrTransactionReportQuery = <
     options
   );
 export const GetChequeBookRequestsDocument = `
-    query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
+    query getChequeBookRequests($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       chequeBookRequest(paginate: $pagination, filter: $filter) {
@@ -59619,7 +60011,7 @@ export const useGetChequeBookRequestsQuery = <TData = GetChequeBookRequestsQuery
     options
   );
 export const GetWithdrawViaCollectorDocument = `
-    query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter) {
+    query getWithdrawViaCollector($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       withdrawViaCollector(paginate: $pagination, filter: $filter) {
@@ -59663,7 +60055,7 @@ export const useGetWithdrawViaCollectorQuery = <
     options
   );
 export const GetLoanRequestsDocument = `
-    query getLoanRequests($pagination: Pagination, $filter: RequestFilter) {
+    query getLoanRequests($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       loanRequest(filter: $filter, paginate: $pagination) {
@@ -59702,7 +60094,7 @@ export const useGetLoanRequestsQuery = <TData = GetLoanRequestsQuery, TError = u
     options
   );
 export const GetBlockChequeListDocument = `
-    query getBlockChequeList($pagination: Pagination, $filter: RequestFilter) {
+    query getBlockChequeList($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       blockCheque(filter: $filter, paginate: $pagination) {
@@ -59742,7 +60134,7 @@ export const useGetBlockChequeListQuery = <TData = GetBlockChequeListQuery, TErr
     options
   );
 export const GetMemberRequestListDocument = `
-    query getMemberRequestList($pagination: Pagination, $filter: RequestFilter) {
+    query getMemberRequestList($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       membershipRequest(filter: $filter, paginate: $pagination) {
@@ -60293,15 +60685,10 @@ export const useGetCoaAccountsUnderLeafListQuery = <
     options
   );
 export const GetCoaAccountListDocument = `
-    query getCoaAccountList($branchId: [String!], $pagination: Pagination, $filter: COAListFilter, $flag: COAListFlag) {
+    query getCoaAccountList($pagination: Pagination, $filter: Filter, $flag: COAListFlag) {
   settings {
     chartsOfAccount {
-      coaAccountList(
-        branchId: $branchId
-        pagination: $pagination
-        filter: $filter
-        flag: $flag
-      ) {
+      coaAccountList(pagination: $pagination, filter: $filter, flag: $flag) {
         edges {
           node {
             accountCode
@@ -61221,6 +61608,273 @@ export const useGetLeavePolicyQuery = <TData = GetLeavePolicyQuery, TError = unk
       null,
       variables
     ),
+    options
+  );
+export const GetEarningComponentDocument = `
+    query getEarningComponent($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          earningComponent {
+            getEarningComponent(id: $id) {
+              data {
+                id
+                name
+                abbr
+                description
+                base_multiple
+                multiplier
+                isTaxApplicable
+                roundToNearestInteger
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEarningComponentQuery = <TData = GetEarningComponentQuery, TError = unknown>(
+  variables: GetEarningComponentQueryVariables,
+  options?: UseQueryOptions<GetEarningComponentQuery, TError, TData>
+) =>
+  useQuery<GetEarningComponentQuery, TError, TData>(
+    ['getEarningComponent', variables],
+    useAxios<GetEarningComponentQuery, GetEarningComponentQueryVariables>(
+      GetEarningComponentDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEarningComponentListDocument = `
+    query getEarningComponentList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          earningComponent {
+            listEarningComponent(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  status
+                  description
+                  abbr
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEarningComponentListQuery = <
+  TData = GetEarningComponentListQuery,
+  TError = unknown
+>(
+  variables?: GetEarningComponentListQueryVariables,
+  options?: UseQueryOptions<GetEarningComponentListQuery, TError, TData>
+) =>
+  useQuery<GetEarningComponentListQuery, TError, TData>(
+    variables === undefined ? ['getEarningComponentList'] : ['getEarningComponentList', variables],
+    useAxios<GetEarningComponentListQuery, GetEarningComponentListQueryVariables>(
+      GetEarningComponentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDeductionComponentDocument = `
+    query getDeductionComponent($id: String!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          deductionComponent {
+            getDeductionComponent(id: $id) {
+              record {
+                id
+                name
+                abbr
+                description
+                deductionFrequency
+                baseMultiple
+                multiplier
+                roundToNearestInteger
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetDeductionComponentQuery = <TData = GetDeductionComponentQuery, TError = unknown>(
+  variables: GetDeductionComponentQueryVariables,
+  options?: UseQueryOptions<GetDeductionComponentQuery, TError, TData>
+) =>
+  useQuery<GetDeductionComponentQuery, TError, TData>(
+    ['getDeductionComponent', variables],
+    useAxios<GetDeductionComponentQuery, GetDeductionComponentQueryVariables>(
+      GetDeductionComponentDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDeductionComponentListDocument = `
+    query getDeductionComponentList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          deductionComponent {
+            listDeductionComponent(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  status
+                  deductionFrequency
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetDeductionComponentListQuery = <
+  TData = GetDeductionComponentListQuery,
+  TError = unknown
+>(
+  variables?: GetDeductionComponentListQueryVariables,
+  options?: UseQueryOptions<GetDeductionComponentListQuery, TError, TData>
+) =>
+  useQuery<GetDeductionComponentListQuery, TError, TData>(
+    variables === undefined
+      ? ['getDeductionComponentList']
+      : ['getDeductionComponentList', variables],
+    useAxios<GetDeductionComponentListQuery, GetDeductionComponentListQueryVariables>(
+      GetDeductionComponentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalaryStructureDocument = `
+    query getSalaryStructure($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          salaryStructure {
+            getSalaryStructure(id: $id) {
+              record {
+                id
+                name
+                payrollFrequency
+                description
+                salaryEarnings {
+                  component
+                  abbr
+                  amount
+                  baseMultiple
+                  multiplier
+                }
+                salaryDeduction {
+                  component
+                  abbr
+                  amount
+                  baseMultiple
+                  multiplier
+                }
+                modeOfPayment
+                salaryPaymentLedger
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetSalaryStructureQuery = <TData = GetSalaryStructureQuery, TError = unknown>(
+  variables: GetSalaryStructureQueryVariables,
+  options?: UseQueryOptions<GetSalaryStructureQuery, TError, TData>
+) =>
+  useQuery<GetSalaryStructureQuery, TError, TData>(
+    ['getSalaryStructure', variables],
+    useAxios<GetSalaryStructureQuery, GetSalaryStructureQueryVariables>(
+      GetSalaryStructureDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalaryStructureListDocument = `
+    query getSalaryStructureList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          salaryStructure {
+            listSalaryStructure(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                  status
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSalaryStructureListQuery = <
+  TData = GetSalaryStructureListQuery,
+  TError = unknown
+>(
+  variables?: GetSalaryStructureListQueryVariables,
+  options?: UseQueryOptions<GetSalaryStructureListQuery, TError, TData>
+) =>
+  useQuery<GetSalaryStructureListQuery, TError, TData>(
+    variables === undefined ? ['getSalaryStructureList'] : ['getSalaryStructureList', variables],
+    useAxios<GetSalaryStructureListQuery, GetSalaryStructureListQueryVariables>(
+      GetSalaryStructureListDocument
+    ).bind(null, variables),
     options
   );
 export const LedgerTagsListDocument = `
@@ -64755,7 +65409,7 @@ export const useGetEndOfDayDateDataQuery = <TData = GetEndOfDayDateDataQuery, TE
     options
   );
 export const GetTellerTransactionListDataDocument = `
-    query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination: Pagination) {
+    query getTellerTransactionListData($filter: Filter, $pagination: Pagination) {
   transaction {
     listTellerTransaction(filter: $filter, pagination: $pagination) {
       totalCount
@@ -65715,13 +66369,9 @@ export const useGetTransferDetailQuery = <TData = GetTransferDetailQuery, TError
     options
   );
 export const GetCashInTransitListDocument = `
-    query getCashInTransitList($transferType: CashInTransitTransferType!, $filter: CashInTransitFilter, $pagination: Pagination) {
+    query getCashInTransitList($filter: Filter, $pagination: Pagination) {
   transaction {
-    cashInTransit(
-      transferType: $transferType
-      filter: $filter
-      pagination: $pagination
-    ) {
+    cashInTransit(filter: $filter, pagination: $pagination) {
       totalCount
       pageInfo {
         hasNextPage
@@ -65755,11 +66405,11 @@ export const GetCashInTransitListDocument = `
 }
     `;
 export const useGetCashInTransitListQuery = <TData = GetCashInTransitListQuery, TError = unknown>(
-  variables: GetCashInTransitListQueryVariables,
+  variables?: GetCashInTransitListQueryVariables,
   options?: UseQueryOptions<GetCashInTransitListQuery, TError, TData>
 ) =>
   useQuery<GetCashInTransitListQuery, TError, TData>(
-    ['getCashInTransitList', variables],
+    variables === undefined ? ['getCashInTransitList'] : ['getCashInTransitList', variables],
     useAxios<GetCashInTransitListQuery, GetCashInTransitListQueryVariables>(
       GetCashInTransitListDocument
     ).bind(null, variables),
@@ -65815,13 +66465,9 @@ export const useGetCashInTransitDetailQuery = <
     options
   );
 export const GetServiceCenterTransferListDocument = `
-    query getServiceCenterTransferList($filter: ServiceCenterTransactionFilter, $pagination: Pagination, $transferMode: IBTType!) {
+    query getServiceCenterTransferList($filter: Filter, $pagination: Pagination) {
   transaction {
-    listServiceCenterCashTransfer(
-      filter: $filter
-      pagination: $pagination
-      transferMode: $transferMode
-    ) {
+    listServiceCenterCashTransfer(filter: $filter, pagination: $pagination) {
       totalCount
       pageInfo {
         startCursor
@@ -65854,18 +66500,20 @@ export const useGetServiceCenterTransferListQuery = <
   TData = GetServiceCenterTransferListQuery,
   TError = unknown
 >(
-  variables: GetServiceCenterTransferListQueryVariables,
+  variables?: GetServiceCenterTransferListQueryVariables,
   options?: UseQueryOptions<GetServiceCenterTransferListQuery, TError, TData>
 ) =>
   useQuery<GetServiceCenterTransferListQuery, TError, TData>(
-    ['getServiceCenterTransferList', variables],
+    variables === undefined
+      ? ['getServiceCenterTransferList']
+      : ['getServiceCenterTransferList', variables],
     useAxios<GetServiceCenterTransferListQuery, GetServiceCenterTransferListQueryVariables>(
       GetServiceCenterTransferListDocument
     ).bind(null, variables),
     options
   );
 export const GetBankTransferListDocument = `
-    query getBankTransferList($filter: TellerBankTransferFilter, $pagination: Pagination) {
+    query getBankTransferList($filter: Filter, $pagination: Pagination) {
   transaction {
     tellerBankTransfer {
       list(filter: $filter, pagination: $pagination) {

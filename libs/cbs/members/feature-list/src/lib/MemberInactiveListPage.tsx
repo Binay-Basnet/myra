@@ -8,10 +8,16 @@ import { Column, Table } from '@myra-ui/table';
 import {
   useDeleteDraftMutation,
   useGetGeneralMemberSettingsDataQuery,
+  useGetMemberFilterMappingQuery,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
 import { formatTableAddress, localizedDate, ROUTES } from '@coop/cbs/utils';
-import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import {
+  featureCode,
+  getFilterQuery,
+  getPaginationQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { forms, Page } from './MemberLayout';
 
@@ -43,6 +49,8 @@ export const MemberInactiveListPage = () => {
   const objState = router?.query['objState'];
 
   const { data: memberTypeData } = useGetGeneralMemberSettingsDataQuery();
+  const { data: memberFilterData } = useGetMemberFilterMappingQuery();
+
   const memberTypes =
     memberTypeData?.settings?.general?.KYM?.general?.generalMember?.record?.memberType;
 
@@ -58,20 +66,7 @@ export const MemberInactiveListPage = () => {
   const { data, isFetching, refetch } = useGetMemberListQuery(
     {
       pagination: getPaginationQuery(),
-      filter: {
-        query: searchTerm,
-        orConditions: [
-          {
-            andConditions: [
-              {
-                column: 'objState',
-                comparator: 'EqualTo',
-                value: 'INACTIVE',
-              },
-            ],
-          },
-        ],
-      },
+      filter: getFilterQuery({ objState: { value: 'INACTIVE', compare: '=' } }),
     },
     {
       staleTime: 0,
@@ -88,9 +83,12 @@ export const MemberInactiveListPage = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'inactiveDate',
         header: 'Inactive Date',
         accessorFn: (row) => localizedDate(row?.node?.inactiveDate),
         cell: (row) => localizedDate(row?.cell?.row?.original?.node?.inactiveDate),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
         meta: {
           width: '100px',
         },
@@ -144,10 +142,16 @@ export const MemberInactiveListPage = () => {
         },
       },
       {
+        id: 'serviceCenter',
         header: 'Service Center',
         accessorFn: (row) => row?.node?.branch,
+        enableColumnFilter: true,
+
         meta: {
           width: '120px',
+          filterMaps: {
+            list: memberFilterData?.members?.filterMapping?.serviceCenter || [],
+          },
         },
       },
 
@@ -253,7 +257,7 @@ export const MemberInactiveListPage = () => {
         },
       },
     ],
-    [t, objState]
+    [t, objState, memberFilterData?.members?.filterMapping?.serviceCenter]
   );
 
   const deleteMember = useCallback(async () => {
