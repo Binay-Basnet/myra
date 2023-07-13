@@ -99,6 +99,7 @@ query getDeductionComponentList($filter: Filter, $pagination: Pagination) {
                   name
                   status
                   deductionFrequency
+                  abbr
                 }
                 cursor
               }

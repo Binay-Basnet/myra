@@ -36502,6 +36502,7 @@ export type GetDeductionComponentListQuery = {
                   name?: string | null;
                   status?: DeductionStatusEnum | null;
                   deductionFrequency?: DeductionFrequencyEnum | null;
+                  abbr?: string | null;
                 };
               } | null> | null;
               pageInfo?: PaginationFragment | null;
@@ -61798,6 +61799,7 @@ export const GetDeductionComponentListDocument = `
                   name
                   status
                   deductionFrequency
+                  abbr
                 }
                 cursor
               }
