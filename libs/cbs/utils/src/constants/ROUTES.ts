@@ -203,6 +203,8 @@ export const ROUTES = {
 
   SETTINGS_REPORTING_TAGS_LIST: '/settings/general/reporting-tags/list',
 
+  SETTINGS_GENERAL_TRANSACTION_CONSTRAINTS_LIST: '/settings/general/transaction-constraints/list',
+
   /* NOT INDEXED BY GLOBAL SEARCH */
 
   CBS_ACCOUNT_OPEN_EDIT: '/cbs/savings/account-open/edit',

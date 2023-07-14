@@ -38635,6 +38635,49 @@ export type GetSettingsShareTransferDataQuery = {
   };
 };
 
+export type TransactionConstraintsListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type TransactionConstraintsListQuery = {
+  settings: {
+    transactionConstraint: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          objState?: ObjState | null;
+          valueDate?: Record<'local' | 'en' | 'np', string> | null;
+          effectiveSince?: Record<'local' | 'en' | 'np', string> | null;
+          effectiveTill?: Record<'local' | 'en' | 'np', string> | null;
+          txnType?: LedgerType | null;
+          ledgerId?: string | null;
+          accountType?: string | null;
+          coaHead?: string | null;
+          user?: string | null;
+          initiationType?: string | null;
+          branch?: { name?: string | null } | null;
+          member?: {
+            id: string;
+            code: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            profilePicUrl?: string | null;
+          } | null;
+          account?: { ID: string; accountName?: string | null } | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
+
 export type GetSettingsUserListDataQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
@@ -64799,6 +64842,66 @@ export const useGetSettingsShareTransferDataQuery = <
       : ['getSettingsShareTransferData', variables],
     useAxios<GetSettingsShareTransferDataQuery, GetSettingsShareTransferDataQueryVariables>(
       GetSettingsShareTransferDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const TransactionConstraintsListDocument = `
+    query transactionConstraintsList($filter: Filter, $pagination: Pagination) {
+  settings {
+    transactionConstraint(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          objState
+          valueDate
+          branch {
+            name
+          }
+          member {
+            id
+            code
+            name
+            profilePicUrl
+          }
+          account {
+            ID
+            accountName
+          }
+          effectiveSince
+          effectiveTill
+          txnType
+          ledgerId
+          accountType
+          coaHead
+          user
+          initiationType
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useTransactionConstraintsListQuery = <
+  TData = TransactionConstraintsListQuery,
+  TError = unknown
+>(
+  variables?: TransactionConstraintsListQueryVariables,
+  options?: UseQueryOptions<TransactionConstraintsListQuery, TError, TData>
+) =>
+  useQuery<TransactionConstraintsListQuery, TError, TData>(
+    variables === undefined
+      ? ['transactionConstraintsList']
+      : ['transactionConstraintsList', variables],
+    useAxios<TransactionConstraintsListQuery, TransactionConstraintsListQueryVariables>(
+      TransactionConstraintsListDocument
     ).bind(null, variables),
     options
   );

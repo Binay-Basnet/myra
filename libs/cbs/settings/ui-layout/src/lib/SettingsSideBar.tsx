@@ -96,6 +96,11 @@ const tabList: TabList[] = [
     aclKey: 'SETTINGS_LOAN_PRODUCTS',
     route: ROUTES.SETTINGS_GENERAL_LP_LIST,
   },
+  {
+    label: 'Transaction Constraints',
+    aclKey: 'SETTINGS_LOAN_PRODUCTS',
+    route: ROUTES.SETTINGS_GENERAL_TRANSACTION_CONSTRAINTS_LIST,
+  },
 ];
 
 const otherTabList: TabList[] = [
