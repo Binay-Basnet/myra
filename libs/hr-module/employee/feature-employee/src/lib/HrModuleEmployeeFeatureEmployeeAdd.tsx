@@ -191,11 +191,13 @@ export const EmployeeAddForm = () => {
                 <FormCheckbox label="Is Member" name="isCoopMember" />
               </GridItem>
               {isCoopMemberWatch && (
-                <FormMemberSelect
-                  label="Member"
-                  name="memberId"
-                  memberType={MemberType?.Individual}
-                />
+                <GridItem colSpan={3}>
+                  <FormMemberSelect
+                    label="Member"
+                    name="memberId"
+                    memberType={MemberType?.Individual}
+                  />
+                </GridItem>
               )}
             </FormSection>
             <SectionContainer>

@@ -55,6 +55,10 @@ query getTransactionLists($filter: EbankingTransactionFilter, $pagination: Pagin
           accountNumber
         }
         recentTransactions(filter: $filter, paginate: $pagination) {
+          summary {
+            accountBalanceMap
+          }
+
           edges {
             node {
               id
@@ -189,9 +193,10 @@ query getTotalExpense {
   eBanking {
     account {
       list {
-        recentTransactions(paginate: { after: "", first: 1 }) {
+        recentTransactions(paginate: { after: "", first: -1 }) {
           summary {
             expensesThisMonth
+            accountBalanceMap
           }
         }
       }

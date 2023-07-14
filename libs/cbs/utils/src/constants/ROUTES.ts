@@ -203,6 +203,8 @@ export const ROUTES = {
 
   SETTINGS_REPORTING_TAGS_LIST: '/settings/general/reporting-tags/list',
 
+  SETTINGS_GENERAL_TRANSACTION_CONSTRAINTS_LIST: '/settings/general/transaction-constraints/list',
+
   /* NOT INDEXED BY GLOBAL SEARCH */
 
   CBS_ACCOUNT_OPEN_EDIT: '/cbs/savings/account-open/edit',
@@ -435,11 +437,11 @@ export const ROUTES = {
 
   HRMODULE_EMPLOYEES_EDIT: '/hr/employee/employee/edit',
 
-  HRMODULE_EMPLOYEES_SETTINGS: '/settings/general/hcm/employee',
-  HRMODULE_EMPLOYEES_LEAVE_SETTINGS: '/settings/general/hcm/employee/leave',
+  HRMODULE_EMPLOYEES_SETTINGS: '/settings/general/hcm-employee',
+  HRMODULE_EMPLOYEES_LEAVE_SETTINGS: '/settings/general/hcm-employee/leave',
 
-  HRMODULE_PAYROLL_SALARY_COMPONENTS_SETTINGS: '/settings/general/hcm/payroll/salary-components',
-  HRMODULE_PAYROLL_SALARY_STRUCTURE_SETTINGS: '/settings/general/hcm/payroll/salary-structure',
+  HRMODULE_PAYROLL_SALARY_COMPONENTS_SETTINGS: '/settings/general/hcm-payroll/salary-components',
+  HRMODULE_PAYROLL_SALARY_STRUCTURE_SETTINGS: '/settings/general/hcm-payroll/salary-structure',
 
   HRMODULE_ATTENDENCE_SETTINGS: '/hr/employee/attendence/list',
   HRMODULE_LEAVE_SETTINGS: '/hr/employee/leave/list',
