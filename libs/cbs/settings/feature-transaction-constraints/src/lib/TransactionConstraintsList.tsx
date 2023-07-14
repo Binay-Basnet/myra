@@ -6,7 +6,7 @@ import { AvatarCell, Column, Table } from '@myra-ui/table';
 
 import { ObjState, useTransactionConstraintsListQuery } from '@coop/cbs/data-access';
 import { localizedDate, localizedText, RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { getPaginationQuery, getUrl } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 const TAB_ITEMS = [
   {
@@ -123,13 +123,6 @@ export const TransactionConstraintsList = () => {
         isLoading={isFetching}
         data={rowData}
         columns={columns}
-        rowOnClick={(row) => {
-          if (router.pathname.includes('settings')) {
-            router.push(`/${getUrl(router.pathname, 3)}/details?id=${row?.node?.id}`);
-          } else {
-            router.push(`/${getUrl(router.pathname, 3)}/details?id=${row?.node?.id}`);
-          }
-        }}
         pagination={{
           total: data?.settings?.transactionConstraint?.totalCount ?? 'Many',
           pageInfo: data?.settings?.transactionConstraint?.pageInfo,

@@ -2162,6 +2162,7 @@ export type TransactionFilter = {
 };
 
 export type TransactionListSummary = {
+  accountBalanceMap?: Maybe<Scalars['Map']>;
   averageBalance?: Maybe<Scalars['String']>;
   expensesThisMonth?: Maybe<Scalars['String']>;
   totalDeposit?: Maybe<Scalars['String']>;
@@ -2790,7 +2791,12 @@ export type GetTotalExpenseQuery = {
   eBanking: {
     account?: {
       list?: {
-        recentTransactions?: { summary?: { expensesThisMonth?: string | null } | null } | null;
+        recentTransactions?: {
+          summary?: {
+            expensesThisMonth?: string | null;
+            accountBalanceMap?: Record<string, string> | null;
+          } | null;
+        } | null;
       } | null;
     } | null;
   };

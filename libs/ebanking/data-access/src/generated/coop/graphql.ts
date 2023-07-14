@@ -728,9 +728,10 @@ export const GetTotalExpenseDocument = `
   eBanking {
     account {
       list {
-        recentTransactions(paginate: {after: "", first: 1}) {
+        recentTransactions(paginate: {after: "", first: -1}) {
           summary {
             expensesThisMonth
+            accountBalanceMap
           }
         }
       }
