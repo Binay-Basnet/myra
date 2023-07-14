@@ -18,16 +18,20 @@ interface IUpdateBalanceProps {
   isOpen: boolean;
   onClose: () => void;
 }
+type CashTransferEditTableType = {
+  memberId: string;
+  position: string;
+};
 
 type CashTransferTableType = {
-  memberId: string;
+  memberId: { label: string; value: string };
   position: string;
 };
 
 type CustomCommitteeMemberInput = {
   chairman?: string | null;
   data?: {
-    memberId: string;
+    memberId: { label: string; value: string };
     position: string;
   }[];
 } & CommitteeMemberInput[];
@@ -102,7 +106,7 @@ export const AddMembersModal = ({ isOpen, onClose }: IUpdateBalanceProps) => {
     const otherMembersData =
       dataTable?.map((data) => ({
         committeeId: id,
-        memberId: data?.memberId,
+        memberId: data?.memberId?.value,
         position: data?.position,
       })) || [];
 
@@ -143,7 +147,7 @@ export const AddMembersModal = ({ isOpen, onClose }: IUpdateBalanceProps) => {
       <FormProvider {...methods}>
         <Box display="flex" flexDirection="column" gap="s24" py="s40">
           {!committeeMemberData && <FormMemberSelect name="chairman" label="Chairman" />}
-          <FormEditableTable<CashTransferTableType>
+          <FormEditableTable<CashTransferEditTableType>
             name="data"
             columns={[
               {
