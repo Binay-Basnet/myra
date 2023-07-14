@@ -116,6 +116,7 @@ export const InventoryItemSalesReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization />
           <Report.Table<SalesReportDataList & { index: number }>
+            showFooter
             columns={[
               {
                 header: 'S.No.',
