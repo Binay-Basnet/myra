@@ -2645,6 +2645,7 @@ export type GetTransactionListsQuery = {
       list?: {
         accounts?: Array<{ id: string; name: string; accountNumber: string } | null> | null;
         recentTransactions?: {
+          summary?: { accountBalanceMap?: Record<string, string> | null } | null;
           edges?: Array<{
             node: {
               id: string;

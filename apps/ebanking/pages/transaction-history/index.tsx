@@ -26,7 +26,6 @@ import {
   DateFilter,
   EbankingTransactionCrOrDr,
   EbankingTransactionFilter,
-  useGetTotalExpenseQuery,
   useGetTransactionListsQuery,
 } from '@coop/ebanking/data-access';
 import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
@@ -55,7 +54,6 @@ type BalanceMap = Record<
 
 const TransactionHistoryPage = () => {
   const componentRef = useRef<HTMLInputElement | null>(null);
-  const { data: balanceData } = useGetTotalExpenseQuery();
 
   const [filter, setFilter] = useState<EbankingTransactionFilter | null>(null);
 
@@ -74,10 +72,8 @@ const TransactionHistoryPage = () => {
     value: account?.id,
   }));
 
-  const accountMap = balanceData?.eBanking?.account?.list?.recentTransactions?.summary
+  const accountMap = data?.eBanking?.account?.list?.recentTransactions?.summary
     ?.accountBalanceMap as unknown as BalanceMap;
-
-  const accountIds = Object.keys(accountMap || {});
 
   return (
     <Box display="flex" flexDir="column" gap="s16">
@@ -224,9 +220,9 @@ const TransactionHistoryPage = () => {
             <Loader />
           ) : (
             <Box>
-              <Box p="s16" borderBottom="1px" borderBottomColor="border.layout">
+              <Box p="s16" borderBottom="1px" borderBottomColor="border.layout" fontSize="s3">
                 <Box as="span" display="flex" flexDir="column" gap="s8" mt="4px">
-                  {(filter?.accounts || accountIds).map((f) => (
+                  {(filter?.accounts || Object.keys(accountMap))?.map((f) => (
                     <Box>
                       <Box fontWeight={600} color="gray.800">
                         {accountOptions?.find((a) => a.value === f)?.label}
@@ -241,6 +237,7 @@ const TransactionHistoryPage = () => {
                   ))}
                 </Box>
               </Box>
+
               {data?.eBanking?.account?.list?.recentTransactions?.edges?.map((transaction) => (
                 <TransactionCard
                   accountName={

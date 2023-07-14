@@ -537,6 +537,9 @@ export const GetTransactionListsDocument = `
           accountNumber
         }
         recentTransactions(filter: $filter, paginate: $pagination) {
+          summary {
+            accountBalanceMap
+          }
           edges {
             node {
               id
