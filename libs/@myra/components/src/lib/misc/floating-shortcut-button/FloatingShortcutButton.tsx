@@ -59,6 +59,9 @@ const whatsNewData = {
       'Branch-wise filter(User Login Branch) in transfer, deposit, withdraw, loan disburse, loan repayment.',
       'Notes Text changes.',
       'Minor account create and validation issue fixes.',
+      'Product name in saving and loan statment',
+      'Remove last fisscal year closing txn from loan statement',
+      'Fix opening/closing amount with txn order in share statemnt',
     ],
   },
   // knownBugs: {

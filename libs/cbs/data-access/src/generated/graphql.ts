@@ -1289,6 +1289,7 @@ export type AllTransactionResult = {
   branch?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
+  isYearEndAdjustment?: Maybe<Scalars['Boolean']>;
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
@@ -15299,6 +15300,11 @@ export type MutationError =
   | ServerError
   | ValidationError;
 
+export type MutationResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type MyCoopInfo = {
   totalBranch?: Maybe<Scalars['Int']>;
   totalMembers?: Maybe<Scalars['Int']>;
@@ -19522,6 +19528,7 @@ export type TransactionInfo = {
   branchName: Scalars['String'];
   date: Scalars['Localized'];
   id: Scalars['String'];
+  isYearEndAdjustment?: Maybe<Scalars['Boolean']>;
   narration: Scalars['String'];
   transactionType: AllTransactionType;
 };
@@ -19555,6 +19562,7 @@ export type TransactionMutation = {
   revertTransaction: RevertTransactionResult;
   serviceCentreCashTransfer: ServiceCentreCashTransferResult;
   strTransactionAction?: Maybe<StrTransactionActionResult>;
+  switchTransactionYearEndFlag?: Maybe<MutationResult>;
   tellerBankTransfer?: Maybe<TellerBankTransferMutation>;
   tellerTransfer: TellerTransferResult;
   tellerTransferAction: TellerTransferActionResult;
@@ -19598,6 +19606,10 @@ export type TransactionMutationServiceCentreCashTransferArgs = {
 
 export type TransactionMutationStrTransactionActionArgs = {
   data: StrTransactionActionInput;
+};
+
+export type TransactionMutationSwitchTransactionYearEndFlagArgs = {
+  journalId: Scalars['ID'];
 };
 
 export type TransactionMutationTellerTransferArgs = {
