@@ -5,6 +5,7 @@ import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import {
+  useGetMemberFilterMappingQuery,
   useGetWithdrawFilterMappingQuery,
   useGetWithdrawListDataQuery,
 } from '@coop/cbs/data-access';
@@ -23,6 +24,8 @@ export const WithdrawList = () => {
   const router = useRouter();
 
   const { data: withdrawFilterMapping } = useGetWithdrawFilterMappingQuery();
+  const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
+
   const { data, isFetching } = useGetWithdrawListDataQuery({
     pagination: getPaginationQuery(),
     filter: getFilterQuery(),
@@ -95,8 +98,15 @@ export const WithdrawList = () => {
         },
       },
       {
+        id: 'branchId',
         header: 'Service Center',
         accessorKey: 'node.branchName',
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: memberFilterMapping?.members?.filterMapping?.serviceCenter || [],
+          },
+        },
       },
       {
         id: 'amount',
@@ -135,7 +145,7 @@ export const WithdrawList = () => {
         },
       },
     ],
-    [t, rowData]
+    [t, rowData, memberFilterMapping?.members?.filterMapping?.serviceCenter]
   );
 
   return (

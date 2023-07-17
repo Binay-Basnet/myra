@@ -5,10 +5,21 @@ import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Alert, Button, Container, Divider, FormFooter, Icon, Text, VStack } from '@myra-ui';
+import {
+  Alert,
+  asyncToast,
+  Button,
+  Container,
+  Divider,
+  FormFooter,
+  Icon,
+  Text,
+  VStack,
+} from '@myra-ui';
 
 import {
   NatureOfDepositProduct,
+  useActivateMemberWithoutSharePurchaseMutation,
   useGetAccountCheckQuery,
   useGetMemberAccountsQuery,
   useGetMemberCheckQuery,
@@ -30,14 +41,29 @@ export const CbsMembersFeatureActivate = () => {
   const hasPaidMemberFee = data?.members?.activateMember?.memberActivateChecks?.isFeePaid;
   const hasShareIssued = data?.members?.activateMember?.memberActivateChecks?.isShareIssued;
   const hasAccountUpdated = data?.members?.activateMember?.memberActivateChecks?.isAccountUpdated;
+  const isMemberActive = data?.members?.activateMember?.memberActivateChecks?.isMemberActive;
 
   const { data: memberAccountsData } = useGetMemberAccountsQuery(
     { memberId: id },
-    { enabled: !!id && !!hasShareIssued }
+    { enabled: !!id && (!!hasShareIssued || !!isMemberActive) }
   );
 
   const accounts = memberAccountsData?.members?.getAllAccounts?.data?.depositAccount;
   const { data: memberDetails } = useGetMemberIndividualDataQuery({ id });
+
+  const { mutateAsync: activateSharePurchase } = useActivateMemberWithoutSharePurchaseMutation();
+
+  const handleZeroShareActivation = () => {
+    asyncToast({
+      id: 'zero-share-member-activation',
+      msgs: {
+        loading: 'Activating Member',
+        success: 'Member Activated',
+      },
+      promise: activateSharePurchase({ memberId: id }),
+      onSuccess: () => queryClient.invalidateQueries(['getMemberCheck']),
+    });
+  };
 
   return (
     <>
@@ -113,7 +139,10 @@ export const CbsMembersFeatureActivate = () => {
             </Box>
             <Divider />
             <Box display="flex" gap="s16">
-              <NumberStatus active={!hasShareIssued && !!hasPaidMemberFee} number={2} />
+              <NumberStatus
+                active={!hasShareIssued && !isMemberActive && !!hasPaidMemberFee}
+                number={2}
+              />
               <Box display="flex" flexDir="column" gap="s16">
                 <Box display="flex" flexDir="column" gap="s4">
                   <Text fontSize="r1" fontWeight="600" color="gray.800">
@@ -123,7 +152,7 @@ export const CbsMembersFeatureActivate = () => {
                     Share must be issued for a member to be active
                   </Text>
                 </Box>
-                {hasShareIssued ? (
+                {hasShareIssued || isMemberActive ? (
                   <Box display="flex" gap="s4">
                     <Icon color="primary.500" as={IoCheckmarkDone} />
                     <Text
@@ -136,7 +165,7 @@ export const CbsMembersFeatureActivate = () => {
                     </Text>
                   </Box>
                 ) : (
-                  <Box>
+                  <Box display="flex" gap="s16">
                     <Button
                       {...(!hasPaidMemberFee ? { shade: 'neutral', disabled: true } : {})}
                       leftIcon={<Icon as={AiOutlinePlus} />}
@@ -148,6 +177,13 @@ export const CbsMembersFeatureActivate = () => {
                     >
                       New Share Issue
                     </Button>
+
+                    <Button
+                      {...(!hasPaidMemberFee ? { shade: 'neutral', disabled: true } : {})}
+                      onClick={handleZeroShareActivation}
+                    >
+                      Zero Share Activation
+                    </Button>
                   </Box>
                 )}
               </Box>
@@ -156,7 +192,9 @@ export const CbsMembersFeatureActivate = () => {
 
             <Box display="flex" gap="s16">
               <NumberStatus
-                active={!!hasShareIssued && !!hasPaidMemberFee && !hasAccountUpdated}
+                active={
+                  (!!hasShareIssued || !!isMemberActive) && !!hasPaidMemberFee && !hasAccountUpdated
+                }
                 number={3}
               />
               <Box w="100%" display="flex" flexDir="column" gap="s16">

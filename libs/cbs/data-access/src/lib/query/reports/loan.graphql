@@ -124,6 +124,7 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
               installment
               charge
               openingBalance
+              productName
               disbursedAmount
             }
 
@@ -190,6 +191,7 @@ query getClosedLoanAccountReport($data: ClosedLoanAccountFilter) {
           interestRate
           loanAccountNo
           loanAccountNo
+
           loanClosedDate
           loanIssuedDate
           loanProcessingCharge

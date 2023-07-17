@@ -254,3 +254,14 @@ mutation yearEndSettlement($destinationCOALeaf: ID!) {
     }
   }
 }
+
+mutation switchTransactionYearEndFlag($journalId: ID!) {
+  transaction {
+    switchTransactionYearEndFlag(journalId: $journalId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

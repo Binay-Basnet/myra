@@ -14164,11 +14164,17 @@ export type MemberAccountResult = {
 export type MemberActivateCheck = {
   isAccountUpdated: Scalars['Boolean'];
   isFeePaid: Scalars['Boolean'];
+  isMemberActive: Scalars['Boolean'];
   isShareIssued: Scalars['Boolean'];
 };
 
 export type MemberActivateMutation = {
+  activateMemberWithoutSharePurchase?: Maybe<MemberDeleteDraftResult>;
   membershipPayment?: Maybe<MembershipPaymentResult>;
+};
+
+export type MemberActivateMutationActivateMemberWithoutSharePurchaseArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type MemberActivateMutationMembershipPaymentArgs = {
@@ -22905,6 +22911,27 @@ export type InactivateMemberMutation = {
   members: { makeInactive?: { recordId?: string | null } | null };
 };
 
+export type ActivateMemberWithoutSharePurchaseMutationVariables = Exact<{
+  memberId: Scalars['ID'];
+}>;
+
+export type ActivateMemberWithoutSharePurchaseMutation = {
+  members: {
+    activateMember?: {
+      activateMemberWithoutSharePurchase?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SetOrganizationDataMutationVariables = Exact<{
   data: OrganizationInput;
 }>;
@@ -25619,6 +25646,25 @@ export type YearEndSettlementMutationVariables = Exact<{
 export type YearEndSettlementMutation = {
   transaction: {
     yearEndSettlement?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type SwitchTransactionYearEndFlagMutationVariables = Exact<{
+  journalId: Scalars['ID'];
+}>;
+
+export type SwitchTransactionYearEndFlagMutation = {
+  transaction: {
+    switchTransactionYearEndFlag?: {
       recordId?: string | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -31537,6 +31583,7 @@ export type GetMemberCheckQuery = {
         isFeePaid: boolean;
         isShareIssued: boolean;
         isAccountUpdated: boolean;
+        isMemberActive: boolean;
       } | null;
     } | null;
   };
@@ -33518,6 +33565,7 @@ export type GetLoanStatementReportQuery = {
                 installment?: number | null;
                 charge?: string | null;
                 openingBalance?: string | null;
+                productName?: string | null;
                 disbursedAmount?: string | null;
               } | null;
               loanStatement?: Array<{
@@ -39669,6 +39717,7 @@ export type GetAllTransactionsDetailQuery = {
         transactionMode?: string | null;
         amount?: string | null;
         branch?: string | null;
+        isYearEndAdjustment?: boolean | null;
         note?: string | null;
         status?: string | null;
         totalDebit?: string | null;
@@ -43695,6 +43744,41 @@ export const useInactivateMemberMutation = <TError = unknown, TContext = unknown
     useAxios<InactivateMemberMutation, InactivateMemberMutationVariables>(InactivateMemberDocument),
     options
   );
+export const ActivateMemberWithoutSharePurchaseDocument = `
+    mutation activateMemberWithoutSharePurchase($memberId: ID!) {
+  members {
+    activateMember {
+      activateMemberWithoutSharePurchase(memberId: $memberId) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useActivateMemberWithoutSharePurchaseMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ActivateMemberWithoutSharePurchaseMutation,
+    TError,
+    ActivateMemberWithoutSharePurchaseMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    ActivateMemberWithoutSharePurchaseMutation,
+    TError,
+    ActivateMemberWithoutSharePurchaseMutationVariables,
+    TContext
+  >(
+    ['activateMemberWithoutSharePurchase'],
+    useAxios<
+      ActivateMemberWithoutSharePurchaseMutation,
+      ActivateMemberWithoutSharePurchaseMutationVariables
+    >(ActivateMemberWithoutSharePurchaseDocument),
+    options
+  );
 export const SetOrganizationDataDocument = `
     mutation setOrganizationData($data: OrganizationInput!) {
   settings {
@@ -47669,6 +47753,38 @@ export const useYearEndSettlementMutation = <TError = unknown, TContext = unknow
     ['yearEndSettlement'],
     useAxios<YearEndSettlementMutation, YearEndSettlementMutationVariables>(
       YearEndSettlementDocument
+    ),
+    options
+  );
+export const SwitchTransactionYearEndFlagDocument = `
+    mutation switchTransactionYearEndFlag($journalId: ID!) {
+  transaction {
+    switchTransactionYearEndFlag(journalId: $journalId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSwitchTransactionYearEndFlagMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SwitchTransactionYearEndFlagMutation,
+    TError,
+    SwitchTransactionYearEndFlagMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SwitchTransactionYearEndFlagMutation,
+    TError,
+    SwitchTransactionYearEndFlagMutationVariables,
+    TContext
+  >(
+    ['switchTransactionYearEndFlag'],
+    useAxios<SwitchTransactionYearEndFlagMutation, SwitchTransactionYearEndFlagMutationVariables>(
+      SwitchTransactionYearEndFlagDocument
     ),
     options
   );
@@ -55383,6 +55499,7 @@ export const GetMemberCheckDocument = `
         isFeePaid
         isShareIssued
         isAccountUpdated
+        isMemberActive
       }
     }
   }
@@ -57932,6 +58049,7 @@ export const GetLoanStatementReportDocument = `
               installment
               charge
               openingBalance
+              productName
               disbursedAmount
             }
             loanStatement {
@@ -66216,6 +66334,7 @@ export const GetAllTransactionsDetailDocument = `
         transactionMode
         amount
         branch
+        isYearEndAdjustment
         note
         status
         glTransaction {

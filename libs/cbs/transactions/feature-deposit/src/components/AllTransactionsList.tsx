@@ -18,7 +18,9 @@ import {
 } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
-export interface DepositListProps {}
+// export interface AllTransactionsListProps {
+//   isYearEndAdjustment?: 'false' | 'true';
+// }
 
 export const AllTransactionsList = () => {
   const router = useRouter();
