@@ -1289,7 +1289,7 @@ export type AllTransactionResult = {
   branch?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
-  isYearEndAdjustment?: Maybe<Scalars['String']>;
+  isYearEndAdjustment?: Maybe<Scalars['Boolean']>;
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
@@ -33537,6 +33537,7 @@ export type GetLoanStatementReportQuery = {
                 installment?: number | null;
                 charge?: string | null;
                 openingBalance?: string | null;
+                productName?: string | null;
                 disbursedAmount?: string | null;
               } | null;
               loanStatement?: Array<{
@@ -39688,7 +39689,7 @@ export type GetAllTransactionsDetailQuery = {
         transactionMode?: string | null;
         amount?: string | null;
         branch?: string | null;
-        isYearEndAdjustment?: string | null;
+        isYearEndAdjustment?: boolean | null;
         note?: string | null;
         status?: string | null;
         totalDebit?: string | null;
@@ -57984,6 +57985,7 @@ export const GetLoanStatementReportDocument = `
               installment
               charge
               openingBalance
+              productName
               disbursedAmount
             }
             loanStatement {
