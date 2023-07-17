@@ -1289,7 +1289,7 @@ export type AllTransactionResult = {
   branch?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
-  isYearEndAdjustment?: Maybe<Scalars['Boolean']>;
+  isYearEndAdjustment?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
@@ -25631,6 +25631,25 @@ export type YearEndSettlementMutation = {
   };
 };
 
+export type SwitchTransactionYearEndFlagMutationVariables = Exact<{
+  journalId: Scalars['ID'];
+}>;
+
+export type SwitchTransactionYearEndFlagMutation = {
+  transaction: {
+    switchTransactionYearEndFlag?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type GetAccountMemberListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -39669,6 +39688,7 @@ export type GetAllTransactionsDetailQuery = {
         transactionMode?: string | null;
         amount?: string | null;
         branch?: string | null;
+        isYearEndAdjustment?: string | null;
         note?: string | null;
         status?: string | null;
         totalDebit?: string | null;
@@ -47669,6 +47689,38 @@ export const useYearEndSettlementMutation = <TError = unknown, TContext = unknow
     ['yearEndSettlement'],
     useAxios<YearEndSettlementMutation, YearEndSettlementMutationVariables>(
       YearEndSettlementDocument
+    ),
+    options
+  );
+export const SwitchTransactionYearEndFlagDocument = `
+    mutation switchTransactionYearEndFlag($journalId: ID!) {
+  transaction {
+    switchTransactionYearEndFlag(journalId: $journalId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSwitchTransactionYearEndFlagMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SwitchTransactionYearEndFlagMutation,
+    TError,
+    SwitchTransactionYearEndFlagMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SwitchTransactionYearEndFlagMutation,
+    TError,
+    SwitchTransactionYearEndFlagMutationVariables,
+    TContext
+  >(
+    ['switchTransactionYearEndFlag'],
+    useAxios<SwitchTransactionYearEndFlagMutation, SwitchTransactionYearEndFlagMutationVariables>(
+      SwitchTransactionYearEndFlagDocument
     ),
     options
   );
@@ -66216,6 +66268,7 @@ export const GetAllTransactionsDetailDocument = `
         transactionMode
         amount
         branch
+        isYearEndAdjustment
         note
         status
         glTransaction {

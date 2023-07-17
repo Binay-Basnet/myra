@@ -417,6 +417,7 @@ query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
         transactionMode
         amount
         branch
+        isYearEndAdjustment
         note
         status
         glTransaction {

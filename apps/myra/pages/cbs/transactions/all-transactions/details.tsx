@@ -1,16 +1,33 @@
 import { ReactElement, useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { Box, Button, DetailPageHeader, MainLayout, Modal, Text, toast } from '@myra-ui';
+import {
+  asyncToast,
+  Box,
+  Button,
+  DetailPageHeader,
+  MainLayout,
+  Modal,
+  Text,
+  toast,
+} from '@myra-ui';
 
-import { useRevertTransactionMutation } from '@coop/cbs/data-access';
+import {
+  useRevertTransactionMutation,
+  useSwitchTransactionYearEndFlagMutation,
+} from '@coop/cbs/data-access';
 import { AllTransactionDetailPage } from '@coop/cbs/transactions/feature-detail-page';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
 import { ROUTES } from '@coop/cbs/utils';
 
 const DepositDetailsPage = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: switchTransactionYearEnd } = useSwitchTransactionYearEndFlagMutation();
+
   const [isRevertTransactionModalOpen, setIsRevertTransactionModalOpen] = useState(false);
   const handleRevertTransactionModalClose = () => {
     setIsRevertTransactionModalOpen(false);
@@ -28,7 +45,22 @@ const DepositDetailsPage = () => {
       <DetailPageHeader
         title="Transaction List"
         options={[
+          {
+            label: 'Flag Year End Adjustment',
+            handler: async () => {
+              await asyncToast({
+                id: 'switch-transaction',
+                msgs: {
+                  loading: 'Flagging Year End Adjustment',
+                  success: 'Year End Adjustment Flagged',
+                },
+                onSuccess: () => queryClient.invalidateQueries(['getAllTransactionsDetail']),
+                promise: switchTransactionYearEnd({ journalId: String(router.query['id']) }),
+              });
+            },
+          },
           { label: 'Revert Transaction', handler: () => setIsRevertTransactionModalOpen(true) },
+
           { label: 'Print', handler: handlePrintVoucher },
         ]}
       />
