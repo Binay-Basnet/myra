@@ -8,6 +8,7 @@ import {
   DepositedBy,
   useGetDepositFilterMappingQuery,
   useGetDepositListDataQuery,
+  useGetMemberFilterMappingQuery,
 } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
@@ -33,6 +34,7 @@ export const DepositList = () => {
   const router = useRouter();
 
   const { data: depositFilterMapping } = useGetDepositFilterMappingQuery();
+  const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
   const { data, isFetching } = useGetDepositListDataQuery({
     pagination: getPaginationQuery(),
     filter: getFilterQuery(),
@@ -113,8 +115,15 @@ export const DepositList = () => {
         },
       },
       {
+        id: 'branchId',
         header: 'Service Center',
         accessorKey: 'node.branchName',
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: memberFilterMapping?.members?.filterMapping?.serviceCenter || [],
+          },
+        },
       },
       {
         id: 'amount',
@@ -151,6 +160,7 @@ export const DepositList = () => {
     ],
     [
       t,
+      memberFilterMapping?.members?.filterMapping?.serviceCenter,
       depositFilterMapping?.transaction?.filterMapping?.deposit?.paymentMode,
       depositFilterMapping?.transaction?.filterMapping?.deposit?.depositedBy,
       router,

@@ -191,7 +191,7 @@ query getClosedLoanAccountReport($data: ClosedLoanAccountFilter) {
           interestRate
           loanAccountNo
           loanAccountNo
-          
+
           loanClosedDate
           loanIssuedDate
           loanProcessingCharge
