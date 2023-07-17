@@ -59,6 +59,9 @@ const whatsNewData = {
       'Branch-wise filter(User Login Branch) in transfer, deposit, withdraw, loan disburse, loan repayment.',
       'Notes Text changes.',
       'Minor account create and validation issue fixes.',
+      'Product name in saving and loan statment',
+      'Remove last fisscal year closing txn from loan statement',
+      'Fix opening/closing amount with txn order in share statemnt',
     ],
   },
   // knownBugs: {
@@ -108,8 +111,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.76</Text>
-          <Text fontSize="s3">July 14, 2023</Text>
+          <Text fontSize="r2">Version 1.0.78</Text>
+          <Text fontSize="s3">July 17, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>

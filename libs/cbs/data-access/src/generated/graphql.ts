@@ -1289,6 +1289,7 @@ export type AllTransactionResult = {
   branch?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
+  isYearEndAdjustment?: Maybe<Scalars['Boolean']>;
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
@@ -5593,6 +5594,11 @@ export type EachStaffRecord = {
   error?: Maybe<QueryError>;
 };
 
+export type EachTaxSlabRecords = {
+  data?: Maybe<TaxSlabRecord>;
+  error?: Maybe<QueryError>;
+};
+
 export type EachTransferRecord = {
   branchArray?: Maybe<Array<Maybe<BranchTransferDetails>>>;
   departArray?: Maybe<Array<Maybe<DepartTransferDetails>>>;
@@ -7835,12 +7841,14 @@ export type HcmPayrollMutation = {
   deductionComponent: HcmPayrollDeductionComponentMutation;
   earningComponent: HcmPayrollEarningComponentMutation;
   salaryStructure: HcmPayrollSalaryStructureMutation;
+  taxSlab: HcmPayrollTaxSlabMutation;
 };
 
 export type HcmPayrollQuery = {
   deductionComponent: HcmPayrollDeductionComponentQuery;
   earningComponent: HcmPayrollEarningComponentQuery;
   salaryStructure: HcmPayrollSalaryStructureQuery;
+  taxSlab: HcmPayrollTaxSlabQuery;
 };
 
 export type HcmSettingsMutation = {
@@ -8260,6 +8268,29 @@ export type HcmPayrollSalaryStructureQueryGetSalaryStructureArgs = {
 };
 
 export type HcmPayrollSalaryStructureQueryListSalaryStructureArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HcmPayrollTaxSlabMutation = {
+  upsertTaxSlab: ReturnTaxSlab;
+};
+
+export type HcmPayrollTaxSlabMutationUpsertTaxSlabArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: TaxSlabInput;
+};
+
+export type HcmPayrollTaxSlabQuery = {
+  getTaxSlab: EachTaxSlabRecords;
+  listTaxSlab: TaxSlabConnection;
+};
+
+export type HcmPayrollTaxSlabQueryGetTaxSlabArgs = {
+  id: Scalars['ID'];
+};
+
+export type HcmPayrollTaxSlabQueryListTaxSlabArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -15269,6 +15300,11 @@ export type MutationError =
   | ServerError
   | ValidationError;
 
+export type MutationResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type MyCoopInfo = {
   totalBranch?: Maybe<Scalars['Int']>;
   totalMembers?: Maybe<Scalars['Int']>;
@@ -17105,6 +17141,12 @@ export type ReturnStaffPlan = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export type ReturnTaxSlab = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<TaxSlabRecord>;
+  recordId: Scalars['ID'];
+};
+
 export type ReturnWarehouseInput = {
   address: Scalars['String'];
   branchId: Scalars['String'];
@@ -18800,6 +18842,18 @@ export type SisterConcernDetailsFormState = {
   phone?: Maybe<Scalars['String']>;
 };
 
+export type Slab = {
+  fromAmount?: Maybe<Scalars['String']>;
+  percentageDeduction?: Maybe<Scalars['String']>;
+  toAmount?: Maybe<Scalars['String']>;
+};
+
+export type SlabInput = {
+  fromAmount?: InputMaybe<Scalars['String']>;
+  percentageDeduction?: InputMaybe<Scalars['String']>;
+  toAmount?: InputMaybe<Scalars['String']>;
+};
+
 export type SlipElementMeasurement = {
   left?: Maybe<Scalars['Float']>;
   top?: Maybe<Scalars['Float']>;
@@ -19099,6 +19153,43 @@ export const TaxPayerOptions = {
 } as const;
 
 export type TaxPayerOptions = typeof TaxPayerOptions[keyof typeof TaxPayerOptions];
+export type TaxSlabConnection = {
+  edges?: Maybe<Array<Maybe<TaxSlabs>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type TaxSlabInput = {
+  effectiveFrom?: InputMaybe<Scalars['Localized']>;
+  fiscalYear?: InputMaybe<LocalizedDateFilter>;
+  makeThisActive?: InputMaybe<Scalars['Boolean']>;
+  marriedTaxableSalarySlab?: InputMaybe<Array<InputMaybe<SlabInput>>>;
+  name?: InputMaybe<Scalars['String']>;
+  unmarriedTaxableSalarySlab?: InputMaybe<Array<InputMaybe<SlabInput>>>;
+};
+
+export type TaxSlabListed = {
+  effectiveFrom?: Maybe<Scalars['Localized']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Boolean']>;
+};
+
+export type TaxSlabRecord = {
+  effectiveFrom?: Maybe<Scalars['Localized']>;
+  fiscalYear?: Maybe<LocalizedDate>;
+  id?: Maybe<Scalars['ID']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  marriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
+  name?: Maybe<Scalars['String']>;
+  unmarriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
+};
+
+export type TaxSlabs = {
+  cursor: Scalars['Cursor'];
+  node: TaxSlabListed;
+};
+
 export type TellerActivityEntry = {
   ID: Scalars['ID'];
   amount?: Maybe<Scalars['String']>;
@@ -19437,6 +19528,7 @@ export type TransactionInfo = {
   branchName: Scalars['String'];
   date: Scalars['Localized'];
   id: Scalars['String'];
+  isYearEndAdjustment?: Maybe<Scalars['Boolean']>;
   narration: Scalars['String'];
   transactionType: AllTransactionType;
 };
@@ -19470,6 +19562,7 @@ export type TransactionMutation = {
   revertTransaction: RevertTransactionResult;
   serviceCentreCashTransfer: ServiceCentreCashTransferResult;
   strTransactionAction?: Maybe<StrTransactionActionResult>;
+  switchTransactionYearEndFlag?: Maybe<MutationResult>;
   tellerBankTransfer?: Maybe<TellerBankTransferMutation>;
   tellerTransfer: TellerTransferResult;
   tellerTransferAction: TellerTransferActionResult;
@@ -19513,6 +19606,10 @@ export type TransactionMutationServiceCentreCashTransferArgs = {
 
 export type TransactionMutationStrTransactionActionArgs = {
   data: StrTransactionActionInput;
+};
+
+export type TransactionMutationSwitchTransactionYearEndFlagArgs = {
+  journalId: Scalars['ID'];
 };
 
 export type TransactionMutationTellerTransferArgs = {
@@ -32779,6 +32876,7 @@ export type GetSavingStatementQuery = {
                 currentInterestRate?: number | null;
                 accountNo?: string | null;
                 savingType?: string | null;
+                productName?: string | null;
               } | null;
             }
           | {}
@@ -57003,6 +57101,7 @@ export const GetSavingStatementDocument = `
               currentInterestRate
               accountNo
               savingType
+              productName
             }
           }
         }

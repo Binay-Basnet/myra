@@ -163,6 +163,7 @@ query getSavingStatement($data: SavingStatementReportSettings!) {
               currentInterestRate
               accountNo
               savingType
+              productName
             }
           }
         }
@@ -176,7 +177,6 @@ query getInterestStatementReport($data: InterestStatementFilter!) {
     depositReport {
       interestStatementReport(data: $data) {
         data {
-
           entries {
             date
             amount
@@ -191,7 +191,7 @@ query getInterestStatementReport($data: InterestStatementFilter!) {
           accountType
           currentInterestRate
           memberName
-          
+
           address {
             wardNo
             state
