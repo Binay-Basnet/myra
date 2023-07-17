@@ -17,7 +17,6 @@ import {
 import { amountConverter } from '@coop/shared/utils';
 
 import { AccountDetail } from '../components/AccountDetail';
-import { AccountPopover } from '../components/AccountPopover';
 
 export const EbankingAccountDetailPage = () => {
   const router = useRouter();
@@ -71,7 +70,6 @@ export const AccountDetails = ({ account, isLoading }: IAccountDetailsProps) => 
             link: router.asPath,
           },
         ]}
-        button={<AccountPopover selectedAccount={account} />}
       />
       {account ? (
         <AccountLargeCard isDefault={account?.isDefault} account={account as EbankingAccount} />

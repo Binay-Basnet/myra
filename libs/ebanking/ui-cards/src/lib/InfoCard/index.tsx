@@ -4,7 +4,7 @@ import { Box, Button, Divider, Text, VStack } from '@myra-ui';
 
 export interface InfoCardProps {
   title?: string;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   header?: React.ReactNode;
   children?: React.ReactNode;
   btn?: React.ReactNode;

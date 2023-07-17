@@ -57,7 +57,7 @@ export const TransferDetailsHistory = () => {
   return (
     <FormSection
       header={` ${
-        transferType === EmployeeTransferType.Department ? 'Department' : 'Service Cente'
+        transferType === EmployeeTransferType.Department ? 'Department' : 'Service Center'
       } Transfer History`}
       flexLayout
     >
@@ -66,7 +66,7 @@ export const TransferDetailsHistory = () => {
         : rowData?.branchArray) && (
         <EmployeeTransferHistoryTable
           transferType={
-            transferType === EmployeeTransferType.Department ? 'Department' : 'Service Cente'
+            transferType === EmployeeTransferType.Department ? 'Department' : 'Service Center'
           }
           data={
             transferType === EmployeeTransferType.Department ? departmentHistory : branchHistory

@@ -537,6 +537,9 @@ export const GetTransactionListsDocument = `
           accountNumber
         }
         recentTransactions(filter: $filter, paginate: $pagination) {
+          summary {
+            accountBalanceMap
+          }
           edges {
             node {
               id
@@ -728,9 +731,10 @@ export const GetTotalExpenseDocument = `
   eBanking {
     account {
       list {
-        recentTransactions(paginate: {after: "", first: 1}) {
+        recentTransactions(paginate: {after: "", first: -1}) {
           summary {
             expensesThisMonth
+            accountBalanceMap
           }
         }
       }

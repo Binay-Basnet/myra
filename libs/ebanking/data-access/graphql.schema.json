@@ -17939,6 +17939,18 @@
         "description": null,
         "fields": [
           {
+            "name": "accountBalanceMap",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Map",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "averageBalance",
             "description": null,
             "args": [],

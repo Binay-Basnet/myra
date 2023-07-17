@@ -45,6 +45,11 @@ export const ReportMember = ({ member, accountCloseDate, savingData }: ReportMem
                   Saving Type:
                 </Text>
               )}
+              {savingData?.meta?.productName && (
+                <Text fontSize="r1" color="gray.700">
+                  Product Name
+                </Text>
+              )}
             </Box>
           </GridItem>
 
@@ -102,6 +107,17 @@ export const ReportMember = ({ member, accountCloseDate, savingData }: ReportMem
                   textTransform="capitalize"
                 >
                   {savingData?.meta?.savingType?.replace(/_/g, ' ').toLowerCase()}
+                </Text>
+              )}
+              {savingData?.meta?.savingType && (
+                <Text
+                  noOfLines={1}
+                  fontSize="r1"
+                  color="gray.700"
+                  fontWeight="500"
+                  textTransform="capitalize"
+                >
+                  {savingData?.meta?.productName}
                 </Text>
               )}
             </Box>

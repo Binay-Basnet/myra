@@ -59,7 +59,7 @@ const getIndividualEditData = (data: GetKymIndividualFormDataQuery | undefined) 
 
     identification: identificationMap?.map((identification) => ({
       idType: identification,
-      ...editValues?.identification,
+      ...editValues?.identification?.find((f) => f?.idType === identification),
     })),
 
     permanentAddress: {
