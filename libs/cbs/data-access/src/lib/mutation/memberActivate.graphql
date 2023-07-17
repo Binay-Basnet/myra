@@ -18,3 +18,16 @@ mutation inactivateMember($memberId: ID!) {
     }
   }
 }
+
+mutation activateMemberWithoutSharePurchase($memberId: ID!) {
+  members {
+    activateMember {
+      activateMemberWithoutSharePurchase(memberId: $memberId) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

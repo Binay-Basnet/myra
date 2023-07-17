@@ -14133,11 +14133,17 @@ export type MemberAccountResult = {
 export type MemberActivateCheck = {
   isAccountUpdated: Scalars['Boolean'];
   isFeePaid: Scalars['Boolean'];
+  isMemberActive: Scalars['Boolean'];
   isShareIssued: Scalars['Boolean'];
 };
 
 export type MemberActivateMutation = {
+  activateMemberWithoutSharePurchase?: Maybe<MemberDeleteDraftResult>;
   membershipPayment?: Maybe<MembershipPaymentResult>;
+};
+
+export type MemberActivateMutationActivateMemberWithoutSharePurchaseArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type MemberActivateMutationMembershipPaymentArgs = {
@@ -19442,6 +19448,7 @@ export type TransactionInfo = {
 };
 
 export type TransactionListSummary = {
+  accountBalanceMap?: Maybe<Scalars['Map']>;
   averageBalance?: Maybe<Scalars['String']>;
   expensesThisMonth?: Maybe<Scalars['String']>;
   totalDeposit?: Maybe<Scalars['String']>;
@@ -22805,6 +22812,27 @@ export type InactivateMemberMutationVariables = Exact<{
 
 export type InactivateMemberMutation = {
   members: { makeInactive?: { recordId?: string | null } | null };
+};
+
+export type ActivateMemberWithoutSharePurchaseMutationVariables = Exact<{
+  memberId: Scalars['ID'];
+}>;
+
+export type ActivateMemberWithoutSharePurchaseMutation = {
+  members: {
+    activateMember?: {
+      activateMemberWithoutSharePurchase?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
 };
 
 export type SetOrganizationDataMutationVariables = Exact<{
@@ -31439,6 +31467,7 @@ export type GetMemberCheckQuery = {
         isFeePaid: boolean;
         isShareIssued: boolean;
         isAccountUpdated: boolean;
+        isMemberActive: boolean;
       } | null;
     } | null;
   };
@@ -43596,6 +43625,41 @@ export const useInactivateMemberMutation = <TError = unknown, TContext = unknown
     useAxios<InactivateMemberMutation, InactivateMemberMutationVariables>(InactivateMemberDocument),
     options
   );
+export const ActivateMemberWithoutSharePurchaseDocument = `
+    mutation activateMemberWithoutSharePurchase($memberId: ID!) {
+  members {
+    activateMember {
+      activateMemberWithoutSharePurchase(memberId: $memberId) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useActivateMemberWithoutSharePurchaseMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ActivateMemberWithoutSharePurchaseMutation,
+    TError,
+    ActivateMemberWithoutSharePurchaseMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    ActivateMemberWithoutSharePurchaseMutation,
+    TError,
+    ActivateMemberWithoutSharePurchaseMutationVariables,
+    TContext
+  >(
+    ['activateMemberWithoutSharePurchase'],
+    useAxios<
+      ActivateMemberWithoutSharePurchaseMutation,
+      ActivateMemberWithoutSharePurchaseMutationVariables
+    >(ActivateMemberWithoutSharePurchaseDocument),
+    options
+  );
 export const SetOrganizationDataDocument = `
     mutation setOrganizationData($data: OrganizationInput!) {
   settings {
@@ -55284,6 +55348,7 @@ export const GetMemberCheckDocument = `
         isFeePaid
         isShareIssued
         isAccountUpdated
+        isMemberActive
       }
     }
   }
