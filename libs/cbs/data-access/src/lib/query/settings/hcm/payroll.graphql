@@ -180,3 +180,69 @@ query getSalaryStructureList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getTaxSlab($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxSlab {
+            getTaxSlab(id: $id) {
+              data {
+                id
+                name
+                fiscalYear {
+                  from
+                  to
+                }
+                unmarriedTaxableSalarySlab {
+                  fromAmount
+                  toAmount
+                  percentageDeduction
+                }
+                marriedTaxableSalarySlab {
+                  fromAmount
+                  toAmount
+                  percentageDeduction
+                }
+                effectiveFrom
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getTaxSlabList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxSlab {
+            listTaxSlab(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  effectiveFrom
+                  status
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

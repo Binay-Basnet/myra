@@ -442,6 +442,7 @@ export const ROUTES = {
 
   HRMODULE_PAYROLL_SALARY_COMPONENTS_SETTINGS: '/settings/general/hcm-payroll/salary-components',
   HRMODULE_PAYROLL_SALARY_STRUCTURE_SETTINGS: '/settings/general/hcm-payroll/salary-structure',
+  HRMODULE_PAYROLL_INCOME_TAX_SLAB_SETTINGS: '/settings/general/hcm-payroll/income-tax-slab',
 
   HRMODULE_ATTENDENCE_SETTINGS: '/hr/employee/attendence/list',
   HRMODULE_LEAVE_SETTINGS: '/hr/employee/leave/list',

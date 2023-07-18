@@ -25,7 +25,8 @@ export const ReportOrganizationHeader = ({ reportType }: { reportType: Report })
           <Text fontSize="r1" fontWeight="400" color="gray.700">
             Contact: {user?.organization?.contactDetails?.phoneNumber} | Email:{' '}
             {user?.organization?.contactDetails?.email ?? 'N/A'} | Website:{' '}
-            {user?.organization?.contactDetails?.website ?? 'N/A'}
+            {user?.organization?.contactDetails?.website ?? 'N/A'} | Pan:{' '}
+            {user?.organization?.registrationDetails?.panOrVat}
           </Text>
         </Box>
       </Box>
