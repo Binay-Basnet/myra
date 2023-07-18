@@ -26,7 +26,7 @@ export const CBSLoanRepaymentList = () => {
   const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
-  const { data, isLoading } = useGetLoanRepaymentListQuery(
+  const { data, isFetching } = useGetLoanRepaymentListQuery(
     {
       paginate: getPaginationQuery(),
       filter: getFilterQuery(),
@@ -164,7 +164,7 @@ export const CBSLoanRepaymentList = () => {
       </Box>
 
       <Table
-        isLoading={isLoading}
+        isLoading={isFetching}
         data={rowData}
         columns={columns}
         rowOnClick={(row) => {
