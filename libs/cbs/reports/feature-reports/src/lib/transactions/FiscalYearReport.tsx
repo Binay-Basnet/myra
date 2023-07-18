@@ -250,7 +250,7 @@ export const FiscalYearReport = () => {
               direction="column"
             />
           </Report.Filter>
-          <Report.Filter title="Include Year End Reversal">
+          {/* <Report.Filter title="Include Year End Reversal">
             <FormRadioGroup
               name="filter.inclueYearEnd"
               options={[
@@ -269,7 +269,7 @@ export const FiscalYearReport = () => {
               ]}
               direction="column"
             />
-          </Report.Filter>
+          </Report.Filter> */}
         </Report.Filters>
       </Report.Body>
     </Report>
