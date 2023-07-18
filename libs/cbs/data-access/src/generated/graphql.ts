@@ -24067,6 +24067,34 @@ export type SetSalaryStructureMutation = {
   };
 };
 
+export type SetTaxSlabMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: TaxSlabInput;
+}>;
+
+export type SetTaxSlabMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxSlab: {
+            upsertTaxSlab: {
+              recordId: string;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type UpsertLedgerTagMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: LedgerTagInput;
@@ -36806,6 +36834,82 @@ export type GetSalaryStructureListQuery = {
   };
 };
 
+export type GetTaxSlabQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetTaxSlabQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxSlab: {
+            getTaxSlab: {
+              data?: {
+                id?: string | null;
+                name?: string | null;
+                effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
+                makeThisActive?: boolean | null;
+                fiscalYear?: {
+                  from: Record<'local' | 'en' | 'np', string>;
+                  to: Record<'local' | 'en' | 'np', string>;
+                } | null;
+                unmarriedTaxableSalarySlab?: Array<{
+                  fromAmount?: string | null;
+                  toAmount?: string | null;
+                  percentageDeduction?: string | null;
+                } | null> | null;
+                marriedTaxableSalarySlab?: Array<{
+                  fromAmount?: string | null;
+                  toAmount?: string | null;
+                  percentageDeduction?: string | null;
+                } | null> | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetTaxSlabListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetTaxSlabListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxSlab: {
+            listTaxSlab: {
+              totalCount?: number | null;
+              edges?: Array<{
+                cursor: string;
+                node: {
+                  id?: string | null;
+                  name?: string | null;
+                  effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
+                  status?: boolean | null;
+                };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type LedgerTagsListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -45425,6 +45529,34 @@ export const useSetSalaryStructureMutation = <TError = unknown, TContext = unkno
     useAxios<SetSalaryStructureMutation, SetSalaryStructureMutationVariables>(
       SetSalaryStructureDocument
     ),
+    options
+  );
+export const SetTaxSlabDocument = `
+    mutation setTaxSlab($id: String, $input: TaxSlabInput!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxSlab {
+            upsertTaxSlab(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetTaxSlabMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetTaxSlabMutation, TError, SetTaxSlabMutationVariables, TContext>
+) =>
+  useMutation<SetTaxSlabMutation, TError, SetTaxSlabMutationVariables, TContext>(
+    ['setTaxSlab'],
+    useAxios<SetTaxSlabMutation, SetTaxSlabMutationVariables>(SetTaxSlabDocument),
     options
   );
 export const UpsertLedgerTagDocument = `
@@ -62323,6 +62455,95 @@ export const useGetSalaryStructureListQuery = <
     useAxios<GetSalaryStructureListQuery, GetSalaryStructureListQueryVariables>(
       GetSalaryStructureListDocument
     ).bind(null, variables),
+    options
+  );
+export const GetTaxSlabDocument = `
+    query getTaxSlab($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxSlab {
+            getTaxSlab(id: $id) {
+              data {
+                id
+                name
+                fiscalYear {
+                  from
+                  to
+                }
+                unmarriedTaxableSalarySlab {
+                  fromAmount
+                  toAmount
+                  percentageDeduction
+                }
+                marriedTaxableSalarySlab {
+                  fromAmount
+                  toAmount
+                  percentageDeduction
+                }
+                effectiveFrom
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetTaxSlabQuery = <TData = GetTaxSlabQuery, TError = unknown>(
+  variables: GetTaxSlabQueryVariables,
+  options?: UseQueryOptions<GetTaxSlabQuery, TError, TData>
+) =>
+  useQuery<GetTaxSlabQuery, TError, TData>(
+    ['getTaxSlab', variables],
+    useAxios<GetTaxSlabQuery, GetTaxSlabQueryVariables>(GetTaxSlabDocument).bind(null, variables),
+    options
+  );
+export const GetTaxSlabListDocument = `
+    query getTaxSlabList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxSlab {
+            listTaxSlab(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  effectiveFrom
+                  status
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetTaxSlabListQuery = <TData = GetTaxSlabListQuery, TError = unknown>(
+  variables?: GetTaxSlabListQueryVariables,
+  options?: UseQueryOptions<GetTaxSlabListQuery, TError, TData>
+) =>
+  useQuery<GetTaxSlabListQuery, TError, TData>(
+    variables === undefined ? ['getTaxSlabList'] : ['getTaxSlabList', variables],
+    useAxios<GetTaxSlabListQuery, GetTaxSlabListQueryVariables>(GetTaxSlabListDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const LedgerTagsListDocument = `

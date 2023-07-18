@@ -16,6 +16,10 @@ const tabList = [
     title: 'Salary Structure',
     to: ROUTES.HRMODULE_PAYROLL_SALARY_STRUCTURE_SETTINGS,
   },
+  {
+    title: 'Income Tax Slab',
+    to: ROUTES.HRMODULE_PAYROLL_INCOME_TAX_SLAB_SETTINGS,
+  },
 ];
 
 interface ISettingsDepositLayout {
