@@ -20,6 +20,9 @@ import {
 
 import {
   InputSalaryStructure,
+  LedgerPaymentEnum,
+  PaymentModeEnum,
+  PayrollFrequencyEnum,
   useDeleteHcmEmployeeGeneralMutation,
   useGetDeductionComponentListQuery,
   useGetEarningComponentListQuery,
@@ -28,7 +31,13 @@ import {
   useSetSalaryStructureMutation,
 } from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
-import { FormCheckbox, FormEditableTable, FormInput, FormTextArea } from '@coop/shared/form';
+import {
+  FormCheckbox,
+  FormEditableTable,
+  FormInput,
+  FormSelect,
+  FormTextArea,
+} from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 const defaultFormValue = {
@@ -158,6 +167,14 @@ export const SalaryStructureTable = () => {
 
   const onSubmit = () => {
     const values = getValues();
+    const salaryEarnings = values?.salaryEarnings?.map((item) => ({
+      id: item?.id,
+      amount: item?.amount,
+    }));
+    const salaryDeduction = values?.salaryDeduction?.map((item) => ({
+      id: item?.id,
+      amount: item?.amount,
+    }));
     if (selectedSalaryStructureId) {
       asyncToast({
         id: 'edit-salary-structure',
@@ -171,7 +188,7 @@ export const SalaryStructureTable = () => {
         },
         promise: mutateAsync({
           id: selectedSalaryStructureId,
-          input: values,
+          input: { ...values, salaryEarnings, salaryDeduction },
         }),
       });
     } else {
@@ -187,7 +204,7 @@ export const SalaryStructureTable = () => {
         },
         promise: mutateAsync({
           id: null,
-          input: values,
+          input: { ...values, salaryEarnings, salaryDeduction },
         }),
       });
     }
@@ -242,7 +259,14 @@ export const SalaryStructureTable = () => {
               <GridItem colSpan={2}>
                 <FormInput name="name" label="Name" />
               </GridItem>
-              <FormInput name="payrollFrequency" label="Payroll Frequency" />
+              <FormSelect
+                name="payrollFrequency"
+                label="Payroll Frequency"
+                options={[
+                  { label: PayrollFrequencyEnum?.Monthly, value: PayrollFrequencyEnum?.Monthly },
+                  { label: PayrollFrequencyEnum?.Yearly, value: PayrollFrequencyEnum?.Yearly },
+                ]}
+              />
               <GridItem colSpan={3}>
                 <FormTextArea name="description" label="Description" />
               </GridItem>
@@ -257,7 +281,7 @@ export const SalaryStructureTable = () => {
                   label="Earnings"
                   columns={[
                     {
-                      accessor: 'component',
+                      accessor: 'id',
                       header: 'Component',
                       fieldType: 'select',
                       selectOptions: earningComponentData?.map((item) => ({
@@ -270,7 +294,7 @@ export const SalaryStructureTable = () => {
                       header: 'Abbr',
                       cell: (row) => {
                         const selectedEarningComponent = earningComponentData?.find(
-                          (item) => item?.node?.id === row?.component
+                          (item) => item?.node?.id === row?.id
                         );
                         return <Box textAlign="right">{selectedEarningComponent?.node?.abbr}</Box>;
                       },
@@ -287,7 +311,7 @@ export const SalaryStructureTable = () => {
                       isNumeric: true,
                       cell: (row) => {
                         const selectedEarningComponent = earningComponentData?.find(
-                          (item) => item?.node?.id === row?.component
+                          (item) => item?.node?.id === row?.id
                         );
                         if (!selectedEarningComponent?.node?.baseMultiple) {
                           return <Box />;
@@ -309,7 +333,7 @@ export const SalaryStructureTable = () => {
                   label="Deductions"
                   columns={[
                     {
-                      accessor: 'component',
+                      accessor: 'id',
                       header: 'Component',
                       fieldType: 'select',
                       selectOptions: deductionComponentData?.map((item) => ({
@@ -322,7 +346,7 @@ export const SalaryStructureTable = () => {
                       header: 'Abbr',
                       cell: (row) => {
                         const selectedDeductionComponent = deductionComponentData?.find(
-                          (item) => item?.node?.id === row?.component
+                          (item) => item?.node?.id === row?.id
                         );
                         return (
                           <Box textAlign="right">{selectedDeductionComponent?.node?.abbr}</Box>
@@ -332,6 +356,7 @@ export const SalaryStructureTable = () => {
                     {
                       accessor: 'amount',
                       header: 'Amount',
+                      isNumeric: true,
                     },
                     {
                       accessor: 'formula',
@@ -339,7 +364,7 @@ export const SalaryStructureTable = () => {
                       isNumeric: true,
                       cell: (row) => {
                         const selectedDeductionComponent = deductionComponentData?.find(
-                          (item) => item?.node?.id === row?.component
+                          (item) => item?.node?.id === row?.id
                         );
                         if (!selectedDeductionComponent?.node?.baseMultiple) {
                           return <Box />;
@@ -357,8 +382,38 @@ export const SalaryStructureTable = () => {
               </GridItem>
               <GridItem colSpan={3}>
                 <Box display="flex" gap="s16">
-                  <FormInput name="modeOfPayment" label="Mode of payment" />
-                  <FormInput name="salaryPaymentLedger" label="Salary Payment Ledger" />
+                  <FormSelect
+                    name="modeOfPayment"
+                    label="Mode of payment"
+                    options={[
+                      {
+                        label: 'Bank Transfer',
+                        value: PaymentModeEnum?.BankTransfer,
+                      },
+                      {
+                        label: 'Cash',
+                        value: PaymentModeEnum?.Cash,
+                      },
+                      {
+                        label: 'Check',
+                        value: PaymentModeEnum?.Check,
+                      },
+                    ]}
+                  />
+                  <FormSelect
+                    name="salaryPaymentLedger"
+                    label="Salary Payment Ledger"
+                    options={[
+                      {
+                        label: LedgerPaymentEnum?.LedgerPayment_1,
+                        value: LedgerPaymentEnum?.LedgerPayment_1,
+                      },
+                      {
+                        label: LedgerPaymentEnum?.LedgerPayment_2,
+                        value: LedgerPaymentEnum?.LedgerPayment_2,
+                      },
+                    ]}
+                  />
                 </Box>
               </GridItem>
               <GridItem colSpan={3}>

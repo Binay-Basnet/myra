@@ -36752,18 +36752,12 @@ export type GetSalaryStructureQuery = {
                 salaryPaymentLedger?: LedgerPaymentEnum | null;
                 makeThisActive?: boolean | null;
                 salaryEarnings?: Array<{
-                  component?: string | null;
-                  abbr: string;
+                  id?: string | null;
                   amount?: number | null;
-                  baseMultiple?: string | null;
-                  multiplier?: number | null;
                 } | null> | null;
                 salaryDeduction?: Array<{
-                  component?: string | null;
-                  abbr: string;
+                  id?: string | null;
                   amount?: number | null;
-                  baseMultiple?: string | null;
-                  multiplier?: number | null;
                 } | null> | null;
               } | null;
               error?:
@@ -62253,18 +62247,12 @@ export const GetSalaryStructureDocument = `
                 payrollFrequency
                 description
                 salaryEarnings {
-                  component
-                  abbr
+                  id
                   amount
-                  baseMultiple
-                  multiplier
                 }
                 salaryDeduction {
-                  component
-                  abbr
+                  id
                   amount
-                  baseMultiple
-                  multiplier
                 }
                 modeOfPayment
                 salaryPaymentLedger

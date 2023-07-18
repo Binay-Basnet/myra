@@ -131,18 +131,12 @@ query getSalaryStructure($id: ID!) {
                 payrollFrequency
                 description
                 salaryEarnings {
-                  component
-                  abbr
+                  id
                   amount
-                  baseMultiple
-                  multiplier
                 }
                 salaryDeduction {
-                  component
-                  abbr
+                  id
                   amount
-                  baseMultiple
-                  multiplier
                 }
                 modeOfPayment
                 salaryPaymentLedger
