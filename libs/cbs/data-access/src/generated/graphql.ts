@@ -1289,7 +1289,7 @@ export type AllTransactionResult = {
   branch?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
-  isYearEndAdjustment?: Maybe<Scalars['Boolean']>;
+  isYearEndAdjustment?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
@@ -19534,7 +19534,6 @@ export type TransactionInfo = {
   branchName: Scalars['String'];
   date: Scalars['Localized'];
   id: Scalars['String'];
-  isYearEndAdjustment?: Maybe<Scalars['Boolean']>;
   narration: Scalars['String'];
   transactionType: AllTransactionType;
 };
@@ -39717,7 +39716,7 @@ export type GetAllTransactionsDetailQuery = {
         transactionMode?: string | null;
         amount?: string | null;
         branch?: string | null;
-        isYearEndAdjustment?: boolean | null;
+        isYearEndAdjustment?: string | null;
         note?: string | null;
         status?: string | null;
         totalDebit?: string | null;

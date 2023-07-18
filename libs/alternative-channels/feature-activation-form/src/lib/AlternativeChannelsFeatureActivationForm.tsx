@@ -3,7 +3,7 @@ import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { IoSyncCircleOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 
 import {
   Alert,
@@ -177,6 +177,31 @@ export const ActivationForm = () => {
     });
   };
 
+  const handleActivate = () => {
+    const values = getValues();
+    asyncToast({
+      id: 'activate-service',
+      msgs: {
+        success: 'Service Activated!!',
+        loading: 'Activating Services!!',
+      },
+
+      onSuccess: () => {
+        router.push(`/alternative-channels/users/${router.query['type']}`);
+        queryClient.invalidateQueries(['getActivatedService']);
+        queryClient.invalidateQueries(['getAlternativeChannelList']);
+      },
+      promise: activateService({
+        data: {
+          ...omit(values, ['bankCheque', 'cash', 'bankCheque']),
+          service: selectedService,
+          pin: null,
+          totalAmount: String(serviceCharges?.reduce((a, b) => a + Number(b?.amount), 0)),
+        } as AlternativeChannelServiceActivationInput,
+      }),
+    });
+  };
+
   return (
     <Container minW="container.lg" p="0" bg="white">
       <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
@@ -296,8 +321,16 @@ export const ActivationForm = () => {
               </Button>
             )
           }
-          mainButtonLabel={mode === 'form' ? 'Proceed Transaction' : 'Submit'}
-          mainButtonHandler={mode === 'form' ? () => setMode('payment') : handleSubmit}
+          mainButtonLabel={
+            mode === 'form' ? (totalAmount === '0' ? 'Activate' : 'Proceed Transaction') : 'Submit'
+          }
+          mainButtonHandler={
+            mode === 'form'
+              ? totalAmount === '0'
+                ? handleActivate
+                : () => setMode('payment')
+              : handleSubmit
+          }
 
           // mainButtonHandler={sendForApprovalHandler}
           // isMainButtonDisabled={!memberId || !productId || !loanType || !loanSubType}
