@@ -108,7 +108,7 @@ export const FiscalYearReport = () => {
               link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
             },
             {
-              label: 'Fiscal Year Trial Balance',
+              label: 'Fiscal Year and Adjustment Trial Balance',
               link: isCbs
                 ? '/reports/cbs/transactions/fiscal-year/new'
                 : '/accounting/reports/transactions/fiscal-year/new',
@@ -246,6 +246,26 @@ export const FiscalYearReport = () => {
               options={[
                 { label: 'Include', value: 'include' },
                 { label: 'Exclude', value: 'exclude' },
+              ]}
+              direction="column"
+            />
+          </Report.Filter>
+          <Report.Filter title="Include Year End Reversal">
+            <FormRadioGroup
+              name="filter.inclueYearEnd"
+              options={[
+                { label: 'Yes', value: 'include' },
+                { label: 'No', value: 'exclude' },
+              ]}
+              direction="column"
+            />
+          </Report.Filter>
+          <Report.Filter title="Include Adjustments">
+            <FormRadioGroup
+              name="filter.inclueYearEnd"
+              options={[
+                { label: 'Yes', value: 'include' },
+                { label: 'No', value: 'exclude' },
               ]}
               direction="column"
             />
