@@ -94,6 +94,7 @@ export const LoanProcessingCharge = () => {
                 <FormAmountInput
                   name={`loanProcessingCharge.${index}.amount`}
                   defaultValue={calculateAmount(val?.percentage, val?.amount)}
+                  isDisabled
                 />
               </Box>
             </Box>
