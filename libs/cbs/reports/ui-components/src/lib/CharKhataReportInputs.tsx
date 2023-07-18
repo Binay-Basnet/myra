@@ -104,7 +104,7 @@ export const CharkhataReportInputs = () => {
   const [combinedArray, setCombinedArray] = useState<ArrayObject[]>([]);
   const [selectedHeads, setSelectedHeads] = useState<string[]>([]);
 
-  const { watch } = methods;
+  const { watch, setValue } = methods;
   const coaTypeSelected = watch('coaType');
 
   useEffect(() => {
@@ -115,6 +115,7 @@ export const CharkhataReportInputs = () => {
 
   useEffect(() => {
     setCombinedArray(combineArrays(coaViews, selectedHeads));
+    setValue('coaHead', []);
   }, [selectedHeads]);
 
   return (
