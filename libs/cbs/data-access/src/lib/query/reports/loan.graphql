@@ -483,6 +483,7 @@ query getLoanTransactionReport($data: LoanStatementReportSettings!) {
         statement {
           ... on LoanStatementReport {
             meta {
+              productName
               accountNo
               approvedAmount
               interestRate

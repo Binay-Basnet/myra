@@ -33963,6 +33963,7 @@ export type GetLoanTransactionReportQuery = {
         statement?:
           | {
               meta?: {
+                productName?: string | null;
                 accountNo?: string | null;
                 approvedAmount?: string | null;
                 interestRate?: number | null;
@@ -58545,6 +58546,7 @@ export const GetLoanTransactionReportDocument = `
         statement {
           ... on LoanStatementReport {
             meta {
+              productName
               accountNo
               approvedAmount
               interestRate
