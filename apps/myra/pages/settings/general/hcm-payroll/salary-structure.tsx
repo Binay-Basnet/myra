@@ -1,4 +1,4 @@
-import { SalaryComponents } from '@coop/cbs/settings/feature-hcm';
+import { SalaryStructure } from '@coop/cbs/settings/feature-hcm';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
@@ -7,8 +7,8 @@ import {
 import { Can } from '@coop/cbs/utils';
 
 export const SalaryStructurePage = () => (
-  <Can I="SHOW_IN_MENU" a="SETTINGS_SAVING_PARAMETERS" showError isErrorCentered>
-    <SalaryComponents />
+  <Can I="SHOW_IN_MENU" a="SETTINGS_HCM_EMPLOYEE" showError isErrorCentered>
+    <SalaryStructure />
   </Can>
 );
 

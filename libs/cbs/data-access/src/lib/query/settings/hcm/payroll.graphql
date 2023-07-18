@@ -10,7 +10,7 @@ query getEarningComponent($id: ID!) {
                 name
                 abbr
                 description
-                base_multiple
+                baseMultiple
                 multiplier
                 isTaxApplicable
                 roundToNearestInteger
@@ -42,6 +42,8 @@ query getEarningComponentList($filter: Filter, $pagination: Pagination) {
                   status
                   description
                   abbr
+                  multiplier
+                  baseMultiple
                 }
                 cursor
               }
@@ -100,6 +102,8 @@ query getDeductionComponentList($filter: Filter, $pagination: Pagination) {
                   status
                   deductionFrequency
                   abbr
+                  multiplier
+                  baseMultiple
                 }
                 cursor
               }

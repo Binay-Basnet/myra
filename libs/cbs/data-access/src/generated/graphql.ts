@@ -4072,9 +4072,14 @@ export type DeductionComponentListEdges = {
 
 export type DeductionComponentNode = {
   abbr?: Maybe<Scalars['String']>;
+  baseMultiple?: Maybe<Scalars['String']>;
   deductionFrequency?: Maybe<DeductionFrequencyEnum>;
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  multiplier?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
+  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
   status?: Maybe<DeductionStatusEnum>;
 };
 
@@ -5629,15 +5634,20 @@ export type EarningComponentListEdges = {
 
 export type EarningComponentNode = {
   abbr?: Maybe<Scalars['String']>;
+  baseMultiple?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  isTaxApplicable?: Maybe<Scalars['Boolean']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  multiplier?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
+  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
   status?: Maybe<EarningComponentStatus>;
 };
 
 export type EarningComponentRecord = {
   abbr?: Maybe<Scalars['String']>;
-  base_multiple?: Maybe<Scalars['String']>;
+  baseMultiple?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   isTaxApplicable?: Maybe<Scalars['Boolean']>;
@@ -17276,11 +17286,8 @@ export type SalaryRangeInput = {
 };
 
 export type SalaryStructureDeductionDetails = {
-  abbr: Scalars['String'];
   amount?: InputMaybe<Scalars['Int']>;
-  baseMultiple?: InputMaybe<Scalars['String']>;
-  component?: InputMaybe<Scalars['String']>;
-  multiplier?: InputMaybe<Scalars['Float']>;
+  id?: InputMaybe<Scalars['String']>;
 };
 
 export type SalaryStructureDeductionDetailsType = {
@@ -17288,15 +17295,13 @@ export type SalaryStructureDeductionDetailsType = {
   amount?: Maybe<Scalars['Int']>;
   baseMultiple?: Maybe<Scalars['String']>;
   component?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   multiplier?: Maybe<Scalars['Float']>;
 };
 
 export type SalaryStructureEarningDetails = {
-  abbr: Scalars['String'];
   amount?: InputMaybe<Scalars['Int']>;
-  baseMultiple?: InputMaybe<Scalars['String']>;
-  component?: InputMaybe<Scalars['String']>;
-  multiplier?: InputMaybe<Scalars['Float']>;
+  id?: InputMaybe<Scalars['String']>;
 };
 
 export type SalaryStructureEarningDetailsType = {
@@ -17304,6 +17309,7 @@ export type SalaryStructureEarningDetailsType = {
   amount?: Maybe<Scalars['Int']>;
   baseMultiple?: Maybe<Scalars['String']>;
   component?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   multiplier?: Maybe<Scalars['Float']>;
 };
 
@@ -36602,7 +36608,7 @@ export type GetEarningComponentQuery = {
                 name?: string | null;
                 abbr?: string | null;
                 description?: string | null;
-                base_multiple?: string | null;
+                baseMultiple?: string | null;
                 multiplier?: number | null;
                 isTaxApplicable?: boolean | null;
                 roundToNearestInteger?: boolean | null;
@@ -36643,6 +36649,8 @@ export type GetEarningComponentListQuery = {
                   status?: EarningComponentStatus | null;
                   description?: string | null;
                   abbr?: string | null;
+                  multiplier?: number | null;
+                  baseMultiple?: string | null;
                 };
               } | null> | null;
               pageInfo?: PaginationFragment | null;
@@ -36711,6 +36719,8 @@ export type GetDeductionComponentListQuery = {
                   status?: DeductionStatusEnum | null;
                   deductionFrequency?: DeductionFrequencyEnum | null;
                   abbr?: string | null;
+                  multiplier?: number | null;
+                  baseMultiple?: string | null;
                 };
               } | null> | null;
               pageInfo?: PaginationFragment | null;
@@ -62066,7 +62076,7 @@ export const GetEarningComponentDocument = `
                 name
                 abbr
                 description
-                base_multiple
+                baseMultiple
                 multiplier
                 isTaxApplicable
                 roundToNearestInteger
@@ -62110,6 +62120,8 @@ export const GetEarningComponentListDocument = `
                   status
                   description
                   abbr
+                  multiplier
+                  baseMultiple
                 }
                 cursor
               }
@@ -62195,6 +62207,8 @@ export const GetDeductionComponentListDocument = `
                   status
                   deductionFrequency
                   abbr
+                  multiplier
+                  baseMultiple
                 }
                 cursor
               }

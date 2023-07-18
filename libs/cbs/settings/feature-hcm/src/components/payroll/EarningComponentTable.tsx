@@ -229,10 +229,10 @@ export const EarningComponentTable = () => {
               <GridItem colSpan={3}>
                 <FormTextArea name="description" label="Description" />
               </GridItem>
-              <GridItem colSpan={3}>
+              <GridItem>
                 <FormSelect
                   name="base_multiple"
-                  label="Base Multiplier"
+                  label="Multiplier"
                   options={
                     rowData?.map((item) => ({
                       label: item?.node?.abbr,
@@ -241,8 +241,11 @@ export const EarningComponentTable = () => {
                   }
                 />
               </GridItem>
-              <GridItem colSpan={3}>
-                <FormInput type="number" name="multiplier" label="Multiplier" />
+              <GridItem>
+                <Box display="flex" h="100%" justifyContent="center" alignItems="center" gap="s16">
+                  <Text>X</Text>
+                  <FormInput type="number" name="multiplier" label="Factor" />
+                </Box>
               </GridItem>
               <GridItem colSpan={3}>
                 <Box display="flex" flexDir="column" gap="s16">

@@ -7,7 +7,7 @@ import {
 import { Can } from '@coop/cbs/utils';
 
 export const EmployeeLeave = () => (
-  <Can I="SHOW_IN_MENU" a="SETTINGS_SAVING_PARAMETERS" showError isErrorCentered>
+  <Can I="SHOW_IN_MENU" a="SETTINGS_HCM_EMPLOYEE" showError isErrorCentered>
     <HcmEmployeeLeave />
   </Can>
 );
