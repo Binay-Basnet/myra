@@ -153,7 +153,7 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
                 </Text>
               </Box>
               <Box w="300px">
-                <FormAmountInput name={`serviceCharge.${index}.amount`} />
+                <FormAmountInput name={`serviceCharge.${index}.amount`} isDisabled />
               </Box>
             </Box>
           ))}
