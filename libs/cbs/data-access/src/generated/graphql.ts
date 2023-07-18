@@ -32928,6 +32928,7 @@ export type GetSavingStatementQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           dateJoined?: Record<'local' | 'en' | 'np', string> | null;
           activeDate?: Record<'local' | 'en' | 'np', string> | null;
+          panVatNo?: string | null;
           branch?: string | null;
           address?: {
             wardNo?: string | null;
@@ -34829,6 +34830,7 @@ export type GetShareStatementQuery = {
           code: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
           activeDate?: Record<'local' | 'en' | 'np', string> | null;
+          panVatNo?: string | null;
           dateJoined?: Record<'local' | 'en' | 'np', string> | null;
           branch?: string | null;
           address?: {
@@ -57333,6 +57335,7 @@ export const GetSavingStatementDocument = `
           }
           dateJoined
           activeDate
+          panVatNo
           branch
         }
         statement {
@@ -59765,6 +59768,7 @@ export const GetShareStatementDocument = `
           code
           name
           activeDate
+          panVatNo
           address {
             wardNo
             state

@@ -142,6 +142,7 @@ query getSavingStatement($data: SavingStatementReportSettings!) {
           }
           dateJoined
           activeDate
+          panVatNo
           branch
         }
         statement {
@@ -191,7 +192,7 @@ query getInterestStatementReport($data: InterestStatementFilter!) {
           accountType
           currentInterestRate
           memberName
-
+          
           address {
             wardNo
             state
