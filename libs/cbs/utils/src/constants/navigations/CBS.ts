@@ -371,6 +371,11 @@ export const CBS: NavType = {
           aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
         },
         {
+          label: 'Adjusted Transactions',
+          route: ROUTES.CBS_TRANS_ADJUSTED_TRANSACTIONS_LIST,
+          aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
+        },
+        {
           label: 'All Ledgers',
           route: ROUTES.CBS_TRANS_ALL_LEDGERS_LIST,
           aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
