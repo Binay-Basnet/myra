@@ -22,6 +22,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => (
               {account?.approvedAmount && <Text>Approved Amount:</Text>}
               {account?.issuedDate && <Text>Loan Issued Date:</Text>}
               {member?.code && <Text>Membership No:</Text>}
+              {member?.panVatNo && <Text>PAN No:</Text>}
               {/* {account?.openingBalance && <Text>Opening Balance:</Text>} */}
             </Box>
           </GridItem>
@@ -38,6 +39,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => (
                 <Text noOfLines={1}> {localizedDate(account?.issuedDate)}</Text>
               )}
               {member?.code && <Text noOfLines={1}>{member?.code}</Text>}
+              {member?.panVatNo && <Text noOfLines={1}>{member?.panVatNo}</Text>}
               {/* {account?.openingBalance && (
                 <Text noOfLines={1}>{amountConverter(account?.openingBalance ?? 0)}</Text>
               )} */}
@@ -98,6 +100,7 @@ export const ClosedLoanReportMeta = ({ meta }: ClosedLoanAccountMetaProps) => (
             <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
               {meta?.memberName && <Text>Name of member:</Text>}
               {meta?.address && <Text>Address:</Text>}
+              {meta?.memberPan && <Text>Member Pan:</Text>}
               {meta?.branchName && <Text>Branch Name:</Text>}
               {meta?.approvedAmount && <Text>Approved Amount:</Text>}
               {meta?.loanIssuedDate && <Text>Loan Issued Date:</Text>}
@@ -114,6 +117,7 @@ export const ClosedLoanReportMeta = ({ meta }: ClosedLoanAccountMetaProps) => (
                 </Text>
               )}
               {meta?.address && <Text noOfLines={1}>{localizedText(meta?.address)}</Text>}
+              {meta?.memberPan && <Text noOfLines={1}>{meta?.memberPan}</Text>}
               {meta?.branchName && <Text noOfLines={1}>{meta?.branchName}</Text>}
               {meta?.approvedAmount && (
                 <Text noOfLines={1}>{amountConverter(meta?.approvedAmount ?? 0)}</Text>

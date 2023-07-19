@@ -71,6 +71,7 @@ export const ClosedSavingAccountStatement = () => {
               address: closedAccountReport?.address,
               code: closedAccountReport?.memberShipCode || '',
               activeDate: closedAccountReport?.closedDate,
+              panVatNo: closedAccountReport?.memberPan,
             }}
             accountCloseDate={localizedDate(closedAccountReport?.closedDate)}
             savingData={{
