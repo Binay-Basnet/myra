@@ -1932,7 +1932,7 @@ export type BankChequePaymentForAccountClose = {
 export type BankChequePaymentForAlternativeChannel = {
   bank: Scalars['ID'];
   depositedBy?: InputMaybe<AlternativeChannelDepositedBy>;
-  deposited_date?: InputMaybe<Scalars['String']>;
+  deposited_date?: InputMaybe<Scalars['Localized']>;
   note?: InputMaybe<Scalars['String']>;
   voucher_id?: InputMaybe<Scalars['String']>;
 };
@@ -7526,6 +7526,16 @@ export type GetEmployeeLifecycleNode = {
   status?: Maybe<Scalars['String']>;
 };
 
+export type GetEmployeeSchema = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<HcmEmployeeSchema>;
+};
+
+export type GetHealthInsuranceSchema = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<EmployeeHealthInsurance>;
+};
+
 export type GetInventoryItemResponse = {
   data?: Maybe<FormStateInvItemsInput>;
   error?: Maybe<QueryError>;
@@ -7687,11 +7697,36 @@ export type HcmEmployeeGeneralMutationUpsertEmployeeTypeArgs = {
 };
 
 export type HcmEmployeeGeneralQuery = {
+  getDepartment: GetEmployeeSchema;
+  getDesignation: GetEmployeeSchema;
+  getEmployeeLevel: GetEmployeeSchema;
+  getEmployeeType: GetEmployeeSchema;
+  getHealthInsurance: GetHealthInsuranceSchema;
   listDepartment?: Maybe<HcmEmployeeListConnection>;
   listDesignation?: Maybe<HcmEmployeeListConnection>;
   listEmployeeHealthInsurance?: Maybe<HcmEmployeeHealthInsuranceListConnection>;
   listEmployeeLevel?: Maybe<HcmEmployeeListConnection>;
   listEmployeeType?: Maybe<HcmEmployeeListConnection>;
+};
+
+export type HcmEmployeeGeneralQueryGetDepartmentArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeGeneralQueryGetDesignationArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeGeneralQueryGetEmployeeLevelArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeGeneralQueryGetEmployeeTypeArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeGeneralQueryGetHealthInsuranceArgs = {
+  id: Scalars['String'];
 };
 
 export type HcmEmployeeGeneralQueryListDepartmentArgs = {
@@ -12221,6 +12256,7 @@ export type LoanAccountMutationUpdateLinkedAccountArgs = {
 
 export type LoanAccountOverview = {
   additionalFeatures?: Maybe<LoanPreviewAdditionalFeatures>;
+  closedDate?: Maybe<Scalars['Localized']>;
   generalInformation?: Maybe<LoanGeneralInformation>;
   isClosed: Scalars['Boolean'];
   loanSchedule?: Maybe<LoanInstallments>;
@@ -14122,7 +14158,7 @@ export type MemberAccountDetails = {
   autoOpen?: Maybe<Scalars['Boolean']>;
   availableBalance?: Maybe<Scalars['String']>;
   chequeIssue?: Maybe<Scalars['Boolean']>;
-  closedAt?: Maybe<Scalars['String']>;
+  closedAt?: Maybe<Scalars['Localized']>;
   defaultAccountType?: Maybe<DefaultAccountType>;
   dues?: Maybe<Dues>;
   guaranteedAmount?: Maybe<Scalars['String']>;
@@ -14463,6 +14499,7 @@ export type MemberLoanInformation = {
 
 export type MemberMutation = {
   activateMember?: Maybe<MemberActivateMutation>;
+  balanceCertificate: Scalars['String'];
   cooperative?: Maybe<KymCooperativeMutation>;
   cooperativeUnion?: Maybe<KymCoopUnionMutation>;
   deleteDraft?: Maybe<MemberDeleteDraftResult>;
@@ -14479,6 +14516,10 @@ export type MemberMutation = {
   translate?: Maybe<TranslateData>;
   updateDormancy: MemberDormancyResult;
   updateKym: KymUpdateResult;
+};
+
+export type MemberMutationBalanceCertificateArgs = {
+  id: Scalars['ID'];
 };
 
 export type MemberMutationDeleteDraftArgs = {
@@ -16354,6 +16395,7 @@ export type PrintPreferenceResult = {
 };
 
 export const PrintType = {
+  BalanceCertificate: 'BALANCE_CERTIFICATE',
   CustomerCopy: 'CUSTOMER_COPY',
   FdCertificate: 'FD_CERTIFICATE',
   IssueCertificate: 'ISSUE_CERTIFICATE',
@@ -22894,6 +22936,12 @@ export type MemberTransferActionMutation = {
   };
 };
 
+export type BalanceCertificateMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type BalanceCertificateMutation = { members: { balanceCertificate: string } };
+
 export type PayMembershipMutationVariables = Exact<{
   data?: InputMaybe<MembershipPaymentInput>;
   memberId: Scalars['ID'];
@@ -26284,7 +26332,7 @@ export type GetAccountDetailsDataQuery = {
         overDrawnBalance?: string | null;
         lastTransactionDate?: Record<'local' | 'en' | 'np', string> | null;
         accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
-        closedAt?: string | null;
+        closedAt?: Record<'local' | 'en' | 'np', string> | null;
         lastInstallmentUpdatedDate?: Record<'local' | 'en' | 'np', string> | null;
         member?: {
           id: string;
@@ -30956,6 +31004,7 @@ export type GetLoanAccountDetailsQuery = {
     loanAccountDetails?: {
       overView?: {
         isClosed: boolean;
+        closedDate?: Record<'local' | 'en' | 'np', string> | null;
         totalPrincipalPaid: string;
         totalInterestPaid: string;
         totalRemainingPrincipal: string;
@@ -43820,6 +43869,28 @@ export const useMemberTransferActionMutation = <TError = unknown, TContext = unk
     ),
     options
   );
+export const BalanceCertificateDocument = `
+    mutation balanceCertificate($id: ID!) {
+  members {
+    balanceCertificate(id: $id)
+  }
+}
+    `;
+export const useBalanceCertificateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    BalanceCertificateMutation,
+    TError,
+    BalanceCertificateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<BalanceCertificateMutation, TError, BalanceCertificateMutationVariables, TContext>(
+    ['balanceCertificate'],
+    useAxios<BalanceCertificateMutation, BalanceCertificateMutationVariables>(
+      BalanceCertificateDocument
+    ),
+    options
+  );
 export const PayMembershipDocument = `
     mutation payMembership($data: MembershipPaymentInput, $memberId: ID!) {
   members {
@@ -54711,6 +54782,7 @@ export const GetLoanAccountDetailsDocument = `
     loanAccountDetails(loanAccountId: $loanAccountId) {
       overView {
         isClosed
+        closedDate
         totalPrincipalPaid
         totalInterestPaid
         totalRemainingPrincipal

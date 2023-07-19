@@ -1,23 +1,11 @@
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
-import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
 import { IoSyncCircleOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
-import {
-  Alert,
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  GridItem,
-  Icon,
-  Text,
-} from '@myra-ui';
+import { Alert, asyncToast, Box, Button, FormSection, GridItem, Icon, Text } from '@myra-ui';
 
 import {
   AlternativeChannelPaymentMode,
@@ -29,7 +17,7 @@ import {
   useGetAlternativeFeeAndChargesQuery,
 } from '@coop/cbs/data-access';
 import { CashOptions } from '@coop/shared/components';
-import { FormInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
+import { FormInput, FormLayout, FormMemberSelect, FormSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import Payment from '../components/Payment';
@@ -203,140 +191,138 @@ export const ActivationForm = () => {
   };
 
   return (
-    <Container minW="container.lg" p="0" bg="white">
-      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader title={t['acNewServiceActivationForm']} />
-      </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header title={t['acNewServiceActivationForm']} />
 
-      <FormProvider {...methods}>
-        <Box minH="calc(100vh - 220px)" display={mode === 'form' ? 'block' : 'none'}>
-          <FormSection>
-            <GridItem colSpan={2}>
-              <FormMemberSelect name="memberId" label={t['acMember']} />
-            </GridItem>
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <Box display={mode === 'form' ? 'block' : 'none'}>
+            <FormSection>
+              <GridItem colSpan={2}>
+                <FormMemberSelect name="memberId" label={t['acMember']} />
+              </GridItem>
 
-            <FormSelect
-              name="service"
-              isMulti
-              isDisabled={!memberId}
-              label={t['acService']}
-              options={[
-                {
-                  label: t['acMBanking'],
-                  value: AlternativeChannelServiceType.MobileBanking,
-                  disabled: isMobileBankingDisabled ?? false,
-                },
-                {
-                  label: t['acEBanking'],
-                  value: AlternativeChannelServiceType.Ebanking,
-                  disabled: isEbankingDisabled ?? false,
-                },
-                {
-                  label: t['acSMSBanking'],
-                  value: AlternativeChannelServiceType.SmsBanking,
-                  disabled: isSMSDisabled ?? false,
-                },
-              ]}
-            />
-          </FormSection>
+              <FormSelect
+                name="service"
+                isMulti
+                isDisabled={!memberId}
+                label={t['acService']}
+                options={[
+                  {
+                    label: t['acMBanking'],
+                    value: AlternativeChannelServiceType.MobileBanking,
+                    disabled: isMobileBankingDisabled ?? false,
+                  },
+                  {
+                    label: t['acEBanking'],
+                    value: AlternativeChannelServiceType.Ebanking,
+                    disabled: isEbankingDisabled ?? false,
+                  },
+                  {
+                    label: t['acSMSBanking'],
+                    value: AlternativeChannelServiceType.SmsBanking,
+                    disabled: isSMSDisabled ?? false,
+                  },
+                ]}
+              />
+            </FormSection>
 
-          <FormSection
-            templateColumns={2}
-            header="acUserInformation"
-            subHeader="acUserInformationDetails"
-          >
-            <FormInput name="phoneNumber" label={t['acPhoneNumber']} />
-            <FormInput name="email" label={t['acEmail']} />
-          </FormSection>
-
-          {/* {(selectedService?.includes(AlternativeChannelServiceType.Ebanking) || */}
-          {/*   selectedService?.includes(AlternativeChannelServiceType.MobileBanking)) && ( */}
-          {/*   <GeneratePin pin={pin} setPin={setPin} /> */}
-          {/* )} */}
-
-          <FormSection flexLayout header="acFeeAndCharges" subHeader="acFeeDes">
-            <Box
-              display="flex"
-              flexDirection="column"
-              background="background.500"
-              borderRadius="br2"
-              p="s16"
-              gap="s8"
+            <FormSection
+              templateColumns={2}
+              header="acUserInformation"
+              subHeader="acUserInformationDetails"
             >
-              {serviceCharges?.map((charge) => (
+              <FormInput name="phoneNumber" label={t['acPhoneNumber']} />
+              <FormInput name="email" label={t['acEmail']} />
+            </FormSection>
+
+            {/* {(selectedService?.includes(AlternativeChannelServiceType.Ebanking) || */}
+            {/*   selectedService?.includes(AlternativeChannelServiceType.MobileBanking)) && ( */}
+            {/*   <GeneratePin pin={pin} setPin={setPin} /> */}
+            {/* )} */}
+
+            <FormSection flexLayout header="acFeeAndCharges" subHeader="acFeeDes" divider={false}>
+              <Box
+                display="flex"
+                flexDirection="column"
+                background="background.500"
+                borderRadius="br2"
+                p="s16"
+                gap="s8"
+              >
+                {serviceCharges?.map((charge) => (
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    h="s32"
+                  >
+                    <Text fontSize="s3" fontWeight="500" color="gray.600">
+                      {charge?.serviceType ? t[ActivationChargeDict[charge?.serviceType]] : 'N/A'}
+                    </Text>
+                    <Text fontSize="r1" fontWeight="600" color="gray.800">
+                      {charge?.amount}
+                    </Text>
+                  </Box>
+                ))}
+
                 <Box
                   display="flex"
                   flexDirection="row"
                   alignItems="center"
                   justifyContent="space-between"
-                  h="s32"
+                  h="s48"
                 >
-                  <Text fontSize="s3" fontWeight="500" color="gray.600">
-                    {charge?.serviceType ? t[ActivationChargeDict[charge?.serviceType]] : 'N/A'}
+                  <Text fontSize="s3" fontWeight="600" color="gray.800">
+                    Total
                   </Text>
                   <Text fontSize="r1" fontWeight="600" color="gray.800">
-                    {charge?.amount}
+                    {serviceCharges?.reduce((a, b) => a + Number(b?.amount), 0)}
                   </Text>
                 </Box>
-              ))}
-
-              <Box
-                display="flex"
-                flexDirection="row"
-                alignItems="center"
-                justifyContent="space-between"
-                h="s48"
-              >
-                <Text fontSize="s3" fontWeight="600" color="gray.800">
-                  Total
-                </Text>
-                <Text fontSize="r1" fontWeight="600" color="gray.800">
-                  {serviceCharges?.reduce((a, b) => a + Number(b?.amount), 0)}
-                </Text>
               </Box>
+            </FormSection>
+          </Box>
+
+          <Box display={mode === 'payment' ? 'block' : 'none'}>
+            <Payment totalDeposit={Number(totalAmount)} />
+          </Box>
+        </FormLayout.Form>
+      </FormLayout.Content>
+
+      <FormLayout.Footer
+        status={
+          mode === 'form' ? (
+            <Box display="flex" gap="s32">
+              <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
+                {t['acTotalAmount']}
+              </Text>
+              <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
+                {totalAmount ?? '---'}
+              </Text>
             </Box>
-          </FormSection>
-        </Box>
+          ) : (
+            <Button variant="solid" onClick={() => setMode('form')}>
+              {t['addDepositPrevious']}
+            </Button>
+          )
+        }
+        mainButtonLabel={
+          mode === 'form' ? (totalAmount === '0' ? 'Activate' : 'Proceed Transaction') : 'Submit'
+        }
+        mainButtonHandler={
+          mode === 'form'
+            ? totalAmount === '0'
+              ? handleActivate
+              : () => setMode('payment')
+            : handleSubmit
+        }
 
-        <Box minH="calc(100vh - 220px)" display={mode === 'payment' ? 'block' : 'none'}>
-          <Payment totalDeposit={Number(totalAmount)} />
-        </Box>
-      </FormProvider>
-
-      <Box position="sticky" bottom={0} zIndex="11">
-        <FormFooter
-          status={
-            mode === 'form' ? (
-              <Box display="flex" gap="s32">
-                <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
-                  {t['acTotalAmount']}
-                </Text>
-                <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
-                  {totalAmount ?? '---'}
-                </Text>
-              </Box>
-            ) : (
-              <Button variant="solid" onClick={() => setMode('form')}>
-                {t['addDepositPrevious']}
-              </Button>
-            )
-          }
-          mainButtonLabel={
-            mode === 'form' ? (totalAmount === '0' ? 'Activate' : 'Proceed Transaction') : 'Submit'
-          }
-          mainButtonHandler={
-            mode === 'form'
-              ? totalAmount === '0'
-                ? handleActivate
-                : () => setMode('payment')
-              : handleSubmit
-          }
-
-          // mainButtonHandler={sendForApprovalHandler}
-          // isMainButtonDisabled={!memberId || !productId || !loanType || !loanSubType}
-        />
-      </Box>
-    </Container>
+        // mainButtonHandler={sendForApprovalHandler}
+        // isMainButtonDisabled={!memberId || !productId || !loanType || !loanSubType}
+      />
+    </FormLayout>
   );
 };
 

@@ -13,7 +13,9 @@ import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-co
 import { DenominationTable } from '@coop/shared/components';
 import {
   FormAccountSelect,
+  FormAmountInput,
   FormBankSelect,
+  FormDatePicker,
   FormInput,
   FormSwitch,
   FormSwitchTab,
@@ -73,7 +75,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
     setValue('totalAmount', String(totalDeposit));
   }, [totalDeposit, setValue]);
   return (
-    <ContainerWithDivider borderRight="1px" borderColor="border.layout" p="s16" pb="100px">
+    <ContainerWithDivider p="s16" pb="100px">
       <BoxContainer>
         <FormSwitchTab label="Payment Mode" options={paymentModes} name="paymentMode" />
         {selectedPaymentMode === AlternativeChannelPaymentMode?.Account && (
@@ -86,13 +88,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 filterBy={ObjState.Active}
               />
             </GridItem>
-            <FormInput
-              name="totalAmount"
-              label="Amount"
-              isDisabled
-              textAlign="right"
-              placeholder="0.00"
-            />
+            <FormAmountInput name="totalAmount" label="Amount" isDisabled />
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
               <FormTextArea name="accountTransfer.note" label="Note" />
             </GridItem>
@@ -105,15 +101,9 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 <FormBankSelect name="bankCheque.bank" label="Bank Name" currentBranchOnly />
               </GridItem>
               <FormInput name="bankCheque.voucher_id" label="Voucher Number" />
-              <FormInput
-                name="totalAmount"
-                label="Amount"
-                isDisabled
-                textAlign="right"
-                placeholder="0.00"
-              />
+              <FormAmountInput name="totalAmount" label="Amount" isDisabled />
 
-              <FormInput type="date" name="bankCheque.deposited_date" label="Deposited Date" />
+              <FormDatePicker type="date" name="bankCheque.deposited_date" label="Deposited Date" />
             </Grid>
             <Divider />
 
@@ -129,7 +119,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
         {selectedPaymentMode === AlternativeChannelPaymentMode.Cash && (
           <>
             <Grid templateColumns="repeat(2,1fr)" gap="s20">
-              <FormInput name="cash.cashPaid" type="number" label="Cash" textAlign="right" />
+              <FormAmountInput name="cash.cashPaid" label="Cash" />
             </Grid>
             <FormSwitch name="cash.disableDenomination" label="Disable Denomination" />
 
