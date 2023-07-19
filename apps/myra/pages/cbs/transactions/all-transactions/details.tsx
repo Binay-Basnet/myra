@@ -25,15 +25,22 @@ import {
 
 import {
   useGetAllTransactionsDetailQuery,
+  useGetEndOfDayDateDataQuery,
   useRevertTransactionMutation,
   useSwitchTransactionYearEndFlagMutation,
 } from '@coop/cbs/data-access';
 import { AllTransactionDetailPage } from '@coop/cbs/transactions/feature-detail-page';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
 import { ROUTES } from '@coop/cbs/utils';
+import { checkDateInFiscalYear } from '@coop/shared/utils';
 
 const DepositDetailsPage = () => {
   const router = useRouter();
+  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+  const isCurrentFiscalYear = checkDateInFiscalYear({
+    date: new Date(endOfDayData?.transaction?.endOfDayDate?.value?.en),
+  });
+
   const { id } = router.query;
 
   const queryClient = useQueryClient();
@@ -69,17 +76,31 @@ const DepositDetailsPage = () => {
     <>
       <DetailPageHeader
         title="Transaction List"
-        options={[
-          {
-            label: allTransactionsData?.isYearEndAdjustment
-              ? 'Remove Year End Adjustment'
-              : 'Year End Adjustment',
-            handler: () => onToggle(),
-          },
-          { label: 'Revert Transaction', handler: () => setIsRevertTransactionModalOpen(true) },
+        options={
+          isCurrentFiscalYear
+            ? [
+                {
+                  label: allTransactionsData?.isYearEndAdjustment
+                    ? 'Remove Year End Adjustment'
+                    : 'Year End Adjustment',
+                  handler: () => onToggle(),
+                },
+                {
+                  label: 'Revert Transaction',
+                  handler: () => setIsRevertTransactionModalOpen(true),
+                },
 
-          { label: 'Print', handler: handlePrintVoucher },
-        ]}
+                { label: 'Print', handler: handlePrintVoucher },
+              ]
+            : [
+                {
+                  label: 'Revert Transaction',
+                  handler: () => setIsRevertTransactionModalOpen(true),
+                },
+
+                { label: 'Print', handler: handlePrintVoucher },
+              ]
+        }
       />
       <AllTransactionDetailPage printRef={printRef} />
       <YearEndAdjustmentConfirmationDialog
@@ -180,7 +201,6 @@ const YearEndAdjustmentConfirmationDialog = ({
 
           <AlertDialogBody borderBottom="1px solid" borderBottomColor="border.layout" p="s16">
             <Text fontSize="s3" fontWeight={400} color="gray.800">
-              Are you sure you want to proceed with year end adjustment?.{' '}
               {!isAdjusted
                 ? 'This will make the transaction as previous fiscal year end adjustment'
                 : 'This will remove the adjustment from previous fiscal year and make it as current fiscal year'}

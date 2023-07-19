@@ -10,6 +10,7 @@ export * from './hooks/useTranslation';
 export * from './locales';
 export * from './utilFunctions/amountConverter';
 export * from './utilFunctions/amountToWordsConverter';
+export * from './utilFunctions/checkDateInFiscalYear';
 export * from './utilFunctions/checkModuleAccess';
 export * from './utilFunctions/copyToClipboard';
 export * from './utilFunctions/debitCreditConverter';

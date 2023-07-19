@@ -22937,6 +22937,12 @@ export type MemberTransferActionMutation = {
   };
 };
 
+export type BalanceCertificateMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type BalanceCertificateMutation = { members: { balanceCertificate: string } };
+
 export type PayMembershipMutationVariables = Exact<{
   data?: InputMaybe<MembershipPaymentInput>;
   memberId: Scalars['ID'];
@@ -30999,6 +31005,7 @@ export type GetLoanAccountDetailsQuery = {
     loanAccountDetails?: {
       overView?: {
         isClosed: boolean;
+        closedDate?: Record<'local' | 'en' | 'np', string> | null;
         totalPrincipalPaid: string;
         totalInterestPaid: string;
         totalRemainingPrincipal: string;
@@ -43864,6 +43871,28 @@ export const useMemberTransferActionMutation = <TError = unknown, TContext = unk
     ),
     options
   );
+export const BalanceCertificateDocument = `
+    mutation balanceCertificate($id: ID!) {
+  members {
+    balanceCertificate(id: $id)
+  }
+}
+    `;
+export const useBalanceCertificateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    BalanceCertificateMutation,
+    TError,
+    BalanceCertificateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<BalanceCertificateMutation, TError, BalanceCertificateMutationVariables, TContext>(
+    ['balanceCertificate'],
+    useAxios<BalanceCertificateMutation, BalanceCertificateMutationVariables>(
+      BalanceCertificateDocument
+    ),
+    options
+  );
 export const PayMembershipDocument = `
     mutation payMembership($data: MembershipPaymentInput, $memberId: ID!) {
   members {
@@ -54755,6 +54784,7 @@ export const GetLoanAccountDetailsDocument = `
     loanAccountDetails(loanAccountId: $loanAccountId) {
       overView {
         isClosed
+        closedDate
         totalPrincipalPaid
         totalInterestPaid
         totalRemainingPrincipal
