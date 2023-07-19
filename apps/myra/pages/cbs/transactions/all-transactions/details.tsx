@@ -1,6 +1,15 @@
 import { ReactElement, useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -15,6 +24,7 @@ import {
 } from '@myra-ui';
 
 import {
+  useGetAllTransactionsDetailQuery,
   useRevertTransactionMutation,
   useSwitchTransactionYearEndFlagMutation,
 } from '@coop/cbs/data-access';
@@ -24,7 +34,22 @@ import { ROUTES } from '@coop/cbs/utils';
 
 const DepositDetailsPage = () => {
   const router = useRouter();
+  const { id } = router.query;
+
   const queryClient = useQueryClient();
+  const { isOpen, onClose, onToggle } = useDisclosure();
+
+  const { data: allTransactionsDetails } = useGetAllTransactionsDetailQuery(
+    { id: id as string },
+    {
+      staleTime: 0,
+      enabled:
+        !!id &&
+        (router?.asPath?.includes('/all-transactions/') ||
+          router?.asPath?.includes('/ledger-balance-transfer/')),
+    }
+  );
+  const allTransactionsData = allTransactionsDetails?.transaction?.viewTransactionDetail?.data;
 
   const { mutateAsync: switchTransactionYearEnd } = useSwitchTransactionYearEndFlagMutation();
 
@@ -46,18 +71,10 @@ const DepositDetailsPage = () => {
         title="Transaction List"
         options={[
           {
-            label: 'Flag Year End Adjustment',
-            handler: async () => {
-              await asyncToast({
-                id: 'switch-transaction',
-                msgs: {
-                  loading: 'Flagging Year End Adjustment',
-                  success: 'Year End Adjustment Flagged',
-                },
-                onSuccess: () => queryClient.invalidateQueries(['getAllTransactionsDetail']),
-                promise: switchTransactionYearEnd({ journalId: String(router.query['id']) }),
-              });
-            },
+            label: allTransactionsData?.isYearEndAdjustment
+              ? 'Remove Year End Adjustment'
+              : 'Year End Adjustment',
+            handler: () => onToggle(),
           },
           { label: 'Revert Transaction', handler: () => setIsRevertTransactionModalOpen(true) },
 
@@ -65,6 +82,23 @@ const DepositDetailsPage = () => {
         ]}
       />
       <AllTransactionDetailPage printRef={printRef} />
+      <YearEndAdjustmentConfirmationDialog
+        isAdjusted={!!allTransactionsData?.isYearEndAdjustment}
+        isOpen={isOpen}
+        handleConfirm={async () => {
+          await asyncToast({
+            id: 'switch-transaction',
+            msgs: {
+              loading: 'Flagging Year End Adjustment',
+              success: 'Year End Adjustment Flagged',
+            },
+            onSuccess: () => queryClient.invalidateQueries(['getAllTransactionsDetail']),
+            promise: switchTransactionYearEnd({ journalId: String(router.query['id']) }),
+          });
+        }}
+        onClose={onClose}
+        onToggle={onToggle}
+      />
       <Modal
         open={isRevertTransactionModalOpen}
         onClose={handleRevertTransactionModalClose}
@@ -103,6 +137,73 @@ const DepositDetailsPage = () => {
         </Box>
       </Modal>
     </>
+  );
+};
+
+type YearEndAdjustmentConfirmationDialogProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  onToggle: () => void;
+
+  handleConfirm: () => void;
+  isAdjusted: boolean;
+};
+
+const YearEndAdjustmentConfirmationDialog = ({
+  isOpen,
+  onClose,
+  onToggle,
+  isAdjusted,
+  handleConfirm,
+}: YearEndAdjustmentConfirmationDialogProps) => {
+  const confirmCancelRef = useRef<HTMLButtonElement | null>(null);
+
+  return (
+    <AlertDialog
+      isOpen={isOpen}
+      leastDestructiveRef={confirmCancelRef}
+      onClose={onClose}
+      isCentered
+    >
+      <AlertDialogOverlay>
+        <AlertDialogContent>
+          <AlertDialogHeader
+            fontSize="lg"
+            fontWeight="bold"
+            borderBottom="1px"
+            borderColor="border.layout"
+          >
+            <Text fontWeight="SemiBold" fontSize="r2" color="gray.800" lineHeight="150%">
+              Year End Adjustment Confirmation
+            </Text>
+          </AlertDialogHeader>
+
+          <AlertDialogBody borderBottom="1px solid" borderBottomColor="border.layout" p="s16">
+            <Text fontSize="s3" fontWeight={400} color="gray.800">
+              Are you sure you want to proceed with year end adjustment?.{' '}
+              {!isAdjusted
+                ? 'This will make the transaction as previous fiscal year end adjustment'
+                : 'This will remove the adjustment from previous fiscal year and make it as current fiscal year'}
+            </Text>
+          </AlertDialogBody>
+
+          <AlertDialogFooter>
+            <Button ref={confirmCancelRef} variant="outline" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              ml={3}
+              onClick={() => {
+                onToggle();
+                handleConfirm();
+              }}
+            >
+              Confirm
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogOverlay>
+    </AlertDialog>
   );
 };
 
