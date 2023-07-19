@@ -3339,6 +3339,8 @@ export const ComparatorType = {
   Contains: 'CONTAINS',
   EqualTo: 'EqualTo',
   GreaterThan: 'GreaterThan',
+  HasNoValue: 'HasNoValue',
+  HasValue: 'HasValue',
   In: 'IN',
   LessThan: 'LessThan',
 } as const;

@@ -23,6 +23,8 @@ type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId
   branchId: { label: string; value: string }[];
   filter: {
     includeZero: 'include' | 'exclude';
+    includeFiscalReversal: 'YES' | 'NO';
+    inculdeAdjustment: 'YES' | 'NO';
   };
 };
 
@@ -54,6 +56,8 @@ export const FiscalYearReport = () => {
 
         filter: {
           includeZero: filters?.filter?.includeZero === 'include',
+          includeFiscalReversal: filters?.filter?.includeFiscalReversal === 'YES',
+          inculdeAdjustment: filters?.filter?.inculdeAdjustment === 'YES',
         },
       },
     },
@@ -92,6 +96,8 @@ export const FiscalYearReport = () => {
       defaultFilters={{
         filter: {
           includeZero: 'include',
+          includeFiscalReversal: 'NO',
+          inculdeAdjustment: 'NO',
         },
       }}
       data={assetsReport as TrialSheetReportDataEntry[]}
@@ -250,26 +256,26 @@ export const FiscalYearReport = () => {
               direction="column"
             />
           </Report.Filter>
-          {/* <Report.Filter title="Include Year End Reversal">
+          <Report.Filter title="Include Year End Reversal">
             <FormRadioGroup
-              name="filter.inclueYearEnd"
+              name="filter.includeFiscalReversal"
               options={[
-                { label: 'Yes', value: 'include' },
-                { label: 'No', value: 'exclude' },
+                { label: 'Yes', value: 'YES' },
+                { label: 'No', value: 'NO' },
               ]}
               direction="column"
             />
           </Report.Filter>
           <Report.Filter title="Include Adjustments">
             <FormRadioGroup
-              name="filter.inclueYearEnd"
+              name="filter.inculdeAdjustment"
               options={[
-                { label: 'Yes', value: 'include' },
-                { label: 'No', value: 'exclude' },
+                { label: 'Yes', value: 'YES' },
+                { label: 'No', value: 'NO' },
               ]}
               direction="column"
             />
-          </Report.Filter> */}
+          </Report.Filter>
         </Report.Filters>
       </Report.Body>
     </Report>
