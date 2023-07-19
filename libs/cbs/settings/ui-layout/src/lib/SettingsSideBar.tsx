@@ -122,26 +122,26 @@ const otherTabList: TabList[] = [
 ];
 
 const accountingTabList: TabList[] = [
-  {
-    label: 'General',
-    route: ROUTES.SETTINGS_GENERAL_ACCOUNTING_GENERAL,
-    aclKey: 'SETTINGS_INDEXING',
-  },
-  {
-    label: 'Credit Terms',
-    route: ROUTES.SETTINGS_GENERAL_ACCOUNTING_CREDIT_TERMS,
-    aclKey: 'SETTINGS_INDEXING',
-  },
-  {
-    label: 'Custom Fields',
-    route: '/settings/general/accounting/custom-fields',
-    aclKey: 'SETTINGS_INDEXING',
-  },
-  {
-    label: 'Default Ledger Mapping',
-    route: '/settings/general/accounting/default-ledger-mapping',
-    aclKey: 'SETTINGS_INDEXING',
-  },
+  // {
+  //   label: 'General',
+  //   route: ROUTES.SETTINGS_GENERAL_ACCOUNTING_GENERAL,
+  //   aclKey: 'SETTINGS_INDEXING',
+  // },
+  // {
+  //   label: 'Credit Terms',
+  //   route: ROUTES.SETTINGS_GENERAL_ACCOUNTING_CREDIT_TERMS,
+  //   aclKey: 'SETTINGS_INDEXING',
+  // },
+  // {
+  //   label: 'Custom Fields',
+  //   route: '/settings/general/accounting/custom-fields',
+  //   aclKey: 'SETTINGS_INDEXING',
+  // },
+  // {
+  //   label: 'Default Ledger Mapping',
+  //   route: '/settings/general/accounting/default-ledger-mapping',
+  //   aclKey: 'SETTINGS_INDEXING',
+  // },
   {
     label: 'Tax',
     route: '/settings/general/accounting/tax',
