@@ -1289,7 +1289,7 @@ export type AllTransactionResult = {
   branch?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
-  isYearEndAdjustment?: Maybe<Scalars['Boolean']>;
+  isYearEndAdjustment?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
@@ -1932,7 +1932,7 @@ export type BankChequePaymentForAccountClose = {
 export type BankChequePaymentForAlternativeChannel = {
   bank: Scalars['ID'];
   depositedBy?: InputMaybe<AlternativeChannelDepositedBy>;
-  deposited_date?: InputMaybe<Scalars['String']>;
+  deposited_date?: InputMaybe<Scalars['Localized']>;
   note?: InputMaybe<Scalars['String']>;
   voucher_id?: InputMaybe<Scalars['String']>;
 };
@@ -3126,6 +3126,7 @@ export type ClosedLoanAccountMeta = {
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['String']>;
+  memberPan?: Maybe<Scalars['String']>;
   noOfInstallments?: Maybe<Scalars['Int']>;
 };
 
@@ -3188,6 +3189,7 @@ export type ClosedSavingAccountResultData = {
   closedDate?: Maybe<Scalars['Localized']>;
   entries?: Maybe<Array<Maybe<ClosedSavingAccountData>>>;
   memberName?: Maybe<Scalars['Localized']>;
+  memberPan?: Maybe<Scalars['String']>;
   memberShipCode?: Maybe<Scalars['String']>;
   membershipDate?: Maybe<Scalars['Localized']>;
   savingType?: Maybe<Scalars['String']>;
@@ -3337,6 +3339,8 @@ export const ComparatorType = {
   Contains: 'CONTAINS',
   EqualTo: 'EqualTo',
   GreaterThan: 'GreaterThan',
+  HasNoValue: 'HasNoValue',
+  HasValue: 'HasValue',
   In: 'IN',
   LessThan: 'LessThan',
 } as const;
@@ -4072,9 +4076,14 @@ export type DeductionComponentListEdges = {
 
 export type DeductionComponentNode = {
   abbr?: Maybe<Scalars['String']>;
+  baseMultiple?: Maybe<Scalars['String']>;
   deductionFrequency?: Maybe<DeductionFrequencyEnum>;
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  multiplier?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
+  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
   status?: Maybe<DeductionStatusEnum>;
 };
 
@@ -5629,15 +5638,20 @@ export type EarningComponentListEdges = {
 
 export type EarningComponentNode = {
   abbr?: Maybe<Scalars['String']>;
+  baseMultiple?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  isTaxApplicable?: Maybe<Scalars['Boolean']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  multiplier?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
+  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
   status?: Maybe<EarningComponentStatus>;
 };
 
 export type EarningComponentRecord = {
   abbr?: Maybe<Scalars['String']>;
-  base_multiple?: Maybe<Scalars['String']>;
+  baseMultiple?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   isTaxApplicable?: Maybe<Scalars['Boolean']>;
@@ -7512,6 +7526,16 @@ export type GetEmployeeLifecycleNode = {
   status?: Maybe<Scalars['String']>;
 };
 
+export type GetEmployeeSchema = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<HcmEmployeeSchema>;
+};
+
+export type GetHealthInsuranceSchema = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<EmployeeHealthInsurance>;
+};
+
 export type GetInventoryItemResponse = {
   data?: Maybe<FormStateInvItemsInput>;
   error?: Maybe<QueryError>;
@@ -7673,11 +7697,36 @@ export type HcmEmployeeGeneralMutationUpsertEmployeeTypeArgs = {
 };
 
 export type HcmEmployeeGeneralQuery = {
+  getDepartment: GetEmployeeSchema;
+  getDesignation: GetEmployeeSchema;
+  getEmployeeLevel: GetEmployeeSchema;
+  getEmployeeType: GetEmployeeSchema;
+  getHealthInsurance: GetHealthInsuranceSchema;
   listDepartment?: Maybe<HcmEmployeeListConnection>;
   listDesignation?: Maybe<HcmEmployeeListConnection>;
   listEmployeeHealthInsurance?: Maybe<HcmEmployeeHealthInsuranceListConnection>;
   listEmployeeLevel?: Maybe<HcmEmployeeListConnection>;
   listEmployeeType?: Maybe<HcmEmployeeListConnection>;
+};
+
+export type HcmEmployeeGeneralQueryGetDepartmentArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeGeneralQueryGetDesignationArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeGeneralQueryGetEmployeeLevelArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeGeneralQueryGetEmployeeTypeArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeGeneralQueryGetHealthInsuranceArgs = {
+  id: Scalars['String'];
 };
 
 export type HcmEmployeeGeneralQueryListDepartmentArgs = {
@@ -12207,6 +12256,7 @@ export type LoanAccountMutationUpdateLinkedAccountArgs = {
 
 export type LoanAccountOverview = {
   additionalFeatures?: Maybe<LoanPreviewAdditionalFeatures>;
+  closedDate?: Maybe<Scalars['Localized']>;
   generalInformation?: Maybe<LoanGeneralInformation>;
   isClosed: Scalars['Boolean'];
   loanSchedule?: Maybe<LoanInstallments>;
@@ -12373,6 +12423,7 @@ export type LoanAccrueBasicInfo = {
   memberCode: Scalars['String'];
   memberId: Scalars['String'];
   memberName: Scalars['String'];
+  memberPanNo?: Maybe<Scalars['String']>;
   membershipDate: Scalars['Localized'];
   noOfInstallment: Scalars['Int'];
   serviceCentreId: Scalars['String'];
@@ -14107,7 +14158,7 @@ export type MemberAccountDetails = {
   autoOpen?: Maybe<Scalars['Boolean']>;
   availableBalance?: Maybe<Scalars['String']>;
   chequeIssue?: Maybe<Scalars['Boolean']>;
-  closedAt?: Maybe<Scalars['String']>;
+  closedAt?: Maybe<Scalars['Localized']>;
   defaultAccountType?: Maybe<DefaultAccountType>;
   dues?: Maybe<Dues>;
   guaranteedAmount?: Maybe<Scalars['String']>;
@@ -14448,6 +14499,7 @@ export type MemberLoanInformation = {
 
 export type MemberMutation = {
   activateMember?: Maybe<MemberActivateMutation>;
+  balanceCertificate: Scalars['String'];
   cooperative?: Maybe<KymCooperativeMutation>;
   cooperativeUnion?: Maybe<KymCoopUnionMutation>;
   deleteDraft?: Maybe<MemberDeleteDraftResult>;
@@ -14464,6 +14516,10 @@ export type MemberMutation = {
   translate?: Maybe<TranslateData>;
   updateDormancy: MemberDormancyResult;
   updateKym: KymUpdateResult;
+};
+
+export type MemberMutationBalanceCertificateArgs = {
+  id: Scalars['ID'];
 };
 
 export type MemberMutationDeleteDraftArgs = {
@@ -16339,6 +16395,7 @@ export type PrintPreferenceResult = {
 };
 
 export const PrintType = {
+  BalanceCertificate: 'BALANCE_CERTIFICATE',
   CustomerCopy: 'CUSTOMER_COPY',
   FdCertificate: 'FD_CERTIFICATE',
   IssueCertificate: 'ISSUE_CERTIFICATE',
@@ -17276,11 +17333,8 @@ export type SalaryRangeInput = {
 };
 
 export type SalaryStructureDeductionDetails = {
-  abbr: Scalars['String'];
   amount?: InputMaybe<Scalars['Int']>;
-  baseMultiple?: InputMaybe<Scalars['String']>;
-  component?: InputMaybe<Scalars['String']>;
-  multiplier?: InputMaybe<Scalars['Float']>;
+  id?: InputMaybe<Scalars['String']>;
 };
 
 export type SalaryStructureDeductionDetailsType = {
@@ -17288,15 +17342,13 @@ export type SalaryStructureDeductionDetailsType = {
   amount?: Maybe<Scalars['Int']>;
   baseMultiple?: Maybe<Scalars['String']>;
   component?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   multiplier?: Maybe<Scalars['Float']>;
 };
 
 export type SalaryStructureEarningDetails = {
-  abbr: Scalars['String'];
   amount?: InputMaybe<Scalars['Int']>;
-  baseMultiple?: InputMaybe<Scalars['String']>;
-  component?: InputMaybe<Scalars['String']>;
-  multiplier?: InputMaybe<Scalars['Float']>;
+  id?: InputMaybe<Scalars['String']>;
 };
 
 export type SalaryStructureEarningDetailsType = {
@@ -17304,6 +17356,7 @@ export type SalaryStructureEarningDetailsType = {
   amount?: Maybe<Scalars['Int']>;
   baseMultiple?: Maybe<Scalars['String']>;
   component?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   multiplier?: Maybe<Scalars['Float']>;
 };
 
@@ -17630,6 +17683,7 @@ export type SavingAccrueBasicInfo = {
   memberCode: Scalars['String'];
   memberId: Scalars['String'];
   memberName: Scalars['String'];
+  memberPanNo?: Maybe<Scalars['String']>;
   membershipDate: Scalars['Localized'];
   serviceCentreId: Scalars['String'];
   serviceCentreName: Scalars['String'];
@@ -19534,9 +19588,9 @@ export type TransactionInfo = {
   branchName: Scalars['String'];
   date: Scalars['Localized'];
   id: Scalars['String'];
-  isYearEndAdjustment?: Maybe<Scalars['Boolean']>;
   narration: Scalars['String'];
   transactionType: AllTransactionType;
+  yearEndAdjustment?: Maybe<Scalars['String']>;
 };
 
 export type TransactionListSummary = {
@@ -19870,7 +19924,9 @@ export type TranslateQueryResult = {
 };
 
 export type TrialSheetFilter = {
+  includeFiscalReversal?: InputMaybe<Scalars['Boolean']>;
   includeZero?: InputMaybe<Scalars['Boolean']>;
+  inculdeAdjustment?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type TrialSheetReportData = {
@@ -22881,6 +22937,12 @@ export type MemberTransferActionMutation = {
   };
 };
 
+export type BalanceCertificateMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type BalanceCertificateMutation = { members: { balanceCertificate: string } };
+
 export type PayMembershipMutationVariables = Exact<{
   data?: InputMaybe<MembershipPaymentInput>;
   memberId: Scalars['ID'];
@@ -24047,6 +24109,34 @@ export type SetSalaryStructureMutation = {
           salaryStructure: {
             upsertSalaryStructure: {
               recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetTaxSlabMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: TaxSlabInput;
+}>;
+
+export type SetTaxSlabMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxSlab: {
+            upsertTaxSlab: {
+              recordId: string;
               error?:
                 | MutationError_AuthorizationError_Fragment
                 | MutationError_BadRequestError_Fragment
@@ -26243,7 +26333,7 @@ export type GetAccountDetailsDataQuery = {
         overDrawnBalance?: string | null;
         lastTransactionDate?: Record<'local' | 'en' | 'np', string> | null;
         accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
-        closedAt?: string | null;
+        closedAt?: Record<'local' | 'en' | 'np', string> | null;
         lastInstallmentUpdatedDate?: Record<'local' | 'en' | 'np', string> | null;
         member?: {
           id: string;
@@ -30915,6 +31005,7 @@ export type GetLoanAccountDetailsQuery = {
     loanAccountDetails?: {
       overView?: {
         isClosed: boolean;
+        closedDate?: Record<'local' | 'en' | 'np', string> | null;
         totalPrincipalPaid: string;
         totalInterestPaid: string;
         totalRemainingPrincipal: string;
@@ -32895,6 +32986,7 @@ export type GetSavingStatementQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           dateJoined?: Record<'local' | 'en' | 'np', string> | null;
           activeDate?: Record<'local' | 'en' | 'np', string> | null;
+          panVatNo?: string | null;
           branch?: string | null;
           address?: {
             wardNo?: string | null;
@@ -32956,6 +33048,7 @@ export type GetInterestStatementReportQuery = {
             remarks?: string | null;
             tds?: string | null;
           } | null> | null;
+          member?: { panVatNo?: string | null } | null;
           address?: {
             wardNo?: string | null;
             state?: Record<'local' | 'en' | 'np', string> | null;
@@ -33033,6 +33126,7 @@ export type GetClosedSavingAccountStatementQuery = {
       closedSavingAccountReport?: {
         data?: {
           memberName?: Record<'local' | 'en' | 'np', string> | null;
+          memberPan?: string | null;
           memberShipCode?: string | null;
           membershipDate?: Record<'local' | 'en' | 'np', string> | null;
           serviceCenterName?: string | null;
@@ -33130,6 +33224,7 @@ export type GetSavingAccountAccruedInterestReportQuery = {
           accountId: string;
           accountName: string;
           accountType: NatureOfDepositProduct;
+          memberPanNo?: string | null;
           currentInterestRate: number;
           memberCode: string;
           memberId: string;
@@ -33543,6 +33638,7 @@ export type GetLoanStatementReportQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
           branch?: string | null;
+          panVatNo?: string | null;
           address?: {
             state?: Record<'local' | 'en' | 'np', string> | null;
             district?: Record<'local' | 'en' | 'np', string> | null;
@@ -33627,6 +33723,7 @@ export type GetClosedLoanAccountReportQuery = {
           memberCode?: string | null;
           memberId?: string | null;
           memberName?: string | null;
+          memberPan?: string | null;
           noOfInstallments?: number | null;
           approvedAmount?: string | null;
           branchName?: string | null;
@@ -33791,6 +33888,7 @@ export type GetLoanAccruedInterestReportQuery = {
           memberName: string;
           memberId: string;
           memberCode: string;
+          memberPanNo?: string | null;
           currentInterestRate: number;
           accountType: string;
           accountName: string;
@@ -33945,6 +34043,7 @@ export type GetLoanTransactionReportQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
           branch?: string | null;
+          panVatNo?: string | null;
           address?: {
             state?: Record<'local' | 'en' | 'np', string> | null;
             district?: Record<'local' | 'en' | 'np', string> | null;
@@ -33958,6 +34057,7 @@ export type GetLoanTransactionReportQuery = {
         statement?:
           | {
               meta?: {
+                productName?: string | null;
                 accountNo?: string | null;
                 approvedAmount?: string | null;
                 interestRate?: number | null;
@@ -34795,6 +34895,7 @@ export type GetShareStatementQuery = {
           code: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
           activeDate?: Record<'local' | 'en' | 'np', string> | null;
+          panVatNo?: string | null;
           dateJoined?: Record<'local' | 'en' | 'np', string> | null;
           branch?: string | null;
           address?: {
@@ -36603,7 +36704,7 @@ export type GetEarningComponentQuery = {
                 name?: string | null;
                 abbr?: string | null;
                 description?: string | null;
-                base_multiple?: string | null;
+                baseMultiple?: string | null;
                 multiplier?: number | null;
                 isTaxApplicable?: boolean | null;
                 roundToNearestInteger?: boolean | null;
@@ -36644,6 +36745,8 @@ export type GetEarningComponentListQuery = {
                   status?: EarningComponentStatus | null;
                   description?: string | null;
                   abbr?: string | null;
+                  multiplier?: number | null;
+                  baseMultiple?: string | null;
                 };
               } | null> | null;
               pageInfo?: PaginationFragment | null;
@@ -36712,6 +36815,8 @@ export type GetDeductionComponentListQuery = {
                   status?: DeductionStatusEnum | null;
                   deductionFrequency?: DeductionFrequencyEnum | null;
                   abbr?: string | null;
+                  multiplier?: number | null;
+                  baseMultiple?: string | null;
                 };
               } | null> | null;
               pageInfo?: PaginationFragment | null;
@@ -36743,18 +36848,12 @@ export type GetSalaryStructureQuery = {
                 salaryPaymentLedger?: LedgerPaymentEnum | null;
                 makeThisActive?: boolean | null;
                 salaryEarnings?: Array<{
-                  component?: string | null;
-                  abbr: string;
+                  id?: string | null;
                   amount?: number | null;
-                  baseMultiple?: string | null;
-                  multiplier?: number | null;
                 } | null> | null;
                 salaryDeduction?: Array<{
-                  component?: string | null;
-                  abbr: string;
+                  id?: string | null;
                   amount?: number | null;
-                  baseMultiple?: string | null;
-                  multiplier?: number | null;
                 } | null> | null;
               } | null;
               error?:
@@ -36791,6 +36890,82 @@ export type GetSalaryStructureListQuery = {
                   name?: string | null;
                   description?: string | null;
                   status?: SalaryStructureStatusEnum | null;
+                };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetTaxSlabQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetTaxSlabQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxSlab: {
+            getTaxSlab: {
+              data?: {
+                id?: string | null;
+                name?: string | null;
+                effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
+                makeThisActive?: boolean | null;
+                fiscalYear?: {
+                  from: Record<'local' | 'en' | 'np', string>;
+                  to: Record<'local' | 'en' | 'np', string>;
+                } | null;
+                unmarriedTaxableSalarySlab?: Array<{
+                  fromAmount?: string | null;
+                  toAmount?: string | null;
+                  percentageDeduction?: string | null;
+                } | null> | null;
+                marriedTaxableSalarySlab?: Array<{
+                  fromAmount?: string | null;
+                  toAmount?: string | null;
+                  percentageDeduction?: string | null;
+                } | null> | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetTaxSlabListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetTaxSlabListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxSlab: {
+            listTaxSlab: {
+              totalCount?: number | null;
+              edges?: Array<{
+                cursor: string;
+                node: {
+                  id?: string | null;
+                  name?: string | null;
+                  effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
+                  status?: boolean | null;
                 };
               } | null> | null;
               pageInfo?: PaginationFragment | null;
@@ -39689,6 +39864,7 @@ export type GetAllTransactionsListQuery = {
           amount: string;
           date: Record<'local' | 'en' | 'np', string>;
           branchName: string;
+          yearEndAdjustment?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -39717,7 +39893,7 @@ export type GetAllTransactionsDetailQuery = {
         transactionMode?: string | null;
         amount?: string | null;
         branch?: string | null;
-        isYearEndAdjustment?: boolean | null;
+        isYearEndAdjustment?: string | null;
         note?: string | null;
         status?: string | null;
         totalDebit?: string | null;
@@ -43695,6 +43871,28 @@ export const useMemberTransferActionMutation = <TError = unknown, TContext = unk
     ),
     options
   );
+export const BalanceCertificateDocument = `
+    mutation balanceCertificate($id: ID!) {
+  members {
+    balanceCertificate(id: $id)
+  }
+}
+    `;
+export const useBalanceCertificateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    BalanceCertificateMutation,
+    TError,
+    BalanceCertificateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<BalanceCertificateMutation, TError, BalanceCertificateMutationVariables, TContext>(
+    ['balanceCertificate'],
+    useAxios<BalanceCertificateMutation, BalanceCertificateMutationVariables>(
+      BalanceCertificateDocument
+    ),
+    options
+  );
 export const PayMembershipDocument = `
     mutation payMembership($data: MembershipPaymentInput, $memberId: ID!) {
   members {
@@ -45421,6 +45619,34 @@ export const useSetSalaryStructureMutation = <TError = unknown, TContext = unkno
     useAxios<SetSalaryStructureMutation, SetSalaryStructureMutationVariables>(
       SetSalaryStructureDocument
     ),
+    options
+  );
+export const SetTaxSlabDocument = `
+    mutation setTaxSlab($id: String, $input: TaxSlabInput!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxSlab {
+            upsertTaxSlab(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetTaxSlabMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetTaxSlabMutation, TError, SetTaxSlabMutationVariables, TContext>
+) =>
+  useMutation<SetTaxSlabMutation, TError, SetTaxSlabMutationVariables, TContext>(
+    ['setTaxSlab'],
+    useAxios<SetTaxSlabMutation, SetTaxSlabMutationVariables>(SetTaxSlabDocument),
     options
   );
 export const UpsertLedgerTagDocument = `
@@ -54558,6 +54784,7 @@ export const GetLoanAccountDetailsDocument = `
     loanAccountDetails(loanAccountId: $loanAccountId) {
       overView {
         isClosed
+        closedDate
         totalPrincipalPaid
         totalInterestPaid
         totalRemainingPrincipal
@@ -57197,6 +57424,7 @@ export const GetSavingStatementDocument = `
           }
           dateJoined
           activeDate
+          panVatNo
           branch
         }
         statement {
@@ -57252,6 +57480,9 @@ export const GetInterestStatementReportDocument = `
             rate
             remarks
             tds
+          }
+          member {
+            panVatNo
           }
           memberId
           accountNo
@@ -57371,6 +57602,7 @@ export const GetClosedSavingAccountStatementDocument = `
             ...Address
           }
           memberName
+          memberPan
           memberShipCode
           membershipDate
           serviceCenterName
@@ -57501,6 +57733,7 @@ export const GetSavingAccountAccruedInterestReportDocument = `
           accountId
           accountName
           accountType
+          memberPanNo
           address {
             ...Address
           }
@@ -58024,6 +58257,7 @@ export const GetLoanStatementReportDocument = `
           name
           code
           branch
+          panVatNo
           address {
             state
             district
@@ -58124,6 +58358,7 @@ export const GetClosedLoanAccountReportDocument = `
           memberCode
           memberId
           memberName
+          memberPan
           noOfInstallments
           approvedAmount
           branchName
@@ -58350,6 +58585,7 @@ export const GetLoanAccruedInterestReportDocument = `
           memberName
           memberId
           memberCode
+          memberPanNo
           currentInterestRate
           accountType
           accountName
@@ -58526,6 +58762,7 @@ export const GetLoanTransactionReportDocument = `
           name
           code
           branch
+          panVatNo
           address {
             state
             district
@@ -58542,6 +58779,7 @@ export const GetLoanTransactionReportDocument = `
         statement {
           ... on LoanStatementReport {
             meta {
+              productName
               accountNo
               approvedAmount
               interestRate
@@ -59628,6 +59866,7 @@ export const GetShareStatementDocument = `
           code
           name
           activeDate
+          panVatNo
           address {
             wardNo
             state
@@ -62067,7 +62306,7 @@ export const GetEarningComponentDocument = `
                 name
                 abbr
                 description
-                base_multiple
+                baseMultiple
                 multiplier
                 isTaxApplicable
                 roundToNearestInteger
@@ -62111,6 +62350,8 @@ export const GetEarningComponentListDocument = `
                   status
                   description
                   abbr
+                  multiplier
+                  baseMultiple
                 }
                 cursor
               }
@@ -62196,6 +62437,8 @@ export const GetDeductionComponentListDocument = `
                   status
                   deductionFrequency
                   abbr
+                  multiplier
+                  baseMultiple
                 }
                 cursor
               }
@@ -62240,18 +62483,12 @@ export const GetSalaryStructureDocument = `
                 payrollFrequency
                 description
                 salaryEarnings {
-                  component
-                  abbr
+                  id
                   amount
-                  baseMultiple
-                  multiplier
                 }
                 salaryDeduction {
-                  component
-                  abbr
+                  id
                   amount
-                  baseMultiple
-                  multiplier
                 }
                 modeOfPayment
                 salaryPaymentLedger
@@ -62320,6 +62557,95 @@ export const useGetSalaryStructureListQuery = <
     useAxios<GetSalaryStructureListQuery, GetSalaryStructureListQueryVariables>(
       GetSalaryStructureListDocument
     ).bind(null, variables),
+    options
+  );
+export const GetTaxSlabDocument = `
+    query getTaxSlab($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxSlab {
+            getTaxSlab(id: $id) {
+              data {
+                id
+                name
+                fiscalYear {
+                  from
+                  to
+                }
+                unmarriedTaxableSalarySlab {
+                  fromAmount
+                  toAmount
+                  percentageDeduction
+                }
+                marriedTaxableSalarySlab {
+                  fromAmount
+                  toAmount
+                  percentageDeduction
+                }
+                effectiveFrom
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetTaxSlabQuery = <TData = GetTaxSlabQuery, TError = unknown>(
+  variables: GetTaxSlabQueryVariables,
+  options?: UseQueryOptions<GetTaxSlabQuery, TError, TData>
+) =>
+  useQuery<GetTaxSlabQuery, TError, TData>(
+    ['getTaxSlab', variables],
+    useAxios<GetTaxSlabQuery, GetTaxSlabQueryVariables>(GetTaxSlabDocument).bind(null, variables),
+    options
+  );
+export const GetTaxSlabListDocument = `
+    query getTaxSlabList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxSlab {
+            listTaxSlab(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  effectiveFrom
+                  status
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetTaxSlabListQuery = <TData = GetTaxSlabListQuery, TError = unknown>(
+  variables?: GetTaxSlabListQueryVariables,
+  options?: UseQueryOptions<GetTaxSlabListQuery, TError, TData>
+) =>
+  useQuery<GetTaxSlabListQuery, TError, TData>(
+    variables === undefined ? ['getTaxSlabList'] : ['getTaxSlabList', variables],
+    useAxios<GetTaxSlabListQuery, GetTaxSlabListQueryVariables>(GetTaxSlabListDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const LedgerTagsListDocument = `
@@ -66289,6 +66615,7 @@ export const GetAllTransactionsListDocument = `
           amount
           date
           branchName
+          yearEndAdjustment
         }
         cursor
       }

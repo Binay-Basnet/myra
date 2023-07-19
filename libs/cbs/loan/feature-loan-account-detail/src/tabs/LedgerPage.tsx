@@ -15,7 +15,7 @@ type CustomTransactionItem = AccountLedgerDetails & {
 };
 
 export const LedgerPage = () => {
-  const { ledgerList } = useLoanAccountDetailHooks();
+  const { ledgerList, ledgerLoading } = useLoanAccountDetailHooks();
 
   const rowData = useMemo(() => ledgerList ?? [], [ledgerList]);
 
@@ -65,7 +65,7 @@ export const LedgerPage = () => {
           isDetailPageTable
           showFooter
           isStatic
-          isLoading={false}
+          isLoading={ledgerLoading}
           data={ledgerListWithIndex ?? []}
           columns={columns}
         />

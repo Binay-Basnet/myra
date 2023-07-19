@@ -9,6 +9,7 @@ import {
   TellerActivityEntry,
   TellerActivityState,
   TellerTransferType,
+  useGetMemberFilterMappingQuery,
   useGetSettingsUserListDataQuery,
   useGetTellerTransactionListDataQuery,
 } from '@coop/cbs/data-access';
@@ -19,7 +20,6 @@ import {
   getFilterQuery,
   getPaginationQuery,
   getUrl,
-  useTranslation,
 } from '@coop/shared/utils';
 
 import { TellerTransferApproveModal } from '../components';
@@ -34,10 +34,11 @@ const tellerActivityVariant: Record<TellerActivityState, 'success' | 'failure' |
 };
 
 export const TellerTransferList = () => {
+  const { data: filterMapping } = useGetMemberFilterMappingQuery();
+
   const { data: userList } = useGetSettingsUserListDataQuery({
     paginate: { after: '', first: -1 },
   });
-  const { t } = useTranslation();
 
   const router = useRouter();
 
@@ -160,8 +161,15 @@ export const TellerTransferList = () => {
         },
       },
       {
+        id: 'branchId',
         header: 'Transaction Service Center',
         accessorFn: (row) => row?.node?.transactionBranchName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: filterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
       },
       {
         id: 'amount',
@@ -200,7 +208,11 @@ export const TellerTransferList = () => {
         },
       },
     ],
-    [t, userList?.settings?.myraUser?.list?.edges]
+    [
+      filterMapping?.members?.filterMapping?.serviceCenter,
+      router,
+      userList?.settings?.myraUser?.list?.edges,
+    ]
   );
 
   const selectedTransfer = rowData?.find(

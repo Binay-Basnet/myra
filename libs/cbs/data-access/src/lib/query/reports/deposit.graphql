@@ -142,6 +142,7 @@ query getSavingStatement($data: SavingStatementReportSettings!) {
           }
           dateJoined
           activeDate
+          panVatNo
           branch
         }
         statement {
@@ -185,6 +186,9 @@ query getInterestStatementReport($data: InterestStatementFilter!) {
             rate
             remarks
             tds
+          }
+          member {
+            panVatNo
           }
           memberId
           accountNo
@@ -263,6 +267,7 @@ query getClosedSavingAccountStatement($data: ClosedSavingAccountInput!) {
             ...Address
           }
           memberName
+          memberPan
           memberShipCode
           membershipDate
           serviceCenterName
@@ -348,6 +353,7 @@ query getSavingAccountAccruedInterestReport($data: AccruedInterestFilter!) {
           accountId
           accountName
           accountType
+          memberPanNo
           address {
             ...Address
           }

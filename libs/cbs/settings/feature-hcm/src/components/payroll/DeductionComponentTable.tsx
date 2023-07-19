@@ -34,7 +34,7 @@ const defaultFormValue = {
   name: '',
   abbr: '',
   description: '',
-  base_multiple: null,
+  baseMultiple: null,
   multiplier: 0,
   isTaxApplicable: false,
   roundToNearestInteger: false,
@@ -244,10 +244,10 @@ export const DeductionComponentTable = () => {
                   options={deductionFrequencyOptions}
                 />
               </GridItem>
-              <GridItem colSpan={3}>
+              <GridItem>
                 <FormSelect
                   name="baseMultiple"
-                  label="Base Multiplier"
+                  label="Multiplier"
                   options={
                     rowData?.map((item) => ({
                       label: item?.node?.abbr,
@@ -256,8 +256,11 @@ export const DeductionComponentTable = () => {
                   }
                 />
               </GridItem>
-              <GridItem colSpan={3}>
-                <FormInput type="number" name="multiplier" label="Multiplier" />
+              <GridItem>
+                <Box display="flex" h="100%" justifyContent="center" alignItems="center" gap="s16">
+                  <Text>X</Text>
+                  <FormInput type="number" name="multiplier" label="Factor" />
+                </Box>
               </GridItem>
               <GridItem colSpan={3}>
                 <Box display="flex" flexDir="column" gap="s16">

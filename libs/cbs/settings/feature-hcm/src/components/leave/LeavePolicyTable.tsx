@@ -41,12 +41,22 @@ type LeavePolicyType = {
   annualAllocation: number;
 };
 
+const defaultFormValue = {
+  name: '',
+  description: '',
+  employeeLevelId: '',
+  effectiveFrom: null,
+  leavePolicyDetails: null,
+};
+
 export const LeavePolicyTable = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedLeavePolicyId, setSelectedLeavePolicyId] = useState('');
 
-  const methods = useForm();
+  const methods = useForm<LeavePolicyInput>({
+    defaultValues: defaultFormValue,
+  });
   const { getValues, handleSubmit, reset } = methods;
 
   const { data, refetch } = useGetEmployeeLeavePolicyListQuery({
@@ -161,7 +171,7 @@ export const LeavePolicyTable = () => {
   const handleAddModalClose = () => {
     setIsAddModalOpen(false);
     setSelectedLeavePolicyId('');
-    reset();
+    reset(defaultFormValue);
   };
 
   const handleDeleteModalClose = () => {

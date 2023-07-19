@@ -58,6 +58,7 @@ fragment User on User {
   }
   organization {
     id
+
     basicDetails {
       name
       logo

@@ -65,6 +65,8 @@ export const SavingAccountAccruedInterestReport = () => {
                     <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
                       <Text>Name of member:</Text>
                       {meta?.address && <Text>Address:</Text>}
+                      {meta?.memberPanNo && <Text>PAN No:</Text>}
+
                       {meta?.serviceCentreName && <Text>Service Center Name:</Text>}
                       {meta?.currentInterestRate && <Text>Current Interest Rate:</Text>}
                     </Box>
@@ -82,6 +84,12 @@ export const SavingAccountAccruedInterestReport = () => {
                         {meta?.memberName}
                       </Text>
                       {meta?.address && <Text noOfLines={1}>{formatAddress(meta?.address)}</Text>}
+
+                      {meta?.memberPanNo && (
+                        <Text noOfLines={1} textTransform="capitalize">
+                          {meta?.memberPanNo}
+                        </Text>
+                      )}
                       {meta?.serviceCentreName && (
                         <Text noOfLines={1}>{meta?.serviceCentreName}</Text>
                       )}

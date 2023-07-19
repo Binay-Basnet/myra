@@ -1,11 +1,12 @@
 import React from 'react';
 import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { Avatar, Box, Collapse, Icon, Text, TopLevelHeader } from '@myra-ui';
 
-import { useTranslation } from '@coop/shared/utils';
+import { MYRA_APPS } from '@coop/cbs/utils';
+import { checkModuleAccess, useTranslation } from '@coop/shared/utils';
 
 export interface HomePageLayoutProps {
   children: React.ReactNode;
@@ -48,39 +49,6 @@ const comingSoon = [
   },
 ];
 
-const myraAppn = [
-  {
-    title: 'corebankingSystems',
-    img: '/cbs.svg',
-    link: '/cbs/members/list',
-  },
-  {
-    title: 'memberAndShareManagement',
-    img: '/memberandshare.svg',
-    link: '/cbs/members/list',
-  },
-  {
-    title: 'accountingSystem',
-    img: '/accounting.svg',
-    link: '/accounting/sales/sales-entry/list',
-  },
-  {
-    title: 'alternativeChannelsAndCrossConnectivity',
-    img: '/tnt.svg',
-    link: '/alternative-channels/users/mBanking',
-  },
-  {
-    title: 'inventoryManagement',
-    img: '/inventory.svg',
-    link: '/inventory/inventory/register/list',
-  },
-  {
-    title: 'hrTrainingAndCapacityManagement',
-    img: '/btcd.svg',
-    link: '/hr/employee/employee/list',
-  },
-];
-
 export const HomePageLayout = (props: HomePageLayoutProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const { t } = useTranslation();
@@ -111,7 +79,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
           </Text>
 
           <Box display="flex" alignItems="center" flexDir="column">
-            {myraAppn.map((item) => (
+            {MYRA_APPS.filter((f) => checkModuleAccess(f.key)).map((item) => (
               <Box
                 key={item?.link}
                 w="100%"

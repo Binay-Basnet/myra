@@ -98,6 +98,7 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
           name
           code
           branch
+          panVatNo
           address {
             state
             district
@@ -185,6 +186,7 @@ query getClosedLoanAccountReport($data: ClosedLoanAccountFilter) {
           memberCode
           memberId
           memberName
+          memberPan
           noOfInstallments
           approvedAmount
           branchName
@@ -331,6 +333,7 @@ query getLoanAccruedInterestReport($data: AccruedInterestFilter!) {
           memberName
           memberId
           memberCode
+          memberPanNo
           currentInterestRate
           accountType
           accountName
@@ -466,6 +469,7 @@ query getLoanTransactionReport($data: LoanStatementReportSettings!) {
           name
           code
           branch
+          panVatNo
           address {
             state
             district
@@ -483,6 +487,7 @@ query getLoanTransactionReport($data: LoanStatementReportSettings!) {
         statement {
           ... on LoanStatementReport {
             meta {
+              productName
               accountNo
               approvedAmount
               interestRate

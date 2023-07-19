@@ -4,7 +4,11 @@ import debounce from 'lodash/debounce';
 
 import { BankSelect, BankSelectProps } from '@myra-ui/forms';
 
-import { AccountingBankAccountType, useGetBankAccountListQuery } from '@coop/cbs/data-access';
+import {
+  AccountingBankAccountType,
+  useAppSelector,
+  useGetBankAccountListQuery,
+} from '@coop/cbs/data-access';
 import { debitCreditConverter, getPaginationQuery } from '@coop/shared/utils';
 
 interface Option {
@@ -27,6 +31,7 @@ interface IFormBankSelectProps extends BankSelectProps {
 }
 
 export const FormBankSelect = (props: IFormBankSelectProps) => {
+  const branchId = useAppSelector((state) => state.auth.user?.currentBranch?.id);
   const { name, label, currentBranchOnly = false, ...rest } = props;
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -35,6 +40,17 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
     pagination: { ...getPaginationQuery(), first: 20 },
     filter: {
       query: searchQuery,
+      orConditions: [
+        {
+          andConditions: [
+            {
+              column: 'branchId',
+              value: branchId,
+              comparator: 'EqualTo',
+            },
+          ],
+        },
+      ],
     },
     currentBranchOnly,
   });
