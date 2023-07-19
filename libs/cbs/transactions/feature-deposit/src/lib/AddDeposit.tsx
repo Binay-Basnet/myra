@@ -9,12 +9,12 @@ import { Box, Button, Divider, Grid, MemberCard, ResponseDialog, Text } from '@m
 import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
   AccountObjState,
-  DepositAccount,
   DepositedBy,
   DepositInput,
   DepositPaymentType,
   InstallmentState,
   KymMemberTypesEnum,
+  MemberAccountDetails,
   NatureOfDepositProduct,
   useAppSelector,
   useGetAccountDetailsDataQuery,
@@ -678,7 +678,7 @@ export const AddDeposit = () => {
         onClose={handleModalClose}
         accountId={selectedAccount?.accountId as string}
         productType={selectedAccount?.product?.nature}
-        selectedAccount={selectedAccount as DepositAccount}
+        selectedAccount={selectedAccount as MemberAccountDetails}
       />
     </>
   );
