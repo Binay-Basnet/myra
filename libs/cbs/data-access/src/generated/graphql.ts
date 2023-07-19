@@ -19590,6 +19590,7 @@ export type TransactionInfo = {
   id: Scalars['String'];
   narration: Scalars['String'];
   transactionType: AllTransactionType;
+  yearEndAdjustment?: Maybe<Scalars['String']>;
 };
 
 export type TransactionListSummary = {
