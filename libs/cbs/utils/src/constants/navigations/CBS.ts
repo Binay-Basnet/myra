@@ -274,8 +274,8 @@ export const CBS: NavType = {
       ],
       reportPages: [
         {
-          label: 'loanLayoutStatementReport',
-          route: ROUTES.CBS_REPORTS_LOAN_STATEMENT,
+          label: 'Loan Account Statement Report',
+          route: ROUTES.CBS_REPORTS_LOAN_ACCOUNT_STATEMENT_REPORT,
           aclKey: 'CBS_REPORTS',
         },
         {

@@ -19879,7 +19879,9 @@ export type TranslateQueryResult = {
 };
 
 export type TrialSheetFilter = {
+  includeFiscalReversal?: InputMaybe<Scalars['Boolean']>;
   includeZero?: InputMaybe<Scalars['Boolean']>;
+  inculdeAdjustment?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type TrialSheetReportData = {
