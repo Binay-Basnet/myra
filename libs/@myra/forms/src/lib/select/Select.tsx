@@ -160,13 +160,14 @@ const useMulti = ({ isMulti, value, options, onChange: propOnChange }: IUseMulti
 
   const valueRefCurrent = valueRef?.current;
 
-  const isSelectAllSelected = () => valueRefCurrent?.length === options?.length;
+  const isSelectAllSelected = () =>
+    options.length !== 0 && valueRefCurrent?.length === options?.length;
 
   const isOptionSelected = (option: SelectOption) =>
     valueRef?.current?.some(({ value: newValue }) => newValue === option.value) ||
     isSelectAllSelected();
 
-  const getOptions = () => [selectAllOption, ...options];
+  const getOptions = () => (options.length !== 0 ? [selectAllOption, ...options] : []);
   const getValue = () => (isSelectAllSelected() ? [selectAllOption] : value);
 
   const onChange = (

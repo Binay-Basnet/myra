@@ -31,37 +31,25 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Recurring product with no deposit frequency in product section.',
-      'Installment amount update in recurring and mandatory products.',
-      'Year end transfer and block related transactions during year end.',
-      'Branch readiness and reversal in day end section',
-      'Branch transactions restrictions on branch ready.',
-      'All transactions restrictions on ongoing day end.',
-      'Shift money posting value date from T to T-1.',
-      'Year end status and entires as view part.',
-      'Alternative channel blocking in both mobile and banking.',
-      'Ledger balance transfer list and detail [From all transaction LEDGER_BALANCE_TRANSFER]',
+      '"0" amount activation of alternative channel.',
+      'Pan number add in all as loan and saving statement reports.',
+      'Closed at “date “ in closed accounts.',
+      'Balance certificate generation.',
+      'Fiscal year Trial balance adjustment report.',
+      'Adjustment transactions list in transactions section.',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Loan loss provision ui issue "0" value appearing in screen.',
-      'Kym form temporary field issue fix in temp. Address.',
-      'Kym coop form registration number character issue fix.',
-      '404 found error in member overview page fix.',
-      'Update kym in member overview page fix.',
-      'Date not selecting issue in coop form fix.',
-      'Inventory sales report not generating issue fixed.',
-      'Remove role for others except teller and head teller as teller vault access.',
-      'Block duplicate adding account in MR collection and today’s list.',
-      'Member id issue while on boarding member fixed.',
-      'Branch-wise filter(User Login Branch) in transfer, deposit, withdraw, loan disburse, loan repayment.',
-      'Notes Text changes.',
-      'Minor account create and validation issue fixes.',
-      'Product name in saving and loan statment',
-      'Remove last fisscal year closing txn from loan statement',
-      'Fix opening/closing amount with txn order in share statemnt',
+      'Installment UI issue incase of date range fixed.',
+      'Filter and loader updated in missing list pages.',
+      'Disable fees and charges amount field in both loan and saving account open.',
+      'Change the link in loan account section of loan account report to statement report.',
+      'Product name add in loan account statement report.',
+      'ERROR messages change in day end error handling section.',
+      'Branch wise bank filter changes in payment modes.',
+      'fixed loan schedule generation on decimal sanctioned amount.',
     ],
   },
   // knownBugs: {
@@ -111,8 +99,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.78</Text>
-          <Text fontSize="s3">July 17, 2023</Text>
+          <Text fontSize="r2">Version 1.0.81</Text>
+          <Text fontSize="s3">July 19, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>

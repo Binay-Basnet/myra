@@ -6,6 +6,7 @@ import { Column, PageHeader, Table } from '@myra-ui';
 import {
   TellerBankTransferType,
   useGetBankTransferListQuery,
+  useGetMemberFilterMappingQuery,
   useGetSettingsUserListDataQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
@@ -15,6 +16,8 @@ import { amountConverter, getFilterQuery, getPaginationQuery } from '@coop/share
 export interface BankTransferListProps {}
 
 export const BankTransferList = () => {
+  const { data: filterMapping } = useGetMemberFilterMappingQuery();
+
   const router = useRouter();
   const { data: userList } = useGetSettingsUserListDataQuery({
     paginate: { after: '', first: -1 },
@@ -78,8 +81,15 @@ export const BankTransferList = () => {
         },
       },
       {
+        id: 'branchId',
         header: 'Service Center',
         accessorFn: (row) => row?.node?.transactionBranchName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: filterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
       },
       {
         id: 'amount',
@@ -92,7 +102,10 @@ export const BankTransferList = () => {
         enableColumnFilter: true,
       },
     ],
-    [userList]
+    [
+      filterMapping?.members?.filterMapping?.serviceCenter,
+      userList?.settings?.myraUser?.list?.edges,
+    ]
   );
   return (
     <>

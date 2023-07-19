@@ -16,7 +16,7 @@ export const LedgerListTab = () => {
 
   const { id } = router.query;
 
-  const { data: ledgerListQueryData } = useGetAccountLedgersListQuery(
+  const { data: ledgerListQueryData, isFetching } = useGetAccountLedgersListQuery(
     { accountId: id as string },
     { enabled: !!id }
   );
@@ -66,7 +66,13 @@ export const LedgerListTab = () => {
     <>
       <TabHeader heading="Ledger Lists" />
       <DetailsCard title="Ledger Lists" hasTable>
-        <Table isDetailPageTable isStatic data={ledgersList} columns={columns} />
+        <Table
+          isLoading={isFetching}
+          isDetailPageTable
+          isStatic
+          data={ledgersList}
+          columns={columns}
+        />
       </DetailsCard>
     </>
   );

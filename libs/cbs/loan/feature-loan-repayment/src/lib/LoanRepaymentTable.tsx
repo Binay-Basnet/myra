@@ -4,7 +4,11 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, PageHeader, TablePopover, Text, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetLoanFilterMappingQuery, useGetLoanRepaymentListQuery } from '@coop/cbs/data-access';
+import {
+  useGetLoanFilterMappingQuery,
+  useGetLoanRepaymentListQuery,
+  useGetMemberFilterMappingQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
@@ -20,8 +24,9 @@ export const CBSLoanRepaymentList = () => {
 
   const { t } = useTranslation();
   const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
+  const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
-  const { data, isLoading } = useGetLoanRepaymentListQuery(
+  const { data, isFetching } = useGetLoanRepaymentListQuery(
     {
       paginate: getPaginationQuery(),
       filter: getFilterQuery(),
@@ -91,8 +96,15 @@ export const CBSLoanRepaymentList = () => {
         ),
       },
       {
+        id: 'branchId',
         header: 'Service Center',
         accessorKey: 'node.branchName',
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: memberFilterMapping?.members?.filterMapping?.serviceCenter || [],
+          },
+        },
       },
       {
         id: 'amount',
@@ -137,7 +149,12 @@ export const CBSLoanRepaymentList = () => {
         },
       },
     ],
-    [t, loanFilterMapping?.loanAccount?.filterMapping]
+    [
+      loanFilterMapping?.loanAccount?.filterMapping?.productName,
+      memberFilterMapping?.members?.filterMapping?.serviceCenter,
+      t,
+      router,
+    ]
   );
 
   return (
@@ -147,7 +164,7 @@ export const CBSLoanRepaymentList = () => {
       </Box>
 
       <Table
-        isLoading={isLoading}
+        isLoading={isFetching}
         data={rowData}
         columns={columns}
         rowOnClick={(row) => {

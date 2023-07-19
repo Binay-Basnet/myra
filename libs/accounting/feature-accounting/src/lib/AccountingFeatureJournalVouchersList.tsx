@@ -5,7 +5,10 @@ import { Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { useGetJournalVoucherListQuery } from '@coop/cbs/data-access';
+import {
+  useGetJournalVoucherListQuery,
+  useGetMemberFilterMappingQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
@@ -20,6 +23,7 @@ export interface AccountingFeatureJournalVouchersListProps {}
 
 export const AccountingFeatureJournalVouchersList = () => {
   const { t } = useTranslation();
+  const { data: filterMapping } = useGetMemberFilterMappingQuery();
 
   const router = useRouter();
 
@@ -53,8 +57,15 @@ export const AccountingFeatureJournalVouchersList = () => {
         accessorFn: (row) => row?.node?.note,
       },
       {
+        id: 'branchId',
         header: 'Service Center',
         accessorFn: (row) => row?.node?.branchName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: filterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
       },
       {
         id: 'amount',
@@ -93,7 +104,7 @@ export const AccountingFeatureJournalVouchersList = () => {
           ),
       },
     ],
-    [t]
+    [baseRoute, filterMapping?.members?.filterMapping?.serviceCenter, router]
   );
 
   return (

@@ -4,7 +4,11 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
-import { TellerTransferType, useGetTellerTransactionListDataQuery } from '@coop/cbs/data-access';
+import {
+  TellerTransferType,
+  useGetMemberFilterMappingQuery,
+  useGetTellerTransactionListDataQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
@@ -12,16 +16,14 @@ import {
   getFilterQuery,
   getPaginationQuery,
   getUrl,
-  useTranslation,
 } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface VaultTransferListProps {}
 
 export const VaultTransferList = () => {
-  const { t } = useTranslation();
-
   const router = useRouter();
+  const { data: filterMapping } = useGetMemberFilterMappingQuery();
 
   const { data, isFetching } = useGetTellerTransactionListDataQuery(
     {
@@ -86,8 +88,15 @@ export const VaultTransferList = () => {
         ),
       },
       {
+        id: 'branchId',
         header: 'Transaction Service Center',
         accessorFn: (row) => row?.node?.transactionBranchName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: filterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
       },
       {
         id: 'amount',
@@ -124,7 +133,7 @@ export const VaultTransferList = () => {
         ),
       },
     ],
-    [t]
+    [filterMapping?.members?.filterMapping?.serviceCenter, router]
   );
 
   return (

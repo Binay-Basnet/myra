@@ -274,8 +274,8 @@ export const CBS: NavType = {
       ],
       reportPages: [
         {
-          label: 'loanLayoutStatementReport',
-          route: ROUTES.CBS_REPORTS_LOAN_STATEMENT,
+          label: 'Loan Account Statement Report',
+          route: ROUTES.CBS_REPORTS_LOAN_ACCOUNT_STATEMENT_REPORT,
           aclKey: 'CBS_REPORTS',
         },
         {
@@ -368,6 +368,11 @@ export const CBS: NavType = {
         {
           label: 'transactionsSidebarAllTransactions',
           route: ROUTES.CBS_TRANS_ALL_TRANSACTION_LIST,
+          aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
+        },
+        {
+          label: 'Adjusted Transactions',
+          route: ROUTES.CBS_TRANS_ADJUSTED_TRANSACTIONS_LIST,
           aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
         },
         {

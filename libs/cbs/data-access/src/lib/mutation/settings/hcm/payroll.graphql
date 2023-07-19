@@ -54,3 +54,22 @@ mutation setSalaryStructure($id: String, $input: InputSalaryStructure!) {
     }
   }
 }
+
+mutation setTaxSlab($id: String, $input: TaxSlabInput!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxSlab {
+            upsertTaxSlab(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

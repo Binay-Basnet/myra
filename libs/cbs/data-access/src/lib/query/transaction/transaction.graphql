@@ -387,6 +387,7 @@ query getAllTransactionsList($filter: Filter, $pagination: Pagination) {
           amount
           date
           branchName
+          yearEndAdjustment
         }
         cursor
       }
@@ -417,6 +418,7 @@ query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
         transactionMode
         amount
         branch
+        isYearEndAdjustment
         note
         status
         glTransaction {

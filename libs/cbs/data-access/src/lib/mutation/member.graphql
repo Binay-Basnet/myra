@@ -122,3 +122,9 @@ mutation memberTransferAction($requestId: ID!, $state: MemberTransferState!, $no
     }
   }
 }
+
+mutation balanceCertificate($id: ID!) {
+  members {
+    balanceCertificate(id: $id)
+  }
+}

@@ -8,6 +8,7 @@ import {
   TransferType,
   useGetAccountTransferFilterMappingQuery,
   useGetAccountTransferListDataQuery,
+  useGetMemberFilterMappingQuery,
 } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
@@ -32,6 +33,8 @@ export const AccountTransferList = () => {
   const router = useRouter();
 
   const { data: accountTransferFilterMapping } = useGetAccountTransferFilterMappingQuery();
+  const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
+
   const { data, isFetching } = useGetAccountTransferListDataQuery({
     pagination: getPaginationQuery(),
     filter: getFilterQuery(),
@@ -72,8 +75,15 @@ export const AccountTransferList = () => {
         },
       },
       {
+        id: 'branchId',
         header: 'Service Center',
         accessorKey: 'node.branchName',
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: memberFilterMapping?.members?.filterMapping?.serviceCenter || [],
+          },
+        },
       },
       {
         id: 'amount',
@@ -112,7 +122,12 @@ export const AccountTransferList = () => {
         },
       },
     ],
-    [t, rowData]
+    [
+      t,
+      accountTransferFilterMapping?.transaction?.filterMapping?.transfer?.type,
+      memberFilterMapping?.members?.filterMapping?.serviceCenter,
+      router,
+    ]
   );
 
   return (
