@@ -31,12 +31,10 @@ import { getPaginationQuery } from '@coop/shared/utils';
 
 const defaultFormValue = {
   name: '',
-  abbr: '',
-  description: '',
-  base_multiple: null,
-  multiplier: 0,
-  isTaxApplicable: false,
-  roundToNearestInteger: false,
+  fiscalYear: null,
+  unmarriedTaxableSalarySlab: null,
+  marriedTaxableSalarySlab: null,
+  effectiveFrom: null,
   makeThisActive: false,
 };
 

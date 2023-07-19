@@ -33,7 +33,7 @@ const defaultFormValue = {
   name: '',
   abbr: '',
   description: '',
-  base_multiple: null,
+  baseMultiple: null,
   multiplier: 0,
   isTaxApplicable: false,
   roundToNearestInteger: false,
@@ -231,7 +231,7 @@ export const EarningComponentTable = () => {
               </GridItem>
               <GridItem>
                 <FormSelect
-                  name="base_multiple"
+                  name="baseMultiple"
                   label="Multiplier"
                   options={
                     rowData?.map((item) => ({

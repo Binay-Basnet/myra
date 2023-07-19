@@ -30,11 +30,28 @@ import { SettingsCard } from '@coop/cbs/settings/ui-components';
 import { FormCheckbox, FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
+const defaultFormValue = {
+  name: '',
+  typeOfLeave: null,
+  description: '',
+  applicableAfter: 0,
+  maximumLeaveAllowed: 0,
+  maximumContinuousDaysApplicable: 0,
+  isCarriedForward: false,
+  isPartiallyPaid: false,
+  fractionOfDailySalaryPerLeave: 0,
+  isOptionalLeave: false,
+  includeHolidaysWithLeavesAsLeaves: false,
+  isCompensatory: false,
+};
+
 export const LeaveTypeTable = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedLeaveTypeId, setSelectedLeaveTypeId] = useState('');
-  const methods = useForm();
+  const methods = useForm<LeaveTypeInput>({
+    defaultValues: defaultFormValue,
+  });
   const { getValues, handleSubmit, watch, reset } = methods;
 
   const { data, refetch } = useGetEmployeeLeaveTypeListQuery({
@@ -112,7 +129,7 @@ export const LeaveTypeTable = () => {
   const handleAddModalClose = () => {
     setIsAddModalOpen(false);
     setSelectedLeaveTypeId('');
-    reset();
+    reset(defaultFormValue);
   };
 
   const handleDeleteModalClose = () => {
