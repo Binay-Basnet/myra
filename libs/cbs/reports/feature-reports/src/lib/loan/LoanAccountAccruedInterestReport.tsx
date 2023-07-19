@@ -63,6 +63,8 @@ export const LoanAccountAccruedInterestReport = () => {
                     <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
                       <Text>Name of member:</Text>
                       {basicInfo?.address && <Text>Address:</Text>}
+                      {basicInfo?.memberPanNo && <Text>PAN No:</Text>}
+
                       {basicInfo?.serviceCentreName && <Text>Service Center Name:</Text>}
                       {basicInfo?.approvedAmount && <Text>Approved Amount:</Text>}
                       {basicInfo?.loanIssueDate && <Text>Loan Issued Date:</Text>}
@@ -84,6 +86,8 @@ export const LoanAccountAccruedInterestReport = () => {
                       {basicInfo?.address && (
                         <Text noOfLines={1}>{formatAddress(basicInfo?.address)}</Text>
                       )}
+                      {basicInfo?.memberPanNo && <Text>{basicInfo?.memberPanNo}</Text>}
+
                       {basicInfo?.serviceCentreName && (
                         <Text noOfLines={1}>{basicInfo?.serviceCentreName}</Text>
                       )}

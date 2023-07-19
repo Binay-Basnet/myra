@@ -3126,6 +3126,7 @@ export type ClosedLoanAccountMeta = {
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['String']>;
+  memberPan?: Maybe<Scalars['String']>;
   noOfInstallments?: Maybe<Scalars['Int']>;
 };
 
@@ -3188,6 +3189,7 @@ export type ClosedSavingAccountResultData = {
   closedDate?: Maybe<Scalars['Localized']>;
   entries?: Maybe<Array<Maybe<ClosedSavingAccountData>>>;
   memberName?: Maybe<Scalars['Localized']>;
+  memberPan?: Maybe<Scalars['String']>;
   memberShipCode?: Maybe<Scalars['String']>;
   membershipDate?: Maybe<Scalars['Localized']>;
   savingType?: Maybe<Scalars['String']>;
@@ -12383,6 +12385,7 @@ export type LoanAccrueBasicInfo = {
   memberCode: Scalars['String'];
   memberId: Scalars['String'];
   memberName: Scalars['String'];
+  memberPanNo?: Maybe<Scalars['String']>;
   membershipDate: Scalars['Localized'];
   noOfInstallment: Scalars['Int'];
   serviceCentreId: Scalars['String'];
@@ -17636,6 +17639,7 @@ export type SavingAccrueBasicInfo = {
   memberCode: Scalars['String'];
   memberId: Scalars['String'];
   memberName: Scalars['String'];
+  memberPanNo?: Maybe<Scalars['String']>;
   membershipDate: Scalars['Localized'];
   serviceCentreId: Scalars['String'];
   serviceCentreName: Scalars['String'];
@@ -32990,6 +32994,7 @@ export type GetInterestStatementReportQuery = {
             remarks?: string | null;
             tds?: string | null;
           } | null> | null;
+          member?: { panVatNo?: string | null } | null;
           address?: {
             wardNo?: string | null;
             state?: Record<'local' | 'en' | 'np', string> | null;
@@ -33067,6 +33072,7 @@ export type GetClosedSavingAccountStatementQuery = {
       closedSavingAccountReport?: {
         data?: {
           memberName?: Record<'local' | 'en' | 'np', string> | null;
+          memberPan?: string | null;
           memberShipCode?: string | null;
           membershipDate?: Record<'local' | 'en' | 'np', string> | null;
           serviceCenterName?: string | null;
@@ -33164,6 +33170,7 @@ export type GetSavingAccountAccruedInterestReportQuery = {
           accountId: string;
           accountName: string;
           accountType: NatureOfDepositProduct;
+          memberPanNo?: string | null;
           currentInterestRate: number;
           memberCode: string;
           memberId: string;
@@ -33577,6 +33584,7 @@ export type GetLoanStatementReportQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
           branch?: string | null;
+          panVatNo?: string | null;
           address?: {
             state?: Record<'local' | 'en' | 'np', string> | null;
             district?: Record<'local' | 'en' | 'np', string> | null;
@@ -33661,6 +33669,7 @@ export type GetClosedLoanAccountReportQuery = {
           memberCode?: string | null;
           memberId?: string | null;
           memberName?: string | null;
+          memberPan?: string | null;
           noOfInstallments?: number | null;
           approvedAmount?: string | null;
           branchName?: string | null;
@@ -33825,6 +33834,7 @@ export type GetLoanAccruedInterestReportQuery = {
           memberName: string;
           memberId: string;
           memberCode: string;
+          memberPanNo?: string | null;
           currentInterestRate: number;
           accountType: string;
           accountName: string;
@@ -33979,6 +33989,7 @@ export type GetLoanTransactionReportQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
           branch?: string | null;
+          panVatNo?: string | null;
           address?: {
             state?: Record<'local' | 'en' | 'np', string> | null;
             district?: Record<'local' | 'en' | 'np', string> | null;
@@ -57392,6 +57403,9 @@ export const GetInterestStatementReportDocument = `
             remarks
             tds
           }
+          member {
+            panVatNo
+          }
           memberId
           accountNo
           accountType
@@ -57510,6 +57524,7 @@ export const GetClosedSavingAccountStatementDocument = `
             ...Address
           }
           memberName
+          memberPan
           memberShipCode
           membershipDate
           serviceCenterName
@@ -57640,6 +57655,7 @@ export const GetSavingAccountAccruedInterestReportDocument = `
           accountId
           accountName
           accountType
+          memberPanNo
           address {
             ...Address
           }
@@ -58163,6 +58179,7 @@ export const GetLoanStatementReportDocument = `
           name
           code
           branch
+          panVatNo
           address {
             state
             district
@@ -58263,6 +58280,7 @@ export const GetClosedLoanAccountReportDocument = `
           memberCode
           memberId
           memberName
+          memberPan
           noOfInstallments
           approvedAmount
           branchName
@@ -58489,6 +58507,7 @@ export const GetLoanAccruedInterestReportDocument = `
           memberName
           memberId
           memberCode
+          memberPanNo
           currentInterestRate
           accountType
           accountName
@@ -58665,6 +58684,7 @@ export const GetLoanTransactionReportDocument = `
           name
           code
           branch
+          panVatNo
           address {
             state
             district
