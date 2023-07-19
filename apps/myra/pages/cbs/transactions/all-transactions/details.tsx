@@ -25,7 +25,6 @@ import {
 
 import {
   useGetAllTransactionsDetailQuery,
-  useGetEndOfDayDateDataQuery,
   useRevertTransactionMutation,
   useSwitchTransactionYearEndFlagMutation,
 } from '@coop/cbs/data-access';
@@ -36,10 +35,6 @@ import { checkDateInFiscalYear } from '@coop/shared/utils';
 
 const DepositDetailsPage = () => {
   const router = useRouter();
-  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
-  const isCurrentFiscalYear = checkDateInFiscalYear({
-    date: new Date(endOfDayData?.transaction?.endOfDayDate?.value?.en),
-  });
 
   const { id } = router.query;
 
@@ -56,7 +51,12 @@ const DepositDetailsPage = () => {
           router?.asPath?.includes('/ledger-balance-transfer/')),
     }
   );
+
   const allTransactionsData = allTransactionsDetails?.transaction?.viewTransactionDetail?.data;
+
+  const isCurrentFiscalYear = checkDateInFiscalYear({
+    date: new Date(allTransactionsData?.transactionDate.en),
+  });
 
   const { mutateAsync: switchTransactionYearEnd } = useSwitchTransactionYearEndFlagMutation();
 
