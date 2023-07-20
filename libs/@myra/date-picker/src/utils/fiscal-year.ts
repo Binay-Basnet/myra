@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 
-import { getFiscalYears, getJSDate } from '@myra-ui/date-picker';
+import { getFiscalYears, getJSDate } from './functions';
 
 dayjs.extend(isBetween);
 
