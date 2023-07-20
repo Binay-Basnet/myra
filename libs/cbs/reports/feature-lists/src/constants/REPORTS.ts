@@ -156,6 +156,7 @@ export enum Report {
 
   INVENTORY_REGISTER_REPORT = 'Inventory Register Report',
   INVENTORY_SALES_REPORT = 'Inventory Item Sales Report',
+  INVENTORY_PURCHASE_ORDER_REPORT = 'Inventory Purchase Order Report',
   INVENTORY_STOCK_STATUS_REPORT = 'Inventory Stock Status Report',
 
   ACCOUNTING_EXTERNAL_LOAN_STATEMENT_REPORT = 'External Loan Statement Report',
@@ -749,6 +750,11 @@ export const REPORTS = {
       id: '',
       report: Report.INVENTORY_SALES_REPORT,
       link: 'item-sales',
+    },
+    {
+      id: '',
+      report: Report.INVENTORY_PURCHASE_ORDER_REPORT,
+      link: 'purchase-order',
     },
   ],
   [ReportGroup.ACCOUNTING]: [
