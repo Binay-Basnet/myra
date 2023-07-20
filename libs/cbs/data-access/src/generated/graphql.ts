@@ -58,6 +58,7 @@ export const Action = {
 export type Action = typeof Action[keyof typeof Action];
 export type AllTransactionFilterMapping = {
   branchId: Array<LabelValueArray>;
+  fiscalYear: Array<LabelValueArray>;
   txnType: Array<LabelValueArray>;
 };
 

@@ -53,6 +53,7 @@ const DepositDetailsPage = () => {
       enabled:
         !!id &&
         (router?.asPath?.includes('/all-transactions/') ||
+          router?.asPath?.includes('/adjusted-transactions/') ||
           router?.asPath?.includes('/ledger-balance-transfer/')),
     }
   );
