@@ -4112,6 +4112,16 @@ export const DefaultAccountType = {
 } as const;
 
 export type DefaultAccountType = typeof DefaultAccountType[keyof typeof DefaultAccountType];
+export type DeleteLeavePolicy = {
+  error?: Maybe<MutationError>;
+  responseStatus: Scalars['Boolean'];
+};
+
+export type DeleteLeaveType = {
+  error?: Maybe<MutationError>;
+  responseStatus: Scalars['Boolean'];
+};
+
 export type DeleteResponse = {
   error?: Maybe<MutationError>;
   responseStatus: Scalars['Boolean'];
@@ -7761,7 +7771,12 @@ export type HcmEmployeeGeneralQueryListEmployeeTypeArgs = {
 };
 
 export type HcmEmployeeLeaveMutation = {
+  DeleteLeaveType: DeleteLeaveType;
   upsertLeaveType: LeaveTypeOutput;
+};
+
+export type HcmEmployeeLeaveMutationDeleteLeaveTypeArgs = {
+  id: Scalars['String'];
 };
 
 export type HcmEmployeeLeaveMutationUpsertLeaveTypeArgs = {
@@ -7770,7 +7785,12 @@ export type HcmEmployeeLeaveMutationUpsertLeaveTypeArgs = {
 };
 
 export type HcmEmployeeLeavePolicyMutation = {
+  deleteLeavePolicy: DeleteLeavePolicy;
   upsertLeavePolicy: LeavePolicyOutput;
+};
+
+export type HcmEmployeeLeavePolicyMutationDeleteLeavePolicyArgs = {
+  id: Scalars['String'];
 };
 
 export type HcmEmployeeLeavePolicyMutationUpsertLeavePolicyArgs = {

@@ -232,7 +232,7 @@ export const InventoryPurchaseOrderReport = () => {
         <Report.Filters>
           <Report.Filter title="User Select">
             <FormSelect
-              label="Sold By User"
+              label="Purchased By User"
               isMulti
               options={userList?.map((user) => ({
                 label: user.node?.name as string,
