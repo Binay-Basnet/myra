@@ -1,6 +1,10 @@
+import { ReactElement } from 'react';
+
+import { EmployeePortalMainLayout } from '@coop/employee-portal/layouts';
+
 import styles from './index.module.css';
 
-export const Index = () => (
+export const Page = () => (
   /*
    * Replace the elements below with your own.
    *
@@ -399,4 +403,8 @@ export const Index = () => (
   </div>
 );
 
-export default Index;
+Page.getLayout = (page: ReactElement) => (
+  <EmployeePortalMainLayout>{page}</EmployeePortalMainLayout>
+);
+
+export default Page;
