@@ -704,6 +704,7 @@ export type AccountingReport = {
   externalLoanStatementReport: ExternalLoanStatementReportResult;
   fdInvestmentReport: FdInvestmentReportResult;
   fdInvestmentStatementReport: FdInvestmentStatementReportResult;
+  purchaseReport?: Maybe<PurchaseReportResult>;
   salesReport: SalesReportResult;
 };
 
@@ -721,6 +722,10 @@ export type AccountingReportFdInvestmentReportArgs = {
 
 export type AccountingReportFdInvestmentStatementReportArgs = {
   data: FdInvestmentStatementReportFilter;
+};
+
+export type AccountingReportPurchaseReportArgs = {
+  data: PurchaseReportFilter;
 };
 
 export type AccountingReportSalesReportArgs = {
@@ -16574,6 +16579,42 @@ export type PurchaseItemDetailsType = {
   taxValue?: Maybe<Scalars['String']>;
   warehouse?: Maybe<Scalars['String']>;
   warehouseName?: Maybe<Scalars['String']>;
+};
+
+export type PurchaseReportData = {
+  date?: Maybe<Scalars['Localized']>;
+  deliveryDate?: Maybe<Scalars['Localized']>;
+  preRate?: Maybe<Scalars['String']>;
+  productDetail?: Maybe<Scalars['String']>;
+  purchaseOrderId?: Maybe<Scalars['String']>;
+  purchaseOrderQuantity?: Maybe<Scalars['String']>;
+  referenceNo?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+  totalPriceWithoutVat?: Maybe<Scalars['String']>;
+  vat?: Maybe<Scalars['String']>;
+  vendorId?: Maybe<Scalars['String']>;
+  vendorName?: Maybe<Scalars['String']>;
+};
+
+export type PurchaseReportFilter = {
+  branchIds: Array<Scalars['String']>;
+  itemIds?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
+  userIds?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type PurchaseReportResult = {
+  data?: Maybe<Array<Maybe<PurchaseReportData>>>;
+  error?: Maybe<QueryError>;
+  footer?: Maybe<PurchaseResult>;
+};
+
+export type PurchaseResult = {
+  sumAmount?: Maybe<Scalars['String']>;
+  sumPriceWithoutVat?: Maybe<Scalars['String']>;
+  totalPreRate?: Maybe<Scalars['String']>;
+  totalQuantity?: Maybe<Scalars['Int']>;
+  totalVat?: Maybe<Scalars['String']>;
 };
 
 export type QuarterlyDividendRate = {
@@ -33526,6 +33567,46 @@ export type GetInventorySalesReportQuery = {
           | QueryError_ServerError_Fragment
           | null;
       };
+    };
+  };
+};
+
+export type GetInventoryPurchaseReportQueryVariables = Exact<{
+  data: PurchaseReportFilter;
+}>;
+
+export type GetInventoryPurchaseReportQuery = {
+  report: {
+    accountingReport: {
+      purchaseReport?: {
+        footer?: {
+          totalQuantity?: number | null;
+          totalPreRate?: string | null;
+          sumPriceWithoutVat?: string | null;
+          totalVat?: string | null;
+          sumAmount?: string | null;
+        } | null;
+        data?: Array<{
+          purchaseOrderId?: string | null;
+          vendorName?: string | null;
+          productDetail?: string | null;
+          vendorId?: string | null;
+          purchaseOrderQuantity?: string | null;
+          referenceNo?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          deliveryDate?: Record<'local' | 'en' | 'np', string> | null;
+          preRate?: string | null;
+          totalPriceWithoutVat?: string | null;
+          vat?: string | null;
+          totalAmount?: string | null;
+        } | null> | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
     };
   };
 };
@@ -58130,6 +58211,54 @@ export const useGetInventorySalesReportQuery = <
     ['getInventorySalesReport', variables],
     useAxios<GetInventorySalesReportQuery, GetInventorySalesReportQueryVariables>(
       GetInventorySalesReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryPurchaseReportDocument = `
+    query getInventoryPurchaseReport($data: PurchaseReportFilter!) {
+  report {
+    accountingReport {
+      purchaseReport(data: $data) {
+        footer {
+          totalQuantity
+          totalPreRate
+          sumPriceWithoutVat
+          totalVat
+          sumAmount
+        }
+        data {
+          purchaseOrderId
+          vendorName
+          productDetail
+          vendorId
+          purchaseOrderQuantity
+          referenceNo
+          date
+          deliveryDate
+          preRate
+          totalPriceWithoutVat
+          vat
+          totalAmount
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryPurchaseReportQuery = <
+  TData = GetInventoryPurchaseReportQuery,
+  TError = unknown
+>(
+  variables: GetInventoryPurchaseReportQueryVariables,
+  options?: UseQueryOptions<GetInventoryPurchaseReportQuery, TError, TData>
+) =>
+  useQuery<GetInventoryPurchaseReportQuery, TError, TData>(
+    ['getInventoryPurchaseReport', variables],
+    useAxios<GetInventoryPurchaseReportQuery, GetInventoryPurchaseReportQueryVariables>(
+      GetInventoryPurchaseReportDocument
     ).bind(null, variables),
     options
   );

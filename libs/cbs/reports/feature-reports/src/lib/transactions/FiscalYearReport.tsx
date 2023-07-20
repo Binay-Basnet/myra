@@ -96,7 +96,7 @@ export const FiscalYearReport = () => {
       defaultFilters={{
         filter: {
           includeZero: 'include',
-          includeFiscalReversal: 'NO',
+          includeFiscalReversal: 'YES',
           inculdeAdjustment: 'NO',
         },
       }}
