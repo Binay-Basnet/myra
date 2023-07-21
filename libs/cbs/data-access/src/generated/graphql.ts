@@ -866,6 +866,13 @@ export type AccountingTaxRate = {
   rate: Scalars['Float'];
 };
 
+export type AccountsMinimal = {
+  accNo?: Maybe<Scalars['String']>;
+  balance?: Maybe<BalanceValue>;
+  disbursedAmount?: Maybe<Scalars['String']>;
+  interestAccured?: Maybe<Scalars['String']>;
+};
+
 export type AccountsTransactionFilter = {
   accountIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   date?: InputMaybe<LocalizedDateFilter>;
@@ -15011,6 +15018,7 @@ export type MemberReport = {
   memberBalanceReport?: Maybe<MemberBalanceReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
   memberRegistrationReport?: Maybe<MemberRegistrationReportResult>;
+  memberTransferReport?: Maybe<MemberTransferReportResult>;
   minorReport?: Maybe<MinorReportResult>;
 };
 
@@ -15044,6 +15052,10 @@ export type MemberReportMemberClassificationReportArgs = {
 
 export type MemberReportMemberRegistrationReportArgs = {
   data?: InputMaybe<MemberRegistrationReportData>;
+};
+
+export type MemberReportMemberTransferReportArgs = {
+  data: MemberTransferFilter;
 };
 
 export type MemberReportMinorReportArgs = {
@@ -15133,6 +15145,13 @@ export type MemberTransferEntry = {
   state?: Maybe<MemberTransferState>;
 };
 
+export type MemberTransferFilter = {
+  filter?: InputMaybe<TransferredByFilter>;
+  fromBranchIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  period: LocalizedDateFilter;
+  toBranchIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
 export type MemberTransferInput = {
   docs?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   newBranchId: Scalars['ID'];
@@ -15178,6 +15197,24 @@ export type MemberTransferQueryGetArgs = {
 export type MemberTransferQueryListArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type MemberTransferReportData = {
+  fromBranch?: Maybe<BranchMinimal>;
+  loanAccounts?: Maybe<Array<AccountsMinimal>>;
+  memberCode: Scalars['String'];
+  memberId: Scalars['ID'];
+  memberName: Scalars['String'];
+  savingAccounts?: Maybe<Array<AccountsMinimal>>;
+  shareBalance?: Maybe<Scalars['String']>;
+  toBranch?: Maybe<BranchMinimal>;
+  transferredBy?: Maybe<Scalars['String']>;
+  transferredDate?: Maybe<Scalars['Localized']>;
+};
+
+export type MemberTransferReportResult = {
+  data?: Maybe<Array<Maybe<MemberTransferReportData>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type MemberTransferResult = {
@@ -20179,6 +20216,10 @@ export const TransferType = {
 } as const;
 
 export type TransferType = typeof TransferType[keyof typeof TransferType];
+export type TransferredByFilter = {
+  transferredBy?: InputMaybe<Array<Scalars['String']>>;
+};
+
 export type TranslateData = {
   data?: Maybe<Scalars['String']>;
   id: Scalars['String'];
