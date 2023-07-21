@@ -24312,6 +24312,60 @@ export type SetEmployeeLeavePolicyMutation = {
   };
 };
 
+export type DeleteLeaveTypeMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type DeleteLeaveTypeMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leave: {
+            DeleteLeaveType: {
+              responseStatus: boolean;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type DeleteLeavePolicyMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type DeleteLeavePolicyMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leavePolicy: {
+            deleteLeavePolicy: {
+              responseStatus: boolean;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type SetEarningComponentMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: EarningComponentInput;
@@ -37000,6 +37054,136 @@ export type GetLeavePolicyQuery = {
   };
 };
 
+export type GetEmployeeLevelQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetEmployeeLevelQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getEmployeeLevel: {
+              record?: { name: string; description: string } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDepartmentQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetDepartmentQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getDepartment: {
+              record?: { name: string; description: string } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDesignationQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetDesignationQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getDesignation: {
+              record?: { name: string; description: string } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEmployeeTypeQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetEmployeeTypeQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getEmployeeType: {
+              record?: { name: string; description: string } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetHealthInsuranceQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetHealthInsuranceQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getHealthInsurance: {
+              record?: { healthInsuranceProvider: string; healthInsuranceNumber: string } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type GetEarningComponentQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -45820,6 +46004,74 @@ export const useSetEmployeeLeavePolicyMutation = <TError = unknown, TContext = u
     ['setEmployeeLeavePolicy'],
     useAxios<SetEmployeeLeavePolicyMutation, SetEmployeeLeavePolicyMutationVariables>(
       SetEmployeeLeavePolicyDocument
+    ),
+    options
+  );
+export const DeleteLeaveTypeDocument = `
+    mutation deleteLeaveType($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leave {
+            DeleteLeaveType(id: $id) {
+              responseStatus
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteLeaveTypeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteLeaveTypeMutation,
+    TError,
+    DeleteLeaveTypeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteLeaveTypeMutation, TError, DeleteLeaveTypeMutationVariables, TContext>(
+    ['deleteLeaveType'],
+    useAxios<DeleteLeaveTypeMutation, DeleteLeaveTypeMutationVariables>(DeleteLeaveTypeDocument),
+    options
+  );
+export const DeleteLeavePolicyDocument = `
+    mutation deleteLeavePolicy($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leavePolicy {
+            deleteLeavePolicy(id: $id) {
+              responseStatus
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteLeavePolicyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteLeavePolicyMutation,
+    TError,
+    DeleteLeavePolicyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteLeavePolicyMutation, TError, DeleteLeavePolicyMutationVariables, TContext>(
+    ['deleteLeavePolicy'],
+    useAxios<DeleteLeavePolicyMutation, DeleteLeavePolicyMutationVariables>(
+      DeleteLeavePolicyDocument
     ),
     options
   );
@@ -62651,6 +62903,180 @@ export const useGetLeavePolicyQuery = <TData = GetLeavePolicyQuery, TError = unk
       null,
       variables
     ),
+    options
+  );
+export const GetEmployeeLevelDocument = `
+    query getEmployeeLevel($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getEmployeeLevel(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEmployeeLevelQuery = <TData = GetEmployeeLevelQuery, TError = unknown>(
+  variables: GetEmployeeLevelQueryVariables,
+  options?: UseQueryOptions<GetEmployeeLevelQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeLevelQuery, TError, TData>(
+    ['getEmployeeLevel', variables],
+    useAxios<GetEmployeeLevelQuery, GetEmployeeLevelQueryVariables>(GetEmployeeLevelDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetDepartmentDocument = `
+    query getDepartment($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getDepartment(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetDepartmentQuery = <TData = GetDepartmentQuery, TError = unknown>(
+  variables: GetDepartmentQueryVariables,
+  options?: UseQueryOptions<GetDepartmentQuery, TError, TData>
+) =>
+  useQuery<GetDepartmentQuery, TError, TData>(
+    ['getDepartment', variables],
+    useAxios<GetDepartmentQuery, GetDepartmentQueryVariables>(GetDepartmentDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetDesignationDocument = `
+    query getDesignation($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getDesignation(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetDesignationQuery = <TData = GetDesignationQuery, TError = unknown>(
+  variables: GetDesignationQueryVariables,
+  options?: UseQueryOptions<GetDesignationQuery, TError, TData>
+) =>
+  useQuery<GetDesignationQuery, TError, TData>(
+    ['getDesignation', variables],
+    useAxios<GetDesignationQuery, GetDesignationQueryVariables>(GetDesignationDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetEmployeeTypeDocument = `
+    query getEmployeeType($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getEmployeeType(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEmployeeTypeQuery = <TData = GetEmployeeTypeQuery, TError = unknown>(
+  variables: GetEmployeeTypeQueryVariables,
+  options?: UseQueryOptions<GetEmployeeTypeQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeTypeQuery, TError, TData>(
+    ['getEmployeeType', variables],
+    useAxios<GetEmployeeTypeQuery, GetEmployeeTypeQueryVariables>(GetEmployeeTypeDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetHealthInsuranceDocument = `
+    query getHealthInsurance($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getHealthInsurance(id: $id) {
+              record {
+                healthInsuranceProvider
+                healthInsuranceNumber
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetHealthInsuranceQuery = <TData = GetHealthInsuranceQuery, TError = unknown>(
+  variables: GetHealthInsuranceQueryVariables,
+  options?: UseQueryOptions<GetHealthInsuranceQuery, TError, TData>
+) =>
+  useQuery<GetHealthInsuranceQuery, TError, TData>(
+    ['getHealthInsurance', variables],
+    useAxios<GetHealthInsuranceQuery, GetHealthInsuranceQueryVariables>(
+      GetHealthInsuranceDocument
+    ).bind(null, variables),
     options
   );
 export const GetEarningComponentDocument = `

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { BiEdit } from 'react-icons/bi';
@@ -6,28 +6,42 @@ import { BiEdit } from 'react-icons/bi';
 import { asyncToast, Box, Button, Column, Divider, Icon, Modal, Table, Text } from '@myra-ui';
 
 import {
+  NewDepartment,
   useDeleteHcmEmployeeGeneralMutation,
-  useGetDesignationListQuery,
-  useSetDesignationMutation,
+  useGetDepartmentListQuery,
+  useGetDepartmentQuery,
+  useSetDepartmentMutation,
 } from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
 import { FormInput } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
-export const DesignationsTable = () => {
+export const DepartmentsTable = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [selectedDesignationId, setSelectedDesignationId] = useState('');
+  const [selectedDepartmentId, setSelectedDepartmentId] = useState('');
 
-  const { data, refetch } = useGetDesignationListQuery({ pagination: getPaginationQuery() });
-  const { mutateAsync, isLoading } = useSetDesignationMutation();
+  const { data, refetch } = useGetDepartmentListQuery({ pagination: getPaginationQuery() });
+  const { mutateAsync, isLoading } = useSetDepartmentMutation();
   const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+
+  const { data: departmentData } = useGetDepartmentQuery(
+    { id: selectedDepartmentId },
+    { enabled: !!selectedDepartmentId }
+  );
+
+  const departmentDataEdit =
+    departmentData?.settings?.general?.HCM?.employee?.employee?.getDepartment?.record;
+
+  useEffect(() => {
+    reset(departmentDataEdit as NewDepartment);
+  }, [departmentDataEdit]);
 
   const methods = useForm();
   const { getValues, handleSubmit, reset } = methods;
 
   const rowData = useMemo(
-    () => data?.settings?.general?.HCM?.employee?.employee?.listDesignation?.edges ?? [],
+    () => data?.settings?.general?.HCM?.employee?.employee?.listDepartment?.edges ?? [],
     [data]
   );
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -54,7 +68,7 @@ export const DesignationsTable = () => {
               gap="s8"
               cursor="pointer"
               onClick={() => {
-                setSelectedDesignationId(props?.row?.original?.node?.id as string);
+                setSelectedDepartmentId(props?.row?.original?.node?.id as string);
                 setIsAddModalOpen(true);
               }}
             >
@@ -68,7 +82,7 @@ export const DesignationsTable = () => {
               gap="s8"
               cursor="pointer"
               onClick={() => {
-                setSelectedDesignationId(props?.row?.original?.node?.id as string);
+                setSelectedDepartmentId(props?.row?.original?.node?.id as string);
                 setIsDeleteModalOpen(true);
               }}
             >
@@ -84,38 +98,40 @@ export const DesignationsTable = () => {
 
   const handleAddModalClose = () => {
     setIsAddModalOpen(false);
-    setSelectedDesignationId('');
+    setSelectedDepartmentId('');
     reset({ name: '', description: '' });
   };
 
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
-    setSelectedDesignationId('');
+    setSelectedDepartmentId('');
+    reset({ name: '', description: '' });
   };
 
   const onSubmit = () => {
-    if (selectedDesignationId) {
+    const values = getValues();
+    if (selectedDepartmentId) {
       asyncToast({
-        id: 'edit-designation',
+        id: 'edit-department',
         msgs: {
-          success: 'Designation edited succesfully',
-          loading: 'Editing designation',
+          success: 'Department edited succesfully',
+          loading: 'Editing department',
         },
         onSuccess: () => {
           refetch();
           handleAddModalClose();
         },
         promise: mutateAsync({
-          id: selectedDesignationId,
-          input: { name: getValues()?.name, description: getValues()?.description },
+          id: selectedDepartmentId,
+          input: values as NewDepartment,
         }),
       });
     } else {
       asyncToast({
-        id: 'new-designation',
+        id: 'new-department',
         msgs: {
-          success: 'New Designation added succesfully',
-          loading: 'Adding new designation',
+          success: 'New Department added succesfully',
+          loading: 'Adding new department',
         },
         onSuccess: () => {
           refetch();
@@ -123,7 +139,7 @@ export const DesignationsTable = () => {
         },
         promise: mutateAsync({
           id: null,
-          input: { name: getValues()?.name, description: getValues()?.description },
+          input: values as NewDepartment,
         }),
       });
     }
@@ -131,23 +147,23 @@ export const DesignationsTable = () => {
 
   const onDelete = () => {
     asyncToast({
-      id: 'delete-designation',
+      id: 'delete-department',
       msgs: {
-        success: 'Designation deleted successfully',
-        loading: 'Deleting designation',
+        success: 'Department deleted successfully',
+        loading: 'Deleting department',
       },
       onSuccess: () => {
         refetch();
         handleDeleteModalClose();
       },
-      promise: deleteMutateAsync({ id: selectedDesignationId }),
+      promise: deleteMutateAsync({ id: selectedDepartmentId }),
     });
   };
 
   return (
-    <Box id="designation">
+    <Box id="department">
       <SettingsCard
-        title="Designations"
+        title="Departments"
         subtitle="Extends Fields that can be added to forms for additional input Fields"
         headerButton={
           <Box
@@ -159,7 +175,7 @@ export const DesignationsTable = () => {
             onClick={() => setIsAddModalOpen(true)}
           >
             <Icon size="sm" as={AiOutlinePlus} />
-            <Text fontSize="r1">Add Designation</Text>
+            <Text fontSize="r1">Add Department</Text>
           </Box>
         }
       >
@@ -169,7 +185,7 @@ export const DesignationsTable = () => {
         open={isAddModalOpen}
         onClose={handleAddModalClose}
         isCentered
-        title="Designations"
+        title="Department"
         width="xl"
       >
         <FormProvider {...methods}>
@@ -192,7 +208,7 @@ export const DesignationsTable = () => {
       </Modal>
       <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">
         <Box display="flex" flexDir="column" p="s4" gap="s16">
-          <Text fontSize="r2">Are you sure you want to delete this designation ?</Text>
+          <Text fontSize="r2">Are you sure you want to delete this department ?</Text>
           <Button w="-webkit-fit-content" alignSelf="flex-end" onClick={onDelete}>
             Confirm
           </Button>
@@ -202,4 +218,4 @@ export const DesignationsTable = () => {
   );
 };
 
-export default DesignationsTable;
+export default DepartmentsTable;

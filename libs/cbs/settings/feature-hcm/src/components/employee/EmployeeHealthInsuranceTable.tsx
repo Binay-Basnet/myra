@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { BiEdit } from 'react-icons/bi';
@@ -6,28 +6,45 @@ import { BiEdit } from 'react-icons/bi';
 import { asyncToast, Box, Button, Column, Divider, Icon, Modal, Table, Text } from '@myra-ui';
 
 import {
+  NewEmployeeHealthInsurance,
   useDeleteHcmEmployeeGeneralMutation,
-  useGetEmployeeLevelListQuery,
-  useSetEmployeeLevelMutation,
+  useGetEmployeeHealthInsuranceListQuery,
+  useGetHealthInsuranceQuery,
+  useSetEmployeeHealthInsuranceMutation,
 } from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
 import { FormInput } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
-export const EmployeeLevelTable = () => {
-  const [isAddModal, setIsAddModal] = useState(false);
+export const EmployeeHealthInsuranceTable = () => {
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [selectedEmployeeLevelId, setSelectedEmployeeLevelId] = useState('');
+  const [selectedEmpoyeeHealthInsuranceId, setSelectedEmpoyeeHealthInsuranceId] = useState('');
 
-  const { data, refetch } = useGetEmployeeLevelListQuery({ pagination: getPaginationQuery() });
-  const { mutateAsync, isLoading } = useSetEmployeeLevelMutation();
+  const { data, refetch } = useGetEmployeeHealthInsuranceListQuery({
+    pagination: getPaginationQuery(),
+  });
+  const { mutateAsync, isLoading } = useSetEmployeeHealthInsuranceMutation();
   const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+
+  const { data: healthInsuranceData } = useGetHealthInsuranceQuery(
+    { id: selectedEmpoyeeHealthInsuranceId },
+    { enabled: !!selectedEmpoyeeHealthInsuranceId }
+  );
+
+  const healthInsuranceDataEdit =
+    healthInsuranceData?.settings?.general?.HCM?.employee?.employee?.getHealthInsurance?.record;
+
+  useEffect(() => {
+    reset(healthInsuranceDataEdit as NewEmployeeHealthInsurance);
+  }, [healthInsuranceDataEdit]);
 
   const methods = useForm();
   const { getValues, handleSubmit, reset } = methods;
 
   const rowData = useMemo(
-    () => data?.settings?.general?.HCM?.employee?.employee?.listEmployeeLevel?.edges ?? [],
+    () =>
+      data?.settings?.general?.HCM?.employee?.employee?.listEmployeeHealthInsurance?.edges ?? [],
     [data]
   );
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -37,12 +54,12 @@ export const EmployeeLevelTable = () => {
         accessorFn: (__, index) => index + 1,
       },
       {
-        header: 'Name',
-        accessorFn: (row) => row?.node?.name,
+        header: 'Health Insurance Provider',
+        accessorFn: (row) => row?.node?.healthInsuranceProvider,
       },
       {
-        header: 'Description',
-        accessorFn: (row) => row?.node?.description,
+        header: 'Health Insurance Number',
+        accessorFn: (row) => row?.node?.healthInsuranceNumber,
       },
       {
         header: 'Actions',
@@ -54,8 +71,8 @@ export const EmployeeLevelTable = () => {
               gap="s8"
               cursor="pointer"
               onClick={() => {
-                setSelectedEmployeeLevelId(props?.row?.original?.node?.id as string);
-                setIsAddModal(true);
+                setSelectedEmpoyeeHealthInsuranceId(props?.row?.original?.node?.id as string);
+                setIsAddModalOpen(true);
               }}
             >
               <Icon as={BiEdit} />
@@ -68,7 +85,7 @@ export const EmployeeLevelTable = () => {
               gap="s8"
               cursor="pointer"
               onClick={() => {
-                setSelectedEmployeeLevelId(props?.row?.original?.node?.id as string);
+                setSelectedEmpoyeeHealthInsuranceId(props?.row?.original?.node?.id as string);
                 setIsDeleteModalOpen(true);
               }}
             >
@@ -83,38 +100,41 @@ export const EmployeeLevelTable = () => {
   );
 
   const handleAddModalClose = () => {
-    setIsAddModal(false);
-    setSelectedEmployeeLevelId('');
-    reset({ name: '', description: '' });
+    setIsAddModalOpen(false);
+    setSelectedEmpoyeeHealthInsuranceId('');
+    reset({ healthInsuranceProvider: '', healthInsuranceNumber: '' });
   };
+
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
-    setSelectedEmployeeLevelId('');
+    setSelectedEmpoyeeHealthInsuranceId('');
+    reset({ healthInsuranceProvider: '', healthInsuranceNumber: '' });
   };
 
   const onSubmit = () => {
-    if (selectedEmployeeLevelId) {
+    const values = getValues();
+    if (selectedEmpoyeeHealthInsuranceId) {
       asyncToast({
-        id: 'edit-department',
+        id: 'edit-EmpoyeeHealthInsurance',
         msgs: {
-          success: 'Employee Level edited succesfully',
-          loading: 'Editing Employee Level',
+          success: 'Empoyee Health Insurance edited succesfully',
+          loading: 'Editing Empoyee Health Insurance',
         },
         onSuccess: () => {
           refetch();
           handleAddModalClose();
         },
         promise: mutateAsync({
-          id: selectedEmployeeLevelId,
-          input: { name: getValues()?.name, description: getValues()?.description },
+          id: selectedEmpoyeeHealthInsuranceId,
+          input: values as NewEmployeeHealthInsurance,
         }),
       });
     } else {
       asyncToast({
-        id: 'new-department',
+        id: 'new-EmpoyeeHealthInsurance',
         msgs: {
-          success: 'New EmployeeLevel added succesfully',
-          loading: 'Adding new department',
+          success: 'New EmpoyeeHealthInsurance added succesfully',
+          loading: 'Adding new EmpoyeeHealthInsurance',
         },
         onSuccess: () => {
           refetch();
@@ -122,7 +142,7 @@ export const EmployeeLevelTable = () => {
         },
         promise: mutateAsync({
           id: null,
-          input: { name: getValues()?.name, description: getValues()?.description },
+          input: values as NewEmployeeHealthInsurance,
         }),
       });
     }
@@ -130,23 +150,23 @@ export const EmployeeLevelTable = () => {
 
   const onDelete = () => {
     asyncToast({
-      id: 'delete-employee-level',
+      id: 'delete-employee-health-insurance',
       msgs: {
-        success: 'Employee level deleted successfully',
-        loading: 'Deleting employee level',
+        success: 'Employee health insurance deleted successfully',
+        loading: 'Deleting employee health insurance',
       },
       onSuccess: () => {
         refetch();
         handleDeleteModalClose();
       },
-      promise: deleteMutateAsync({ id: selectedEmployeeLevelId }),
+      promise: deleteMutateAsync({ id: selectedEmpoyeeHealthInsuranceId }),
     });
   };
 
   return (
-    <Box id="employee-level">
+    <Box id="employee-health-insurance">
       <SettingsCard
-        title="Employee Level"
+        title="Employee Health Insurance"
         subtitle="Extends Fields that can be added to forms for additional input Fields"
         headerButton={
           <Box
@@ -155,27 +175,27 @@ export const EmployeeLevelTable = () => {
             gap="s4"
             color="green.500"
             cursor="pointer"
-            onClick={() => setIsAddModal(true)}
+            onClick={() => setIsAddModalOpen(true)}
           >
             <Icon size="sm" as={AiOutlinePlus} />
-            <Text fontSize="r1">Add Employee Level</Text>
+            <Text fontSize="r1">Add Empoyee Health Insurance</Text>
           </Box>
         }
       >
         <Table isStatic data={rowData} columns={columns} />
       </SettingsCard>
       <Modal
-        open={isAddModal}
+        open={isAddModalOpen}
         onClose={handleAddModalClose}
         isCentered
-        title="Employee Level"
+        title="Empoyee Health Insurance"
         width="xl"
       >
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box display="flex" flexDir="column" gap="s16">
-              <FormInput name="name" label="Name" />
-              <FormInput name="description" label="Description" />
+              <FormInput name="healthInsuranceProvider" label="Health Insurance Provider" />
+              <FormInput name="healthInsuranceNumber" label="Health Insurance Number" />
               <Divider />
               <Button
                 w="-webkit-fit-content"
@@ -201,4 +221,4 @@ export const EmployeeLevelTable = () => {
   );
 };
 
-export default EmployeeLevelTable;
+export default EmployeeHealthInsuranceTable;

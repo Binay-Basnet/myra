@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { BiEdit } from 'react-icons/bi';
@@ -6,28 +6,42 @@ import { BiEdit } from 'react-icons/bi';
 import { asyncToast, Box, Button, Column, Divider, Icon, Modal, Table, Text } from '@myra-ui';
 
 import {
+  NewEmployeeType,
   useDeleteHcmEmployeeGeneralMutation,
-  useGetDepartmentListQuery,
-  useSetDepartmentMutation,
+  useGetEmployeeTypeListQuery,
+  useGetEmployeeTypeQuery,
+  useSetEmployeeTypeMutation,
 } from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
 import { FormInput } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
-export const DepartmentsTable = () => {
+export const EmployeeTypeTable = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [selectedDepartmentId, setSelectedDepartmentId] = useState('');
+  const [selectedEmpoymentTypeId, setSelectedEmpoymentTypeId] = useState('');
 
-  const { data, refetch } = useGetDepartmentListQuery({ pagination: getPaginationQuery() });
-  const { mutateAsync, isLoading } = useSetDepartmentMutation();
+  const { data, refetch } = useGetEmployeeTypeListQuery({ pagination: getPaginationQuery() });
+  const { mutateAsync, isLoading } = useSetEmployeeTypeMutation();
   const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+
+  const { data: employeeTypeData } = useGetEmployeeTypeQuery(
+    { id: selectedEmpoymentTypeId },
+    { enabled: !!selectedEmpoymentTypeId }
+  );
+
+  const employeeTypeDataEdit =
+    employeeTypeData?.settings?.general?.HCM?.employee?.employee?.getEmployeeType?.record;
+
+  useEffect(() => {
+    reset(employeeTypeDataEdit as NewEmployeeType);
+  }, [employeeTypeDataEdit]);
 
   const methods = useForm();
   const { getValues, handleSubmit, reset } = methods;
 
   const rowData = useMemo(
-    () => data?.settings?.general?.HCM?.employee?.employee?.listDepartment?.edges ?? [],
+    () => data?.settings?.general?.HCM?.employee?.employee?.listEmployeeType?.edges ?? [],
     [data]
   );
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -54,7 +68,7 @@ export const DepartmentsTable = () => {
               gap="s8"
               cursor="pointer"
               onClick={() => {
-                setSelectedDepartmentId(props?.row?.original?.node?.id as string);
+                setSelectedEmpoymentTypeId(props?.row?.original?.node?.id as string);
                 setIsAddModalOpen(true);
               }}
             >
@@ -68,7 +82,7 @@ export const DepartmentsTable = () => {
               gap="s8"
               cursor="pointer"
               onClick={() => {
-                setSelectedDepartmentId(props?.row?.original?.node?.id as string);
+                setSelectedEmpoymentTypeId(props?.row?.original?.node?.id as string);
                 setIsDeleteModalOpen(true);
               }}
             >
@@ -84,38 +98,40 @@ export const DepartmentsTable = () => {
 
   const handleAddModalClose = () => {
     setIsAddModalOpen(false);
-    setSelectedDepartmentId('');
+    setSelectedEmpoymentTypeId('');
     reset({ name: '', description: '' });
   };
 
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
-    setSelectedDepartmentId('');
+    setSelectedEmpoymentTypeId('');
+    reset({ name: '', description: '' });
   };
 
   const onSubmit = () => {
-    if (selectedDepartmentId) {
+    const values = getValues();
+    if (selectedEmpoymentTypeId) {
       asyncToast({
-        id: 'edit-department',
+        id: 'edit-EmpoymentType',
         msgs: {
-          success: 'Department edited succesfully',
-          loading: 'Editing department',
+          success: 'Empoyment Type edited succesfully',
+          loading: 'Editing Empoyment Type',
         },
         onSuccess: () => {
           refetch();
           handleAddModalClose();
         },
         promise: mutateAsync({
-          id: selectedDepartmentId,
-          input: { name: getValues()?.name, description: getValues()?.description },
+          id: selectedEmpoymentTypeId,
+          input: values as NewEmployeeType,
         }),
       });
     } else {
       asyncToast({
-        id: 'new-department',
+        id: 'new-EmpoymentType',
         msgs: {
-          success: 'New Department added succesfully',
-          loading: 'Adding new department',
+          success: 'New Empoyment Type added succesfully',
+          loading: 'Adding new Empoyment Type',
         },
         onSuccess: () => {
           refetch();
@@ -123,7 +139,7 @@ export const DepartmentsTable = () => {
         },
         promise: mutateAsync({
           id: null,
-          input: { name: getValues()?.name, description: getValues()?.description },
+          input: values as NewEmployeeType,
         }),
       });
     }
@@ -131,23 +147,22 @@ export const DepartmentsTable = () => {
 
   const onDelete = () => {
     asyncToast({
-      id: 'delete-department',
+      id: 'delete-employee-type',
       msgs: {
-        success: 'Department deleted successfully',
-        loading: 'Deleting department',
+        success: 'Employee type deleted successfully',
+        loading: 'Deleting employee type',
       },
       onSuccess: () => {
         refetch();
         handleDeleteModalClose();
       },
-      promise: deleteMutateAsync({ id: selectedDepartmentId }),
+      promise: deleteMutateAsync({ id: selectedEmpoymentTypeId }),
     });
   };
-
   return (
-    <Box id="department">
+    <Box id="employee-type">
       <SettingsCard
-        title="Departments"
+        title="Employee Type"
         subtitle="Extends Fields that can be added to forms for additional input Fields"
         headerButton={
           <Box
@@ -159,7 +174,7 @@ export const DepartmentsTable = () => {
             onClick={() => setIsAddModalOpen(true)}
           >
             <Icon size="sm" as={AiOutlinePlus} />
-            <Text fontSize="r1">Add Department</Text>
+            <Text fontSize="r1">Add Empoyment Type</Text>
           </Box>
         }
       >
@@ -169,7 +184,7 @@ export const DepartmentsTable = () => {
         open={isAddModalOpen}
         onClose={handleAddModalClose}
         isCentered
-        title="Department"
+        title="Empoyment Type"
         width="xl"
       >
         <FormProvider {...methods}>
@@ -202,4 +217,4 @@ export const DepartmentsTable = () => {
   );
 };
 
-export default DepartmentsTable;
+export default EmployeeTypeTable;

@@ -247,3 +247,113 @@ query getLeavePolicy($id: String!) {
     }
   }
 }
+
+query getEmployeeLevel($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getEmployeeLevel(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getDepartment($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getDepartment(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getDesignation($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getDesignation(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getEmployeeType($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getEmployeeType(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getHealthInsurance($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getHealthInsurance(id: $id) {
+              record {
+                healthInsuranceProvider
+                healthInsuranceNumber
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
