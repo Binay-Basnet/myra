@@ -4296,6 +4296,7 @@ export type DepositLoanAccount = Base & {
   accountName?: Maybe<Scalars['String']>;
   agentId?: Maybe<Scalars['ID']>;
   atmFacility?: Maybe<Scalars['Boolean']>;
+  branchName?: Maybe<Scalars['String']>;
   chequeFacility?: Maybe<Scalars['Boolean']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
@@ -5637,7 +5638,7 @@ export type EachTransferRecord = {
 
 export type EarningComponentInput = {
   abbr?: InputMaybe<Scalars['String']>;
-  base_multiple?: InputMaybe<Scalars['String']>;
+  baseMultiple?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   isTaxApplicable?: InputMaybe<Scalars['Boolean']>;
   makeThisActive?: InputMaybe<Scalars['Boolean']>;
@@ -7812,7 +7813,7 @@ export type HcmEmployeeGeneralQueryListEmployeeTypeArgs = {
 };
 
 export type HcmEmployeeLeaveMutation = {
-  DeleteLeaveType: DeleteLeaveType;
+  deleteLeaveType: DeleteLeaveType;
   upsertLeaveType: LeaveTypeOutput;
 };
 
@@ -24322,7 +24323,7 @@ export type DeleteLeaveTypeMutation = {
       HCM?: {
         employee: {
           leave: {
-            DeleteLeaveType: {
+            deleteLeaveType: {
               responseStatus: boolean;
               error?:
                 | MutationError_AuthorizationError_Fragment
@@ -41051,7 +41052,12 @@ export type GetWithdrawSlipDataQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
         } | null;
-        account?: { id: string; accountName?: string | null; productName?: string | null } | null;
+        account?: {
+          id: string;
+          accountName?: string | null;
+          productName?: string | null;
+          branchName?: string | null;
+        } | null;
         availableRange?: { from: string; to: string } | null;
       } | null;
     } | null;
@@ -46014,7 +46020,7 @@ export const DeleteLeaveTypeDocument = `
       HCM {
         employee {
           leave {
-            DeleteLeaveType(id: $id) {
+            deleteLeaveType(id: $id) {
               responseStatus
               error {
                 ...MutationError
@@ -68395,6 +68401,7 @@ export const GetWithdrawSlipDataDocument = `
           id
           accountName
           productName
+          branchName
         }
         noOfLeaves
         availableRange {

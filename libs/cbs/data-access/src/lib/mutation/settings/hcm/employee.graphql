@@ -155,7 +155,7 @@ mutation deleteLeaveType($id: String!) {
       HCM {
         employee {
           leave {
-            DeleteLeaveType(id: $id) {
+            deleteLeaveType(id: $id) {
               responseStatus
               error {
                 ...MutationError
