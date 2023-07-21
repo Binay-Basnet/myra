@@ -49,7 +49,7 @@ export const generateAndSortCOATreeArray = ({
   total,
 }: {
   array: TrialSheetReportDataEntry[];
-  total: Record<string, string>;
+  total: Record<string, unknown>;
   type: keyof typeof COAType;
 }) => {
   if (!array || !array.length) return [];

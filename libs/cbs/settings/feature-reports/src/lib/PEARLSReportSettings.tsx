@@ -38,14 +38,14 @@ export const PEARLSReportSettings = ({ indicator }: ReportSettingsProps) => {
     if (pearlsGroup?.numerator && pearlsGroup?.numeratorVariables) {
       setNumeratorFormula({
         expression: pearlsGroup?.numerator,
-        variables: pearlsGroup?.numeratorVariables,
+        variables: pearlsGroup?.numeratorVariables as Record<string, string>,
       });
     }
 
     if (pearlsGroup?.denominator && pearlsGroup?.denominatorVariables) {
       setDenominatorFormula({
         expression: pearlsGroup?.denominator,
-        variables: pearlsGroup?.denominatorVariables,
+        variables: pearlsGroup?.denominatorVariables as Record<string, string>,
       });
     }
   }, [isFetching, indicator]);
@@ -131,14 +131,14 @@ export const PEARLSReportSettings = ({ indicator }: ReportSettingsProps) => {
           if (pearlsGroup?.numerator && pearlsGroup?.numeratorVariables) {
             setNumeratorFormula({
               expression: pearlsGroup?.numerator,
-              variables: pearlsGroup?.numeratorVariables,
+              variables: pearlsGroup?.numeratorVariables as Record<string, string>,
             });
           }
 
           if (pearlsGroup?.denominator && pearlsGroup?.denominatorVariables) {
             setDenominatorFormula({
               expression: pearlsGroup?.denominator,
-              variables: pearlsGroup?.denominatorVariables,
+              variables: pearlsGroup?.denominatorVariables as Record<string, string>,
             });
           }
         }}
