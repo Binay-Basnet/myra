@@ -28,11 +28,12 @@ type InventoryRegisterFilter = {
     label: string;
     value: string;
   }[];
-
-  creatorIds: {
-    label: string;
-    value: string;
-  }[];
+  filter: {
+    creatorIds: {
+      label: string;
+      value: string;
+    }[];
+  };
 };
 
 export const InventoryPurchaseOrderReport = () => {
@@ -54,8 +55,8 @@ export const InventoryPurchaseOrderReport = () => {
       : null;
 
   const creatorsIds =
-    filters?.creatorIds && filters?.creatorIds?.length !== 0
-      ? filters?.creatorIds?.map((t) => t.value)
+    filters?.filter?.creatorIds && filters?.filter?.creatorIds?.length !== 0
+      ? filters?.filter?.creatorIds?.map((t) => t.value)
       : null;
 
   const { data, isFetching } = useGetInventoryPurchaseReportQuery(
@@ -67,8 +68,8 @@ export const InventoryPurchaseOrderReport = () => {
         } as LocalizedDateFilter,
         branchIds,
 
-        userIds: creatorsIds,
         itemIds: itemsIds,
+        filter: { creatorIds: creatorsIds },
       } as PurchaseReportFilter,
     },
     { enabled: !!filters }
@@ -238,7 +239,7 @@ export const InventoryPurchaseOrderReport = () => {
                 label: user.node?.name as string,
                 value: user.node?.id as string,
               }))}
-              name="creatorIds"
+              name="filter.creatorIds"
             />
           </Report.Filter>
         </Report.Filters>

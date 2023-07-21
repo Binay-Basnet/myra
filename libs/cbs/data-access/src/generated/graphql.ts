@@ -5614,6 +5614,11 @@ export type EachJobOpeningRecord = {
   error?: Maybe<QueryError>;
 };
 
+export type EachPayrollRunRecords = {
+  data: PayrollRunRecord;
+  error: QueryError;
+};
+
 export type EachStaffRecord = {
   data?: Maybe<StaffPlanRecord>;
   error?: Maybe<QueryError>;
@@ -6492,6 +6497,26 @@ export const ExternalLoanType = {
 } as const;
 
 export type ExternalLoanType = typeof ExternalLoanType[keyof typeof ExternalLoanType];
+export type ExtraDetailListed = {
+  deductions?: Maybe<Scalars['String']>;
+  employeeName?: Maybe<Scalars['String']>;
+  grossPay?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  netPay?: Maybe<Scalars['String']>;
+  paidDays?: Maybe<Scalars['Int']>;
+};
+
+export type ExtraDetails = {
+  cursor: Scalars['Cursor'];
+  node: ExtraDetailListed;
+};
+
+export type ExtraDetailsConnection = {
+  edges?: Maybe<Array<Maybe<ExtraDetails>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
 export type FdInvestment = {
   certificateNo: Scalars['String'];
   fdAmount: Scalars['String'];
@@ -7557,6 +7582,22 @@ export type GetInventoryItemResponse = {
   error?: Maybe<QueryError>;
 };
 
+export type GetSalaryStructureAssignment = {
+  baseSalary?: Maybe<Scalars['String']>;
+  deduction?: Maybe<Array<Maybe<SalaryAmountType>>>;
+  earnings?: Maybe<Array<Maybe<SalaryAmountType>>>;
+  employeeId?: Maybe<Scalars['String']>;
+  fromDate?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  paymentMode?: Maybe<PaymentModeSalary>;
+  salaryStructureId?: Maybe<Scalars['String']>;
+};
+
+export type GetSalaryStructureAssignmentWithError = {
+  data?: Maybe<GetSalaryStructureAssignment>;
+  error?: Maybe<MutationError>;
+};
+
 export type GetSalaryStructureSchema = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -8173,12 +8214,76 @@ export type HrEmployeeSeparationEdges = {
 export type HrMutation = {
   employee: HrEmployeeMutation;
   employeelifecycle?: Maybe<HrEmployeeLifecycleMutation>;
+  payroll: HrPayrollMutation;
   recruitment: HrRecruitmentMutation;
+};
+
+export type HrPayrollMutation = {
+  payrollRun: HrPayrollPayrollRunMutation;
+  salaryStructureAssignment: HrPayrollSalaryStructureAssignmentMutation;
+};
+
+export type HrPayrollPayrollRunMutation = {
+  upsertPayrollRun: ReturnPayrollRun;
+};
+
+export type HrPayrollPayrollRunMutationUpsertPayrollRunArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: PayrollRunInput;
+};
+
+export type HrPayrollPayrollRunQuery = {
+  ListSalaryAssignmentWithExtraDetails: ExtraDetailsConnection;
+  getPayrollRun: EachPayrollRunRecords;
+  listPayrollRun: PayrollRunConnection;
+};
+
+export type HrPayrollPayrollRunQueryListSalaryAssignmentWithExtraDetailsArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HrPayrollPayrollRunQueryGetPayrollRunArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrPayrollPayrollRunQueryListPayrollRunArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HrPayrollQuery = {
+  payrollRun: HrPayrollPayrollRunQuery;
+  salaryStructureAssignment: HrPayrollSalaryStructureAssignmentQuery;
+};
+
+export type HrPayrollSalaryStructureAssignmentMutation = {
+  upsertSalStructAssignment: SalStructAssignOutput;
+};
+
+export type HrPayrollSalaryStructureAssignmentMutationUpsertSalStructAssignmentArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: InputSalaryStructureAssignment;
+};
+
+export type HrPayrollSalaryStructureAssignmentQuery = {
+  getSalaryStructureAssignment: GetSalaryStructureAssignmentWithError;
+  listSalaryStructureAssignment: SalaryStructureAssignmentListConnection;
+};
+
+export type HrPayrollSalaryStructureAssignmentQueryGetSalaryStructureAssignmentArgs = {
+  id: Scalars['String'];
+};
+
+export type HrPayrollSalaryStructureAssignmentQueryListSalaryStructureAssignmentArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HrQuery = {
   employee: HrEmployeeQuery;
   employeelifecycle: HrEmployeeLifecycleQuery;
+  payroll: HrPayrollQuery;
   recruitment: HrRecruitmentQuery;
 };
 
@@ -8614,6 +8719,16 @@ export type InputSalaryStructure = {
   salaryDeduction?: InputMaybe<Array<InputMaybe<SalaryStructureDeductionDetails>>>;
   salaryEarnings?: InputMaybe<Array<InputMaybe<SalaryStructureEarningDetails>>>;
   salaryPaymentLedger?: InputMaybe<LedgerPaymentEnum>;
+};
+
+export type InputSalaryStructureAssignment = {
+  baseSalary?: InputMaybe<Scalars['String']>;
+  deduction?: InputMaybe<Array<InputMaybe<SalaryAmount>>>;
+  earnings?: InputMaybe<Array<InputMaybe<SalaryAmount>>>;
+  employeeId?: InputMaybe<Scalars['String']>;
+  fromDate?: InputMaybe<Scalars['Localized']>;
+  paymentMode?: InputMaybe<PaymentModeSalary>;
+  salaryStructureId?: InputMaybe<Scalars['String']>;
 };
 
 export type InsBankAcDetails = {
@@ -16116,12 +16231,59 @@ export const PaymentModeEnum = {
 } as const;
 
 export type PaymentModeEnum = typeof PaymentModeEnum[keyof typeof PaymentModeEnum];
+export const PaymentModeSalary = {
+  Bank: 'BANK',
+  Cash: 'CASH',
+  Cheque: 'CHEQUE',
+} as const;
+
+export type PaymentModeSalary = typeof PaymentModeSalary[keyof typeof PaymentModeSalary];
 export const PayrollFrequencyEnum = {
   Monthly: 'MONTHLY',
   Yearly: 'YEARLY',
 } as const;
 
 export type PayrollFrequencyEnum = typeof PayrollFrequencyEnum[keyof typeof PayrollFrequencyEnum];
+export type PayrollRunConnection = {
+  edges?: Maybe<Array<Maybe<PayrollRuns>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type PayrollRunInput = {
+  payDay?: InputMaybe<Scalars['Localized']>;
+  payrollPeriod?: InputMaybe<LocalizedDateFilter>;
+  salaryAssignments?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+};
+
+export type PayrollRunListed = {
+  employees?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['ID']>;
+  payDate?: Maybe<Scalars['Localized']>;
+  payPeriod?: Maybe<LocalizedDate>;
+  payableCost?: Maybe<Scalars['String']>;
+  status?: Maybe<PayrollStatus>;
+};
+
+export type PayrollRunRecord = {
+  id?: Maybe<Scalars['ID']>;
+  payDay?: Maybe<Scalars['Localized']>;
+  payrollPeriod?: Maybe<LocalizedDate>;
+  salaryAssignments?: Maybe<Array<Maybe<Scalars['ID']>>>;
+};
+
+export type PayrollRuns = {
+  cursor: Scalars['Cursor'];
+  node: PayrollRunListed;
+};
+
+export const PayrollStatus = {
+  Paid: 'PAID',
+  Pending: 'PENDING',
+  Rejected: 'REJECTED',
+} as const;
+
+export type PayrollStatus = typeof PayrollStatus[keyof typeof PayrollStatus];
 export type PearlsConfiguration = {
   denominator: Scalars['String'];
   denominatorVariables: Scalars['Map'];
@@ -16618,9 +16780,9 @@ export type PurchaseReportData = {
 
 export type PurchaseReportFilter = {
   branchIds: Array<Scalars['String']>;
+  filter?: InputMaybe<SalesPurchaseFilter>;
   itemIds?: InputMaybe<Array<Scalars['String']>>;
   period: LocalizedDateFilter;
-  userIds?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type PurchaseReportResult = {
@@ -17260,6 +17422,12 @@ export type ReturnJobOpening = {
   recordId: Scalars['ID'];
 };
 
+export type ReturnPayrollRun = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<PayrollRunRecord>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type ReturnStaffPlan = {
   error?: Maybe<MutationError>;
   record?: Maybe<StaffPlanRecord>;
@@ -17381,6 +17549,21 @@ export type StrTransactionDetailQuery = {
   error?: Maybe<QueryError>;
 };
 
+export type SalStructAssignOutput = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export type SalaryAmount = {
+  amount?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type SalaryAmountType = {
+  amount?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
+};
+
 export type SalaryRange = {
   default: Scalars['String'];
   id: Scalars['ID'];
@@ -17392,6 +17575,29 @@ export type SalaryRangeInput = {
   default: Scalars['String'];
   max: Scalars['String'];
   min: Scalars['String'];
+};
+
+export type SalaryStructureAssignmentListConnection = {
+  edges?: Maybe<Array<Maybe<SalaryStructureAssignmentListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SalaryStructureAssignmentListEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node: SalaryStructureAssignmentNode;
+};
+
+export type SalaryStructureAssignmentNode = {
+  baseSalary?: Maybe<Scalars['String']>;
+  contact?: Maybe<Scalars['String']>;
+  department?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  employeeId?: Maybe<Scalars['String']>;
+  employeeName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  lastUpdated?: Maybe<Scalars['Localized']>;
+  salaryStructure?: Maybe<Scalars['String']>;
 };
 
 export type SalaryStructureDeductionDetails = {
@@ -17635,6 +17841,10 @@ export type SalesCustomerPaymentListEdges = {
   node?: Maybe<SalesCustomerPaymentEntry>;
 };
 
+export type SalesPurchaseFilter = {
+  creatorIds?: InputMaybe<Array<Scalars['String']>>;
+};
+
 export type SalesReportDataList = {
   itemId: Scalars['String'];
   itemName: Scalars['String'];
@@ -17647,7 +17857,7 @@ export type SalesReportDataList = {
 };
 
 export type SalesReportFilter = {
-  creatorIds?: InputMaybe<Array<Scalars['String']>>;
+  filter?: InputMaybe<SalesPurchaseFilter>;
   itemIds?: InputMaybe<Array<Scalars['String']>>;
   period: LocalizedDateFilter;
   warehouseId: Array<Scalars['String']>;
