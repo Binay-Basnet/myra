@@ -135,11 +135,25 @@ export type ClientEnvironment = {
 };
 
 export type ClientEnvironmentMutation = {
+  clone: NewClientEnvironmentResult;
+  cloneFromDev: NewClientEnvironmentResult;
   createDB?: Maybe<DbCreateResult>;
   delete: DeleteClientEnvironmentResult;
+  deleteVersion: DbCreateResult;
+  insertVersion: DbCreateResult;
   new: NewClientEnvironmentResult;
   seedDBWithCSV?: Maybe<EnvSeedResult>;
   updateVersion?: Maybe<ClientEnvironment>;
+};
+
+export type ClientEnvironmentMutationCloneArgs = {
+  clientId: Scalars['ID'];
+  data: CloneClientEnvironmentInput;
+};
+
+export type ClientEnvironmentMutationCloneFromDevArgs = {
+  clientId: Scalars['ID'];
+  data: CloneEnvironmentFromDevInput;
 };
 
 export type ClientEnvironmentMutationCreateDbArgs = {
@@ -149,6 +163,14 @@ export type ClientEnvironmentMutationCreateDbArgs = {
 
 export type ClientEnvironmentMutationDeleteArgs = {
   environmentId: Scalars['String'];
+};
+
+export type ClientEnvironmentMutationDeleteVersionArgs = {
+  version: Scalars['String'];
+};
+
+export type ClientEnvironmentMutationInsertVersionArgs = {
+  data: VersionInput;
 };
 
 export type ClientEnvironmentMutationNewArgs = {
@@ -164,6 +186,22 @@ export type ClientEnvironmentMutationSeedDbWithCsvArgs = {
 export type ClientEnvironmentMutationUpdateVersionArgs = {
   environmentId: Scalars['String'];
   version: Scalars['String'];
+};
+
+export type CloneClientEnvironmentInput = {
+  description?: InputMaybe<Scalars['String']>;
+  destinationEnvironmentName?: InputMaybe<Scalars['String']>;
+  isForProduction?: InputMaybe<Scalars['Boolean']>;
+  otpToken?: InputMaybe<Scalars['String']>;
+  sourceEnvironmentId?: InputMaybe<Scalars['String']>;
+};
+
+export type CloneEnvironmentFromDevInput = {
+  description?: InputMaybe<Scalars['String']>;
+  destinationEnvironmentName?: InputMaybe<Scalars['String']>;
+  isForProduction?: InputMaybe<Scalars['Boolean']>;
+  otpToken?: InputMaybe<Scalars['String']>;
+  sourceEnvironmentName?: InputMaybe<Scalars['String']>;
 };
 
 export const ComparatorType = {
@@ -837,6 +875,11 @@ export type ValidationError = {
   message: Scalars['InvalidData'];
 };
 
+export type VersionInput = {
+  description?: InputMaybe<Scalars['String']>;
+  version: Scalars['String'];
+};
+
 export type LoginMutationVariables = Exact<{
   data: NeosysLoginInput;
 }>;
@@ -941,6 +984,54 @@ export type CreateDbMutation = {
           | MutationError_ServerError_Fragment
           | MutationError_ValidationError_Fragment
           | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type CloneEnvironmentMutationVariables = Exact<{
+  clientId: Scalars['ID'];
+  data: CloneClientEnvironmentInput;
+}>;
+
+export type CloneEnvironmentMutation = {
+  neosys: {
+    client?: {
+      environment?: {
+        clone: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type CloneEnvFromDevMutationVariables = Exact<{
+  clientId: Scalars['ID'];
+  data: CloneEnvironmentFromDevInput;
+}>;
+
+export type CloneEnvFromDevMutation = {
+  neosys: {
+    client?: {
+      environment?: {
+        cloneFromDev: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
       } | null;
     } | null;
   };
@@ -1524,6 +1615,64 @@ export const useCreateDbMutation = <TError = unknown, TContext = unknown>(
   useMutation<CreateDbMutation, TError, CreateDbMutationVariables, TContext>(
     ['createDB'],
     useAxios<CreateDbMutation, CreateDbMutationVariables>(CreateDbDocument),
+    options
+  );
+export const CloneEnvironmentDocument = `
+    mutation cloneEnvironment($clientId: ID!, $data: CloneClientEnvironmentInput!) {
+  neosys {
+    client {
+      environment {
+        clone(clientId: $clientId, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useCloneEnvironmentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CloneEnvironmentMutation,
+    TError,
+    CloneEnvironmentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<CloneEnvironmentMutation, TError, CloneEnvironmentMutationVariables, TContext>(
+    ['cloneEnvironment'],
+    useAxios<CloneEnvironmentMutation, CloneEnvironmentMutationVariables>(CloneEnvironmentDocument),
+    options
+  );
+export const CloneEnvFromDevDocument = `
+    mutation cloneEnvFromDev($clientId: ID!, $data: CloneEnvironmentFromDevInput!) {
+  neosys {
+    client {
+      environment {
+        cloneFromDev(clientId: $clientId, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useCloneEnvFromDevMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CloneEnvFromDevMutation,
+    TError,
+    CloneEnvFromDevMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<CloneEnvFromDevMutation, TError, CloneEnvFromDevMutationVariables, TContext>(
+    ['cloneEnvFromDev'],
+    useAxios<CloneEnvFromDevMutation, CloneEnvFromDevMutationVariables>(CloneEnvFromDevDocument),
     options
   );
 export const SetEnvironementDocument = `
