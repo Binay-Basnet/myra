@@ -22,6 +22,7 @@ import {
   Text,
   toast,
 } from '@myra-ui';
+import { checkDateInFiscalYear } from '@myra-ui/date-picker';
 
 import {
   useGetAllTransactionsDetailQuery,
@@ -31,7 +32,6 @@ import {
 import { AllTransactionDetailPage } from '@coop/cbs/transactions/feature-detail-page';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
 import { ROUTES } from '@coop/cbs/utils';
-import { checkDateInFiscalYear } from '@coop/shared/utils';
 
 const DepositDetailsPage = () => {
   const router = useRouter();

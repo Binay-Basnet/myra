@@ -25,6 +25,36 @@ mutation createDB($saccosID: ID!) {
   }
 }
 
+mutation cloneEnvironment($clientId: ID!, $data: CloneClientEnvironmentInput!) {
+  neosys {
+    client {
+      environment {
+        clone(clientId: $clientId, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation cloneEnvFromDev($clientId: ID!, $data: CloneEnvironmentFromDevInput!) {
+  neosys {
+    client {
+      environment {
+        cloneFromDev(clientId: $clientId, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
 mutation setEnvironement($clientId: ID!, $data: NewClientEnvironmentInput!) {
   neosys {
     client {

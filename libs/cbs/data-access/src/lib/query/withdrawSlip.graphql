@@ -58,6 +58,7 @@ query getWithdrawSlipData($requestID: ID!) {
           id
           accountName
           productName
+          branchName
         }
         noOfLeaves
         availableRange {

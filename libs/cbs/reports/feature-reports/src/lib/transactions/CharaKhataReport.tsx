@@ -464,12 +464,7 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
   // );
 
   return (
-    <Report.Table<TrialSheetReportDataEntry>
-      showFooter
-      data={data}
-      columns={columns}
-      tableTitle={type}
-    />
+    <Report.Table<TrialSheetReportDataEntry> data={data} columns={columns} tableTitle={type} />
   );
 };
 

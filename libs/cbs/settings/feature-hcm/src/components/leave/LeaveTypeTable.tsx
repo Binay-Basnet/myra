@@ -21,7 +21,7 @@ import {
 import {
   LeaveTypeEnum,
   LeaveTypeInput,
-  useDeleteHcmEmployeeGeneralMutation,
+  useDeleteLeaveTypeMutation,
   useGetEmployeeLeaveTypeListQuery,
   useGetLeaveTypeQuery,
   useSetEmployeeLeaveTypeMutation,
@@ -58,7 +58,7 @@ export const LeaveTypeTable = () => {
     pagination: getPaginationQuery(),
   });
   const { mutateAsync, isLoading } = useSetEmployeeLeaveTypeMutation();
-  const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+  const { mutateAsync: deleteMutateAsync } = useDeleteLeaveTypeMutation();
   const { data: leaveData } = useGetLeaveTypeQuery(
     { id: selectedLeaveTypeId },
     { enabled: !!selectedLeaveTypeId }
@@ -135,6 +135,7 @@ export const LeaveTypeTable = () => {
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
     setSelectedLeaveTypeId('');
+    reset(defaultFormValue);
   };
 
   const onSubmit = () => {
@@ -153,6 +154,15 @@ export const LeaveTypeTable = () => {
           id: selectedLeaveTypeId,
           input: getValues(),
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof LeaveTypeInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     } else {
       asyncToast({
@@ -169,6 +179,15 @@ export const LeaveTypeTable = () => {
           id: null,
           input: getValues(),
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof LeaveTypeInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     }
   };

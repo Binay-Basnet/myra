@@ -101,7 +101,9 @@ export const LoanRepayment = () => {
   const memberId = watch('memberId');
   const loanAccountId = watch('loanAccountId');
   const isDisableDenomination = watch('cash.disableDenomination');
-  const amountPaid = watch('amountPaid') as unknown;
+
+  const finePaid = watch('penalty.amount');
+  const amountPaid = Number(watch('amountPaid')) + Number(finePaid);
 
   const cashPaid = watch('cash.cashPaid');
 
@@ -348,14 +350,14 @@ export const LoanRepayment = () => {
                   code: memberDetailData?.code,
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,
-                  maritalStatus: memberDetailData?.maritalStatus,
+                  maritalStatus: memberDetailData?.maritalStatus as string,
                   dateJoined: memberDetailData?.dateJoined,
                   phoneNo: memberDetailData?.contact,
                   email: memberDetailData?.email,
                   address: memberDetailData?.address,
                 }}
-                signaturePath={memberSignatureUrl}
-                citizenshipPath={memberCitizenshipUrl}
+                signaturePath={memberSignatureUrl as string}
+                citizenshipPath={memberCitizenshipUrl as string}
               />
             </Box>
             {loanAccountId && (
@@ -415,7 +417,6 @@ export const LoanRepayment = () => {
                     'Principal Amount': amountConverter(result?.principalAmount ?? '0'),
                     'Interest Amount': amountConverter(result?.interestAmount ?? '0'),
                     'Penalty Amount': amountConverter(result?.penaltyAmount ?? '0'),
-                    'Discount Amount': amountConverter(result?.discountAmount ?? '0'),
                     'Rebate Amount': amountConverter(result?.rebateAmount ?? '0'),
 
                     'Payment Mode': result?.paymentMethod,

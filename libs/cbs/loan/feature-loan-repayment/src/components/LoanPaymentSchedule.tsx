@@ -1,9 +1,10 @@
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { IoCopyOutline } from 'react-icons/io5';
 import { useDeepCompareEffect } from 'react-use';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { Box, Button, Text } from '@myra-ui';
+import { Box, Button, Icon, Text } from '@myra-ui';
 
 import { useGetLoanPreviewQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
@@ -32,7 +33,7 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     onToggle: onFullScheduleToggle,
   } = useDisclosure();
 
-  const { watch } = useFormContext();
+  const { watch, setValue } = useFormContext();
 
   const loanAccountId = watch('loanAccountId');
 
@@ -170,6 +171,15 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     [paymentSchedule]
   );
 
+  const handleFineCopy = () => {
+    setValue('isFinePaid', true);
+    setValue('penalty.amount', totalFine);
+  };
+
+  const handlePayableCopy = () => {
+    setValue('amountPaid', totalOverdueAmount);
+  };
+
   return (
     <>
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -295,21 +305,33 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
                   )} Days`}
                 </Text>
               </Box>
-              <Box display="flex" gap="s4">
+              <Box display="flex" alignItems="center" gap="s4">
                 <Text>Total Fine:</Text>
                 <Text fontWeight={500}>{amountConverter(totalFine)}</Text>
+                <Icon
+                  _hover={{ cursor: 'pointer' }}
+                  size="sm"
+                  as={IoCopyOutline}
+                  onClick={handleFineCopy}
+                />
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Total Remaining Principal:</Text>
-                <Text fontWeight={500}>{amountConverter(totalOverduePrincipal)}</Text>
+                <Text fontWeight={500}>{amountConverter(totalOverduePrincipal || 0)}</Text>
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Total Remaining Interest:</Text>
                 <Text fontWeight={500}>{amountConverter(totalOverdueInterest)}</Text>
               </Box>
-              <Box display="flex" gap="s4">
-                <Text>Total Overdue Amount:</Text>
-                <Text fontWeight={500}>{amountConverter(totalOverdueAmount)}</Text>
+              <Box display="flex" alignItems="center" gap="s4">
+                <Text>Total Amount (Principal + Interest):</Text>
+                <Text fontWeight={500}>{amountConverter(totalOverdueAmount || 0)}</Text>
+                <Icon
+                  _hover={{ cursor: 'pointer' }}
+                  size="sm"
+                  as={IoCopyOutline}
+                  onClick={handlePayableCopy}
+                />
               </Box>
             </Box>
           </>

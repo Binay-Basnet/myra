@@ -33,10 +33,12 @@ type InventoryRegisterFilter = {
     label: string;
     value: string;
   }[];
-  creatorIds: {
-    label: string;
-    value: string;
-  }[];
+  filter: {
+    creatorIds: {
+      label: string;
+      value: string;
+    }[];
+  };
 };
 
 export const InventoryItemSalesReport = () => {
@@ -58,8 +60,8 @@ export const InventoryItemSalesReport = () => {
       : null;
 
   const creatorsIds =
-    filters?.creatorIds && filters?.creatorIds?.length !== 0
-      ? filters?.creatorIds?.map((t) => t.value)
+    filters?.filter?.creatorIds && filters?.filter?.creatorIds?.length !== 0
+      ? filters?.filter?.creatorIds?.map((t) => t.value)
       : null;
 
   const { data, isFetching } = useGetInventorySalesReportQuery(
@@ -72,8 +74,10 @@ export const InventoryItemSalesReport = () => {
         // branchId: warehouseIds,
         warehouseId: warehouseIds,
 
-        creatorIds: creatorsIds,
         itemIds: itemsIds,
+        filter: {
+          creatorIds: creatorsIds,
+        },
       } as SalesReportFilter,
     },
     { enabled: !!filters }
@@ -208,7 +212,7 @@ export const InventoryItemSalesReport = () => {
                 label: user.node?.name as string,
                 value: user.node?.id as string,
               }))}
-              name="creatorIds"
+              name="filter.creatorIds"
             />
           </Report.Filter>
         </Report.Filters>

@@ -1,10 +1,10 @@
 import { Box, Divider, Text } from '@myra-ui';
 
-import DepartmentsTable from '../components/DepartmentsTable';
-import DesignationsTable from '../components/DesignationsTable';
-import EmployeeHealthInsuranceTable from '../components/EmployeeHealthInsuranceTable';
-import EmployeeLevelTable from '../components/EmployeeLevelTable';
-import EmployeeTypeTable from '../components/EmployeeTypeTable';
+import DepartmentsTable from '../components/employee/DepartmentsTable';
+import DesignationsTable from '../components/employee/DesignationsTable';
+import EmployeeHealthInsuranceTable from '../components/employee/EmployeeHealthInsuranceTable';
+import EmployeeLevelTable from '../components/employee/EmployeeLevelTable';
+import EmployeeTypeTable from '../components/employee/EmployeeTypeTable';
 
 export const CbsSettingsFeatureHcm = () => (
   <Box p="s16" display="flex" flexDir="column" gap="s16">

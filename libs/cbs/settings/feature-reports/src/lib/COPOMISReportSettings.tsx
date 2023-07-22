@@ -37,7 +37,7 @@ export const COPOMISReportSettings = ({ indicator }: ReportSettingsProps) => {
     if (copomisGroup?.expression && copomisGroup?.values) {
       setFormula({
         expression: copomisGroup?.expression,
-        variables: copomisGroup?.values,
+        variables: copomisGroup?.values as Record<string, string>,
       });
     }
   }, [isFetching, indicator]);
@@ -114,7 +114,7 @@ export const COPOMISReportSettings = ({ indicator }: ReportSettingsProps) => {
           if (copomisGroup?.expression && copomisGroup?.values) {
             setFormula({
               expression: copomisGroup?.expression,
-              variables: copomisGroup?.values,
+              variables: copomisGroup?.values as Record<string, string>,
             });
           }
         }}
