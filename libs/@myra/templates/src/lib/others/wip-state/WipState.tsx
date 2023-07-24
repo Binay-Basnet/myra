@@ -1,8 +1,8 @@
-import Image from 'next/legacy/image';
-
 import { Box, Text } from '@myra-ui/foundations';
 
 import { useTranslation } from '@coop/shared/utils';
+
+import { WipSVG } from './WipSVG';
 
 export const WIPState = () => {
   const { t } = useTranslation();
@@ -15,7 +15,7 @@ export const WIPState = () => {
       alignItems="center"
       gap="s16"
     >
-      <Image height={100} width={100} src="/workInProgress.svg" alt="cetral chakra" />
+      <WipSVG />
       <Text color="neutralColorLight.Gray-70" fontWeight="500" fontSize="m1">
         {t['workinProgress']}
       </Text>

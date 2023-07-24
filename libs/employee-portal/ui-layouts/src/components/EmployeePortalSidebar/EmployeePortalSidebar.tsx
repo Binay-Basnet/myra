@@ -1,3 +1,4 @@
+import React from 'react';
 import { BsFolder } from 'react-icons/bs';
 import { LuCalendarCheck, LuCalendarX, LuCommand, LuDollarSign, LuMedal } from 'react-icons/lu';
 import Link from 'next/link';
@@ -62,7 +63,9 @@ export const EmployeePortalSidebar = () => {
       flexDir="column"
     >
       {SIDEBAR_ITEMS?.map((item) => (
-        <EmployeePortalSidebarItem {...item} isSelected={router.asPath === item.link} />
+        <React.Fragment key={item.title}>
+          <EmployeePortalSidebarItem {...item} isSelected={router.asPath === item.link} />
+        </React.Fragment>
       ))}
     </Box>
   );
