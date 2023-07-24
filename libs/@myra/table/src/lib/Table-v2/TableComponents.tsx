@@ -34,10 +34,6 @@ export const TableContainer = <T,>({ children, variant, data }: TableContainerPr
             border: '1px',
             borderColor: 'border.layout',
             borderRadius: 'br2',
-            scrollbarWidth: 'none',
-            '&::-webkit-scrollbar': {
-              display: 'none',
-            },
             '@media print': {
               w: '100%',
               h: '100%',
