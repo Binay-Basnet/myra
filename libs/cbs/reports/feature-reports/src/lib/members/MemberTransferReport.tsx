@@ -15,7 +15,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { RouteToDetailsPage } from '@coop/cbs/utils';
+import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter, debitCreditConverter } from '@coop/shared/utils';
 
@@ -169,6 +169,11 @@ export const MemberTransferReport = () => {
                     header: 'To Service Center',
                     accessorKey: 'toBranch',
                     cell: (props) => props.row?.original?.toBranch?.name ?? '-',
+                  },
+                  {
+                    header: 'Transferred Date',
+                    accessorKey: 'transferredDate',
+                    cell: (props) => localizedDate(props?.row?.original?.transferredDate),
                   },
                 ],
               },
