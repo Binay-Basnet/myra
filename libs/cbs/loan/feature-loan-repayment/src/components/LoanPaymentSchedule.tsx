@@ -173,11 +173,11 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
 
   const handleFineCopy = () => {
     setValue('isFinePaid', true);
-    setValue('penalty.amount', totalFine);
+    setValue('penalty.amount', totalFine.toFixed(2));
   };
 
-  const handlePayableCopy = () => {
-    setValue('amountPaid', totalOverdueAmount);
+  const handlePayableCopy = (amount: number) => {
+    setValue('amountPaid', amount.toFixed(2));
   };
 
   return (
@@ -241,11 +241,19 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
                 <Text>Last Paid Date:</Text>
                 <Text fontWeight={500}>{localizedDate(partialPaidInstallment?.paidDate)}</Text>
               </Box>
-              <Box display="flex" gap="s4">
+              <Box display="flex" alignItems="center" gap="s4">
                 <Text>Fine:</Text>
                 <Text fontWeight={500} color="danger.500">
                   {amountConverter(partialPaidInstallment?.penalty ?? 0)}
                 </Text>
+                {!overDueInstallments?.length && (
+                  <Icon
+                    _hover={{ cursor: 'pointer' }}
+                    size="sm"
+                    as={IoCopyOutline}
+                    onClick={handleFineCopy}
+                  />
+                )}
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Remaining Principal:</Text>
@@ -259,14 +267,27 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
                   {amountConverter(partialPaidInstallment?.remainingInterest ?? 0)}
                 </Text>
               </Box>
-              <Box display="flex" gap="s4">
-                <Text>Remaining Payable:</Text>
+              <Box display="flex" alignItems="center" gap="s4">
+                <Text>Remaining Payable (Principal + Interest):</Text>
                 <Text fontWeight={500} color="danger.500">
                   {amountConverter(
                     Number(partialPaidInstallment?.remainingInterest ?? 0) +
                       Number(partialPaidInstallment?.currentRemainingPrincipal ?? 0)
                   )}
                 </Text>
+                {!overDueInstallments?.length && (
+                  <Icon
+                    _hover={{ cursor: 'pointer' }}
+                    size="sm"
+                    as={IoCopyOutline}
+                    onClick={() =>
+                      handlePayableCopy(
+                        Number(partialPaidInstallment?.remainingInterest ?? 0) +
+                          Number(partialPaidInstallment?.currentRemainingPrincipal ?? 0)
+                      )
+                    }
+                  />
+                )}
               </Box>
             </Box>
           </>
@@ -330,7 +351,7 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
                   _hover={{ cursor: 'pointer' }}
                   size="sm"
                   as={IoCopyOutline}
-                  onClick={handlePayableCopy}
+                  onClick={() => handlePayableCopy(Number(totalOverdueAmount || 0))}
                 />
               </Box>
             </Box>

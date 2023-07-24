@@ -103,7 +103,7 @@ export const LoanRepayment = () => {
   const isDisableDenomination = watch('cash.disableDenomination');
 
   const finePaid = watch('penalty.amount');
-  const amountPaid = Number(watch('amountPaid')) + Number(finePaid);
+  const amountPaid = Number(watch('amountPaid') || 0) + Number(finePaid || 0);
 
   const cashPaid = watch('cash.cashPaid');
 
