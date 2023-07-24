@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Button, Column, ExpandedCell, ExpandedHeader, GridItem, MultiFooter } from '@myra-ui';
+import { Box, Button, Column, ExpandedCell, ExpandedHeader, GridItem, MultiFooter } from '@myra-ui';
 
 import {
   LocalizedDateFilter,
@@ -365,13 +365,108 @@ export const COATable = ({ data, type, total }: ICOATableProps) => {
   );
 
   return (
-    <Report.Table<TrialSheetReportDataEntry>
-      showFooter={!!total.length}
-      data={tree}
-      columns={columns}
-      tableTitle={type}
-    />
+    <>
+      <Report.Table<TrialSheetReportDataEntry> data={tree} columns={columns} tableTitle={type} />
+      <CoaTotalTable total={total} />
+    </>
   );
+};
+
+interface ICoaTotalTableProps {
+  total: { label: string; value: TrialBalance }[];
+}
+
+export const CoaTotalTable = ({ total }: ICoaTotalTableProps) => {
+  const { getValues } = useFormContext<TrialSheetReportFilters>();
+  const branchIDs = getValues()?.branchId?.map((a) => a.value);
+
+  const { data: branchListQueryData } = useGetBranchListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+
+  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
+  const headers =
+    branchIDs?.length === branchList?.length
+      ? ['Total']
+      : [
+          ...((branchList
+            ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
+            ?.map((a) => a.node?.id) || []) as string[]),
+          branchIDs.length === 1 ? undefined : 'Total',
+        ]?.filter(Boolean);
+
+  const particularData: Record<string, string>[] = total?.map((t) => ({
+    particular: t.label,
+  }));
+
+  const data = particularData?.map((d, index) => ({
+    ...d,
+    ...total[index].value,
+  })) as unknown as TrialBalance[];
+
+  const baseColumn: Column<typeof data[0]>[] = [
+    {
+      header: 'Particulars',
+      accessorKey: 'particular',
+      cell: (props) => <Box fontWeight="600">{props.getValue() as string}</Box>,
+      meta: {
+        width: '80%',
+      },
+    },
+  ];
+
+  const columns: Column<typeof data[0]>[] = [
+    ...baseColumn,
+    ...headers.map(
+      (header) =>
+        ({
+          header: branchList?.find((b) => b?.node?.id === header)?.node?.name || 'Total',
+          columns: [
+            {
+              header: 'Debit (Dr.)',
+              accessorFn: (row) => row?.[header || '']?.Dr,
+              cell: (props) =>
+                header ? amountConverter(props?.row?.original?.[header]?.Dr || '0.00') : '0.00',
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: 'Credit (Cr.)',
+              accessorFn: (row) => row?.[header || '']?.Cr,
+              cell: (props) =>
+                header ? amountConverter(props?.row?.original?.[header]?.Cr || '0.00') : '0.00',
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: 'Balance',
+              accessorFn: (row) => row?.[header || '']?.Total,
+
+              cell: (props) =>
+                header ? amountConverter(props.row.original?.[header]?.Total || '0.00') : '0.00',
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: '',
+              id: 'cr',
+              accessorFn: (row) => (header ? row?.[header]?.Type || '-' : '-'),
+              meta: {
+                width: '10px',
+              },
+            },
+          ],
+        } as Column<typeof data[0]>)
+    ),
+  ];
+
+  return <Report.Table data={data} columns={columns} tableTitle="Total" />;
 };
 
 export const sortCoa = (data: TrialSheetReportDataEntry[]) =>
