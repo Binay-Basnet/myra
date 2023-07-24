@@ -21,7 +21,7 @@ import {
 import {
   LeaveTypeEnum,
   LeaveTypeInput,
-  useDeleteHcmEmployeeGeneralMutation,
+  useDeleteLeaveTypeMutation,
   useGetEmployeeLeaveTypeListQuery,
   useGetLeaveTypeQuery,
   useSetEmployeeLeaveTypeMutation,
@@ -58,7 +58,7 @@ export const LeaveTypeTable = () => {
     pagination: getPaginationQuery(),
   });
   const { mutateAsync, isLoading } = useSetEmployeeLeaveTypeMutation();
-  const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+  const { mutateAsync: deleteMutateAsync } = useDeleteLeaveTypeMutation();
   const { data: leaveData } = useGetLeaveTypeQuery(
     { id: selectedLeaveTypeId },
     { enabled: !!selectedLeaveTypeId }
@@ -135,6 +135,7 @@ export const LeaveTypeTable = () => {
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
     setSelectedLeaveTypeId('');
+    reset(defaultFormValue);
   };
 
   const onSubmit = () => {

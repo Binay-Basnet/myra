@@ -22,7 +22,7 @@ export type Scalars = {
   Email: any;
   InvalidData: Record<string, Array<string>>;
   Localized: Record<'local' | 'en' | 'np', string>;
-  Map: Record<string, string>;
+  Map: Record<string, unknown>;
   Time: string;
 };
 
@@ -21950,7 +21950,7 @@ export type SwitchRoleMutation = {
         me?: {
           branches?: Array<{ id: string; name: string } | null> | null;
           rolesList?: Array<{ id: string; name: string } | null> | null;
-          permission?: { myPermission?: Record<string, string> | null } | null;
+          permission?: { myPermission?: Record<string, unknown> | null } | null;
           preference?: {
             language?: Language | null;
             languageCode?: string | null;
@@ -22299,6 +22299,30 @@ export type SetEmployeeExitUpsertMutation = {
         };
       };
     } | null;
+  };
+};
+
+export type SetSalaryStructureAssignmentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: InputSalaryStructureAssignment;
+}>;
+
+export type SetSalaryStructureAssignmentMutation = {
+  hr: {
+    payroll: {
+      salaryStructureAssignment: {
+        upsertSalStructAssignment: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
   };
 };
 
@@ -24344,6 +24368,60 @@ export type SetEmployeeLeavePolicyMutation = {
           leavePolicy: {
             upsertLeavePolicy: {
               recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type DeleteLeaveTypeMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type DeleteLeaveTypeMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leave: {
+            deleteLeaveType: {
+              responseStatus: boolean;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type DeleteLeavePolicyMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type DeleteLeavePolicyMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leavePolicy: {
+            deleteLeavePolicy: {
+              responseStatus: boolean;
               error?:
                 | MutationError_AuthorizationError_Fragment
                 | MutationError_BadRequestError_Fragment
@@ -28152,7 +28230,7 @@ export type GetMeQuery = {
       data?: {
         branches?: Array<{ id: string; name: string } | null> | null;
         rolesList?: Array<{ id: string; name: string } | null> | null;
-        permission?: { myPermission?: Record<string, string> | null } | null;
+        permission?: { myPermission?: Record<string, unknown> | null } | null;
         preference?: {
           language?: Language | null;
           languageCode?: string | null;
@@ -29067,6 +29145,68 @@ export type GetHrLifecycleEmployeeViewQuery = {
   };
 };
 
+export type GetSalaryStructureAssignmentListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetSalaryStructureAssignmentListQuery = {
+  hr: {
+    payroll: {
+      salaryStructureAssignment: {
+        listSalaryStructureAssignment: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node: {
+              id?: string | null;
+              employeeId?: string | null;
+              employeeName?: string | null;
+              department?: string | null;
+              contact?: string | null;
+              salaryStructure?: string | null;
+              email?: string | null;
+              baseSalary?: string | null;
+              lastUpdated?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetSalaryStructureAssignmentQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetSalaryStructureAssignmentQuery = {
+  hr: {
+    payroll: {
+      salaryStructureAssignment: {
+        getSalaryStructureAssignment: {
+          data?: {
+            employeeId?: string | null;
+            salaryStructureId?: string | null;
+            baseSalary?: string | null;
+            fromDate?: Record<'local' | 'en' | 'np', string> | null;
+            paymentMode?: PaymentModeSalary | null;
+            earnings?: Array<{ id?: string | null; amount?: number | null } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetStaffPlanningListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -29793,7 +29933,7 @@ export type GetInventoryItemsListQuery = {
             sellingPrice: string;
             itemQuantity: string;
             taxId?: string | null;
-            itemsInWarehouses?: Record<string, string> | null;
+            itemsInWarehouses?: Record<string, unknown> | null;
             taxValue?: number | null;
           } | null;
         } | null> | null;
@@ -33056,10 +33196,10 @@ export type GetServiceCenterCoaBalanceReportQuery = {
     branchReport: {
       serviceCenterCOAWiseBalanceReport: {
         data?: {
-          total?: Record<string, string> | null;
+          total?: Record<string, unknown> | null;
           entries?: Array<{
             ServiceCenterName?: string | null;
-            balanceMap?: Record<string, string> | null;
+            balanceMap?: Record<string, unknown> | null;
             serviceCenterId?: string | null;
             serviceCenterCode?: string | null;
           } | null> | null;
@@ -34572,7 +34712,7 @@ export type GetKymStatusReportQuery = {
   report: {
     memberReport: {
       kymStatusReport?: {
-        Summary?: Record<string, string> | null;
+        Summary?: Record<string, unknown> | null;
         data?: Array<{
           memberName?: string | null;
           memberId?: string | null;
@@ -35427,47 +35567,47 @@ export type GetTrialSheetReportQuery = {
       financial: {
         trialSheetReport: {
           data?: {
-            equityAndLiablitiesTotal?: Record<string, string> | null;
-            assetsTotal?: Record<string, string> | null;
-            expenseTotal?: Record<string, string> | null;
-            incomeTotal?: Record<string, string> | null;
-            offBalanceTotal?: Record<string, string> | null;
-            orphanTotal?: Record<string, string> | null;
-            totalAssetExpense?: Record<string, string> | null;
-            totalLiablitiesIncome?: Record<string, string> | null;
-            totalProfitLoss?: Record<string, string> | null;
+            equityAndLiablitiesTotal?: Record<string, unknown> | null;
+            assetsTotal?: Record<string, unknown> | null;
+            expenseTotal?: Record<string, unknown> | null;
+            incomeTotal?: Record<string, unknown> | null;
+            offBalanceTotal?: Record<string, unknown> | null;
+            orphanTotal?: Record<string, unknown> | null;
+            totalAssetExpense?: Record<string, unknown> | null;
+            totalLiablitiesIncome?: Record<string, unknown> | null;
+            totalProfitLoss?: Record<string, unknown> | null;
             equityAndLiablities?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             expenses?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             income?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             assets?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             offBalance?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             orphanEntries?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
@@ -35736,49 +35876,49 @@ export type GetCharKhataReportQuery = {
       financial: {
         charKhataReport: {
           data?: {
-            equityAndLiablitiesTotal?: Record<string, string> | null;
-            assetsTotal?: Record<string, string> | null;
-            expenseTotal?: Record<string, string> | null;
-            incomeTotal?: Record<string, string> | null;
-            offBalanceTotal?: Record<string, string> | null;
-            orphanTotal?: Record<string, string> | null;
-            totalProfitLoss?: Record<string, string> | null;
-            totalAssetExpense?: Record<string, string> | null;
-            totalLiablitiesIncome?: Record<string, string> | null;
+            equityAndLiablitiesTotal?: Record<string, unknown> | null;
+            assetsTotal?: Record<string, unknown> | null;
+            expenseTotal?: Record<string, unknown> | null;
+            incomeTotal?: Record<string, unknown> | null;
+            offBalanceTotal?: Record<string, unknown> | null;
+            orphanTotal?: Record<string, unknown> | null;
+            totalProfitLoss?: Record<string, unknown> | null;
+            totalAssetExpense?: Record<string, unknown> | null;
+            totalLiablitiesIncome?: Record<string, unknown> | null;
             equityAndLiablities?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               under?: string | null;
             } | null> | null;
             assets?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               under?: string | null;
             } | null> | null;
             expenses?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               under?: string | null;
             } | null> | null;
             income?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               under?: string | null;
             } | null> | null;
             offBalance?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               under?: string | null;
             } | null> | null;
             orphanEntries?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               under?: string | null;
             } | null> | null;
           } | null;
@@ -35859,47 +35999,47 @@ export type GetFiscalYearTrialBalanceQuery = {
       financial: {
         fiscalTrialSheetReport: {
           data?: {
-            equityAndLiablitiesTotal?: Record<string, string> | null;
-            assetsTotal?: Record<string, string> | null;
-            expenseTotal?: Record<string, string> | null;
-            incomeTotal?: Record<string, string> | null;
-            offBalanceTotal?: Record<string, string> | null;
-            orphanTotal?: Record<string, string> | null;
-            totalAssetExpense?: Record<string, string> | null;
-            totalLiablitiesIncome?: Record<string, string> | null;
-            totalProfitLoss?: Record<string, string> | null;
+            equityAndLiablitiesTotal?: Record<string, unknown> | null;
+            assetsTotal?: Record<string, unknown> | null;
+            expenseTotal?: Record<string, unknown> | null;
+            incomeTotal?: Record<string, unknown> | null;
+            offBalanceTotal?: Record<string, unknown> | null;
+            orphanTotal?: Record<string, unknown> | null;
+            totalAssetExpense?: Record<string, unknown> | null;
+            totalLiablitiesIncome?: Record<string, unknown> | null;
+            totalProfitLoss?: Record<string, unknown> | null;
             equityAndLiablities?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             expenses?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             income?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             assets?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             offBalance?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             orphanEntries?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
@@ -37068,6 +37208,136 @@ export type GetLeavePolicyQuery = {
                   annualAllocation?: number | null;
                 } | null> | null;
               } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEmployeeLevelQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetEmployeeLevelQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getEmployeeLevel: {
+              record?: { name: string; description: string } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDepartmentQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetDepartmentQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getDepartment: {
+              record?: { name: string; description: string } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDesignationQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetDesignationQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getDesignation: {
+              record?: { name: string; description: string } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEmployeeTypeQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetEmployeeTypeQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getEmployeeType: {
+              record?: { name: string; description: string } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetHealthInsuranceQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetHealthInsuranceQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getHealthInsurance: {
+              record?: { healthInsuranceProvider: string; healthInsuranceNumber: string } | null;
               error?:
                 | MutationError_AuthorizationError_Fragment
                 | MutationError_BadRequestError_Fragment
@@ -38407,9 +38677,9 @@ export type GetPearlsReportsFormulaQuery = {
             header: string;
             description: string;
             numerator: string;
-            numeratorVariables: Record<string, string>;
+            numeratorVariables: Record<string, unknown>;
             denominator: string;
-            denominatorVariables: Record<string, string>;
+            denominatorVariables: Record<string, unknown>;
             goal: string;
             indicatorId: string;
           } | null> | null;
@@ -38430,7 +38700,7 @@ export type GetCopomisReportSettingsQuery = {
             expression: string;
             id: string;
             indicatorName: string;
-            values: Record<string, string>;
+            values: Record<string, unknown>;
           } | null> | null;
         } | null;
       } | null;
@@ -40447,7 +40717,7 @@ export type EodHistoryDetailsQuery = {
           success: boolean;
           accountNumber: string;
           narration: string;
-          payload?: Record<string, string> | null;
+          payload?: Record<string, unknown> | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -40949,7 +41219,12 @@ export type GetWithdrawSlipDataQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
         } | null;
-        account?: { id: string; accountName?: string | null; productName?: string | null } | null;
+        account?: {
+          id: string;
+          accountName?: string | null;
+          productName?: string | null;
+          branchName?: string | null;
+        } | null;
         availableRange?: { from: string; to: string } | null;
       } | null;
     } | null;
@@ -42903,6 +43178,42 @@ export const useSetEmployeeExitUpsertMutation = <TError = unknown, TContext = un
     ['setEmployeeExitUpsert'],
     useAxios<SetEmployeeExitUpsertMutation, SetEmployeeExitUpsertMutationVariables>(
       SetEmployeeExitUpsertDocument
+    ),
+    options
+  );
+export const SetSalaryStructureAssignmentDocument = `
+    mutation setSalaryStructureAssignment($id: String, $input: InputSalaryStructureAssignment!) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        upsertSalStructAssignment(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSalaryStructureAssignmentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalaryStructureAssignmentMutation,
+    TError,
+    SetSalaryStructureAssignmentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSalaryStructureAssignmentMutation,
+    TError,
+    SetSalaryStructureAssignmentMutationVariables,
+    TContext
+  >(
+    ['setSalaryStructureAssignment'],
+    useAxios<SetSalaryStructureAssignmentMutation, SetSalaryStructureAssignmentMutationVariables>(
+      SetSalaryStructureAssignmentDocument
     ),
     options
   );
@@ -45902,6 +46213,74 @@ export const useSetEmployeeLeavePolicyMutation = <TError = unknown, TContext = u
     ['setEmployeeLeavePolicy'],
     useAxios<SetEmployeeLeavePolicyMutation, SetEmployeeLeavePolicyMutationVariables>(
       SetEmployeeLeavePolicyDocument
+    ),
+    options
+  );
+export const DeleteLeaveTypeDocument = `
+    mutation deleteLeaveType($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leave {
+            deleteLeaveType(id: $id) {
+              responseStatus
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteLeaveTypeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteLeaveTypeMutation,
+    TError,
+    DeleteLeaveTypeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteLeaveTypeMutation, TError, DeleteLeaveTypeMutationVariables, TContext>(
+    ['deleteLeaveType'],
+    useAxios<DeleteLeaveTypeMutation, DeleteLeaveTypeMutationVariables>(DeleteLeaveTypeDocument),
+    options
+  );
+export const DeleteLeavePolicyDocument = `
+    mutation deleteLeavePolicy($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leavePolicy {
+            deleteLeavePolicy(id: $id) {
+              responseStatus
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteLeavePolicyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteLeavePolicyMutation,
+    TError,
+    DeleteLeavePolicyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteLeavePolicyMutation, TError, DeleteLeavePolicyMutationVariables, TContext>(
+    ['deleteLeavePolicy'],
+    useAxios<DeleteLeavePolicyMutation, DeleteLeavePolicyMutationVariables>(
+      DeleteLeavePolicyDocument
     ),
     options
   );
@@ -52296,6 +52675,92 @@ export const useGetHrLifecycleEmployeeViewQuery = <
     ['getHrLifecycleEmployeeView', variables],
     useAxios<GetHrLifecycleEmployeeViewQuery, GetHrLifecycleEmployeeViewQueryVariables>(
       GetHrLifecycleEmployeeViewDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalaryStructureAssignmentListDocument = `
+    query getSalaryStructureAssignmentList($filter: Filter, $pagination: Pagination) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        listSalaryStructureAssignment(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              employeeId
+              employeeName
+              department
+              contact
+              salaryStructure
+              email
+              baseSalary
+              lastUpdated
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSalaryStructureAssignmentListQuery = <
+  TData = GetSalaryStructureAssignmentListQuery,
+  TError = unknown
+>(
+  variables?: GetSalaryStructureAssignmentListQueryVariables,
+  options?: UseQueryOptions<GetSalaryStructureAssignmentListQuery, TError, TData>
+) =>
+  useQuery<GetSalaryStructureAssignmentListQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalaryStructureAssignmentList']
+      : ['getSalaryStructureAssignmentList', variables],
+    useAxios<GetSalaryStructureAssignmentListQuery, GetSalaryStructureAssignmentListQueryVariables>(
+      GetSalaryStructureAssignmentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalaryStructureAssignmentDocument = `
+    query getSalaryStructureAssignment($id: String!) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        getSalaryStructureAssignment(id: $id) {
+          data {
+            employeeId
+            salaryStructureId
+            baseSalary
+            fromDate
+            paymentMode
+            earnings {
+              id
+              amount
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetSalaryStructureAssignmentQuery = <
+  TData = GetSalaryStructureAssignmentQuery,
+  TError = unknown
+>(
+  variables: GetSalaryStructureAssignmentQueryVariables,
+  options?: UseQueryOptions<GetSalaryStructureAssignmentQuery, TError, TData>
+) =>
+  useQuery<GetSalaryStructureAssignmentQuery, TError, TData>(
+    ['getSalaryStructureAssignment', variables],
+    useAxios<GetSalaryStructureAssignmentQuery, GetSalaryStructureAssignmentQueryVariables>(
+      GetSalaryStructureAssignmentDocument
     ).bind(null, variables),
     options
   );
@@ -62795,6 +63260,180 @@ export const useGetLeavePolicyQuery = <TData = GetLeavePolicyQuery, TError = unk
     ),
     options
   );
+export const GetEmployeeLevelDocument = `
+    query getEmployeeLevel($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getEmployeeLevel(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEmployeeLevelQuery = <TData = GetEmployeeLevelQuery, TError = unknown>(
+  variables: GetEmployeeLevelQueryVariables,
+  options?: UseQueryOptions<GetEmployeeLevelQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeLevelQuery, TError, TData>(
+    ['getEmployeeLevel', variables],
+    useAxios<GetEmployeeLevelQuery, GetEmployeeLevelQueryVariables>(GetEmployeeLevelDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetDepartmentDocument = `
+    query getDepartment($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getDepartment(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetDepartmentQuery = <TData = GetDepartmentQuery, TError = unknown>(
+  variables: GetDepartmentQueryVariables,
+  options?: UseQueryOptions<GetDepartmentQuery, TError, TData>
+) =>
+  useQuery<GetDepartmentQuery, TError, TData>(
+    ['getDepartment', variables],
+    useAxios<GetDepartmentQuery, GetDepartmentQueryVariables>(GetDepartmentDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetDesignationDocument = `
+    query getDesignation($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getDesignation(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetDesignationQuery = <TData = GetDesignationQuery, TError = unknown>(
+  variables: GetDesignationQueryVariables,
+  options?: UseQueryOptions<GetDesignationQuery, TError, TData>
+) =>
+  useQuery<GetDesignationQuery, TError, TData>(
+    ['getDesignation', variables],
+    useAxios<GetDesignationQuery, GetDesignationQueryVariables>(GetDesignationDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetEmployeeTypeDocument = `
+    query getEmployeeType($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getEmployeeType(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEmployeeTypeQuery = <TData = GetEmployeeTypeQuery, TError = unknown>(
+  variables: GetEmployeeTypeQueryVariables,
+  options?: UseQueryOptions<GetEmployeeTypeQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeTypeQuery, TError, TData>(
+    ['getEmployeeType', variables],
+    useAxios<GetEmployeeTypeQuery, GetEmployeeTypeQueryVariables>(GetEmployeeTypeDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetHealthInsuranceDocument = `
+    query getHealthInsurance($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getHealthInsurance(id: $id) {
+              record {
+                healthInsuranceProvider
+                healthInsuranceNumber
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetHealthInsuranceQuery = <TData = GetHealthInsuranceQuery, TError = unknown>(
+  variables: GetHealthInsuranceQueryVariables,
+  options?: UseQueryOptions<GetHealthInsuranceQuery, TError, TData>
+) =>
+  useQuery<GetHealthInsuranceQuery, TError, TData>(
+    ['getHealthInsurance', variables],
+    useAxios<GetHealthInsuranceQuery, GetHealthInsuranceQueryVariables>(
+      GetHealthInsuranceDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetEarningComponentDocument = `
     query getEarningComponent($id: ID!) {
   settings {
@@ -68111,6 +68750,7 @@ export const GetWithdrawSlipDataDocument = `
           id
           accountName
           productName
+          branchName
         }
         noOfLeaves
         availableRange {

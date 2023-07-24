@@ -40,7 +40,7 @@ export const MaturityCheck = () => {
       },
       {
         header: 'Account Balance',
-        accessorFn: (row) => amountConverter(row?.payload?.account_balance ?? 0),
+        accessorFn: (row) => amountConverter((row?.payload?.account_balance ?? 0) as number),
         meta: {
           isNumeric: true,
         },

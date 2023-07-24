@@ -91,7 +91,7 @@ export const useInit = () => {
         dispatch(
           authenticate({
             user: userData,
-            permissions,
+            permissions: permissions as Record<string, string>,
             preference,
             availableRoles: availableRoles as RoleInfo[],
             availableBranches: availableBranches as RoleInfo[],

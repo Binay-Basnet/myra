@@ -1,0 +1,14 @@
+mutation setSalaryStructureAssignment($id: String, $input: InputSalaryStructureAssignment!) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        upsertSalStructAssignment(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

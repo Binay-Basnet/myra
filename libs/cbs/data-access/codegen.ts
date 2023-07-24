@@ -39,7 +39,7 @@ const config: CodegenConfig = {
           Any: 'unknown',
           Cursor: 'string',
           InvalidData: 'Record<string, Array<string>>',
-          Map: 'Record<string, string>',
+          Map: 'Record<string, unknown>',
           Date: 'string',
           Localized: 'Record<"local"|"en"|"np",string>',
         },

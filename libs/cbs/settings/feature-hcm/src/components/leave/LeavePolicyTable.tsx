@@ -19,7 +19,7 @@ import {
 
 import {
   LeavePolicyInput,
-  useDeleteHcmEmployeeGeneralMutation,
+  useDeleteLeavePolicyMutation,
   useGetEmployeeLeavePolicyListQuery,
   useGetEmployeeLeaveTypeListQuery,
   useGetEmployeeLevelListQuery,
@@ -63,7 +63,7 @@ export const LeavePolicyTable = () => {
     pagination: getPaginationQuery(),
   });
   const { mutateAsync, isLoading } = useSetEmployeeLeavePolicyMutation();
-  const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+  const { mutateAsync: deleteMutateAsync } = useDeleteLeavePolicyMutation();
   const { data: leavePolicyData } = useGetLeavePolicyQuery(
     { id: selectedLeavePolicyId },
     { enabled: !!selectedLeavePolicyId }
@@ -177,6 +177,7 @@ export const LeavePolicyTable = () => {
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
     setSelectedLeavePolicyId('');
+    reset(defaultFormValue);
   };
 
   const onSubmit = () => {
