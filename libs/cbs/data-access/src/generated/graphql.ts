@@ -22,7 +22,7 @@ export type Scalars = {
   Email: any;
   InvalidData: Record<string, Array<string>>;
   Localized: Record<'local' | 'en' | 'np', string>;
-  Map: Record<string, unknown>;
+  Map: Record<string, string>;
   Time: string;
 };
 
@@ -21950,7 +21950,7 @@ export type SwitchRoleMutation = {
         me?: {
           branches?: Array<{ id: string; name: string } | null> | null;
           rolesList?: Array<{ id: string; name: string } | null> | null;
-          permission?: { myPermission?: Record<string, unknown> | null } | null;
+          permission?: { myPermission?: Record<string, string> | null } | null;
           preference?: {
             language?: Language | null;
             languageCode?: string | null;
@@ -28256,7 +28256,7 @@ export type GetMeQuery = {
       data?: {
         branches?: Array<{ id: string; name: string } | null> | null;
         rolesList?: Array<{ id: string; name: string } | null> | null;
-        permission?: { myPermission?: Record<string, unknown> | null } | null;
+        permission?: { myPermission?: Record<string, string> | null } | null;
         preference?: {
           language?: Language | null;
           languageCode?: string | null;
@@ -29959,7 +29959,7 @@ export type GetInventoryItemsListQuery = {
             sellingPrice: string;
             itemQuantity: string;
             taxId?: string | null;
-            itemsInWarehouses?: Record<string, unknown> | null;
+            itemsInWarehouses?: Record<string, string> | null;
             taxValue?: number | null;
           } | null;
         } | null> | null;
@@ -33222,10 +33222,10 @@ export type GetServiceCenterCoaBalanceReportQuery = {
     branchReport: {
       serviceCenterCOAWiseBalanceReport: {
         data?: {
-          total?: Record<string, unknown> | null;
+          total?: Record<string, string> | null;
           entries?: Array<{
             ServiceCenterName?: string | null;
-            balanceMap?: Record<string, unknown> | null;
+            balanceMap?: Record<string, string> | null;
             serviceCenterId?: string | null;
             serviceCenterCode?: string | null;
           } | null> | null;
@@ -34738,7 +34738,7 @@ export type GetKymStatusReportQuery = {
   report: {
     memberReport: {
       kymStatusReport?: {
-        Summary?: Record<string, unknown> | null;
+        Summary?: Record<string, string> | null;
         data?: Array<{
           memberName?: string | null;
           memberId?: string | null;
@@ -35593,47 +35593,47 @@ export type GetTrialSheetReportQuery = {
       financial: {
         trialSheetReport: {
           data?: {
-            equityAndLiablitiesTotal?: Record<string, unknown> | null;
-            assetsTotal?: Record<string, unknown> | null;
-            expenseTotal?: Record<string, unknown> | null;
-            incomeTotal?: Record<string, unknown> | null;
-            offBalanceTotal?: Record<string, unknown> | null;
-            orphanTotal?: Record<string, unknown> | null;
-            totalAssetExpense?: Record<string, unknown> | null;
-            totalLiablitiesIncome?: Record<string, unknown> | null;
-            totalProfitLoss?: Record<string, unknown> | null;
+            equityAndLiablitiesTotal?: Record<string, string> | null;
+            assetsTotal?: Record<string, string> | null;
+            expenseTotal?: Record<string, string> | null;
+            incomeTotal?: Record<string, string> | null;
+            offBalanceTotal?: Record<string, string> | null;
+            orphanTotal?: Record<string, string> | null;
+            totalAssetExpense?: Record<string, string> | null;
+            totalLiablitiesIncome?: Record<string, string> | null;
+            totalProfitLoss?: Record<string, string> | null;
             equityAndLiablities?: Array<{
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             expenses?: Array<{
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             income?: Array<{
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             assets?: Array<{
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             offBalance?: Array<{
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             orphanEntries?: Array<{
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
@@ -35902,49 +35902,49 @@ export type GetCharKhataReportQuery = {
       financial: {
         charKhataReport: {
           data?: {
-            equityAndLiablitiesTotal?: Record<string, unknown> | null;
-            assetsTotal?: Record<string, unknown> | null;
-            expenseTotal?: Record<string, unknown> | null;
-            incomeTotal?: Record<string, unknown> | null;
-            offBalanceTotal?: Record<string, unknown> | null;
-            orphanTotal?: Record<string, unknown> | null;
-            totalProfitLoss?: Record<string, unknown> | null;
-            totalAssetExpense?: Record<string, unknown> | null;
-            totalLiablitiesIncome?: Record<string, unknown> | null;
+            equityAndLiablitiesTotal?: Record<string, string> | null;
+            assetsTotal?: Record<string, string> | null;
+            expenseTotal?: Record<string, string> | null;
+            incomeTotal?: Record<string, string> | null;
+            offBalanceTotal?: Record<string, string> | null;
+            orphanTotal?: Record<string, string> | null;
+            totalProfitLoss?: Record<string, string> | null;
+            totalAssetExpense?: Record<string, string> | null;
+            totalLiablitiesIncome?: Record<string, string> | null;
             equityAndLiablities?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               under?: string | null;
             } | null> | null;
             assets?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               under?: string | null;
             } | null> | null;
             expenses?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               under?: string | null;
             } | null> | null;
             income?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               under?: string | null;
             } | null> | null;
             offBalance?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               under?: string | null;
             } | null> | null;
             orphanEntries?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               under?: string | null;
             } | null> | null;
           } | null;
@@ -36025,47 +36025,47 @@ export type GetFiscalYearTrialBalanceQuery = {
       financial: {
         fiscalTrialSheetReport: {
           data?: {
-            equityAndLiablitiesTotal?: Record<string, unknown> | null;
-            assetsTotal?: Record<string, unknown> | null;
-            expenseTotal?: Record<string, unknown> | null;
-            incomeTotal?: Record<string, unknown> | null;
-            offBalanceTotal?: Record<string, unknown> | null;
-            orphanTotal?: Record<string, unknown> | null;
-            totalAssetExpense?: Record<string, unknown> | null;
-            totalLiablitiesIncome?: Record<string, unknown> | null;
-            totalProfitLoss?: Record<string, unknown> | null;
+            equityAndLiablitiesTotal?: Record<string, string> | null;
+            assetsTotal?: Record<string, string> | null;
+            expenseTotal?: Record<string, string> | null;
+            incomeTotal?: Record<string, string> | null;
+            offBalanceTotal?: Record<string, string> | null;
+            orphanTotal?: Record<string, string> | null;
+            totalAssetExpense?: Record<string, string> | null;
+            totalLiablitiesIncome?: Record<string, string> | null;
+            totalProfitLoss?: Record<string, string> | null;
             equityAndLiablities?: Array<{
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             expenses?: Array<{
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             income?: Array<{
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             assets?: Array<{
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             offBalance?: Array<{
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             orphanEntries?: Array<{
-              balance?: Record<string, unknown> | null;
+              balance?: Record<string, string> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
@@ -38703,9 +38703,9 @@ export type GetPearlsReportsFormulaQuery = {
             header: string;
             description: string;
             numerator: string;
-            numeratorVariables: Record<string, unknown>;
+            numeratorVariables: Record<string, string>;
             denominator: string;
-            denominatorVariables: Record<string, unknown>;
+            denominatorVariables: Record<string, string>;
             goal: string;
             indicatorId: string;
           } | null> | null;
@@ -38726,7 +38726,7 @@ export type GetCopomisReportSettingsQuery = {
             expression: string;
             id: string;
             indicatorName: string;
-            values: Record<string, unknown>;
+            values: Record<string, string>;
           } | null> | null;
         } | null;
       } | null;
@@ -40743,7 +40743,7 @@ export type EodHistoryDetailsQuery = {
           success: boolean;
           accountNumber: string;
           narration: string;
-          payload?: Record<string, unknown> | null;
+          payload?: Record<string, string> | null;
         } | null;
       } | null> | null;
       pageInfo?: {

@@ -301,15 +301,19 @@ type CombinedArrayType = {
 // Function to combine the arrays
 function combineArrays(array1: ArrayType[], loanArray: ArrayType[]): CombinedArrayType[] {
   const combinedArray: CombinedArrayType[] = [];
-  const maxLength = Math.max(array1?.length, loanArray?.length);
+  const maxLength = Math.max(array1?.length || 0, loanArray?.length || 0);
+
+  // Convert null arrays to empty arrays
+  const safeArray1 = array1 || [];
+  const safeArray2 = loanArray || [];
 
   // Add "-" as value to missing keys in the objects to make them have the same keys
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < maxLength; i++) {
-    if (!array1[i])
-      array1[i] = { accNo: null, balance: null, interestAccured: null, disbursedAmount: null };
-    if (!loanArray[i])
-      loanArray[i] = { accNo: null, balance: null, interestAccured: null, disbursedAmount: null };
+    if (!array1 || !array1[i])
+      safeArray1[i] = { accNo: null, balance: null, interestAccured: null, disbursedAmount: null };
+    if (!loanArray || !loanArray[i])
+      safeArray2[i] = { accNo: null, balance: null, interestAccured: null, disbursedAmount: null };
   }
 
   // Iterate through the modified arrays and combine the objects
@@ -317,10 +321,10 @@ function combineArrays(array1: ArrayType[], loanArray: ArrayType[]): CombinedArr
   for (let i = 0; i < maxLength; i++) {
     const mergedObject = {
       ...array1[i],
-      looanaccNo: loanArray[i].accNo,
-      loanBalance: loanArray[i].balance,
-      loanInterestAccured: loanArray[i].interestAccured,
-      loanDisbursedAmount: loanArray[i].disbursedAmount,
+      looanaccNo: safeArray2[i].accNo,
+      loanBalance: safeArray2[i].balance,
+      loanInterestAccured: safeArray2[i].interestAccured,
+      loanDisbursedAmount: safeArray2[i].disbursedAmount,
     };
     combinedArray.push(mergedObject);
   }
