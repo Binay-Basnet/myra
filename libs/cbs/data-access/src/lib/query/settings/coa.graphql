@@ -205,7 +205,7 @@ query getCOALeafNodeDetails($id: ID!, $branch: [String], $snapshot: String) {
 }
 
 query getLedgerList(
-  $id: ID!
+  $id: [ID!]!
   $pagination: Pagination
   $filter: Filter
   $branchId: [String!]

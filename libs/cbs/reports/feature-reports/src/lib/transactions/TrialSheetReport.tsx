@@ -214,9 +214,10 @@ interface ICOATableProps {
   data: TrialSheetReportDataEntry[];
   type: string;
   total: { label: string; value: TrialBalance }[];
+  coaRedirect?: boolean;
 }
 
-export const COATable = ({ data, type, total }: ICOATableProps) => {
+export const COATable = ({ data, type, total, coaRedirect = true }: ICOATableProps) => {
   const { getValues } = useFormContext<TrialSheetReportFilters>();
   const branchIDs = getValues()?.branchId?.map((a) => a.value);
 
@@ -253,21 +254,28 @@ export const COATable = ({ data, type, total }: ICOATableProps) => {
           row={props.row}
           value={
             !props.row?.getCanExpand() ? (
-              <Button
-                variant="link"
-                color="primary.500"
-                onClick={() =>
-                  window.open(
-                    `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
-                      props.row?.original?.ledgerId
-                    }&branch=${JSON.stringify(branchIDs)}&date=${datePeriod?.from?.en}`,
-                    '_blank'
-                  )
-                }
-              >
-                {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
-                {localizedText(props?.row?.original?.ledgerName)}
-              </Button>
+              coaRedirect ? (
+                <Button
+                  variant="link"
+                  color="primary.500"
+                  onClick={() =>
+                    window.open(
+                      `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
+                        props.row?.original?.ledgerId
+                      }&branch=${JSON.stringify(branchIDs)}&date=${datePeriod?.from?.en}`,
+                      '_blank'
+                    )
+                  }
+                >
+                  {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+                  {localizedText(props?.row?.original?.ledgerName)}
+                </Button>
+              ) : (
+                <>
+                  {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+                  {localizedText(props?.row?.original?.ledgerName)}
+                </>
+              )
             ) : props?.row.original.under ? (
               `${props.row.original.ledgerId} ${props?.row?.original?.ledgerName ? '-' : ''}
                 ${localizedText(props?.row?.original?.ledgerName)}`
