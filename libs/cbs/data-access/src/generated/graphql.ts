@@ -2942,6 +2942,7 @@ export type ChartsOfAccountFilter = {
 export type ChartsOfAccountMutation = {
   add: AddChartsOfAccountResult;
   addAccount?: Maybe<CoaAddAccountResult>;
+  changeLedgerParent: LeadgerHeadChangeResult;
   delete: AddChartsOfAccountResult;
   newGroup: NewCoaGroupResult;
   updateLedgerName?: Maybe<UpdateLedgerResult>;
@@ -2958,6 +2959,11 @@ export type ChartsOfAccountMutationAddAccountArgs = {
   openForBranches?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   parentAccountCode: Scalars['String'];
   tagIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+};
+
+export type ChartsOfAccountMutationChangeLedgerParentArgs = {
+  ledgerId: Scalars['ID'];
+  newCOALeaf: Scalars['ID'];
 };
 
 export type ChartsOfAccountMutationDeleteArgs = {
@@ -2992,7 +2998,6 @@ export type ChartsOfAccountSettingsQuery = {
   accounts: ChartsOfAccountResult;
   accountsUnder?: Maybe<CoaMinimalResult>;
   accountsUnderLeaf?: Maybe<Array<Maybe<AccountsUnderLeafNode>>>;
-  changeLedgerParent: LeadgerHeadChangeResult;
   class?: Maybe<ChartsOfAccountClassResult>;
   coaAccountDetails?: Maybe<CoaDetailsResult>;
   coaAccountList?: Maybe<CoaAccountListResult>;
@@ -3020,11 +3025,6 @@ export type ChartsOfAccountSettingsQueryAccountsUnderLeafArgs = {
   parentId: Array<InputMaybe<Scalars['String']>>;
 };
 
-export type ChartsOfAccountSettingsQueryChangeLedgerParentArgs = {
-  ledgerId: Scalars['ID'];
-  newCOALeaf: Scalars['ID'];
-};
-
 export type ChartsOfAccountSettingsQueryCoaAccountDetailsArgs = {
   branchId?: InputMaybe<Scalars['String']>;
   id: Scalars['String'];
@@ -3045,7 +3045,7 @@ export type ChartsOfAccountSettingsQueryCoaLeafNodeDetailsArgs = {
 export type ChartsOfAccountSettingsQueryCoaLedgerListArgs = {
   branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<Filter>;
-  id: Scalars['ID'];
+  id: Array<Scalars['ID']>;
   pagination?: InputMaybe<Pagination>;
   snapshot?: InputMaybe<Scalars['String']>;
 };
@@ -22118,6 +22118,32 @@ export type UpdateLedgerNameMutation = {
   };
 };
 
+export type ChangeLedgerParentMutationVariables = Exact<{
+  ledgerId: Scalars['ID'];
+  newCOALeaf: Scalars['ID'];
+}>;
+
+export type ChangeLedgerParentMutation = {
+  settings: {
+    general?: {
+      chartsOfAccount?: {
+        account?: {
+          changeLedgerParent: {
+            recordId?: string | null;
+            error?:
+              | MutationError_AuthorizationError_Fragment
+              | MutationError_BadRequestError_Fragment
+              | MutationError_NotFoundError_Fragment
+              | MutationError_ServerError_Fragment
+              | MutationError_ValidationError_Fragment
+              | null;
+          };
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type AddProfitToFundManagementDataMutationVariables = Exact<{
   data: FundManagementInput;
 }>;
@@ -36595,7 +36621,7 @@ export type GetCoaLeafNodeDetailsQuery = {
 };
 
 export type GetLedgerListQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Array<Scalars['ID']> | Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
   branchId?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
@@ -42793,6 +42819,39 @@ export const useUpdateLedgerNameMutation = <TError = unknown, TContext = unknown
   useMutation<UpdateLedgerNameMutation, TError, UpdateLedgerNameMutationVariables, TContext>(
     ['updateLedgerName'],
     useAxios<UpdateLedgerNameMutation, UpdateLedgerNameMutationVariables>(UpdateLedgerNameDocument),
+    options
+  );
+export const ChangeLedgerParentDocument = `
+    mutation changeLedgerParent($ledgerId: ID!, $newCOALeaf: ID!) {
+  settings {
+    general {
+      chartsOfAccount {
+        account {
+          changeLedgerParent(ledgerId: $ledgerId, newCOALeaf: $newCOALeaf) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useChangeLedgerParentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ChangeLedgerParentMutation,
+    TError,
+    ChangeLedgerParentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ChangeLedgerParentMutation, TError, ChangeLedgerParentMutationVariables, TContext>(
+    ['changeLedgerParent'],
+    useAxios<ChangeLedgerParentMutation, ChangeLedgerParentMutationVariables>(
+      ChangeLedgerParentDocument
+    ),
     options
   );
 export const AddProfitToFundManagementDataDocument = `
@@ -62202,7 +62261,7 @@ export const useGetCoaLeafNodeDetailsQuery = <TData = GetCoaLeafNodeDetailsQuery
     options
   );
 export const GetLedgerListDocument = `
-    query getLedgerList($id: ID!, $pagination: Pagination, $filter: Filter, $branchId: [String!], $snapshot: String) {
+    query getLedgerList($id: [ID!]!, $pagination: Pagination, $filter: Filter, $branchId: [String!], $snapshot: String) {
   settings {
     chartsOfAccount {
       coaLedgerList(
