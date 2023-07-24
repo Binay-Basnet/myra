@@ -866,6 +866,13 @@ export type AccountingTaxRate = {
   rate: Scalars['Float'];
 };
 
+export type AccountsMinimal = {
+  accNo?: Maybe<Scalars['String']>;
+  balance?: Maybe<BalanceValue>;
+  disbursedAmount?: Maybe<Scalars['String']>;
+  interestAccured?: Maybe<Scalars['String']>;
+};
+
 export type AccountsTransactionFilter = {
   accountIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   date?: InputMaybe<LocalizedDateFilter>;
@@ -4296,6 +4303,7 @@ export type DepositLoanAccount = Base & {
   accountName?: Maybe<Scalars['String']>;
   agentId?: Maybe<Scalars['ID']>;
   atmFacility?: Maybe<Scalars['Boolean']>;
+  branchName?: Maybe<Scalars['String']>;
   chequeFacility?: Maybe<Scalars['Boolean']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
@@ -5637,7 +5645,7 @@ export type EachTransferRecord = {
 
 export type EarningComponentInput = {
   abbr?: InputMaybe<Scalars['String']>;
-  base_multiple?: InputMaybe<Scalars['String']>;
+  baseMultiple?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   isTaxApplicable?: InputMaybe<Scalars['Boolean']>;
   makeThisActive?: InputMaybe<Scalars['Boolean']>;
@@ -7812,7 +7820,7 @@ export type HcmEmployeeGeneralQueryListEmployeeTypeArgs = {
 };
 
 export type HcmEmployeeLeaveMutation = {
-  DeleteLeaveType: DeleteLeaveType;
+  deleteLeaveType: DeleteLeaveType;
   upsertLeaveType: LeaveTypeOutput;
 };
 
@@ -15010,6 +15018,7 @@ export type MemberReport = {
   memberBalanceReport?: Maybe<MemberBalanceReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
   memberRegistrationReport?: Maybe<MemberRegistrationReportResult>;
+  memberTransferReport?: Maybe<MemberTransferReportResult>;
   minorReport?: Maybe<MinorReportResult>;
 };
 
@@ -15043,6 +15052,10 @@ export type MemberReportMemberClassificationReportArgs = {
 
 export type MemberReportMemberRegistrationReportArgs = {
   data?: InputMaybe<MemberRegistrationReportData>;
+};
+
+export type MemberReportMemberTransferReportArgs = {
+  data: MemberTransferFilter;
 };
 
 export type MemberReportMinorReportArgs = {
@@ -15132,6 +15145,13 @@ export type MemberTransferEntry = {
   state?: Maybe<MemberTransferState>;
 };
 
+export type MemberTransferFilter = {
+  filter?: InputMaybe<TransferredByFilter>;
+  fromBranchIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  period: LocalizedDateFilter;
+  toBranchIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
 export type MemberTransferInput = {
   docs?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   newBranchId: Scalars['ID'];
@@ -15177,6 +15197,24 @@ export type MemberTransferQueryGetArgs = {
 export type MemberTransferQueryListArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type MemberTransferReportData = {
+  fromBranch?: Maybe<BranchMinimal>;
+  loanAccounts?: Maybe<Array<AccountsMinimal>>;
+  memberCode: Scalars['String'];
+  memberId: Scalars['ID'];
+  memberName: Scalars['String'];
+  savingAccounts?: Maybe<Array<AccountsMinimal>>;
+  shareBalance?: Maybe<Scalars['String']>;
+  toBranch?: Maybe<BranchMinimal>;
+  transferredBy?: Maybe<Scalars['String']>;
+  transferredDate?: Maybe<Scalars['Localized']>;
+};
+
+export type MemberTransferReportResult = {
+  data?: Maybe<Array<Maybe<MemberTransferReportData>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type MemberTransferResult = {
@@ -16779,10 +16817,10 @@ export type PurchaseReportData = {
 };
 
 export type PurchaseReportFilter = {
-  branchIds: Array<Scalars['String']>;
   filter?: InputMaybe<SalesPurchaseFilter>;
   itemIds?: InputMaybe<Array<Scalars['String']>>;
   period: LocalizedDateFilter;
+  warehouseId: Array<Scalars['String']>;
 };
 
 export type PurchaseReportResult = {
@@ -18457,6 +18495,11 @@ export type SettingsMutation = {
   general?: Maybe<GeneralSettingsMutation>;
   myraUser?: Maybe<MyraUserMutation>;
   report?: Maybe<ReportSettingMutation>;
+  switchTransactionConstraintState: MutationResult;
+};
+
+export type SettingsMutationSwitchTransactionConstraintStateArgs = {
+  id: Scalars['ID'];
 };
 
 export type SettingsQuery = {
@@ -20178,6 +20221,10 @@ export const TransferType = {
 } as const;
 
 export type TransferType = typeof TransferType[keyof typeof TransferType];
+export type TransferredByFilter = {
+  transferredBy?: InputMaybe<Array<Scalars['String']>>;
+};
+
 export type TranslateData = {
   data?: Maybe<Scalars['String']>;
   id: Scalars['String'];
@@ -34737,6 +34784,41 @@ export type GetMinorListReportQuery = {
           serviceCentreName: string;
           minorName: string;
           relationshipId?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetMemberTransferReportQueryVariables = Exact<{
+  data: MemberTransferFilter;
+}>;
+
+export type GetMemberTransferReportQuery = {
+  report: {
+    memberReport: {
+      memberTransferReport?: {
+        data?: Array<{
+          memberId: string;
+          memberCode: string;
+          memberName: string;
+          transferredDate?: Record<'local' | 'en' | 'np', string> | null;
+          transferredBy?: string | null;
+          shareBalance?: string | null;
+          fromBranch?: { id: string; branchCode?: string | null; name: string } | null;
+          toBranch?: { id: string; branchCode?: string | null; name: string } | null;
+          savingAccounts?: Array<{
+            accNo?: string | null;
+            interestAccured?: string | null;
+            disbursedAmount?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          }> | null;
+          loanAccounts?: Array<{
+            accNo?: string | null;
+            interestAccured?: string | null;
+            disbursedAmount?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          }> | null;
         } | null> | null;
       } | null;
     };
@@ -59611,6 +59693,66 @@ export const useGetMinorListReportQuery = <TData = GetMinorListReportQuery, TErr
     variables === undefined ? ['getMinorListReport'] : ['getMinorListReport', variables],
     useAxios<GetMinorListReportQuery, GetMinorListReportQueryVariables>(
       GetMinorListReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberTransferReportDocument = `
+    query getMemberTransferReport($data: MemberTransferFilter!) {
+  report {
+    memberReport {
+      memberTransferReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          memberName
+          fromBranch {
+            id
+            branchCode
+            name
+          }
+          toBranch {
+            id
+            branchCode
+            name
+          }
+          transferredDate
+          transferredBy
+          shareBalance
+          savingAccounts {
+            accNo
+            balance {
+              amount
+              amountType
+            }
+            interestAccured
+            disbursedAmount
+          }
+          loanAccounts {
+            accNo
+            balance {
+              amount
+              amountType
+            }
+            interestAccured
+            disbursedAmount
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberTransferReportQuery = <
+  TData = GetMemberTransferReportQuery,
+  TError = unknown
+>(
+  variables: GetMemberTransferReportQueryVariables,
+  options?: UseQueryOptions<GetMemberTransferReportQuery, TError, TData>
+) =>
+  useQuery<GetMemberTransferReportQuery, TError, TData>(
+    ['getMemberTransferReport', variables],
+    useAxios<GetMemberTransferReportQuery, GetMemberTransferReportQueryVariables>(
+      GetMemberTransferReportDocument
     ).bind(null, variables),
     options
   );
