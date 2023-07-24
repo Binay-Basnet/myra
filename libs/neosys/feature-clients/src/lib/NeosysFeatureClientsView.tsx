@@ -153,25 +153,6 @@ export const NeosysFeatureClientView = () => {
                     setIsCloneEnvironmentOpen(true);
                   },
                 },
-                ...(process.env['NX_APP_ENV'] === 'prod'
-                  ? [
-                      {
-                        title: 'Clone Env From Dev',
-                        onClick: (node: {
-                          id: string;
-                          environmentName: string;
-                          environmentSlug: string;
-                          otpToken?: string;
-                          description?: string;
-                          isForProduction?: boolean;
-                          version?: string;
-                        }) => {
-                          setCurrentId(node?.id);
-                          setIsCloneEnvFromDevOpen(true);
-                        },
-                      },
-                    ]
-                  : []),
                 {
                   title: 'Update Environment',
                   onClick: (node) => {
@@ -218,6 +199,10 @@ export const NeosysFeatureClientView = () => {
     setIsCloneEnvironmentOpen(false);
   };
 
+  const handleCloneEnvFromDevOpen = () => {
+    setIsCloneEnvFromDevOpen(true);
+  };
+
   const handleCloneEnvFromDevClose = () => {
     setCurrentId('');
     setIsCloneEnvFromDevOpen(false);
@@ -256,8 +241,8 @@ export const NeosysFeatureClientView = () => {
     await asyncToast({
       id: 'clone-environment',
       msgs: {
-        loading: 'Cloning New Environment',
-        success: 'Environment cloned successfully',
+        loading: 'Creating a task to clone environment',
+        success: 'Task to clone environment submitted successfully',
       },
       onSuccess: () => {
         cloneEnvReset({
@@ -290,8 +275,8 @@ export const NeosysFeatureClientView = () => {
     await asyncToast({
       id: 'clone-env-from-dev',
       msgs: {
-        loading: 'Cloning Environment from Dev',
-        success: 'Environment cloned successfully from Dev',
+        loading: 'Creating a task to clone environment from Dev',
+        success: 'Task to clone environment from dev submitted successfully',
       },
       onSuccess: () => {
         cloneEnvFromDevReset({
@@ -388,7 +373,14 @@ export const NeosysFeatureClientView = () => {
     <>
       <Box display="flex" justifyContent="space-between" p={2}>
         <Text fontSize="r2">{data?.neosys?.client?.details?.organizationName}</Text>
-        <Button onClick={handleModalOpen}>Create Environment</Button>
+        <Box display="flex" justifyContent="space-between">
+          {process.env['NX_APP_ENV'] === 'prod' ? (
+            <Button onClick={handleCloneEnvFromDevOpen} mr={2}>
+              Clone Environment From Dev
+            </Button>
+          ) : null}
+          <Button onClick={handleModalOpen}>Create Environment</Button>
+        </Box>
       </Box>
       <Table
         data={rowData}
