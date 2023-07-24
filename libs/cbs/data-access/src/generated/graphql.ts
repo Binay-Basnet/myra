@@ -34930,6 +34930,41 @@ export type GetMinorListReportQuery = {
   };
 };
 
+export type GetMemberTransferReportQueryVariables = Exact<{
+  data: MemberTransferFilter;
+}>;
+
+export type GetMemberTransferReportQuery = {
+  report: {
+    memberReport: {
+      memberTransferReport?: {
+        data?: Array<{
+          memberId: string;
+          memberCode: string;
+          memberName: string;
+          transferredDate?: Record<'local' | 'en' | 'np', string> | null;
+          transferredBy?: string | null;
+          shareBalance?: string | null;
+          fromBranch?: { id: string; branchCode?: string | null; name: string } | null;
+          toBranch?: { id: string; branchCode?: string | null; name: string } | null;
+          savingAccounts?: Array<{
+            accNo?: string | null;
+            interestAccured?: string | null;
+            disbursedAmount?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          }> | null;
+          loanAccounts?: Array<{
+            accNo?: string | null;
+            interestAccured?: string | null;
+            disbursedAmount?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          }> | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
 export type GetMBankingRegistrationReportQueryVariables = Exact<{
   data?: InputMaybe<EbankingReportFilter>;
 }>;
@@ -60123,6 +60158,66 @@ export const useGetMinorListReportQuery = <TData = GetMinorListReportQuery, TErr
     variables === undefined ? ['getMinorListReport'] : ['getMinorListReport', variables],
     useAxios<GetMinorListReportQuery, GetMinorListReportQueryVariables>(
       GetMinorListReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberTransferReportDocument = `
+    query getMemberTransferReport($data: MemberTransferFilter!) {
+  report {
+    memberReport {
+      memberTransferReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          memberName
+          fromBranch {
+            id
+            branchCode
+            name
+          }
+          toBranch {
+            id
+            branchCode
+            name
+          }
+          transferredDate
+          transferredBy
+          shareBalance
+          savingAccounts {
+            accNo
+            balance {
+              amount
+              amountType
+            }
+            interestAccured
+            disbursedAmount
+          }
+          loanAccounts {
+            accNo
+            balance {
+              amount
+              amountType
+            }
+            interestAccured
+            disbursedAmount
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberTransferReportQuery = <
+  TData = GetMemberTransferReportQuery,
+  TError = unknown
+>(
+  variables: GetMemberTransferReportQueryVariables,
+  options?: UseQueryOptions<GetMemberTransferReportQuery, TError, TData>
+) =>
+  useQuery<GetMemberTransferReportQuery, TError, TData>(
+    ['getMemberTransferReport', variables],
+    useAxios<GetMemberTransferReportQuery, GetMemberTransferReportQueryVariables>(
+      GetMemberTransferReportDocument
     ).bind(null, variables),
     options
   );

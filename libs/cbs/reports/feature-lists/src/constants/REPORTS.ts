@@ -26,6 +26,7 @@ export enum Report {
   MEMBER_REGISTER_REPORT = 'Member Register Report',
   MEMBER_ACTIVATIONS = 'Active/Inactive Member',
   MEMBER_CLASSIFICATION_REPORT = 'Member Classification Reports',
+  MEMBER_TRANSFER_REPORT = 'Member Transfer Report',
   KYM_STATUS_REPORT = 'Kym Status Report',
   MINOR_LIST_REPORT = 'Minor List Report',
   MEMBER_WISE_BALANCE_REPORT = 'Member Wise Balance Report',
@@ -218,6 +219,10 @@ export const REPORTS = {
     {
       report: Report.MINOR_LIST_REPORT,
       link: 'minor-list',
+    },
+    {
+      report: Report.MEMBER_TRANSFER_REPORT,
+      link: 'transfer',
     },
   ],
 
