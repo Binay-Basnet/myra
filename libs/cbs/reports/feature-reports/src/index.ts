@@ -37,6 +37,7 @@ export * from './lib/members/MemberActiveInactiveReport';
 export * from './lib/members/MemberBalanceReport';
 export * from './lib/members/MemberClassificationReport';
 export * from './lib/members/MemberRegistrationReport';
+export * from './lib/members/MemberTransferReport';
 export * from './lib/members/MinorListReport';
 export * from './lib/members/UsersReport';
 export * from './lib/mobile-banking/MBExpiryReport';

@@ -22328,6 +22328,30 @@ export type SetEmployeeExitUpsertMutation = {
   };
 };
 
+export type SetSalaryStructureAssignmentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: InputSalaryStructureAssignment;
+}>;
+
+export type SetSalaryStructureAssignmentMutation = {
+  hr: {
+    payroll: {
+      salaryStructureAssignment: {
+        upsertSalStructAssignment: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type SetStaffPlanningMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: StaffPlanInput;
@@ -29147,6 +29171,68 @@ export type GetHrLifecycleEmployeeViewQuery = {
   };
 };
 
+export type GetSalaryStructureAssignmentListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetSalaryStructureAssignmentListQuery = {
+  hr: {
+    payroll: {
+      salaryStructureAssignment: {
+        listSalaryStructureAssignment: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node: {
+              id?: string | null;
+              employeeId?: string | null;
+              employeeName?: string | null;
+              department?: string | null;
+              contact?: string | null;
+              salaryStructure?: string | null;
+              email?: string | null;
+              baseSalary?: string | null;
+              lastUpdated?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetSalaryStructureAssignmentQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetSalaryStructureAssignmentQuery = {
+  hr: {
+    payroll: {
+      salaryStructureAssignment: {
+        getSalaryStructureAssignment: {
+          data?: {
+            employeeId?: string | null;
+            salaryStructureId?: string | null;
+            baseSalary?: string | null;
+            fromDate?: Record<'local' | 'en' | 'np', string> | null;
+            paymentMode?: PaymentModeSalary | null;
+            earnings?: Array<{ id?: string | null; amount?: number | null } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetStaffPlanningListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -34864,6 +34950,41 @@ export type GetMinorListReportQuery = {
           serviceCentreName: string;
           minorName: string;
           relationshipId?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetMemberTransferReportQueryVariables = Exact<{
+  data: MemberTransferFilter;
+}>;
+
+export type GetMemberTransferReportQuery = {
+  report: {
+    memberReport: {
+      memberTransferReport?: {
+        data?: Array<{
+          memberId: string;
+          memberCode: string;
+          memberName: string;
+          transferredDate?: Record<'local' | 'en' | 'np', string> | null;
+          transferredBy?: string | null;
+          shareBalance?: string | null;
+          fromBranch?: { id: string; branchCode?: string | null; name: string } | null;
+          toBranch?: { id: string; branchCode?: string | null; name: string } | null;
+          savingAccounts?: Array<{
+            accNo?: string | null;
+            interestAccured?: string | null;
+            disbursedAmount?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          }> | null;
+          loanAccounts?: Array<{
+            accNo?: string | null;
+            interestAccured?: string | null;
+            disbursedAmount?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          }> | null;
         } | null> | null;
       } | null;
     };
@@ -43116,6 +43237,42 @@ export const useSetEmployeeExitUpsertMutation = <TError = unknown, TContext = un
     ['setEmployeeExitUpsert'],
     useAxios<SetEmployeeExitUpsertMutation, SetEmployeeExitUpsertMutationVariables>(
       SetEmployeeExitUpsertDocument
+    ),
+    options
+  );
+export const SetSalaryStructureAssignmentDocument = `
+    mutation setSalaryStructureAssignment($id: String, $input: InputSalaryStructureAssignment!) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        upsertSalStructAssignment(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSalaryStructureAssignmentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalaryStructureAssignmentMutation,
+    TError,
+    SetSalaryStructureAssignmentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSalaryStructureAssignmentMutation,
+    TError,
+    SetSalaryStructureAssignmentMutationVariables,
+    TContext
+  >(
+    ['setSalaryStructureAssignment'],
+    useAxios<SetSalaryStructureAssignmentMutation, SetSalaryStructureAssignmentMutationVariables>(
+      SetSalaryStructureAssignmentDocument
     ),
     options
   );
@@ -52580,6 +52737,92 @@ export const useGetHrLifecycleEmployeeViewQuery = <
     ).bind(null, variables),
     options
   );
+export const GetSalaryStructureAssignmentListDocument = `
+    query getSalaryStructureAssignmentList($filter: Filter, $pagination: Pagination) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        listSalaryStructureAssignment(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              employeeId
+              employeeName
+              department
+              contact
+              salaryStructure
+              email
+              baseSalary
+              lastUpdated
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSalaryStructureAssignmentListQuery = <
+  TData = GetSalaryStructureAssignmentListQuery,
+  TError = unknown
+>(
+  variables?: GetSalaryStructureAssignmentListQueryVariables,
+  options?: UseQueryOptions<GetSalaryStructureAssignmentListQuery, TError, TData>
+) =>
+  useQuery<GetSalaryStructureAssignmentListQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalaryStructureAssignmentList']
+      : ['getSalaryStructureAssignmentList', variables],
+    useAxios<GetSalaryStructureAssignmentListQuery, GetSalaryStructureAssignmentListQueryVariables>(
+      GetSalaryStructureAssignmentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalaryStructureAssignmentDocument = `
+    query getSalaryStructureAssignment($id: String!) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        getSalaryStructureAssignment(id: $id) {
+          data {
+            employeeId
+            salaryStructureId
+            baseSalary
+            fromDate
+            paymentMode
+            earnings {
+              id
+              amount
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetSalaryStructureAssignmentQuery = <
+  TData = GetSalaryStructureAssignmentQuery,
+  TError = unknown
+>(
+  variables: GetSalaryStructureAssignmentQueryVariables,
+  options?: UseQueryOptions<GetSalaryStructureAssignmentQuery, TError, TData>
+) =>
+  useQuery<GetSalaryStructureAssignmentQuery, TError, TData>(
+    ['getSalaryStructureAssignment', variables],
+    useAxios<GetSalaryStructureAssignmentQuery, GetSalaryStructureAssignmentQueryVariables>(
+      GetSalaryStructureAssignmentDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetStaffPlanningListDocument = `
     query getStaffPlanningList($filter: Filter, $pagination: Pagination) {
   hr {
@@ -59974,6 +60217,66 @@ export const useGetMinorListReportQuery = <TData = GetMinorListReportQuery, TErr
     variables === undefined ? ['getMinorListReport'] : ['getMinorListReport', variables],
     useAxios<GetMinorListReportQuery, GetMinorListReportQueryVariables>(
       GetMinorListReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberTransferReportDocument = `
+    query getMemberTransferReport($data: MemberTransferFilter!) {
+  report {
+    memberReport {
+      memberTransferReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          memberName
+          fromBranch {
+            id
+            branchCode
+            name
+          }
+          toBranch {
+            id
+            branchCode
+            name
+          }
+          transferredDate
+          transferredBy
+          shareBalance
+          savingAccounts {
+            accNo
+            balance {
+              amount
+              amountType
+            }
+            interestAccured
+            disbursedAmount
+          }
+          loanAccounts {
+            accNo
+            balance {
+              amount
+              amountType
+            }
+            interestAccured
+            disbursedAmount
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberTransferReportQuery = <
+  TData = GetMemberTransferReportQuery,
+  TError = unknown
+>(
+  variables: GetMemberTransferReportQueryVariables,
+  options?: UseQueryOptions<GetMemberTransferReportQuery, TError, TData>
+) =>
+  useQuery<GetMemberTransferReportQuery, TError, TData>(
+    ['getMemberTransferReport', variables],
+    useAxios<GetMemberTransferReportQuery, GetMemberTransferReportQueryVariables>(
+      GetMemberTransferReportDocument
     ).bind(null, variables),
     options
   );
