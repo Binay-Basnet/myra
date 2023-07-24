@@ -22302,6 +22302,30 @@ export type SetEmployeeExitUpsertMutation = {
   };
 };
 
+export type SetSalaryStructureAssignmentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: InputSalaryStructureAssignment;
+}>;
+
+export type SetSalaryStructureAssignmentMutation = {
+  hr: {
+    payroll: {
+      salaryStructureAssignment: {
+        upsertSalStructAssignment: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type SetStaffPlanningMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: StaffPlanInput;
@@ -29115,6 +29139,68 @@ export type GetHrLifecycleEmployeeViewQuery = {
             joiningDate?: Record<'local' | 'en' | 'np', string> | null;
             name?: string | null;
           } | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetSalaryStructureAssignmentListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetSalaryStructureAssignmentListQuery = {
+  hr: {
+    payroll: {
+      salaryStructureAssignment: {
+        listSalaryStructureAssignment: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node: {
+              id?: string | null;
+              employeeId?: string | null;
+              employeeName?: string | null;
+              department?: string | null;
+              contact?: string | null;
+              salaryStructure?: string | null;
+              email?: string | null;
+              baseSalary?: string | null;
+              lastUpdated?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetSalaryStructureAssignmentQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetSalaryStructureAssignmentQuery = {
+  hr: {
+    payroll: {
+      salaryStructureAssignment: {
+        getSalaryStructureAssignment: {
+          data?: {
+            employeeId?: string | null;
+            salaryStructureId?: string | null;
+            baseSalary?: string | null;
+            fromDate?: Record<'local' | 'en' | 'np', string> | null;
+            paymentMode?: PaymentModeSalary | null;
+            earnings?: Array<{ id?: string | null; amount?: number | null } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
         };
       };
     };
@@ -43060,6 +43146,42 @@ export const useSetEmployeeExitUpsertMutation = <TError = unknown, TContext = un
     ),
     options
   );
+export const SetSalaryStructureAssignmentDocument = `
+    mutation setSalaryStructureAssignment($id: String, $input: InputSalaryStructureAssignment!) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        upsertSalStructAssignment(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSalaryStructureAssignmentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalaryStructureAssignmentMutation,
+    TError,
+    SetSalaryStructureAssignmentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSalaryStructureAssignmentMutation,
+    TError,
+    SetSalaryStructureAssignmentMutationVariables,
+    TContext
+  >(
+    ['setSalaryStructureAssignment'],
+    useAxios<SetSalaryStructureAssignmentMutation, SetSalaryStructureAssignmentMutationVariables>(
+      SetSalaryStructureAssignmentDocument
+    ),
+    options
+  );
 export const SetStaffPlanningDocument = `
     mutation setStaffPlanning($id: ID, $input: StaffPlanInput!) {
   hr {
@@ -52518,6 +52640,92 @@ export const useGetHrLifecycleEmployeeViewQuery = <
     ['getHrLifecycleEmployeeView', variables],
     useAxios<GetHrLifecycleEmployeeViewQuery, GetHrLifecycleEmployeeViewQueryVariables>(
       GetHrLifecycleEmployeeViewDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalaryStructureAssignmentListDocument = `
+    query getSalaryStructureAssignmentList($filter: Filter, $pagination: Pagination) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        listSalaryStructureAssignment(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              employeeId
+              employeeName
+              department
+              contact
+              salaryStructure
+              email
+              baseSalary
+              lastUpdated
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSalaryStructureAssignmentListQuery = <
+  TData = GetSalaryStructureAssignmentListQuery,
+  TError = unknown
+>(
+  variables?: GetSalaryStructureAssignmentListQueryVariables,
+  options?: UseQueryOptions<GetSalaryStructureAssignmentListQuery, TError, TData>
+) =>
+  useQuery<GetSalaryStructureAssignmentListQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalaryStructureAssignmentList']
+      : ['getSalaryStructureAssignmentList', variables],
+    useAxios<GetSalaryStructureAssignmentListQuery, GetSalaryStructureAssignmentListQueryVariables>(
+      GetSalaryStructureAssignmentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalaryStructureAssignmentDocument = `
+    query getSalaryStructureAssignment($id: String!) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        getSalaryStructureAssignment(id: $id) {
+          data {
+            employeeId
+            salaryStructureId
+            baseSalary
+            fromDate
+            paymentMode
+            earnings {
+              id
+              amount
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetSalaryStructureAssignmentQuery = <
+  TData = GetSalaryStructureAssignmentQuery,
+  TError = unknown
+>(
+  variables: GetSalaryStructureAssignmentQueryVariables,
+  options?: UseQueryOptions<GetSalaryStructureAssignmentQuery, TError, TData>
+) =>
+  useQuery<GetSalaryStructureAssignmentQuery, TError, TData>(
+    ['getSalaryStructureAssignment', variables],
+    useAxios<GetSalaryStructureAssignmentQuery, GetSalaryStructureAssignmentQueryVariables>(
+      GetSalaryStructureAssignmentDocument
     ).bind(null, variables),
     options
   );
