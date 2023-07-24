@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { Box, GridItem } from '@myra-ui';
 
@@ -9,6 +10,7 @@ import {
   useGetInventoryItemsListQuery,
   useGetInventoryPurchaseReportQuery,
   useGetSettingsUserListDataQuery,
+  useGetWarehouseListQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
@@ -28,6 +30,10 @@ type InventoryRegisterFilter = {
     label: string;
     value: string;
   }[];
+  warehouseId: {
+    label: string;
+    value: string;
+  }[];
   filter: {
     creatorIds: {
       label: string;
@@ -44,11 +50,11 @@ export const InventoryPurchaseOrderReport = () => {
     paginate: { after: '', first: -1 },
   });
   const userList = userListData?.settings?.myraUser?.list?.edges;
-
-  const branchIds =
-    filters?.branchId && filters?.branchId?.length !== 0
-      ? filters?.branchId?.map((t) => t.value)
+  const warehouseIds =
+    filters?.warehouseId && filters?.warehouseId?.length !== 0
+      ? filters?.warehouseId?.map((t) => t.value)
       : null;
+
   const itemsIds =
     filters?.itemIds && filters?.itemIds?.length !== 0
       ? filters?.itemIds?.map((t) => t.value)
@@ -66,7 +72,7 @@ export const InventoryPurchaseOrderReport = () => {
           from: filters?.period?.from,
           to: filters?.period?.to,
         } as LocalizedDateFilter,
-        branchIds,
+        warehouseId: warehouseIds,
 
         itemIds: itemsIds,
         filter: { creatorIds: creatorsIds },
@@ -248,7 +254,49 @@ export const InventoryPurchaseOrderReport = () => {
   );
 };
 
+// const InventoryPurchaseReportInput = () => {
+//   const { data: inventoryItems } = useGetInventoryItemsListQuery({
+//     pagination: {
+//       after: '',
+//       first: -1,
+//     },
+//   });
+//   const inventoryItemsData = inventoryItems?.inventory?.items?.list?.edges;
+//   const itemSearchOptions = useMemo(
+//     () =>
+//       inventoryItemsData?.map((account) => ({
+//         label: account?.node?.name as string,
+//         value: account?.node?.id as string,
+//       })),
+//     [inventoryItemsData]
+//   );
+
+//   return (
+//     <>
+//       <GridItem colSpan={1}>
+//         <FormBranchSelect
+//           showUserBranchesOnly
+//           isMulti
+//           name="branchId"
+//           label="Select Service Center"
+//         />
+//       </GridItem>
+
+//       <GridItem colSpan={1}>
+//         <FormSelect isMulti name="itemIds" label="Select Items" options={itemSearchOptions} />
+//       </GridItem>
+
+//       <GridItem colSpan={2}>
+//         <ReportDateRange />
+//       </GridItem>
+//     </>
+//   );
+// };
+
 const InventoryPurchaseReportInputs = () => {
+  const [triggerQuery, setTriggerQuery] = useState(false);
+  const methods = useFormContext<InventoryRegisterFilter>();
+
   const { data: inventoryItems } = useGetInventoryItemsListQuery({
     pagination: {
       after: '',
@@ -264,6 +312,32 @@ const InventoryPurchaseReportInputs = () => {
       })),
     [inventoryItemsData]
   );
+  const { watch } = methods;
+  const branchIds = watch('branchId');
+  const { data: warehouseData } = useGetWarehouseListQuery(
+    {
+      paginate: { after: '', first: -1 },
+      filter: {
+        orConditions: [
+          {
+            andConditions: [
+              {
+                column: 'branchid',
+                value: watch('branchId')?.map((branch) => branch.value) || [],
+                comparator: 'IN',
+              },
+            ],
+          },
+        ],
+      },
+    },
+    { enabled: triggerQuery }
+  );
+  useEffect(() => {
+    if (branchIds?.length) {
+      setTriggerQuery(true);
+    }
+  }, [branchIds]);
 
   return (
     <>
@@ -279,8 +353,22 @@ const InventoryPurchaseReportInputs = () => {
       <GridItem colSpan={1}>
         <FormSelect isMulti name="itemIds" label="Select Items" options={itemSearchOptions} />
       </GridItem>
-
-      <GridItem colSpan={2}>
+      <GridItem colSpan={1}>
+        <FormSelect
+          isMulti
+          name="warehouseId"
+          label="Select Warehouse"
+          options={
+            branchIds?.length
+              ? warehouseData?.inventory?.warehouse?.listWarehouses?.edges?.map((bank) => ({
+                  label: bank?.node?.name as string,
+                  value: bank?.node?.id as string,
+                }))
+              : undefined
+          }
+        />
+      </GridItem>
+      <GridItem colSpan={1}>
         <ReportDateRange />
       </GridItem>
     </>
