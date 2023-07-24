@@ -311,7 +311,11 @@ export const LoanRepayment = () => {
                 ) : null} */}
 
                 <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-                  <FormAmountInput isRequired name="amountPaid" label="Amount to Pay" />
+                  <FormAmountInput
+                    isRequired
+                    name="amountPaid"
+                    label="Amount to Pay (Excluding Fine)"
+                  />
                 </Grid>
 
                 {memberDetailData?.type === KymMemberTypesEnum.Individual && (
