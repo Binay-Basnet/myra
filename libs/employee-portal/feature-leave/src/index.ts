@@ -1,1 +1,1 @@
-export * from './lib/employee-portal-feature-leave';
+export * from './lib/EmployeeLeavePage';

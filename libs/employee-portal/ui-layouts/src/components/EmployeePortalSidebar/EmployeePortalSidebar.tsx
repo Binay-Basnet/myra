@@ -64,7 +64,7 @@ export const EmployeePortalSidebar = () => {
     >
       {SIDEBAR_ITEMS?.map((item) => (
         <React.Fragment key={item.title}>
-          <EmployeePortalSidebarItem {...item} isSelected={router.asPath === item.link} />
+          <EmployeePortalSidebarItem {...item} isSelected={router.pathname === item.link} />
         </React.Fragment>
       ))}
     </Box>

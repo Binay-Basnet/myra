@@ -1,1 +1,1 @@
-export * from './lib/employee-portal-feature-home';
+export * from './lib/EmployeeHomePage';

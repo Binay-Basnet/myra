@@ -1,1 +1,1 @@
-export * from './lib/employee-portal-feature-attendance';
+export * from './lib/EmployeeAttendancePage';

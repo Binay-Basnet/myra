@@ -1,10 +1,9 @@
 import { ReactElement } from 'react';
 
-import { WIPState } from '@myra-ui';
-
+import { EmployeeHomePage } from '@coop/employee-portal/home';
 import { EmployeePortalMainLayout } from '@coop/employee-portal/layouts';
 
-const Page = () => <WIPState />;
+const Page = () => <EmployeeHomePage />;
 
 Page.getLayout = (page: ReactElement) => (
   <EmployeePortalMainLayout>{page}</EmployeePortalMainLayout>

@@ -47,7 +47,7 @@ export const EmployeePortalHeader = () => (
     display="flex"
     alignItems="center"
     justifyContent="space-between"
-    bg="primary.600"
+    bg="secondary.700"
   >
     <Link href="/">
       <Box
