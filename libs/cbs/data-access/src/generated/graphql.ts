@@ -5623,8 +5623,8 @@ export type EachJobOpeningRecord = {
 };
 
 export type EachPayrollRunRecords = {
-  data: PayrollRunRecord;
-  error: QueryError;
+  data?: Maybe<PayrollRunRecord>;
+  error?: Maybe<QueryError>;
 };
 
 export type EachStaffRecord = {

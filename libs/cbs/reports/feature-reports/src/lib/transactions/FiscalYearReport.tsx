@@ -159,6 +159,7 @@ export const FiscalYearReport = () => {
               },
             ]}
             data={coaReport}
+            coaRedirect={false}
           />
         </Report.Content>
         <Report.Filters>
@@ -172,7 +173,7 @@ export const FiscalYearReport = () => {
               direction="column"
             />
           </Report.Filter>
-          <Report.Filter title="Include Year End Reversal">
+          <Report.Filter title="Include Year End Settlement">
             <FormRadioGroup
               name="filter.includeFiscalReversal"
               options={[
