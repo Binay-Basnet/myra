@@ -1,4 +1,6 @@
-import { SelectProps } from '@myra-ui';
+import { MultiValue, SingleValue } from 'chakra-react-select';
+
+import { SelectOption, SelectProps } from '@myra-ui';
 
 import { useAppSelector, useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
@@ -7,6 +9,7 @@ interface IFormBranchSelectProps extends SelectProps {
   name: string;
   label: string;
   showUserBranchesOnly?: boolean;
+  onChangeAction?: (newValue: MultiValue<SelectOption> | SingleValue<SelectOption>) => void;
 }
 
 export const FormBranchSelect = (props: IFormBranchSelectProps) => {

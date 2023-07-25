@@ -3943,6 +3943,26 @@ export const CustomerPayment = {
 } as const;
 
 export type CustomerPayment = typeof CustomerPayment[keyof typeof CustomerPayment];
+export type DailyBalanceReport = {
+  allLedgers: Scalars['Boolean'];
+  branchId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  coaHead?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  ledgerId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  period: LocalizedDateFilter;
+};
+
+export type DailyBalanceReportData = {
+  balance?: Maybe<BalanceValue>;
+  credit?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  debit?: Maybe<Scalars['String']>;
+};
+
+export type DailyBalanceReportResult = {
+  data?: Maybe<Array<DailyBalanceReportData>>;
+  error?: Maybe<QueryError>;
+};
+
 export type DashboardInfo = {
   branchInfo?: Maybe<BranchInfo>;
   coopInfo?: Maybe<MyCoopInfo>;
@@ -6671,6 +6691,7 @@ export type FianancialTransactionReport = {
   bankGLBalanceReport: BankGlBalanceResult;
   bankGLStatementReport: BankGlStatementResult;
   charKhataReport: TrialSheetReportResult;
+  dailyBalanceReport: DailyBalanceReportResult;
   dayBookReport: DayBookReportResult;
   fiscalTrialSheetReport: TrialSheetReportResult;
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
@@ -6695,6 +6716,10 @@ export type FianancialTransactionReportBankGlStatementReportArgs = {
 
 export type FianancialTransactionReportCharKhataReportArgs = {
   data: CharKhataReportFilter;
+};
+
+export type FianancialTransactionReportDailyBalanceReportArgs = {
+  data: DailyBalanceReport;
 };
 
 export type FianancialTransactionReportDayBookReportArgs = {
@@ -16329,6 +16354,9 @@ export type PayrollRunConnection = {
 };
 
 export type PayrollRunInput = {
+  branchId?: InputMaybe<Scalars['String']>;
+  departmentId?: InputMaybe<Scalars['String']>;
+  designationId?: InputMaybe<Scalars['String']>;
   payDay?: InputMaybe<Scalars['Localized']>;
   payrollPeriod?: InputMaybe<LocalizedDateFilter>;
   salaryAssignments?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
@@ -16344,6 +16372,9 @@ export type PayrollRunListed = {
 };
 
 export type PayrollRunRecord = {
+  branchId?: Maybe<Scalars['String']>;
+  departmentId?: Maybe<Scalars['String']>;
+  designationId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   payDay?: Maybe<Scalars['Localized']>;
   payrollPeriod?: Maybe<LocalizedDate>;
@@ -41162,6 +41193,27 @@ export type YearEndLedgerAccountListQuery = {
         } | null;
       } | null;
     } | null;
+  };
+};
+
+export type GetDailyBalanceReportQueryVariables = Exact<{
+  data: DailyBalanceReport;
+}>;
+
+export type GetDailyBalanceReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        dailyBalanceReport: {
+          data?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            debit?: string | null;
+            credit?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          }> | null;
+        };
+      };
+    };
   };
 };
 
@@ -68916,6 +68968,38 @@ export const useYearEndLedgerAccountListQuery = <
       : ['yearEndLedgerAccountList', variables],
     useAxios<YearEndLedgerAccountListQuery, YearEndLedgerAccountListQueryVariables>(
       YearEndLedgerAccountListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDailyBalanceReportDocument = `
+    query getDailyBalanceReport($data: DailyBalanceReport!) {
+  report {
+    transactionReport {
+      financial {
+        dailyBalanceReport(data: $data) {
+          data {
+            date
+            debit
+            credit
+            balance {
+              amount
+              amountType
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDailyBalanceReportQuery = <TData = GetDailyBalanceReportQuery, TError = unknown>(
+  variables: GetDailyBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetDailyBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetDailyBalanceReportQuery, TError, TData>(
+    ['getDailyBalanceReport', variables],
+    useAxios<GetDailyBalanceReportQuery, GetDailyBalanceReportQueryVariables>(
+      GetDailyBalanceReportDocument
     ).bind(null, variables),
     options
   );

@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { MultiValue, SingleValue } from 'chakra-react-select';
 import debounce from 'lodash/debounce';
 
-import { SelectProps } from '@myra-ui';
+import { SelectOption, SelectProps } from '@myra-ui';
 
 import { useListLeafCoaHeadsQuery } from '@coop/cbs/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
@@ -11,6 +12,7 @@ import FormSelect from '../FormSelect/FormSelect';
 interface IFormLeafCoaHeadSelectProps extends SelectProps {
   name: string;
   label?: string;
+  onChangeAction?: (newValue: MultiValue<SelectOption> | SingleValue<SelectOption>) => void;
 }
 
 export const FormLeafCoaHeadSelect = ({ name, label, ...rest }: IFormLeafCoaHeadSelectProps) => {

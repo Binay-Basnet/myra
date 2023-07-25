@@ -115,6 +115,7 @@ export enum Report {
   TRANSACTION_CHAR_KHATA_REPORT = 'Charkhata Ledger Report',
   TRANSACTION_MRTRANSACTION_REPORT = 'Market Representative Transaction Report',
   TRANSACTION_TAG_KHATA_REPORT = 'Ledger Group Report',
+  TRANSACTION_DAILY_BALANCE_REPORT = 'Daily Balance Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -648,6 +649,10 @@ export const REPORTS = {
     {
       report: Report.TRANSACTION_TAG_KHATA_REPORT,
       link: 'tag-khata',
+    },
+    {
+      report: Report.TRANSACTION_DAILY_BALANCE_REPORT,
+      link: 'daily-balance',
     },
   ],
   [ReportGroup.BRANCHLESS_BANKING]: [

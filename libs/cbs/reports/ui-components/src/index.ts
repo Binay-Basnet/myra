@@ -1,6 +1,7 @@
 export * from './components';
 export * from './lib/CharKhataReportInputs';
 export * from './lib/ClosedAccountInputs';
+export * from './lib/DailyBalanceReportInputs';
 export * from './lib/InterestStatementInputs';
 export * from './lib/LoanReportInputs';
 export * from './lib/LoanReportMember';
