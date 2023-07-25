@@ -199,6 +199,7 @@ export const MemberTransfer = () => {
                 name="memberId"
                 label="Member"
                 isDisabled={!!memberId || !!transferEditdata?.memberId}
+                isRequired
               />
             </GridItem>
 
@@ -207,6 +208,7 @@ export const MemberTransfer = () => {
                 name="currentBranchId"
                 label="Current Service Center"
                 isDisabled={!!branchId}
+                isRequired
               />
             </GridItem>
 
@@ -215,10 +217,16 @@ export const MemberTransfer = () => {
                 name="newBranchId"
                 label="New Service Center"
                 isDisabled={!!requestId}
+                isRequired
               />
             </GridItem>
             <GridItem colSpan={2}>
-              <FormTextArea name="reason" label="Reason to transfer" isDisabled={!!requestId} />
+              <FormTextArea
+                name="reason"
+                label="Reason to transfer"
+                isDisabled={!!requestId}
+                isRequired
+              />
             </GridItem>
             <FormFileInput size="sm" name="docs" label="File Upload" />
           </FormSection>

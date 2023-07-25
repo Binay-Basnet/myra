@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { FieldValues, UseFormReturn } from 'react-hook-form';
 import {
   useGetDepartmentOptions,
   useGetDesignationOptions,
@@ -12,7 +13,7 @@ import { useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormEditableTable, FormSelect } from '@coop/shared/form';
 
 interface PayrollEmployeeType {
-  methods: any;
+  methods: UseFormReturn<FieldValues, any>;
 }
 
 export const PayrollEntryEmployees = (props: PayrollEmployeeType) => {
