@@ -55,7 +55,7 @@ export const IncomeTaxSlabTable = () => {
   const taxSlabDataEdit = taxSlabData?.settings?.general?.HCM?.payroll?.taxSlab?.getTaxSlab?.data;
 
   useEffect(() => {
-    reset(omit({ ...taxSlabDataEdit }, ['id']) as TaxSlabInput);
+    reset(omit({ ...taxSlabDataEdit }, ['id']) as unknown as TaxSlabInput);
   }, [taxSlabDataEdit]);
 
   const methods = useForm<TaxSlabInput>({

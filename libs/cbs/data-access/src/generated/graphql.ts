@@ -22,7 +22,7 @@ export type Scalars = {
   Email: any;
   InvalidData: Record<string, Array<string>>;
   Localized: Record<'local' | 'en' | 'np', string>;
-  Map: Record<string, string>;
+  Map: Record<string, unknown>;
   Time: string;
 };
 
@@ -4119,6 +4119,16 @@ export const DefaultAccountType = {
 } as const;
 
 export type DefaultAccountType = typeof DefaultAccountType[keyof typeof DefaultAccountType];
+export type DeleteDeductionComponent = {
+  error?: Maybe<MutationError>;
+  responseStatus: Scalars['Boolean'];
+};
+
+export type DeleteEarningComponent = {
+  error?: Maybe<MutationError>;
+  responseStatus?: Maybe<Scalars['Boolean']>;
+};
+
 export type DeleteLeavePolicy = {
   error?: Maybe<MutationError>;
   responseStatus: Scalars['Boolean'];
@@ -4130,6 +4140,16 @@ export type DeleteLeaveType = {
 };
 
 export type DeleteResponse = {
+  error?: Maybe<MutationError>;
+  responseStatus: Scalars['Boolean'];
+};
+
+export type DeleteSalaryStructure = {
+  error?: Maybe<MutationError>;
+  responseStatus?: Maybe<Scalars['Boolean']>;
+};
+
+export type DeleteTaxSlab = {
   error?: Maybe<MutationError>;
   responseStatus: Scalars['Boolean'];
 };
@@ -7916,7 +7936,12 @@ export type HcmEmployeeSchema = {
 };
 
 export type HcmPayrollDeductionComponentMutation = {
+  deleteDeductionComponent: DeleteDeductionComponent;
   upsertDeductionComponent: ReturnDeductionComponent;
+};
+
+export type HcmPayrollDeductionComponentMutationDeleteDeductionComponentArgs = {
+  id: Scalars['ID'];
 };
 
 export type HcmPayrollDeductionComponentMutationUpsertDeductionComponentArgs = {
@@ -7939,7 +7964,12 @@ export type HcmPayrollDeductionComponentQueryListDeductionComponentArgs = {
 };
 
 export type HcmPayrollEarningComponentMutation = {
+  deleteEarningComponent: DeleteEarningComponent;
   upsertEarningComponent: ReturnEarningComponent;
+};
+
+export type HcmPayrollEarningComponentMutationDeleteEarningComponentArgs = {
+  id: Scalars['ID'];
 };
 
 export type HcmPayrollEarningComponentMutationUpsertEarningComponentArgs = {
@@ -8438,7 +8468,12 @@ export type HcmEmployeeHealthInsuranceListEdges = {
 };
 
 export type HcmPayrollSalaryStructureMutation = {
+  deleteSalaryStructure: DeleteSalaryStructure;
   upsertSalaryStructure: SalaryStructureOutput;
+};
+
+export type HcmPayrollSalaryStructureMutationDeleteSalaryStructureArgs = {
+  id: Scalars['ID'];
 };
 
 export type HcmPayrollSalaryStructureMutationUpsertSalaryStructureArgs = {
@@ -8461,7 +8496,12 @@ export type HcmPayrollSalaryStructureQueryListSalaryStructureArgs = {
 };
 
 export type HcmPayrollTaxSlabMutation = {
+  deleteTaxSlab: DeleteTaxSlab;
   upsertTaxSlab: ReturnTaxSlab;
+};
+
+export type HcmPayrollTaxSlabMutationDeleteTaxSlabArgs = {
+  id: Scalars['ID'];
 };
 
 export type HcmPayrollTaxSlabMutationUpsertTaxSlabArgs = {
@@ -11740,7 +11780,7 @@ export type LeavePolicyInput = {
   description?: InputMaybe<Scalars['String']>;
   effectiveFrom?: InputMaybe<Scalars['Localized']>;
   employeeLevelId?: InputMaybe<Scalars['String']>;
-  leavePolicyDetails?: InputMaybe<Array<InputMaybe<LeavePolicyDetails>>>;
+  leavePolicyDetails: Array<LeavePolicyDetails>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -19224,9 +19264,9 @@ export type Slab = {
 };
 
 export type SlabInput = {
-  fromAmount?: InputMaybe<Scalars['String']>;
+  fromAmount?: InputMaybe<Scalars['Int']>;
   percentageDeduction?: InputMaybe<Scalars['String']>;
-  toAmount?: InputMaybe<Scalars['String']>;
+  toAmount?: InputMaybe<Scalars['Int']>;
 };
 
 export type SlipElementMeasurement = {
@@ -21950,7 +21990,7 @@ export type SwitchRoleMutation = {
         me?: {
           branches?: Array<{ id: string; name: string } | null> | null;
           rolesList?: Array<{ id: string; name: string } | null> | null;
-          permission?: { myPermission?: Record<string, string> | null } | null;
+          permission?: { myPermission?: Record<string, unknown> | null } | null;
           preference?: {
             language?: Language | null;
             languageCode?: string | null;
@@ -28256,7 +28296,7 @@ export type GetMeQuery = {
       data?: {
         branches?: Array<{ id: string; name: string } | null> | null;
         rolesList?: Array<{ id: string; name: string } | null> | null;
-        permission?: { myPermission?: Record<string, string> | null } | null;
+        permission?: { myPermission?: Record<string, unknown> | null } | null;
         preference?: {
           language?: Language | null;
           languageCode?: string | null;
@@ -29959,7 +29999,7 @@ export type GetInventoryItemsListQuery = {
             sellingPrice: string;
             itemQuantity: string;
             taxId?: string | null;
-            itemsInWarehouses?: Record<string, string> | null;
+            itemsInWarehouses?: Record<string, unknown> | null;
             taxValue?: number | null;
           } | null;
         } | null> | null;
@@ -33222,10 +33262,10 @@ export type GetServiceCenterCoaBalanceReportQuery = {
     branchReport: {
       serviceCenterCOAWiseBalanceReport: {
         data?: {
-          total?: Record<string, string> | null;
+          total?: Record<string, unknown> | null;
           entries?: Array<{
             ServiceCenterName?: string | null;
-            balanceMap?: Record<string, string> | null;
+            balanceMap?: Record<string, unknown> | null;
             serviceCenterId?: string | null;
             serviceCenterCode?: string | null;
           } | null> | null;
@@ -34738,7 +34778,7 @@ export type GetKymStatusReportQuery = {
   report: {
     memberReport: {
       kymStatusReport?: {
-        Summary?: Record<string, string> | null;
+        Summary?: Record<string, unknown> | null;
         data?: Array<{
           memberName?: string | null;
           memberId?: string | null;
@@ -35593,47 +35633,47 @@ export type GetTrialSheetReportQuery = {
       financial: {
         trialSheetReport: {
           data?: {
-            equityAndLiablitiesTotal?: Record<string, string> | null;
-            assetsTotal?: Record<string, string> | null;
-            expenseTotal?: Record<string, string> | null;
-            incomeTotal?: Record<string, string> | null;
-            offBalanceTotal?: Record<string, string> | null;
-            orphanTotal?: Record<string, string> | null;
-            totalAssetExpense?: Record<string, string> | null;
-            totalLiablitiesIncome?: Record<string, string> | null;
-            totalProfitLoss?: Record<string, string> | null;
+            equityAndLiablitiesTotal?: Record<string, unknown> | null;
+            assetsTotal?: Record<string, unknown> | null;
+            expenseTotal?: Record<string, unknown> | null;
+            incomeTotal?: Record<string, unknown> | null;
+            offBalanceTotal?: Record<string, unknown> | null;
+            orphanTotal?: Record<string, unknown> | null;
+            totalAssetExpense?: Record<string, unknown> | null;
+            totalLiablitiesIncome?: Record<string, unknown> | null;
+            totalProfitLoss?: Record<string, unknown> | null;
             equityAndLiablities?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             expenses?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             income?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             assets?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             offBalance?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             orphanEntries?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
@@ -35902,49 +35942,49 @@ export type GetCharKhataReportQuery = {
       financial: {
         charKhataReport: {
           data?: {
-            equityAndLiablitiesTotal?: Record<string, string> | null;
-            assetsTotal?: Record<string, string> | null;
-            expenseTotal?: Record<string, string> | null;
-            incomeTotal?: Record<string, string> | null;
-            offBalanceTotal?: Record<string, string> | null;
-            orphanTotal?: Record<string, string> | null;
-            totalProfitLoss?: Record<string, string> | null;
-            totalAssetExpense?: Record<string, string> | null;
-            totalLiablitiesIncome?: Record<string, string> | null;
+            equityAndLiablitiesTotal?: Record<string, unknown> | null;
+            assetsTotal?: Record<string, unknown> | null;
+            expenseTotal?: Record<string, unknown> | null;
+            incomeTotal?: Record<string, unknown> | null;
+            offBalanceTotal?: Record<string, unknown> | null;
+            orphanTotal?: Record<string, unknown> | null;
+            totalProfitLoss?: Record<string, unknown> | null;
+            totalAssetExpense?: Record<string, unknown> | null;
+            totalLiablitiesIncome?: Record<string, unknown> | null;
             equityAndLiablities?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               under?: string | null;
             } | null> | null;
             assets?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               under?: string | null;
             } | null> | null;
             expenses?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               under?: string | null;
             } | null> | null;
             income?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               under?: string | null;
             } | null> | null;
             offBalance?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               under?: string | null;
             } | null> | null;
             orphanEntries?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               under?: string | null;
             } | null> | null;
           } | null;
@@ -36025,47 +36065,47 @@ export type GetFiscalYearTrialBalanceQuery = {
       financial: {
         fiscalTrialSheetReport: {
           data?: {
-            equityAndLiablitiesTotal?: Record<string, string> | null;
-            assetsTotal?: Record<string, string> | null;
-            expenseTotal?: Record<string, string> | null;
-            incomeTotal?: Record<string, string> | null;
-            offBalanceTotal?: Record<string, string> | null;
-            orphanTotal?: Record<string, string> | null;
-            totalAssetExpense?: Record<string, string> | null;
-            totalLiablitiesIncome?: Record<string, string> | null;
-            totalProfitLoss?: Record<string, string> | null;
+            equityAndLiablitiesTotal?: Record<string, unknown> | null;
+            assetsTotal?: Record<string, unknown> | null;
+            expenseTotal?: Record<string, unknown> | null;
+            incomeTotal?: Record<string, unknown> | null;
+            offBalanceTotal?: Record<string, unknown> | null;
+            orphanTotal?: Record<string, unknown> | null;
+            totalAssetExpense?: Record<string, unknown> | null;
+            totalLiablitiesIncome?: Record<string, unknown> | null;
+            totalProfitLoss?: Record<string, unknown> | null;
             equityAndLiablities?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             expenses?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             income?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             assets?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             offBalance?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
             } | null> | null;
             orphanEntries?: Array<{
-              balance?: Record<string, string> | null;
+              balance?: Record<string, unknown> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               under?: string | null;
@@ -38703,9 +38743,9 @@ export type GetPearlsReportsFormulaQuery = {
             header: string;
             description: string;
             numerator: string;
-            numeratorVariables: Record<string, string>;
+            numeratorVariables: Record<string, unknown>;
             denominator: string;
-            denominatorVariables: Record<string, string>;
+            denominatorVariables: Record<string, unknown>;
             goal: string;
             indicatorId: string;
           } | null> | null;
@@ -38726,7 +38766,7 @@ export type GetCopomisReportSettingsQuery = {
             expression: string;
             id: string;
             indicatorName: string;
-            values: Record<string, string>;
+            values: Record<string, unknown>;
           } | null> | null;
         } | null;
       } | null;
@@ -40743,7 +40783,7 @@ export type EodHistoryDetailsQuery = {
           success: boolean;
           accountNumber: string;
           narration: string;
-          payload?: Record<string, string> | null;
+          payload?: Record<string, unknown> | null;
         } | null;
       } | null> | null;
       pageInfo?: {
