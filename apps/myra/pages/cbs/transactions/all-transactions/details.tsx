@@ -77,7 +77,7 @@ const DepositDetailsPage = () => {
       <DetailPageHeader
         title="Transaction List"
         options={
-          isCurrentFiscalYear
+          isCurrentFiscalYear && !allTransactionsData?.isYearEndAdjustment
             ? [
                 {
                   label: allTransactionsData?.isYearEndAdjustment
