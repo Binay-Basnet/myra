@@ -211,7 +211,7 @@ export const EmployeeHealthInsuranceTable = () => {
       </Modal>
       <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">
         <Box display="flex" flexDir="column" p="s4" gap="s16">
-          <Text fontSize="r2">Are you sure you want to delete this Employee level ?</Text>
+          <Text fontSize="r2">Are you sure you want to delete this health insurance ?</Text>
           <Button w="-webkit-fit-content" alignSelf="flex-end" onClick={onDelete}>
             Confirm
           </Button>
