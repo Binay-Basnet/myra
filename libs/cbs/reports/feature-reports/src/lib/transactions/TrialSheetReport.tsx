@@ -474,6 +474,10 @@ export const CoaTotalTable = ({ total }: ICoaTotalTableProps) => {
     ),
   ];
 
+  if (total.length === 0) {
+    return null;
+  }
+
   return <Report.Table data={data} columns={columns} tableTitle="Total" />;
 };
 
