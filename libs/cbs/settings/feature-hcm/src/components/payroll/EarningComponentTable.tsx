@@ -137,7 +137,7 @@ export const EarningComponentTable = () => {
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
     setselectedEarningComponentId('');
-    eset(defaultFormValue);
+    reset(defaultFormValue);
   };
 
   const onSubmit = () => {

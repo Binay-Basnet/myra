@@ -87,7 +87,7 @@ export const HrLeaveAdd = () => {
             <FormDatePicker name="leaveFrom" label="From Date" />
             <FormDatePicker name="leaveTo" label="To Date" />
             <GridItem colSpan={3}>
-              <FormTextArea name="leaveNote" label="Reason" />
+              <FormTextArea name="leaveNote" label="Reason" isRequired />
             </GridItem>
           </FormSection>
         </FormLayout.Form>{' '}
