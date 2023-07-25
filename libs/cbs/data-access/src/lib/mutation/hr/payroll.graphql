@@ -12,3 +12,18 @@ mutation setSalaryStructureAssignment($id: String, $input: InputSalaryStructureA
     }
   }
 }
+
+mutation setPayrollRun($id: ID, $input: PayrollRunInput!) {
+  hr {
+    payroll {
+      payrollRun {
+        upsertPayrollRun(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

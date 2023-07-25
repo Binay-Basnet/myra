@@ -51,3 +51,81 @@ query getSalaryStructureAssignment($id: String!) {
     }
   }
 }
+
+query getPayrollRunList($filter: Filter, $pagination: Pagination) {
+  hr {
+    payroll {
+      payrollRun {
+        listPayrollRun(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              payPeriod {
+                from
+                to
+              }
+              employees
+              payableCost
+              payDate
+              status
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getPayrollRun($id: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        getPayrollRun(id: $id) {
+          data {
+            id
+            payrollPeriod {
+              from
+              to
+            }
+            payDay
+            salaryAssignments
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSalaryAssignmentListWithExtraDetailsList($filter: Filter, $pagination: Pagination) {
+  hr {
+    payroll {
+      payrollRun {
+        ListSalaryAssignmentWithExtraDetails(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              employeeName
+              paidDays
+              grossPay
+              deductions
+              netPay
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

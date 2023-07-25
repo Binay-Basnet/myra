@@ -22392,6 +22392,30 @@ export type SetSalaryStructureAssignmentMutation = {
   };
 };
 
+export type SetPayrollRunMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: PayrollRunInput;
+}>;
+
+export type SetPayrollRunMutation = {
+  hr: {
+    payroll: {
+      payrollRun: {
+        upsertPayrollRun: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type SetStaffPlanningMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: StaffPlanInput;
@@ -29267,6 +29291,97 @@ export type GetSalaryStructureAssignmentQuery = {
             | MutationError_ServerError_Fragment
             | MutationError_ValidationError_Fragment
             | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetPayrollRunListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetPayrollRunListQuery = {
+  hr: {
+    payroll: {
+      payrollRun: {
+        listPayrollRun: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: string | null;
+              employees?: number | null;
+              payableCost?: string | null;
+              payDate?: Record<'local' | 'en' | 'np', string> | null;
+              status?: PayrollStatus | null;
+              payPeriod?: {
+                from: Record<'local' | 'en' | 'np', string>;
+                to: Record<'local' | 'en' | 'np', string>;
+              } | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetPayrollRunQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetPayrollRunQuery = {
+  hr: {
+    payroll: {
+      payrollRun: {
+        getPayrollRun: {
+          data?: {
+            id?: string | null;
+            payDay?: Record<'local' | 'en' | 'np', string> | null;
+            salaryAssignments?: Array<string | null> | null;
+            payrollPeriod?: {
+              from: Record<'local' | 'en' | 'np', string>;
+              to: Record<'local' | 'en' | 'np', string>;
+            } | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetSalaryAssignmentListWithExtraDetailsListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetSalaryAssignmentListWithExtraDetailsListQuery = {
+  hr: {
+    payroll: {
+      payrollRun: {
+        ListSalaryAssignmentWithExtraDetails: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: string | null;
+              employeeName?: string | null;
+              paidDays?: number | null;
+              grossPay?: string | null;
+              deductions?: string | null;
+              netPay?: string | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
         };
       };
     };
@@ -43316,6 +43431,35 @@ export const useSetSalaryStructureAssignmentMutation = <TError = unknown, TConte
     ),
     options
   );
+export const SetPayrollRunDocument = `
+    mutation setPayrollRun($id: ID, $input: PayrollRunInput!) {
+  hr {
+    payroll {
+      payrollRun {
+        upsertPayrollRun(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetPayrollRunMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetPayrollRunMutation,
+    TError,
+    SetPayrollRunMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetPayrollRunMutation, TError, SetPayrollRunMutationVariables, TContext>(
+    ['setPayrollRun'],
+    useAxios<SetPayrollRunMutation, SetPayrollRunMutationVariables>(SetPayrollRunDocument),
+    options
+  );
 export const SetStaffPlanningDocument = `
     mutation setStaffPlanning($id: ID, $input: StaffPlanInput!) {
   hr {
@@ -52861,6 +53005,127 @@ export const useGetSalaryStructureAssignmentQuery = <
     useAxios<GetSalaryStructureAssignmentQuery, GetSalaryStructureAssignmentQueryVariables>(
       GetSalaryStructureAssignmentDocument
     ).bind(null, variables),
+    options
+  );
+export const GetPayrollRunListDocument = `
+    query getPayrollRunList($filter: Filter, $pagination: Pagination) {
+  hr {
+    payroll {
+      payrollRun {
+        listPayrollRun(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              payPeriod {
+                from
+                to
+              }
+              employees
+              payableCost
+              payDate
+              status
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetPayrollRunListQuery = <TData = GetPayrollRunListQuery, TError = unknown>(
+  variables?: GetPayrollRunListQueryVariables,
+  options?: UseQueryOptions<GetPayrollRunListQuery, TError, TData>
+) =>
+  useQuery<GetPayrollRunListQuery, TError, TData>(
+    variables === undefined ? ['getPayrollRunList'] : ['getPayrollRunList', variables],
+    useAxios<GetPayrollRunListQuery, GetPayrollRunListQueryVariables>(
+      GetPayrollRunListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetPayrollRunDocument = `
+    query getPayrollRun($id: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        getPayrollRun(id: $id) {
+          data {
+            id
+            payrollPeriod {
+              from
+              to
+            }
+            payDay
+            salaryAssignments
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetPayrollRunQuery = <TData = GetPayrollRunQuery, TError = unknown>(
+  variables: GetPayrollRunQueryVariables,
+  options?: UseQueryOptions<GetPayrollRunQuery, TError, TData>
+) =>
+  useQuery<GetPayrollRunQuery, TError, TData>(
+    ['getPayrollRun', variables],
+    useAxios<GetPayrollRunQuery, GetPayrollRunQueryVariables>(GetPayrollRunDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetSalaryAssignmentListWithExtraDetailsListDocument = `
+    query getSalaryAssignmentListWithExtraDetailsList($filter: Filter, $pagination: Pagination) {
+  hr {
+    payroll {
+      payrollRun {
+        ListSalaryAssignmentWithExtraDetails(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              employeeName
+              paidDays
+              grossPay
+              deductions
+              netPay
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSalaryAssignmentListWithExtraDetailsListQuery = <
+  TData = GetSalaryAssignmentListWithExtraDetailsListQuery,
+  TError = unknown
+>(
+  variables?: GetSalaryAssignmentListWithExtraDetailsListQueryVariables,
+  options?: UseQueryOptions<GetSalaryAssignmentListWithExtraDetailsListQuery, TError, TData>
+) =>
+  useQuery<GetSalaryAssignmentListWithExtraDetailsListQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalaryAssignmentListWithExtraDetailsList']
+      : ['getSalaryAssignmentListWithExtraDetailsList', variables],
+    useAxios<
+      GetSalaryAssignmentListWithExtraDetailsListQuery,
+      GetSalaryAssignmentListWithExtraDetailsListQueryVariables
+    >(GetSalaryAssignmentListWithExtraDetailsListDocument).bind(null, variables),
     options
   );
 export const GetStaffPlanningListDocument = `

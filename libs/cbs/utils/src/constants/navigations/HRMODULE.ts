@@ -239,7 +239,7 @@ export const HRMODULE: NavType = {
       label: 'Payroll',
       forms: [
         {
-          label: 'New Payroll Entry',
+          label: 'New Payroll Run',
           aclKey: 'HCM_PAYROLL_ENTRY',
           route: ROUTES.HR_PAYROLL_ENTRY_ADD,
         },
@@ -261,7 +261,7 @@ export const HRMODULE: NavType = {
       ],
       pages: [
         {
-          label: 'Payroll Entry',
+          label: 'Payroll Run',
           route: ROUTES.HR_PAYROLL_ENTRY_LIST,
           aclKey: 'HCM_PAYROLL_ENTRY',
           addRoute: ROUTES.HR_PAYROLL_ENTRY_ADD,
