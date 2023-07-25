@@ -64,6 +64,11 @@ export const COAAccountDetail = () => {
     });
   };
 
+  const handleUpdateModalOpen = () => {
+    methods.setValue('newName', accountDetails?.meta?.accountName);
+    onToggle();
+  };
+
   const handleUpdateModalClose = () => {
     methods.reset({ newName: '' });
     onClose();
@@ -126,13 +131,13 @@ export const COAAccountDetail = () => {
   };
 
   const handleChangeLedgerParentClose = () => {
-    methods.reset({ newName: '' });
+    methods.reset({ newCOALeaf: '' });
     onChangeParentClose();
   };
 
   const options = useMemo(() => {
     const tempOptions = [
-      { label: 'Edit Ledger Name', handler: onToggle },
+      { label: 'Edit Ledger Name', handler: handleUpdateModalOpen },
       { label: 'Assign Tag', handler: onAssignTagModalToggle },
     ];
 
