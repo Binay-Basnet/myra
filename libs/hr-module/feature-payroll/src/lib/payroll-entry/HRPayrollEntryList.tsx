@@ -18,7 +18,7 @@ export const HRPayrollEntryList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Pay Peroid',
+        header: 'Pay Period',
         accessorFn: (row) => row?.node?.payPeriod?.from,
         cell: (props) => (
           <Text>
