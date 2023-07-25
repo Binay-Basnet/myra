@@ -40,6 +40,8 @@ export enum Report {
   SHARE_BONUS_DISTRIBUTION_REPORT = 'Share Bonus Distribution Report',
 
   SAVING_STATEMENT = 'Saving Account Statement',
+  ADJUSTMENT_SAVING_STATEMENT = 'Adjustment Saving Account Statement',
+
   SAVING_INTEREST_STATEMENT = 'Interest Statement Report',
   DEPOSIT_CONSOLIDATED_REPORT = 'Deposit Consolidated Report',
   DEPOSIT_DAILY_TRANSACTION_REPORT = 'Deposit Daily Transaction Report',
@@ -271,6 +273,11 @@ export const REPORTS = {
       id: '5.1',
       report: Report.SAVING_STATEMENT,
       link: 'statement',
+    },
+    {
+      id: '5.1.1',
+      report: Report.ADJUSTMENT_SAVING_STATEMENT,
+      // link: 'adjustment-statement',
     },
     {
       id: '5.2',
