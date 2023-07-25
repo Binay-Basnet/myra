@@ -20,7 +20,7 @@ import {
 
 import {
   EarningComponentInput,
-  useDeleteHcmEmployeeGeneralMutation,
+  useDeleteEarningComponentMutation,
   useGetEarningComponentListQuery,
   useGetEarningComponentQuery,
   useSetEarningComponentMutation,
@@ -47,7 +47,7 @@ export const EarningComponentTable = () => {
 
   const { data, refetch } = useGetEarningComponentListQuery({ pagination: getPaginationQuery() });
   const { mutateAsync, isLoading } = useSetEarningComponentMutation();
-  const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+  const { mutateAsync: deleteMutateAsync } = useDeleteEarningComponentMutation();
 
   const { data: earningComponentData } = useGetEarningComponentQuery(
     { id: selectedEarningComponentId },
@@ -137,6 +137,7 @@ export const EarningComponentTable = () => {
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
     setselectedEarningComponentId('');
+    eset(defaultFormValue);
   };
 
   const onSubmit = () => {
@@ -156,6 +157,15 @@ export const EarningComponentTable = () => {
           id: selectedEarningComponentId,
           input: values,
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof EarningComponentInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     } else {
       asyncToast({
@@ -172,6 +182,15 @@ export const EarningComponentTable = () => {
           id: null,
           input: values,
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof EarningComponentInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     }
   };

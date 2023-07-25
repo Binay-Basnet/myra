@@ -21,7 +21,7 @@ import {
 import {
   DeductionFrequencyEnum,
   InputDeductionComponent,
-  useDeleteHcmEmployeeGeneralMutation,
+  useDeleteDeductionComponentMutation,
   useGetDeductionComponentListQuery,
   useGetDeductionComponentQuery,
   useSetDeductionComponentMutation,
@@ -49,7 +49,7 @@ export const DeductionComponentTable = () => {
 
   const { data, refetch } = useGetDeductionComponentListQuery({ pagination: getPaginationQuery() });
   const { mutateAsync, isLoading } = useSetDeductionComponentMutation();
-  const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+  const { mutateAsync: deleteMutateAsync } = useDeleteDeductionComponentMutation();
 
   const { data: deductionComponentData } = useGetDeductionComponentQuery(
     { id: selectedDeductionComponentId },
@@ -145,6 +145,7 @@ export const DeductionComponentTable = () => {
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
     setSelectedDeductionComponentId('');
+    reset(defaultFormValue);
   };
 
   const onSubmit = () => {
@@ -164,6 +165,15 @@ export const DeductionComponentTable = () => {
           id: selectedDeductionComponentId,
           input: values,
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof InputDeductionComponent, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     } else {
       asyncToast({
@@ -180,6 +190,15 @@ export const DeductionComponentTable = () => {
           id: null,
           input: values,
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof InputDeductionComponent, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     }
   };

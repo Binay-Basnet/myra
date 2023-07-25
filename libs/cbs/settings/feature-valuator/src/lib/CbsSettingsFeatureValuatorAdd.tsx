@@ -146,7 +146,7 @@ export const CbsSettingsFeatureValuatorAdd = () => {
                           label={t['settingsGeneralValuatorFormValuatorID']}
                         />
 
-                        {/* <FormSelect
+                        <FormSelect
                           name="academicQualification"
                           label={t['settingsGeneralValuatorFormAcademicQualification']}
                           options={[
@@ -171,7 +171,7 @@ export const CbsSettingsFeatureValuatorAdd = () => {
                               value: 'PHD',
                             },
                           ]}
-                        /> */}
+                        />
 
                         <FormInput
                           type="text"

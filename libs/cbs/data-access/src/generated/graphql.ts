@@ -24639,6 +24639,114 @@ export type SetTaxSlabMutation = {
   };
 };
 
+export type DeleteEarningComponentMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type DeleteEarningComponentMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          earningComponent: {
+            deleteEarningComponent: {
+              responseStatus?: boolean | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type DeleteDeductionComponentMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type DeleteDeductionComponentMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          deductionComponent: {
+            deleteDeductionComponent: {
+              responseStatus: boolean;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type DeleteSalaryStructureMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type DeleteSalaryStructureMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          salaryStructure: {
+            deleteSalaryStructure: {
+              responseStatus?: boolean | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type DeleteTaxSlabMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type DeleteTaxSlabMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxSlab: {
+            deleteTaxSlab: {
+              responseStatus: boolean;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type UpsertLedgerTagMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: LedgerTagInput;
@@ -46663,6 +46771,159 @@ export const useSetTaxSlabMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetTaxSlabMutation, TError, SetTaxSlabMutationVariables, TContext>(
     ['setTaxSlab'],
     useAxios<SetTaxSlabMutation, SetTaxSlabMutationVariables>(SetTaxSlabDocument),
+    options
+  );
+export const DeleteEarningComponentDocument = `
+    mutation deleteEarningComponent($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          earningComponent {
+            deleteEarningComponent(id: $id) {
+              responseStatus
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteEarningComponentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteEarningComponentMutation,
+    TError,
+    DeleteEarningComponentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteEarningComponentMutation,
+    TError,
+    DeleteEarningComponentMutationVariables,
+    TContext
+  >(
+    ['deleteEarningComponent'],
+    useAxios<DeleteEarningComponentMutation, DeleteEarningComponentMutationVariables>(
+      DeleteEarningComponentDocument
+    ),
+    options
+  );
+export const DeleteDeductionComponentDocument = `
+    mutation deleteDeductionComponent($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          deductionComponent {
+            deleteDeductionComponent(id: $id) {
+              responseStatus
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteDeductionComponentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteDeductionComponentMutation,
+    TError,
+    DeleteDeductionComponentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteDeductionComponentMutation,
+    TError,
+    DeleteDeductionComponentMutationVariables,
+    TContext
+  >(
+    ['deleteDeductionComponent'],
+    useAxios<DeleteDeductionComponentMutation, DeleteDeductionComponentMutationVariables>(
+      DeleteDeductionComponentDocument
+    ),
+    options
+  );
+export const DeleteSalaryStructureDocument = `
+    mutation deleteSalaryStructure($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          salaryStructure {
+            deleteSalaryStructure(id: $id) {
+              responseStatus
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteSalaryStructureMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteSalaryStructureMutation,
+    TError,
+    DeleteSalaryStructureMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteSalaryStructureMutation,
+    TError,
+    DeleteSalaryStructureMutationVariables,
+    TContext
+  >(
+    ['deleteSalaryStructure'],
+    useAxios<DeleteSalaryStructureMutation, DeleteSalaryStructureMutationVariables>(
+      DeleteSalaryStructureDocument
+    ),
+    options
+  );
+export const DeleteTaxSlabDocument = `
+    mutation deleteTaxSlab($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxSlab {
+            deleteTaxSlab(id: $id) {
+              responseStatus
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteTaxSlabMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteTaxSlabMutation,
+    TError,
+    DeleteTaxSlabMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteTaxSlabMutation, TError, DeleteTaxSlabMutationVariables, TContext>(
+    ['deleteTaxSlab'],
+    useAxios<DeleteTaxSlabMutation, DeleteTaxSlabMutationVariables>(DeleteTaxSlabDocument),
     options
   );
 export const UpsertLedgerTagDocument = `

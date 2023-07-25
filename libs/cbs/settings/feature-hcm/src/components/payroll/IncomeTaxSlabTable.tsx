@@ -20,7 +20,7 @@ import {
 
 import {
   TaxSlabInput,
-  useDeleteHcmEmployeeGeneralMutation,
+  useDeleteTaxSlabMutation,
   useGetTaxSlabListQuery,
   useGetTaxSlabQuery,
   useSetTaxSlabMutation,
@@ -45,7 +45,7 @@ export const IncomeTaxSlabTable = () => {
 
   const { data, refetch } = useGetTaxSlabListQuery({ pagination: getPaginationQuery() });
   const { mutateAsync, isLoading } = useSetTaxSlabMutation();
-  const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+  const { mutateAsync: deleteMutateAsync } = useDeleteTaxSlabMutation();
 
   const { data: taxSlabData } = useGetTaxSlabQuery(
     { id: selectedTaxSlabId },
@@ -132,6 +132,7 @@ export const IncomeTaxSlabTable = () => {
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
     setselectedTaxSlabId('');
+    reset(defaultFormValue);
   };
 
   const onSubmit = () => {
@@ -151,6 +152,15 @@ export const IncomeTaxSlabTable = () => {
           id: selectedTaxSlabId,
           input: values,
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof TaxSlabInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     } else {
       asyncToast({
@@ -167,6 +177,15 @@ export const IncomeTaxSlabTable = () => {
           id: null,
           input: values,
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof TaxSlabInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     }
   };
