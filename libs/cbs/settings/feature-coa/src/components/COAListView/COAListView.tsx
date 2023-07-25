@@ -4,31 +4,33 @@ import { useRouter } from 'next/router';
 import { TablePopover, Text, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Filter_Mode, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
-import { amountConverter, getPaginationQuery, getUrl, useTranslation } from '@coop/shared/utils';
+import { useGetCoaAccountListQuery, useGetMemberFilterMappingQuery } from '@coop/cbs/data-access';
+import {
+  amountConverter,
+  getFilterQuery,
+  getPaginationQuery,
+  getUrl,
+  useTranslation,
+} from '@coop/shared/utils';
 
-// const accountClass = {
-//   EQUITY_AND_LIABILITIES: 'Equity and Liabilities',
-//   ASSETS: 'Assets',
-//   EXPENDITURE: 'Expenditure',
-//   INCOME: 'Income',
-// };
+const accountClass = {
+  EQUITY_AND_LIABILITIES: 'Equity and Liabilities',
+  ASSETS: 'Assets',
+  EXPENDITURE: 'Expenditure',
+  INCOME: 'Income',
+  OFF_BALANCE_SHEET: 'Off Balance Sheet',
+};
 
 export const COAListView = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
-  // const branch = useAppSelector((state) => state?.auth?.user?.currentBranch);
-  const searchTerm = router?.query['search'] as string;
+
+  const { data: filterMapping } = useGetMemberFilterMappingQuery();
 
   const { data: accountList, isFetching } = useGetCoaAccountListQuery({
-    pagination: {
-      ...getPaginationQuery(),
-    },
-    filter: {
-      name: searchTerm,
-      filterMode: Filter_Mode.Or,
-    },
+    pagination: getPaginationQuery(),
+    filter: getFilterQuery(),
   });
 
   const accountListData = accountList?.settings?.chartsOfAccount?.coaAccountList?.edges;
@@ -37,10 +39,6 @@ export const COAListView = () => {
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
-      // {
-      //   header: t['settingsCoaTableAccountCode'],
-      //   accessorFn: (row) => row?.node?.accountCode,
-      // },
       {
         header: t['settingsCoaTableAccountName'],
         accessorFn: (row) => row?.node?.accountName?.local,
@@ -58,10 +56,18 @@ export const COAListView = () => {
         },
       },
       {
+        id: 'branch',
         header: 'Service Center',
         accessorFn: (row) => row?.node?.branch,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: filterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
       },
       {
+        id: 'accountClass',
         header: t['settingsCoaTableAccountClass'],
         accessorFn: (row) => row?.node?.accountClass,
         cell: (props) => (
@@ -71,8 +77,16 @@ export const COAListView = () => {
               : '-'}
           </Text>
         ),
+        enableColumnFilter: true,
+
         meta: {
           width: '200px',
+          filterMaps: {
+            list: Object.keys(accountClass)?.map((account) => ({
+              label: accountClass[account as keyof typeof accountClass],
+              value: account,
+            })),
+          },
         },
       },
 
@@ -84,8 +98,11 @@ export const COAListView = () => {
         },
       },
       {
+        id: 'balance',
         header: 'Balance',
         accessorFn: (row) => amountConverter(row?.node?.balance as string),
+        enableColumnFilter: true,
+        filterFn: 'amount',
         meta: {
           width: '200px',
           isNumeric: true,
@@ -120,7 +137,7 @@ export const COAListView = () => {
           ),
       },
     ],
-    [t]
+    [t, filterMapping?.members?.filterMapping?.serviceCenter]
   );
 
   return (

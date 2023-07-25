@@ -22,6 +22,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => (
               {account?.approvedAmount && <Text>Approved Amount:</Text>}
               {account?.issuedDate && <Text>Loan Issued Date:</Text>}
               {member?.code && <Text>Membership No:</Text>}
+              {member?.panVatNo && <Text>PAN No:</Text>}
               {/* {account?.openingBalance && <Text>Opening Balance:</Text>} */}
             </Box>
           </GridItem>
@@ -38,6 +39,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => (
                 <Text noOfLines={1}> {localizedDate(account?.issuedDate)}</Text>
               )}
               {member?.code && <Text noOfLines={1}>{member?.code}</Text>}
+              {member?.panVatNo && <Text noOfLines={1}>{member?.panVatNo}</Text>}
               {/* {account?.openingBalance && (
                 <Text noOfLines={1}>{amountConverter(account?.openingBalance ?? 0)}</Text>
               )} */}
@@ -54,6 +56,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => (
             <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
               {account?.interestRate && <Text>Current Interest Rate:</Text>}
               {account?.accountNo && <Text>Loan Account No:</Text>}
+              {account?.productName && <Text>Loan Product Name</Text>}
               {account?.loanType && <Text>Loan Type:</Text>}
               {account?.loanSubtype && <Text>Loan Subtype:</Text>}
               {account?.installment && <Text>Installment:</Text>}
@@ -67,6 +70,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => (
             <Box display="flex" flexDir="column" fontSize="r1" color="gray.700" fontWeight="500">
               {account?.interestRate && <Text noOfLines={1}>{account?.interestRate ?? 0}%</Text>}
               {account?.accountNo && <Text noOfLines={1}>{account?.accountNo}</Text>}
+              {account?.productName && <Text noOfLines={1}>{account?.productName}</Text>}
               {account?.loanType && <Text noOfLines={1}>{account?.loanType}</Text>}
               {account?.loanSubtype && <Text noOfLines={1}>{account?.loanSubtype}</Text>}
               {account?.installment && <Text noOfLines={1}>{account?.installment}</Text>}
@@ -96,6 +100,7 @@ export const ClosedLoanReportMeta = ({ meta }: ClosedLoanAccountMetaProps) => (
             <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
               {meta?.memberName && <Text>Name of member:</Text>}
               {meta?.address && <Text>Address:</Text>}
+              {meta?.memberPan && <Text>Member Pan:</Text>}
               {meta?.branchName && <Text>Branch Name:</Text>}
               {meta?.approvedAmount && <Text>Approved Amount:</Text>}
               {meta?.loanIssuedDate && <Text>Loan Issued Date:</Text>}
@@ -112,6 +117,7 @@ export const ClosedLoanReportMeta = ({ meta }: ClosedLoanAccountMetaProps) => (
                 </Text>
               )}
               {meta?.address && <Text noOfLines={1}>{localizedText(meta?.address)}</Text>}
+              {meta?.memberPan && <Text noOfLines={1}>{meta?.memberPan}</Text>}
               {meta?.branchName && <Text noOfLines={1}>{meta?.branchName}</Text>}
               {meta?.approvedAmount && (
                 <Text noOfLines={1}>{amountConverter(meta?.approvedAmount ?? 0)}</Text>

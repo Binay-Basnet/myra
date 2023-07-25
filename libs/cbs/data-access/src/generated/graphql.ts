@@ -58,6 +58,7 @@ export const Action = {
 export type Action = typeof Action[keyof typeof Action];
 export type AllTransactionFilterMapping = {
   branchId: Array<LabelValueArray>;
+  fiscalYear: Array<LabelValueArray>;
   txnType: Array<LabelValueArray>;
 };
 
@@ -703,6 +704,7 @@ export type AccountingReport = {
   externalLoanStatementReport: ExternalLoanStatementReportResult;
   fdInvestmentReport: FdInvestmentReportResult;
   fdInvestmentStatementReport: FdInvestmentStatementReportResult;
+  purchaseReport?: Maybe<PurchaseReportResult>;
   salesReport: SalesReportResult;
 };
 
@@ -720,6 +722,10 @@ export type AccountingReportFdInvestmentReportArgs = {
 
 export type AccountingReportFdInvestmentStatementReportArgs = {
   data: FdInvestmentStatementReportFilter;
+};
+
+export type AccountingReportPurchaseReportArgs = {
+  data: PurchaseReportFilter;
 };
 
 export type AccountingReportSalesReportArgs = {
@@ -858,6 +864,13 @@ export type AccountingTaxRate = {
   id: Scalars['String'];
   name: Scalars['String'];
   rate: Scalars['Float'];
+};
+
+export type AccountsMinimal = {
+  accNo?: Maybe<Scalars['String']>;
+  balance?: Maybe<BalanceValue>;
+  disbursedAmount?: Maybe<Scalars['String']>;
+  interestAccured?: Maybe<Scalars['String']>;
 };
 
 export type AccountsTransactionFilter = {
@@ -1289,6 +1302,7 @@ export type AllTransactionResult = {
   branch?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
+  isYearEndAdjustment?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
@@ -1302,24 +1316,41 @@ export type AllTransactionResult = {
 };
 
 export const AllTransactionType = {
+  AccountingExternalLoan: 'ACCOUNTING_EXTERNAL_LOAN',
+  AccountingInvestment: 'ACCOUNTING_INVESTMENT',
   AccountClose: 'ACCOUNT_CLOSE',
   AlternateChannel: 'ALTERNATE_CHANNEL',
+  BranchTransfer: 'BRANCH_TRANSFER',
+  BulkTransfer: 'BULK_TRANSFER',
+  CashInTransit: 'CASH_IN_TRANSIT',
+  CreditNote: 'CREDIT_NOTE',
+  DebitNote: 'DEBIT_NOTE',
   Deposit: 'DEPOSIT',
   Ebanking: 'EBANKING',
+  Expenses: 'EXPENSES',
   InterestBooking: 'INTEREST_BOOKING',
   InterestPosting: 'INTEREST_POSTING',
   InterBranchTransfer: 'INTER_BRANCH_TRANSFER',
+  InventoryPurchase: 'INVENTORY_PURCHASE',
+  InventorySell: 'INVENTORY_SELL',
   JournalVoucher: 'JOURNAL_VOUCHER',
+  LedgerBalanceTransfer: 'LEDGER_BALANCE_TRANSFER',
   LoanDisbursment: 'LOAN_DISBURSMENT',
+  LoanLossProvision: 'LOAN_LOSS_PROVISION',
   LoanRepayment: 'LOAN_REPAYMENT',
+  LocLimit: 'LOC_LIMIT',
   Membership: 'MEMBERSHIP',
+  MemberTransfer: 'MEMBER_TRANSFER',
   Migration: 'MIGRATION',
   OpeningBalance: 'OPENING_BALANCE',
   SharePurchase: 'SHARE_PURCHASE',
   ShareReturn: 'SHARE_RETURN',
+  TellerBankTransfer: 'TELLER_BANK_TRANSFER',
   TellerTransfer: 'TELLER_TRANSFER',
+  TransactionRevert: 'TRANSACTION_REVERT',
   Transfer: 'TRANSFER',
   Withdraw: 'WITHDRAW',
+  YearEnd: 'YEAR_END',
 } as const;
 
 export type AllTransactionType = typeof AllTransactionType[keyof typeof AllTransactionType];
@@ -1354,6 +1385,7 @@ export type AlternativeChannelCharges = {
   amount?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   ledgerId?: Maybe<Scalars['String']>;
+  restrictTransaction?: Maybe<Scalars['Boolean']>;
   serviceType?: Maybe<AlternativeChannelServiceType>;
 };
 
@@ -1361,6 +1393,7 @@ export type AlternativeChannelChargesInput = {
   amount?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   ledgerId?: InputMaybe<Scalars['String']>;
+  restrictTransaction?: InputMaybe<Scalars['Boolean']>;
   serviceType?: InputMaybe<AlternativeChannelServiceType>;
 };
 
@@ -1801,7 +1834,7 @@ export type BankAccountQueryDetailsArgs = {
 
 export type BankAccountQueryListArgs = {
   currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
-  filter?: InputMaybe<BankAccountFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -1912,7 +1945,7 @@ export type BankChequePaymentForAccountClose = {
 export type BankChequePaymentForAlternativeChannel = {
   bank: Scalars['ID'];
   depositedBy?: InputMaybe<AlternativeChannelDepositedBy>;
-  deposited_date?: InputMaybe<Scalars['String']>;
+  deposited_date?: InputMaybe<Scalars['Localized']>;
   note?: InputMaybe<Scalars['String']>;
   voucher_id?: InputMaybe<Scalars['String']>;
 };
@@ -2077,6 +2110,7 @@ export type Branch = {
   category?: Maybe<BranchCategory>;
   contactNumber?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  eodReady?: Maybe<Scalars['Boolean']>;
   estDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   location?: Maybe<LocationCoordinate>;
@@ -2908,6 +2942,7 @@ export type ChartsOfAccountFilter = {
 export type ChartsOfAccountMutation = {
   add: AddChartsOfAccountResult;
   addAccount?: Maybe<CoaAddAccountResult>;
+  changeLedgerParent: LeadgerHeadChangeResult;
   delete: AddChartsOfAccountResult;
   newGroup: NewCoaGroupResult;
   updateLedgerName?: Maybe<UpdateLedgerResult>;
@@ -2924,6 +2959,11 @@ export type ChartsOfAccountMutationAddAccountArgs = {
   openForBranches?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   parentAccountCode: Scalars['String'];
   tagIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+};
+
+export type ChartsOfAccountMutationChangeLedgerParentArgs = {
+  ledgerId: Scalars['ID'];
+  newCOALeaf: Scalars['ID'];
 };
 
 export type ChartsOfAccountMutationDeleteArgs = {
@@ -2991,8 +3031,7 @@ export type ChartsOfAccountSettingsQueryCoaAccountDetailsArgs = {
 };
 
 export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
-  branchId?: InputMaybe<Array<Scalars['String']>>;
-  filter?: InputMaybe<CoaListFilter>;
+  filter?: InputMaybe<Filter>;
   flag?: InputMaybe<CoaListFlag>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -3006,7 +3045,7 @@ export type ChartsOfAccountSettingsQueryCoaLeafNodeDetailsArgs = {
 export type ChartsOfAccountSettingsQueryCoaLedgerListArgs = {
   branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<Filter>;
-  id: Scalars['ID'];
+  id: Array<Scalars['ID']>;
   pagination?: InputMaybe<Pagination>;
   snapshot?: InputMaybe<Scalars['String']>;
 };
@@ -3100,6 +3139,7 @@ export type ClosedLoanAccountMeta = {
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['String']>;
+  memberPan?: Maybe<Scalars['String']>;
   noOfInstallments?: Maybe<Scalars['Int']>;
 };
 
@@ -3162,6 +3202,7 @@ export type ClosedSavingAccountResultData = {
   closedDate?: Maybe<Scalars['Localized']>;
   entries?: Maybe<Array<Maybe<ClosedSavingAccountData>>>;
   memberName?: Maybe<Scalars['Localized']>;
+  memberPan?: Maybe<Scalars['String']>;
   memberShipCode?: Maybe<Scalars['String']>;
   membershipDate?: Maybe<Scalars['Localized']>;
   savingType?: Maybe<Scalars['String']>;
@@ -3311,6 +3352,8 @@ export const ComparatorType = {
   Contains: 'CONTAINS',
   EqualTo: 'EqualTo',
   GreaterThan: 'GreaterThan',
+  HasNoValue: 'HasNoValue',
+  HasValue: 'HasValue',
   In: 'IN',
   LessThan: 'LessThan',
 } as const;
@@ -4033,12 +4076,59 @@ export type DeclarationUpdateResult = {
   record?: Maybe<Declaration>;
 };
 
+export type DeductionComponentListConnection = {
+  edges?: Maybe<Array<Maybe<DeductionComponentListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type DeductionComponentListEdges = {
+  cursor: Scalars['Cursor'];
+  node: DeductionComponentNode;
+};
+
+export type DeductionComponentNode = {
+  abbr?: Maybe<Scalars['String']>;
+  baseMultiple?: Maybe<Scalars['String']>;
+  deductionFrequency?: Maybe<DeductionFrequencyEnum>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  multiplier?: Maybe<Scalars['Float']>;
+  name?: Maybe<Scalars['String']>;
+  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
+  status?: Maybe<DeductionStatusEnum>;
+};
+
+export const DeductionFrequencyEnum = {
+  Monthly: 'MONTHLY',
+  Yearly: 'YEARLY',
+} as const;
+
+export type DeductionFrequencyEnum =
+  typeof DeductionFrequencyEnum[keyof typeof DeductionFrequencyEnum];
+export const DeductionStatusEnum = {
+  Active: 'ACTIVE',
+  Inactive: 'INACTIVE',
+} as const;
+
+export type DeductionStatusEnum = typeof DeductionStatusEnum[keyof typeof DeductionStatusEnum];
 export const DefaultAccountType = {
   Current: 'CURRENT',
   Saving: 'SAVING',
 } as const;
 
 export type DefaultAccountType = typeof DefaultAccountType[keyof typeof DefaultAccountType];
+export type DeleteLeavePolicy = {
+  error?: Maybe<MutationError>;
+  responseStatus: Scalars['Boolean'];
+};
+
+export type DeleteLeaveType = {
+  error?: Maybe<MutationError>;
+  responseStatus: Scalars['Boolean'];
+};
+
 export type DeleteResponse = {
   error?: Maybe<MutationError>;
   responseStatus: Scalars['Boolean'];
@@ -4213,6 +4303,7 @@ export type DepositLoanAccount = Base & {
   accountName?: Maybe<Scalars['String']>;
   agentId?: Maybe<Scalars['ID']>;
   atmFacility?: Maybe<Scalars['Boolean']>;
+  branchName?: Maybe<Scalars['String']>;
   chequeFacility?: Maybe<Scalars['Boolean']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
@@ -4368,6 +4459,7 @@ export type DepositLoanAccountMutationUpdateAccountNameArgs = {
 
 export type DepositLoanAccountMutationUpdateInstallmentAmountArgs = {
   accountId: Scalars['ID'];
+  effectiveDate: Scalars['Localized'];
   newInstallmentAmount: Scalars['String'];
 };
 
@@ -4486,6 +4578,7 @@ export type DepositProduct = {
   createdAt: Scalars['Localized'];
   createdBy: Identity;
   createdDate?: Maybe<Scalars['String']>;
+  depositFrequency?: Maybe<Frequency>;
   id: Scalars['ID'];
   interest?: Maybe<Scalars['Float']>;
   isMandatorySaving?: Maybe<Scalars['Boolean']>;
@@ -5352,6 +5445,7 @@ export type EodDate = {
   hasErrors: Scalars['Boolean'];
   headOfficeReady?: Maybe<Scalars['Boolean']>;
   isInitialized: Scalars['Boolean'];
+  isYearEnd: Scalars['Boolean'];
   recentHistory?: Maybe<Array<Maybe<EodHistory>>>;
   value: Scalars['Localized'];
 };
@@ -5498,6 +5592,11 @@ export type EachAppointmentLetterRecords = {
   error?: Maybe<QueryError>;
 };
 
+export type EachEarningComponentRecords = {
+  data?: Maybe<EarningComponentRecord>;
+  error?: Maybe<QueryError>;
+};
+
 export type EachEmployeeExitRecords = {
   data: EmployeeExitRecord;
   error: QueryError;
@@ -5523,8 +5622,18 @@ export type EachJobOpeningRecord = {
   error?: Maybe<QueryError>;
 };
 
+export type EachPayrollRunRecords = {
+  data?: Maybe<PayrollRunRecord>;
+  error?: Maybe<QueryError>;
+};
+
 export type EachStaffRecord = {
   data?: Maybe<StaffPlanRecord>;
+  error?: Maybe<QueryError>;
+};
+
+export type EachTaxSlabRecords = {
+  data?: Maybe<TaxSlabRecord>;
   error?: Maybe<QueryError>;
 };
 
@@ -5534,6 +5643,60 @@ export type EachTransferRecord = {
   error?: Maybe<QueryError>;
 };
 
+export type EarningComponentInput = {
+  abbr?: InputMaybe<Scalars['String']>;
+  baseMultiple?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  isTaxApplicable?: InputMaybe<Scalars['Boolean']>;
+  makeThisActive?: InputMaybe<Scalars['Boolean']>;
+  multiplier?: InputMaybe<Scalars['Float']>;
+  name?: InputMaybe<Scalars['String']>;
+  roundToNearestInteger?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type EarningComponentListConnection = {
+  edges?: Maybe<Array<Maybe<EarningComponentListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type EarningComponentListEdges = {
+  cursor: Scalars['Cursor'];
+  node: EarningComponentNode;
+};
+
+export type EarningComponentNode = {
+  abbr?: Maybe<Scalars['String']>;
+  baseMultiple?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  isTaxApplicable?: Maybe<Scalars['Boolean']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  multiplier?: Maybe<Scalars['Float']>;
+  name?: Maybe<Scalars['String']>;
+  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
+  status?: Maybe<EarningComponentStatus>;
+};
+
+export type EarningComponentRecord = {
+  abbr?: Maybe<Scalars['String']>;
+  baseMultiple?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  isTaxApplicable?: Maybe<Scalars['Boolean']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  multiplier?: Maybe<Scalars['Float']>;
+  name?: Maybe<Scalars['String']>;
+  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
+};
+
+export const EarningComponentStatus = {
+  Disabled: 'DISABLED',
+  Enabled: 'ENABLED',
+} as const;
+
+export type EarningComponentStatus =
+  typeof EarningComponentStatus[keyof typeof EarningComponentStatus];
 export type EbankingRegistrationReportResult = {
   data?: Maybe<Array<Maybe<EbankingReportResult>>>;
   error?: Maybe<QueryError>;
@@ -6342,6 +6505,26 @@ export const ExternalLoanType = {
 } as const;
 
 export type ExternalLoanType = typeof ExternalLoanType[keyof typeof ExternalLoanType];
+export type ExtraDetailListed = {
+  deductions?: Maybe<Scalars['String']>;
+  employeeName?: Maybe<Scalars['String']>;
+  grossPay?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  netPay?: Maybe<Scalars['String']>;
+  paidDays?: Maybe<Scalars['Int']>;
+};
+
+export type ExtraDetails = {
+  cursor: Scalars['Cursor'];
+  node: ExtraDetailListed;
+};
+
+export type ExtraDetailsConnection = {
+  edges?: Maybe<Array<Maybe<ExtraDetails>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
 export type FdInvestment = {
   certificateNo: Scalars['String'];
   fdAmount: Scalars['String'];
@@ -6469,6 +6652,7 @@ export type FianancialTransactionReport = {
   bankGLStatementReport: BankGlStatementResult;
   charKhataReport: TrialSheetReportResult;
   dayBookReport: DayBookReportResult;
+  fiscalTrialSheetReport: TrialSheetReportResult;
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
   serviceCenterBalanceReport: SericeCenterStatementResult;
   tagKhataReport: TagKhataReportResult;
@@ -6495,6 +6679,10 @@ export type FianancialTransactionReportCharKhataReportArgs = {
 
 export type FianancialTransactionReportDayBookReportArgs = {
   data: DayBookReportFilter;
+};
+
+export type FianancialTransactionReportFiscalTrialSheetReportArgs = {
+  data: TrialSheetReportFilter;
 };
 
 export type FianancialTransactionReportMrTransactionReportArgs = {
@@ -7351,6 +7539,23 @@ export type GeneralSettingsQuery = {
   valuator?: Maybe<ValuatorSettingsQuery>;
 };
 
+export type GetDeductionComponentSchema = {
+  abbr: Scalars['String'];
+  baseMultiple?: Maybe<Scalars['String']>;
+  deductionFrequency?: Maybe<DeductionFrequencyEnum>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  multiplier?: Maybe<Scalars['Float']>;
+  name?: Maybe<Scalars['String']>;
+  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
+};
+
+export type GetDeductionComponentSchemaWithError = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<GetDeductionComponentSchema>;
+};
+
 export type GetEmployeeLifecycleDetail = {
   data?: Maybe<GetEmployeeLifecycleNode>;
   error?: Maybe<QueryError>;
@@ -7370,9 +7575,52 @@ export type GetEmployeeLifecycleNode = {
   status?: Maybe<Scalars['String']>;
 };
 
+export type GetEmployeeSchema = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<HcmEmployeeSchema>;
+};
+
+export type GetHealthInsuranceSchema = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<EmployeeHealthInsurance>;
+};
+
 export type GetInventoryItemResponse = {
   data?: Maybe<FormStateInvItemsInput>;
   error?: Maybe<QueryError>;
+};
+
+export type GetSalaryStructureAssignment = {
+  baseSalary?: Maybe<Scalars['String']>;
+  deduction?: Maybe<Array<Maybe<SalaryAmountType>>>;
+  earnings?: Maybe<Array<Maybe<SalaryAmountType>>>;
+  employeeId?: Maybe<Scalars['String']>;
+  fromDate?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  paymentMode?: Maybe<PaymentModeSalary>;
+  salaryStructureId?: Maybe<Scalars['String']>;
+};
+
+export type GetSalaryStructureAssignmentWithError = {
+  data?: Maybe<GetSalaryStructureAssignment>;
+  error?: Maybe<MutationError>;
+};
+
+export type GetSalaryStructureSchema = {
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  modeOfPayment?: Maybe<PaymentModeEnum>;
+  name?: Maybe<Scalars['String']>;
+  payrollFrequency?: Maybe<PayrollFrequencyEnum>;
+  salaryDeduction?: Maybe<Array<Maybe<SalaryStructureDeductionDetailsType>>>;
+  salaryEarnings?: Maybe<Array<Maybe<SalaryStructureEarningDetailsType>>>;
+  salaryPaymentLedger?: Maybe<LedgerPaymentEnum>;
+};
+
+export type GetSalaryStructureSchemaWithError = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<GetSalaryStructureSchema>;
 };
 
 export type GetSupplierResponse = {
@@ -7514,11 +7762,36 @@ export type HcmEmployeeGeneralMutationUpsertEmployeeTypeArgs = {
 };
 
 export type HcmEmployeeGeneralQuery = {
+  getDepartment: GetEmployeeSchema;
+  getDesignation: GetEmployeeSchema;
+  getEmployeeLevel: GetEmployeeSchema;
+  getEmployeeType: GetEmployeeSchema;
+  getHealthInsurance: GetHealthInsuranceSchema;
   listDepartment?: Maybe<HcmEmployeeListConnection>;
   listDesignation?: Maybe<HcmEmployeeListConnection>;
   listEmployeeHealthInsurance?: Maybe<HcmEmployeeHealthInsuranceListConnection>;
   listEmployeeLevel?: Maybe<HcmEmployeeListConnection>;
   listEmployeeType?: Maybe<HcmEmployeeListConnection>;
+};
+
+export type HcmEmployeeGeneralQueryGetDepartmentArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeGeneralQueryGetDesignationArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeGeneralQueryGetEmployeeLevelArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeGeneralQueryGetEmployeeTypeArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeGeneralQueryGetHealthInsuranceArgs = {
+  id: Scalars['String'];
 };
 
 export type HcmEmployeeGeneralQueryListDepartmentArgs = {
@@ -7547,7 +7820,12 @@ export type HcmEmployeeGeneralQueryListEmployeeTypeArgs = {
 };
 
 export type HcmEmployeeLeaveMutation = {
+  deleteLeaveType: DeleteLeaveType;
   upsertLeaveType: LeaveTypeOutput;
+};
+
+export type HcmEmployeeLeaveMutationDeleteLeaveTypeArgs = {
+  id: Scalars['String'];
 };
 
 export type HcmEmployeeLeaveMutationUpsertLeaveTypeArgs = {
@@ -7556,7 +7834,12 @@ export type HcmEmployeeLeaveMutationUpsertLeaveTypeArgs = {
 };
 
 export type HcmEmployeeLeavePolicyMutation = {
+  deleteLeavePolicy: DeleteLeavePolicy;
   upsertLeavePolicy: LeavePolicyOutput;
+};
+
+export type HcmEmployeeLeavePolicyMutationDeleteLeavePolicyArgs = {
+  id: Scalars['String'];
 };
 
 export type HcmEmployeeLeavePolicyMutationUpsertLeavePolicyArgs = {
@@ -7632,12 +7915,74 @@ export type HcmEmployeeSchema = {
   name: Scalars['String'];
 };
 
+export type HcmPayrollDeductionComponentMutation = {
+  upsertDeductionComponent: ReturnDeductionComponent;
+};
+
+export type HcmPayrollDeductionComponentMutationUpsertDeductionComponentArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: InputDeductionComponent;
+};
+
+export type HcmPayrollDeductionComponentQuery = {
+  getDeductionComponent: GetDeductionComponentSchemaWithError;
+  listDeductionComponent: DeductionComponentListConnection;
+};
+
+export type HcmPayrollDeductionComponentQueryGetDeductionComponentArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmPayrollDeductionComponentQueryListDeductionComponentArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HcmPayrollEarningComponentMutation = {
+  upsertEarningComponent: ReturnEarningComponent;
+};
+
+export type HcmPayrollEarningComponentMutationUpsertEarningComponentArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: EarningComponentInput;
+};
+
+export type HcmPayrollEarningComponentQuery = {
+  getEarningComponent: EachEarningComponentRecords;
+  listEarningComponent: EarningComponentListConnection;
+};
+
+export type HcmPayrollEarningComponentQueryGetEarningComponentArgs = {
+  id: Scalars['ID'];
+};
+
+export type HcmPayrollEarningComponentQueryListEarningComponentArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HcmPayrollMutation = {
+  deductionComponent: HcmPayrollDeductionComponentMutation;
+  earningComponent: HcmPayrollEarningComponentMutation;
+  salaryStructure: HcmPayrollSalaryStructureMutation;
+  taxSlab: HcmPayrollTaxSlabMutation;
+};
+
+export type HcmPayrollQuery = {
+  deductionComponent: HcmPayrollDeductionComponentQuery;
+  earningComponent: HcmPayrollEarningComponentQuery;
+  salaryStructure: HcmPayrollSalaryStructureQuery;
+  taxSlab: HcmPayrollTaxSlabQuery;
+};
+
 export type HcmSettingsMutation = {
   employee: HcmEmployeeMutation;
+  payroll: HcmPayrollMutation;
 };
 
 export type HcmSettingsQuery = {
   employee: HcmEmployeeQuery;
+  payroll: HcmPayrollQuery;
 };
 
 export type HrEmployeeKyeMutation = {
@@ -7877,12 +8222,76 @@ export type HrEmployeeSeparationEdges = {
 export type HrMutation = {
   employee: HrEmployeeMutation;
   employeelifecycle?: Maybe<HrEmployeeLifecycleMutation>;
+  payroll: HrPayrollMutation;
   recruitment: HrRecruitmentMutation;
+};
+
+export type HrPayrollMutation = {
+  payrollRun: HrPayrollPayrollRunMutation;
+  salaryStructureAssignment: HrPayrollSalaryStructureAssignmentMutation;
+};
+
+export type HrPayrollPayrollRunMutation = {
+  upsertPayrollRun: ReturnPayrollRun;
+};
+
+export type HrPayrollPayrollRunMutationUpsertPayrollRunArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: PayrollRunInput;
+};
+
+export type HrPayrollPayrollRunQuery = {
+  ListSalaryAssignmentWithExtraDetails: ExtraDetailsConnection;
+  getPayrollRun: EachPayrollRunRecords;
+  listPayrollRun: PayrollRunConnection;
+};
+
+export type HrPayrollPayrollRunQueryListSalaryAssignmentWithExtraDetailsArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HrPayrollPayrollRunQueryGetPayrollRunArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrPayrollPayrollRunQueryListPayrollRunArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HrPayrollQuery = {
+  payrollRun: HrPayrollPayrollRunQuery;
+  salaryStructureAssignment: HrPayrollSalaryStructureAssignmentQuery;
+};
+
+export type HrPayrollSalaryStructureAssignmentMutation = {
+  upsertSalStructAssignment: SalStructAssignOutput;
+};
+
+export type HrPayrollSalaryStructureAssignmentMutationUpsertSalStructAssignmentArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: InputSalaryStructureAssignment;
+};
+
+export type HrPayrollSalaryStructureAssignmentQuery = {
+  getSalaryStructureAssignment: GetSalaryStructureAssignmentWithError;
+  listSalaryStructureAssignment: SalaryStructureAssignmentListConnection;
+};
+
+export type HrPayrollSalaryStructureAssignmentQueryGetSalaryStructureAssignmentArgs = {
+  id: Scalars['String'];
+};
+
+export type HrPayrollSalaryStructureAssignmentQueryListSalaryStructureAssignmentArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HrQuery = {
   employee: HrEmployeeQuery;
   employeelifecycle: HrEmployeeLifecycleQuery;
+  payroll: HrPayrollQuery;
   recruitment: HrRecruitmentQuery;
 };
 
@@ -8026,6 +8435,52 @@ export type HcmEmployeeHealthInsuranceListConnection = {
 export type HcmEmployeeHealthInsuranceListEdges = {
   cursor: Scalars['Cursor'];
   node: EmployeeHealthInsurance;
+};
+
+export type HcmPayrollSalaryStructureMutation = {
+  upsertSalaryStructure: SalaryStructureOutput;
+};
+
+export type HcmPayrollSalaryStructureMutationUpsertSalaryStructureArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: InputSalaryStructure;
+};
+
+export type HcmPayrollSalaryStructureQuery = {
+  getSalaryStructure: GetSalaryStructureSchemaWithError;
+  listSalaryStructure: SalaryStructureListConnection;
+};
+
+export type HcmPayrollSalaryStructureQueryGetSalaryStructureArgs = {
+  id: Scalars['ID'];
+};
+
+export type HcmPayrollSalaryStructureQueryListSalaryStructureArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HcmPayrollTaxSlabMutation = {
+  upsertTaxSlab: ReturnTaxSlab;
+};
+
+export type HcmPayrollTaxSlabMutationUpsertTaxSlabArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: TaxSlabInput;
+};
+
+export type HcmPayrollTaxSlabQuery = {
+  getTaxSlab: EachTaxSlabRecords;
+  listTaxSlab: TaxSlabConnection;
+};
+
+export type HcmPayrollTaxSlabQueryGetTaxSlabArgs = {
+  id: Scalars['ID'];
+};
+
+export type HcmPayrollTaxSlabQueryListTaxSlabArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HrEmployeeEducationDetail = {
@@ -8252,6 +8707,38 @@ export const IndividualRequiredDocument = {
 
 export type IndividualRequiredDocument =
   typeof IndividualRequiredDocument[keyof typeof IndividualRequiredDocument];
+export type InputDeductionComponent = {
+  abbr: Scalars['String'];
+  baseMultiple?: InputMaybe<Scalars['String']>;
+  deductionFrequency?: InputMaybe<DeductionFrequencyEnum>;
+  description?: InputMaybe<Scalars['String']>;
+  makeThisActive?: InputMaybe<Scalars['Boolean']>;
+  multiplier?: InputMaybe<Scalars['Float']>;
+  name?: InputMaybe<Scalars['String']>;
+  roundToNearestInteger?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type InputSalaryStructure = {
+  description?: InputMaybe<Scalars['String']>;
+  makeThisActive?: InputMaybe<Scalars['Boolean']>;
+  modeOfPayment?: InputMaybe<PaymentModeEnum>;
+  name?: InputMaybe<Scalars['String']>;
+  payrollFrequency?: InputMaybe<PayrollFrequencyEnum>;
+  salaryDeduction?: InputMaybe<Array<InputMaybe<SalaryStructureDeductionDetails>>>;
+  salaryEarnings?: InputMaybe<Array<InputMaybe<SalaryStructureEarningDetails>>>;
+  salaryPaymentLedger?: InputMaybe<LedgerPaymentEnum>;
+};
+
+export type InputSalaryStructureAssignment = {
+  baseSalary?: InputMaybe<Scalars['String']>;
+  deduction?: InputMaybe<Array<InputMaybe<SalaryAmount>>>;
+  earnings?: InputMaybe<Array<InputMaybe<SalaryAmount>>>;
+  employeeId?: InputMaybe<Scalars['String']>;
+  fromDate?: InputMaybe<Scalars['Localized']>;
+  paymentMode?: InputMaybe<PaymentModeSalary>;
+  salaryStructureId?: InputMaybe<Scalars['String']>;
+};
+
 export type InsBankAcDetails = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
@@ -9677,7 +10164,7 @@ export type JournalVoucherQuery = {
 };
 
 export type JournalVoucherQueryListArgs = {
-  filter?: InputMaybe<JournalVoucherFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -11194,6 +11681,11 @@ export const Language = {
 } as const;
 
 export type Language = typeof Language[keyof typeof Language];
+export type LeadgerHeadChangeResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type LeafCoaHeads = {
   Name: Scalars['String'];
   accountCode: Scalars['String'];
@@ -11396,6 +11888,7 @@ export type LedgerBalanceTransferRequestInput = {
   amount?: InputMaybe<Scalars['String']>;
   amountType?: InputMaybe<LedgerAmountTransferType>;
   branchId?: InputMaybe<Scalars['String']>;
+  closingDate: Scalars['Localized'];
   coaHead: Array<Scalars['String']>;
   destinationLedgerId?: InputMaybe<Scalars['String']>;
   ledgerType: LedgerType;
@@ -11421,6 +11914,7 @@ export type LedgerBalanceTransferResultData = {
   destinationLedgerName: Scalars['String'];
   totalLedgerAccounts: Scalars['String'];
   totalTransferBalance: BalanceValue;
+  transactionId: Scalars['String'];
 };
 
 export type LedgerList = {
@@ -11452,6 +11946,12 @@ export type LedgerMappingFormState = {
   principal?: Maybe<Scalars['String']>;
 };
 
+export const LedgerPaymentEnum = {
+  LedgerPayment_1: 'LEDGER_PAYMENT_1',
+  LedgerPayment_2: 'LEDGER_PAYMENT_2',
+} as const;
+
+export type LedgerPaymentEnum = typeof LedgerPaymentEnum[keyof typeof LedgerPaymentEnum];
 export type LedgerTag = {
   createdAt?: Maybe<Scalars['Localized']>;
   description?: Maybe<Scalars['String']>;
@@ -11905,6 +12405,7 @@ export type LoanAccountMutationUpdateLinkedAccountArgs = {
 
 export type LoanAccountOverview = {
   additionalFeatures?: Maybe<LoanPreviewAdditionalFeatures>;
+  closedDate?: Maybe<Scalars['Localized']>;
   generalInformation?: Maybe<LoanGeneralInformation>;
   isClosed: Scalars['Boolean'];
   loanSchedule?: Maybe<LoanInstallments>;
@@ -12035,7 +12536,7 @@ export type LoanAccountQueryRemainingPaymentsArgs = {
 };
 
 export type LoanAccountQueryRepaymentListArgs = {
-  filter?: InputMaybe<LoanRepaymentFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -12071,6 +12572,7 @@ export type LoanAccrueBasicInfo = {
   memberCode: Scalars['String'];
   memberId: Scalars['String'];
   memberName: Scalars['String'];
+  memberPanNo?: Maybe<Scalars['String']>;
   membershipDate: Scalars['Localized'];
   noOfInstallment: Scalars['Int'];
   serviceCentreId: Scalars['String'];
@@ -13174,16 +13676,6 @@ export type LoanRepaymentEdge = {
   node?: Maybe<LoanRepaymentDetail>;
 };
 
-export type LoanRepaymentFilter = {
-  accountName?: InputMaybe<Scalars['String']>;
-  filterMode?: InputMaybe<Filter_Mode>;
-  loanAccountId?: InputMaybe<Scalars['String']>;
-  memberCode?: InputMaybe<Scalars['String']>;
-  memberId?: InputMaybe<Scalars['String']>;
-  memberName?: InputMaybe<Scalars['String']>;
-  productName?: InputMaybe<Scalars['String']>;
-};
-
 export type LoanRepaymentInput = {
   account?: InputMaybe<LoanRepaymentAccountMode>;
   amountPaid: Scalars['String'];
@@ -13815,7 +14307,7 @@ export type MemberAccountDetails = {
   autoOpen?: Maybe<Scalars['Boolean']>;
   availableBalance?: Maybe<Scalars['String']>;
   chequeIssue?: Maybe<Scalars['Boolean']>;
-  closedAt?: Maybe<Scalars['String']>;
+  closedAt?: Maybe<Scalars['Localized']>;
   defaultAccountType?: Maybe<DefaultAccountType>;
   dues?: Maybe<Dues>;
   guaranteedAmount?: Maybe<Scalars['String']>;
@@ -13827,6 +14319,7 @@ export type MemberAccountDetails = {
   interestTax?: Maybe<Scalars['String']>;
   isForMinors?: Maybe<Scalars['Boolean']>;
   isMandatory?: Maybe<Scalars['Boolean']>;
+  lastInstallmentUpdatedDate?: Maybe<Scalars['Localized']>;
   lastTransactionDate?: Maybe<Scalars['Localized']>;
   member?: Maybe<Member>;
   monthlyInterestCompulsory?: Maybe<Scalars['Boolean']>;
@@ -13871,11 +14364,17 @@ export type MemberAccountResult = {
 export type MemberActivateCheck = {
   isAccountUpdated: Scalars['Boolean'];
   isFeePaid: Scalars['Boolean'];
+  isMemberActive: Scalars['Boolean'];
   isShareIssued: Scalars['Boolean'];
 };
 
 export type MemberActivateMutation = {
+  activateMemberWithoutSharePurchase?: Maybe<MemberDeleteDraftResult>;
   membershipPayment?: Maybe<MembershipPaymentResult>;
+};
+
+export type MemberActivateMutationActivateMemberWithoutSharePurchaseArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type MemberActivateMutationMembershipPaymentArgs = {
@@ -14149,6 +14648,7 @@ export type MemberLoanInformation = {
 
 export type MemberMutation = {
   activateMember?: Maybe<MemberActivateMutation>;
+  balanceCertificate: Scalars['String'];
   cooperative?: Maybe<KymCooperativeMutation>;
   cooperativeUnion?: Maybe<KymCoopUnionMutation>;
   deleteDraft?: Maybe<MemberDeleteDraftResult>;
@@ -14165,6 +14665,10 @@ export type MemberMutation = {
   translate?: Maybe<TranslateData>;
   updateDormancy: MemberDormancyResult;
   updateKym: KymUpdateResult;
+};
+
+export type MemberMutationBalanceCertificateArgs = {
+  id: Scalars['ID'];
 };
 
 export type MemberMutationDeleteDraftArgs = {
@@ -14514,6 +15018,7 @@ export type MemberReport = {
   memberBalanceReport?: Maybe<MemberBalanceReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
   memberRegistrationReport?: Maybe<MemberRegistrationReportResult>;
+  memberTransferReport?: Maybe<MemberTransferReportResult>;
   minorReport?: Maybe<MinorReportResult>;
 };
 
@@ -14547,6 +15052,10 @@ export type MemberReportMemberClassificationReportArgs = {
 
 export type MemberReportMemberRegistrationReportArgs = {
   data?: InputMaybe<MemberRegistrationReportData>;
+};
+
+export type MemberReportMemberTransferReportArgs = {
+  data: MemberTransferFilter;
 };
 
 export type MemberReportMinorReportArgs = {
@@ -14636,6 +15145,13 @@ export type MemberTransferEntry = {
   state?: Maybe<MemberTransferState>;
 };
 
+export type MemberTransferFilter = {
+  filter?: InputMaybe<TransferredByFilter>;
+  fromBranchIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  period: LocalizedDateFilter;
+  toBranchIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
 export type MemberTransferInput = {
   docs?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   newBranchId: Scalars['ID'];
@@ -14681,6 +15197,24 @@ export type MemberTransferQueryGetArgs = {
 export type MemberTransferQueryListArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type MemberTransferReportData = {
+  fromBranch?: Maybe<BranchMinimal>;
+  loanAccounts?: Maybe<Array<AccountsMinimal>>;
+  memberCode: Scalars['String'];
+  memberId: Scalars['ID'];
+  memberName: Scalars['String'];
+  savingAccounts?: Maybe<Array<AccountsMinimal>>;
+  shareBalance?: Maybe<Scalars['String']>;
+  toBranch?: Maybe<BranchMinimal>;
+  transferredBy?: Maybe<Scalars['String']>;
+  transferredDate?: Maybe<Scalars['Localized']>;
+};
+
+export type MemberTransferReportResult = {
+  data?: Maybe<Array<Maybe<MemberTransferReportData>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type MemberTransferResult = {
@@ -15006,6 +15540,11 @@ export type MutationError =
   | NotFoundError
   | ServerError
   | ValidationError;
+
+export type MutationResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
 
 export type MyCoopInfo = {
   totalBranch?: Maybe<Scalars['Int']>;
@@ -15617,6 +16156,26 @@ export type OverviewViewV2 = {
   error?: Maybe<QueryError>;
 };
 
+export type PlCurrentData = {
+  expenseEntries?: Maybe<Array<Maybe<PlEntry>>>;
+  incomeEntries?: Maybe<Array<Maybe<PlEntry>>>;
+  totalExpense?: Maybe<BalanceValue>;
+  totalIncome?: Maybe<BalanceValue>;
+};
+
+export type PlCurrentResult = {
+  data?: Maybe<PlCurrentData>;
+  error?: Maybe<QueryError>;
+};
+
+export type PlEntry = {
+  balance?: Maybe<BalanceValue>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
+  ledgerId?: Maybe<Scalars['String']>;
+  ledgerName?: Maybe<Scalars['String']>;
+};
+
 export type PageInfo = {
   endCursor?: Maybe<Scalars['Cursor']>;
   hasNextPage: Scalars['Boolean'];
@@ -15703,6 +16262,66 @@ export const PaymentMode = {
 } as const;
 
 export type PaymentMode = typeof PaymentMode[keyof typeof PaymentMode];
+export const PaymentModeEnum = {
+  BankTransfer: 'BANK_TRANSFER',
+  Cash: 'CASH',
+  Check: 'CHECK',
+} as const;
+
+export type PaymentModeEnum = typeof PaymentModeEnum[keyof typeof PaymentModeEnum];
+export const PaymentModeSalary = {
+  Bank: 'BANK',
+  Cash: 'CASH',
+  Cheque: 'CHEQUE',
+} as const;
+
+export type PaymentModeSalary = typeof PaymentModeSalary[keyof typeof PaymentModeSalary];
+export const PayrollFrequencyEnum = {
+  Monthly: 'MONTHLY',
+  Yearly: 'YEARLY',
+} as const;
+
+export type PayrollFrequencyEnum = typeof PayrollFrequencyEnum[keyof typeof PayrollFrequencyEnum];
+export type PayrollRunConnection = {
+  edges?: Maybe<Array<Maybe<PayrollRuns>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type PayrollRunInput = {
+  payDay?: InputMaybe<Scalars['Localized']>;
+  payrollPeriod?: InputMaybe<LocalizedDateFilter>;
+  salaryAssignments?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+};
+
+export type PayrollRunListed = {
+  employees?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['ID']>;
+  payDate?: Maybe<Scalars['Localized']>;
+  payPeriod?: Maybe<LocalizedDate>;
+  payableCost?: Maybe<Scalars['String']>;
+  status?: Maybe<PayrollStatus>;
+};
+
+export type PayrollRunRecord = {
+  id?: Maybe<Scalars['ID']>;
+  payDay?: Maybe<Scalars['Localized']>;
+  payrollPeriod?: Maybe<LocalizedDate>;
+  salaryAssignments?: Maybe<Array<Maybe<Scalars['ID']>>>;
+};
+
+export type PayrollRuns = {
+  cursor: Scalars['Cursor'];
+  node: PayrollRunListed;
+};
+
+export const PayrollStatus = {
+  Paid: 'PAID',
+  Pending: 'PENDING',
+  Rejected: 'REJECTED',
+} as const;
+
+export type PayrollStatus = typeof PayrollStatus[keyof typeof PayrollStatus];
 export type PearlsConfiguration = {
   denominator: Scalars['String'];
   denominatorVariables: Scalars['Map'];
@@ -16002,6 +16621,7 @@ export type PrintPreferenceResult = {
 };
 
 export const PrintType = {
+  BalanceCertificate: 'BALANCE_CERTIFICATE',
   CustomerCopy: 'CUSTOMER_COPY',
   FdCertificate: 'FD_CERTIFICATE',
   IssueCertificate: 'ISSUE_CERTIFICATE',
@@ -16181,6 +16801,42 @@ export type PurchaseItemDetailsType = {
   warehouseName?: Maybe<Scalars['String']>;
 };
 
+export type PurchaseReportData = {
+  date?: Maybe<Scalars['Localized']>;
+  deliveryDate?: Maybe<Scalars['Localized']>;
+  preRate?: Maybe<Scalars['String']>;
+  productDetail?: Maybe<Scalars['String']>;
+  purchaseOrderId?: Maybe<Scalars['String']>;
+  purchaseOrderQuantity?: Maybe<Scalars['String']>;
+  referenceNo?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+  totalPriceWithoutVat?: Maybe<Scalars['String']>;
+  vat?: Maybe<Scalars['String']>;
+  vendorId?: Maybe<Scalars['String']>;
+  vendorName?: Maybe<Scalars['String']>;
+};
+
+export type PurchaseReportFilter = {
+  filter?: InputMaybe<SalesPurchaseFilter>;
+  itemIds?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
+  warehouseId: Array<Scalars['String']>;
+};
+
+export type PurchaseReportResult = {
+  data?: Maybe<Array<Maybe<PurchaseReportData>>>;
+  error?: Maybe<QueryError>;
+  footer?: Maybe<PurchaseResult>;
+};
+
+export type PurchaseResult = {
+  sumAmount?: Maybe<Scalars['String']>;
+  sumPriceWithoutVat?: Maybe<Scalars['String']>;
+  totalPreRate?: Maybe<Scalars['String']>;
+  totalQuantity?: Maybe<Scalars['Int']>;
+  totalVat?: Maybe<Scalars['String']>;
+};
+
 export type QuarterlyDividendRate = {
   firstQuarter?: Maybe<Scalars['Float']>;
   fourthQuarter?: Maybe<Scalars['Float']>;
@@ -16347,7 +17003,9 @@ export const Resource = {
   CbsTransactionLimitWithdrawLimit: 'CBS_TRANSACTION_LIMIT_WITHDRAW_LIMIT',
   CbsTransactionRestrict: 'CBS_TRANSACTION_RESTRICT',
   CbsTransactionRevert: 'CBS_TRANSACTION_REVERT',
+  CbsTransactionYearEnd: 'CBS_TRANSACTION_YEAR_END',
   CbsTransfers: 'CBS_TRANSFERS',
+  CbsTransfersBankTransfer: 'CBS_TRANSFERS_BANK_TRANSFER',
   CbsTransfersCashInTransitTransfer: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
   CbsTransfersServiceCenterCashTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
   CbsTransfersServiceCenterTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_TRANSFER',
@@ -16387,6 +17045,7 @@ export const Resource = {
   SettingsAuditLog: 'SETTINGS_AUDIT_LOG',
   SettingsBank: 'SETTINGS_BANK',
   SettingsCoa: 'SETTINGS_COA',
+  SettingsCoaLedgerTransfer: 'SETTINGS_COA_LEDGER_TRANSFER',
   SettingsCodeManagement: 'SETTINGS_CODE_MANAGEMENT',
   SettingsDocumentManagement: 'SETTINGS_DOCUMENT_MANAGEMENT',
   SettingsEodSeed: 'SETTINGS_EOD_SEED',
@@ -16407,6 +17066,7 @@ export const Resource = {
   SettingsSavingProducts: 'SETTINGS_SAVING_PRODUCTS',
   SettingsServiceCenter: 'SETTINGS_SERVICE_CENTER',
   SettingsShare: 'SETTINGS_SHARE',
+  SettingsTransactionConstraint: 'SETTINGS_TRANSACTION_CONSTRAINT',
   SettingsUsers: 'SETTINGS_USERS',
   UserUser: 'USER_USER',
   UserUserPassword: 'USER_USER_PASSWORD',
@@ -16627,27 +17287,27 @@ export type RequestsList = {
 };
 
 export type RequestsListBlockChequeArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListChequeBookRequestArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListLoanRequestArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListMembershipRequestArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 export type RequestsListWithdrawViaCollectorArgs = {
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -16754,6 +17414,16 @@ export type ReturnAppointmentLetter = {
   recordId: Scalars['ID'];
 };
 
+export type ReturnDeductionComponent = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export type ReturnEarningComponent = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type ReturnEmployeeExit = {
   error?: Maybe<MutationError>;
   record?: Maybe<EmployeeExitRecord>;
@@ -16790,10 +17460,22 @@ export type ReturnJobOpening = {
   recordId: Scalars['ID'];
 };
 
+export type ReturnPayrollRun = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<PayrollRunRecord>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type ReturnStaffPlan = {
   error?: Maybe<MutationError>;
   record?: Maybe<StaffPlanRecord>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type ReturnTaxSlab = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<TaxSlabRecord>;
+  recordId: Scalars['ID'];
 };
 
 export type ReturnWarehouseInput = {
@@ -16905,6 +17587,21 @@ export type StrTransactionDetailQuery = {
   error?: Maybe<QueryError>;
 };
 
+export type SalStructAssignOutput = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export type SalaryAmount = {
+  amount?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type SalaryAmountType = {
+  amount?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
+};
+
 export type SalaryRange = {
   default: Scalars['String'];
   id: Scalars['ID'];
@@ -16918,6 +17615,89 @@ export type SalaryRangeInput = {
   min: Scalars['String'];
 };
 
+export type SalaryStructureAssignmentListConnection = {
+  edges?: Maybe<Array<Maybe<SalaryStructureAssignmentListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SalaryStructureAssignmentListEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node: SalaryStructureAssignmentNode;
+};
+
+export type SalaryStructureAssignmentNode = {
+  baseSalary?: Maybe<Scalars['String']>;
+  contact?: Maybe<Scalars['String']>;
+  department?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  employeeId?: Maybe<Scalars['String']>;
+  employeeName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  lastUpdated?: Maybe<Scalars['Localized']>;
+  salaryStructure?: Maybe<Scalars['String']>;
+};
+
+export type SalaryStructureDeductionDetails = {
+  amount?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type SalaryStructureDeductionDetailsType = {
+  abbr: Scalars['String'];
+  amount?: Maybe<Scalars['Int']>;
+  baseMultiple?: Maybe<Scalars['String']>;
+  component?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  multiplier?: Maybe<Scalars['Float']>;
+};
+
+export type SalaryStructureEarningDetails = {
+  amount?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type SalaryStructureEarningDetailsType = {
+  abbr: Scalars['String'];
+  amount?: Maybe<Scalars['Int']>;
+  baseMultiple?: Maybe<Scalars['String']>;
+  component?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  multiplier?: Maybe<Scalars['Float']>;
+};
+
+export type SalaryStructureListConnection = {
+  edges?: Maybe<Array<Maybe<SalaryStructureListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SalaryStructureListEdges = {
+  cursor: Scalars['Cursor'];
+  node: SalaryStructureNode;
+};
+
+export type SalaryStructureNode = {
+  deduction?: Maybe<Array<Maybe<SalaryStructureDeductionDetailsType>>>;
+  description?: Maybe<Scalars['String']>;
+  earnings?: Maybe<Array<Maybe<SalaryStructureEarningDetailsType>>>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  status?: Maybe<SalaryStructureStatusEnum>;
+};
+
+export type SalaryStructureOutput = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export const SalaryStructureStatusEnum = {
+  Disabled: 'DISABLED',
+  Enabled: 'ENABLED',
+} as const;
+
+export type SalaryStructureStatusEnum =
+  typeof SalaryStructureStatusEnum[keyof typeof SalaryStructureStatusEnum];
 export type SaleProduct = {
   amount?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
@@ -17099,6 +17879,10 @@ export type SalesCustomerPaymentListEdges = {
   node?: Maybe<SalesCustomerPaymentEntry>;
 };
 
+export type SalesPurchaseFilter = {
+  creatorIds?: InputMaybe<Array<Scalars['String']>>;
+};
+
 export type SalesReportDataList = {
   itemId: Scalars['String'];
   itemName: Scalars['String'];
@@ -17111,10 +17895,10 @@ export type SalesReportDataList = {
 };
 
 export type SalesReportFilter = {
-  branchId: Array<Scalars['String']>;
-  creatorIds?: InputMaybe<Array<Scalars['String']>>;
+  filter?: InputMaybe<SalesPurchaseFilter>;
   itemIds?: InputMaybe<Array<Scalars['String']>>;
   period: LocalizedDateFilter;
+  warehouseId: Array<Scalars['String']>;
 };
 
 export type SalesReportResult = {
@@ -17209,6 +17993,7 @@ export type SavingAccrueBasicInfo = {
   memberCode: Scalars['String'];
   memberId: Scalars['String'];
   memberName: Scalars['String'];
+  memberPanNo?: Maybe<Scalars['String']>;
   membershipDate: Scalars['Localized'];
   serviceCentreId: Scalars['String'];
   serviceCentreName: Scalars['String'];
@@ -17710,6 +18495,11 @@ export type SettingsMutation = {
   general?: Maybe<GeneralSettingsMutation>;
   myraUser?: Maybe<MyraUserMutation>;
   report?: Maybe<ReportSettingMutation>;
+  switchTransactionConstraintState: MutationResult;
+};
+
+export type SettingsMutationSwitchTransactionConstraintStateArgs = {
+  id: Scalars['ID'];
 };
 
 export type SettingsQuery = {
@@ -17720,11 +18510,17 @@ export type SettingsQuery = {
   general?: Maybe<GeneralSettingsQuery>;
   getPrintCount: Scalars['Int'];
   myraUser?: Maybe<MyraUserQuery>;
+  transactionConstraint: TransactionConstraintList;
 };
 
 export type SettingsQueryGetPrintCountArgs = {
   objectId: Scalars['ID'];
   type: PrintType;
+};
+
+export type SettingsQueryTransactionConstraintArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type SetupMutation = {
@@ -18421,6 +19217,18 @@ export type SisterConcernDetailsFormState = {
   phone?: Maybe<Scalars['String']>;
 };
 
+export type Slab = {
+  fromAmount?: Maybe<Scalars['String']>;
+  percentageDeduction?: Maybe<Scalars['String']>;
+  toAmount?: Maybe<Scalars['String']>;
+};
+
+export type SlabInput = {
+  fromAmount?: InputMaybe<Scalars['String']>;
+  percentageDeduction?: InputMaybe<Scalars['String']>;
+  toAmount?: InputMaybe<Scalars['String']>;
+};
+
 export type SlipElementMeasurement = {
   left?: Maybe<Scalars['Float']>;
   top?: Maybe<Scalars['Float']>;
@@ -18464,7 +19272,7 @@ export const SlipState = {
 export type SlipState = typeof SlipState[keyof typeof SlipState];
 export const SourceOfHire = {
   Direct: 'DIRECT',
-  Referral: 'REFERRAL',
+  Referel: 'REFEREL',
   Vacancy: 'VACANCY',
 } as const;
 
@@ -18720,6 +19528,43 @@ export const TaxPayerOptions = {
 } as const;
 
 export type TaxPayerOptions = typeof TaxPayerOptions[keyof typeof TaxPayerOptions];
+export type TaxSlabConnection = {
+  edges?: Maybe<Array<Maybe<TaxSlabs>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type TaxSlabInput = {
+  effectiveFrom?: InputMaybe<Scalars['Localized']>;
+  fiscalYear?: InputMaybe<LocalizedDateFilter>;
+  makeThisActive?: InputMaybe<Scalars['Boolean']>;
+  marriedTaxableSalarySlab?: InputMaybe<Array<InputMaybe<SlabInput>>>;
+  name?: InputMaybe<Scalars['String']>;
+  unmarriedTaxableSalarySlab?: InputMaybe<Array<InputMaybe<SlabInput>>>;
+};
+
+export type TaxSlabListed = {
+  effectiveFrom?: Maybe<Scalars['Localized']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Boolean']>;
+};
+
+export type TaxSlabRecord = {
+  effectiveFrom?: Maybe<Scalars['Localized']>;
+  fiscalYear?: Maybe<LocalizedDate>;
+  id?: Maybe<Scalars['ID']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
+  marriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
+  name?: Maybe<Scalars['String']>;
+  unmarriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
+};
+
+export type TaxSlabs = {
+  cursor: Scalars['Cursor'];
+  node: TaxSlabListed;
+};
+
 export type TellerActivityEntry = {
   ID: Scalars['ID'];
   amount?: Maybe<Scalars['String']>;
@@ -18810,7 +19655,7 @@ export type TellerBankTransferQuery = {
 };
 
 export type TellerBankTransferQueryListArgs = {
-  filter?: InputMaybe<TellerBankTransferFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -18994,6 +19839,34 @@ export type TotalReport = {
   totalShares?: Maybe<Scalars['Int']>;
 };
 
+export type TransactionConstraintList = {
+  edges?: Maybe<Array<Maybe<TransactionConstraintListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type TransactionConstraintListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<TransactionConstraints>;
+};
+
+export type TransactionConstraints = {
+  account?: Maybe<AllAccount>;
+  accountType?: Maybe<Scalars['String']>;
+  branch?: Maybe<Branch>;
+  coaHead?: Maybe<Scalars['String']>;
+  effectiveSince?: Maybe<Scalars['Localized']>;
+  effectiveTill?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  initiationType?: Maybe<Scalars['String']>;
+  ledgerId?: Maybe<Scalars['String']>;
+  member?: Maybe<Member>;
+  objState?: Maybe<ObjState>;
+  txnType?: Maybe<LedgerType>;
+  user?: Maybe<Scalars['String']>;
+  valueDate?: Maybe<Scalars['Localized']>;
+};
+
 export type TransactionConstraintsStatus = {
   blockId?: Maybe<Scalars['ID']>;
   effectiveSince?: Maybe<Scalars['Localized']>;
@@ -19032,9 +19905,11 @@ export type TransactionInfo = {
   id: Scalars['String'];
   narration: Scalars['String'];
   transactionType: AllTransactionType;
+  yearEndAdjustment?: Maybe<Scalars['String']>;
 };
 
 export type TransactionListSummary = {
+  accountBalanceMap?: Maybe<Scalars['Map']>;
   averageBalance?: Maybe<Scalars['String']>;
   expensesThisMonth?: Maybe<Scalars['String']>;
   totalDeposit?: Maybe<Scalars['String']>;
@@ -19062,11 +19937,13 @@ export type TransactionMutation = {
   revertTransaction: RevertTransactionResult;
   serviceCentreCashTransfer: ServiceCentreCashTransferResult;
   strTransactionAction?: Maybe<StrTransactionActionResult>;
+  switchTransactionYearEndFlag?: Maybe<MutationResult>;
   tellerBankTransfer?: Maybe<TellerBankTransferMutation>;
   tellerTransfer: TellerTransferResult;
   tellerTransferAction: TellerTransferActionResult;
   transfer: TransferResult;
   withdraw: WithdrawResult;
+  yearEndSettlement?: Maybe<YearEndSettlementResult>;
 };
 
 export type TransactionMutationApproveIbtArgs = {
@@ -19090,6 +19967,10 @@ export type TransactionMutationEndOfDayArgs = {
   option?: InputMaybe<EodOption>;
 };
 
+export type TransactionMutationReadyBranchEodArgs = {
+  revertBranchId?: InputMaybe<Scalars['ID']>;
+};
+
 export type TransactionMutationRevertTransactionArgs = {
   journalId: Scalars['ID'];
 };
@@ -19100,6 +19981,10 @@ export type TransactionMutationServiceCentreCashTransferArgs = {
 
 export type TransactionMutationStrTransactionActionArgs = {
   data: StrTransactionActionInput;
+};
+
+export type TransactionMutationSwitchTransactionYearEndFlagArgs = {
+  journalId: Scalars['ID'];
 };
 
 export type TransactionMutationTellerTransferArgs = {
@@ -19118,6 +20003,10 @@ export type TransactionMutationTransferArgs = {
 
 export type TransactionMutationWithdrawArgs = {
   data: WithdrawInput;
+};
+
+export type TransactionMutationYearEndSettlementArgs = {
+  destinationCOALeaf: Scalars['ID'];
 };
 
 export type TransactionMyDay = {
@@ -19154,12 +20043,12 @@ export type TransactionQuery = {
   viewServiceCenterCashTransfer?: Maybe<ServiceCenterCashTransferDetail>;
   viewTransactionDetail?: Maybe<AllTransactionViewResult>;
   viewWithdraw?: Maybe<WithdrawTransactionViewResult>;
+  yearEnd?: Maybe<YearEndResult>;
 };
 
 export type TransactionQueryCashInTransitArgs = {
-  filter?: InputMaybe<CashInTransitFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
-  transferType: CashInTransitTransferType;
 };
 
 export type TransactionQueryCashInTransitDetailArgs = {
@@ -19182,13 +20071,12 @@ export type TransactionQueryListDepositArgs = {
 };
 
 export type TransactionQueryListServiceCenterCashTransferArgs = {
-  filter?: InputMaybe<ServiceCenterTransactionFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
-  transferMode: IbtType;
 };
 
 export type TransactionQueryListTellerTransactionArgs = {
-  filter?: InputMaybe<TellerTransactionFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -19333,6 +20221,10 @@ export const TransferType = {
 } as const;
 
 export type TransferType = typeof TransferType[keyof typeof TransferType];
+export type TransferredByFilter = {
+  transferredBy?: InputMaybe<Array<Scalars['String']>>;
+};
+
 export type TranslateData = {
   data?: Maybe<Scalars['String']>;
   id: Scalars['String'];
@@ -19351,7 +20243,9 @@ export type TranslateQueryResult = {
 };
 
 export type TrialSheetFilter = {
+  includeFiscalReversal?: InputMaybe<Scalars['Boolean']>;
   includeZero?: InputMaybe<Scalars['Boolean']>;
+  inculdeAdjustment?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type TrialSheetReportData = {
@@ -20150,6 +21044,15 @@ export const WithdrawWith = {
 } as const;
 
 export type WithdrawWith = typeof WithdrawWith[keyof typeof WithdrawWith];
+export type YearEndResult = {
+  getCurrentState?: Maybe<PlCurrentResult>;
+};
+
+export type YearEndSettlementResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type Activity = {
   beginsOn?: Maybe<Scalars['Localized']>;
   duration?: Maybe<Scalars['String']>;
@@ -20332,6 +21235,7 @@ export type InitiateLedgerBalanceTransferMutation = {
       initiateTransferRequest: {
         recordId?: string | null;
         data?: {
+          transactionId: string;
           totalLedgerAccounts: string;
           destinationLedgerName: string;
           totalTransferBalance: { amount?: string | null; amountType?: BalanceType | null };
@@ -20727,6 +21631,7 @@ export type SetupdateSignatureMutation = {
 export type SetupdateInstallmentAmountMutationVariables = Exact<{
   accountId: Scalars['ID'];
   newInstallmentAmount: Scalars['String'];
+  effectiveDate: Scalars['Localized'];
 }>;
 
 export type SetupdateInstallmentAmountMutation = {
@@ -21213,6 +22118,32 @@ export type UpdateLedgerNameMutation = {
   };
 };
 
+export type ChangeLedgerParentMutationVariables = Exact<{
+  ledgerId: Scalars['ID'];
+  newCOALeaf: Scalars['ID'];
+}>;
+
+export type ChangeLedgerParentMutation = {
+  settings: {
+    general?: {
+      chartsOfAccount?: {
+        account?: {
+          changeLedgerParent: {
+            recordId?: string | null;
+            error?:
+              | MutationError_AuthorizationError_Fragment
+              | MutationError_BadRequestError_Fragment
+              | MutationError_NotFoundError_Fragment
+              | MutationError_ServerError_Fragment
+              | MutationError_ValidationError_Fragment
+              | null;
+          };
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type AddProfitToFundManagementDataMutationVariables = Exact<{
   data: FundManagementInput;
 }>;
@@ -21394,6 +22325,30 @@ export type SetEmployeeExitUpsertMutation = {
         };
       };
     } | null;
+  };
+};
+
+export type SetSalaryStructureAssignmentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: InputSalaryStructureAssignment;
+}>;
+
+export type SetSalaryStructureAssignmentMutation = {
+  hr: {
+    payroll: {
+      salaryStructureAssignment: {
+        upsertSalStructAssignment: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
   };
 };
 
@@ -22351,6 +23306,12 @@ export type MemberTransferActionMutation = {
   };
 };
 
+export type BalanceCertificateMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type BalanceCertificateMutation = { members: { balanceCertificate: string } };
+
 export type PayMembershipMutationVariables = Exact<{
   data?: InputMaybe<MembershipPaymentInput>;
   memberId: Scalars['ID'];
@@ -22379,6 +23340,27 @@ export type InactivateMemberMutationVariables = Exact<{
 
 export type InactivateMemberMutation = {
   members: { makeInactive?: { recordId?: string | null } | null };
+};
+
+export type ActivateMemberWithoutSharePurchaseMutationVariables = Exact<{
+  memberId: Scalars['ID'];
+}>;
+
+export type ActivateMemberWithoutSharePurchaseMutation = {
+  members: {
+    activateMember?: {
+      activateMemberWithoutSharePurchase?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
 };
 
 export type SetOrganizationDataMutationVariables = Exact<{
@@ -23412,6 +24394,172 @@ export type SetEmployeeLeavePolicyMutation = {
           leavePolicy: {
             upsertLeavePolicy: {
               recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type DeleteLeaveTypeMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type DeleteLeaveTypeMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leave: {
+            deleteLeaveType: {
+              responseStatus: boolean;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type DeleteLeavePolicyMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type DeleteLeavePolicyMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          leavePolicy: {
+            deleteLeavePolicy: {
+              responseStatus: boolean;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetEarningComponentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: EarningComponentInput;
+}>;
+
+export type SetEarningComponentMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          earningComponent: {
+            upsertEarningComponent: {
+              recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetDeductionComponentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: InputDeductionComponent;
+}>;
+
+export type SetDeductionComponentMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          deductionComponent: {
+            upsertDeductionComponent: {
+              recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSalaryStructureMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: InputSalaryStructure;
+}>;
+
+export type SetSalaryStructureMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          salaryStructure: {
+            upsertSalaryStructure: {
+              recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetTaxSlabMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: TaxSlabInput;
+}>;
+
+export type SetTaxSlabMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxSlab: {
+            upsertTaxSlab: {
+              recordId: string;
               error?:
                 | MutationError_AuthorizationError_Fragment
                 | MutationError_BadRequestError_Fragment
@@ -24856,7 +26004,9 @@ export type SetTellerTransferActionMutation = {
   };
 };
 
-export type ReadyBranchEodMutationVariables = Exact<{ [key: string]: never }>;
+export type ReadyBranchEodMutationVariables = Exact<{
+  revertBranchId?: InputMaybe<Scalars['ID']>;
+}>;
 
 export type ReadyBranchEodMutation = {
   transaction: { readyBranchEOD?: Array<string | null> | null };
@@ -24998,6 +26148,44 @@ export type DisableAccountingTransactionRestrictMutation = {
           | MutationError_ValidationError_Fragment
           | null;
       } | null;
+    } | null;
+  };
+};
+
+export type YearEndSettlementMutationVariables = Exact<{
+  destinationCOALeaf: Scalars['ID'];
+}>;
+
+export type YearEndSettlementMutation = {
+  transaction: {
+    yearEndSettlement?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type SwitchTransactionYearEndFlagMutationVariables = Exact<{
+  journalId: Scalars['ID'];
+}>;
+
+export type SwitchTransactionYearEndFlagMutation = {
+  transaction: {
+    switchTransactionYearEndFlag?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
     } | null;
   };
 };
@@ -25568,7 +26756,8 @@ export type GetAccountDetailsDataQuery = {
         overDrawnBalance?: string | null;
         lastTransactionDate?: Record<'local' | 'en' | 'np', string> | null;
         accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
-        closedAt?: string | null;
+        closedAt?: Record<'local' | 'en' | 'np', string> | null;
+        lastInstallmentUpdatedDate?: Record<'local' | 'en' | 'np', string> | null;
         member?: {
           id: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
@@ -25597,6 +26786,7 @@ export type GetAccountDetailsDataQuery = {
           isMandatorySaving?: boolean | null;
           withdrawRestricted?: boolean | null;
           interest?: number | null;
+          depositFrequency?: Frequency | null;
           accountClosingCharge?: Array<{
             serviceName?: string | null;
             ledgerName?: string | null;
@@ -25796,7 +26986,7 @@ export type GetAllAccountsFilterMappingQuery = {
 };
 
 export type GetBankAccountListQueryVariables = Exact<{
-  filter?: InputMaybe<BankAccountFilter>;
+  filter?: InputMaybe<Filter>;
   currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -26081,7 +27271,7 @@ export type GetInvestmentTransactionsListDataQuery = {
 
 export type GetJournalVoucherListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<JournalVoucherFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetJournalVoucherListQuery = {
@@ -27975,6 +29165,68 @@ export type GetHrLifecycleEmployeeViewQuery = {
             joiningDate?: Record<'local' | 'en' | 'np', string> | null;
             name?: string | null;
           } | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetSalaryStructureAssignmentListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetSalaryStructureAssignmentListQuery = {
+  hr: {
+    payroll: {
+      salaryStructureAssignment: {
+        listSalaryStructureAssignment: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node: {
+              id?: string | null;
+              employeeId?: string | null;
+              employeeName?: string | null;
+              department?: string | null;
+              contact?: string | null;
+              salaryStructure?: string | null;
+              email?: string | null;
+              baseSalary?: string | null;
+              lastUpdated?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetSalaryStructureAssignmentQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetSalaryStructureAssignmentQuery = {
+  hr: {
+    payroll: {
+      salaryStructureAssignment: {
+        getSalaryStructureAssignment: {
+          data?: {
+            employeeId?: string | null;
+            salaryStructureId?: string | null;
+            baseSalary?: string | null;
+            fromDate?: Record<'local' | 'en' | 'np', string> | null;
+            paymentMode?: PaymentModeSalary | null;
+            earnings?: Array<{ id?: string | null; amount?: number | null } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
         };
       };
     };
@@ -30117,7 +31369,7 @@ export type GetLoanPreviewQuery = {
 
 export type GetLoanRepaymentListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
-  filter?: InputMaybe<LoanRepaymentFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetLoanRepaymentListQuery = {
@@ -30238,6 +31490,7 @@ export type GetLoanAccountDetailsQuery = {
     loanAccountDetails?: {
       overView?: {
         isClosed: boolean;
+        closedDate?: Record<'local' | 'en' | 'np', string> | null;
         totalPrincipalPaid: string;
         totalInterestPaid: string;
         totalRemainingPrincipal: string;
@@ -30906,6 +32159,7 @@ export type GetMemberCheckQuery = {
         isFeePaid: boolean;
         isShareIssued: boolean;
         isAccountUpdated: boolean;
+        isMemberActive: boolean;
       } | null;
     } | null;
   };
@@ -32217,6 +33471,7 @@ export type GetSavingStatementQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           dateJoined?: Record<'local' | 'en' | 'np', string> | null;
           activeDate?: Record<'local' | 'en' | 'np', string> | null;
+          panVatNo?: string | null;
           branch?: string | null;
           address?: {
             wardNo?: string | null;
@@ -32245,6 +33500,7 @@ export type GetSavingStatementQuery = {
                 currentInterestRate?: number | null;
                 accountNo?: string | null;
                 savingType?: string | null;
+                productName?: string | null;
               } | null;
             }
           | {}
@@ -32277,6 +33533,7 @@ export type GetInterestStatementReportQuery = {
             remarks?: string | null;
             tds?: string | null;
           } | null> | null;
+          member?: { panVatNo?: string | null } | null;
           address?: {
             wardNo?: string | null;
             state?: Record<'local' | 'en' | 'np', string> | null;
@@ -32354,6 +33611,7 @@ export type GetClosedSavingAccountStatementQuery = {
       closedSavingAccountReport?: {
         data?: {
           memberName?: Record<'local' | 'en' | 'np', string> | null;
+          memberPan?: string | null;
           memberShipCode?: string | null;
           membershipDate?: Record<'local' | 'en' | 'np', string> | null;
           serviceCenterName?: string | null;
@@ -32451,6 +33709,7 @@ export type GetSavingAccountAccruedInterestReportQuery = {
           accountId: string;
           accountName: string;
           accountType: NatureOfDepositProduct;
+          memberPanNo?: string | null;
           currentInterestRate: number;
           memberCode: string;
           memberId: string;
@@ -32727,6 +33986,13 @@ export type GetInventorySalesReportQuery = {
   report: {
     accountingReport: {
       salesReport: {
+        summationData?: {
+          totalPerQuantityPrice: string;
+          totalPrice: string;
+          totalPriceWithVat: string;
+          totalQuantitySold: string;
+          totalVatAmount: string;
+        } | null;
         data?: Array<{
           itemId: string;
           itemName: string;
@@ -32744,6 +34010,46 @@ export type GetInventorySalesReportQuery = {
           | QueryError_ServerError_Fragment
           | null;
       };
+    };
+  };
+};
+
+export type GetInventoryPurchaseReportQueryVariables = Exact<{
+  data: PurchaseReportFilter;
+}>;
+
+export type GetInventoryPurchaseReportQuery = {
+  report: {
+    accountingReport: {
+      purchaseReport?: {
+        footer?: {
+          totalQuantity?: number | null;
+          totalPreRate?: string | null;
+          sumPriceWithoutVat?: string | null;
+          totalVat?: string | null;
+          sumAmount?: string | null;
+        } | null;
+        data?: Array<{
+          purchaseOrderId?: string | null;
+          vendorName?: string | null;
+          productDetail?: string | null;
+          vendorId?: string | null;
+          purchaseOrderQuantity?: string | null;
+          referenceNo?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          deliveryDate?: Record<'local' | 'en' | 'np', string> | null;
+          preRate?: string | null;
+          totalPriceWithoutVat?: string | null;
+          vat?: string | null;
+          totalAmount?: string | null;
+        } | null> | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
     };
   };
 };
@@ -32857,6 +34163,7 @@ export type GetLoanStatementReportQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
           branch?: string | null;
+          panVatNo?: string | null;
           address?: {
             state?: Record<'local' | 'en' | 'np', string> | null;
             district?: Record<'local' | 'en' | 'np', string> | null;
@@ -32879,6 +34186,7 @@ export type GetLoanStatementReportQuery = {
                 installment?: number | null;
                 charge?: string | null;
                 openingBalance?: string | null;
+                productName?: string | null;
                 disbursedAmount?: string | null;
               } | null;
               loanStatement?: Array<{
@@ -32940,6 +34248,7 @@ export type GetClosedLoanAccountReportQuery = {
           memberCode?: string | null;
           memberId?: string | null;
           memberName?: string | null;
+          memberPan?: string | null;
           noOfInstallments?: number | null;
           approvedAmount?: string | null;
           branchName?: string | null;
@@ -33104,6 +34413,7 @@ export type GetLoanAccruedInterestReportQuery = {
           memberName: string;
           memberId: string;
           memberCode: string;
+          memberPanNo?: string | null;
           currentInterestRate: number;
           accountType: string;
           accountName: string;
@@ -33258,6 +34568,7 @@ export type GetLoanTransactionReportQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
           branch?: string | null;
+          panVatNo?: string | null;
           address?: {
             state?: Record<'local' | 'en' | 'np', string> | null;
             district?: Record<'local' | 'en' | 'np', string> | null;
@@ -33271,6 +34582,7 @@ export type GetLoanTransactionReportQuery = {
         statement?:
           | {
               meta?: {
+                productName?: string | null;
                 accountNo?: string | null;
                 approvedAmount?: string | null;
                 interestRate?: number | null;
@@ -33638,6 +34950,41 @@ export type GetMinorListReportQuery = {
           serviceCentreName: string;
           minorName: string;
           relationshipId?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetMemberTransferReportQueryVariables = Exact<{
+  data: MemberTransferFilter;
+}>;
+
+export type GetMemberTransferReportQuery = {
+  report: {
+    memberReport: {
+      memberTransferReport?: {
+        data?: Array<{
+          memberId: string;
+          memberCode: string;
+          memberName: string;
+          transferredDate?: Record<'local' | 'en' | 'np', string> | null;
+          transferredBy?: string | null;
+          shareBalance?: string | null;
+          fromBranch?: { id: string; branchCode?: string | null; name: string } | null;
+          toBranch?: { id: string; branchCode?: string | null; name: string } | null;
+          savingAccounts?: Array<{
+            accNo?: string | null;
+            interestAccured?: string | null;
+            disbursedAmount?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          }> | null;
+          loanAccounts?: Array<{
+            accNo?: string | null;
+            interestAccured?: string | null;
+            disbursedAmount?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          }> | null;
         } | null> | null;
       } | null;
     };
@@ -34108,6 +35455,7 @@ export type GetShareStatementQuery = {
           code: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
           activeDate?: Record<'local' | 'en' | 'np', string> | null;
+          panVatNo?: string | null;
           dateJoined?: Record<'local' | 'en' | 'np', string> | null;
           branch?: string | null;
           address?: {
@@ -34667,9 +36015,71 @@ export type GetMrTransactionReportQuery = {
   };
 };
 
+export type GetFiscalYearTrialBalanceQueryVariables = Exact<{
+  data: TrialSheetReportFilter;
+}>;
+
+export type GetFiscalYearTrialBalanceQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        fiscalTrialSheetReport: {
+          data?: {
+            equityAndLiablitiesTotal?: Record<string, string> | null;
+            assetsTotal?: Record<string, string> | null;
+            expenseTotal?: Record<string, string> | null;
+            incomeTotal?: Record<string, string> | null;
+            offBalanceTotal?: Record<string, string> | null;
+            orphanTotal?: Record<string, string> | null;
+            totalAssetExpense?: Record<string, string> | null;
+            totalLiablitiesIncome?: Record<string, string> | null;
+            totalProfitLoss?: Record<string, string> | null;
+            equityAndLiablities?: Array<{
+              balance?: Record<string, string> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            expenses?: Array<{
+              balance?: Record<string, string> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            income?: Array<{
+              balance?: Record<string, string> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            assets?: Array<{
+              balance?: Record<string, string> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            offBalance?: Array<{
+              balance?: Record<string, string> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            orphanEntries?: Array<{
+              balance?: Record<string, string> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+          } | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetChequeBookRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetChequeBookRequestsQuery = {
@@ -34707,7 +36117,7 @@ export type GetChequeBookRequestsQuery = {
 
 export type GetWithdrawViaCollectorQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetWithdrawViaCollectorQuery = {
@@ -34739,7 +36149,7 @@ export type GetWithdrawViaCollectorQuery = {
 
 export type GetLoanRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetLoanRequestsQuery = {
@@ -34768,7 +36178,7 @@ export type GetLoanRequestsQuery = {
 
 export type GetBlockChequeListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetBlockChequeListQuery = {
@@ -34799,7 +36209,7 @@ export type GetBlockChequeListQuery = {
 
 export type GetMemberRequestListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<RequestFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetMemberRequestListQuery = {
@@ -34885,6 +36295,7 @@ export type GetAlternativeFeeAndChargesQuery = {
             serviceType?: AlternativeChannelServiceType | null;
             ledgerId?: string | null;
             amount?: string | null;
+            restrictTransaction?: boolean | null;
           } | null> | null;
         } | null;
       } | null;
@@ -35017,6 +36428,7 @@ export type GetBranchListQuery = {
               plTransferId?: string | null;
               tdsTransaferId?: string | null;
               branchStatus?: boolean | null;
+              eodReady?: boolean | null;
               address?: {
                 state?: Record<'local' | 'en' | 'np', string> | null;
                 district?: Record<'local' | 'en' | 'np', string> | null;
@@ -35183,9 +36595,8 @@ export type GetCoaAccountsUnderLeafListQuery = {
 };
 
 export type GetCoaAccountListQueryVariables = Exact<{
-  branchId?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<CoaListFilter>;
+  filter?: InputMaybe<Filter>;
   flag?: InputMaybe<CoaListFlag>;
 }>;
 
@@ -35331,7 +36742,7 @@ export type GetCoaLeafNodeDetailsQuery = {
 };
 
 export type GetLedgerListQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Array<Scalars['ID']> | Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
   branchId?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
@@ -35829,6 +37240,425 @@ export type GetLeavePolicyQuery = {
                 | MutationError_NotFoundError_Fragment
                 | MutationError_ServerError_Fragment
                 | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEmployeeLevelQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetEmployeeLevelQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getEmployeeLevel: {
+              record?: { name: string; description: string } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDepartmentQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetDepartmentQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getDepartment: {
+              record?: { name: string; description: string } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDesignationQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetDesignationQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getDesignation: {
+              record?: { name: string; description: string } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEmployeeTypeQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetEmployeeTypeQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getEmployeeType: {
+              record?: { name: string; description: string } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetHealthInsuranceQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetHealthInsuranceQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            getHealthInsurance: {
+              record?: { healthInsuranceProvider: string; healthInsuranceNumber: string } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEarningComponentQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetEarningComponentQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          earningComponent: {
+            getEarningComponent: {
+              data?: {
+                id?: string | null;
+                name?: string | null;
+                abbr?: string | null;
+                description?: string | null;
+                baseMultiple?: string | null;
+                multiplier?: number | null;
+                isTaxApplicable?: boolean | null;
+                roundToNearestInteger?: boolean | null;
+                makeThisActive?: boolean | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEarningComponentListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEarningComponentListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          earningComponent: {
+            listEarningComponent: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: {
+                  id?: string | null;
+                  name?: string | null;
+                  status?: EarningComponentStatus | null;
+                  description?: string | null;
+                  abbr?: string | null;
+                  multiplier?: number | null;
+                  baseMultiple?: string | null;
+                };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDeductionComponentQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetDeductionComponentQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          deductionComponent: {
+            getDeductionComponent: {
+              record?: {
+                id?: string | null;
+                name?: string | null;
+                abbr: string;
+                description?: string | null;
+                deductionFrequency?: DeductionFrequencyEnum | null;
+                baseMultiple?: string | null;
+                multiplier?: number | null;
+                roundToNearestInteger?: boolean | null;
+                makeThisActive?: boolean | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDeductionComponentListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetDeductionComponentListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          deductionComponent: {
+            listDeductionComponent: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: {
+                  id?: string | null;
+                  name?: string | null;
+                  status?: DeductionStatusEnum | null;
+                  deductionFrequency?: DeductionFrequencyEnum | null;
+                  abbr?: string | null;
+                  multiplier?: number | null;
+                  baseMultiple?: string | null;
+                };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSalaryStructureQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetSalaryStructureQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          salaryStructure: {
+            getSalaryStructure: {
+              record?: {
+                id?: string | null;
+                name?: string | null;
+                payrollFrequency?: PayrollFrequencyEnum | null;
+                description?: string | null;
+                modeOfPayment?: PaymentModeEnum | null;
+                salaryPaymentLedger?: LedgerPaymentEnum | null;
+                makeThisActive?: boolean | null;
+                salaryEarnings?: Array<{
+                  id?: string | null;
+                  amount?: number | null;
+                } | null> | null;
+                salaryDeduction?: Array<{
+                  id?: string | null;
+                  amount?: number | null;
+                } | null> | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSalaryStructureListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetSalaryStructureListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          salaryStructure: {
+            listSalaryStructure: {
+              totalCount: number;
+              edges?: Array<{
+                cursor: string;
+                node: {
+                  id?: string | null;
+                  name?: string | null;
+                  description?: string | null;
+                  status?: SalaryStructureStatusEnum | null;
+                };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetTaxSlabQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetTaxSlabQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxSlab: {
+            getTaxSlab: {
+              data?: {
+                id?: string | null;
+                name?: string | null;
+                effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
+                makeThisActive?: boolean | null;
+                fiscalYear?: {
+                  from: Record<'local' | 'en' | 'np', string>;
+                  to: Record<'local' | 'en' | 'np', string>;
+                } | null;
+                unmarriedTaxableSalarySlab?: Array<{
+                  fromAmount?: string | null;
+                  toAmount?: string | null;
+                  percentageDeduction?: string | null;
+                } | null> | null;
+                marriedTaxableSalarySlab?: Array<{
+                  fromAmount?: string | null;
+                  toAmount?: string | null;
+                  percentageDeduction?: string | null;
+                } | null> | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetTaxSlabListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetTaxSlabListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxSlab: {
+            listTaxSlab: {
+              totalCount?: number | null;
+              edges?: Array<{
+                cursor: string;
+                node: {
+                  id?: string | null;
+                  name?: string | null;
+                  effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
+                  status?: boolean | null;
+                };
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
             };
           };
         };
@@ -37817,6 +39647,49 @@ export type GetSettingsShareTransferDataQuery = {
   };
 };
 
+export type TransactionConstraintsListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type TransactionConstraintsListQuery = {
+  settings: {
+    transactionConstraint: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          objState?: ObjState | null;
+          valueDate?: Record<'local' | 'en' | 'np', string> | null;
+          effectiveSince?: Record<'local' | 'en' | 'np', string> | null;
+          effectiveTill?: Record<'local' | 'en' | 'np', string> | null;
+          txnType?: LedgerType | null;
+          ledgerId?: string | null;
+          accountType?: string | null;
+          coaHead?: string | null;
+          user?: string | null;
+          initiationType?: string | null;
+          branch?: { name?: string | null } | null;
+          member?: {
+            id: string;
+            code: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            profilePicUrl?: string | null;
+          } | null;
+          account?: { ID: string; accountName?: string | null } | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
+
 export type GetSettingsUserListDataQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
@@ -38367,6 +40240,7 @@ export type GetEndOfDayDateDataQuery = {
   transaction: {
     endOfDayDate: {
       value: Record<'local' | 'en' | 'np', string>;
+      isYearEnd: boolean;
       hasErrors: boolean;
       isInitialized: boolean;
       headOfficeReady?: boolean | null;
@@ -38375,7 +40249,7 @@ export type GetEndOfDayDateDataQuery = {
 };
 
 export type GetTellerTransactionListDataQueryVariables = Exact<{
-  filter?: InputMaybe<TellerTransactionFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -38680,6 +40554,7 @@ export type GetAllTransactionsListQuery = {
           amount: string;
           date: Record<'local' | 'en' | 'np', string>;
           branchName: string;
+          yearEndAdjustment?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -38708,6 +40583,7 @@ export type GetAllTransactionsDetailQuery = {
         transactionMode?: string | null;
         amount?: string | null;
         branch?: string | null;
+        isYearEndAdjustment?: string | null;
         note?: string | null;
         status?: string | null;
         totalDebit?: string | null;
@@ -38997,6 +40873,35 @@ export type GetTagKhataReportQuery = {
   };
 };
 
+export type YearEndLedgerAccountListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type YearEndLedgerAccountListQuery = {
+  transaction: {
+    yearEnd?: {
+      getCurrentState?: {
+        data?: {
+          expenseEntries?: Array<{
+            ledgerId?: string | null;
+            ledgerName?: string | null;
+            branchId?: string | null;
+            branchName?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          } | null> | null;
+          totalExpense?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          incomeEntries?: Array<{
+            ledgerId?: string | null;
+            ledgerName?: string | null;
+            branchId?: string | null;
+            branchName?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          } | null> | null;
+          totalIncome?: { amount?: string | null; amountType?: BalanceType | null } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetTransferDetailQueryVariables = Exact<{
   transferID: Scalars['ID'];
 }>;
@@ -39037,8 +40942,7 @@ export type GetTransferDetailQuery = {
 };
 
 export type GetCashInTransitListQueryVariables = Exact<{
-  transferType: CashInTransitTransferType;
-  filter?: InputMaybe<CashInTransitFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -39115,9 +41019,8 @@ export type GetCashInTransitDetailQuery = {
 };
 
 export type GetServiceCenterTransferListQueryVariables = Exact<{
-  filter?: InputMaybe<ServiceCenterTransactionFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
-  transferMode: IbtType;
 }>;
 
 export type GetServiceCenterTransferListQuery = {
@@ -39152,7 +41055,7 @@ export type GetServiceCenterTransferListQuery = {
 };
 
 export type GetBankTransferListQueryVariables = Exact<{
-  filter?: InputMaybe<TellerBankTransferFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -39342,7 +41245,12 @@ export type GetWithdrawSlipDataQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
         } | null;
-        account?: { id: string; accountName?: string | null; productName?: string | null } | null;
+        account?: {
+          id: string;
+          accountName?: string | null;
+          productName?: string | null;
+          branchName?: string | null;
+        } | null;
         availableRange?: { from: string; to: string } | null;
       } | null;
     } | null;
@@ -39713,6 +41621,7 @@ export const InitiateLedgerBalanceTransferDocument = `
       initiateTransferRequest(input: $input) {
         recordId
         data {
+          transactionId
           totalLedgerAccounts
           totalTransferBalance {
             amount
@@ -40333,11 +42242,12 @@ export const useSetupdateSignatureMutation = <TError = unknown, TContext = unkno
     options
   );
 export const SetupdateInstallmentAmountDocument = `
-    mutation setupdateInstallmentAmount($accountId: ID!, $newInstallmentAmount: String!) {
+    mutation setupdateInstallmentAmount($accountId: ID!, $newInstallmentAmount: String!, $effectiveDate: Localized!) {
   account {
     updateInstallmentAmount(
       accountId: $accountId
       newInstallmentAmount: $newInstallmentAmount
+      effectiveDate: $effectiveDate
     ) {
       recordId
       error {
@@ -41032,6 +42942,39 @@ export const useUpdateLedgerNameMutation = <TError = unknown, TContext = unknown
     useAxios<UpdateLedgerNameMutation, UpdateLedgerNameMutationVariables>(UpdateLedgerNameDocument),
     options
   );
+export const ChangeLedgerParentDocument = `
+    mutation changeLedgerParent($ledgerId: ID!, $newCOALeaf: ID!) {
+  settings {
+    general {
+      chartsOfAccount {
+        account {
+          changeLedgerParent(ledgerId: $ledgerId, newCOALeaf: $newCOALeaf) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useChangeLedgerParentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ChangeLedgerParentMutation,
+    TError,
+    ChangeLedgerParentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ChangeLedgerParentMutation, TError, ChangeLedgerParentMutationVariables, TContext>(
+    ['changeLedgerParent'],
+    useAxios<ChangeLedgerParentMutation, ChangeLedgerParentMutationVariables>(
+      ChangeLedgerParentDocument
+    ),
+    options
+  );
 export const AddProfitToFundManagementDataDocument = `
     mutation addProfitToFundManagementData($data: FundManagementInput!) {
   profitToFundManagement {
@@ -41294,6 +43237,42 @@ export const useSetEmployeeExitUpsertMutation = <TError = unknown, TContext = un
     ['setEmployeeExitUpsert'],
     useAxios<SetEmployeeExitUpsertMutation, SetEmployeeExitUpsertMutationVariables>(
       SetEmployeeExitUpsertDocument
+    ),
+    options
+  );
+export const SetSalaryStructureAssignmentDocument = `
+    mutation setSalaryStructureAssignment($id: String, $input: InputSalaryStructureAssignment!) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        upsertSalStructAssignment(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSalaryStructureAssignmentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalaryStructureAssignmentMutation,
+    TError,
+    SetSalaryStructureAssignmentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSalaryStructureAssignmentMutation,
+    TError,
+    SetSalaryStructureAssignmentMutationVariables,
+    TContext
+  >(
+    ['setSalaryStructureAssignment'],
+    useAxios<SetSalaryStructureAssignmentMutation, SetSalaryStructureAssignmentMutationVariables>(
+      SetSalaryStructureAssignmentDocument
     ),
     options
   );
@@ -42656,6 +44635,28 @@ export const useMemberTransferActionMutation = <TError = unknown, TContext = unk
     ),
     options
   );
+export const BalanceCertificateDocument = `
+    mutation balanceCertificate($id: ID!) {
+  members {
+    balanceCertificate(id: $id)
+  }
+}
+    `;
+export const useBalanceCertificateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    BalanceCertificateMutation,
+    TError,
+    BalanceCertificateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<BalanceCertificateMutation, TError, BalanceCertificateMutationVariables, TContext>(
+    ['balanceCertificate'],
+    useAxios<BalanceCertificateMutation, BalanceCertificateMutationVariables>(
+      BalanceCertificateDocument
+    ),
+    options
+  );
 export const PayMembershipDocument = `
     mutation payMembership($data: MembershipPaymentInput, $memberId: ID!) {
   members {
@@ -42703,6 +44704,41 @@ export const useInactivateMemberMutation = <TError = unknown, TContext = unknown
   useMutation<InactivateMemberMutation, TError, InactivateMemberMutationVariables, TContext>(
     ['inactivateMember'],
     useAxios<InactivateMemberMutation, InactivateMemberMutationVariables>(InactivateMemberDocument),
+    options
+  );
+export const ActivateMemberWithoutSharePurchaseDocument = `
+    mutation activateMemberWithoutSharePurchase($memberId: ID!) {
+  members {
+    activateMember {
+      activateMemberWithoutSharePurchase(memberId: $memberId) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useActivateMemberWithoutSharePurchaseMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ActivateMemberWithoutSharePurchaseMutation,
+    TError,
+    ActivateMemberWithoutSharePurchaseMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    ActivateMemberWithoutSharePurchaseMutation,
+    TError,
+    ActivateMemberWithoutSharePurchaseMutationVariables,
+    TContext
+  >(
+    ['activateMemberWithoutSharePurchase'],
+    useAxios<
+      ActivateMemberWithoutSharePurchaseMutation,
+      ActivateMemberWithoutSharePurchaseMutationVariables
+    >(ActivateMemberWithoutSharePurchaseDocument),
     options
   );
 export const SetOrganizationDataDocument = `
@@ -44237,6 +46273,212 @@ export const useSetEmployeeLeavePolicyMutation = <TError = unknown, TContext = u
     useAxios<SetEmployeeLeavePolicyMutation, SetEmployeeLeavePolicyMutationVariables>(
       SetEmployeeLeavePolicyDocument
     ),
+    options
+  );
+export const DeleteLeaveTypeDocument = `
+    mutation deleteLeaveType($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leave {
+            deleteLeaveType(id: $id) {
+              responseStatus
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteLeaveTypeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteLeaveTypeMutation,
+    TError,
+    DeleteLeaveTypeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteLeaveTypeMutation, TError, DeleteLeaveTypeMutationVariables, TContext>(
+    ['deleteLeaveType'],
+    useAxios<DeleteLeaveTypeMutation, DeleteLeaveTypeMutationVariables>(DeleteLeaveTypeDocument),
+    options
+  );
+export const DeleteLeavePolicyDocument = `
+    mutation deleteLeavePolicy($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          leavePolicy {
+            deleteLeavePolicy(id: $id) {
+              responseStatus
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteLeavePolicyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteLeavePolicyMutation,
+    TError,
+    DeleteLeavePolicyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteLeavePolicyMutation, TError, DeleteLeavePolicyMutationVariables, TContext>(
+    ['deleteLeavePolicy'],
+    useAxios<DeleteLeavePolicyMutation, DeleteLeavePolicyMutationVariables>(
+      DeleteLeavePolicyDocument
+    ),
+    options
+  );
+export const SetEarningComponentDocument = `
+    mutation setEarningComponent($id: ID, $input: EarningComponentInput!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          earningComponent {
+            upsertEarningComponent(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEarningComponentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEarningComponentMutation,
+    TError,
+    SetEarningComponentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetEarningComponentMutation, TError, SetEarningComponentMutationVariables, TContext>(
+    ['setEarningComponent'],
+    useAxios<SetEarningComponentMutation, SetEarningComponentMutationVariables>(
+      SetEarningComponentDocument
+    ),
+    options
+  );
+export const SetDeductionComponentDocument = `
+    mutation setDeductionComponent($id: ID, $input: InputDeductionComponent!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          deductionComponent {
+            upsertDeductionComponent(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetDeductionComponentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDeductionComponentMutation,
+    TError,
+    SetDeductionComponentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetDeductionComponentMutation,
+    TError,
+    SetDeductionComponentMutationVariables,
+    TContext
+  >(
+    ['setDeductionComponent'],
+    useAxios<SetDeductionComponentMutation, SetDeductionComponentMutationVariables>(
+      SetDeductionComponentDocument
+    ),
+    options
+  );
+export const SetSalaryStructureDocument = `
+    mutation setSalaryStructure($id: String, $input: InputSalaryStructure!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          salaryStructure {
+            upsertSalaryStructure(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSalaryStructureMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalaryStructureMutation,
+    TError,
+    SetSalaryStructureMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetSalaryStructureMutation, TError, SetSalaryStructureMutationVariables, TContext>(
+    ['setSalaryStructure'],
+    useAxios<SetSalaryStructureMutation, SetSalaryStructureMutationVariables>(
+      SetSalaryStructureDocument
+    ),
+    options
+  );
+export const SetTaxSlabDocument = `
+    mutation setTaxSlab($id: String, $input: TaxSlabInput!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxSlab {
+            upsertTaxSlab(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetTaxSlabMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetTaxSlabMutation, TError, SetTaxSlabMutationVariables, TContext>
+) =>
+  useMutation<SetTaxSlabMutation, TError, SetTaxSlabMutationVariables, TContext>(
+    ['setTaxSlab'],
+    useAxios<SetTaxSlabMutation, SetTaxSlabMutationVariables>(SetTaxSlabDocument),
     options
   );
 export const UpsertLedgerTagDocument = `
@@ -46327,9 +48569,9 @@ export const useSetTellerTransferActionMutation = <TError = unknown, TContext = 
     options
   );
 export const ReadyBranchEodDocument = `
-    mutation readyBranchEOD {
+    mutation readyBranchEOD($revertBranchId: ID) {
   transaction {
-    readyBranchEOD
+    readyBranchEOD(revertBranchId: $revertBranchId)
   }
 }
     `;
@@ -46543,6 +48785,65 @@ export const useDisableAccountingTransactionRestrictMutation = <
       DisableAccountingTransactionRestrictMutation,
       DisableAccountingTransactionRestrictMutationVariables
     >(DisableAccountingTransactionRestrictDocument),
+    options
+  );
+export const YearEndSettlementDocument = `
+    mutation yearEndSettlement($destinationCOALeaf: ID!) {
+  transaction {
+    yearEndSettlement(destinationCOALeaf: $destinationCOALeaf) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useYearEndSettlementMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    YearEndSettlementMutation,
+    TError,
+    YearEndSettlementMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<YearEndSettlementMutation, TError, YearEndSettlementMutationVariables, TContext>(
+    ['yearEndSettlement'],
+    useAxios<YearEndSettlementMutation, YearEndSettlementMutationVariables>(
+      YearEndSettlementDocument
+    ),
+    options
+  );
+export const SwitchTransactionYearEndFlagDocument = `
+    mutation switchTransactionYearEndFlag($journalId: ID!) {
+  transaction {
+    switchTransactionYearEndFlag(journalId: $journalId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSwitchTransactionYearEndFlagMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SwitchTransactionYearEndFlagMutation,
+    TError,
+    SwitchTransactionYearEndFlagMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SwitchTransactionYearEndFlagMutation,
+    TError,
+    SwitchTransactionYearEndFlagMutationVariables,
+    TContext
+  >(
+    ['switchTransactionYearEndFlag'],
+    useAxios<SwitchTransactionYearEndFlagMutation, SwitchTransactionYearEndFlagMutationVariables>(
+      SwitchTransactionYearEndFlagDocument
+    ),
     options
   );
 export const GetAccountMemberListDocument = `
@@ -47305,6 +49606,7 @@ export const GetAccountDetailsDataDocument = `
             penaltyRate
           }
           interest
+          depositFrequency
         }
         dues {
           fine
@@ -47323,6 +49625,7 @@ export const GetAccountDetailsDataDocument = `
           effectiveSince
           effectiveTill
         }
+        lastInstallmentUpdatedDate
       }
     }
   }
@@ -47607,7 +49910,7 @@ export const useGetAllAccountsFilterMappingQuery = <
     options
   );
 export const GetBankAccountListDocument = `
-    query getBankAccountList($filter: BankAccountFilter, $currentBranchOnly: Boolean, $pagination: Pagination) {
+    query getBankAccountList($filter: Filter, $currentBranchOnly: Boolean, $pagination: Pagination) {
   accounting {
     bankAccounts {
       list(
@@ -47977,7 +50280,7 @@ export const useGetInvestmentTransactionsListDataQuery = <
     options
   );
 export const GetJournalVoucherListDocument = `
-    query getJournalVoucherList($pagination: Pagination, $filter: JournalVoucherFilter) {
+    query getJournalVoucherList($pagination: Pagination, $filter: Filter) {
   accounting {
     journalVoucher {
       list(filter: $filter, pagination: $pagination) {
@@ -50431,6 +52734,92 @@ export const useGetHrLifecycleEmployeeViewQuery = <
     ['getHrLifecycleEmployeeView', variables],
     useAxios<GetHrLifecycleEmployeeViewQuery, GetHrLifecycleEmployeeViewQueryVariables>(
       GetHrLifecycleEmployeeViewDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalaryStructureAssignmentListDocument = `
+    query getSalaryStructureAssignmentList($filter: Filter, $pagination: Pagination) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        listSalaryStructureAssignment(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              employeeId
+              employeeName
+              department
+              contact
+              salaryStructure
+              email
+              baseSalary
+              lastUpdated
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSalaryStructureAssignmentListQuery = <
+  TData = GetSalaryStructureAssignmentListQuery,
+  TError = unknown
+>(
+  variables?: GetSalaryStructureAssignmentListQueryVariables,
+  options?: UseQueryOptions<GetSalaryStructureAssignmentListQuery, TError, TData>
+) =>
+  useQuery<GetSalaryStructureAssignmentListQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalaryStructureAssignmentList']
+      : ['getSalaryStructureAssignmentList', variables],
+    useAxios<GetSalaryStructureAssignmentListQuery, GetSalaryStructureAssignmentListQueryVariables>(
+      GetSalaryStructureAssignmentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalaryStructureAssignmentDocument = `
+    query getSalaryStructureAssignment($id: String!) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        getSalaryStructureAssignment(id: $id) {
+          data {
+            employeeId
+            salaryStructureId
+            baseSalary
+            fromDate
+            paymentMode
+            earnings {
+              id
+              amount
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetSalaryStructureAssignmentQuery = <
+  TData = GetSalaryStructureAssignmentQuery,
+  TError = unknown
+>(
+  variables: GetSalaryStructureAssignmentQueryVariables,
+  options?: UseQueryOptions<GetSalaryStructureAssignmentQuery, TError, TData>
+) =>
+  useQuery<GetSalaryStructureAssignmentQuery, TError, TData>(
+    ['getSalaryStructureAssignment', variables],
+    useAxios<GetSalaryStructureAssignmentQuery, GetSalaryStructureAssignmentQueryVariables>(
+      GetSalaryStructureAssignmentDocument
     ).bind(null, variables),
     options
   );
@@ -53151,7 +55540,7 @@ export const useGetLoanPreviewQuery = <TData = GetLoanPreviewQuery, TError = unk
     options
   );
 export const GetLoanRepaymentListDocument = `
-    query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) {
+    query getLoanRepaymentList($paginate: Pagination, $filter: Filter) {
   loanAccount {
     repaymentList(paginate: $paginate, filter: $filter) {
       totalCount
@@ -53313,6 +55702,7 @@ export const GetLoanAccountDetailsDocument = `
     loanAccountDetails(loanAccountId: $loanAccountId) {
       overView {
         isClosed
+        closedDate
         totalPrincipalPaid
         totalInterestPaid
         totalRemainingPrincipal
@@ -54254,6 +56644,7 @@ export const GetMemberCheckDocument = `
         isFeePaid
         isShareIssued
         isAccountUpdated
+        isMemberActive
       }
     }
   }
@@ -55951,6 +58342,7 @@ export const GetSavingStatementDocument = `
           }
           dateJoined
           activeDate
+          panVatNo
           branch
         }
         statement {
@@ -55972,6 +58364,7 @@ export const GetSavingStatementDocument = `
               currentInterestRate
               accountNo
               savingType
+              productName
             }
           }
         }
@@ -56005,6 +58398,9 @@ export const GetInterestStatementReportDocument = `
             rate
             remarks
             tds
+          }
+          member {
+            panVatNo
           }
           memberId
           accountNo
@@ -56124,6 +58520,7 @@ export const GetClosedSavingAccountStatementDocument = `
             ...Address
           }
           memberName
+          memberPan
           memberShipCode
           membershipDate
           serviceCenterName
@@ -56254,6 +58651,7 @@ export const GetSavingAccountAccruedInterestReportDocument = `
           accountId
           accountName
           accountType
+          memberPanNo
           address {
             ...Address
           }
@@ -56613,6 +59011,13 @@ export const GetInventorySalesReportDocument = `
   report {
     accountingReport {
       salesReport(data: $data) {
+        summationData {
+          totalPerQuantityPrice
+          totalPrice
+          totalPriceWithVat
+          totalQuantitySold
+          totalVatAmount
+        }
         data {
           itemId
           itemName
@@ -56642,6 +59047,54 @@ export const useGetInventorySalesReportQuery = <
     ['getInventorySalesReport', variables],
     useAxios<GetInventorySalesReportQuery, GetInventorySalesReportQueryVariables>(
       GetInventorySalesReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryPurchaseReportDocument = `
+    query getInventoryPurchaseReport($data: PurchaseReportFilter!) {
+  report {
+    accountingReport {
+      purchaseReport(data: $data) {
+        footer {
+          totalQuantity
+          totalPreRate
+          sumPriceWithoutVat
+          totalVat
+          sumAmount
+        }
+        data {
+          purchaseOrderId
+          vendorName
+          productDetail
+          vendorId
+          purchaseOrderQuantity
+          referenceNo
+          date
+          deliveryDate
+          preRate
+          totalPriceWithoutVat
+          vat
+          totalAmount
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryPurchaseReportQuery = <
+  TData = GetInventoryPurchaseReportQuery,
+  TError = unknown
+>(
+  variables: GetInventoryPurchaseReportQueryVariables,
+  options?: UseQueryOptions<GetInventoryPurchaseReportQuery, TError, TData>
+) =>
+  useQuery<GetInventoryPurchaseReportQuery, TError, TData>(
+    ['getInventoryPurchaseReport', variables],
+    useAxios<GetInventoryPurchaseReportQuery, GetInventoryPurchaseReportQueryVariables>(
+      GetInventoryPurchaseReportDocument
     ).bind(null, variables),
     options
   );
@@ -56770,6 +59223,7 @@ export const GetLoanStatementReportDocument = `
           name
           code
           branch
+          panVatNo
           address {
             state
             district
@@ -56795,6 +59249,7 @@ export const GetLoanStatementReportDocument = `
               installment
               charge
               openingBalance
+              productName
               disbursedAmount
             }
             loanStatement {
@@ -56869,6 +59324,7 @@ export const GetClosedLoanAccountReportDocument = `
           memberCode
           memberId
           memberName
+          memberPan
           noOfInstallments
           approvedAmount
           branchName
@@ -57095,6 +59551,7 @@ export const GetLoanAccruedInterestReportDocument = `
           memberName
           memberId
           memberCode
+          memberPanNo
           currentInterestRate
           accountType
           accountName
@@ -57271,6 +59728,7 @@ export const GetLoanTransactionReportDocument = `
           name
           code
           branch
+          panVatNo
           address {
             state
             district
@@ -57287,6 +59745,7 @@ export const GetLoanTransactionReportDocument = `
         statement {
           ... on LoanStatementReport {
             meta {
+              productName
               accountNo
               approvedAmount
               interestRate
@@ -57758,6 +60217,66 @@ export const useGetMinorListReportQuery = <TData = GetMinorListReportQuery, TErr
     variables === undefined ? ['getMinorListReport'] : ['getMinorListReport', variables],
     useAxios<GetMinorListReportQuery, GetMinorListReportQueryVariables>(
       GetMinorListReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberTransferReportDocument = `
+    query getMemberTransferReport($data: MemberTransferFilter!) {
+  report {
+    memberReport {
+      memberTransferReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          memberName
+          fromBranch {
+            id
+            branchCode
+            name
+          }
+          toBranch {
+            id
+            branchCode
+            name
+          }
+          transferredDate
+          transferredBy
+          shareBalance
+          savingAccounts {
+            accNo
+            balance {
+              amount
+              amountType
+            }
+            interestAccured
+            disbursedAmount
+          }
+          loanAccounts {
+            accNo
+            balance {
+              amount
+              amountType
+            }
+            interestAccured
+            disbursedAmount
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberTransferReportQuery = <
+  TData = GetMemberTransferReportQuery,
+  TError = unknown
+>(
+  variables: GetMemberTransferReportQueryVariables,
+  options?: UseQueryOptions<GetMemberTransferReportQuery, TError, TData>
+) =>
+  useQuery<GetMemberTransferReportQuery, TError, TData>(
+    ['getMemberTransferReport', variables],
+    useAxios<GetMemberTransferReportQuery, GetMemberTransferReportQueryVariables>(
+      GetMemberTransferReportDocument
     ).bind(null, variables),
     options
   );
@@ -58373,6 +60892,7 @@ export const GetShareStatementDocument = `
           code
           name
           activeDate
+          panVatNo
           address {
             wardNo
             state
@@ -59078,8 +61598,81 @@ export const useGetMrTransactionReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetFiscalYearTrialBalanceDocument = `
+    query getFiscalYearTrialBalance($data: TrialSheetReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        fiscalTrialSheetReport(data: $data) {
+          data {
+            equityAndLiablities {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            expenses {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            income {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            assets {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            offBalance {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            orphanEntries {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            equityAndLiablitiesTotal
+            assetsTotal
+            expenseTotal
+            incomeTotal
+            offBalanceTotal
+            orphanTotal
+            totalAssetExpense
+            totalLiablitiesIncome
+            totalProfitLoss
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetFiscalYearTrialBalanceQuery = <
+  TData = GetFiscalYearTrialBalanceQuery,
+  TError = unknown
+>(
+  variables: GetFiscalYearTrialBalanceQueryVariables,
+  options?: UseQueryOptions<GetFiscalYearTrialBalanceQuery, TError, TData>
+) =>
+  useQuery<GetFiscalYearTrialBalanceQuery, TError, TData>(
+    ['getFiscalYearTrialBalance', variables],
+    useAxios<GetFiscalYearTrialBalanceQuery, GetFiscalYearTrialBalanceQueryVariables>(
+      GetFiscalYearTrialBalanceDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetChequeBookRequestsDocument = `
-    query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
+    query getChequeBookRequests($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       chequeBookRequest(paginate: $pagination, filter: $filter) {
@@ -59126,7 +61719,7 @@ export const useGetChequeBookRequestsQuery = <TData = GetChequeBookRequestsQuery
     options
   );
 export const GetWithdrawViaCollectorDocument = `
-    query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter) {
+    query getWithdrawViaCollector($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       withdrawViaCollector(paginate: $pagination, filter: $filter) {
@@ -59170,7 +61763,7 @@ export const useGetWithdrawViaCollectorQuery = <
     options
   );
 export const GetLoanRequestsDocument = `
-    query getLoanRequests($pagination: Pagination, $filter: RequestFilter) {
+    query getLoanRequests($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       loanRequest(filter: $filter, paginate: $pagination) {
@@ -59209,7 +61802,7 @@ export const useGetLoanRequestsQuery = <TData = GetLoanRequestsQuery, TError = u
     options
   );
 export const GetBlockChequeListDocument = `
-    query getBlockChequeList($pagination: Pagination, $filter: RequestFilter) {
+    query getBlockChequeList($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       blockCheque(filter: $filter, paginate: $pagination) {
@@ -59249,7 +61842,7 @@ export const useGetBlockChequeListQuery = <TData = GetBlockChequeListQuery, TErr
     options
   );
 export const GetMemberRequestListDocument = `
-    query getMemberRequestList($pagination: Pagination, $filter: RequestFilter) {
+    query getMemberRequestList($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       membershipRequest(filter: $filter, paginate: $pagination) {
@@ -59369,6 +61962,7 @@ export const GetAlternativeFeeAndChargesDocument = `
             serviceType
             ledgerId
             amount
+            restrictTransaction
           }
         }
       }
@@ -59580,6 +62174,7 @@ export const GetBranchListDocument = `
               plTransferId
               tdsTransaferId
               branchStatus
+              eodReady
             }
           }
         }
@@ -59799,15 +62394,10 @@ export const useGetCoaAccountsUnderLeafListQuery = <
     options
   );
 export const GetCoaAccountListDocument = `
-    query getCoaAccountList($branchId: [String!], $pagination: Pagination, $filter: COAListFilter, $flag: COAListFlag) {
+    query getCoaAccountList($pagination: Pagination, $filter: Filter, $flag: COAListFlag) {
   settings {
     chartsOfAccount {
-      coaAccountList(
-        branchId: $branchId
-        pagination: $pagination
-        filter: $filter
-        flag: $flag
-      ) {
+      coaAccountList(pagination: $pagination, filter: $filter, flag: $flag) {
         edges {
           node {
             accountCode
@@ -59974,7 +62564,7 @@ export const useGetCoaLeafNodeDetailsQuery = <TData = GetCoaLeafNodeDetailsQuery
     options
   );
 export const GetLedgerListDocument = `
-    query getLedgerList($id: ID!, $pagination: Pagination, $filter: Filter, $branchId: [String!], $snapshot: String) {
+    query getLedgerList($id: [ID!]!, $pagination: Pagination, $filter: Filter, $branchId: [String!], $snapshot: String) {
   settings {
     chartsOfAccount {
       coaLedgerList(
@@ -60724,6 +63314,535 @@ export const useGetLeavePolicyQuery = <TData = GetLeavePolicyQuery, TError = unk
   useQuery<GetLeavePolicyQuery, TError, TData>(
     ['getLeavePolicy', variables],
     useAxios<GetLeavePolicyQuery, GetLeavePolicyQueryVariables>(GetLeavePolicyDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetEmployeeLevelDocument = `
+    query getEmployeeLevel($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getEmployeeLevel(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEmployeeLevelQuery = <TData = GetEmployeeLevelQuery, TError = unknown>(
+  variables: GetEmployeeLevelQueryVariables,
+  options?: UseQueryOptions<GetEmployeeLevelQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeLevelQuery, TError, TData>(
+    ['getEmployeeLevel', variables],
+    useAxios<GetEmployeeLevelQuery, GetEmployeeLevelQueryVariables>(GetEmployeeLevelDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetDepartmentDocument = `
+    query getDepartment($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getDepartment(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetDepartmentQuery = <TData = GetDepartmentQuery, TError = unknown>(
+  variables: GetDepartmentQueryVariables,
+  options?: UseQueryOptions<GetDepartmentQuery, TError, TData>
+) =>
+  useQuery<GetDepartmentQuery, TError, TData>(
+    ['getDepartment', variables],
+    useAxios<GetDepartmentQuery, GetDepartmentQueryVariables>(GetDepartmentDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetDesignationDocument = `
+    query getDesignation($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getDesignation(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetDesignationQuery = <TData = GetDesignationQuery, TError = unknown>(
+  variables: GetDesignationQueryVariables,
+  options?: UseQueryOptions<GetDesignationQuery, TError, TData>
+) =>
+  useQuery<GetDesignationQuery, TError, TData>(
+    ['getDesignation', variables],
+    useAxios<GetDesignationQuery, GetDesignationQueryVariables>(GetDesignationDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetEmployeeTypeDocument = `
+    query getEmployeeType($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getEmployeeType(id: $id) {
+              record {
+                name
+                description
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEmployeeTypeQuery = <TData = GetEmployeeTypeQuery, TError = unknown>(
+  variables: GetEmployeeTypeQueryVariables,
+  options?: UseQueryOptions<GetEmployeeTypeQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeTypeQuery, TError, TData>(
+    ['getEmployeeType', variables],
+    useAxios<GetEmployeeTypeQuery, GetEmployeeTypeQueryVariables>(GetEmployeeTypeDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetHealthInsuranceDocument = `
+    query getHealthInsurance($id: String!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            getHealthInsurance(id: $id) {
+              record {
+                healthInsuranceProvider
+                healthInsuranceNumber
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetHealthInsuranceQuery = <TData = GetHealthInsuranceQuery, TError = unknown>(
+  variables: GetHealthInsuranceQueryVariables,
+  options?: UseQueryOptions<GetHealthInsuranceQuery, TError, TData>
+) =>
+  useQuery<GetHealthInsuranceQuery, TError, TData>(
+    ['getHealthInsurance', variables],
+    useAxios<GetHealthInsuranceQuery, GetHealthInsuranceQueryVariables>(
+      GetHealthInsuranceDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEarningComponentDocument = `
+    query getEarningComponent($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          earningComponent {
+            getEarningComponent(id: $id) {
+              data {
+                id
+                name
+                abbr
+                description
+                baseMultiple
+                multiplier
+                isTaxApplicable
+                roundToNearestInteger
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEarningComponentQuery = <TData = GetEarningComponentQuery, TError = unknown>(
+  variables: GetEarningComponentQueryVariables,
+  options?: UseQueryOptions<GetEarningComponentQuery, TError, TData>
+) =>
+  useQuery<GetEarningComponentQuery, TError, TData>(
+    ['getEarningComponent', variables],
+    useAxios<GetEarningComponentQuery, GetEarningComponentQueryVariables>(
+      GetEarningComponentDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEarningComponentListDocument = `
+    query getEarningComponentList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          earningComponent {
+            listEarningComponent(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  status
+                  description
+                  abbr
+                  multiplier
+                  baseMultiple
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEarningComponentListQuery = <
+  TData = GetEarningComponentListQuery,
+  TError = unknown
+>(
+  variables?: GetEarningComponentListQueryVariables,
+  options?: UseQueryOptions<GetEarningComponentListQuery, TError, TData>
+) =>
+  useQuery<GetEarningComponentListQuery, TError, TData>(
+    variables === undefined ? ['getEarningComponentList'] : ['getEarningComponentList', variables],
+    useAxios<GetEarningComponentListQuery, GetEarningComponentListQueryVariables>(
+      GetEarningComponentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDeductionComponentDocument = `
+    query getDeductionComponent($id: String!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          deductionComponent {
+            getDeductionComponent(id: $id) {
+              record {
+                id
+                name
+                abbr
+                description
+                deductionFrequency
+                baseMultiple
+                multiplier
+                roundToNearestInteger
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetDeductionComponentQuery = <TData = GetDeductionComponentQuery, TError = unknown>(
+  variables: GetDeductionComponentQueryVariables,
+  options?: UseQueryOptions<GetDeductionComponentQuery, TError, TData>
+) =>
+  useQuery<GetDeductionComponentQuery, TError, TData>(
+    ['getDeductionComponent', variables],
+    useAxios<GetDeductionComponentQuery, GetDeductionComponentQueryVariables>(
+      GetDeductionComponentDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDeductionComponentListDocument = `
+    query getDeductionComponentList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          deductionComponent {
+            listDeductionComponent(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  status
+                  deductionFrequency
+                  abbr
+                  multiplier
+                  baseMultiple
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetDeductionComponentListQuery = <
+  TData = GetDeductionComponentListQuery,
+  TError = unknown
+>(
+  variables?: GetDeductionComponentListQueryVariables,
+  options?: UseQueryOptions<GetDeductionComponentListQuery, TError, TData>
+) =>
+  useQuery<GetDeductionComponentListQuery, TError, TData>(
+    variables === undefined
+      ? ['getDeductionComponentList']
+      : ['getDeductionComponentList', variables],
+    useAxios<GetDeductionComponentListQuery, GetDeductionComponentListQueryVariables>(
+      GetDeductionComponentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalaryStructureDocument = `
+    query getSalaryStructure($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          salaryStructure {
+            getSalaryStructure(id: $id) {
+              record {
+                id
+                name
+                payrollFrequency
+                description
+                salaryEarnings {
+                  id
+                  amount
+                }
+                salaryDeduction {
+                  id
+                  amount
+                }
+                modeOfPayment
+                salaryPaymentLedger
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetSalaryStructureQuery = <TData = GetSalaryStructureQuery, TError = unknown>(
+  variables: GetSalaryStructureQueryVariables,
+  options?: UseQueryOptions<GetSalaryStructureQuery, TError, TData>
+) =>
+  useQuery<GetSalaryStructureQuery, TError, TData>(
+    ['getSalaryStructure', variables],
+    useAxios<GetSalaryStructureQuery, GetSalaryStructureQueryVariables>(
+      GetSalaryStructureDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalaryStructureListDocument = `
+    query getSalaryStructureList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          salaryStructure {
+            listSalaryStructure(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  description
+                  status
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSalaryStructureListQuery = <
+  TData = GetSalaryStructureListQuery,
+  TError = unknown
+>(
+  variables?: GetSalaryStructureListQueryVariables,
+  options?: UseQueryOptions<GetSalaryStructureListQuery, TError, TData>
+) =>
+  useQuery<GetSalaryStructureListQuery, TError, TData>(
+    variables === undefined ? ['getSalaryStructureList'] : ['getSalaryStructureList', variables],
+    useAxios<GetSalaryStructureListQuery, GetSalaryStructureListQueryVariables>(
+      GetSalaryStructureListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetTaxSlabDocument = `
+    query getTaxSlab($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxSlab {
+            getTaxSlab(id: $id) {
+              data {
+                id
+                name
+                fiscalYear {
+                  from
+                  to
+                }
+                unmarriedTaxableSalarySlab {
+                  fromAmount
+                  toAmount
+                  percentageDeduction
+                }
+                marriedTaxableSalarySlab {
+                  fromAmount
+                  toAmount
+                  percentageDeduction
+                }
+                effectiveFrom
+                makeThisActive
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetTaxSlabQuery = <TData = GetTaxSlabQuery, TError = unknown>(
+  variables: GetTaxSlabQueryVariables,
+  options?: UseQueryOptions<GetTaxSlabQuery, TError, TData>
+) =>
+  useQuery<GetTaxSlabQuery, TError, TData>(
+    ['getTaxSlab', variables],
+    useAxios<GetTaxSlabQuery, GetTaxSlabQueryVariables>(GetTaxSlabDocument).bind(null, variables),
+    options
+  );
+export const GetTaxSlabListDocument = `
+    query getTaxSlabList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxSlab {
+            listTaxSlab(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  effectiveFrom
+                  status
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetTaxSlabListQuery = <TData = GetTaxSlabListQuery, TError = unknown>(
+  variables?: GetTaxSlabListQueryVariables,
+  options?: UseQueryOptions<GetTaxSlabListQuery, TError, TData>
+) =>
+  useQuery<GetTaxSlabListQuery, TError, TData>(
+    variables === undefined ? ['getTaxSlabList'] : ['getTaxSlabList', variables],
+    useAxios<GetTaxSlabListQuery, GetTaxSlabListQueryVariables>(GetTaxSlabListDocument).bind(
       null,
       variables
     ),
@@ -63470,6 +66589,66 @@ export const useGetSettingsShareTransferDataQuery = <
     ).bind(null, variables),
     options
   );
+export const TransactionConstraintsListDocument = `
+    query transactionConstraintsList($filter: Filter, $pagination: Pagination) {
+  settings {
+    transactionConstraint(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          objState
+          valueDate
+          branch {
+            name
+          }
+          member {
+            id
+            code
+            name
+            profilePicUrl
+          }
+          account {
+            ID
+            accountName
+          }
+          effectiveSince
+          effectiveTill
+          txnType
+          ledgerId
+          accountType
+          coaHead
+          user
+          initiationType
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useTransactionConstraintsListQuery = <
+  TData = TransactionConstraintsListQuery,
+  TError = unknown
+>(
+  variables?: TransactionConstraintsListQueryVariables,
+  options?: UseQueryOptions<TransactionConstraintsListQuery, TError, TData>
+) =>
+  useQuery<TransactionConstraintsListQuery, TError, TData>(
+    variables === undefined
+      ? ['transactionConstraintsList']
+      : ['transactionConstraintsList', variables],
+    useAxios<TransactionConstraintsListQuery, TransactionConstraintsListQueryVariables>(
+      TransactionConstraintsListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSettingsUserListDataDocument = `
     query getSettingsUserListData($paginate: Pagination, $filter: Filter) {
   settings {
@@ -64241,6 +67420,7 @@ export const GetEndOfDayDateDataDocument = `
   transaction {
     endOfDayDate {
       value
+      isYearEnd
       hasErrors
       isInitialized
       headOfficeReady
@@ -64260,7 +67440,7 @@ export const useGetEndOfDayDateDataQuery = <TData = GetEndOfDayDateDataQuery, TE
     options
   );
 export const GetTellerTransactionListDataDocument = `
-    query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination: Pagination) {
+    query getTellerTransactionListData($filter: Filter, $pagination: Pagination) {
   transaction {
     listTellerTransaction(filter: $filter, pagination: $pagination) {
       totalCount
@@ -64635,6 +67815,7 @@ export const GetAllTransactionsListDocument = `
           amount
           date
           branchName
+          yearEndAdjustment
         }
         cursor
       }
@@ -64680,6 +67861,7 @@ export const GetAllTransactionsDetailDocument = `
         transactionMode
         amount
         branch
+        isYearEndAdjustment
         note
         status
         glTransaction {
@@ -65115,6 +68297,62 @@ export const useGetTagKhataReportQuery = <TData = GetTagKhataReportQuery, TError
     ).bind(null, variables),
     options
   );
+export const YearEndLedgerAccountListDocument = `
+    query yearEndLedgerAccountList {
+  transaction {
+    yearEnd {
+      getCurrentState {
+        data {
+          expenseEntries {
+            ledgerId
+            ledgerName
+            branchId
+            branchName
+            balance {
+              amount
+              amountType
+            }
+          }
+          totalExpense {
+            amount
+            amountType
+          }
+          incomeEntries {
+            ledgerId
+            ledgerName
+            branchId
+            branchName
+            balance {
+              amount
+              amountType
+            }
+          }
+          totalIncome {
+            amount
+            amountType
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useYearEndLedgerAccountListQuery = <
+  TData = YearEndLedgerAccountListQuery,
+  TError = unknown
+>(
+  variables?: YearEndLedgerAccountListQueryVariables,
+  options?: UseQueryOptions<YearEndLedgerAccountListQuery, TError, TData>
+) =>
+  useQuery<YearEndLedgerAccountListQuery, TError, TData>(
+    variables === undefined
+      ? ['yearEndLedgerAccountList']
+      : ['yearEndLedgerAccountList', variables],
+    useAxios<YearEndLedgerAccountListQuery, YearEndLedgerAccountListQueryVariables>(
+      YearEndLedgerAccountListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetTransferDetailDocument = `
     query getTransferDetail($transferID: ID!) {
   transaction {
@@ -65164,13 +68402,9 @@ export const useGetTransferDetailQuery = <TData = GetTransferDetailQuery, TError
     options
   );
 export const GetCashInTransitListDocument = `
-    query getCashInTransitList($transferType: CashInTransitTransferType!, $filter: CashInTransitFilter, $pagination: Pagination) {
+    query getCashInTransitList($filter: Filter, $pagination: Pagination) {
   transaction {
-    cashInTransit(
-      transferType: $transferType
-      filter: $filter
-      pagination: $pagination
-    ) {
+    cashInTransit(filter: $filter, pagination: $pagination) {
       totalCount
       pageInfo {
         hasNextPage
@@ -65204,11 +68438,11 @@ export const GetCashInTransitListDocument = `
 }
     `;
 export const useGetCashInTransitListQuery = <TData = GetCashInTransitListQuery, TError = unknown>(
-  variables: GetCashInTransitListQueryVariables,
+  variables?: GetCashInTransitListQueryVariables,
   options?: UseQueryOptions<GetCashInTransitListQuery, TError, TData>
 ) =>
   useQuery<GetCashInTransitListQuery, TError, TData>(
-    ['getCashInTransitList', variables],
+    variables === undefined ? ['getCashInTransitList'] : ['getCashInTransitList', variables],
     useAxios<GetCashInTransitListQuery, GetCashInTransitListQueryVariables>(
       GetCashInTransitListDocument
     ).bind(null, variables),
@@ -65264,13 +68498,9 @@ export const useGetCashInTransitDetailQuery = <
     options
   );
 export const GetServiceCenterTransferListDocument = `
-    query getServiceCenterTransferList($filter: ServiceCenterTransactionFilter, $pagination: Pagination, $transferMode: IBTType!) {
+    query getServiceCenterTransferList($filter: Filter, $pagination: Pagination) {
   transaction {
-    listServiceCenterCashTransfer(
-      filter: $filter
-      pagination: $pagination
-      transferMode: $transferMode
-    ) {
+    listServiceCenterCashTransfer(filter: $filter, pagination: $pagination) {
       totalCount
       pageInfo {
         startCursor
@@ -65303,18 +68533,20 @@ export const useGetServiceCenterTransferListQuery = <
   TData = GetServiceCenterTransferListQuery,
   TError = unknown
 >(
-  variables: GetServiceCenterTransferListQueryVariables,
+  variables?: GetServiceCenterTransferListQueryVariables,
   options?: UseQueryOptions<GetServiceCenterTransferListQuery, TError, TData>
 ) =>
   useQuery<GetServiceCenterTransferListQuery, TError, TData>(
-    ['getServiceCenterTransferList', variables],
+    variables === undefined
+      ? ['getServiceCenterTransferList']
+      : ['getServiceCenterTransferList', variables],
     useAxios<GetServiceCenterTransferListQuery, GetServiceCenterTransferListQueryVariables>(
       GetServiceCenterTransferListDocument
     ).bind(null, variables),
     options
   );
 export const GetBankTransferListDocument = `
-    query getBankTransferList($filter: TellerBankTransferFilter, $pagination: Pagination) {
+    query getBankTransferList($filter: Filter, $pagination: Pagination) {
   transaction {
     tellerBankTransfer {
       list(filter: $filter, pagination: $pagination) {
@@ -65577,6 +68809,7 @@ export const GetWithdrawSlipDataDocument = `
           id
           accountName
           productName
+          branchName
         }
         noOfLeaves
         availableRange {

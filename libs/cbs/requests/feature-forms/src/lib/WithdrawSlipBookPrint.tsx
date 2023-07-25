@@ -8,7 +8,6 @@ import { Alert, asyncToast, Box, Button, FormSection, GridItem } from '@myra-ui'
 
 import {
   SlipSizeStandard,
-  useAppSelector,
   useGetWithdrawSlipDataQuery,
   useGetWithdrawSlipPrintPreferenceQuery,
   usePrintSlipMutation,
@@ -48,7 +47,7 @@ export const WithdrawSlipBookPrint = () => {
 
   const slipId = router?.query?.id;
 
-  const user = useAppSelector((state) => state?.auth?.user);
+  // const user = useAppSelector((state) => state?.auth?.user);
 
   const queryClient = useQueryClient();
 
@@ -149,7 +148,7 @@ export const WithdrawSlipBookPrint = () => {
     accountPosition: selectedPrintPreference?.blockTwo,
     slipNumberPosition: selectedPrintPreference?.blockThree,
     details: {
-      branch: user?.currentBranch?.name as string,
+      branch: withdrawSlipData?.account?.branchName as string,
       memberName: withdrawSlipData?.member?.name?.local as string,
       memberCode: withdrawSlipData?.member?.code as string,
       accountNumber: withdrawSlipData?.account?.id as string,

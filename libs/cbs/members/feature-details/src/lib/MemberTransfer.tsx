@@ -49,6 +49,7 @@ export const MemberTransfer = () => {
   const memberId = router?.query?.['memberId'];
   const requestId = router?.query?.['requestId'];
   const isApprove = router?.query?.['type'] === 'approve';
+  const isDetail = router?.query?.['type'] === 'details';
 
   const { data: transferData } = useGetMemberTransferQuery(
     { requestId: requestId as string },
@@ -130,6 +131,7 @@ export const MemberTransfer = () => {
   }, [branchId]);
 
   const handleTransferMember = () => {
+    const values = getValues();
     asyncToast({
       id: 'member-transfer-id',
       msgs: {
@@ -140,8 +142,8 @@ export const MemberTransfer = () => {
         router.push(ROUTES?.CBS_REQUESTS_MEMBER_TRANSFER_LIST);
       },
       promise: mutateAsync({
-        memberId: memberId as string,
-        data: { ...(omit(getValues(), ['memberId', 'currentBranchId']) as MemberTransferInput) },
+        memberId: values?.['memberId'],
+        data: { ...(omit(values, ['memberId', 'currentBranchId']) as MemberTransferInput) },
       }),
     });
   };
@@ -302,7 +304,7 @@ export const MemberTransfer = () => {
           </Box>
         </FormLayout.Sidebar>
       </FormLayout.Content>
-      {memberId && (
+      {!isDetail && !isApprove && (
         <FormLayout.Footer
           mainButtonLabel="Request Transfer"
           mainButtonHandler={handleTransferMember}

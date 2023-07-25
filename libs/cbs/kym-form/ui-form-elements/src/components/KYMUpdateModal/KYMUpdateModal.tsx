@@ -10,12 +10,24 @@ import { FormDatePicker } from '@coop/shared/form';
 interface IKymUpdateModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onUpdateClick: () => Promise<Record<string, unknown>>;
 }
 
-export const KYMUpdateModal = ({ isOpen, onClose }: IKymUpdateModalProps) => {
+export const KYMUpdateModal = ({ isOpen, onClose, onUpdateClick }: IKymUpdateModalProps) => {
   const router = useRouter();
   const methods = useForm<{ date: { en: string; np: string; local: string } }>();
   const { mutateAsync } = useUpdateKymMutation();
+
+  const onUpdate = () =>
+    new Promise<Record<string, unknown>>((resolve) => {
+      onUpdateClick().then(() => {
+        const response = mutateAsync({
+          id: router.query['id'] as string,
+          date: methods.getValues().date,
+        });
+        resolve(response);
+      });
+    });
 
   return (
     <Modal
@@ -31,10 +43,7 @@ export const KYMUpdateModal = ({ isOpen, onClose }: IKymUpdateModalProps) => {
             loading: 'Update KYM',
           },
           onSuccess: () => router.push(`/cbs/members/details?id=${router.query['id']}`),
-          promise: mutateAsync({
-            id: router.query['id'] as string,
-            date: methods.getValues().date,
-          }),
+          promise: onUpdate(),
         });
       }}
     >

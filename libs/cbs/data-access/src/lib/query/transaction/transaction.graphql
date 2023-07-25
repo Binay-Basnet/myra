@@ -89,6 +89,7 @@ query getEndOfDayDateData {
   transaction {
     endOfDayDate {
       value
+      isYearEnd
       hasErrors
       isInitialized
       headOfficeReady
@@ -96,7 +97,7 @@ query getEndOfDayDateData {
   }
 }
 
-query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination: Pagination) {
+query getTellerTransactionListData($filter: Filter, $pagination: Pagination) {
   transaction {
     listTellerTransaction(filter: $filter, pagination: $pagination) {
       totalCount
@@ -386,6 +387,7 @@ query getAllTransactionsList($filter: Filter, $pagination: Pagination) {
           amount
           date
           branchName
+          yearEndAdjustment
         }
         cursor
       }
@@ -416,6 +418,7 @@ query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
         transactionMode
         amount
         branch
+        isYearEndAdjustment
         note
         status
         glTransaction {
@@ -696,6 +699,45 @@ query getTagKhataReport($data: TagKhataReportFilter!) {
               netBalance
               closingBalance
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+query yearEndLedgerAccountList {
+  transaction {
+    yearEnd {
+      getCurrentState {
+        data {
+          expenseEntries {
+            ledgerId
+            ledgerName
+            branchId
+            branchName
+            balance {
+              amount
+              amountType
+            }
+          }
+          totalExpense {
+            amount
+            amountType
+          }
+          incomeEntries {
+            ledgerId
+            ledgerName
+            branchId
+            branchName
+            balance {
+              amount
+              amountType
+            }
+          }
+          totalIncome {
+            amount
+            amountType
           }
         }
       }

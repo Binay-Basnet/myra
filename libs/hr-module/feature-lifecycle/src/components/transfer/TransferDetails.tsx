@@ -46,7 +46,7 @@ export const TransferDetails = () => {
   return (
     <FormSection
       header={`New ${
-        transferType === EmployeeTransferType.Department ? 'Department' : 'Service Cente'
+        transferType === EmployeeTransferType.Department ? 'Department' : 'Service Center'
       } Transfer`}
     >
       <GridItem colSpan={2}>

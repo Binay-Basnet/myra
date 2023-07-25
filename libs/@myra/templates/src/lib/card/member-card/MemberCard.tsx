@@ -22,7 +22,7 @@ import {
 import { AccountQRModal, Tooltip } from '@myra-ui/components';
 import { Avatar, Box, Button, Icon } from '@myra-ui/foundations';
 
-import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 // import { localizedDate } from '@coop/cbs/utils';
 
@@ -66,6 +66,7 @@ export interface MemberCardProps {
         lastTransactionDate?: string;
         productName: string | undefined;
         installmentAmount: string | null | undefined;
+        lastInstallmentUpdatedDate?: Record<'local' | 'en' | 'np', string> | null;
       }
     | undefined
     | null;
@@ -437,6 +438,19 @@ export const MemberCard = ({
                       </Text>
                     </Box>
                   )}
+                  {accountInfo.installmentAmount && (
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
+                        Last Installment Updated Date
+                      </Text>
+                      <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
+                        {accountInfo?.lastInstallmentUpdatedDate
+                          ? localizedDate(accountInfo.lastInstallmentUpdatedDate)
+                          : ''}
+                      </Text>
+                    </Box>
+                  )}
+
                   {accountInfo.interestAccured && (
                     <Box display="flex" justifyContent="space-between">
                       <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">

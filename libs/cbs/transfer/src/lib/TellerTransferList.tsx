@@ -9,15 +9,17 @@ import {
   TellerActivityEntry,
   TellerActivityState,
   TellerTransferType,
+  useGetMemberFilterMappingQuery,
+  useGetSettingsUserListDataQuery,
   useGetTellerTransactionListDataQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
+  getFilterQuery,
   getPaginationQuery,
   getUrl,
-  useTranslation,
 } from '@coop/shared/utils';
 
 import { TellerTransferApproveModal } from '../components';
@@ -32,7 +34,11 @@ const tellerActivityVariant: Record<TellerActivityState, 'success' | 'failure' |
 };
 
 export const TellerTransferList = () => {
-  const { t } = useTranslation();
+  const { data: filterMapping } = useGetMemberFilterMappingQuery();
+
+  const { data: userList } = useGetSettingsUserListDataQuery({
+    paginate: { after: '', first: -1 },
+  });
 
   const router = useRouter();
 
@@ -40,9 +46,12 @@ export const TellerTransferList = () => {
 
   const { data, isFetching } = useGetTellerTransactionListDataQuery({
     pagination: getPaginationQuery(),
-    filter: {
-      type: [TellerTransferType.TellerTransfer],
-    },
+    filter: getFilterQuery({
+      type: {
+        compare: '=',
+        value: TellerTransferType.TellerTransfer,
+      },
+    }),
   });
 
   const rowData = useMemo(() => data?.transaction?.listTellerTransaction?.edges ?? [], [data]);
@@ -50,15 +59,19 @@ export const TellerTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'date',
         header: 'Transfer Date',
         accessorFn: (row) => localizedDate(row?.node?.date),
         cell: (props) => localizedDate(props?.row?.original?.node?.date),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Transfer Code',
         accessorFn: (row) => row?.node?.transferCode,
       },
       {
+        id: 'srcTeller',
         accessorFn: (row) => row?.node?.srcTeller?.local,
         header: 'Sender',
         cell: (props) => (
@@ -78,12 +91,20 @@ export const TellerTransferList = () => {
             </Text>
           </Box>
         ),
+        enableColumnFilter: true,
 
         meta: {
           width: '25%',
+          filterMaps: {
+            list: userList?.settings?.myraUser?.list?.edges?.map((e) => ({
+              label: e?.node?.name,
+              value: e?.node?.id,
+            })),
+          },
         },
       },
       {
+        id: 'destTeller',
         accessorFn: (row) => row?.node?.destTeller?.local,
         header: 'Receiver',
         cell: (props) => (
@@ -103,14 +124,24 @@ export const TellerTransferList = () => {
             </Text>
           </Box>
         ),
+        enableColumnFilter: true,
 
         meta: {
           width: '25%',
+          filterMaps: {
+            list: userList?.settings?.myraUser?.list?.edges?.map((e) => ({
+              label: e?.node?.name,
+              value: e?.node?.id,
+            })),
+          },
         },
       },
       {
+        id: 'transferStatus',
         header: 'Approval Status',
         accessorFn: (row) => row?.node?.transferState,
+        enableColumnFilter: true,
+
         cell: (props) => (
           <ApprovalStatusCell
             status={props.row.original?.node?.transferState as string}
@@ -119,15 +150,34 @@ export const TellerTransferList = () => {
             }
           />
         ),
+        meta: {
+          filterMaps: {
+            list: [
+              { label: 'Success', value: TellerActivityState.Approved },
+              { label: 'Failed', value: TellerActivityState.Cancelled },
+              { label: 'Pending', value: TellerActivityState.Pending },
+            ],
+          },
+        },
       },
       {
+        id: 'branchId',
         header: 'Transaction Service Center',
         accessorFn: (row) => row?.node?.transactionBranchName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: filterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
       },
       {
+        id: 'amount',
         header: 'Amount',
 
         accessorFn: (row) => amountConverter(row?.node?.amount as string),
+        enableColumnFilter: true,
+        filterFn: 'amount',
         meta: {
           isNumeric: true,
         },
@@ -158,7 +208,11 @@ export const TellerTransferList = () => {
         },
       },
     ],
-    [t]
+    [
+      filterMapping?.members?.filterMapping?.serviceCenter,
+      router,
+      userList?.settings?.myraUser?.list?.edges,
+    ]
   );
 
   const selectedTransfer = rowData?.find(

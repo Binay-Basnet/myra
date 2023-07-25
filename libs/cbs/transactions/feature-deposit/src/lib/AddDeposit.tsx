@@ -9,12 +9,12 @@ import { Box, Button, Divider, Grid, MemberCard, ResponseDialog, Text } from '@m
 import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
   AccountObjState,
-  DepositAccount,
   DepositedBy,
   DepositInput,
   DepositPaymentType,
   InstallmentState,
   KymMemberTypesEnum,
+  MemberAccountDetails,
   NatureOfDepositProduct,
   useAppSelector,
   useGetAccountDetailsDataQuery,
@@ -371,7 +371,8 @@ export const AddDeposit = () => {
                 )}
 
                 {accountId &&
-                  (selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
+                  ((selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving &&
+                    selectedAccount?.product?.depositFrequency) ||
                     (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
                       selectedAccount?.product?.isMandatorySaving)) && (
                     <>
@@ -428,6 +429,8 @@ export const AddDeposit = () => {
                   (selectedAccount?.product?.nature === NatureOfDepositProduct.Current ||
                     (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
                       !selectedAccount?.product?.isMandatorySaving) ||
+                    (selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving &&
+                      !selectedAccount?.product?.depositFrequency) ||
                     selectedAccount?.product?.nature === NatureOfDepositProduct.TermSavingOrFd ||
                     !selectedAccount?.product?.nature) && (
                     <>
@@ -578,6 +581,7 @@ export const AddDeposit = () => {
                             selectedAccount?.product?.isMandatorySaving)
                             ? selectedAccount?.installmentAmount
                             : null,
+                        lastInstallmentUpdatedDate: selectedAccount?.lastInstallmentUpdatedDate,
                       }
                     : null
                 }
@@ -674,7 +678,7 @@ export const AddDeposit = () => {
         onClose={handleModalClose}
         accountId={selectedAccount?.accountId as string}
         productType={selectedAccount?.product?.nature}
-        selectedAccount={selectedAccount as DepositAccount}
+        selectedAccount={selectedAccount as MemberAccountDetails}
       />
     </>
   );

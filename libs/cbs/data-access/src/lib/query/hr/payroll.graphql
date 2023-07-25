@@ -1,0 +1,53 @@
+query getSalaryStructureAssignmentList($filter: Filter, $pagination: Pagination) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        listSalaryStructureAssignment(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              employeeId
+              employeeName
+              department
+              contact
+              salaryStructure
+              email
+              baseSalary
+              lastUpdated
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSalaryStructureAssignment($id: String!) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        getSalaryStructureAssignment(id: $id) {
+          data {
+            employeeId
+            salaryStructureId
+            baseSalary
+            fromDate
+            paymentMode
+            earnings {
+              id
+              amount
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

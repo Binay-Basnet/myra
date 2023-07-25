@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import omit from 'lodash/omit';
 
 import { asyncToast, Box, Container, FormFooter, FormHeader, Loader, Text } from '@myra-ui';
 
@@ -75,6 +76,7 @@ type DepositForm = Omit<
   natureOfBusinessInstitution: SelectOption;
   chequeCharge: ServiceType[];
   atmCharge: ServiceType[];
+  isFrequencyMandatory: boolean;
 };
 
 export const SettingsDepositProductsAdd = () => {
@@ -196,7 +198,7 @@ export const SettingsDepositProductsAdd = () => {
       : null;
 
     const updatedData = {
-      ...values,
+      ...omit(values, ['isFrequencyMandatory']),
       typeOfMember: values?.typeOfMember ?? null,
       genderId: genderList,
       maritalStatusId: maritalStatusList,
@@ -237,7 +239,9 @@ export const SettingsDepositProductsAdd = () => {
           ? values?.minTenureUnitNumber ?? null
           : null,
       depositFrequency:
-        depositNature === NatureOfDepositProduct.RecurringSaving || isMandatorySaving
+        (depositNature === NatureOfDepositProduct.RecurringSaving &&
+          values?.isFrequencyMandatory) ||
+        isMandatorySaving
           ? values?.depositFrequency
           : null,
       postingFrequency: values?.postingFrequency ? values?.postingFrequency : null,

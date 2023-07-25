@@ -145,9 +145,9 @@ mutation setTellerTransferAction(
   }
 }
 
-mutation readyBranchEOD {
+mutation readyBranchEOD($revertBranchId: ID) {
   transaction {
-    readyBranchEOD
+    readyBranchEOD(revertBranchId: $revertBranchId)
   }
 }
 
@@ -239,6 +239,28 @@ mutation disableAccountingTransactionRestrict($id: ID!) {
         error {
           ...MutationError
         }
+      }
+    }
+  }
+}
+
+mutation yearEndSettlement($destinationCOALeaf: ID!) {
+  transaction {
+    yearEndSettlement(destinationCOALeaf: $destinationCOALeaf) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation switchTransactionYearEndFlag($journalId: ID!) {
+  transaction {
+    switchTransactionYearEndFlag(journalId: $journalId) {
+      recordId
+      error {
+        ...MutationError
       }
     }
   }

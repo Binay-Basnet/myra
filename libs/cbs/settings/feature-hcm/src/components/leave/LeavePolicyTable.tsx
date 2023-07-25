@@ -19,7 +19,7 @@ import {
 
 import {
   LeavePolicyInput,
-  useDeleteHcmEmployeeGeneralMutation,
+  useDeleteLeavePolicyMutation,
   useGetEmployeeLeavePolicyListQuery,
   useGetEmployeeLeaveTypeListQuery,
   useGetEmployeeLevelListQuery,
@@ -41,19 +41,29 @@ type LeavePolicyType = {
   annualAllocation: number;
 };
 
+const defaultFormValue = {
+  name: '',
+  description: '',
+  employeeLevelId: '',
+  effectiveFrom: null,
+  leavePolicyDetails: null,
+};
+
 export const LeavePolicyTable = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedLeavePolicyId, setSelectedLeavePolicyId] = useState('');
 
-  const methods = useForm();
+  const methods = useForm<LeavePolicyInput>({
+    defaultValues: defaultFormValue,
+  });
   const { getValues, handleSubmit, reset } = methods;
 
   const { data, refetch } = useGetEmployeeLeavePolicyListQuery({
     pagination: getPaginationQuery(),
   });
   const { mutateAsync, isLoading } = useSetEmployeeLeavePolicyMutation();
-  const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+  const { mutateAsync: deleteMutateAsync } = useDeleteLeavePolicyMutation();
   const { data: leavePolicyData } = useGetLeavePolicyQuery(
     { id: selectedLeavePolicyId },
     { enabled: !!selectedLeavePolicyId }
@@ -161,12 +171,13 @@ export const LeavePolicyTable = () => {
   const handleAddModalClose = () => {
     setIsAddModalOpen(false);
     setSelectedLeavePolicyId('');
-    reset();
+    reset(defaultFormValue);
   };
 
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
     setSelectedLeavePolicyId('');
+    reset(defaultFormValue);
   };
 
   const onSubmit = () => {
@@ -185,6 +196,15 @@ export const LeavePolicyTable = () => {
           id: selectedLeavePolicyId,
           input: getValues(),
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof LeavePolicyInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     } else {
       asyncToast({
@@ -201,6 +221,15 @@ export const LeavePolicyTable = () => {
           id: null,
           input: getValues(),
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof LeavePolicyInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     }
   };

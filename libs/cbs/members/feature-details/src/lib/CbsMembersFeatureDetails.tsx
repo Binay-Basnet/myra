@@ -7,6 +7,7 @@ import {
   CooperativeUnionBasicMinInfo,
   IndividualBasicMinInfo,
   InstitutionBasicMinInfo,
+  useBalanceCertificateMutation,
   useGetMemberKymDetailsOverviewQuery,
   useIssueCertificateMutation,
 } from '@coop/cbs/data-access';
@@ -42,14 +43,16 @@ export const MemberDetails = ({
 
   const { mutateAsync } = useIssueCertificateMutation();
 
+  const { mutateAsync: issueBalanceCertificate } = useBalanceCertificateMutation();
+
   const memberId = router.query['id'] as string;
   const tabQuery = router.query['tab'] as string;
   const memberDetailsData = useGetMemberKymDetailsOverviewQuery({
     id: memberId as string,
   });
 
-  const branchId =
-    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation?.branchId;
+  // const branchId =
+  //   memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation?.branchId;
 
   const memberIndividual =
     memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
@@ -113,9 +116,13 @@ export const MemberDetails = ({
                 { label: 'Get Certificate', handler: getCertificate },
                 {
                   label: 'Transfer Member',
+                  handler: () => router.push(`${ROUTES?.CBS_MEMBER_TRANSFER}?memberId=${memberId}`),
+                },
+                {
+                  label: 'Issue Balance Certificate',
                   handler: () =>
-                    router.push(
-                      `${ROUTES?.CBS_MEMBER_TRANSFER}?memberId=${memberId}&&branchId=${branchId}`
+                    issueBalanceCertificate({ id: memberId }).then((res) =>
+                      window.open(res?.members?.balanceCertificate, '_blank')
                     ),
                 },
               ]
@@ -127,9 +134,13 @@ export const MemberDetails = ({
                 { label: 'Get Certificate', handler: getCertificate },
                 {
                   label: 'Transfer Member',
+                  handler: () => router.push(`${ROUTES?.CBS_MEMBER_TRANSFER}?memberId=${memberId}`),
+                },
+                {
+                  label: 'Issue Balance Certificate',
                   handler: () =>
-                    router.push(
-                      `${ROUTES?.CBS_MEMBER_TRANSFER}?memberId=${memberId}&&branchId=${branchId}`
+                    issueBalanceCertificate({ id: memberId }).then((res) =>
+                      window.open(res?.members?.balanceCertificate, '_blank')
                     ),
                 },
               ]

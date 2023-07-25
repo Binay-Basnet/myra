@@ -1,10 +1,11 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Grid, GridItem, Modal } from '@myra-ui';
+import { asyncToast, Grid, GridItem, Modal } from '@myra-ui';
 
 import {
   FormFieldSearchTerm,
+  useAddFamilyMemberMutation,
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
   // useSetMemberFamilyDetailsMutation,
@@ -33,32 +34,31 @@ export const AddMinorModal = ({ isOpen, onClose, memberId }: IAddMinorModalProps
 
   const { mutateAsync: newIDMutate } = useGetNewIdMutation();
 
-  // const { mutateAsync: setMinor } = useSetMemberFamilyDetailsMutation();
+  const { mutateAsync: setMinor } = useAddFamilyMemberMutation();
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const values = methods.getValues();
 
-    // asyncToast({
-    //   id: 'account-open-add-minor',
-    //   promise: newIDMutate({}).then((res) =>
-    //     setMinor({
-    //       id: memberId,
-    //       data: {
-    //         id: res.newId,
-    //         ...values,
-    //       },
-    //     })
-    //   ),
-    //   msgs: {
-    //     loading: 'Adding Minor',
-    //     success: 'Minor Added',
-    //   },
-    //   onSuccess: () => {
-    //     queryClient.invalidateQueries(['getAccountOpenMinorList']);
-    //     onClose();
-    //     // router.push('/accounting/investment/investment-transaction/list');
-    //   },
-    // });
+    await asyncToast({
+      id: 'account-open-add-minor',
+      promise: newIDMutate({}).then((res) =>
+        setMinor({
+          id: memberId,
+          data: {
+            id: res.newId,
+            ...values,
+          },
+        })
+      ),
+      msgs: {
+        loading: 'Adding Minor',
+        success: 'Minor Added',
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['getAccountOpenMinorList']);
+        onClose();
+      },
+    });
   };
 
   return isOpen ? (

@@ -558,7 +558,7 @@ query getLoanPreview($id: String!) {
   }
 }
 
-query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) {
+query getLoanRepaymentList($paginate: Pagination, $filter: Filter) {
   loanAccount {
     repaymentList(paginate: $paginate, filter: $filter) {
       totalCount
@@ -670,6 +670,7 @@ query getLoanAccountDetails(
     loanAccountDetails(loanAccountId: $loanAccountId) {
       overView {
         isClosed
+        closedDate
         totalPrincipalPaid
         totalInterestPaid
         totalRemainingPrincipal

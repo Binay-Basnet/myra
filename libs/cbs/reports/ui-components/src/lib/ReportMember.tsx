@@ -29,20 +29,30 @@ export const ReportMember = ({ member, accountCloseDate, savingData }: ReportMem
               <Text fontSize="r1" color="gray.700">
                 Service Center Name:
               </Text>
-              {savingData?.meta?.accountNo && (
+
+              <Text fontSize="r1" color="gray.700">
+                PAN no:
+              </Text>
+
+              {!!savingData?.meta?.accountNo && (
                 <Text fontSize="r1" color="gray.700">
                   Account No:
                 </Text>
               )}
 
-              {savingData?.meta?.currentInterestRate && (
+              {!!savingData?.meta?.currentInterestRate && (
                 <Text fontSize="r1" color="gray.700">
                   Current Interest Rate:
                 </Text>
               )}
-              {savingData?.meta?.savingType && (
+              {!!savingData?.meta?.savingType && (
                 <Text fontSize="r1" color="gray.700">
                   Saving Type:
+                </Text>
+              )}
+              {!!savingData?.meta?.productName && (
+                <Text fontSize="r1" color="gray.700">
+                  Product Name
                 </Text>
               )}
             </Box>
@@ -69,9 +79,20 @@ export const ReportMember = ({ member, accountCloseDate, savingData }: ReportMem
                 fontWeight="500"
                 textTransform="capitalize"
               >
-                {member?.branch}
+                {member?.branch || '-'}
               </Text>
-              {savingData?.meta?.accountNo && (
+
+              <Text
+                noOfLines={1}
+                fontSize="r1"
+                color="gray.700"
+                fontWeight="500"
+                textTransform="capitalize"
+              >
+                {member?.panVatNo || '-'}
+              </Text>
+
+              {!!savingData?.meta?.accountNo && (
                 <Text
                   noOfLines={1}
                   fontSize="r1"
@@ -82,7 +103,7 @@ export const ReportMember = ({ member, accountCloseDate, savingData }: ReportMem
                   {savingData?.meta?.accountNo}
                 </Text>
               )}
-              {savingData?.meta?.currentInterestRate && (
+              {!!savingData?.meta?.currentInterestRate && (
                 <Text
                   noOfLines={1}
                   fontSize="r1"
@@ -102,6 +123,17 @@ export const ReportMember = ({ member, accountCloseDate, savingData }: ReportMem
                   textTransform="capitalize"
                 >
                   {savingData?.meta?.savingType?.replace(/_/g, ' ').toLowerCase()}
+                </Text>
+              )}
+              {!!savingData?.meta?.savingType && (
+                <Text
+                  noOfLines={1}
+                  fontSize="r1"
+                  color="gray.700"
+                  fontWeight="500"
+                  textTransform="capitalize"
+                >
+                  {savingData?.meta?.productName}
                 </Text>
               )}
             </Box>

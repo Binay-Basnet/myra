@@ -98,6 +98,7 @@ export const useLink = (app: ModuleType = 'CBS') => {
   const linkArr: string[] = [];
 
   const menuKeys = Object.keys(APP_NAVS[app].menus) as MenuType[];
+
   menuKeys.forEach((menu) => {
     const aclKey = APP_NAVS[app].menus?.[menu]?.aclKey;
 

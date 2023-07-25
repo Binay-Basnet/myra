@@ -152,7 +152,7 @@ export const AddLoanLossProvision = () => {
               <MaturedAbove12Months setSelectedAccounts={setMatureAbove12MonthsAccounts} />
             )}
 
-            {provision?.length && (
+            {Boolean(provision?.length) && (
               <FormSection templateColumns={1} divider={false}>
                 <FormTextArea name="note" label="Notes" rows={5} />
               </FormSection>

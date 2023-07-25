@@ -35,7 +35,8 @@ export const useLoanAccountDetailHooks = () => {
     loanAccountId: id as string,
   });
 
-  const { data: loanAccountLedgersData } = useGetLoanAccountLedgersListQuery({ id: id as string });
+  const { data: loanAccountLedgersData, isLoading: ledgerLoading } =
+    useGetLoanAccountLedgersListQuery({ id: id as string });
 
   const gauranteeData = loanAccountGuaranteeDetailsData?.loanAccount?.loanAccountDetails?.guarantee;
   const collatData = loanAccountCollateralDetailsData?.loanAccount?.loanAccountDetails?.collateral;
@@ -233,5 +234,6 @@ export const useLoanAccountDetailHooks = () => {
     ledgerList,
     paymentAllList,
     refetch,
+    ledgerLoading,
   };
 };

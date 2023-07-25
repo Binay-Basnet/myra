@@ -235,8 +235,9 @@ export const KYMCooperativeUnionPage = () => {
       <form
         onFocus={(e) => {
           const kymSection = getKymSectionCoOperativeUnion(e.target.id);
-
-          setSection(kymSection);
+          if (kymSection.subSection === kymCurrentSection?.subSection) {
+            setSection(kymSection);
+          }
         }}
       >
         <FormLayout methods={methods} hasSidebar>
@@ -290,7 +291,17 @@ export const KYMCooperativeUnionPage = () => {
         </FormLayout>
       </form>
 
-      <KYMUpdateModal isOpen={isOpen} onClose={onClose} />
+      <KYMUpdateModal
+        isOpen={isOpen}
+        onClose={onClose}
+        onUpdateClick={() =>
+          mutateAsync({
+            id: router.query['id'] as string,
+            data: methods.getValues(),
+            forDraft: false,
+          })
+        }
+      />
     </>
   );
 };

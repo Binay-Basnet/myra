@@ -1,8 +1,4 @@
-query getBankAccountList(
-  $filter: BankAccountFilter
-  $currentBranchOnly: Boolean
-  $pagination: Pagination
-) {
+query getBankAccountList($filter: Filter, $currentBranchOnly: Boolean, $pagination: Pagination) {
   accounting {
     bankAccounts {
       list(filter: $filter, currentBranchOnly: $currentBranchOnly, pagination: $pagination) {

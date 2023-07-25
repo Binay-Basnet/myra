@@ -3,18 +3,29 @@ import { useRouter } from 'next/router';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetBankTransferListQuery } from '@coop/cbs/data-access';
+import {
+  TellerBankTransferType,
+  useGetBankTransferListQuery,
+  useGetMemberFilterMappingQuery,
+  useGetSettingsUserListDataQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
+import { amountConverter, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface BankTransferListProps {}
 
 export const BankTransferList = () => {
+  const { data: filterMapping } = useGetMemberFilterMappingQuery();
+
   const router = useRouter();
+  const { data: userList } = useGetSettingsUserListDataQuery({
+    paginate: { after: '', first: -1 },
+  });
   const { data, isFetching } = useGetBankTransferListQuery(
     {
       pagination: getPaginationQuery(),
+      filter: getFilterQuery(),
     },
     {
       staleTime: 0,
@@ -26,54 +37,75 @@ export const BankTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'date',
         header: 'Transfer Date',
         accessorFn: (row) => localizedDate(row?.node?.transactionDate),
         cell: (props) => localizedDate(props?.row?.original?.node?.transactionDate),
+        filterFn: 'dateTime',
+        enableColumnFilter: true,
       },
       {
         header: 'ID',
         accessorFn: (row) => row?.node?.id,
       },
       {
+        id: 'tellerName',
         header: 'Teller Name',
         accessorFn: (row) => row?.node?.tellerName,
+        enableColumnFilter: true,
+
         meta: {
           width: '25%',
+          filterMaps: {
+            list: userList?.settings?.myraUser?.list?.edges?.map((e) => ({
+              label: e?.node?.name,
+              value: e?.node?.id,
+            })),
+          },
         },
       },
       {
+        id: 'transferType',
         header: 'Transfer Type',
         accessorFn: (row) => row?.node?.transferType,
+        enableColumnFilter: true,
+
         meta: {
+          filterMaps: {
+            list: [
+              { label: 'Deposit', value: TellerBankTransferType.Deposit },
+              { label: 'Withdraw', value: TellerBankTransferType.Withdraw },
+            ],
+          },
           width: '25%',
         },
       },
       {
+        id: 'branchId',
         header: 'Service Center',
         accessorFn: (row) => row?.node?.transactionBranchName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: filterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
       },
       {
+        id: 'amount',
         header: 'Amount',
         meta: {
           isNumeric: true,
         },
         accessorFn: (row) => amountConverter(row?.node?.amount as string),
+        filterFn: 'amount',
+        enableColumnFilter: true,
       },
-      // {
-      //   id: '_actions',
-      //   header: '',
-      //   accessorKey: 'actions',
-      //   cell: (cell) => {
-      //     const member = cell?.row?.original?.node;
-      //     const memberData = { id: member?.ID };
-      //     return <PopoverComponent items={[]} member={memberData} />;
-      //   },
-      //   meta: {
-      //     width: '60px',
-      //   },
-      // },
     ],
-    []
+    [
+      filterMapping?.members?.filterMapping?.serviceCenter,
+      userList?.settings?.myraUser?.list?.edges,
+    ]
   );
   return (
     <>

@@ -96,6 +96,11 @@ const tabList: TabList[] = [
     aclKey: 'SETTINGS_LOAN_PRODUCTS',
     route: ROUTES.SETTINGS_GENERAL_LP_LIST,
   },
+  {
+    label: 'Transaction Constraints',
+    aclKey: 'SETTINGS_LOAN_PRODUCTS',
+    route: ROUTES.SETTINGS_GENERAL_TRANSACTION_CONSTRAINTS_LIST,
+  },
 ];
 
 const otherTabList: TabList[] = [
@@ -117,26 +122,26 @@ const otherTabList: TabList[] = [
 ];
 
 const accountingTabList: TabList[] = [
-  {
-    label: 'General',
-    route: ROUTES.SETTINGS_GENERAL_ACCOUNTING_GENERAL,
-    aclKey: 'SETTINGS_INDEXING',
-  },
-  {
-    label: 'Credit Terms',
-    route: ROUTES.SETTINGS_GENERAL_ACCOUNTING_CREDIT_TERMS,
-    aclKey: 'SETTINGS_INDEXING',
-  },
-  {
-    label: 'Custom Fields',
-    route: '/settings/general/accounting/custom-fields',
-    aclKey: 'SETTINGS_INDEXING',
-  },
-  {
-    label: 'Default Ledger Mapping',
-    route: '/settings/general/accounting/default-ledger-mapping',
-    aclKey: 'SETTINGS_INDEXING',
-  },
+  // {
+  //   label: 'General',
+  //   route: ROUTES.SETTINGS_GENERAL_ACCOUNTING_GENERAL,
+  //   aclKey: 'SETTINGS_INDEXING',
+  // },
+  // {
+  //   label: 'Credit Terms',
+  //   route: ROUTES.SETTINGS_GENERAL_ACCOUNTING_CREDIT_TERMS,
+  //   aclKey: 'SETTINGS_INDEXING',
+  // },
+  // {
+  //   label: 'Custom Fields',
+  //   route: '/settings/general/accounting/custom-fields',
+  //   aclKey: 'SETTINGS_INDEXING',
+  // },
+  // {
+  //   label: 'Default Ledger Mapping',
+  //   route: '/settings/general/accounting/default-ledger-mapping',
+  //   aclKey: 'SETTINGS_INDEXING',
+  // },
   {
     label: 'Tax',
     route: '/settings/general/accounting/tax',
@@ -148,6 +153,11 @@ const hcmTabList: TabList[] = [
   {
     label: 'Employee',
     route: ROUTES.HRMODULE_EMPLOYEES_SETTINGS,
+    aclKey: 'SETTINGS_INDEXING',
+  },
+  {
+    label: 'Payroll',
+    route: ROUTES.HRMODULE_PAYROLL_SALARY_COMPONENTS_SETTINGS,
     aclKey: 'SETTINGS_INDEXING',
   },
 ];

@@ -1,5 +1,5 @@
 mutation changeCoopPin($oldPin: String!, $newPin: String!){
-  eBanking {
+  eBanking(source: EBANKING) {
     auth {
       changeCoopPin(newPin: $newPin, oldPin: $oldPin){
         success
@@ -12,7 +12,7 @@ mutation changeCoopPin($oldPin: String!, $newPin: String!){
 }
 
 mutation changeMyraPassword($newPassword: String!, $oldPassword: String!){
-  eBanking {
+  eBanking(source: EBANKING) {
     auth {
       changePassword(newPassword:$newPassword, oldPassword: $oldPassword){
         success

@@ -1,4 +1,4 @@
-query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
+query getChequeBookRequests($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       chequeBookRequest(paginate: $pagination, filter: $filter) {
@@ -33,7 +33,7 @@ query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
   }
 }
 
-query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter) {
+query getWithdrawViaCollector($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       withdrawViaCollector(paginate: $pagination, filter: $filter) {
@@ -62,7 +62,7 @@ query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter) {
   }
 }
 
-query getLoanRequests($pagination: Pagination, $filter: RequestFilter) {
+query getLoanRequests($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       loanRequest(filter: $filter, paginate: $pagination) {
@@ -88,7 +88,7 @@ query getLoanRequests($pagination: Pagination, $filter: RequestFilter) {
   }
 }
 
-query getBlockChequeList($pagination: Pagination, $filter: RequestFilter) {
+query getBlockChequeList($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       blockCheque(filter: $filter, paginate: $pagination) {
@@ -116,7 +116,7 @@ query getBlockChequeList($pagination: Pagination, $filter: RequestFilter) {
   }
 }
 
-query getMemberRequestList($pagination: Pagination, $filter: RequestFilter) {
+query getMemberRequestList($pagination: Pagination, $filter: Filter) {
   requests {
     list {
       membershipRequest(filter: $filter, paginate: $pagination) {

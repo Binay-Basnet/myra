@@ -7,7 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { RequestStatus, RequestType, useGetBlockChequeListQuery } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { featureCode, getPaginationQuery } from '@coop/shared/utils';
+import { featureCode, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { ApproveDeclineModal } from '../components/ApproveDeclineModal';
@@ -18,6 +18,7 @@ export const BlockWithdrawSlipRequestsList = () => {
 
   const { data, isFetching } = useGetBlockChequeListQuery({
     pagination: getPaginationQuery(),
+    filter: getFilterQuery(),
   });
 
   const blockChequeRequests = React.useMemo(
@@ -28,9 +29,12 @@ export const BlockWithdrawSlipRequestsList = () => {
   const columns = React.useMemo<Column<typeof blockChequeRequests[0]>[]>(
     () => [
       {
+        id: 'requestedDate',
         header: 'Request Date',
         accessorFn: (row) => row?.node?.requestedDate,
         cell: (props) => props?.row?.original?.node?.requestedDate,
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Request ID',
@@ -74,9 +78,19 @@ export const BlockWithdrawSlipRequestsList = () => {
       },
 
       {
+        id: 'status',
         header: 'Approval Status',
         accessorFn: (row) => row?.node?.approvalStatus,
+        enableColumnFilter: true,
         cell: (props) => <ApprovalStatusItem status={props.row.original?.node?.approvalStatus} />,
+        meta: {
+          filterMaps: {
+            list: [
+              { label: 'Approved', value: 'Completed' },
+              { label: 'Pending', value: 'Active' },
+            ],
+          },
+        },
       },
 
       {

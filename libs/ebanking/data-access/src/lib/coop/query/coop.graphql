@@ -125,8 +125,7 @@ query getDownloadCoopList($filter: EBankingDownloadsFilter) {
   }
 }
 
-
-query getBranchListEbanking {
+query getBranchListeBanking {
   eBanking {
     cooperativeServices {
       cheque {
@@ -142,7 +141,7 @@ query getBranchListEbanking {
   }
 }
 
-query getCollectorListEbanking {
+query getCollectorListeBanking {
   eBanking {
     cooperativeServices {
       cheque {

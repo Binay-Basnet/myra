@@ -18,7 +18,7 @@ import {
 import { AsyncSelect, chakraComponents, Select } from 'chakra-react-select';
 import _, { debounce, uniqueId } from 'lodash';
 
-import { Checkbox, Grid, GridItem } from '@myra-ui';
+import { Checkbox, Grid, GridItem, SwitchTabs } from '@myra-ui';
 import { DatePicker } from '@myra-ui/date-picker';
 
 import { chakraDefaultStyles, getSearchBarStyle } from '../utils/ChakraSelectTheme';
@@ -63,7 +63,8 @@ export type Column<T extends RecordWithId & Record<string, EditableValue>> = {
     | 'date'
     | 'select'
     | 'checkbox'
-    | 'modal';
+    | 'modal'
+    | 'switch';
   selectOptions?: { label: string; value: string }[];
   searchOptions?: { label: string; value: string }[];
 
@@ -790,7 +791,11 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
       display="flex"
       alignItems="center"
       justifyContent={
-        column.isNumeric ? 'flex-end' : column.fieldType === 'checkbox' ? 'center' : 'flex-start'
+        column.isNumeric
+          ? 'flex-end'
+          : column.fieldType === 'checkbox' || column.fieldType === 'switch'
+          ? 'center'
+          : 'flex-start'
       }
       fontSize="r1"
       borderLeft="1px"
@@ -843,7 +848,8 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
             selectableNodes="leaf"
           />
         ) : null
-      ) : column.fieldType === 'checkbox' ? null : column.fieldType ===
+      ) : column.fieldType === 'checkbox' ||
+        column.fieldType === 'switch' ? null : column.fieldType ===
         'select' ? null : column.fieldType === 'date' ? null : column.cell ? (
         <Box px="s8" width="100%" cursor="not-allowed">
           {column.cell(data)}
@@ -957,6 +963,43 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
               },
             });
           }}
+        />
+      ) : column?.fieldType === 'switch' ? (
+        <SwitchTabs
+          value={data[column.accessor] as string}
+          onChange={(nextValue) => {
+            if (nextValue === 'true' || nextValue === 'false') {
+              dispatch({
+                type: EditableTableActionKind.EDIT,
+                payload: {
+                  data,
+                  newValue: nextValue === 'true',
+                  column,
+                },
+              });
+            } else {
+              dispatch({
+                type: EditableTableActionKind.EDIT,
+                payload: {
+                  data,
+                  newValue: nextValue,
+                  column,
+                },
+              });
+            }
+          }}
+          options={[
+            {
+              label: 'No',
+              value: false,
+              isDisabled: column.getDisabled && column.getDisabled(data),
+            },
+            {
+              label: 'Yes',
+              value: true,
+              isDisabled: column.getDisabled && column.getDisabled(data),
+            },
+          ]}
         />
       ) : (
         <Input

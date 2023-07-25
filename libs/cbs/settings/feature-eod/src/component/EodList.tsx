@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { IoPlayOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Spinner } from '@chakra-ui/react';
@@ -49,7 +50,7 @@ export const EodList = () => {
       </FormProvider>
 
       <Box display="flex" flexDirection="column" gap="s16">
-        {eodHistoryData?.endOfDay?.history?.map((eod) => (
+        {eodHistoryData?.endOfDay?.history?.map((eod, index) => (
           <Box
             display="flex"
             justifyContent="space-between"
@@ -91,15 +92,26 @@ export const EodList = () => {
                   />
                 ) : null}
               </Box>
-              <Button
-                variant="outline"
-                rightIcon={<Icon as={ChevronRightIcon} color="primary.500" />}
-                onClick={() =>
-                  router.push(`${ROUTES.SETTINGS_EOD_HISTORY_DETAILS}?id=${eod?.eodDate}`)
-                }
-              >
-                Full Details
-              </Button>
+              <Box display="flex" gap="s16">
+                <Button
+                  variant="outline"
+                  rightIcon={<Icon as={ChevronRightIcon} color="primary.500" />}
+                  onClick={() =>
+                    router.push(`${ROUTES.SETTINGS_EOD_HISTORY_DETAILS}?id=${eod?.eodDate}`)
+                  }
+                >
+                  Full Details
+                </Button>
+                {index === 0 && endOfDayData?.transaction?.endOfDayDate?.isYearEnd && (
+                  <Button
+                    // variant="outline"
+                    leftIcon={<Icon as={IoPlayOutline} color="white" />}
+                    onClick={() => router.push(`${ROUTES.YEAR_END_CLOSE}`)}
+                  >
+                    Initiate Year End
+                  </Button>
+                )}
+              </Box>
             </Box>
           </Box>
         ))}

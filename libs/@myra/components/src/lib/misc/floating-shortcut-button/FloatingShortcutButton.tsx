@@ -31,27 +31,25 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Withdraw/ deposit lock transaction.',
-      'KYM refactor.',
-      'Member transfer request.(you can test now)',
+      '"0" amount activation of alternative channel.',
+      'Pan number add in all as loan and saving statement reports.',
+      'Closed at “date “ in closed accounts.',
+      'Balance certificate generation.',
+      'Fiscal year Trial balance adjustment report.',
+      'Adjustment transactions list in transactions section.',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'MR templates static page issues fixes.',
-      'Interest rate float amount fixes in loan account overview page.',
-      'Fine calculation fixes in the loan repayment page.',
-      'Closed account filter in the saving account report.',
-      'Calendar date issue fixations.',
-      'Member transfer request fixations as DR CR amount.',
-      'Member transfer fixations as multiple time transfer of member.',
-      'All Kym form refactor fixations.',
-      'Withdraw amount section added in loan repayment section.',
-      'Loc loan interest amount fixations in loan repayment page.',
-      'Amount differentiation in the loan repayment success card.',
-      'MR template Id issue fixation in ERP.',
-      'IBT transfer revert restrictions.',
+      'Installment UI issue incase of date range fixed.',
+      'Filter and loader updated in missing list pages.',
+      'Disable fees and charges amount field in both loan and saving account open.',
+      'Change the link in loan account section of loan account report to statement report.',
+      'Product name add in loan account statement report.',
+      'ERROR messages change in day end error handling section.',
+      'Branch wise bank filter changes in payment modes.',
+      'fixed loan schedule generation on decimal sanctioned amount.',
     ],
   },
   // knownBugs: {
@@ -101,8 +99,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.71</Text>
-          <Text fontSize="s3">July 5, 2023</Text>
+          <Text fontSize="r2">Version 1.0.81</Text>
+          <Text fontSize="s3">July 19, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>

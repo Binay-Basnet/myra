@@ -140,7 +140,17 @@ export const Overview = () => {
     <>
       <TabHeader heading="Overview" />
 
-      {isClosed && <Alert status="error" subtitle="This Account has been Closed" hideCloseIcon />}
+      {isClosed && (
+        <Alert
+          status="error"
+          subtitle={
+            accountDetails?.closedAt?.local
+              ? `This Account has been closed at ${localizedDate(accountDetails.closedAt)}.`
+              : 'This Account has been Closed.'
+          }
+          hideCloseIcon
+        />
+      )}
 
       {lockedTransaction && (
         <Alert
@@ -166,7 +176,8 @@ export const Overview = () => {
 
       <RecentTransactions isClosed={isClosed} />
 
-      {(accountDetails?.accountType === NatureOfDepositProduct.RecurringSaving ||
+      {((accountDetails?.accountType === NatureOfDepositProduct.RecurringSaving &&
+        accountDetails?.product?.depositFrequency) ||
         (accountDetails?.accountType === NatureOfDepositProduct.Saving &&
           accountDetails?.isMandatory &&
           !isClosed)) && <UpcomingInstallments />}

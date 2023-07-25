@@ -188,7 +188,17 @@ const BankGlStatementInputs = () => {
     {
       pagination: { after: '', first: -1 },
       filter: {
-        branchId: branchesArray,
+        orConditions: [
+          {
+            andConditions: [
+              {
+                column: 'branchId',
+                comparator: 'EqualTo',
+                value: branchesArray,
+              },
+            ],
+          },
+        ],
       },
     },
     { enabled: triggerQuery }

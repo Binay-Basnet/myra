@@ -42,7 +42,7 @@ export const InterestPosting = () => {
       },
       {
         header: 'Interest Amount',
-        accessorFn: (row) => amountConverter(row?.payload?.interest_amount ?? 0),
+        accessorFn: (row) => amountConverter((row?.payload?.interest_amount ?? 0) as number),
         meta: {
           isNumeric: true,
         },

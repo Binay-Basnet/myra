@@ -8,6 +8,7 @@ query getAlternativeFeeAndCharges {
             serviceType
             ledgerId
             amount
+            restrictTransaction
           }
         }
       }

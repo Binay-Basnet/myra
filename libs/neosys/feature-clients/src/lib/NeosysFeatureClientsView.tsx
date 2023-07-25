@@ -18,6 +18,8 @@ import {
 
 import {
   NewClientEnvironmentInput,
+  useCloneEnvFromDevMutation,
+  useCloneEnvironmentMutation,
   useDeleteEnvironementMutation,
   useGetClientDetailsQuery,
   useGetVersionQuery,
@@ -39,6 +41,8 @@ export const NeosysFeatureClientView = () => {
   const clientId = router?.query['id'] as string;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [seedWithCSVModalOpen, setSeedWithCSVModalOpen] = useState(false);
+  const [isCloneEnvironmentOpen, setIsCloneEnvironmentOpen] = useState(false);
+  const [isCloneEnvFromDevOpen, setIsCloneEnvFromDevOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentId, setCurrentId] = useState('');
   const [isUpdateEnvironmentOpen, setIsUpdateEnvironmentOpen] = useState(false);
@@ -48,6 +52,8 @@ export const NeosysFeatureClientView = () => {
   const { mutateAsync: deleteEnvironmentMutation } = useDeleteEnvironementMutation();
   const { mutateAsync: setUpEnvironmentDatabaseMutation } = useSetUpEnvironmentDatabaseMutation();
   const { mutateAsync: seedWithCSVMutation } = useSeedDbWithCsvMutation();
+  const { mutateAsync: cloneEnvironmentMutation } = useCloneEnvironmentMutation();
+  const { mutateAsync: cloneEnvFromDevMutation } = useCloneEnvFromDevMutation();
 
   const { data: versionData } = useGetVersionQuery();
   const versionOption = versionData?.neosys?.versions?.map((item) => ({
@@ -67,6 +73,13 @@ export const NeosysFeatureClientView = () => {
   const { getValues: updateEnvGetValues, handleSubmit: updateEnvHandleSubmit } =
     updateEnvironmentMethods;
   const { mutateAsync: updateEnvMutateAsync } = useUpdateVersionMutation();
+
+  const cloneEnvironmentMethods = useForm();
+  const { getValues: cloneEnvGetValues, reset: cloneEnvReset } = cloneEnvironmentMethods;
+
+  const cloneEnvFromDevMethods = useForm();
+  const { getValues: cloneEnvFromDevGetValues, reset: cloneEnvFromDevReset } =
+    cloneEnvFromDevMethods;
 
   const rowData = React.useMemo(() => data?.neosys?.client?.details?.environments ?? [], [data]);
 
@@ -134,6 +147,13 @@ export const NeosysFeatureClientView = () => {
                   },
                 },
                 {
+                  title: 'Clone Environment',
+                  onClick: (node) => {
+                    setCurrentId(node?.id);
+                    setIsCloneEnvironmentOpen(true);
+                  },
+                },
+                {
                   title: 'Update Environment',
                   onClick: (node) => {
                     setCurrentId(node?.id);
@@ -174,6 +194,20 @@ export const NeosysFeatureClientView = () => {
     setIsUpdateEnvironmentOpen(false);
   };
 
+  const handleCloneEnvironmentClose = () => {
+    setCurrentId('');
+    setIsCloneEnvironmentOpen(false);
+  };
+
+  const handleCloneEnvFromDevOpen = () => {
+    setIsCloneEnvFromDevOpen(true);
+  };
+
+  const handleCloneEnvFromDevClose = () => {
+    setCurrentId('');
+    setIsCloneEnvFromDevOpen(false);
+  };
+
   const onFormSubmit = async () => {
     await asyncToast({
       id: 'new-environement',
@@ -189,6 +223,75 @@ export const NeosysFeatureClientView = () => {
       promise: setEnvironmentMutation({
         clientId,
         data: getValues(),
+      }),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          clearErrors();
+          Object.keys(error.validationErrorMsg).map((key) =>
+            setError(key as keyof NewClientEnvironmentInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
+    });
+  };
+
+  const onCloneEnvSubmit = async () => {
+    await asyncToast({
+      id: 'clone-environment',
+      msgs: {
+        loading: 'Creating a task to clone environment',
+        success: 'Task to clone environment submitted successfully',
+      },
+      onSuccess: () => {
+        cloneEnvReset({
+          destinationEnvironmentName: '',
+          otpToken: '',
+          description: '',
+          isForProduction: false,
+        });
+        setIsCloneEnvironmentOpen(false);
+        refetch();
+      },
+      promise: cloneEnvironmentMutation({
+        clientId,
+        data: { ...cloneEnvGetValues(), sourceEnvironmentId: currentId },
+      }),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          clearErrors();
+          Object.keys(error.validationErrorMsg).map((key) =>
+            setError(key as keyof NewClientEnvironmentInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
+    });
+  };
+
+  const onCloneEnvFromDevSubmit = async () => {
+    await asyncToast({
+      id: 'clone-env-from-dev',
+      msgs: {
+        loading: 'Creating a task to clone environment from Dev',
+        success: 'Task to clone environment from dev submitted successfully',
+      },
+      onSuccess: () => {
+        cloneEnvFromDevReset({
+          sourceEnvironmentName: '',
+          destinationEnvironmentName: '',
+          otpToken: '',
+          description: '',
+          isForProduction: false,
+        });
+        setIsCloneEnvFromDevOpen(false);
+        refetch();
+      },
+      promise: cloneEnvFromDevMutation({
+        clientId,
+        data: cloneEnvFromDevGetValues(),
       }),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {
@@ -270,7 +373,14 @@ export const NeosysFeatureClientView = () => {
     <>
       <Box display="flex" justifyContent="space-between" p={2}>
         <Text fontSize="r2">{data?.neosys?.client?.details?.organizationName}</Text>
-        <Button onClick={handleModalOpen}>Create Environment</Button>
+        <Box display="flex" justifyContent="space-between">
+          {process.env['NX_APP_ENV'] === 'prod' ? (
+            <Button onClick={handleCloneEnvFromDevOpen} mr={2}>
+              Clone Environment From Dev
+            </Button>
+          ) : null}
+          <Button onClick={handleModalOpen}>Create Environment</Button>
+        </Box>
       </Box>
       <Table
         data={rowData}
@@ -363,6 +473,67 @@ export const NeosysFeatureClientView = () => {
           </Grid>
           <Box display="flex" justifyContent="flex-end">
             <Button type="submit" onClick={onFormSubmit}>
+              Submit
+            </Button>
+          </Box>
+        </FormProvider>
+      </Modal>
+      <Modal
+        open={isCloneEnvironmentOpen}
+        onClose={handleCloneEnvironmentClose}
+        isCentered
+        title="Clone Environment"
+        width="3xl"
+      >
+        <FormProvider {...cloneEnvironmentMethods}>
+          <Grid templateColumns="repeat(2, 1fr)" rowGap="s12" columnGap="20px" py="s8">
+            <GridItem>
+              <FormInput name="destinationEnvironmentName" label="New Environment Name" />
+            </GridItem>
+            <GridItem>
+              <FormInput name="otpToken" label="OTP Token" />
+            </GridItem>
+            <GridItem colSpan={2}>
+              <FormTextArea name="description" label="Description" />
+            </GridItem>
+            <GridItem colSpan={2}>
+              <FormCheckbox name="isForProduction" label="Is For Production?" />
+            </GridItem>
+          </Grid>
+          <Box display="flex" justifyContent="flex-end">
+            <Button type="submit" onClick={onCloneEnvSubmit}>
+              Submit
+            </Button>
+          </Box>
+        </FormProvider>
+      </Modal>
+      <Modal
+        open={isCloneEnvFromDevOpen}
+        onClose={handleCloneEnvFromDevClose}
+        isCentered
+        title="Clone Environment From Dev"
+        width="3xl"
+      >
+        <FormProvider {...cloneEnvFromDevMethods}>
+          <Grid templateColumns="repeat(2, 1fr)" rowGap="s12" columnGap="20px" py="s8">
+            <GridItem>
+              <FormInput name="sourceEnvironmentName" label="Source Slug Name (From Dev)" />
+            </GridItem>
+            <GridItem>
+              <FormInput name="destinationEnvironmentName" label="New Environment Name" />
+            </GridItem>
+            <GridItem colSpan={2}>
+              <FormInput name="otpToken" label="OTP Token" />
+            </GridItem>
+            <GridItem colSpan={2}>
+              <FormTextArea name="description" label="Description" />
+            </GridItem>
+            <GridItem colSpan={2}>
+              <FormCheckbox name="isForProduction" label="Is For Production?" />
+            </GridItem>
+          </Grid>
+          <Box display="flex" justifyContent="flex-end">
+            <Button type="submit" onClick={onCloneEnvFromDevSubmit}>
               Submit
             </Button>
           </Box>

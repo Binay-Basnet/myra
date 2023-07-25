@@ -13,8 +13,8 @@ import { asyncToast, Box, Button, Divider, Text } from '@myra-ui';
 
 import {
   DateType,
-  DepositAccount,
   InstallmentState,
+  MemberAccountDetails,
   NatureOfDepositProduct,
   useAppSelector,
   useGetInstallmentsListDataQuery,
@@ -28,7 +28,7 @@ interface IInstallmentModelProps {
   onClose: () => void;
   accountId: string | undefined;
   productType: NatureOfDepositProduct | undefined;
-  selectedAccount: DepositAccount;
+  selectedAccount: MemberAccountDetails;
 }
 
 export const InstallmentModel = ({

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -16,10 +17,14 @@ import {
   WIPState,
 } from '@myra-ui';
 
-import { useAddTagToLedgerMutation, useUpdateLedgerNameMutation } from '@coop/cbs/data-access';
+import {
+  useAddTagToLedgerMutation,
+  useChangeLedgerParentMutation,
+  useUpdateLedgerNameMutation,
+} from '@coop/cbs/data-access';
 import { COADetailSidebar } from '@coop/cbs/settings/ui-layout';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormInput, FormLedgerTagSelect } from '@coop/shared/form';
+import { FormInput, FormLeafCoaHeadSelect, FormLedgerTagSelect } from '@coop/shared/form';
 
 import { Overview, Transactions } from '../components/detail-tabs';
 import { useCOAAccountDetails } from '../hooks';
@@ -70,6 +75,12 @@ export const COAAccountDetail = () => {
     onToggle: onAssignTagModalToggle,
   } = useDisclosure();
 
+  const {
+    isOpen: isChangeParentOpen,
+    onClose: onChangeParentClose,
+    onToggle: onChangeParentToggle,
+  } = useDisclosure();
+
   const assignTagMethods = useForm();
 
   const { mutateAsync: assignTag } = useAddTagToLedgerMutation();
@@ -91,6 +102,46 @@ export const COAAccountDetail = () => {
       },
     });
   };
+
+  const changeParentMethods = useForm();
+
+  const { mutateAsync: changeLedgerParent } = useChangeLedgerParentMutation();
+
+  const handleChangeLedgerParent = () => {
+    asyncToast({
+      id: 'coa-change-ledger-parent',
+      msgs: {
+        loading: 'Changing ledger parent',
+        success: 'Ledger parent changed',
+      },
+      promise: changeLedgerParent({
+        ledgerId: id as string,
+        newCOALeaf: changeParentMethods?.getValues()?.['newCOALeaf'],
+      }),
+      onSuccess: () => {
+        queryClient.invalidateQueries(['getCOAAccountDetails']);
+        handleChangeLedgerParentClose();
+      },
+    });
+  };
+
+  const handleChangeLedgerParentClose = () => {
+    methods.reset({ newName: '' });
+    onChangeParentClose();
+  };
+
+  const options = useMemo(() => {
+    const tempOptions = [
+      { label: 'Edit Ledger Name', handler: onToggle },
+      { label: 'Assign Tag', handler: onAssignTagModalToggle },
+    ];
+
+    if (!['30', '110']?.includes(accountDetails?.meta?.parentId?.split('.')[0] as string)) {
+      tempOptions.push({ label: 'Change Ledger Parent', handler: onChangeParentToggle });
+    }
+
+    return tempOptions;
+  }, [accountDetails]);
 
   return (
     <>
@@ -125,10 +176,7 @@ export const COAAccountDetail = () => {
             </Text>
           </Link>
         }
-        options={[
-          { label: 'Edit Ledger Name', handler: onToggle },
-          { label: 'Assign Tag', handler: onAssignTagModalToggle },
-        ]}
+        options={options}
       />
       <Box display="flex">
         <Box
@@ -185,6 +233,40 @@ export const COAAccountDetail = () => {
         <FormProvider {...methods}>
           {/* <Grid templateColumns="repeat(2,1fr)"> */}
           <FormInput label="New Ledger Name" name="newName" />
+          {/* </Grid> */}
+        </FormProvider>
+      </Modal>
+
+      <Modal
+        open={isAssignTagModalOpen}
+        onClose={onAssignTagModalClose}
+        isCentered
+        title="Assign Tags"
+        footer={
+          <Box display="flex" px={5} pb={5} justifyContent="flex-end">
+            <Button onClick={handleAssignTag}>Save</Button>
+          </Box>
+        }
+        width="xl"
+      >
+        <FormProvider {...assignTagMethods}>
+          <Grid templateColumns="repeat(2,1fr)" gap="s16">
+            <FormLedgerTagSelect name="tagId" label="Tags" menuPosition="fixed" isMulti />
+          </Grid>
+        </FormProvider>
+      </Modal>
+
+      <Modal
+        open={isChangeParentOpen}
+        onClose={handleChangeLedgerParentClose}
+        isCentered
+        title="Change Ledger Parent"
+        primaryButtonLabel="Change"
+        primaryButtonHandler={handleChangeLedgerParent}
+      >
+        <FormProvider {...changeParentMethods}>
+          {/* <Grid templateColumns="repeat(2,1fr)"> */}
+          <FormLeafCoaHeadSelect label="New COA Head" name="newCOALeaf" menuPosition="fixed" />
           {/* </Grid> */}
         </FormProvider>
       </Modal>

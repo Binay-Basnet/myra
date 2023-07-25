@@ -32,8 +32,8 @@ import {
   useSetPreferenceMutation,
   useSwitchRoleMutation,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
-import { useTranslation } from '@coop/shared/utils';
+import { MYRA_APPS, ROUTES } from '@coop/cbs/utils';
+import { checkModuleAccess, useTranslation } from '@coop/shared/utils';
 
 import { HeaderTransactionDate } from './HeaderTransactionDate';
 
@@ -393,64 +393,12 @@ export const TopLevelHeader = () => {
                     >
                       <PopoverBody p={0}>
                         <Box display="flex-column" gridTemplateColumns="repeat(3,1fr)" gap="s8">
-                          <AppSwitcherIconWrapper
-                            onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}
-                          >
-                            <Image
-                              width={32}
-                              height={32}
-                              src="/cbs.svg"
-                              alt="Core Banking System"
-                            />
-                            <AppSwitcherText>{t['corebankingSystems']}</AppSwitcherText>
-                          </AppSwitcherIconWrapper>
-                          <AppSwitcherIconWrapper
-                            onClick={() => router.push(ROUTES.INVENTORY_REGISTER)}
-                          >
-                            <Image
-                              width={32}
-                              height={32}
-                              src="/inventory.svg"
-                              alt="Inventory System"
-                            />
-                            <AppSwitcherText> {t['inventoryManagement']}</AppSwitcherText>
-                          </AppSwitcherIconWrapper>
-                          <AppSwitcherIconWrapper
-                            onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}
-                          >
-                            <Image
-                              height={32}
-                              width={32}
-                              src="/memberandshare.svg"
-                              alt="Fixed Asset Management"
-                            />
-                            <AppSwitcherText> {t['memberAndShareManagement']}</AppSwitcherText>
-                          </AppSwitcherIconWrapper>
-                          <AppSwitcherIconWrapper
-                            onClick={() => router.push('/accounting/sales/sales-entry/list')}
-                          >
-                            <Image
-                              width={32}
-                              height={32}
-                              src="/accounting.svg"
-                              alt="Accounting System"
-                            />
-                            <AppSwitcherText> {t['accountingSystem']}</AppSwitcherText>
-                          </AppSwitcherIconWrapper>
-
-                          <AppSwitcherIconWrapper
-                            onClick={() => router.push('/alternative-channels/users/mBanking')}
-                          >
-                            <Image
-                              width={32}
-                              height={32}
-                              src="/tnt.svg"
-                              alt="Alternativer channel"
-                            />
-                            <AppSwitcherText>
-                              {t['alternativeChannelsAndCrossConnectivity']}
-                            </AppSwitcherText>
-                          </AppSwitcherIconWrapper>
+                          {MYRA_APPS.filter((f) => checkModuleAccess(f.key))?.map((item) => (
+                            <AppSwitcherIconWrapper onClick={() => router.push(item.link)}>
+                              <Image width={32} height={32} src={item.img} alt={item.title} />
+                              <AppSwitcherText>{t[item.title]}</AppSwitcherText>
+                            </AppSwitcherIconWrapper>
+                          ))}
                         </Box>
                         <Divider my="s8" />
                         <Box>

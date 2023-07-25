@@ -1753,6 +1753,10 @@ export type Mutation = {
   presignedUrl: PresignedUrlMutation;
 };
 
+export type MutationEBankingArgs = {
+  source?: InputMaybe<RequestSource>;
+};
+
 export type MutationError =
   | AuthorizationError
   | BadRequestError
@@ -2158,6 +2162,7 @@ export type TransactionFilter = {
 };
 
 export type TransactionListSummary = {
+  accountBalanceMap?: Maybe<Scalars['Map']>;
   averageBalance?: Maybe<Scalars['String']>;
   expensesThisMonth?: Maybe<Scalars['String']>;
   totalDeposit?: Maybe<Scalars['String']>;
@@ -2640,6 +2645,7 @@ export type GetTransactionListsQuery = {
       list?: {
         accounts?: Array<{ id: string; name: string; accountNumber: string } | null> | null;
         recentTransactions?: {
+          summary?: { accountBalanceMap?: Record<string, string> | null } | null;
           edges?: Array<{
             node: {
               id: string;
@@ -2786,7 +2792,12 @@ export type GetTotalExpenseQuery = {
   eBanking: {
     account?: {
       list?: {
-        recentTransactions?: { summary?: { expensesThisMonth?: string | null } | null } | null;
+        recentTransactions?: {
+          summary?: {
+            expensesThisMonth?: string | null;
+            accountBalanceMap?: Record<string, string> | null;
+          } | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -2954,9 +2965,9 @@ export type GetDownloadCoopListQuery = {
   };
 };
 
-export type GetBranchListEbankingQueryVariables = Exact<{ [key: string]: never }>;
+export type GetBranchListeBankingQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetBranchListEbankingQuery = {
+export type GetBranchListeBankingQuery = {
   eBanking: {
     cooperativeServices?: {
       cheque?: {
@@ -2972,9 +2983,9 @@ export type GetBranchListEbankingQuery = {
   };
 };
 
-export type GetCollectorListEbankingQueryVariables = Exact<{ [key: string]: never }>;
+export type GetCollectorListeBankingQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetCollectorListEbankingQuery = {
+export type GetCollectorListeBankingQuery = {
   eBanking: {
     cooperativeServices?: {
       cheque?: {

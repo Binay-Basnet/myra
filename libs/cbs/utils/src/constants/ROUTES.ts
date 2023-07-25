@@ -69,6 +69,9 @@ export const ROUTES = {
   CBS_TRANS_MARKET_REPRESENTATIVE_DETAILS: '/cbs/transactions/market-representative/details',
   CBS_TRANS_JOURNAL_VOUCHER_LIST: '/cbs/transactions/journal-vouchers/list',
   CBS_TRANS_ALL_TRANSACTION_LIST: '/cbs/transactions/all-transactions/list',
+  CBS_TRANS_ADJUSTED_TRANSACTIONS_LIST: '/cbs/transactions/adjusted-transactions/list',
+  CBS_TRANS_ADJUSTED_TRANSACTIONS_DETAILS: '/cbs/transactions/adjusted-transactions/details',
+
   CBS_TRANS_ALL_LEDGERS_LIST: '/cbs/transactions/all-ledgers/list',
   CBS_TRANS_ALL_ACCOUNTS_LIST: '/cbs/transactions/all-accounts/list',
   CBS_TRANS_ALL_HOLDING_ACCOUNTS_LIST: '/cbs/transactions/all-holding-accounts/list',
@@ -202,6 +205,8 @@ export const ROUTES = {
   SETTINGS_ACCESS_LOG: '/settings/monitor/access-log/list',
 
   SETTINGS_REPORTING_TAGS_LIST: '/settings/general/reporting-tags/list',
+
+  SETTINGS_GENERAL_TRANSACTION_CONSTRAINTS_LIST: '/settings/general/transaction-constraints/list',
 
   /* NOT INDEXED BY GLOBAL SEARCH */
 
@@ -342,6 +347,8 @@ export const ROUTES = {
 
   ACCOUNTING_LEDGER_BALANCE_TRANSFER_LIST: '/accounting/accounting/ledger-balance-transfer/list',
   ACCOUNTING_LEDGER_BALANCE_TRANSFER_ADD: '/accounting/accounting/ledger-balance-transfer/add',
+  ACCOUNTING_LEDGER_BALANCE_TRANSFER_DETAILS:
+    '/accounting/accounting/ledger-balance-transfer/details',
 
   ACCOUNTING_CHAR_KHATA_REPORT: '/accounting/reports/transactions/charkhata/new',
   ACCOUNTING_DAY_BOOK_REPORT: '/accounting/reports/transactions/day-book/new',
@@ -409,6 +416,8 @@ export const ROUTES = {
 
   BRANCH_READINESS: '/branch-readiness',
 
+  YEAR_END_CLOSE: '/year-end-close',
+
   ACCOUNTING_INVESTMENT_ORGANIZTION_LIST: '/accounting/investment/organizations/list',
   ACCOUNTING_INVESTMENT_ORGANIZATION_ADD: '/accounting/investment/organizations/add',
   ACCOUNTING_INVESTMENT_ORGANIZATION_EDIT: '/accounting/investment/organizations/edit',
@@ -431,8 +440,12 @@ export const ROUTES = {
 
   HRMODULE_EMPLOYEES_EDIT: '/hr/employee/employee/edit',
 
-  HRMODULE_EMPLOYEES_SETTINGS: '/settings/general/hcm/employee',
-  HRMODULE_EMPLOYEES_LEAVE_SETTINGS: '/settings/general/hcm/employee/leave',
+  HRMODULE_EMPLOYEES_SETTINGS: '/settings/general/hcm-employee',
+  HRMODULE_EMPLOYEES_LEAVE_SETTINGS: '/settings/general/hcm-employee/leave',
+
+  HRMODULE_PAYROLL_SALARY_COMPONENTS_SETTINGS: '/settings/general/hcm-payroll/salary-components',
+  HRMODULE_PAYROLL_SALARY_STRUCTURE_SETTINGS: '/settings/general/hcm-payroll/salary-structure',
+  HRMODULE_PAYROLL_INCOME_TAX_SLAB_SETTINGS: '/settings/general/hcm-payroll/income-tax-slab',
 
   HRMODULE_ATTENDENCE_SETTINGS: '/hr/employee/attendence/list',
   HRMODULE_LEAVE_SETTINGS: '/hr/employee/leave/list',
@@ -484,12 +497,14 @@ export const ROUTES = {
   HR_EMAIL_TEMPLATES: '/hr/recruitment/staff-planning/list',
 
   HR_PAYROLL_ENTRY_LIST: '/hr/payroll/payroll-run/list',
-  HR_PAYROLL_SALARY_STRUCTURE_LIST: '/hr/payroll/salary-structure/list',
+  HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_LIST: '/hr/payroll/salary-structure-assignment/list',
   HR_PAYROLL_SALARY_SLIP_LIST: '/hr/payroll/salary-slip/list',
   HR_PAYROLL_EXPEN_LIST: '/hr/payroll/expen/list',
 
   HR_PAYROLL_ENTRY_ADD: '/hr/payroll/payroll-run/add',
-  HR_PAYROLL_SALARY_STRUCTURE_ADD: '/hr/payroll/salary-structure/add',
+  HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_ADD: '/hr/payroll/salary-structure-assignment/add',
+  HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_EDIT: '/hr/payroll/salary-structure-assignment/edit',
+
   HR_PAYROLL_SALARY_SLIP_ADD: '/hr/payroll/salary-slip/add',
   HR_PAYROLL_EXPEN_ADD: '/hr/payroll/expen/add',
 

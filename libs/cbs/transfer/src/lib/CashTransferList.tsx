@@ -6,12 +6,18 @@ import { ApprovalStatusCell, Column, PageHeader, Table, TablePopover } from '@my
 
 import {
   IbtStatus,
-  IbtType,
   ServiceCenterActivityDetails,
+  useAppSelector,
+  useGetMemberFilterMappingQuery,
   useGetServiceCenterTransferListQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { amountConverter, featureCode, getPaginationQuery } from '@coop/shared/utils';
+import {
+  amountConverter,
+  featureCode,
+  getFilterQuery,
+  getPaginationQuery,
+} from '@coop/shared/utils';
 
 import { IBTCompleteModal } from '../components';
 
@@ -36,18 +42,19 @@ export interface CashTransferListProps {}
 
 export const CashTransferList = () => {
   const router = useRouter();
+  const branchId = useAppSelector((state) => state.auth.user?.currentBranch?.id);
+  const { data: filterMapping } = useGetMemberFilterMappingQuery();
 
   const modalProps = useDisclosure();
 
-  const { data, isFetching } = useGetServiceCenterTransferListQuery(
-    {
-      pagination: getPaginationQuery(),
-      transferMode: (router?.query['objState'] ?? 'SENT') as IbtType,
-    },
-    {
-      staleTime: 0,
-    }
-  );
+  const { data, isFetching } = useGetServiceCenterTransferListQuery({
+    pagination: getPaginationQuery(),
+    filter: getFilterQuery(
+      router.query['objState'] === 'RECEIVED'
+        ? { receiverBranch: { value: String(branchId), compare: '=' } }
+        : { senderBranch: { value: String(branchId), compare: '=' } }
+    ),
+  });
 
   const rowData = useMemo(
     () => data?.transaction?.listServiceCenterCashTransfer?.edges ?? [],
@@ -57,26 +64,35 @@ export const CashTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'transferDate',
         header: 'Transfer Date',
         accessorFn: (row) => localizedDate(row?.node?.transactionDate),
         cell: (props) => localizedDate(props?.row?.original?.node?.transactionDate),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'ID',
         accessorFn: (row) => row?.node?.journalId,
       },
       {
+        id: 'senderBranch',
         header: 'Sender Service Center',
         accessorFn: (row) => row?.node?.sender,
+        enableColumnFilter: true,
         meta: {
           width: '25%',
+          filterMaps: { list: filterMapping?.members?.filterMapping?.serviceCenter || [] },
         },
       },
       {
+        id: 'receiverBranch',
         header: 'Receiver Service Center',
         accessorFn: (row) => row?.node?.receiver,
+        enableColumnFilter: true,
         meta: {
           width: '25%',
+          filterMaps: { list: filterMapping?.members?.filterMapping?.serviceCenter || [] },
         },
       },
       {
@@ -90,10 +106,14 @@ export const CashTransferList = () => {
         ),
       },
       {
+        id: 'amount',
         header: 'Cash Amount',
         meta: {
           isNumeric: true,
         },
+        enableColumnFilter: true,
+        filterFn: 'amount',
+
         accessorFn: (row) => amountConverter(row?.node?.amount as string),
       },
       {

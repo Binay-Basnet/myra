@@ -15,6 +15,7 @@ export const TransactionCard = ({ transaction, accountName }: ITransactionCardPr
     justifyContent="space-between"
     borderBottom="1px"
     borderBottomColor="border.layout"
+    sx={{ pageBreakInside: 'avoid' }}
     p="s16"
   >
     <Box display="flex" gap="s16">

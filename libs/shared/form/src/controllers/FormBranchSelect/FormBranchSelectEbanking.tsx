@@ -1,6 +1,6 @@
 import { SelectProps } from '@myra-ui';
 
-import { useGetBranchListEbankingQuery } from '@coop/ebanking/data-access';
+import { useGetBranchListeBankingQuery } from '@coop/ebanking/data-access';
 import { FormSelect } from '@coop/shared/form';
 
 interface IFormBranchSelectProps extends SelectProps {
@@ -11,7 +11,7 @@ interface IFormBranchSelectProps extends SelectProps {
 export const FormBranchSelectEbanking = (props: IFormBranchSelectProps) => {
   const { name, label, ...rest } = props;
 
-  const { data: branchListQueryData, isFetching } = useGetBranchListEbankingQuery();
+  const { data: branchListQueryData, isFetching } = useGetBranchListeBankingQuery();
 
   const branchList = branchListQueryData?.eBanking?.cooperativeServices?.cheque?.branchList?.data;
 

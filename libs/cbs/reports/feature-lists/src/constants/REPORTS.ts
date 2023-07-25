@@ -26,6 +26,7 @@ export enum Report {
   MEMBER_REGISTER_REPORT = 'Member Register Report',
   MEMBER_ACTIVATIONS = 'Active/Inactive Member',
   MEMBER_CLASSIFICATION_REPORT = 'Member Classification Reports',
+  MEMBER_TRANSFER_REPORT = 'Member Transfer Report',
   KYM_STATUS_REPORT = 'Kym Status Report',
   MINOR_LIST_REPORT = 'Minor List Report',
   MEMBER_WISE_BALANCE_REPORT = 'Member Wise Balance Report',
@@ -90,6 +91,7 @@ export enum Report {
 
   THRESHOLD_TRANSACTION_REPORT = 'Threshold Transaction ',
   TRANSACTION_TRIAL_SHEET = 'Trial Balance',
+  TRANSACTION_FISCAL_YEAR = 'Fiscal Year and Adjustment Trial Balance',
   TRANSACTION_INCOME_STATEMENT = 'Income Statement',
   TRANSACTION_CASH_FLOW_STATEMENT = 'Cash Flow Statement',
   TRANSACTION_CHANGE_OF_EQUITY = 'Change of Equity',
@@ -155,6 +157,7 @@ export enum Report {
 
   INVENTORY_REGISTER_REPORT = 'Inventory Register Report',
   INVENTORY_SALES_REPORT = 'Inventory Item Sales Report',
+  INVENTORY_PURCHASE_ORDER_REPORT = 'Inventory Purchase Order Report',
   INVENTORY_STOCK_STATUS_REPORT = 'Inventory Stock Status Report',
 
   ACCOUNTING_EXTERNAL_LOAN_STATEMENT_REPORT = 'External Loan Statement Report',
@@ -216,6 +219,10 @@ export const REPORTS = {
     {
       report: Report.MINOR_LIST_REPORT,
       link: 'minor-list',
+    },
+    {
+      report: Report.MEMBER_TRANSFER_REPORT,
+      link: 'transfer',
     },
   ],
 
@@ -555,6 +562,12 @@ export const REPORTS = {
       link: 'trial-sheet',
     },
     {
+      id: '7.7.3',
+      report: Report.TRANSACTION_FISCAL_YEAR,
+
+      link: 'fiscal-year',
+    },
+    {
       id: '7.1.2',
       report: Report.TRANSACTION_CHAR_KHATA_REPORT,
       link: 'charkhata',
@@ -742,6 +755,11 @@ export const REPORTS = {
       id: '',
       report: Report.INVENTORY_SALES_REPORT,
       link: 'item-sales',
+    },
+    {
+      id: '',
+      report: Report.INVENTORY_PURCHASE_ORDER_REPORT,
+      link: 'purchase-order',
     },
   ],
   [ReportGroup.ACCOUNTING]: [
