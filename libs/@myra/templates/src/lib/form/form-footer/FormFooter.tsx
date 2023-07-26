@@ -51,7 +51,7 @@ export const FormFooter = ({
 
         {mainButton || (
           <Button
-            width="160px"
+            minWidth="160px"
             isDisabled={isMainButtonDisabled}
             onClick={() => {
               reset({}, { keepValues: true });

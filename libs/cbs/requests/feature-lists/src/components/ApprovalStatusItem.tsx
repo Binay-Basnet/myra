@@ -1,11 +1,11 @@
 import { Box, Text } from '@myra-ui';
 
-import { MemberTransferState, RequestStatus } from '@coop/cbs/data-access';
+import { MemberTransferState, PayrollStatus, RequestStatus } from '@coop/cbs/data-access';
 
 export const ApprovalStatusItem = ({
   status,
 }: {
-  status?: RequestStatus | MemberTransferState;
+  status?: RequestStatus | MemberTransferState | PayrollStatus;
 }) => (
   /* eslint-disable no-nested-ternary */
   <Box display="flex" alignItems="center" gap="s8">
@@ -14,7 +14,7 @@ export const ApprovalStatusItem = ({
       h="s10"
       rounded="100%"
       bg={
-        status === RequestStatus.Approved
+        status === RequestStatus.Approved || status === PayrollStatus.Paid
           ? 'green.300'
           : status === RequestStatus.Declined || status === MemberTransferState?.Rejected
           ? 'red.500'

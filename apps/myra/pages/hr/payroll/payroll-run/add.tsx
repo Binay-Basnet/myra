@@ -3,9 +3,9 @@ import { ReactElement } from 'react';
 import { HrPayrollEntryUpsert } from '@coop/hr/payroll';
 import { HRLayout } from '@coop/hr-module/ui-layouts';
 
-const EmployeeTransferPage = () => <HrPayrollEntryUpsert />;
+const PayrollRunAdd = () => <HrPayrollEntryUpsert />;
 
-EmployeeTransferPage.getLayout = function getLayout(page: ReactElement) {
+PayrollRunAdd.getLayout = function getLayout(page: ReactElement) {
   return <HRLayout>{page}</HRLayout>;
 };
-export default EmployeeTransferPage;
+export default PayrollRunAdd;

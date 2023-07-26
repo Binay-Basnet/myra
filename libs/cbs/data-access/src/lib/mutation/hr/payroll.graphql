@@ -27,3 +27,18 @@ mutation setPayrollRun($id: ID, $input: PayrollRunInput!) {
     }
   }
 }
+
+mutation approvePayollRun($id: ID!, $input: PayrollStatus!) {
+  hr {
+    payroll {
+      payrollRun {
+        approvePayrollRun(id: $id, input: $input) {
+          approved
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
