@@ -89,7 +89,6 @@ export const MemberTransferReport = () => {
     ...d,
     children: combineArrays(d?.savingAccounts as ArrayType[], d?.loanAccounts as ArrayType[]),
   })) as LoanGuranteeData[];
-
   return (
     <Report
       data={loanReport as MemberTransferReportData[]}
@@ -136,47 +135,54 @@ export const MemberTransferReport = () => {
           <Report.Table<LoanGuranteeData>
             columns={[
               {
-                header: 'Member Details',
-                columns: [
-                  {
-                    header: ({ table }) => <ExpandedHeader table={table} value="Member Id" />,
-                    id: 'MemberId',
-                    accessorKey: 'memberId',
-                    cell: (props) => (
-                      <ExpandedCell
-                        row={props.row}
-                        value={
-                          <RouteToDetailsPage
-                            id={props?.row?.original?.memberId as string}
-                            type="member"
-                            label={props?.row?.original?.memberCode as string}
-                          />
-                        }
+                header: ({ table }) => <ExpandedHeader table={table} value="Member Id" />,
+                id: 'MemberId',
+                accessorKey: 'memberId',
+                cell: (props) => (
+                  <ExpandedCell
+                    row={props.row}
+                    value={
+                      <RouteToDetailsPage
+                        id={props?.row?.original?.memberId as string}
+                        type="member"
+                        label={props?.row?.original?.memberCode as string}
                       />
-                    ),
-                  },
-                  {
-                    header: 'Member Name',
-                    accessorKey: 'memberName',
-                    cell: (props) => props.row?.original?.memberName ?? '-',
-                  },
-                  {
-                    header: 'From Service Center',
-                    accessorKey: 'fromBranch',
-                    cell: (props) => props.row?.original?.fromBranch?.name ?? '-',
-                  },
-                  {
-                    header: 'To Service Center',
-                    accessorKey: 'toBranch',
-                    cell: (props) => props.row?.original?.toBranch?.name ?? '-',
-                  },
-                  {
-                    header: 'Transferred Date',
-                    accessorKey: 'transferredDate',
-                    cell: (props) => localizedDate(props?.row?.original?.transferredDate),
-                  },
-                ],
+                    }
+                  />
+                ),
               },
+              {
+                header: 'Member Name',
+                accessorKey: 'memberName',
+                cell: (props) => props.row?.original?.memberName ?? '-',
+              },
+              {
+                header: 'From Service Center',
+                accessorKey: 'fromBranch',
+                cell: (props) => props.row?.original?.fromBranch?.name ?? '-',
+              },
+              {
+                header: 'To Service Center',
+                accessorKey: 'toBranch',
+                cell: (props) => props.row?.original?.toBranch?.name ?? '-',
+              },
+              {
+                header: 'Transferred Date',
+                accessorKey: 'transferredDate',
+                cell: (props) =>
+                  props?.row?.original?.transferredDate
+                    ? localizedDate(props?.row?.original?.transferredDate)
+                    : '-',
+              },
+              {
+                header: 'Share Balance',
+                accessorKey: 'shareBalance',
+                cell: (props) =>
+                  props?.row?.original?.shareBalance
+                    ? amountConverter(props?.row?.original?.shareBalance as string | '0')
+                    : '-',
+              },
+
               {
                 header: 'Saving Information',
                 columns: [
@@ -192,7 +198,7 @@ export const MemberTransferReport = () => {
                       props.row?.original?.balance
                         ? debitCreditConverter(
                             props?.row?.original?.balance?.amount as string,
-                            props?.row?.original?.balance?.amount as string
+                            props?.row?.original?.balance?.amountType as string
                           )
                         : '-',
                     meta: {
@@ -234,7 +240,7 @@ export const MemberTransferReport = () => {
                       props.row?.original?.loanBalance
                         ? debitCreditConverter(
                             props?.row?.original?.loanBalance?.amount as string,
-                            props?.row?.original?.loanBalance?.amount as string
+                            props?.row?.original?.loanBalance?.amountType as string
                           )
                         : '-',
                     meta: {

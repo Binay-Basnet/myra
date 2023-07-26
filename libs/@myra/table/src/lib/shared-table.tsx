@@ -68,9 +68,11 @@ export const TableWithoutRef = <T,>(
     allowSearch,
     tablePagination,
     enableAllFilters = true,
+    freezeFirstColumn,
   } = props;
 
-  const [expanded, setExpanded] = React.useState<ExpandedState>({});
+  const [expanded, setExpanded] = React.useState<ExpandedState>({ '0': true });
+
   const [tableSize, setTableSize] = React.useState(size);
   const [rowSelection, setRowSelection] = React.useState({});
 
@@ -180,6 +182,7 @@ export const TableWithoutRef = <T,>(
               <TableHeadRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHeadCell
+                    freezeFirstColumn={freezeFirstColumn}
                     variant={variant}
                     header={header}
                     isDetailPageTable={isDetailPageTable}
@@ -201,7 +204,7 @@ export const TableWithoutRef = <T,>(
             {table.getRowModel().rows.map((row) => (
               <TableBodyRow isStatic={isStatic} row={row} rowOnClick={rowOnClick}>
                 {row.getVisibleCells().map((cell) => (
-                  <TableBodyCell cell={cell} />
+                  <TableBodyCell freezeFirstColumn={freezeFirstColumn} cell={cell} />
                 ))}
               </TableBodyRow>
             ))}

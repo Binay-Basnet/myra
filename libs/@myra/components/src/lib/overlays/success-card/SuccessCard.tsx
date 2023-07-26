@@ -51,6 +51,7 @@ export interface SuccessCardProps {
   };
   nextInstallmentDetails?: Record<string, string> | null;
   nextInstallmentTotal?: number;
+  transactionId?: string;
 }
 
 export const SuccessCard = ({
@@ -69,6 +70,7 @@ export const SuccessCard = ({
   jVPrint,
   nextInstallmentDetails,
   nextInstallmentTotal,
+  transactionId,
 }: SuccessCardProps) => {
   const router = useRouter();
   const componentRef = useRef<HTMLInputElement | null>(null);
@@ -194,6 +196,7 @@ export const SuccessCard = ({
             </Button>
           )}
           content={() => componentRef.current}
+          documentTitle={`${type}-${transactionId ?? ''}.pdf`}
         />
 
         <Box display="flex" gap="s8">

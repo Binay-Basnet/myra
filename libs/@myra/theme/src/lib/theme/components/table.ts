@@ -72,6 +72,7 @@ const variantSimple = definePartsStyle((props) => {
         borderLeftWidth: '0px',
         borderColor: mode(`border.layout`, `${c}.700`)(props),
         color: mode('gray.800', 'gray.400')(props),
+
         '&:last-child': {
           borderRight: '0',
         },
@@ -115,6 +116,7 @@ const variantSimple = definePartsStyle((props) => {
       '&:last-child': {
         borderRight: '0',
       },
+
       color: mode('gray.800', 'gray.400')(props),
       ...numericStyles,
     },
@@ -253,6 +255,7 @@ const variantReport = definePartsStyle((props) => {
         borderLeftWidth: '0px',
         borderColor: mode(`border.layout`, `${c}.700`)(props),
         color: mode('gray.800', 'gray.400')(props),
+
         '&:last-child': {
           borderRight: '0',
         },
@@ -268,6 +271,7 @@ const variantReport = definePartsStyle((props) => {
       borderLeftWidth: '0px',
       borderColor: mode(`border.layout`, `${c}.700`)(props),
       color: mode('gray.800', 'gray.400')(props),
+
       '&:last-child': {
         borderRight: '0',
       },
@@ -292,6 +296,11 @@ const variantReport = definePartsStyle((props) => {
       borderTopWidth: '1px',
       borderBottomWidth: '0px',
       borderLeftWidth: '0px',
+
+      '&:first-child': {
+        position: 'sticky',
+        left: 0,
+      },
 
       '&:last-child': {
         borderRight: '0',
