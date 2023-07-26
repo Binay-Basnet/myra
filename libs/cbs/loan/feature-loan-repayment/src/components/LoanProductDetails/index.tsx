@@ -106,7 +106,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
             {loanAccountId}
           </Text>
           <Text fontWeight="Medium" fontSize="s3">
-            Interest Rate : <b>{loanData?.loanDetails?.interestRate}%</b>
+            Interest Rate : <b>{loanData?.loanDetails?.interestRate?.toFixed(2)}%</b>
           </Text>
         </Box>
         <Box
