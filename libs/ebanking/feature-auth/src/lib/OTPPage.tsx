@@ -26,6 +26,7 @@ export type ResendOtpResponse = {
 type OtpverifyBody = {
   mobile: string;
   otp: string;
+  otpFor: string;
 };
 
 type OtpResendBody = {
@@ -105,7 +106,7 @@ export const OTPPage = ({ setStatus }: IOTPPageProps) => {
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
-        await mutateAsync({ otp: data.otp, mobile: data.mobileNo });
+        await mutateAsync({ otp: data.otp, mobile: data.mobileNo, otpFor: OtpFor.SignUp });
       })}
     >
       <AuthContainer
