@@ -17,7 +17,7 @@ import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormSelect } from '@coop/shared/form';
-import { amountConverter, debitCreditConverter } from '@coop/shared/utils';
+import { amountConverter, debitCreditConverter, quantityConverter } from '@coop/shared/utils';
 
 type LoanGuranteeData = Partial<{
   memberId: string;
@@ -174,6 +174,12 @@ export const MemberTransferReport = () => {
                     header: 'Transferred Date',
                     accessorKey: 'transferredDate',
                     cell: (props) => localizedDate(props?.row?.original?.transferredDate),
+                  },
+                  {
+                    header: 'Share Balance',
+                    accessorKey: 'shareBalance',
+                    cell: (props) =>
+                      quantityConverter(props?.row?.original?.shareBalance as string | '0'),
                   },
                 ],
               },
