@@ -2,10 +2,14 @@ import { IoAddOutline, IoCopyOutline } from 'react-icons/io5';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { Box, Divider, Grid, Icon, QuickLinks, Text } from '@myra-ui';
 
 import { EmployeeHeader } from '@coop/employee-portal/components';
+import { useGetProfileQuery } from '@coop/employee-portal/data-access';
 import { copyToClipboard } from '@coop/shared/utils';
 
 import { Accounts } from '../../components/Accounts/Accounts';
@@ -14,6 +18,9 @@ import { Documents } from '../../components/Documents';
 import { Employment } from '../../components/Employment';
 import { Overview } from '../../components/Overview';
 import { Personal } from '../../components/Personal';
+
+dayjs.extend(duration);
+dayjs.extend(relativeTime);
 
 const tabs = [
   {
@@ -51,6 +58,10 @@ const tabs = [
 export const EmployeeHomePage = () => {
   const router = useRouter();
 
+  const { data } = useGetProfileQuery();
+  const profileData = data?.employee?.home?.profile?.data?.overview;
+  const profileId = data?.employee?.home?.profile?.data?.id;
+
   const selectedIndex = tabs.findIndex((p) => p.value === router.query['tab']);
 
   return (
@@ -64,21 +75,29 @@ export const EmployeeHomePage = () => {
           </Box>
           <Box display="flex" flexDir="column" gap="s8">
             <Text fontSize="l1" fontWeight={500} color="gray.800">
-              Hari Bahadur
+              {profileData?.firstName?.local} {profileData?.middleName?.local}{' '}
+              {profileData?.lastName?.local}
             </Text>
-            <Text fontSize="r1" fontWeight={400} color="gray.600">
-              193847194098139813{' '}
+            <Text
+              fontSize="r1"
+              fontWeight={400}
+              color="gray.600"
+              display="flex"
+              alignItems="center"
+              gap="s8"
+            >
+              {profileId}
               <Icon
                 _hover={{ cursor: 'pointer' }}
                 size="sm"
                 as={IoCopyOutline}
-                onClick={() => copyToClipboard('193847194098139813')}
+                onClick={() => copyToClipboard(profileId)}
               />
             </Text>{' '}
             <Text fontSize="r1" fontWeight={400} color="gray.600">
               Employee Since:{' '}
               <Text as="span" fontWeight={500}>
-                1yr 50days
+                {dayjs.duration(dayjs().diff(dayjs(profileData?.joinedDate?.en))).humanize()}
               </Text>
             </Text>
           </Box>

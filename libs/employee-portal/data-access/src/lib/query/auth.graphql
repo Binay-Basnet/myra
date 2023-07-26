@@ -1,0 +1,46 @@
+query getMe {
+  employee {
+    auth {
+      me {
+        data {
+          userId
+          user {
+            id
+            username
+            profilePic
+            firstName
+            lastName
+            middleName
+            email
+            contact
+            lastLoggedIn
+            organization {
+              id
+              basicDetails {
+                name
+                logo
+              }
+              contactDetails {
+                website
+                phoneNumber
+                email
+              }
+              address {
+                district
+                wardNo
+                state
+                locality
+                localGovernment
+                houseNo
+              }
+              registrationDetails {
+                regdNo
+                panOrVat
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { Box, Divider, Table, TablePopover, Text } from '@myra-ui';
 
 import {
-  DateRangeSelector,
+  DateRangeSelectorWithFilter,
   EmployeeHeader,
   EmployeeStatCard,
 } from '@coop/employee-portal/components';
@@ -37,8 +37,14 @@ export const EmployeeAttendancePage = () => (
     <Divider my="s8" />
 
     <Box py="s24" display="flex" flexDir="column" gap="s12">
-      <DateRangeSelector />
-      <Box border="1px" h="560px" borderColor="border.layout" borderRadius="br2" overflow="hidden">
+      <DateRangeSelectorWithFilter />
+      <Box
+        border="1px"
+        maxH="560px"
+        borderColor="border.layout"
+        borderRadius="br2"
+        overflow="hidden"
+      >
         <Table<AttendanceTable>
           isStatic
           data={[]}
