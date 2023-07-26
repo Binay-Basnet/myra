@@ -103,6 +103,9 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
             {loanGeneralInfo?.productCode}
           </Text>
           <Text fontWeight="Medium" fontSize="s3">
+            {loanAccountId}
+          </Text>
+          <Text fontWeight="Medium" fontSize="s3">
             Interest Rate : <b>{loanData?.loanDetails?.interestRate}%</b>
           </Text>
         </Box>
