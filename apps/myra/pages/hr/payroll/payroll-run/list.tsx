@@ -4,13 +4,13 @@ import { HRPayrollEntryList } from '@coop/hr/payroll';
 import { HRLayout, HRPayrollSidebarayout } from '@coop/hr-module/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingQuickTransferList = () => <HRPayrollEntryList />;
+const PayrollRunList = () => <HRPayrollEntryList />;
 
-AccountingQuickTransferList.getLayout = function getLayout(page: ReactElement) {
+PayrollRunList.getLayout = function getLayout(page: ReactElement) {
   return (
     <HRLayout>
       <HRPayrollSidebarayout>{page}</HRPayrollSidebarayout>
     </HRLayout>
   );
 };
-export default AccountingQuickTransferList;
+export default PayrollRunList;

@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
+import { ApprovalStatusItem } from 'libs/cbs/requests/feature-lists/src/components/ApprovalStatusItem';
 
 import { Column, PageHeader, Table, TablePopover, Text } from '@myra-ui';
 
-import { useGetPayrollRunListQuery } from '@coop/cbs/data-access';
+import { PayrollStatus, useGetPayrollRunListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
@@ -40,8 +41,13 @@ export const HRPayrollEntryList = () => {
         accessorFn: (row) => row?.node?.payDate?.local,
       },
       {
+        id: 'state',
         header: 'Status',
         accessorFn: (row) => row?.node?.status,
+
+        cell: (props) => (
+          <ApprovalStatusItem status={props?.row?.original?.node?.status as PayrollStatus} />
+        ),
       },
 
       {
@@ -55,17 +61,24 @@ export const HRPayrollEntryList = () => {
                 {
                   title: 'Edit',
                   onClick: (row) => {
-                    router.push(
-                      `${ROUTES?.HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_EDIT}?id=${row?.id}`
-                    );
+                    router.push(`${ROUTES?.HR_PAYROLL_ENTRY_EDIT}?id=${row?.id}`);
+                  },
+                },
+                {
+                  title: 'Approve',
+                  onClick: (row) => {
+                    router.push(`${ROUTES?.HR_PAYROLL_ENTRY_EDIT}?id=${row?.id}&&type=approve`);
+                  },
+                },
+                {
+                  title: 'Details',
+                  onClick: (row) => {
+                    router.push(`${ROUTES?.HR_PAYROLL_ENTRY_EDIT}?id=${row?.id}&&type=details`);
                   },
                 },
               ]}
             />
           ),
-        meta: {
-          width: '3.125rem',
-        },
       },
     ],
     []

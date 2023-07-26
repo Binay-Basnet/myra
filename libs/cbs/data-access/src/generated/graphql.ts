@@ -8287,7 +8287,13 @@ export type HrPayrollMutation = {
 };
 
 export type HrPayrollPayrollRunMutation = {
+  approvePayrollRun: ReturnApprovedOrNot;
   upsertPayrollRun: ReturnPayrollRun;
+};
+
+export type HrPayrollPayrollRunMutationApprovePayrollRunArgs = {
+  id: Scalars['ID'];
+  input: PayrollStatus;
 };
 
 export type HrPayrollPayrollRunMutationUpsertPayrollRunArgs = {
@@ -17485,6 +17491,11 @@ export type ReturnAppointmentLetter = {
   recordId: Scalars['ID'];
 };
 
+export type ReturnApprovedOrNot = {
+  approved: Scalars['Boolean'];
+  error?: Maybe<MutationError>;
+};
+
 export type ReturnDeductionComponent = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
@@ -22434,6 +22445,30 @@ export type SetPayrollRunMutation = {
       payrollRun: {
         upsertPayrollRun: {
           recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type ApprovePayollRunMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: PayrollStatus;
+}>;
+
+export type ApprovePayollRunMutation = {
+  hr: {
+    payroll: {
+      payrollRun: {
+        approvePayrollRun: {
+          approved: boolean;
           error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
@@ -29478,9 +29513,11 @@ export type GetPayrollRunQuery = {
       payrollRun: {
         getPayrollRun: {
           data?: {
-            id?: string | null;
             payDay?: Record<'local' | 'en' | 'np', string> | null;
             salaryAssignments?: Array<string | null> | null;
+            branchId?: string | null;
+            departmentId?: string | null;
+            designationId?: string | null;
             payrollPeriod?: {
               from: Record<'local' | 'en' | 'np', string>;
               to: Record<'local' | 'en' | 'np', string>;
@@ -43620,6 +43657,35 @@ export const useSetPayrollRunMutation = <TError = unknown, TContext = unknown>(
     useAxios<SetPayrollRunMutation, SetPayrollRunMutationVariables>(SetPayrollRunDocument),
     options
   );
+export const ApprovePayollRunDocument = `
+    mutation approvePayollRun($id: ID!, $input: PayrollStatus!) {
+  hr {
+    payroll {
+      payrollRun {
+        approvePayrollRun(id: $id, input: $input) {
+          approved
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useApprovePayollRunMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ApprovePayollRunMutation,
+    TError,
+    ApprovePayollRunMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ApprovePayollRunMutation, TError, ApprovePayollRunMutationVariables, TContext>(
+    ['approvePayollRun'],
+    useAxios<ApprovePayollRunMutation, ApprovePayollRunMutationVariables>(ApprovePayollRunDocument),
+    options
+  );
 export const SetStaffPlanningDocument = `
     mutation setStaffPlanning($id: ID, $input: StaffPlanInput!) {
   hr {
@@ -53368,13 +53434,15 @@ export const GetPayrollRunDocument = `
       payrollRun {
         getPayrollRun(id: $id) {
           data {
-            id
             payrollPeriod {
               from
               to
             }
             payDay
             salaryAssignments
+            branchId
+            departmentId
+            designationId
           }
           error {
             ...MutationError

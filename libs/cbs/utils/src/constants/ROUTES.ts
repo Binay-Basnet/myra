@@ -497,11 +497,13 @@ export const ROUTES = {
   HR_EMAIL_TEMPLATES: '/hr/recruitment/staff-planning/list',
 
   HR_PAYROLL_ENTRY_LIST: '/hr/payroll/payroll-run/list',
+  HR_PAYROLL_ENTRY_ADD: '/hr/payroll/payroll-run/add',
+  HR_PAYROLL_ENTRY_EDIT: '/hr/payroll/payroll-run/edit',
+
   HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_LIST: '/hr/payroll/salary-structure-assignment/list',
   HR_PAYROLL_SALARY_SLIP_LIST: '/hr/payroll/salary-slip/list',
   HR_PAYROLL_EXPEN_LIST: '/hr/payroll/expen/list',
 
-  HR_PAYROLL_ENTRY_ADD: '/hr/payroll/payroll-run/add',
   HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_ADD: '/hr/payroll/salary-structure-assignment/add',
   HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_EDIT: '/hr/payroll/salary-structure-assignment/edit',
 
