@@ -70,6 +70,7 @@ const DepositDetailsPage = () => {
 
   const handlePrintVoucher = useReactToPrint({
     content: () => printRef.current,
+    documentTitle: `${allTransactionsData?.txnType}-${id}.pdf`,
   });
 
   return (
