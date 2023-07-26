@@ -5,20 +5,22 @@ import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import * as yup from 'yup';
 
-import { Box, Button, getError, Icon, Input, Modal, PasswordInput, Text } from '@myra-ui';
+import { Box, Button, Icon, Input, Modal, PasswordInput, Text } from '@myra-ui';
 
 import { GoBack } from '@coop/ebanking/components';
-import {
-  OtpFor,
-  useResendOtpMutation,
-  useResetPasswordMutation,
-  useVerifyOtpMutation,
-} from '@coop/ebanking/data-access';
+import { axiosAgent, OtpFor } from '@coop/ebanking/data-access';
 import { EbankingHeaderLayout } from '@coop/ebanking/ui-layout';
+import { getAPIUrl } from '@coop/shared/utils';
 
 const validationSchema = yup.object({
+  mobileNo: yup
+    .string()
+    .required('No Mobile Number Provided')
+    .length(10, 'Mobile Number is Invalid'),
   password: yup
     .string()
     .required('No password provided')
@@ -31,6 +33,59 @@ const validationSchema = yup.object({
     return this.parent.password === value;
   }),
 });
+
+export type ResendOtpResponse = {
+  success?: boolean;
+};
+
+type OtpResendBody = {
+  otpFor: string;
+  mobile: string;
+};
+
+const schemaPath = getAPIUrl();
+
+const otpResend = async (body: OtpResendBody) => {
+  const response = await axiosAgent.post<ResendOtpResponse>(
+    `${schemaPath}/ebanking/resend-otp`,
+    body
+  );
+
+  return response?.data;
+};
+
+type OtpverifyBody = {
+  mobile: string;
+  otp: string;
+  otpFor: string;
+};
+
+export type OtpResponse = {
+  success?: boolean;
+};
+
+const otpVerify = async (body: OtpverifyBody) => {
+  const response = await axiosAgent.post<OtpResponse>(`${schemaPath}/ebanking/verify-otp`, body);
+
+  return response?.data;
+};
+
+export type SetPasswordMutation = {
+  success?: boolean;
+};
+type SetPasswordBody = {
+  phone: string;
+  newPassword: string;
+  otp: string;
+};
+const setPassword = async (body: SetPasswordBody) => {
+  const response = await axiosAgent.post<SetPasswordMutation>(
+    `${schemaPath}/ebanking/reset-password`,
+    body
+  );
+
+  return response?.data;
+};
 
 const ForgetPasswordPage = () => {
   const methods = useForm<{ mobileNo: string; otp: string; password: string; cPassword: string }>({
@@ -49,9 +104,24 @@ const ForgetPasswordPage = () => {
   const router = useRouter();
   const [state, setState] = useState<'mobile' | 'otp' | 'password'>('mobile');
 
-  const { mutateAsync: resendOTP, isLoading: otpLoading } = useResendOtpMutation();
-  const { mutateAsync: verifyOTP, isLoading: verifyLoading } = useVerifyOtpMutation();
-  const { mutateAsync: resetPassword, isLoading: passwordLoading } = useResetPasswordMutation();
+  const { mutateAsync: resendOTP, isLoading: otpLoading } = useMutation(otpResend, {
+    onError: (error: AxiosError<{ message: string }>) => {
+      setFailedMessage(error?.response?.data?.message || 'Server Error');
+      failIsOnToggle();
+    },
+  });
+  const { mutateAsync: verifyOTP, isLoading: verifyLoading } = useMutation(otpVerify, {
+    onError: (error: AxiosError<{ message: string }>) => {
+      setFailedMessage(error?.response?.data?.message || 'Server Error');
+      failIsOnToggle();
+    },
+  });
+  const { mutateAsync: resetPassword, isLoading: passwordLoading } = useMutation(setPassword, {
+    onError: (error: AxiosError<{ message: string }>) => {
+      setFailedMessage(error?.response?.data?.message || 'Server Error');
+      failIsOnToggle();
+    },
+  });
 
   return (
     <FormProvider {...methods}>
@@ -100,12 +170,8 @@ const ForgetPasswordPage = () => {
                       otpFor: OtpFor.ResetPassword,
                     });
 
-                    if (response.eBanking.auth.resendOtp.success) {
+                    if (response.success) {
                       setState('otp');
-                    } else {
-                      const error = getError(response.eBanking.auth.resendOtp.error);
-                      setFailedMessage(error.toString());
-                      failIsOnToggle();
                     }
                   }}
                 >
@@ -144,18 +210,13 @@ const ForgetPasswordPage = () => {
                   isLoading={verifyLoading}
                   onClick={async () => {
                     const response = await verifyOTP({
-                      data: {
-                        otp: methods.getValues()['otp'],
-                        mobile: methods.getValues()['mobileNo'],
-                      },
+                      otp: methods.getValues()['otp'],
+                      mobile: methods.getValues()['mobileNo'],
+                      otpFor: OtpFor.ResetPassword,
                     });
 
-                    if (response.eBanking.auth.verifyOtp.success) {
+                    if (response?.success) {
                       setState('password');
-                    } else {
-                      const error = getError(response.eBanking.auth.verifyOtp.error);
-                      setFailedMessage(error.toString());
-                      failIsOnToggle();
                     }
                   }}
                 >
@@ -202,16 +263,13 @@ const ForgetPasswordPage = () => {
                   isLoading={passwordLoading}
                   onClick={methods.handleSubmit(async () => {
                     const response = await resetPassword({
-                      mobileNo: methods.getValues()['mobileNo'],
+                      phone: methods.getValues()['mobileNo'],
                       newPassword: methods.getValues()['password'],
+                      otp: methods.getValues()['otp'],
                     });
 
-                    if (response.eBanking.auth.resetPassword.success) {
+                    if (response.success) {
                       onToggle();
-                    } else {
-                      const error = getError(response.eBanking.auth.resetPassword.error);
-                      setFailedMessage(error.toString());
-                      failIsOnToggle();
                     }
                   })}
                 >

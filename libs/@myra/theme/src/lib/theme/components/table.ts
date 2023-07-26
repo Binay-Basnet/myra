@@ -255,11 +255,7 @@ const variantReport = definePartsStyle((props) => {
         borderLeftWidth: '0px',
         borderColor: mode(`border.layout`, `${c}.700`)(props),
         color: mode('gray.800', 'gray.400')(props),
-        '&:first-child': {
-          zIndex: '10',
-          position: 'sticky',
-          left: 0,
-        },
+
         '&:last-child': {
           borderRight: '0',
         },
@@ -275,10 +271,7 @@ const variantReport = definePartsStyle((props) => {
       borderLeftWidth: '0px',
       borderColor: mode(`border.layout`, `${c}.700`)(props),
       color: mode('gray.800', 'gray.400')(props),
-      '&:first-child': {
-        position: 'sticky',
-        left: 0,
-      },
+
       '&:last-child': {
         borderRight: '0',
       },
