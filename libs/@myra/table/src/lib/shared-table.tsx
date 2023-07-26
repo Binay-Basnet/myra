@@ -70,7 +70,8 @@ export const TableWithoutRef = <T,>(
     enableAllFilters = true,
   } = props;
 
-  const [expanded, setExpanded] = React.useState<ExpandedState>({});
+  const [expanded, setExpanded] = React.useState<ExpandedState>({ '0': true });
+
   const [tableSize, setTableSize] = React.useState(size);
   const [rowSelection, setRowSelection] = React.useState({});
 
