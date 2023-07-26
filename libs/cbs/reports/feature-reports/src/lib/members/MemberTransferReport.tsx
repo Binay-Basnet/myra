@@ -169,13 +169,18 @@ export const MemberTransferReport = () => {
               {
                 header: 'Transferred Date',
                 accessorKey: 'transferredDate',
-                cell: (props) => localizedDate(props?.row?.original?.transferredDate),
+                cell: (props) =>
+                  props?.row?.original?.transferredDate
+                    ? localizedDate(props?.row?.original?.transferredDate)
+                    : '-',
               },
               {
                 header: 'Share Balance',
                 accessorKey: 'shareBalance',
                 cell: (props) =>
-                  amountConverter(props?.row?.original?.shareBalance as string | '0'),
+                  props?.row?.original?.shareBalance
+                    ? amountConverter(props?.row?.original?.shareBalance as string | '0')
+                    : '-',
               },
 
               {
