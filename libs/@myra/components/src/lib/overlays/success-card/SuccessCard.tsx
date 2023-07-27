@@ -488,7 +488,7 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                 justifyContent="end"
               >
                 <Text fontSize="s3" color="gray.600" fontWeight="500" lineHeight="125%">
-                  Total Amount
+                  Txn Amount
                 </Text>
                 <Text fontSize="r2" color="primary.500" fontWeight="500" lineHeight="125%">
                   Rs. {total}
