@@ -185,7 +185,7 @@ export const TableHeadCell = <T,>({
       pageBreakAfter: 'auto !important',
       '&:first-child': freezeFirstColumn
         ? {
-            zIndex: '10',
+            zIndex: '9',
             position: 'sticky',
             left: 0,
           }
@@ -385,7 +385,7 @@ export const TableBodyCell = <T,>({ cell, freezeFirstColumn, ...props }: TableBo
       pageBreakAfter: 'auto',
       '&:first-child': freezeFirstColumn
         ? {
-            zIndex: '10',
+            zIndex: '8',
             position: 'sticky',
             left: 0,
           }
