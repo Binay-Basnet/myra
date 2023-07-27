@@ -35,6 +35,22 @@ export const HrPayrollEntryUpsert = () => {
   const { departmentOptions } = useGetDepartmentOptions();
   const { designationOptions } = useGetDesignationOptions();
 
+  const serviceCenterWatch = watch('serviceCenter');
+  const departmentWatch = watch('department');
+  const designationWatch = watch('designation');
+
+  const salaryAssignmentData = useGetSalaryAssignmentsWithExtraDetails({
+    serviceCenter: serviceCenterWatch,
+    department: departmentWatch,
+    designation: designationWatch,
+  });
+
+  useEffect(() => {
+    if (!router?.query?.['id']) {
+      setValue('salaryAssignments', salaryAssignmentData);
+    }
+  }, [JSON.stringify(salaryAssignmentData)]);
+
   const { mutateAsync } = useSetPayrollRunMutation();
   const { mutateAsync: payrollRunApproveMutateAsync } = useApprovePayollRunMutation();
 
@@ -53,7 +69,7 @@ export const HrPayrollEntryUpsert = () => {
 
       reset({ ...payrollRunEditData, salaryAssignments: employeeList });
     }
-  }, [JSON.stringify(payrollRunEditData)]);
+  }, [JSON.stringify(payrollRunEditData), JSON.stringify(salaryAssignmentData)]);
 
   const { data: branchData } = useGetBranchListQuery({
     paginate: {
@@ -66,22 +82,6 @@ export const HrPayrollEntryUpsert = () => {
     label: data?.node?.name as string,
     value: data?.node?.id as string,
   }));
-
-  const serviceCenterWatch = watch('serviceCenter');
-  const departmentWatch = watch('department');
-  const designationWatch = watch('designation');
-
-  const salaryAssignmentData = useGetSalaryAssignmentsWithExtraDetails({
-    serviceCenter: serviceCenterWatch,
-    department: departmentWatch,
-    designation: designationWatch,
-  });
-
-  useEffect(() => {
-    if (!router?.query?.['id']) {
-      setValue('salaryAssignments', salaryAssignmentData);
-    }
-  }, [JSON.stringify(salaryAssignmentData)]);
 
   const submitForm = () => {
     const values = getValues();
@@ -157,7 +157,7 @@ export const HrPayrollEntryUpsert = () => {
       },
       promise: payrollRunApproveMutateAsync({
         id: router?.query?.['id'] as string,
-        input: PayrollStatus?.Paid,
+        input: PayrollStatus?.Rejected,
       }),
     });
   };
