@@ -71,7 +71,12 @@ export const TableWithoutRef = <T,>(
     freezeFirstColumn,
   } = props;
 
-  const [expanded, setExpanded] = React.useState<ExpandedState>({ '0': true });
+  const [expanded, setExpanded] = React.useState<ExpandedState>(
+    Object.keys(data).reduce((result, index) => {
+      result[index] = true;
+      return result;
+    }, {} as Record<string, boolean>)
+  );
 
   const [tableSize, setTableSize] = React.useState(size);
   const [rowSelection, setRowSelection] = React.useState({});
