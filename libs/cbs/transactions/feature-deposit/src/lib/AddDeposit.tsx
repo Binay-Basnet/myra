@@ -270,7 +270,7 @@ export const AddDeposit = () => {
     selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
     selectedAccount?.product?.isMandatorySaving
       ? 0
-      : Number(totalCashPaid) - totalDeposit;
+      : Number(totalCashPaid) - totalPayable;
 
   const handleSubmit = () => {
     const values = getValues();
