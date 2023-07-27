@@ -103,7 +103,7 @@ export const LoanRepayment = () => {
   const isDisableDenomination = watch('cash.disableDenomination');
 
   const finePaid = watch('penalty.amount');
-  const amountPaid = Number(watch('amountPaid')) + Number(finePaid);
+  const amountPaid = Number(watch('amountPaid') || 0) + Number(finePaid || 0);
 
   const cashPaid = watch('cash.cashPaid');
 
@@ -311,7 +311,11 @@ export const LoanRepayment = () => {
                 ) : null} */}
 
                 <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-                  <FormAmountInput isRequired name="amountPaid" label="Amount to Pay" />
+                  <FormAmountInput
+                    isRequired
+                    name="amountPaid"
+                    label="Amount to Pay (Excluding Fine)"
+                  />
                 </Grid>
 
                 {memberDetailData?.type === KymMemberTypesEnum.Individual && (
@@ -429,28 +433,29 @@ export const LoanRepayment = () => {
                     accountId: result?.accountId,
                     accountName: result?.accountName,
                   },
-                  nextInstallmentDetails: result?.nextInstallment
-                    ? {
-                        'Installment No': String(result?.nextInstallment?.installmentNo),
-                        'Payment Date': localizedDate(
-                          result?.nextInstallment?.installmentDate
-                        ) as string,
-                        'Remaining Principal Amount': amountConverter(
-                          result?.nextInstallment?.currentRemainingPrincipal ?? 0
-                        ),
-                        'Remaining Interest Amount': amountConverter(
-                          result?.nextInstallment?.remainingInterest ?? 0
-                        ),
-                        'Total Payable Amount': amountConverter(
-                          Number(result?.nextInstallment?.currentRemainingPrincipal ?? 0) +
-                            Number(result?.nextInstallment?.remainingInterest ?? 0)
-                        ),
-                      }
-                    : null,
-                  nextInstallmentTotal:
-                    Number(result?.nextInstallment?.currentRemainingPrincipal ?? 0) +
-                    Number(result?.nextInstallment?.remainingInterest ?? 0),
+                  // nextInstallmentDetails: result?.nextInstallment
+                  //   ? {
+                  //       'Installment No': String(result?.nextInstallment?.installmentNo),
+                  //       'Payment Date': localizedDate(
+                  //         result?.nextInstallment?.installmentDate
+                  //       ) as string,
+                  //       'Remaining Principal Amount': amountConverter(
+                  //         result?.nextInstallment?.currentRemainingPrincipal ?? 0
+                  //       ),
+                  //       'Remaining Interest Amount': amountConverter(
+                  //         result?.nextInstallment?.remainingInterest ?? 0
+                  //       ),
+                  //       'Total Payable Amount': amountConverter(
+                  //         Number(result?.nextInstallment?.currentRemainingPrincipal ?? 0) +
+                  //           Number(result?.nextInstallment?.remainingInterest ?? 0)
+                  //       ),
+                  //     }
+                  //   : null,
+                  // nextInstallmentTotal:
+                  //   Number(result?.nextInstallment?.currentRemainingPrincipal ?? 0) +
+                  //   Number(result?.nextInstallment?.remainingInterest ?? 0),
                   dublicate: true,
+                  transactionId: result?.transactionId as string,
                 };
               }}
               errorCardProps={{

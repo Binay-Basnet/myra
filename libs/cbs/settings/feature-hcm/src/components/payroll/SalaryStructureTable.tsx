@@ -23,7 +23,7 @@ import {
   LedgerPaymentEnum,
   PaymentModeEnum,
   PayrollFrequencyEnum,
-  useDeleteHcmEmployeeGeneralMutation,
+  useDeleteSalaryStructureMutation,
   useGetDeductionComponentListQuery,
   useGetEarningComponentListQuery,
   useGetSalaryStructureListQuery,
@@ -58,7 +58,7 @@ export const SalaryStructureTable = () => {
 
   const { data, refetch } = useGetSalaryStructureListQuery({ pagination: getPaginationQuery() });
   const { mutateAsync, isLoading } = useSetSalaryStructureMutation();
-  const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+  const { mutateAsync: deleteMutateAsync } = useDeleteSalaryStructureMutation();
 
   const { data: salaryStructureData } = useGetSalaryStructureQuery(
     { id: selectedSalaryStructureId },
@@ -163,6 +163,7 @@ export const SalaryStructureTable = () => {
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
     setselectedSalaryStructureId('');
+    reset(defaultFormValue);
   };
 
   const onSubmit = () => {
@@ -190,6 +191,15 @@ export const SalaryStructureTable = () => {
           id: selectedSalaryStructureId,
           input: { ...values, salaryEarnings, salaryDeduction },
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof InputSalaryStructure, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     } else {
       asyncToast({
@@ -206,6 +216,15 @@ export const SalaryStructureTable = () => {
           id: null,
           input: { ...values, salaryEarnings, salaryDeduction },
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof InputSalaryStructure, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     }
   };

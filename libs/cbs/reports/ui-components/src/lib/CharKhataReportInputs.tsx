@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { GridItem } from '@myra-ui';
-
 import { CharKhataReportFilter, CoaHead, useGetCoaFullViewQuery } from '@coop/cbs/data-access';
 import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 
@@ -120,18 +118,13 @@ export const CharkhataReportInputs = () => {
 
   return (
     <>
-      <GridItem colSpan={1}>
-        <FormBranchSelect isMulti name="branchId" label="Service Center" />
-      </GridItem>
-      <GridItem colSpan={1}>
-        <FormSelect isMulti name="coaType" label="COA Types" options={coaTypeEnum} />
-      </GridItem>
-      <GridItem colSpan={1}>
-        <FormSelect isMulti name="coaHead" label="Coa Head" options={combinedArray} />
-      </GridItem>
-      <GridItem colSpan={1}>
-        <ReportDateRange />
-      </GridItem>{' '}
+      <FormBranchSelect isMulti name="branchId" label="Service Center" />
+
+      <FormSelect isMulti name="coaType" label="COA Types" options={coaTypeEnum} />
+
+      <FormSelect isMulti name="coaHead" label="Coa Head" options={combinedArray} />
+
+      <ReportDateRange />
     </>
   );
 };

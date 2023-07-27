@@ -744,3 +744,23 @@ query yearEndLedgerAccountList {
     }
   }
 }
+
+query getDailyBalanceReport($data: DailyBalanceReport!) {
+  report {
+    transactionReport {
+      financial {
+        dailyBalanceReport(data: $data) {
+          data {
+            date
+            debit
+            credit
+            balance {
+              amount
+              amountType
+            }
+          }
+        }
+      }
+    }
+  }
+}

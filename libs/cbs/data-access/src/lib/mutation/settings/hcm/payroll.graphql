@@ -73,3 +73,79 @@ mutation setTaxSlab($id: String, $input: TaxSlabInput!) {
     }
   }
 }
+
+mutation deleteEarningComponent($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          earningComponent {
+            deleteEarningComponent(id: $id) {
+              responseStatus
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation deleteDeductionComponent($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          deductionComponent {
+            deleteDeductionComponent(id: $id) {
+              responseStatus
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation deleteSalaryStructure($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          salaryStructure {
+            deleteSalaryStructure(id: $id) {
+              responseStatus
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation deleteTaxSlab($id: ID!) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxSlab {
+            deleteTaxSlab(id: $id) {
+              responseStatus
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

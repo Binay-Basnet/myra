@@ -33,7 +33,7 @@ export const PromotionBasicDetails = () => {
         <FormSelect name="employeeId" label="Employee" options={employeeOptions} />
       </GridItem>
       <FormSelect name="promotionType" label="Promotion Type" options={promotionStatus} />
-      <FormDatePicker name="date" label="Resignation Letter Date" />
+      <FormDatePicker name="date" label="Promotion Date" />
     </FormSection>
   );
 };

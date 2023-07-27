@@ -48,5 +48,13 @@ export const EmployeeTransferHistoryTable = ({
     [transferType]
   );
 
-  return <Table<typeof data[0]> size="report" isStatic data={data ?? []} columns={columns} />;
+  return (
+    <Table<typeof data[0]>
+      size="report"
+      isStatic
+      data={data ?? []}
+      columns={columns}
+      variant="report"
+    />
+  );
 };

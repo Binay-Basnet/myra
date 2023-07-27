@@ -61,6 +61,9 @@ export const ShareBalanceTable = () => {
         // cell: (props) => <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>,
         filterFn: 'amount',
         enableColumnFilter: true,
+        meta: {
+          isNumeric: true,
+        },
       },
 
       {

@@ -25,6 +25,20 @@ const transferTypeObj = {
   [TransferType.Member]: 'Member to Member',
 };
 
+const getTransactionType = (route: string) => {
+  if (route.includes('/deposit/')) return 'Deposit';
+
+  if (route.includes('/withdraw/')) return 'Withdraw';
+
+  if (route.includes('/account-transfer/')) return 'Account Transfer';
+
+  if (route.includes('/repayments/') || route.includes('/loan-payment/')) return 'Loan Repayment';
+
+  if (route.includes('/journal-vouchers/')) return 'Journal Voucher';
+
+  return '';
+};
+
 export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => {
   const router = useRouter();
 
@@ -42,6 +56,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
     { entryId: id as string },
     { enabled: !!id && router?.asPath?.includes('journal-vouchers') }
   );
+
   const voucherData = data?.accounting?.journalVoucher?.viewJournalVoucherDetail?.data;
 
   const printComponentRef = useRef<HTMLInputElement | null>(null);
@@ -62,19 +77,9 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
     }
   );
 
-  const handlePrint = useReactToPrint({
-    content: () => printComponentRef.current,
-    onAfterPrint: () => setPrintType(null),
-  });
-
   const handleCustomerPrint = () => {
     setPrintType('CUSTOMER_COPY');
   };
-
-  const handlePrintVoucher = useReactToPrint({
-    content: () => voucherPrintRef.current,
-    onAfterPrint: () => setPrintType(null),
-  });
 
   const handleOfficeVoucherPrint = () => {
     setPrintType('OFFICE_VOUCHER');
@@ -107,6 +112,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
     showSignatures,
     jvDetails,
     glTransactions,
+    glTotal,
   } = useMemo(() => {
     let tempAccountName = '';
     let tempAccountId = '';
@@ -123,6 +129,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
     let tempJVDetails;
 
     let tempGLTransactions;
+
+    let tempGlTotal;
 
     if (router?.asPath?.includes('/deposit/')) {
       tempAccountName = depositDetailData?.accountName as string;
@@ -146,6 +154,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       tempTotal = depositDetailData?.totalDepositedAmount as string;
 
       tempGLTransactions = depositDetailData?.glTransaction;
+
+      tempGlTotal = depositDetailData?.totalDebit;
 
       tempVoucherDetails = {
         'Transaction Id': (
@@ -183,6 +193,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       tempTotal = withdrawDetailData?.totalWithdrawnAmount as string;
 
       tempGLTransactions = withdrawDetailData?.glTransaction;
+
+      tempGlTotal = withdrawDetailData?.totalDebit;
 
       tempVoucherDetails = {
         'Transaction Id': (
@@ -250,6 +262,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       tempTotal = accountTransferDetailData?.transferAmount as string;
 
       tempGLTransactions = accountTransferDetailData?.glTransaction;
+
+      tempGlTotal = accountTransferDetailData?.totalDebit;
     }
 
     if (router?.asPath?.includes('/repayments/') || router?.asPath?.includes('/loan-payment/')) {
@@ -292,6 +306,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
 
       tempGLTransactions = loanRepaymentDetailData?.glTransaction;
 
+      tempGlTotal = loanRepaymentDetailData?.totalDebit;
+
       tempDublicate = true;
     }
 
@@ -320,6 +336,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       jvDetails: tempJVDetails,
       glTransactions: tempGLTransactions,
       dublicate: tempDublicate,
+      glTotal: tempGlTotal,
     };
   }, [
     depositDetailData,
@@ -329,6 +346,18 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
     voucherData,
     router?.asPath,
   ]);
+
+  const handlePrint = useReactToPrint({
+    content: () => printComponentRef.current,
+    onAfterPrint: () => setPrintType(null),
+    documentTitle: `${getTransactionType(router?.asPath)}-${memberDetail?.code ?? ''}-${id}.pdf`,
+  });
+
+  const handlePrintVoucher = useReactToPrint({
+    content: () => voucherPrintRef.current,
+    onAfterPrint: () => setPrintType(null),
+    documentTitle: `${getTransactionType(router?.asPath)}-${memberDetail?.code ?? ''}-${id}.pdf`,
+  });
 
   const pageHeaderOptions =
     router?.asPath?.includes('/deposit') ||
@@ -400,7 +429,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           details={voucherDetails}
           showSignatures={showSignatures}
           glTransactions={glTransactions}
-          glTransactionsTotal={total}
+          glTransactionsTotal={glTotal as string}
           count={printCount}
           ref={voucherPrintRef}
         />

@@ -34,10 +34,6 @@ export const TableContainer = <T,>({ children, variant, data }: TableContainerPr
             border: '1px',
             borderColor: 'border.layout',
             borderRadius: 'br2',
-            scrollbarWidth: 'none',
-            '&::-webkit-scrollbar': {
-              display: 'none',
-            },
             '@media print': {
               w: '100%',
               h: '100%',
@@ -173,18 +169,27 @@ export interface TableHeadCellProps<T> extends ChakraTable.TableCellProps {
   isDetailPageTable?: boolean;
   header: Header<T, unknown>;
   variant: TableVariant;
+  freezeFirstColumn?: boolean;
 }
 
 export const TableHeadCell = <T,>({
   isDetailPageTable,
   header,
   children,
+  freezeFirstColumn,
   ...props
 }: TableHeadCellProps<T>) => (
   <ChakraTable.Th
     sx={{
       pageBreakInside: 'auto !important',
       pageBreakAfter: 'auto !important',
+      '&:first-child': freezeFirstColumn
+        ? {
+            zIndex: '9',
+            position: 'sticky',
+            left: 0,
+          }
+        : {},
     }}
     bg={isDetailPageTable ? 'highlight.500' : 'gray.0'}
     key={header.id}
@@ -366,9 +371,10 @@ export const TableBodyRow = <T,>({ row, isStatic, rowOnClick, ...props }: TableB
 
 export interface TableBodyCellProps<T> extends ChakraTable.TableCellProps {
   cell: Cell<T, unknown>;
+  freezeFirstColumn?: boolean;
 }
 
-export const TableBodyCell = <T,>({ cell, ...props }: TableBodyCellProps<T>) => (
+export const TableBodyCell = <T,>({ cell, freezeFirstColumn, ...props }: TableBodyCellProps<T>) => (
   <ChakraTable.Td
     key={cell.id}
     isNumeric={cell.column.columnDef.meta?.isNumeric}
@@ -377,6 +383,13 @@ export const TableBodyCell = <T,>({ cell, ...props }: TableBodyCellProps<T>) => 
     sx={{
       pageBreakInside: 'avoid',
       pageBreakAfter: 'auto',
+      '&:first-child': freezeFirstColumn
+        ? {
+            zIndex: '8',
+            position: 'sticky',
+            left: 0,
+          }
+        : {},
     }}
     bg="white"
     {...props}

@@ -11,7 +11,6 @@ import {
   useGetMemberKymDetailsOverviewQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
-import { amountConverter } from '@coop/shared/utils';
 
 import { LoanTable } from './LoanAccountTable';
 
@@ -84,8 +83,8 @@ export const LoanAccountList = ({ isClosedAccount }: LoanProps) => {
       id: data?.accountNumber,
       accountType: data?.productType,
       accountName: data?.accountName,
-      totalBalance: amountConverter(data?.totalBalance as string),
-      remainingPrincipal: amountConverter(data?.remainingPrincipal as string),
+      totalBalance: data?.totalBalance,
+      remainingPrincipal: data?.remainingPrincipal,
       interestRate: data?.interestRate,
       accountNumber: data?.accountNumber,
       subscriptionDate: localizedDate(data?.subscriptionDate),
@@ -97,7 +96,7 @@ export const LoanAccountList = ({ isClosedAccount }: LoanProps) => {
       id: data?.accountNumber,
       accountType: data?.productType,
       accountName: data?.accountName,
-      totalBalance: amountConverter(data?.totalBalance as string),
+      totalBalance: data?.totalBalance,
       interestRate: data?.interestRate,
       accountNumber: data?.accountNumber,
       subscriptionDate: localizedDate(data?.closedDate),

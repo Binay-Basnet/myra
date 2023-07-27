@@ -18,7 +18,7 @@ import { getComponents } from './styles/selectComponents';
 // import { getComponents } from './styles/selectComponents';
 import { getChakraDefaultStyles } from './styles/selectStyles';
 
-interface SelectOption {
+export interface SelectOption {
   label: string | number;
   value: string | number;
   disabled?: boolean;

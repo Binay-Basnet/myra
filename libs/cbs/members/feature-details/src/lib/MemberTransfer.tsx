@@ -199,6 +199,7 @@ export const MemberTransfer = () => {
                 name="memberId"
                 label="Member"
                 isDisabled={!!memberId || !!transferEditdata?.memberId}
+                isRequired
               />
             </GridItem>
 
@@ -207,6 +208,7 @@ export const MemberTransfer = () => {
                 name="currentBranchId"
                 label="Current Service Center"
                 isDisabled={!!branchId}
+                isRequired
               />
             </GridItem>
 
@@ -215,94 +217,107 @@ export const MemberTransfer = () => {
                 name="newBranchId"
                 label="New Service Center"
                 isDisabled={!!requestId}
+                isRequired
               />
             </GridItem>
             <GridItem colSpan={2}>
-              <FormTextArea name="reason" label="Reason to transfer" isDisabled={!!requestId} />
+              <FormTextArea
+                name="reason"
+                label="Reason to transfer"
+                isDisabled={!!requestId}
+                isRequired
+              />
             </GridItem>
             <FormFileInput size="sm" name="docs" label="File Upload" />
           </FormSection>
         </FormLayout.Form>
-        <FormLayout.Sidebar borderPosition="left">
-          <Box display="flex" flexDirection="column" gap="s16">
-            <MemberCard
-              memberDetails={{
-                name: memberDetailData?.name,
-                avatar: memberDetailData?.profilePicUrl ?? '',
-                memberID: memberDetailData?.id,
-                code: memberDetailData?.code,
-                gender: memberDetailData?.gender,
-                age: memberDetailData?.age,
-                dateJoined: memberDetailData?.dateJoined?.en,
-                phoneNo: memberDetailData?.contact,
-                email: memberDetailData?.email,
-                address: memberDetailData?.address,
-              }}
-            />
-            <Box m="s16" p="s16" border="1px solid" borderColor="gray.200" borderRadius={5}>
-              <Text fontSize="s3" fontWeight="medium" mb="s16">
-                Share Details
-              </Text>
+        {memberDetailData && (
+          <FormLayout.Sidebar borderPosition="left">
+            <Box display="flex" flexDirection="column" gap="s16">
+              <MemberCard
+                memberDetails={{
+                  name: memberDetailData?.name,
+                  avatar: memberDetailData?.profilePicUrl ?? '',
+                  memberID: memberDetailData?.id,
+                  code: memberDetailData?.code,
+                  gender: memberDetailData?.gender,
+                  age: memberDetailData?.age,
+                  dateJoined: memberDetailData?.dateJoined?.en,
+                  phoneNo: memberDetailData?.contact,
+                  email: memberDetailData?.email,
+                  address: memberDetailData?.address,
+                }}
+              />
 
-              {memberShareDataToBeMapped?.map((item) => (
-                <Box display="flex" justifyContent="space-between">
-                  <Text fontSize="s3">{item?.title}</Text>
-                  <Text fontSize="s3">{item?.value}</Text>
+              <Box m="s16" p="s16" border="1px solid" borderColor="gray.200" borderRadius={5}>
+                <Text fontSize="s3" fontWeight="medium" mb="s16">
+                  Share Details
+                </Text>
+
+                {memberShareDataToBeMapped?.map((item) => (
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontSize="s3">{item?.title}</Text>
+                    <Text fontSize="s3">
+                      {item?.title === 'Share Balance'
+                        ? amountConverter(item?.value as unknown as number)
+                        : item?.value}
+                    </Text>
+                  </Box>
+                ))}
+              </Box>
+              {!isEmpty(memberSavingAccountsDetailsData) && (
+                <Box m="s16" p="s16" border="1px solid" borderColor="gray.200" borderRadius={5}>
+                  <Text fontSize="s3" fontWeight="medium" mb="s16">
+                    Saving Account List
+                  </Text>
+                  <Box display="flex" justifyContent="space-between" p="s8" bg="gray.100">
+                    <Text fontSize="s3" fontWeight="medium">
+                      Account Name
+                    </Text>
+                    <Text fontSize="s3" fontWeight="medium">
+                      Balance
+                    </Text>
+                  </Box>
+                  <Divider />
+                  {memberSavingAccountsDetailsData?.map((item) => (
+                    <>
+                      <Box p="s8" display="flex" justifyContent="space-between">
+                        <Text fontSize="s3">{item?.accountName}</Text>
+                        <Text fontSize="s3">{amountConverter(item?.totalBalance as string)}</Text>
+                      </Box>
+                      <Divider />
+                    </>
+                  ))}
                 </Box>
-              ))}
+              )}
+              {!isEmpty(memberLoanAccountsDetailsData) && (
+                <Box m="s16" p="s16" border="1px solid" borderColor="gray.200" borderRadius={5}>
+                  <Text fontSize="s3" fontWeight="medium" mb="s16">
+                    Loan Account List
+                  </Text>
+                  <Box display="flex" justifyContent="space-between" p="s8" bg="gray.100">
+                    <Text fontSize="s3" fontWeight="medium">
+                      Account Name
+                    </Text>
+                    <Text fontSize="s3" fontWeight="medium">
+                      Amount
+                    </Text>
+                  </Box>
+                  <Divider />
+                  {memberLoanAccountsDetailsData?.map((item) => (
+                    <>
+                      <Box p="s8" display="flex" justifyContent="space-between">
+                        <Text fontSize="s3">{item?.accountName}</Text>
+                        <Text fontSize="s3">{amountConverter(item?.totalBalance as string)}</Text>
+                      </Box>
+                      <Divider />
+                    </>
+                  ))}
+                </Box>
+              )}
             </Box>
-            {!isEmpty(memberSavingAccountsDetailsData) && (
-              <Box m="s16" p="s16" border="1px solid" borderColor="gray.200" borderRadius={5}>
-                <Text fontSize="s3" fontWeight="medium" mb="s16">
-                  Saving Account List
-                </Text>
-                <Box display="flex" justifyContent="space-between" p="s8" bg="gray.100">
-                  <Text fontSize="s3" fontWeight="medium">
-                    Account Name
-                  </Text>
-                  <Text fontSize="s3" fontWeight="medium">
-                    Balance
-                  </Text>
-                </Box>
-                <Divider />
-                {memberSavingAccountsDetailsData?.map((item) => (
-                  <>
-                    <Box p="s8" display="flex" justifyContent="space-between">
-                      <Text fontSize="s3">{item?.accountName}</Text>
-                      <Text fontSize="s3">{amountConverter(item?.totalBalance as string)}</Text>
-                    </Box>
-                    <Divider />
-                  </>
-                ))}
-              </Box>
-            )}
-            {!isEmpty(memberLoanAccountsDetailsData) && (
-              <Box m="s16" p="s16" border="1px solid" borderColor="gray.200" borderRadius={5}>
-                <Text fontSize="s3" fontWeight="medium" mb="s16">
-                  Loan Account List
-                </Text>
-                <Box display="flex" justifyContent="space-between" p="s8" bg="gray.100">
-                  <Text fontSize="s3" fontWeight="medium">
-                    Account Name
-                  </Text>
-                  <Text fontSize="s3" fontWeight="medium">
-                    Amount
-                  </Text>
-                </Box>
-                <Divider />
-                {memberLoanAccountsDetailsData?.map((item) => (
-                  <>
-                    <Box p="s8" display="flex" justifyContent="space-between">
-                      <Text fontSize="s3">{item?.accountName}</Text>
-                      <Text fontSize="s3">{amountConverter(item?.totalBalance as string)}</Text>
-                    </Box>
-                    <Divider />
-                  </>
-                ))}
-              </Box>
-            )}
-          </Box>
-        </FormLayout.Sidebar>
+          </FormLayout.Sidebar>
+        )}
       </FormLayout.Content>
       {!isDetail && !isApprove && (
         <FormLayout.Footer
@@ -360,23 +375,34 @@ export const MemberTransfer = () => {
             </Text>
           </Box>
           <Divider color="blackAlpha.100" width={2} />
-          <Box p="s8" display="flex" bg="gray.100" flexDir="column" gap="s16">
-            <Text fontSize="s3" fontWeight="medium">
-              List of Saving Accounts Transfered
-            </Text>
-            {approvedMemberData?.savingAccountList?.map((item, index) => (
-              <Text>{`${index + 1}. ${item}`}</Text>
-            ))}
-          </Box>
-          <Divider color="blackAlpha.100" width={2} />
-          <Box p="s8" display="flex" bg="gray.100" flexDir="column" gap="s16">
-            <Text fontSize="s3" fontWeight="medium">
-              List of Loan Accounts Transfered
-            </Text>
-            {approvedMemberData?.loanAccountList?.map((item, index) => (
-              <Text fontSize="s3">{`${index + 1}. ${item}`}</Text>
-            ))}
-          </Box>
+          {!isEmpty(approvedMemberData?.savingAccountList) && (
+            <>
+              <Box p="s8" display="flex" bg="gray.100" flexDir="column" gap="s16">
+                <Text fontSize="s3" fontWeight="medium">
+                  List of Saving Accounts Transfered
+                </Text>
+                {approvedMemberData?.savingAccountList?.map((item, index) => (
+                  <Text>{`${index + 1}. ${item}`}</Text>
+                ))}
+              </Box>
+              <Divider color="blackAlpha.100" width={2} />
+            </>
+          )}
+
+          {!isEmpty(approvedMemberData?.loanAccountList) && (
+            <>
+              <Box p="s8" display="flex" bg="gray.100" flexDir="column" gap="s16">
+                <Text fontSize="s3" fontWeight="medium">
+                  List of Loan Accounts Transfered
+                </Text>
+                {approvedMemberData?.loanAccountList?.map((item, index) => (
+                  <Text fontSize="s3">{`${index + 1}. ${item}`}</Text>
+                ))}
+              </Box>
+              <Divider color="blackAlpha.100" width={2} />
+            </>
+          )}
+
           <Box display="flex" gap="s16" alignSelf="flex-end" mt="s16">
             <Button
               variant="outline"

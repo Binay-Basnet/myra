@@ -254,11 +254,14 @@ export const AddDeposit = () => {
   }, [noOfInstallments, selectedAccount, amountToBeDeposited]);
 
   const totalDeposit = useMemo(
+    () => (amountToBeDeposited ? Number(amountToBeDeposited) + Number(rebate ?? REBATE) : 0),
+    [amountToBeDeposited, isFinePaid, payableFine, FINE, rebate, REBATE]
+  );
+
+  const totalPayable = useMemo(
     () =>
       amountToBeDeposited
-        ? Number(amountToBeDeposited) +
-          Number(isFinePaid ? payableFine : FINE) +
-          Number(rebate ?? REBATE)
+        ? Number(amountToBeDeposited) + Number(isFinePaid ? payableFine : FINE)
         : 0,
     [amountToBeDeposited, isFinePaid, payableFine, FINE, rebate, REBATE]
   );
@@ -267,7 +270,7 @@ export const AddDeposit = () => {
     selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
     selectedAccount?.product?.isMandatorySaving
       ? 0
-      : Number(totalCashPaid) - totalDeposit;
+      : Number(totalCashPaid) - totalPayable;
 
   const handleSubmit = () => {
     const values = getValues();
@@ -527,7 +530,7 @@ export const AddDeposit = () => {
 
             <Payment
               mode={mode}
-              totalDeposit={rebate ? Number(totalDeposit) - Number(rebate) : Number(totalDeposit)}
+              totalDeposit={Number(totalPayable)}
               // rebate={Number(rebate ?? 0)}
               // selectedAccount={selectedAccount as DepositAccount}
             />
@@ -543,7 +546,7 @@ export const AddDeposit = () => {
                   memberID: memberDetailData?.id,
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,
-                  maritalStatus: memberDetailData?.maritalStatus,
+                  maritalStatus: memberDetailData?.maritalStatus as string,
                   dateJoined: memberDetailData?.dateJoined,
                   // branch: 'Basantapur',
                   phoneNo: memberDetailData?.contact,
@@ -552,7 +555,7 @@ export const AddDeposit = () => {
                 }}
                 // notice="KYM needs to be updated"
                 signaturePath={selectedAccount?.member?.signaturePicUrl ?? ''}
-                citizenshipPath={memberCitizenshipUrl}
+                citizenshipPath={memberCitizenshipUrl as string}
                 accountInfo={
                   selectedAccount
                     ? {
@@ -608,10 +611,12 @@ export const AddDeposit = () => {
                   const result = response?.transaction?.deposit?.record;
                   const isDepositedByOther = result?.depositedBy === 'OTHER';
 
+                  const totalTxnAmount = Number(result?.amount || 0) + Number(result?.fine || 0);
+
                   return {
                     type: 'Deposit',
-                    total: amountConverter(result?.amount || 0) as string,
-                    totalWords: amountToWordsConverter(result?.amount || 0),
+                    total: amountConverter(totalTxnAmount),
+                    totalWords: amountToWordsConverter(totalTxnAmount),
                     title: 'Deposit Successful',
                     details: {
                       'Transaction Id': (
@@ -655,10 +660,10 @@ export const AddDeposit = () => {
             mode === 0 ? (
               <Box display="flex" gap="s32">
                 <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
-                  {t['addDepositTotalDepositAmount']}
+                  Total Payable Amount
                 </Text>
                 <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
-                  {amountConverter(totalDeposit) ?? '---'}
+                  {amountConverter(totalPayable) ?? '---'}
                 </Text>
               </Box>
             ) : (

@@ -91,7 +91,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
             wordBreak="break-word"
           >
             <RedirectButton
-              label={loanGeneralInfo?.loanProduct as string}
+              label={`${loanGeneralInfo?.loanProduct} (${loanGeneralInfo?.productCode})`}
               link={`${ROUTES.SETTINGS_GENERAL_LP_DETAILS}?id=${loanData?.productId}`}
             />
 
@@ -100,10 +100,10 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
             </Text>
           </Box>
           <Text fontWeight="Medium" fontSize="s3">
-            {loanGeneralInfo?.productCode}
+            {loanAccountId}
           </Text>
           <Text fontWeight="Medium" fontSize="s3">
-            Interest Rate : <b>{loanData?.loanDetails?.interestRate}%</b>
+            Interest Rate : <b>{loanData?.loanDetails?.interestRate?.toFixed(2)}%</b>
           </Text>
         </Box>
         <Box

@@ -26,6 +26,7 @@ export enum Report {
   MEMBER_REGISTER_REPORT = 'Member Register Report',
   MEMBER_ACTIVATIONS = 'Active/Inactive Member',
   MEMBER_CLASSIFICATION_REPORT = 'Member Classification Reports',
+  MEMBER_TRANSFER_REPORT = 'Member Transfer Report',
   KYM_STATUS_REPORT = 'Kym Status Report',
   MINOR_LIST_REPORT = 'Minor List Report',
   MEMBER_WISE_BALANCE_REPORT = 'Member Wise Balance Report',
@@ -39,6 +40,8 @@ export enum Report {
   SHARE_BONUS_DISTRIBUTION_REPORT = 'Share Bonus Distribution Report',
 
   SAVING_STATEMENT = 'Saving Account Statement',
+  ADJUSTMENT_SAVING_STATEMENT = 'Adjustment Saving Account Statement',
+
   SAVING_INTEREST_STATEMENT = 'Interest Statement Report',
   DEPOSIT_CONSOLIDATED_REPORT = 'Deposit Consolidated Report',
   DEPOSIT_DAILY_TRANSACTION_REPORT = 'Deposit Daily Transaction Report',
@@ -112,6 +115,7 @@ export enum Report {
   TRANSACTION_CHAR_KHATA_REPORT = 'Charkhata Ledger Report',
   TRANSACTION_MRTRANSACTION_REPORT = 'Market Representative Transaction Report',
   TRANSACTION_TAG_KHATA_REPORT = 'Ledger Group Report',
+  TRANSACTION_DAILY_BALANCE_REPORT = 'Daily Balance Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -219,6 +223,10 @@ export const REPORTS = {
       report: Report.MINOR_LIST_REPORT,
       link: 'minor-list',
     },
+    {
+      report: Report.MEMBER_TRANSFER_REPORT,
+      link: 'transfer',
+    },
   ],
 
   [ReportGroup.SHARE]: [
@@ -266,6 +274,11 @@ export const REPORTS = {
       id: '5.1',
       report: Report.SAVING_STATEMENT,
       link: 'statement',
+    },
+    {
+      id: '5.1.1',
+      report: Report.ADJUSTMENT_SAVING_STATEMENT,
+      // link: 'adjustment-statement',
     },
     {
       id: '5.2',
@@ -636,6 +649,10 @@ export const REPORTS = {
     {
       report: Report.TRANSACTION_TAG_KHATA_REPORT,
       link: 'tag-khata',
+    },
+    {
+      report: Report.TRANSACTION_DAILY_BALANCE_REPORT,
+      link: 'daily-balance',
     },
   ],
   [ReportGroup.BRANCHLESS_BANKING]: [

@@ -70,6 +70,7 @@ const DepositDetailsPage = () => {
 
   const handlePrintVoucher = useReactToPrint({
     content: () => printRef.current,
+    documentTitle: `${allTransactionsData?.txnType}-${id}.pdf`,
   });
 
   return (
@@ -77,7 +78,7 @@ const DepositDetailsPage = () => {
       <DetailPageHeader
         title="Transaction List"
         options={
-          isCurrentFiscalYear
+          isCurrentFiscalYear && !allTransactionsData?.isYearEndAdjustment
             ? [
                 {
                   label: allTransactionsData?.isYearEndAdjustment
