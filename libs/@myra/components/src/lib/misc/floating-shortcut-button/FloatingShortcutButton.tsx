@@ -31,40 +31,41 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      '"0" amount activation of alternative channel.',
-      'Pan number add in all as loan and saving statement reports.',
-      'Closed at “date “ in closed accounts.',
-      'Balance certificate generation.',
-      'Fiscal year Trial balance adjustment report.',
-      'Adjustment transactions list in transactions section.',
+      'Daily Balance Report.',
+      'COA head ledger transfer to another ledger (Ledger 30 and 110 are restricted from transfer).',
+      'Total row added in Mr collection list.',
+      'Total loan accrued amount calculation in member detail page (current only).',
+      'Total remaining balance and sanctioned amount added in the loan section of member detail page.',
+      'Partial payment of LOC loan.',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Installment UI issue incase of date range fixed.',
-      'Filter and loader updated in missing list pages.',
-      'Disable fees and charges amount field in both loan and saving account open.',
-      'Change the link in loan account section of loan account report to statement report.',
-      'Product name add in loan account statement report.',
-      'ERROR messages change in day end error handling section.',
-      'Branch wise bank filter changes in payment modes.',
-      'fixed loan schedule generation on decimal sanctioned amount.',
+      'Valuator validation issue fixed.',
+      'Added Loan Id in loan repayment page sidebar.',
+      'Difference in Member wise and Saving account report amount.',
+      'Remove DR CR and text change in balance certificate.',
+      'Balance sheet /Trial balance /Profit Loss report show scroll bar and fix print overlap issue and freeze first column.',
+      'Balance sheet /Trial balance /Profit Loss report show Default expand first row.',
+      'Pdf name in bill print repayment.',
+      'Remove charkhata total as it creates confusion in total amount.',
+      'Update balance certificate text.',
+      'Disable drill down for Fiscal adjustment.',
+      'Remove CR/DR in balance certificate.',
+      'Reset password setup fixes in myra mobile banking app.',
+      'Reset password setup fixes in myra e-banking app.',
+      'Repayment amount difference issue in loan repayment page.',
+      'Opening balance calculation fixes in share statement report.',
+      'Interest rate decimal values showing fixes.',
+      'Deposit success card amount fixes.',
+      'Share return charge issue in success card.',
+      'Denominations cash mapping fixations in teller to teller transfer.',
+      'TXN Amount calculation fixes in GL transactions.',
+      'VAT amount calculation In sales and purchase report.',
     ],
   },
-  // knownBugs: {
-  //   title: 'Known Bugs',
-  //   data: [
-  //     '2 Print voucher in single page.',
-  //     'Item name are randomly missing in the inventory section.',
-  //     'Landscape print in report section like loan statement, saving statements.',
-  //     'Loan Schedule payment print in the overview page.',
-  //     'loan products filter issue in loan account page.',
-  //     'String json issue in mr transactions fixes.',
-  //   ],
-  // },
 };
-
 const WhatsNewModal = (props: WhatsNewModalProps) => {
   const { whatsNewModalOpen, handleWhatsNewModalClose } = props;
   return (
@@ -99,8 +100,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.81</Text>
-          <Text fontSize="s3">July 19, 2023</Text>
+          <Text fontSize="r2">Version 1.0.83</Text>
+          <Text fontSize="s3">July 27, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
