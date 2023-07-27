@@ -32,12 +32,17 @@ export const getRange = (selectValue: Period, date: Date) => {
   return { from, to };
 };
 
+const defaultValue = {
+  from: getRange('week', new Date()).from.format('YYYY-MM-DD'),
+  to: getRange('week', new Date()).to.format('YYYY-MM-DD'),
+};
+
 interface DateRangeSelectorProps {
   value: { from: string; to: string } | undefined;
   onChange: (newValue: { from: string; to: string }) => void;
 }
 
-export const DateRangeSelector = ({ value, onChange }: DateRangeSelectorProps) => {
+export const DateRangeSelector = ({ value = defaultValue, onChange }: DateRangeSelectorProps) => {
   const [selectValue, setSelectValue] = useState<Period>('week');
 
   return (
