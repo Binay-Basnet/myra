@@ -98,6 +98,8 @@ export interface TableProps<TData> {
    * Todo! make this number to freeze x number of columns.
    */
   freezeFirstColumn?: boolean;
+
+  expandFirstLevel?: boolean;
 }
 
 export type Column<TData> = Omit<ColumnDef<TData, unknown>, 'accessorKey' | 'accessorFn' | 'id'> & {

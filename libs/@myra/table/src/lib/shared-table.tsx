@@ -69,13 +69,16 @@ export const TableWithoutRef = <T,>(
     tablePagination,
     enableAllFilters = true,
     freezeFirstColumn,
+    expandFirstLevel,
   } = props;
 
   const [expanded, setExpanded] = React.useState<ExpandedState>(
-    Object.keys(data).reduce((result, index) => {
-      result[index] = true;
-      return result;
-    }, {} as Record<string, boolean>)
+    expandFirstLevel
+      ? Object.keys(data).reduce((result, index) => {
+          result[index] = true;
+          return result;
+        }, {} as Record<string, boolean>)
+      : {}
   );
 
   const [tableSize, setTableSize] = React.useState(size);
