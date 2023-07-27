@@ -46,8 +46,8 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     }
   );
 
-  const isLOC =
-    loanPreviewData?.loanAccount?.loanPreview?.data?.loanDetails?.loanRepaymentScheme === 'LOC';
+  // const isLOC =
+  //   loanPreviewData?.loanAccount?.loanPreview?.data?.loanDetails?.loanRepaymentScheme === 'LOC';
 
   const { paymentSchedule, generalInformation, idealSchedule } = useMemo(
     () => ({ ...loanPreviewData?.loanAccount?.loanPreview?.data }),
@@ -360,11 +360,7 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
       </Box>
 
       <Box>
-        {((!isLOC &&
-          currentInstallment &&
-          !partialPaidInstallment &&
-          !overDueInstallments?.length) ||
-          (isLOC && currentInstallment)) && (
+        {currentInstallment && !partialPaidInstallment && !overDueInstallments?.length && (
           <>
             <Box display="flex" flexDirection="column" gap="s4">
               <Text fontSize="s3" fontWeight={500} color="gray.700">
