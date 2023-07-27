@@ -112,6 +112,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
     showSignatures,
     jvDetails,
     glTransactions,
+    glTotal,
   } = useMemo(() => {
     let tempAccountName = '';
     let tempAccountId = '';
@@ -128,6 +129,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
     let tempJVDetails;
 
     let tempGLTransactions;
+
+    let tempGlTotal;
 
     if (router?.asPath?.includes('/deposit/')) {
       tempAccountName = depositDetailData?.accountName as string;
@@ -151,6 +154,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       tempTotal = depositDetailData?.totalDepositedAmount as string;
 
       tempGLTransactions = depositDetailData?.glTransaction;
+
+      tempGlTotal = depositDetailData?.totalDebit;
 
       tempVoucherDetails = {
         'Transaction Id': (
@@ -188,6 +193,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       tempTotal = withdrawDetailData?.totalWithdrawnAmount as string;
 
       tempGLTransactions = withdrawDetailData?.glTransaction;
+
+      tempGlTotal = withdrawDetailData?.totalDebit;
 
       tempVoucherDetails = {
         'Transaction Id': (
@@ -255,6 +262,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       tempTotal = accountTransferDetailData?.transferAmount as string;
 
       tempGLTransactions = accountTransferDetailData?.glTransaction;
+
+      tempGlTotal = accountTransferDetailData?.totalDebit;
     }
 
     if (router?.asPath?.includes('/repayments/') || router?.asPath?.includes('/loan-payment/')) {
@@ -297,6 +306,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
 
       tempGLTransactions = loanRepaymentDetailData?.glTransaction;
 
+      tempGlTotal = loanRepaymentDetailData?.totalDebit;
+
       tempDublicate = true;
     }
 
@@ -325,6 +336,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       jvDetails: tempJVDetails,
       glTransactions: tempGLTransactions,
       dublicate: tempDublicate,
+      glTotal: tempGlTotal,
     };
   }, [
     depositDetailData,
@@ -417,7 +429,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           details={voucherDetails}
           showSignatures={showSignatures}
           glTransactions={glTransactions}
-          glTransactionsTotal={total}
+          glTransactionsTotal={glTotal as string}
           count={printCount}
           ref={voucherPrintRef}
         />
