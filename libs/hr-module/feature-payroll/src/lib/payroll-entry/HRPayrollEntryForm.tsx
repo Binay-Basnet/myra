@@ -35,9 +35,9 @@ export const HrPayrollEntryUpsert = () => {
   const { departmentOptions } = useGetDepartmentOptions();
   const { designationOptions } = useGetDesignationOptions();
 
-  const serviceCenterWatch = watch('serviceCenter');
-  const departmentWatch = watch('department');
-  const designationWatch = watch('designation');
+  const serviceCenterWatch = watch('branchId');
+  const departmentWatch = watch('departmentId');
+  const designationWatch = watch('designationId');
 
   const salaryAssignmentData = useGetSalaryAssignmentsWithExtraDetails({
     serviceCenter: serviceCenterWatch,
