@@ -343,6 +343,7 @@ interface IReportTableProps<T> {
   getSubRows?: (row: T) => T[];
 
   freezeFirstColumn?: boolean;
+  expandFirstLevel?: boolean;
 }
 
 export const ReportTable = <T,>({
@@ -353,6 +354,7 @@ export const ReportTable = <T,>({
   tableTitle,
   getSubRows,
   freezeFirstColumn = true,
+  expandFirstLevel,
 }: IReportTableProps<T>) => {
   const { data } = useReport();
 
@@ -365,6 +367,7 @@ export const ReportTable = <T,>({
         isStatic
         noDataTitle="Reports"
         freezeFirstColumn={freezeFirstColumn}
+        expandFirstLevel={expandFirstLevel}
         getSubRows={getSubRows || ((row) => (row as { children: T[] })['children'])}
         data={
           ((tableData

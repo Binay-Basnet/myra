@@ -374,7 +374,12 @@ export const COATable = ({ data, type, total, coaRedirect = true }: ICOATablePro
 
   return (
     <>
-      <Report.Table<TrialSheetReportDataEntry> data={tree} columns={columns} tableTitle={type} />
+      <Report.Table<TrialSheetReportDataEntry>
+        data={tree}
+        columns={columns}
+        tableTitle={type}
+        expandFirstLevel
+      />
       <CoaTotalTable total={total} />
     </>
   );
