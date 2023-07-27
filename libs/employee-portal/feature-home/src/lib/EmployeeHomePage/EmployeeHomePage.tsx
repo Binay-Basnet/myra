@@ -1,7 +1,6 @@
 import { IoAddOutline, IoCopyOutline } from 'react-icons/io5';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Avatar, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -9,7 +8,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { Box, Divider, Grid, Icon, QuickLinks, Text } from '@myra-ui';
 
 import { EmployeeHeader } from '@coop/employee-portal/components';
-import { useGetProfileQuery } from '@coop/employee-portal/data-access';
+import { useAppSelector, useGetProfileQuery } from '@coop/employee-portal/data-access';
 import { copyToClipboard } from '@coop/shared/utils';
 
 import { Accounts } from '../../components/Accounts/Accounts';
@@ -57,6 +56,7 @@ const tabs = [
 
 export const EmployeeHomePage = () => {
   const router = useRouter();
+  const user = useAppSelector((state) => state.auth.user);
 
   const { data } = useGetProfileQuery();
   const profileData = data?.employee?.home?.profile?.data?.overview;
@@ -70,8 +70,14 @@ export const EmployeeHomePage = () => {
 
       <Box display="flex" justifyContent="space-between" width="100%" py="s24">
         <Box display="flex" gap="s16" flexShrink={0}>
-          <Box w="120px" h="120px" position="relative" borderRadius="br3" overflow="hidden">
-            <Image src="/images/profile.jpg" alt="Profile" fill />
+          <Box position="relative" overflow="hidden">
+            <Avatar
+              w="120px"
+              h="120px"
+              borderRadius="br3"
+              src={user?.profilePic || ''}
+              name={user?.firstName?.local || ''}
+            />
           </Box>
           <Box display="flex" flexDir="column" gap="s8">
             <Text fontSize="l1" fontWeight={500} color="gray.800">

@@ -6,13 +6,16 @@ import { useRouter } from 'next/router';
 
 import { Avatar, Box, Icon, Text } from '@myra-ui';
 
+import { store } from '@coop/employee-portal/data-access';
+
 const SIDEBAR_ITEMS: EmployeePortalSidebarItemProps[] = [
   {
     title: 'Home',
     link: '/',
     icon: (
       <Avatar
-        src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2515&q=80"
+        name={store?.getState().auth?.user?.firstName?.local || ''}
+        src={store?.getState().auth?.user?.profilePic || ''}
         size="xs"
       />
     ),
