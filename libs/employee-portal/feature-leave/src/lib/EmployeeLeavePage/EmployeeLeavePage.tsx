@@ -209,6 +209,7 @@ const ApplyForLeaveModal = ({ isOpen, onClose }: ApplyForLeaveModalProps) => {
 
             onClose();
 
+            queryClient.invalidateQueries(['getLeaveStats']);
             queryClient.invalidateQueries(['getLeaveList']);
           },
         });
