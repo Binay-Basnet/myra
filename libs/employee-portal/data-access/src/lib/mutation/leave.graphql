@@ -1,0 +1,9 @@
+mutation applyForLeave($data: ApplyForLeaveInput!) {
+  employee {
+    leave {
+      applyForLeave(data: $data) {
+        recordId
+      }
+    }
+  }
+}

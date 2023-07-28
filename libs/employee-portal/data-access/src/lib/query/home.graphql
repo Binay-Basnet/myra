@@ -1,0 +1,39 @@
+query getProfile {
+  employee {
+    home {
+      profile {
+        data {
+          id
+          overview {
+            firstName
+            middleName
+            lastName
+            joinedDate
+            dateOfBirth
+            gender
+            email
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            fatherName
+            grandFatherName
+            motherName
+            workPhoneNumber
+            workEmailAddress
+            personalPhoneNumber
+            personalEmailAddress
+          }
+        }
+      }
+    }
+  }
+}

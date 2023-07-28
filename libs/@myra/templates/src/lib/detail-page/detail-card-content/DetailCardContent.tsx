@@ -25,11 +25,11 @@ export const DetailCardContent = ({
         {title ?? 'N/A'}
       </Text>
     )}
-    {subtitle !== undefined && (
-      <Text fontWeight="600" fontSize="r1" color="gray.900">
-        {subtitle ?? 'N/A'}
-      </Text>
-    )}
+
+    <Text fontWeight="600" fontSize="r1" color="gray.700">
+      {subtitle ?? 'N/A'}
+    </Text>
+
     {status && (
       <Box w="100px">
         <Chips variant="solid" theme="success" size="md" type="label" label="Complete" />

@@ -12,6 +12,9 @@ interface DetailsCardProps {
 
   hasThreeRows?: boolean;
   leftBtn?: React.ReactNode;
+
+  rows?: number;
+  hasElevation?: boolean;
 }
 
 export const DetailsCard = ({
@@ -21,9 +24,17 @@ export const DetailsCard = ({
   hasTable,
   bg,
   hasThreeRows,
+  rows,
   leftBtn = null,
+  hasElevation = true,
 }: DetailsCardProps) => (
-  <Box borderRadius="br2" boxShadow="E0" bg={bg ?? 'white'}>
+  <Box
+    borderRadius="br2"
+    boxShadow={hasElevation ? 'E0' : 'none'}
+    border={hasElevation ? 'none' : '1px'}
+    borderColor={hasElevation ? 'none' : 'border.layout'}
+    bg={bg ?? 'white'}
+  >
     {title && (
       <Box
         px="s16"
@@ -53,10 +64,26 @@ export const DetailsCard = ({
         </Box>
       </Box>
     )}
-    {!hasTable && children && !hasThreeRows && (
+    {!hasTable && children && !hasThreeRows && !rows && (
       <Grid
         p="s16"
         templateColumns="repeat(2,1fr)"
+        gap="s20"
+        sx={{
+          '@media print': {
+            py: 's8',
+            px: '0',
+            gap: 's8',
+          },
+        }}
+      >
+        {children}
+      </Grid>
+    )}
+    {!hasTable && children && rows && (
+      <Grid
+        p="s16"
+        templateColumns={`repeat(${rows},1fr)`}
         gap="s20"
         sx={{
           '@media print': {
