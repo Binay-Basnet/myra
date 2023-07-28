@@ -25,4 +25,5 @@ export const getCurrentFiscalYear = () => {
 export const checkDateInFiscalYear = ({
   date = new Date(),
   fiscalYear = getCurrentFiscalYear(),
-}: CheckDateInFiscalYearProps) => dayjs(date).isBetween(fiscalYear?.from, fiscalYear?.to, 'day');
+}: CheckDateInFiscalYearProps) =>
+  dayjs(date).isBetween(fiscalYear?.from, fiscalYear?.to, 'day', '[]');
