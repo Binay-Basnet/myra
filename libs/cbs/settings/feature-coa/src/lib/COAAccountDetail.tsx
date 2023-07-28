@@ -124,24 +124,8 @@ export const COAAccountDetail = () => {
         newCOALeaf: changeParentMethods?.getValues()?.['newCOALeaf'],
       }),
       onSuccess: () => {
-        asyncToast({
-          id: 'update-ledger-name',
-          msgs: {
-            loading: 'Updating ledger name',
-            success: 'Ledger name updated',
-          },
-          promise: updateLedgerName({
-            ledgerId: id as string,
-            newName: accountDetails?.meta?.accountName?.replace(
-              accountDetails?.meta?.accountName?.split('-')[0],
-              changeParentMethods?.getValues()?.['newCOALeaf']
-            ) as string,
-          }),
-          onSuccess: () => {
-            queryClient.invalidateQueries(['getCOAAccountDetails']);
-            handleChangeLedgerParentClose();
-          },
-        });
+        queryClient.invalidateQueries(['getCOAAccountDetails']);
+        handleChangeLedgerParentClose();
       },
     });
   };
