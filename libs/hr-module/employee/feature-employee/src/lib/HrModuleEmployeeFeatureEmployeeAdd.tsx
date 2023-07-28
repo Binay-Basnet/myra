@@ -96,10 +96,11 @@ export const EmployeeAddForm = () => {
         firstName: basicInfo?.firstName?.local,
         middleName: basicInfo?.middleName?.local,
         lastName: basicInfo?.lastName?.local,
-        // gender: personalInfo?.genderId,
+        gender: basicInfo?.genderId,
         dateOfBirth: basicInfo?.dateOfBirth,
         personalPhoneNumber: basicInfo?.mobileNumber,
         personalEmailAddress: basicInfo?.email,
+        maritalStatus: basicInfo?.maritalStatusId,
         permanentAddress: {
           ...basicInfo?.permanentAddress,
           locality: basicInfo?.permanentAddress?.locality?.local,
@@ -164,6 +165,15 @@ export const EmployeeAddForm = () => {
             ['isCoopMember', 'memberId']
           ) as EmployeeInput,
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof EmployeeInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     }
   };

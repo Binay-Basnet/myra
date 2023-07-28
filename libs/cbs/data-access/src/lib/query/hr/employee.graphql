@@ -70,6 +70,7 @@ query getSingleEmployeeDetails($id: String!) {
             age
             gender
             maritalStatus
+            bloodGroup
             workPhoneNumber
             workEmailAddress
             personalPhoneNumber
@@ -121,7 +122,7 @@ query getSingleEmployeeDetails($id: String!) {
             salaryPaymentMode
             panNumber
             providentFundAccount
-            salaryStructureAssignment
+            salaryStructureId
             jobApplicationId
             jobOffer
             appointmentLetter

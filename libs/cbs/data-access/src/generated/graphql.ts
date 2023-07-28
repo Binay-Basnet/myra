@@ -2101,6 +2101,18 @@ export type BlockChequeRequestList = {
   requestedDate: Scalars['String'];
 };
 
+export const BloodGroup = {
+  AbNegative: 'AB_NEGATIVE',
+  AbPositive: 'AB_POSITIVE',
+  ANegative: 'A_NEGATIVE',
+  APositive: 'A_POSITIVE',
+  BNegative: 'B_NEGATIVE',
+  BPositive: 'B_POSITIVE',
+  ONegative: 'O_NEGATIVE',
+  OPositive: 'O_POSITIVE',
+} as const;
+
+export type BloodGroup = typeof BloodGroup[keyof typeof BloodGroup];
 export type Branch = {
   abbsTransaction?: Maybe<AbbsTransaction>;
   address?: Maybe<Address>;
@@ -5865,6 +5877,7 @@ export type EmployeeHealthInsuranceResult = {
 export type EmployeeInput = {
   age?: InputMaybe<Scalars['Int']>;
   appointmentLetter?: InputMaybe<Scalars['ID']>;
+  bloodGroup?: InputMaybe<BloodGroup>;
   dateOfBirth?: InputMaybe<Scalars['Localized']>;
   dateOfJoining?: InputMaybe<Scalars['Localized']>;
   departmentId?: InputMaybe<Scalars['String']>;
@@ -5876,7 +5889,7 @@ export type EmployeeInput = {
   employmentType?: InputMaybe<EmployeeTypeEnum>;
   expenseApproverId?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
-  gender?: InputMaybe<GenderInputType>;
+  gender?: InputMaybe<Scalars['ID']>;
   healthInsuranceNumberId?: InputMaybe<Scalars['String']>;
   healthInsuranceProviderId?: InputMaybe<Scalars['String']>;
   isTemporarySameAsPermanent?: InputMaybe<Scalars['Boolean']>;
@@ -5884,7 +5897,7 @@ export type EmployeeInput = {
   jobOffer?: InputMaybe<Scalars['ID']>;
   lastName?: InputMaybe<Scalars['String']>;
   leaveApproverId?: InputMaybe<Scalars['String']>;
-  maritalStatus?: InputMaybe<MaritalStatusInputType>;
+  maritalStatus?: InputMaybe<Scalars['ID']>;
   middleName?: InputMaybe<Scalars['String']>;
   panNumber?: InputMaybe<Scalars['String']>;
   permanentAddress?: InputMaybe<KymAddressInput>;
@@ -5893,7 +5906,7 @@ export type EmployeeInput = {
   providentFundAccount?: InputMaybe<Scalars['String']>;
   reportsToId?: InputMaybe<Scalars['String']>;
   salaryPaymentMode?: InputMaybe<PaymentMode>;
-  salaryStructureAssignment?: InputMaybe<Scalars['String']>;
+  salaryStructureId?: InputMaybe<Scalars['String']>;
   serviceCenter?: InputMaybe<Scalars['String']>;
   sourceOfHire?: InputMaybe<SourceOfHire>;
   temporaryAddress?: InputMaybe<KymAddressInput>;
@@ -6031,6 +6044,7 @@ export type EmployeeReportUserReportArgs = {
 export type EmployeeResultResponseType = {
   age?: Maybe<Scalars['Int']>;
   appointmentLetter?: Maybe<Scalars['ID']>;
+  bloodGroup?: Maybe<BloodGroup>;
   dateOfBirth?: Maybe<Scalars['Localized']>;
   dateOfJoining?: Maybe<Scalars['Localized']>;
   departmentId?: Maybe<Scalars['String']>;
@@ -6060,7 +6074,7 @@ export type EmployeeResultResponseType = {
   providentFundAccount?: Maybe<Scalars['String']>;
   reportsToId?: Maybe<Scalars['String']>;
   salaryPaymentMode?: Maybe<PaymentMode>;
-  salaryStructureAssignment?: Maybe<Scalars['String']>;
+  salaryStructureId?: Maybe<Scalars['String']>;
   serviceCenter?: Maybe<Scalars['String']>;
   sourceOfHire?: Maybe<SourceOfHire>;
   temporaryAddress?: Maybe<KymAddress>;
@@ -29086,6 +29100,7 @@ export type GetSingleEmployeeDetailsQuery = {
             age?: number | null;
             gender?: GenderType | null;
             maritalStatus?: MaritalStatusType | null;
+            bloodGroup?: BloodGroup | null;
             workPhoneNumber?: string | null;
             workEmailAddress?: string | null;
             personalPhoneNumber?: string | null;
@@ -29101,7 +29116,7 @@ export type GetSingleEmployeeDetailsQuery = {
             salaryPaymentMode?: PaymentMode | null;
             panNumber?: string | null;
             providentFundAccount?: string | null;
-            salaryStructureAssignment?: string | null;
+            salaryStructureId?: string | null;
             jobApplicationId?: string | null;
             jobOffer?: string | null;
             appointmentLetter?: string | null;
@@ -52860,6 +52875,7 @@ export const GetSingleEmployeeDetailsDocument = `
             age
             gender
             maritalStatus
+            bloodGroup
             workPhoneNumber
             workEmailAddress
             personalPhoneNumber
@@ -52911,7 +52927,7 @@ export const GetSingleEmployeeDetailsDocument = `
             salaryPaymentMode
             panNumber
             providentFundAccount
-            salaryStructureAssignment
+            salaryStructureId
             jobApplicationId
             jobOffer
             appointmentLetter
