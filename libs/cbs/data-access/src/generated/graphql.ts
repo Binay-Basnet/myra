@@ -6056,7 +6056,7 @@ export type EmployeeResultResponseType = {
   employmentType?: Maybe<EmployeeTypeEnum>;
   expenseApproverId?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
-  gender?: Maybe<GenderType>;
+  gender?: Maybe<Scalars['ID']>;
   healthInsuranceNumberId?: Maybe<Scalars['String']>;
   healthInsuranceProviderId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -6065,7 +6065,7 @@ export type EmployeeResultResponseType = {
   jobOffer?: Maybe<Scalars['ID']>;
   lastName?: Maybe<Scalars['String']>;
   leaveApproverId?: Maybe<Scalars['String']>;
-  maritalStatus?: Maybe<MaritalStatusType>;
+  maritalStatus?: Maybe<Scalars['ID']>;
   middleName?: Maybe<Scalars['String']>;
   panNumber?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<KymAddress>;
@@ -29098,8 +29098,8 @@ export type GetSingleEmployeeDetailsQuery = {
             lastName?: string | null;
             dateOfBirth?: Record<'local' | 'en' | 'np', string> | null;
             age?: number | null;
-            gender?: GenderType | null;
-            maritalStatus?: MaritalStatusType | null;
+            gender?: string | null;
+            maritalStatus?: string | null;
             bloodGroup?: BloodGroup | null;
             workPhoneNumber?: string | null;
             workEmailAddress?: string | null;

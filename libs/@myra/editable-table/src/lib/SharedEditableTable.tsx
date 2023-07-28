@@ -207,9 +207,7 @@ function editableReducer<T extends RecordWithId & Record<string, EditableValue>>
           item._id === payload?.data?._id
             ? {
                 ...item,
-                [payload.column.accessor]: payload.column.isNumeric
-                  ? +payload.newValue
-                  : payload.newValue,
+                [payload.column.accessor]: payload.newValue,
               }
             : item
         ),
