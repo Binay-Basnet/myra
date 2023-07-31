@@ -97,6 +97,13 @@ export const LedgerReport = () => {
                 },
               },
               {
+                header: 'Old ID',
+                accessorFn: (row) => row?.oldId,
+                meta: {
+                  width: '3.125rem',
+                },
+              },
+              {
                 header: 'Particulars',
                 accessorFn: (row) => row?.account,
                 cell: (props) => (

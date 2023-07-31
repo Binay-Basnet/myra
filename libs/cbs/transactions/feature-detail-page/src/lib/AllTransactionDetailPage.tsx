@@ -78,6 +78,13 @@ export const AllTransactionDetailPage = ({
                 />
               )}
 
+              {allTransactionsData?.oldId && (
+                <DetailCardContent
+                  title="Old Transaction ID"
+                  subtitle={`#${allTransactionsData?.oldId}`}
+                />
+              )}
+
               <DetailCardContent
                 title="Transaction Date"
                 subtitle={localizedDate(allTransactionsData?.transactionDate)}

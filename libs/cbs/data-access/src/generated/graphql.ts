@@ -7536,6 +7536,7 @@ export type GeneralLedgerReportEntry = {
   date?: Maybe<Scalars['Localized']>;
   debit?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
+  oldId?: Maybe<Scalars['String']>;
 };
 
 export type GeneralMemberData = {
@@ -35429,6 +35430,7 @@ export type GetLedgerReportQuery = {
         ledgerName?: string | null;
         data?: Array<{
           id?: string | null;
+          oldId?: string | null;
           date?: Record<'local' | 'en' | 'np', string> | null;
           account?: string | null;
           balance?: string | null;
@@ -40931,6 +40933,7 @@ export type GetAllTransactionsDetailQuery = {
     viewTransactionDetail?: {
       data?: {
         id: string;
+        oldId?: string | null;
         user?: string | null;
         transactionDate?: Record<'local' | 'en' | 'np', string> | null;
         txnType?: AllTransactionType | null;
@@ -61107,6 +61110,7 @@ export const GetLedgerReportDocument = `
         ledgerName
         data {
           id
+          oldId
           date
           account
           balance
@@ -68560,6 +68564,7 @@ export const GetAllTransactionsDetailDocument = `
     viewTransactionDetail(transactionId: $id, txnType: $txnType) {
       data {
         id
+        oldId
         user
         member {
           id

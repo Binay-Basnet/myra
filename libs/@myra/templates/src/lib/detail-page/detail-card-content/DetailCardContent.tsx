@@ -26,9 +26,11 @@ export const DetailCardContent = ({
       </Text>
     )}
 
-    <Text fontWeight="600" fontSize="r1" color="gray.700">
-      {subtitle ?? 'N/A'}
-    </Text>
+    {!status && (
+      <Text fontWeight="600" fontSize="r1" color="gray.700">
+        {subtitle ?? 'N/A'}
+      </Text>
+    )}
 
     {status && (
       <Box w="100px">

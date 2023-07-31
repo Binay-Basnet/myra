@@ -5,6 +5,7 @@ query getLedgerReport($data: GeneralLedgerFilter!) {
         ledgerName
         data {
           id
+          oldId
           date
           account
           balance
