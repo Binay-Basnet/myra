@@ -188,6 +188,7 @@ query getInterestStatementReport($data: InterestStatementFilter!) {
             tds
           }
           member {
+            code
             panVatNo
           }
           memberId
