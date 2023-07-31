@@ -37,4 +37,11 @@ export const MYRA_APPS = [
     img: '/btcd.svg',
     link: ROUTES.HRMODULE_EMPLOYEES_LIST,
   },
+  {
+    key: 'BPM',
+    title: 'businessProcessManagement',
+    img: '/rvn.svg',
+
+    link: ROUTES.BPM_TASKS_LISTS,
+  },
 ] as const;

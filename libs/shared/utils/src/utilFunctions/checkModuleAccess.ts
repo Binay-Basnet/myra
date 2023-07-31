@@ -4,7 +4,8 @@ export type ModuleType =
   | 'ALTERNATIVE_CHANNELS'
   | 'ACCOUNTING'
   | 'INVENTORY'
-  | 'HCM';
+  | 'HCM'
+  | 'BPM';
 
 const modules = {
   CBS: {
@@ -28,6 +29,10 @@ const modules = {
     prod: true,
   },
   HCM: {
+    dev: true,
+    prod: false,
+  },
+  BPM: {
     dev: true,
     prod: false,
   },
