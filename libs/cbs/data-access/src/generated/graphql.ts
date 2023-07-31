@@ -1305,6 +1305,7 @@ export type AllTransactionResult = {
   isYearEndAdjustment?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
+  oldId?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
@@ -20480,6 +20481,13 @@ export const UserGender = {
 } as const;
 
 export type UserGender = typeof UserGender[keyof typeof UserGender];
+export const UserLoginType = {
+  Employee: 'EMPLOYEE',
+  Erp: 'ERP',
+  MrUser: 'MR_USER',
+} as const;
+
+export type UserLoginType = typeof UserLoginType[keyof typeof UserLoginType];
 export type UserMinimal = {
   name: Scalars['Localized'];
   profilePicUrl?: Maybe<Scalars['String']>;
