@@ -18,7 +18,7 @@ export const SalaryDetails = () => {
       <FormInput name="panNumber" label="PAN" />
       <FormSelect name="providentFund" label="Provident Fund Account" />
       <FormSelect
-        name="salaryStructureAssignment"
+        name="salaryStructureId"
         label="Salary Structure"
         options={salaryStructureOptions}
       />

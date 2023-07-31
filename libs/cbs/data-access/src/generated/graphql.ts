@@ -1305,6 +1305,7 @@ export type AllTransactionResult = {
   isYearEndAdjustment?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
+  oldId?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
@@ -2101,6 +2102,18 @@ export type BlockChequeRequestList = {
   requestedDate: Scalars['String'];
 };
 
+export const BloodGroup = {
+  AbNegative: 'AB_NEGATIVE',
+  AbPositive: 'AB_POSITIVE',
+  ANegative: 'A_NEGATIVE',
+  APositive: 'A_POSITIVE',
+  BNegative: 'B_NEGATIVE',
+  BPositive: 'B_POSITIVE',
+  ONegative: 'O_NEGATIVE',
+  OPositive: 'O_POSITIVE',
+} as const;
+
+export type BloodGroup = typeof BloodGroup[keyof typeof BloodGroup];
 export type Branch = {
   abbsTransaction?: Maybe<AbbsTransaction>;
   address?: Maybe<Address>;
@@ -5865,6 +5878,7 @@ export type EmployeeHealthInsuranceResult = {
 export type EmployeeInput = {
   age?: InputMaybe<Scalars['Int']>;
   appointmentLetter?: InputMaybe<Scalars['ID']>;
+  bloodGroup?: InputMaybe<BloodGroup>;
   dateOfBirth?: InputMaybe<Scalars['Localized']>;
   dateOfJoining?: InputMaybe<Scalars['Localized']>;
   departmentId?: InputMaybe<Scalars['String']>;
@@ -5876,7 +5890,7 @@ export type EmployeeInput = {
   employmentType?: InputMaybe<EmployeeTypeEnum>;
   expenseApproverId?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
-  gender?: InputMaybe<GenderInputType>;
+  gender?: InputMaybe<Scalars['ID']>;
   healthInsuranceNumberId?: InputMaybe<Scalars['String']>;
   healthInsuranceProviderId?: InputMaybe<Scalars['String']>;
   isTemporarySameAsPermanent?: InputMaybe<Scalars['Boolean']>;
@@ -5884,7 +5898,7 @@ export type EmployeeInput = {
   jobOffer?: InputMaybe<Scalars['ID']>;
   lastName?: InputMaybe<Scalars['String']>;
   leaveApproverId?: InputMaybe<Scalars['String']>;
-  maritalStatus?: InputMaybe<MaritalStatusInputType>;
+  maritalStatus?: InputMaybe<Scalars['ID']>;
   middleName?: InputMaybe<Scalars['String']>;
   panNumber?: InputMaybe<Scalars['String']>;
   permanentAddress?: InputMaybe<KymAddressInput>;
@@ -5893,7 +5907,7 @@ export type EmployeeInput = {
   providentFundAccount?: InputMaybe<Scalars['String']>;
   reportsToId?: InputMaybe<Scalars['String']>;
   salaryPaymentMode?: InputMaybe<PaymentMode>;
-  salaryStructureAssignment?: InputMaybe<Scalars['String']>;
+  salaryStructureId?: InputMaybe<Scalars['String']>;
   serviceCenter?: InputMaybe<Scalars['String']>;
   sourceOfHire?: InputMaybe<SourceOfHire>;
   temporaryAddress?: InputMaybe<KymAddressInput>;
@@ -6031,6 +6045,7 @@ export type EmployeeReportUserReportArgs = {
 export type EmployeeResultResponseType = {
   age?: Maybe<Scalars['Int']>;
   appointmentLetter?: Maybe<Scalars['ID']>;
+  bloodGroup?: Maybe<BloodGroup>;
   dateOfBirth?: Maybe<Scalars['Localized']>;
   dateOfJoining?: Maybe<Scalars['Localized']>;
   departmentId?: Maybe<Scalars['String']>;
@@ -6042,7 +6057,7 @@ export type EmployeeResultResponseType = {
   employmentType?: Maybe<EmployeeTypeEnum>;
   expenseApproverId?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
-  gender?: Maybe<GenderType>;
+  gender?: Maybe<Scalars['ID']>;
   healthInsuranceNumberId?: Maybe<Scalars['String']>;
   healthInsuranceProviderId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -6051,7 +6066,7 @@ export type EmployeeResultResponseType = {
   jobOffer?: Maybe<Scalars['ID']>;
   lastName?: Maybe<Scalars['String']>;
   leaveApproverId?: Maybe<Scalars['String']>;
-  maritalStatus?: Maybe<MaritalStatusType>;
+  maritalStatus?: Maybe<Scalars['ID']>;
   middleName?: Maybe<Scalars['String']>;
   panNumber?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<KymAddress>;
@@ -6060,7 +6075,7 @@ export type EmployeeResultResponseType = {
   providentFundAccount?: Maybe<Scalars['String']>;
   reportsToId?: Maybe<Scalars['String']>;
   salaryPaymentMode?: Maybe<PaymentMode>;
-  salaryStructureAssignment?: Maybe<Scalars['String']>;
+  salaryStructureId?: Maybe<Scalars['String']>;
   serviceCenter?: Maybe<Scalars['String']>;
   sourceOfHire?: Maybe<SourceOfHire>;
   temporaryAddress?: Maybe<KymAddress>;
@@ -7521,6 +7536,7 @@ export type GeneralLedgerReportEntry = {
   date?: Maybe<Scalars['Localized']>;
   debit?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
+  oldId?: Maybe<Scalars['String']>;
 };
 
 export type GeneralMemberData = {
@@ -20466,6 +20482,13 @@ export const UserGender = {
 } as const;
 
 export type UserGender = typeof UserGender[keyof typeof UserGender];
+export const UserLoginType = {
+  Employee: 'EMPLOYEE',
+  Erp: 'ERP',
+  MrUser: 'MR_USER',
+} as const;
+
+export type UserLoginType = typeof UserLoginType[keyof typeof UserLoginType];
 export type UserMinimal = {
   name: Scalars['Localized'];
   profilePicUrl?: Maybe<Scalars['String']>;
@@ -29084,8 +29107,9 @@ export type GetSingleEmployeeDetailsQuery = {
             lastName?: string | null;
             dateOfBirth?: Record<'local' | 'en' | 'np', string> | null;
             age?: number | null;
-            gender?: GenderType | null;
-            maritalStatus?: MaritalStatusType | null;
+            gender?: string | null;
+            maritalStatus?: string | null;
+            bloodGroup?: BloodGroup | null;
             workPhoneNumber?: string | null;
             workEmailAddress?: string | null;
             personalPhoneNumber?: string | null;
@@ -29101,7 +29125,7 @@ export type GetSingleEmployeeDetailsQuery = {
             salaryPaymentMode?: PaymentMode | null;
             panNumber?: string | null;
             providentFundAccount?: string | null;
-            salaryStructureAssignment?: string | null;
+            salaryStructureId?: string | null;
             jobApplicationId?: string | null;
             jobOffer?: string | null;
             appointmentLetter?: string | null;
@@ -33864,7 +33888,7 @@ export type GetInterestStatementReportQuery = {
             remarks?: string | null;
             tds?: string | null;
           } | null> | null;
-          member?: { panVatNo?: string | null } | null;
+          member?: { code: string; panVatNo?: string | null } | null;
           address?: {
             wardNo?: string | null;
             state?: Record<'local' | 'en' | 'np', string> | null;
@@ -35406,6 +35430,7 @@ export type GetLedgerReportQuery = {
         ledgerName?: string | null;
         data?: Array<{
           id?: string | null;
+          oldId?: string | null;
           date?: Record<'local' | 'en' | 'np', string> | null;
           account?: string | null;
           balance?: string | null;
@@ -40908,6 +40933,7 @@ export type GetAllTransactionsDetailQuery = {
     viewTransactionDetail?: {
       data?: {
         id: string;
+        oldId?: string | null;
         user?: string | null;
         transactionDate?: Record<'local' | 'en' | 'np', string> | null;
         txnType?: AllTransactionType | null;
@@ -52860,6 +52886,7 @@ export const GetSingleEmployeeDetailsDocument = `
             age
             gender
             maritalStatus
+            bloodGroup
             workPhoneNumber
             workEmailAddress
             personalPhoneNumber
@@ -52911,7 +52938,7 @@ export const GetSingleEmployeeDetailsDocument = `
             salaryPaymentMode
             panNumber
             providentFundAccount
-            salaryStructureAssignment
+            salaryStructureId
             jobApplicationId
             jobOffer
             appointmentLetter
@@ -59086,6 +59113,7 @@ export const GetInterestStatementReportDocument = `
             tds
           }
           member {
+            code
             panVatNo
           }
           memberId
@@ -61082,6 +61110,7 @@ export const GetLedgerReportDocument = `
         ledgerName
         data {
           id
+          oldId
           date
           account
           balance
@@ -68535,6 +68564,7 @@ export const GetAllTransactionsDetailDocument = `
     viewTransactionDetail(transactionId: $id, txnType: $txnType) {
       data {
         id
+        oldId
         user
         member {
           id

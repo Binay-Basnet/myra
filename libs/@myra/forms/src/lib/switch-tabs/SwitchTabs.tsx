@@ -123,6 +123,7 @@ export const SwitchTabs = ({
 
           return (
             <Box
+              key={String(val.value)}
               position="relative"
               _after={
                 radio.isChecked || checkedIndex - 1 === index || index === options.length - 1

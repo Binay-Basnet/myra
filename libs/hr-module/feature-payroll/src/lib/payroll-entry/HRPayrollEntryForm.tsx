@@ -150,7 +150,7 @@ export const HrPayrollEntryUpsert = () => {
       id: 'reject-payroll-run',
       msgs: {
         success: 'Payroll run rejected',
-        loading: 'Rejcting payroll run',
+        loading: 'Rejecting payroll run',
       },
       onSuccess: () => {
         router.push(ROUTES?.HR_PAYROLL_ENTRY_LIST);

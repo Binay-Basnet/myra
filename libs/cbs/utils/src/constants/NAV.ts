@@ -7,6 +7,7 @@ import { AbilityContext, AclKey, Actions, RouteValue } from '@coop/cbs/utils';
 import {
   ACCOUNTING,
   ALTERNATIVE_CHANNELS,
+  BPM,
   CBS,
   HRMODULE,
   INVENTORY,
@@ -19,7 +20,8 @@ export type ModuleType =
   | 'ALTERNATIVE_CHANNELS'
   | 'ACCOUNTING'
   | 'INVENTORY'
-  | 'HRMODULE';
+  | 'HRMODULE'
+  | 'BPM';
 
 export type MenuType =
   | 'MEMBERS'
@@ -51,7 +53,10 @@ export type MenuType =
   | 'PAYROLL'
   | 'TRAINING'
   | 'RECRUITMENT'
-  | 'POLICY';
+  | 'POLICY'
+  | 'TASKS'
+  | 'PROGRAMS'
+  | 'OPERATIONS';
 
 export type Page = {
   label: string;
@@ -90,6 +95,7 @@ export const APP_NAVS = {
   ACCOUNTING,
   INVENTORY,
   HRMODULE,
+  BPM,
 };
 
 export const useLink = (app: ModuleType = 'CBS') => {

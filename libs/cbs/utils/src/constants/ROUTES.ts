@@ -520,6 +520,38 @@ export const ROUTES = {
   HR_TRAINING_REPORTS: '/hr/training/courses/list',
 
   HR_REPORTS: '/hr/reports/transactions',
+
+  BPM_TASKS_LISTS: '/bpm/tasks/tasks/list',
+  BPM_TASKS_ADD: '/bpm/tasks/tasks/add',
+
+  BPM_PROGRAMS_EVENTS_LIST: '/bpm/programs/events/list',
+  BPM_PROGRAMS_EVENTS_ADD: '/bpm/programs/events/add',
+  BPM_PROGRAMS_MEETINGS_LIST: '/bpm/programs/meetings/list',
+  BPM_PROGRAMS_MEETINGS_ADD: '/bpm/programs/meetings/add',
+
+  BPM_OPERATIONS_MINOR_ADDITION_LIST: '/bpm/operations/minor-addition/list',
+  BPM_OPERATIONS_MINOR_ADDITION_ADD: '/bpm/operations/minor-addition/add',
+  BPM_OPERATIONS_LOAN_PRODUCT_UPDATES_LIST: '/bpm/operations/loan-product-updates/list',
+  BPM_OPERATIONS_LOAN_PRODUCT_UPDATES_ADD: '/bpm/operations/loan-product-updates/add',
+  BPM_OPERATIONS_SAVING_PRODUCT_UPDATES_LIST: '/bpm/operations/saving-product-updates/list',
+  BPM_OPERATIONS_SAVING_PRODUCT_UPDATES_ADD: '/bpm/operations/saving-product-updates/add',
+  BPM_OPERATIONS_AUTO_OPEN_ACCOUNT_UPDATES_LIST: '/bpm/operations/auto-open-account-updates/list',
+  BPM_OPERATIONS_AUTO_OPEN_ACCOUNT_UPDATES_ADD:
+    '/bpm/operations/operations/auto-open-account-updates/add',
+  BPM_OPERATIONS_COLLATERAL_MANAGEMENT_LIST: '/bpm/operations/collateral/list',
+  BPM_OPERATIONS_COLLATERAL_MANAGEMENT_ADD: '/bpm/operations/collateral/add',
+  BPM_OPERATIONS_NOMINEE_BALANCE_TRANSFER_LIST: '/bpm/operations/nominee-balance-transfer/list',
+  BPM_OPERATIONS_NOMINEE_BALANCE_TRANSFER_ADD: '/bpm/operations/nominee-balance-transfer/add',
+  BPM_OPERATIONS_MEMBER_DEACTIVATION_LIST: '/bpm/operations/member-deactivation/list',
+  BPM_OPERATIONS_MEMBER_DEACTIVATION_ADD: '/bpm/operations/member-deactivation/add',
+
+  BPM_REQUESTS_MEMBERSHIP_REQUESTS: '/bpm/requests/membership/list',
+  BPM_REQUESTS_MINOR_ADDITION_REQUESTS: '/bpm/requests/minor-addition/list',
+  BPM_REQUESTS_LOAN_REQUESTS: '/bpm/requests/loan/list',
+  BPM_REQUESTS_SAVING_ACCOUNTS_REQUESTS: '/bpm/requests/saving-accounts/list',
+  BPM_REQUESTS_ALTERNATIVE_CHANNEL_REQUESTS: '/bpm/requests/alternative-channel/list',
+  BPM_REQUESTS_MEMBER_BRANCH_TRANSFER_REQUESTS: '/bpm/requests/memebrship-branch/list',
+  BPM_REQUESTS_NOMINEE_BALANCE_TRANSFER_REQUESTS: '/bpm/requests/nominee-balance-transfer/list',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

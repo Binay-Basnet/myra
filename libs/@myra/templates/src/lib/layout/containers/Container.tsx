@@ -30,9 +30,10 @@ export const PageContainer = ({ children }: IContainer) => (
 interface IScrollableProps {
   children: React.ReactNode;
   detailPage?: boolean;
+  height?: string;
 }
 
-export const Scrollable = ({ children, detailPage }: IScrollableProps) => (
+export const Scrollable = ({ children, detailPage, height }: IScrollableProps) => (
   <Box
     sx={{
       '&::-webkit-scrollbar': {
@@ -58,7 +59,7 @@ export const Scrollable = ({ children, detailPage }: IScrollableProps) => (
     }}
     w="100%"
     overflowY="auto"
-    h={detailPage ? 'calc(100vh - 160px)' : 'calc(100vh - 110px)'}
+    h={height || (detailPage ? 'calc(100vh - 160px)' : 'calc(100vh - 110px)')}
   >
     {children}
   </Box>

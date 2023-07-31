@@ -34,7 +34,8 @@ export const QuickLinks = ({
     borderRadius="br2"
     cursor="pointer"
     onClick={onclick}
-    boxShadow="E0"
+    border="1px"
+    borderColor="border.layout"
   >
     <Box display="flex" alignItems="center" gap="s8">
       {editLinks && <Icon as={GRID2X3} size="lg" />}

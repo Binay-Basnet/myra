@@ -30,39 +30,15 @@ interface WhatsNewModalProps {
 const whatsNewData = {
   features: {
     title: 'New Features',
-    data: [
-      'Daily Balance Report.',
-      'COA head ledger transfer to another ledger (Ledger 30 and 110 are restricted from transfer).',
-      'Total row added in Mr collection list.',
-      'Total loan accrued amount calculation in member detail page (current only).',
-      'Total remaining balance and sanctioned amount added in the loan section of member detail page.',
-      'Partial payment of LOC loan.',
-    ],
+    data: ['Show old txn id in txn detail and ledger report.'],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Valuator validation issue fixed.',
-      'Added Loan Id in loan repayment page sidebar.',
-      'Difference in Member wise and Saving account report amount.',
-      'Remove DR CR and text change in balance certificate.',
-      'Balance sheet /Trial balance /Profit Loss report show scroll bar and fix print overlap issue and freeze first column.',
-      'Balance sheet /Trial balance /Profit Loss report show Default expand first row.',
-      'Pdf name in bill print repayment.',
-      'Remove charkhata total as it creates confusion in total amount.',
-      'Update balance certificate text.',
-      'Disable drill down for Fiscal adjustment.',
-      'Remove CR/DR in balance certificate.',
-      'Reset password setup fixes in myra mobile banking app.',
-      'Reset password setup fixes in myra e-banking app.',
-      'Repayment amount difference issue in loan repayment page.',
-      'Opening balance calculation fixes in share statement report.',
-      'Interest rate decimal values showing fixes.',
-      'Deposit success card amount fixes.',
-      'Share return charge issue in success card.',
-      'Denominations cash mapping fixations in teller to teller transfer.',
-      'TXN Amount calculation fixes in GL transactions.',
-      'VAT amount calculation In sales and purchase report.',
+      'JV entry cannot input 0.01 [Editable table number input]',
+      'Calculation of Debit, Credit and Balance of Daily balance report',
+      'ledger code missing when creating ledger for all services',
+      'Adjusted without settlement data fixes in Adjusted Fiscal Trial Balance.',
     ],
   },
 };
@@ -100,8 +76,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.83</Text>
-          <Text fontSize="s3">July 27, 2023</Text>
+          <Text fontSize="r2">Version 1.0.84</Text>
+          <Text fontSize="s3">July 31, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>

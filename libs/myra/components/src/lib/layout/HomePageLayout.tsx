@@ -33,11 +33,6 @@ const notSubscribed = [
 
 const comingSoon = [
   {
-    title: 'businessProcessManagement',
-    img: '/rvn.svg',
-    link: '/cbs/members/list',
-  },
-  {
     title: 'assetsAndInventoryManagement',
     img: '/tern.svg',
     link: '/cbs/members/list',
