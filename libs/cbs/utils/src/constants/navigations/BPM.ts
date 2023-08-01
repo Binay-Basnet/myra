@@ -101,42 +101,42 @@ export const BPM: NavType = {
       ],
       pages: [
         {
-          label: 'New Minor Addition',
+          label: 'Minor Addition',
           aclKey: 'HCM_RECRUITMENT_STAFF_PLANNING',
           route: ROUTES.BPM_OPERATIONS_MINOR_ADDITION_LIST,
           addRoute: ROUTES.BPM_OPERATIONS_MINOR_ADDITION_ADD,
         },
         {
-          label: 'New Loan Product Update',
+          label: 'Loan Product Update',
           aclKey: 'HCM_RECRUITMENT_JOB_OPENING',
           route: ROUTES.BPM_OPERATIONS_LOAN_PRODUCT_UPDATES_LIST,
           addRoute: ROUTES.BPM_OPERATIONS_LOAN_PRODUCT_UPDATES_ADD,
         },
         {
-          label: 'New Saving Product Update',
+          label: 'Saving Product Update',
           aclKey: 'HCM_RECRUITMENT_JOB_APPLICATION',
           route: ROUTES.BPM_OPERATIONS_SAVING_PRODUCT_UPDATES_LIST,
           addRoute: ROUTES.BPM_OPERATIONS_SAVING_PRODUCT_UPDATES_ADD,
         },
         // {
-        //   label: 'New Interview',
+        //   label: 'Interview',
         //   aclKey: 'HCM_RECRUITMENT_INTERVIEW',
         //   route: ROUTES.HR_RECRUITMENT_INTERVIEW_ADD,
         // },
         {
-          label: 'New Auto Open Account Update',
+          label: 'Auto Open Account Update',
           aclKey: 'HCM_RECRUITMENT_JOB_OFFER',
           route: ROUTES.BPM_OPERATIONS_AUTO_OPEN_ACCOUNT_UPDATES_LIST,
           addRoute: ROUTES.BPM_OPERATIONS_AUTO_OPEN_ACCOUNT_UPDATES_ADD,
         },
         {
-          label: 'New Collateral Management',
+          label: 'Collateral Management',
           aclKey: 'HCM_RECRUITMENT_APPOINTMENT_LETTER',
           route: ROUTES.BPM_OPERATIONS_COLLATERAL_MANAGEMENT_LIST,
           addRoute: ROUTES.BPM_OPERATIONS_COLLATERAL_MANAGEMENT_ADD,
         },
         {
-          label: 'New Nominee Balance Transfer',
+          label: 'Nominee Balance Transfer',
           aclKey: 'HCM_RECRUITMENT_APPOINTMENT_LETTER',
           route: ROUTES.BPM_OPERATIONS_NOMINEE_BALANCE_TRANSFER_LIST,
           addRoute: ROUTES.BPM_OPERATIONS_NOMINEE_BALANCE_TRANSFER_ADD,
@@ -182,7 +182,7 @@ export const BPM: NavType = {
         {
           label: 'Alternative Channel Requests',
           aclKey: 'HCM_RECRUITMENT_APPOINTMENT_LETTER',
-          route: ROUTES.HR_RECRUITMENT_APPOINTMENT_LETTER_ADD,
+          route: ROUTES.BPM_REQUESTS_ALTERNATIVE_CHANNEL_REQUESTS,
         },
         {
           label: 'New Nominee Balance Transfer',

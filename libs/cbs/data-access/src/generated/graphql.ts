@@ -22329,6 +22329,30 @@ export type SetNewLeaveMutation = {
   };
 };
 
+export type ApproveLeaveMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: LeaveStatusEnum;
+}>;
+
+export type ApproveLeaveMutation = {
+  hr: {
+    employee: {
+      leave: {
+        approveLeave: {
+          isApproved: boolean;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type SetEmployeeOnboardingUpsertMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: EmployeeOnboardingInput;
@@ -29183,6 +29207,36 @@ export type GetSingleEmployeeDetailsQuery = {
               identifiers: Array<{ identifier: string; url: string } | null>;
             } | null> | null;
           } | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetLeaveQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetLeaveQuery = {
+  hr: {
+    employee: {
+      leave: {
+        getLeave: {
+          record?: {
+            id: string;
+            employeeId: string;
+            leaveTypeId: string;
+            leaveFrom: Record<'local' | 'en' | 'np', string>;
+            leaveTo: Record<'local' | 'en' | 'np', string>;
+            leaveNote?: string | null;
+            status?: string | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
         };
       };
     };
@@ -43452,6 +43506,35 @@ export const useSetNewLeaveMutation = <TError = unknown, TContext = unknown>(
     useAxios<SetNewLeaveMutation, SetNewLeaveMutationVariables>(SetNewLeaveDocument),
     options
   );
+export const ApproveLeaveDocument = `
+    mutation approveLeave($id: String!, $input: LeaveStatusEnum!) {
+  hr {
+    employee {
+      leave {
+        approveLeave(id: $id, input: $input) {
+          isApproved
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useApproveLeaveMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ApproveLeaveMutation,
+    TError,
+    ApproveLeaveMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ApproveLeaveMutation, TError, ApproveLeaveMutationVariables, TContext>(
+    ['approveLeave'],
+    useAxios<ApproveLeaveMutation, ApproveLeaveMutationVariables>(ApproveLeaveDocument),
+    options
+  );
 export const SetEmployeeOnboardingUpsertDocument = `
     mutation setEmployeeOnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) {
   hr {
@@ -52988,6 +53071,39 @@ export const useGetSingleEmployeeDetailsQuery = <
     useAxios<GetSingleEmployeeDetailsQuery, GetSingleEmployeeDetailsQueryVariables>(
       GetSingleEmployeeDetailsDocument
     ).bind(null, variables),
+    options
+  );
+export const GetLeaveDocument = `
+    query getLeave($id: String!) {
+  hr {
+    employee {
+      leave {
+        getLeave(id: $id) {
+          record {
+            id
+            employeeId
+            leaveTypeId
+            leaveFrom
+            leaveTo
+            leaveNote
+            status
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetLeaveQuery = <TData = GetLeaveQuery, TError = unknown>(
+  variables: GetLeaveQueryVariables,
+  options?: UseQueryOptions<GetLeaveQuery, TError, TData>
+) =>
+  useQuery<GetLeaveQuery, TError, TData>(
+    ['getLeave', variables],
+    useAxios<GetLeaveQuery, GetLeaveQueryVariables>(GetLeaveDocument).bind(null, variables),
     options
   );
 export const GetHrEmployeeOnboardingListDocument = `
