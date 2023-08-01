@@ -1733,6 +1733,102 @@ export type AuthorizationError = {
   message: Scalars['String'];
 };
 
+export type BpmEmployeeMinimal = {
+  contact?: Maybe<Scalars['String']>;
+  designation?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+};
+
+export type BpmMeetingConnection = {
+  edges?: Maybe<Array<Maybe<BpmMeetingNode>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type BpmMeetingDetail = {
+  error?: Maybe<QueryError>;
+  minute?: Maybe<MeetingMinutes>;
+  overview?: Maybe<MeetingOverview>;
+};
+
+export type BpmMeetingInput = {
+  agenda?: InputMaybe<Scalars['String']>;
+  attendeesId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  date?: InputMaybe<Scalars['Localized']>;
+  files?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  priority?: InputMaybe<Priority>;
+  scheduledBy?: InputMaybe<Scalars['String']>;
+  sendInvitaionEmail?: InputMaybe<Scalars['Boolean']>;
+  time?: InputMaybe<Scalars['Time']>;
+  title?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<MeetingType>;
+};
+
+export type BpmMeetingNode = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<MeetingOverview>;
+};
+
+export type BpmMeetingResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type BpmMutation = {
+  programs: BpmProgramsMutation;
+};
+
+export type BpmProgramsMutation = {
+  addAttendees: BpmMeetingResult;
+  addMinute: BpmMeetingResult;
+  closeMeeting: BpmMeetingResult;
+  upsertMeeting: BpmMeetingResult;
+};
+
+export type BpmProgramsMutationAddAttendeesArgs = {
+  attendeeIds?: InputMaybe<Array<Scalars['String']>>;
+  meetingId: Scalars['ID'];
+};
+
+export type BpmProgramsMutationAddMinuteArgs = {
+  data: MinuteInput;
+  meetingId: Scalars['ID'];
+};
+
+export type BpmProgramsMutationCloseMeetingArgs = {
+  meetingId: Scalars['ID'];
+};
+
+export type BpmProgramsMutationUpsertMeetingArgs = {
+  data: BpmMeetingInput;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type BpmProgramsQuery = {
+  getEmployeeDetails: BpmEmployeeMinimal;
+  listMeetings: BpmMeetingConnection;
+  meetingDetail: BpmMeetingDetail;
+};
+
+export type BpmProgramsQueryGetEmployeeDetailsArgs = {
+  employeeId: Scalars['ID'];
+};
+
+export type BpmProgramsQueryListMeetingsArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type BpmProgramsQueryMeetingDetailArgs = {
+  id: Scalars['ID'];
+};
+
+export type BpmQuery = {
+  programs: BpmProgramsQuery;
+};
+
 export type BadRequestError = {
   code: Scalars['Int'];
   message: Scalars['String'];
@@ -5966,6 +6062,7 @@ export type EmployeeLevelResult = {
 };
 
 export type EmployeeListType = {
+  designation?: Maybe<Scalars['String']>;
   employeeAddress?: Maybe<Address>;
   employeeContact?: Maybe<Scalars['String']>;
   employeeDateOfJoining?: Maybe<Scalars['Localized']>;
@@ -13099,6 +13196,7 @@ export type LoanInstallments = {
   installments?: Maybe<Array<Maybe<LoanInstallment>>>;
   total: Scalars['String'];
   totalInterest?: Maybe<Scalars['String']>;
+  totalOverdueInterest?: Maybe<Scalars['String']>;
   totalOverduePayable?: Maybe<Scalars['String']>;
   totalOverduePrincipal?: Maybe<Scalars['String']>;
   totalPayableInterest?: Maybe<Scalars['String']>;
@@ -14343,6 +14441,41 @@ export type MeResult = {
   error?: Maybe<QueryError>;
 };
 
+export type MeetingMinutes = {
+  files?: Maybe<Array<UploadedDocumentData>>;
+  notes?: Maybe<Scalars['String']>;
+};
+
+export type MeetingOverview = {
+  agenda?: Maybe<Scalars['String']>;
+  attendees?: Maybe<Array<Maybe<BpmEmployeeMinimal>>>;
+  date?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  position?: Maybe<Scalars['String']>;
+  priority?: Maybe<Priority>;
+  scheduledBy?: Maybe<Scalars['String']>;
+  status?: Maybe<MeetingStatus>;
+  time?: Maybe<Scalars['Time']>;
+  title?: Maybe<Scalars['String']>;
+  totalAttendees?: Maybe<Scalars['Int']>;
+  type?: Maybe<MeetingType>;
+};
+
+export const MeetingStatus = {
+  Closed: 'CLOSED',
+  Completed: 'COMPLETED',
+  Scheduled: 'SCHEDULED',
+} as const;
+
+export type MeetingStatus = typeof MeetingStatus[keyof typeof MeetingStatus];
+export const MeetingType = {
+  Agm: 'AGM',
+  Bod: 'BOD',
+  Casual: 'CASUAL',
+  Other: 'OTHER',
+} as const;
+
+export type MeetingType = typeof MeetingType[keyof typeof MeetingType];
 export type Member = Base & {
   activeDate?: Maybe<Scalars['Localized']>;
   address?: Maybe<Address>;
@@ -15514,6 +15647,11 @@ export const MinorWiseFilter = {
 } as const;
 
 export type MinorWiseFilter = typeof MinorWiseFilter[keyof typeof MinorWiseFilter];
+export type MinuteInput = {
+  files?: InputMaybe<Array<Scalars['String']>>;
+  note?: InputMaybe<Scalars['String']>;
+};
+
 export type MobileBankingReport = {
   mBankingExpiryReport?: Maybe<EbankingRegistrationReportResult>;
   mBankingTransactionReport?: Maybe<MBankingTransactionResult>;
@@ -15603,6 +15741,7 @@ export type Mutation = {
   alternativeChannel?: Maybe<AlternativeChannelMutation>;
   auth: AuthMutation;
   bank: BankMutation;
+  bpm: BpmMutation;
   document: DocumentMutation;
   example: ExampleMutation;
   hr: HrMutation;
@@ -16729,6 +16868,13 @@ export const PrintType = {
 } as const;
 
 export type PrintType = typeof PrintType[keyof typeof PrintType];
+export const Priority = {
+  High: 'HIGH',
+  Low: 'LOW',
+  Medium: 'MEDIUM',
+} as const;
+
+export type Priority = typeof Priority[keyof typeof Priority];
 export type ProductAccountOpenCloseData = {
   additionalData?: Maybe<ProductChargeAdditionalData>;
   payload?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
@@ -16962,6 +17108,7 @@ export type Query = {
   auditLog: AuditLogQuery;
   auth: AuthQuery;
   bank: BankQuery;
+  bpm: BpmQuery;
   config: ConfigQuery;
   dashboard: DashboardQuery;
   document: DocumentQuery;
@@ -22315,6 +22462,30 @@ export type SetNewLeaveMutation = {
       leave: {
         upsertLeave: {
           recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type ApproveLeaveMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: LeaveStatusEnum;
+}>;
+
+export type ApproveLeaveMutation = {
+  hr: {
+    employee: {
+      leave: {
+        approveLeave: {
+          isApproved: boolean;
           error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
@@ -29188,6 +29359,36 @@ export type GetSingleEmployeeDetailsQuery = {
   };
 };
 
+export type GetLeaveQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetLeaveQuery = {
+  hr: {
+    employee: {
+      leave: {
+        getLeave: {
+          record?: {
+            id: string;
+            employeeId: string;
+            leaveTypeId: string;
+            leaveFrom: Record<'local' | 'en' | 'np', string>;
+            leaveTo: Record<'local' | 'en' | 'np', string>;
+            leaveNote?: string | null;
+            status?: string | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetHrEmployeeOnboardingListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -31683,6 +31884,7 @@ export type GetLoanPreviewQuery = {
           totalPayableInterest?: string | null;
           totalOverduePayable?: string | null;
           totalOverduePrincipal?: string | null;
+          totalOverdueInterest?: string | null;
           installments?: Array<{
             installmentDate: Record<'local' | 'en' | 'np', string>;
             installmentNo: number;
@@ -43450,6 +43652,35 @@ export const useSetNewLeaveMutation = <TError = unknown, TContext = unknown>(
     useAxios<SetNewLeaveMutation, SetNewLeaveMutationVariables>(SetNewLeaveDocument),
     options
   );
+export const ApproveLeaveDocument = `
+    mutation approveLeave($id: String!, $input: LeaveStatusEnum!) {
+  hr {
+    employee {
+      leave {
+        approveLeave(id: $id, input: $input) {
+          isApproved
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useApproveLeaveMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ApproveLeaveMutation,
+    TError,
+    ApproveLeaveMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ApproveLeaveMutation, TError, ApproveLeaveMutationVariables, TContext>(
+    ['approveLeave'],
+    useAxios<ApproveLeaveMutation, ApproveLeaveMutationVariables>(ApproveLeaveDocument),
+    options
+  );
 export const SetEmployeeOnboardingUpsertDocument = `
     mutation setEmployeeOnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) {
   hr {
@@ -52988,6 +53219,39 @@ export const useGetSingleEmployeeDetailsQuery = <
     ).bind(null, variables),
     options
   );
+export const GetLeaveDocument = `
+    query getLeave($id: String!) {
+  hr {
+    employee {
+      leave {
+        getLeave(id: $id) {
+          record {
+            id
+            employeeId
+            leaveTypeId
+            leaveFrom
+            leaveTo
+            leaveNote
+            status
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetLeaveQuery = <TData = GetLeaveQuery, TError = unknown>(
+  variables: GetLeaveQueryVariables,
+  options?: UseQueryOptions<GetLeaveQuery, TError, TData>
+) =>
+  useQuery<GetLeaveQuery, TError, TData>(
+    ['getLeave', variables],
+    useAxios<GetLeaveQuery, GetLeaveQueryVariables>(GetLeaveDocument).bind(null, variables),
+    options
+  );
 export const GetHrEmployeeOnboardingListDocument = `
     query getHREmployeeOnboardingList($filter: Filter, $pagination: Pagination) {
   hr {
@@ -56218,6 +56482,7 @@ export const GetLoanPreviewDocument = `
           totalPayableInterest
           totalOverduePayable
           totalOverduePrincipal
+          totalOverdueInterest
         }
         statistics {
           remainingPayableAmount
