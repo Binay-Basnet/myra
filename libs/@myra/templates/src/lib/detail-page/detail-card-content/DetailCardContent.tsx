@@ -26,7 +26,7 @@ export const DetailCardContent = ({
       </Text>
     )}
 
-    {!status && (
+    {!status && !children && (
       <Text fontWeight="600" fontSize="r1" color="gray.700">
         {subtitle ?? 'N/A'}
       </Text>
