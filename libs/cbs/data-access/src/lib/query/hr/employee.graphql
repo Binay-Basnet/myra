@@ -145,3 +145,26 @@ query getSingleEmployeeDetails($id: String!) {
     }
   }
 }
+
+query getLeave($id: String!) {
+  hr {
+    employee {
+      leave {
+        getLeave(id: $id) {
+          record {
+            id
+            employeeId
+            leaveTypeId
+            leaveFrom
+            leaveTo
+            leaveNote
+            status
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

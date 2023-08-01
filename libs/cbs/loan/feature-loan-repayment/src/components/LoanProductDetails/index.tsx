@@ -114,6 +114,51 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
           gap="s8"
           p="s16"
         >
+          {loanData?.loanDetails?.loanRepaymentScheme === 'LOC' && (
+            <Box display="flex" justifyContent="space-between">
+              <Text fontWeight="400" fontSize="s3">
+                Withdrawable Amount
+              </Text>
+              <Text fontWeight="600" fontSize="s3">
+                {amountConverter(
+                  (
+                    Number(overviewData?.generalInformation?.sanctionedAmount) -
+                    Number(overviewData?.totalRemainingPrincipal)
+                  ).toFixed(2)
+                )}
+              </Text>
+            </Box>
+          )}
+          <Box display="flex" justifyContent="space-between">
+            <Text fontWeight="400" fontSize="s3">
+              Principal Amount
+            </Text>
+            <Text fontWeight="600" fontSize="s3">
+              {amountConverter(loanData?.paymentSchedule?.totalPayablePrincipal as string)}{' '}
+            </Text>
+          </Box>
+          {loanData?.paymentSchedule?.totalPayableInterest && (
+            <Box display="flex" justifyContent="space-between">
+              <Text fontWeight="400" fontSize="s3">
+                Interest Accrued
+              </Text>
+              <Text fontWeight="600" fontSize="s3">
+                {amountConverter(loanData?.paymentSchedule?.totalPayableInterest)}
+              </Text>
+            </Box>
+          )}
+        </Box>
+      </Box>
+      <Box>
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap="s8"
+          p="s16"
+          border="1px solid"
+          borderColor="border.layout"
+          borderRadius="br2"
+        >
           <Box display="flex" flexDirection="column" gap="s4">
             <Text fontSize="s3" fontWeight="400">
               Disbursed Principal Amount{' '}
@@ -212,52 +257,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               )
           )}
         </Box>
-      </Box>
-      <Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          gap="s8"
-          p="s8"
-          border="1px solid"
-          borderColor="border.layout"
-          borderRadius="br2"
-        >
-          {loanData?.loanDetails?.loanRepaymentScheme === 'LOC' && (
-            <Box display="flex" justifyContent="space-between">
-              <Text fontWeight="400" fontSize="s3">
-                Withdrawable Amount
-              </Text>
-              <Text fontWeight="600" fontSize="s3">
-                {amountConverter(
-                  (
-                    Number(overviewData?.generalInformation?.sanctionedAmount) -
-                    Number(overviewData?.totalRemainingPrincipal)
-                  ).toFixed(2)
-                )}
-              </Text>
-            </Box>
-          )}
-          <Box display="flex" justifyContent="space-between">
-            <Text fontWeight="400" fontSize="s3">
-              Remaining Principal Amount
-            </Text>
-            <Text fontWeight="600" fontSize="s3">
-              {amountConverter(loanData?.paymentSchedule?.totalPayablePrincipal as string)}{' '}
-            </Text>
-          </Box>
-          {loanData?.paymentSchedule?.totalPayableInterest && (
-            <Box display="flex" justifyContent="space-between">
-              <Text fontWeight="400" fontSize="s3">
-                Remaining Interest Amount{' '}
-              </Text>
-              <Text fontWeight="600" fontSize="s3">
-                {amountConverter(loanData?.paymentSchedule?.totalPayableInterest)}
-              </Text>
-            </Box>
-          )}
-        </Box>
-        {loanData?.paymentSchedule?.totalRemainingPayable && (
+        {/* {loanData?.paymentSchedule?.totalRemainingPayable && (
           <Box display="flex" justifyContent="space-between" p="s16" bg="border.layout">
             <Text fontWeight="400" fontSize="s3">
               Total Remaining Amount
@@ -266,7 +266,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               {amountConverter(loanData?.paymentSchedule.totalRemainingPayable)}
             </Text>
           </Box>
-        )}
+        )} */}
       </Box>
     </Box>
   );

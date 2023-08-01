@@ -35,10 +35,10 @@ const whatsNewData = {
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'JV entry cannot input 0.01 [Editable table number input]',
-      'Calculation of Debit, Credit and Balance of Daily balance report',
-      'ledger code missing when creating ledger for all services',
-      'Adjusted without settlement data fixes in Adjusted Fiscal Trial Balance.',
+      'Loan schedule list in order with proper amount and installment number',
+      'Overdue amount on the repayment page',
+      'Last installment date based on period',
+      'Reordering of UI in right panel of repayment page',
     ],
   },
 };
@@ -76,8 +76,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.84</Text>
-          <Text fontSize="s3">July 31, 2023</Text>
+          <Text fontSize="r2">Version 1.0.85</Text>
+          <Text fontSize="s3">August 1, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>

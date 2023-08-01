@@ -159,7 +159,7 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
   ]);
 
   const totalOverdueInterest = useMemo(
-    () => Number(paymentSchedule?.totalPayableInterest || 0),
+    () => Number(paymentSchedule?.totalOverdueInterest || 0),
     [paymentSchedule]
   );
 
