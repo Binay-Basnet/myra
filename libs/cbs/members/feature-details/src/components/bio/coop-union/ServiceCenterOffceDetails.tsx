@@ -15,7 +15,7 @@ export const ServiceCenterAddress = () => {
       ? memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.serviceCenterAddress
       : null;
   return (
-    <DetailsCard title="Service Centre Office Address" bg="white" hasThreeRows>
+    <DetailsCard title="Service Center Office Address" bg="white" hasThreeRows>
       <DetailCardContent title="Province" subtitle={bioDataCoopUnion?.state?.local} />
       <DetailCardContent title="District" subtitle={bioDataCoopUnion?.district?.local} />
       <DetailCardContent

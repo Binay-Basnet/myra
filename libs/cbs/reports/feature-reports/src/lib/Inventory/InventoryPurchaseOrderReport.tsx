@@ -150,7 +150,7 @@ export const InventoryPurchaseOrderReport = () => {
                 },
               },
               {
-                header: 'Product Detials',
+                header: 'Product Details',
                 accessorKey: 'productDetail',
                 meta: {
                   Footer: {
@@ -180,7 +180,7 @@ export const InventoryPurchaseOrderReport = () => {
                 },
               },
               {
-                header: 'Refrence No',
+                header: 'Reference No',
                 accessorKey: 'referenceNo',
               },
               {
