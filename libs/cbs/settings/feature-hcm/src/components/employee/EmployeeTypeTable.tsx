@@ -174,7 +174,7 @@ export const EmployeeTypeTable = () => {
             onClick={() => setIsAddModalOpen(true)}
           >
             <Icon size="sm" as={AiOutlinePlus} />
-            <Text fontSize="r1">Add Empoyment Type</Text>
+            <Text fontSize="r1">Add Employment Type</Text>
           </Box>
         }
       >

@@ -178,7 +178,7 @@ export const EmployeeHealthInsuranceTable = () => {
             onClick={() => setIsAddModalOpen(true)}
           >
             <Icon size="sm" as={AiOutlinePlus} />
-            <Text fontSize="r1">Add Empoyee Health Insurance</Text>
+            <Text fontSize="r1">Add Employee Health Insurance</Text>
           </Box>
         }
       >
