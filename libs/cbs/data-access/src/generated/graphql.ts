@@ -5951,6 +5951,7 @@ export type EmployeeLeaveTypeGet = {
   leaveTo: Scalars['Localized'];
   leaveTypeId: Scalars['String'];
   status?: Maybe<Scalars['String']>;
+  totalLeaveDays: Scalars['Int'];
 };
 
 export type EmployeeLevel = {
@@ -8096,7 +8097,13 @@ export type HrEmployeeLeaveEdges = {
 };
 
 export type HrEmployeeLeaveMutation = {
+  approveLeave: IsApprovedWithError;
   upsertLeave: LeaveOutput;
+};
+
+export type HrEmployeeLeaveMutationApproveLeaveArgs = {
+  id: Scalars['String'];
+  input: LeaveStatusEnum;
 };
 
 export type HrEmployeeLeaveMutationUpsertLeaveArgs = {
@@ -11795,7 +11802,7 @@ export type LeaveInput = {
   leaveNote: Scalars['String'];
   leaveTo: Scalars['Localized'];
   leaveTypeId: Scalars['ID'];
-  status?: InputMaybe<LeaveStatusEnum>;
+  totalLeaveDays: Scalars['Int'];
 };
 
 export type LeaveOutput = {
@@ -13092,6 +13099,7 @@ export type LoanInstallments = {
   installments?: Maybe<Array<Maybe<LoanInstallment>>>;
   total: Scalars['String'];
   totalInterest?: Maybe<Scalars['String']>;
+  totalOverdueInterest?: Maybe<Scalars['String']>;
   totalOverduePayable?: Maybe<Scalars['String']>;
   totalOverduePrincipal?: Maybe<Scalars['String']>;
   totalPayableInterest?: Maybe<Scalars['String']>;
@@ -21230,6 +21238,11 @@ export type FieldsInput = {
   duration?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Scalars['String']>;
   user?: InputMaybe<Scalars['String']>;
+};
+
+export type IsApprovedWithError = {
+  error?: Maybe<MutationError>;
+  isApproved: Scalars['Boolean'];
 };
 
 export type LedgerDetails = {
@@ -31671,6 +31684,7 @@ export type GetLoanPreviewQuery = {
           totalPayableInterest?: string | null;
           totalOverduePayable?: string | null;
           totalOverduePrincipal?: string | null;
+          totalOverdueInterest?: string | null;
           installments?: Array<{
             installmentDate: Record<'local' | 'en' | 'np', string>;
             installmentNo: number;
@@ -56206,6 +56220,7 @@ export const GetLoanPreviewDocument = `
           totalPayableInterest
           totalOverduePayable
           totalOverduePrincipal
+          totalOverdueInterest
         }
         statistics {
           remainingPayableAmount

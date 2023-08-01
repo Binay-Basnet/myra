@@ -524,6 +524,7 @@ query getLoanPreview($id: String!) {
           totalPayableInterest
           totalOverduePayable
           totalOverduePrincipal
+          totalOverdueInterest
         }
         statistics {
           remainingPayableAmount
