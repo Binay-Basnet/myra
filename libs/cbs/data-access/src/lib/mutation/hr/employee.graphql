@@ -27,3 +27,18 @@ mutation setNewLeave($id: String, $input: LeaveInput!) {
     }
   }
 }
+
+mutation approveLeave($id: String!, $input: LeaveStatusEnum!) {
+  hr {
+    employee {
+      leave {
+        approveLeave(id: $id, input: $input) {
+          isApproved
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

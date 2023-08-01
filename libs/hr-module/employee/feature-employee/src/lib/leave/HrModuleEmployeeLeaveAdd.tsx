@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -7,6 +8,7 @@ import {
   LeaveInput,
   useGetEmployeeLeaveTypeListQuery,
   useGetEmployeeListQuery,
+  useGetLeaveQuery,
   useSetNewLeaveMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -16,7 +18,7 @@ import { getPaginationQuery } from '@coop/shared/utils';
 export const HrLeaveAdd = () => {
   const methods = useForm();
   const router = useRouter();
-  const { getValues } = methods;
+  const { getValues, reset } = methods;
 
   const { data: employeeListData } = useGetEmployeeListQuery({
     pagination: {
@@ -41,6 +43,20 @@ export const HrLeaveAdd = () => {
   });
 
   const { mutateAsync } = useSetNewLeaveMutation();
+  const { data: leaveData } = useGetLeaveQuery(
+    {
+      id: router?.query?.['id'] as string,
+    },
+    { enabled: !!router?.query?.['id'] }
+  );
+
+  const leaveEditData = leaveData?.hr?.employee?.leave?.getLeave?.record;
+
+  useEffect(() => {
+    if (leaveEditData) {
+      reset(leaveEditData);
+    }
+  }, [JSON.stringify(leaveEditData)]);
 
   const employeeOptions = employeeListData?.hr?.employee?.employee?.listEmployee?.edges?.map(
     (item) => ({
