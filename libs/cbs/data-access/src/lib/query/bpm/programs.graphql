@@ -62,6 +62,7 @@ query getMeetingsEditData($id: ID!) {
           time
           priority
           scheduledBy
+          scheduledById
           position
           agenda
           departmentIds
@@ -72,6 +73,13 @@ query getMeetingsEditData($id: ID!) {
             id
             name
           }
+        }
+        minute {
+          files {
+            identifier
+            url
+          }
+          notes
         }
       }
     }

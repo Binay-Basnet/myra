@@ -41,7 +41,7 @@ export const MeetingsBasicDetails = () => {
     {
       employeeId: String(id),
     },
-    { enabled: triggerQuery }
+    { enabled: triggerQuery && !!id }
   );
 
   useEffect(() => {

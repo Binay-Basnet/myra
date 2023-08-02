@@ -23,3 +23,16 @@ mutation setCloseBPMMeetings($meetingID: ID!) {
     }
   }
 }
+
+mutation setAddMinutes($meetingID: ID!, $data: MinuteInput!) {
+  bpm {
+    programs {
+      addMinute(meetingId: $meetingID, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

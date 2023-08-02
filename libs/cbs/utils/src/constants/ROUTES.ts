@@ -530,6 +530,7 @@ export const ROUTES = {
   BPM_PROGRAMS_MEETINGS_LIST: '/bpm/programs/meetings/list',
   BPM_PROGRAMS_MEETINGS_ADD: '/bpm/programs/meetings/add',
   BPM_PROGRAMS_MEETINGS_EDIT: '/bpm/programs/meetings/edit',
+  BPM_PROGRAMS_MEETINGS_DETAILS: '/bpm/programs/meetings/details',
 
   BPM_OPERATIONS_MINOR_ADDITION_LIST: '/bpm/operations/minor-addition/list',
   BPM_OPERATIONS_MINOR_ADDITION_ADD: '/bpm/operations/minor-addition/add',

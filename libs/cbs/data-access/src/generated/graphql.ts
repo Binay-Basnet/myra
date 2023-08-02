@@ -22299,6 +22299,28 @@ export type SetCloseBpmMeetingsMutation = {
   };
 };
 
+export type SetAddMinutesMutationVariables = Exact<{
+  meetingID: Scalars['ID'];
+  data: MinuteInput;
+}>;
+
+export type SetAddMinutesMutation = {
+  bpm: {
+    programs: {
+      addMinute: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
 export type AddNewAccountInCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
 }>;
@@ -28925,6 +28947,7 @@ export type GetMeetingsEditDataQuery = {
           time?: string | null;
           priority?: Priority | null;
           scheduledBy?: string | null;
+          scheduledById?: string | null;
           position?: string | null;
           agenda?: string | null;
           departmentIds?: Array<string> | null;
@@ -28935,6 +28958,10 @@ export type GetMeetingsEditDataQuery = {
             id: string;
             name?: string | null;
           } | null> | null;
+        } | null;
+        minute?: {
+          notes?: string | null;
+          files?: Array<{ identifier: string; url: string }> | null;
         } | null;
       };
     };
@@ -43569,6 +43596,33 @@ export const useSetCloseBpmMeetingsMutation = <TError = unknown, TContext = unkn
     ),
     options
   );
+export const SetAddMinutesDocument = `
+    mutation setAddMinutes($meetingID: ID!, $data: MinuteInput!) {
+  bpm {
+    programs {
+      addMinute(meetingId: $meetingID, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAddMinutesMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAddMinutesMutation,
+    TError,
+    SetAddMinutesMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetAddMinutesMutation, TError, SetAddMinutesMutationVariables, TContext>(
+    ['setAddMinutes'],
+    useAxios<SetAddMinutesMutation, SetAddMinutesMutationVariables>(SetAddMinutesDocument),
+    options
+  );
 export const AddNewAccountInCoaDocument = `
     mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
   settings {
@@ -52868,6 +52922,7 @@ export const GetMeetingsEditDataDocument = `
           time
           priority
           scheduledBy
+          scheduledById
           position
           agenda
           departmentIds
@@ -52878,6 +52933,13 @@ export const GetMeetingsEditDataDocument = `
             id
             name
           }
+        }
+        minute {
+          files {
+            identifier
+            url
+          }
+          notes
         }
       }
     }
