@@ -30,15 +30,15 @@ interface WhatsNewModalProps {
 const whatsNewData = {
   features: {
     title: 'New Features',
-    data: ['Show old txn id in txn detail and ledger report.'],
+    data: [],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Loan schedule list in order with proper amount and installment number',
-      'Overdue amount on the repayment page',
-      'Last installment date based on period',
-      'Reordering of UI in right panel of repayment page',
+      'Resend password when email changed',
+      'FD Account creation due to double deposit',
+      'Installment Date Begin label changed',
+      'Ledger not found issue while giving role of teller for user',
     ],
   },
 };
@@ -76,24 +76,26 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.85</Text>
-          <Text fontSize="s3">August 1, 2023</Text>
+          <Text fontSize="r2">Version 1.0.86</Text>
+          <Text fontSize="s3">August 2, 2023</Text>
         </Box>
-        <Box>
-          <Box display="flex" alignItems="center" gap={2}>
-            <AiOutlineStar size={18} />
-            <Text fontSize="r2" fontWeight="medium">
-              {whatsNewData.features.title}
-            </Text>
+        {!isEmpty(whatsNewData.features.data) && (
+          <Box>
+            <Box display="flex" alignItems="center" gap={2}>
+              <AiOutlineStar size={18} />
+              <Text fontSize="r2" fontWeight="medium">
+                {whatsNewData.features.title}
+              </Text>
+            </Box>
+            <UnorderedList>
+              {whatsNewData.features.data.map((item) => (
+                <ListItem key={item} fontSize="s3">
+                  {item}
+                </ListItem>
+              ))}
+            </UnorderedList>
           </Box>
-          <UnorderedList>
-            {whatsNewData.features.data.map((item) => (
-              <ListItem key={item} fontSize="s3">
-                {item}
-              </ListItem>
-            ))}
-          </UnorderedList>
-        </Box>
+        )}
         {!isEmpty(whatsNewData.bugsSquashed.data) && (
           <Box>
             <Box display="flex" alignItems="center" gap={2}>

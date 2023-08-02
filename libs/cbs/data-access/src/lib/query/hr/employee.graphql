@@ -155,6 +155,7 @@ query getLeave($id: String!) {
             id
             employeeId
             leaveTypeId
+            leaveTypeName
             leaveFrom
             leaveTo
             leaveNote

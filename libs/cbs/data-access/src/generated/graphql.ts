@@ -29394,6 +29394,7 @@ export type GetLeaveQuery = {
             id: string;
             employeeId: string;
             leaveTypeId: string;
+            leaveTypeName: string;
             leaveFrom: Record<'local' | 'en' | 'np', string>;
             leaveTo: Record<'local' | 'en' | 'np', string>;
             leaveNote?: string | null;
@@ -53279,6 +53280,7 @@ export const GetLeaveDocument = `
             id
             employeeId
             leaveTypeId
+            leaveTypeName
             leaveFrom
             leaveTo
             leaveNote
