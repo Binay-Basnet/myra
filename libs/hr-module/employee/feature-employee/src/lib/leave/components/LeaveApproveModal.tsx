@@ -26,6 +26,13 @@ const LeaveApproveModal = (props: Props) => {
 
   const leaveDataForApprove = leaveData?.hr?.employee?.leave?.getLeave?.record;
 
+  // const { data: employeeLeaveList } = useGetEmployeeLeaveListQuery(
+  //   {
+  //     employeeId: leaveDataForApprove?.employeeId as string,
+  //   },
+  //   { enabled: !!leaveDataForApprove?.employeeId }
+  // );
+
   const { mutateAsync } = useApproveLeaveMutation();
 
   const handleModalClose = () => {
@@ -109,7 +116,7 @@ const LeaveApproveModal = (props: Props) => {
         <GridItem>
           <Text fontSize="r1">Reason</Text>
           <Text fontSize="r1" fontWeight="semibold">
-            -
+            {leaveDataForApprove?.leaveNote}
           </Text>
         </GridItem>
       </Grid>

@@ -46,7 +46,7 @@ const defaultFormValue = {
   description: '',
   employeeLevelId: '',
   effectiveFrom: null,
-  leavePolicyDetails: null,
+  leavePolicyDetails: [],
 };
 
 export const LeavePolicyTable = () => {
@@ -57,7 +57,7 @@ export const LeavePolicyTable = () => {
   const methods = useForm<LeavePolicyInput>({
     defaultValues: defaultFormValue,
   });
-  const { getValues, handleSubmit, reset } = methods;
+  const { getValues, reset } = methods;
 
   const { data, refetch } = useGetEmployeeLeavePolicyListQuery({
     pagination: getPaginationQuery(),
@@ -278,57 +278,55 @@ export const LeavePolicyTable = () => {
         width="5xl"
       >
         <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid templateColumns="repeat(3,1fr)" gap="s16">
-              <GridItem colSpan={2}>
-                <FormInput name="name" label="Name" />
-              </GridItem>
-              <FormSelect
-                name="employeeLevelId"
-                label="Assign to Employee Level"
-                options={employeeLevelOptions}
-              />
-              <GridItem colSpan={3}>
-                <FormTextArea name="description" label="Description" />
-              </GridItem>
-              <FormDatePicker name="effectiveFrom" label="Effective From" />
+          <Grid templateColumns="repeat(3,1fr)" gap="s16">
+            <GridItem colSpan={2}>
+              <FormInput name="name" label="Name" />
+            </GridItem>
+            <FormSelect
+              name="employeeLevelId"
+              label="Assign to Employee Level"
+              options={employeeLevelOptions}
+            />
+            <GridItem colSpan={3}>
+              <FormTextArea name="description" label="Description" />
+            </GridItem>
+            <FormDatePicker name="effectiveFrom" label="Effective From" />
 
-              <GridItem colSpan={3}>
-                <Divider />
-              </GridItem>
-              <GridItem colSpan={3}>
-                <Box display="flex" flexDir="column" gap="s16">
-                  <Text fontSize="s3">Leave Policy Details</Text>
+            <GridItem colSpan={3}>
+              <Divider />
+            </GridItem>
+            <GridItem colSpan={3}>
+              <Box display="flex" flexDir="column" gap="s16">
+                <Text fontSize="s3">Leave Policy Details</Text>
 
-                  <FormEditableTable<LeavePolicyType>
-                    name="leavePolicyDetails"
-                    columns={[
-                      {
-                        accessor: 'leaveTypeId',
-                        header: 'Leave Type',
-                        cellWidth: 'auto',
-                        fieldType: 'select',
-                        selectOptions: leaveTypeOptions,
-                      },
-                      {
-                        accessor: 'annualAllocation',
-                        header: 'Annual Allocation',
-                      },
-                    ]}
-                  />
+                <FormEditableTable<LeavePolicyType>
+                  name="leavePolicyDetails"
+                  columns={[
+                    {
+                      accessor: 'leaveTypeId',
+                      header: 'Leave Type',
+                      cellWidth: 'auto',
+                      fieldType: 'select',
+                      selectOptions: leaveTypeOptions,
+                    },
+                    {
+                      accessor: 'annualAllocation',
+                      header: 'Annual Allocation',
+                    },
+                  ]}
+                />
 
-                  <Button
-                    w="-webkit-fit-content"
-                    alignSelf="flex-end"
-                    type="submit"
-                    isLoading={isLoading}
-                  >
-                    Save
-                  </Button>
-                </Box>
-              </GridItem>
-            </Grid>
-          </form>
+                <Button
+                  w="-webkit-fit-content"
+                  alignSelf="flex-end"
+                  onClick={onSubmit}
+                  isLoading={isLoading}
+                >
+                  Save
+                </Button>
+              </Box>
+            </GridItem>
+          </Grid>
         </FormProvider>
       </Modal>
       <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">

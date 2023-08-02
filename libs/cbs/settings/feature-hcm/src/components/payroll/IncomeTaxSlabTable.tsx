@@ -61,7 +61,7 @@ export const IncomeTaxSlabTable = () => {
   const methods = useForm<TaxSlabInput>({
     defaultValues: defaultFormValue,
   });
-  const { getValues, handleSubmit, reset } = methods;
+  const { getValues, reset } = methods;
 
   const rowData = useMemo(
     () => data?.settings?.general?.HCM?.payroll?.taxSlab?.listTaxSlab?.edges ?? [],
@@ -234,73 +234,71 @@ export const IncomeTaxSlabTable = () => {
         width="4xl"
       >
         <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid templateColumns="repeat(3,1fr)" gap="s16">
-              <FormInput name="name" label="Name" />
-              <FormDatePicker name="fiscalYear.from" label="Select Fiscal Year From" />
-              <FormDatePicker name="fiscalYear.to" label="Select Fiscal Year to" />
+          <Grid templateColumns="repeat(3,1fr)" gap="s16">
+            <FormInput name="name" label="Name" />
+            <FormDatePicker name="fiscalYear.from" label="Select Fiscal Year From" />
+            <FormDatePicker name="fiscalYear.to" label="Select Fiscal Year to" />
 
-              <GridItem colSpan={3}>
-                <FormEditableTable
-                  name="unmarriedTaxableSalarySlab"
-                  label="Unmarried Taxable Salary Slab"
-                  columns={[
-                    {
-                      accessor: 'fromAmount',
-                      header: 'From Amount',
-                    },
-                    {
-                      accessor: 'toAmount',
-                      header: 'To Amount',
-                    },
-                    {
-                      accessor: 'percentageDeduction',
-                      header: 'Percentage Deduction',
-                    },
-                  ]}
-                />
-              </GridItem>
-              <GridItem colSpan={3}>
-                <FormEditableTable
-                  name="marriedTaxableSalarySlab"
-                  label="Married Taxable Salary Slab"
-                  columns={[
-                    {
-                      accessor: 'fromAmount',
-                      header: 'From Amount',
-                    },
-                    {
-                      accessor: 'toAmount',
-                      header: 'To Amount',
-                    },
-                    {
-                      accessor: 'percentageDeduction',
-                      header: 'Percentage Deduction',
-                    },
-                  ]}
-                />
-              </GridItem>
+            <GridItem colSpan={3}>
+              <FormEditableTable
+                name="unmarriedTaxableSalarySlab"
+                label="Unmarried Taxable Salary Slab"
+                columns={[
+                  {
+                    accessor: 'fromAmount',
+                    header: 'From Amount',
+                  },
+                  {
+                    accessor: 'toAmount',
+                    header: 'To Amount',
+                  },
+                  {
+                    accessor: 'percentageDeduction',
+                    header: 'Percentage Deduction',
+                  },
+                ]}
+              />
+            </GridItem>
+            <GridItem colSpan={3}>
+              <FormEditableTable
+                name="marriedTaxableSalarySlab"
+                label="Married Taxable Salary Slab"
+                columns={[
+                  {
+                    accessor: 'fromAmount',
+                    header: 'From Amount',
+                  },
+                  {
+                    accessor: 'toAmount',
+                    header: 'To Amount',
+                  },
+                  {
+                    accessor: 'percentageDeduction',
+                    header: 'Percentage Deduction',
+                  },
+                ]}
+              />
+            </GridItem>
 
-              <GridItem colSpan={3}>
-                <Box display="flex" flexDir="column" gap="s16">
-                  <Box w="-webkit-fit-content">
-                    <FormDatePicker name="effectiveFrom" label="Effective From" />
-                  </Box>
-
-                  <FormCheckbox name="makeThisActive" label="Make this Active" />
-                  <Divider />
-                  <Button
-                    w="-webkit-fit-content"
-                    alignSelf="flex-end"
-                    type="submit"
-                    isLoading={isLoading}
-                  >
-                    Save
-                  </Button>
+            <GridItem colSpan={3}>
+              <Box display="flex" flexDir="column" gap="s16">
+                <Box w="-webkit-fit-content">
+                  <FormDatePicker name="effectiveFrom" label="Effective From" />
                 </Box>
-              </GridItem>
-            </Grid>
-          </form>
+
+                <FormCheckbox name="makeThisActive" label="Make this Active" />
+                <Divider />
+                <Button
+                  w="-webkit-fit-content"
+                  alignSelf="flex-end"
+                  onClick={onSubmit}
+                  isLoading={isLoading}
+                >
+                  Save
+                </Button>
+              </Box>
+            </GridItem>
+          </Grid>
         </FormProvider>
       </Modal>
       <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">

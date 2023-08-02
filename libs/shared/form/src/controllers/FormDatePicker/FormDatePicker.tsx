@@ -15,6 +15,7 @@ interface IFormDatePickerProps<T> extends InputProps {
   minDate?: Date;
   maxToday?: boolean;
   isRequired?: boolean;
+  helperText?: string;
 }
 
 export const FormDatePicker = <T,>({
@@ -24,6 +25,7 @@ export const FormDatePicker = <T,>({
   minDate,
   maxToday,
   isRequired,
+  helperText,
 
   ...rest
 }: IFormDatePickerProps<T>) => {
@@ -68,11 +70,18 @@ export const FormDatePicker = <T,>({
             minDate={minDate}
           />
 
-          {errors[name] ? (
-            <Text variant="formHelper" color="danger.500">
-              {errors[name]?.message as string}
-            </Text>
-          ) : null}
+          {
+            /* eslint-disable no-nested-ternary */
+            errors[name] ? (
+              <Text variant="formHelper" color="danger.500">
+                {errors[name]?.message as string}
+              </Text>
+            ) : helperText ? (
+              <Text variant="formHelper" color="gray.700">
+                {helperText}
+              </Text>
+            ) : null
+          }
         </Box>
       )}
     />

@@ -1757,6 +1757,7 @@ export type BpmMeetingInput = {
   agenda?: InputMaybe<Scalars['String']>;
   attendeesId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   date?: InputMaybe<Scalars['Localized']>;
+  departmentIds?: InputMaybe<Array<Scalars['String']>>;
   files?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   priority?: InputMaybe<Priority>;
   scheduledBy?: InputMaybe<Scalars['String']>;
@@ -6041,11 +6042,13 @@ export type EmployeeLeaveType = {
 
 export type EmployeeLeaveTypeGet = {
   employeeId: Scalars['String'];
+  employeeName: Scalars['String'];
   id: Scalars['String'];
   leaveFrom: Scalars['Localized'];
   leaveNote?: Maybe<Scalars['String']>;
   leaveTo: Scalars['Localized'];
   leaveTypeId: Scalars['String'];
+  leaveTypeName: Scalars['String'];
   status?: Maybe<Scalars['String']>;
   totalLeaveDays: Scalars['Int'];
 };
@@ -8221,11 +8224,16 @@ export type HrEmployeeLeavePolicyEdges = {
 
 export type HrEmployeeLeaveQuery = {
   getLeave: LeaveOutputType;
+  getLeaveLists?: Maybe<LeaveTypesWithError>;
   listLeave: HrEmployeeLeaveConnection;
 };
 
 export type HrEmployeeLeaveQueryGetLeaveArgs = {
   id: Scalars['String'];
+};
+
+export type HrEmployeeLeaveQueryGetLeaveListsArgs = {
+  employeeId: Scalars['ID'];
 };
 
 export type HrEmployeeLeaveQueryListLeaveArgs = {
@@ -11947,6 +11955,13 @@ export const LeaveStatusEnum = {
 } as const;
 
 export type LeaveStatusEnum = typeof LeaveStatusEnum[keyof typeof LeaveStatusEnum];
+export type LeaveType = {
+  allocatedDays?: Maybe<Scalars['Int']>;
+  leaveTypeName?: Maybe<Scalars['String']>;
+  remainingDays?: Maybe<Scalars['Int']>;
+  usedDays?: Maybe<Scalars['Int']>;
+};
+
 export const LeaveTypeEnum = {
   Paid: 'PAID',
   Unpaid: 'UNPAID',
@@ -11992,6 +12007,11 @@ export type LeaveTypeNode = {
 export type LeaveTypeOutput = {
   error?: Maybe<MutationError>;
   recordId: Scalars['String'];
+};
+
+export type LeaveTypesWithError = {
+  data?: Maybe<Array<Maybe<LeaveType>>>;
+  error?: Maybe<MutationError>;
 };
 
 export type LedgerAllTransactionConnection = {
@@ -14450,10 +14470,12 @@ export type MeetingOverview = {
   agenda?: Maybe<Scalars['String']>;
   attendees?: Maybe<Array<Maybe<BpmEmployeeMinimal>>>;
   date?: Maybe<Scalars['Localized']>;
+  departmentIds?: Maybe<Array<Scalars['String']>>;
   id: Scalars['ID'];
   position?: Maybe<Scalars['String']>;
   priority?: Maybe<Priority>;
   scheduledBy?: Maybe<Scalars['String']>;
+  scheduledById?: Maybe<Scalars['String']>;
   status?: Maybe<MeetingStatus>;
   time?: Maybe<Scalars['Time']>;
   title?: Maybe<Scalars['String']>;
@@ -29384,6 +29406,34 @@ export type GetLeaveQuery = {
             | MutationError_ServerError_Fragment
             | null;
         };
+      };
+    };
+  };
+};
+
+export type GetEmployeeLeaveListQueryVariables = Exact<{
+  employeeId: Scalars['ID'];
+}>;
+
+export type GetEmployeeLeaveListQuery = {
+  hr: {
+    employee: {
+      leave: {
+        getLeaveLists?: {
+          data?: Array<{
+            leaveTypeName?: string | null;
+            allocatedDays?: number | null;
+            usedDays?: number | null;
+            remainingDays?: number | null;
+          } | null> | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
       };
     };
   };
@@ -53250,6 +53300,38 @@ export const useGetLeaveQuery = <TData = GetLeaveQuery, TError = unknown>(
   useQuery<GetLeaveQuery, TError, TData>(
     ['getLeave', variables],
     useAxios<GetLeaveQuery, GetLeaveQueryVariables>(GetLeaveDocument).bind(null, variables),
+    options
+  );
+export const GetEmployeeLeaveListDocument = `
+    query getEmployeeLeaveList($employeeId: ID!) {
+  hr {
+    employee {
+      leave {
+        getLeaveLists(employeeId: $employeeId) {
+          data {
+            leaveTypeName
+            allocatedDays
+            usedDays
+            remainingDays
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEmployeeLeaveListQuery = <TData = GetEmployeeLeaveListQuery, TError = unknown>(
+  variables: GetEmployeeLeaveListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeLeaveListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeLeaveListQuery, TError, TData>(
+    ['getEmployeeLeaveList', variables],
+    useAxios<GetEmployeeLeaveListQuery, GetEmployeeLeaveListQueryVariables>(
+      GetEmployeeLeaveListDocument
+    ).bind(null, variables),
     options
   );
 export const GetHrEmployeeOnboardingListDocument = `

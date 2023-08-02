@@ -65,7 +65,7 @@ export const EarningComponentTable = () => {
   const methods = useForm<EarningComponentInput>({
     defaultValues: defaultFormValue,
   });
-  const { getValues, handleSubmit, reset } = methods;
+  const { getValues, reset } = methods;
 
   const rowData = useMemo(
     () =>
@@ -239,51 +239,49 @@ export const EarningComponentTable = () => {
         width="xl"
       >
         <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid templateColumns="repeat(3,1fr)" gap="s16">
-              <GridItem colSpan={2}>
-                <FormInput name="name" label="Name" />
-              </GridItem>
-              <FormInput name="abbr" label="Abbr" />
-              <GridItem colSpan={3}>
-                <FormTextArea name="description" label="Description" />
-              </GridItem>
-              <GridItem>
-                <FormSelect
-                  name="baseMultiple"
-                  label="Multiplier"
-                  options={
-                    rowData?.map((item) => ({
-                      label: item?.node?.abbr,
-                      value: item?.node?.abbr,
-                    })) as { label: string; value: string }[]
-                  }
-                />
-              </GridItem>
-              <GridItem>
-                <Box display="flex" h="100%" justifyContent="center" alignItems="center" gap="s16">
-                  <Text>X</Text>
-                  <FormInput type="number" name="multiplier" label="Factor" />
-                </Box>
-              </GridItem>
-              <GridItem colSpan={3}>
-                <Box display="flex" flexDir="column" gap="s16">
-                  <FormCheckbox name="isTaxApplicable" label="Is Tax Applicable" />
-                  <FormCheckbox name="roundToNearestInteger" label="Round to the Nearest Integer" />
-                  <FormCheckbox name="makeThisActive" label="Make this Active" />
-                  <Divider />
-                  <Button
-                    w="-webkit-fit-content"
-                    alignSelf="flex-end"
-                    type="submit"
-                    isLoading={isLoading}
-                  >
-                    Save
-                  </Button>
-                </Box>
-              </GridItem>
-            </Grid>
-          </form>
+          <Grid templateColumns="repeat(3,1fr)" gap="s16">
+            <GridItem colSpan={2}>
+              <FormInput name="name" label="Name" />
+            </GridItem>
+            <FormInput name="abbr" label="Abbr" />
+            <GridItem colSpan={3}>
+              <FormTextArea name="description" label="Description" />
+            </GridItem>
+            <GridItem>
+              <FormSelect
+                name="baseMultiple"
+                label="Multiplier"
+                options={
+                  rowData?.map((item) => ({
+                    label: item?.node?.abbr,
+                    value: item?.node?.abbr,
+                  })) as { label: string; value: string }[]
+                }
+              />
+            </GridItem>
+            <GridItem>
+              <Box display="flex" h="100%" justifyContent="center" alignItems="center" gap="s16">
+                <Text>X</Text>
+                <FormInput type="number" name="multiplier" label="Factor" />
+              </Box>
+            </GridItem>
+            <GridItem colSpan={3}>
+              <Box display="flex" flexDir="column" gap="s16">
+                <FormCheckbox name="isTaxApplicable" label="Is Tax Applicable" />
+                <FormCheckbox name="roundToNearestInteger" label="Round to the Nearest Integer" />
+                <FormCheckbox name="makeThisActive" label="Make this Active" />
+                <Divider />
+                <Button
+                  w="-webkit-fit-content"
+                  alignSelf="flex-end"
+                  onClick={onSubmit}
+                  isLoading={isLoading}
+                >
+                  Save
+                </Button>
+              </Box>
+            </GridItem>
+          </Grid>
         </FormProvider>
       </Modal>
       <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">

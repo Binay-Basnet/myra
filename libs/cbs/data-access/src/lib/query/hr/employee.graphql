@@ -168,3 +168,23 @@ query getLeave($id: String!) {
     }
   }
 }
+
+query getEmployeeLeaveList($employeeId: ID!) {
+  hr {
+    employee {
+      leave {
+        getLeaveLists(employeeId: $employeeId) {
+          data {
+            leaveTypeName
+            allocatedDays
+            usedDays
+            remainingDays
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

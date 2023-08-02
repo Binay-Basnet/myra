@@ -52,7 +52,7 @@ export const LeaveTypeTable = () => {
   const methods = useForm<LeaveTypeInput>({
     defaultValues: defaultFormValue,
   });
-  const { getValues, handleSubmit, watch, reset } = methods;
+  const { getValues, watch, reset } = methods;
 
   const { data, refetch } = useGetEmployeeLeaveTypeListQuery({
     pagination: getPaginationQuery(),
@@ -243,60 +243,58 @@ export const LeaveTypeTable = () => {
         width="5xl"
       >
         <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid templateColumns="repeat(3,1fr)" gap="s16">
-              <GridItem colSpan={2}>
-                <FormInput name="name" label="Name" />
-              </GridItem>
+          <Grid templateColumns="repeat(3,1fr)" gap="s16">
+            <GridItem colSpan={2}>
+              <FormInput name="name" label="Name" />
+            </GridItem>
 
-              <FormSelect name="typeOfLeave" label="Type" options={typeOptions} />
-              <GridItem colSpan={3}>
-                <FormTextArea name="description" label="Description" />
-              </GridItem>
-              <FormInput
-                type="number"
-                name="applicableAfter"
-                label="Applicable After(Working Days)"
-              />
-              <FormInput type="number" name="maximumLeaveAllowed" label="Maximum Leave Allowed" />
-              <FormInput
-                type="number"
-                name="maximumContinuousDaysApplicable"
-                label="Maximum Continuous Days Applicable"
-              />
-              <GridItem colSpan={3}>
-                <Divider />
-              </GridItem>
-              <GridItem colSpan={3}>
-                <Box display="flex" flexDir="column" gap="s16">
-                  <Text fontSize="s3">Advance Setup</Text>
-                  <FormCheckbox name="isCarriedForward" label="Is Carry Forward" />
-                  <FormCheckbox name="isPartiallyPaid" label="Is Partially Paid Leave" />
-                  {isPartiallyPaidWatch && (
-                    <FormInput
-                      name="fractionOfDailySalaryPerLeave"
-                      label="Fraction of Daily Salary per Leave"
-                      w="-webkit-fit-content"
-                    />
-                  )}
-                  <FormCheckbox name="isOptionalLeave" label="Is Optional Leave" />
-                  <FormCheckbox
-                    name="includeHolidaysWithLeavesAsLeaves"
-                    label="Include holidays within leaves as leaves"
-                  />
-                  <FormCheckbox name="isCompensatory" label="Is Compensatory" />
-                  <Button
+            <FormSelect name="typeOfLeave" label="Type" options={typeOptions} />
+            <GridItem colSpan={3}>
+              <FormTextArea name="description" label="Description" />
+            </GridItem>
+            <FormInput
+              type="number"
+              name="applicableAfter"
+              label="Applicable After(Working Days)"
+            />
+            <FormInput type="number" name="maximumLeaveAllowed" label="Maximum Leave Allowed" />
+            <FormInput
+              type="number"
+              name="maximumContinuousDaysApplicable"
+              label="Maximum Continuous Days Applicable"
+            />
+            <GridItem colSpan={3}>
+              <Divider />
+            </GridItem>
+            <GridItem colSpan={3}>
+              <Box display="flex" flexDir="column" gap="s16">
+                <Text fontSize="s3">Advance Setup</Text>
+                <FormCheckbox name="isCarriedForward" label="Is Carry Forward" />
+                <FormCheckbox name="isPartiallyPaid" label="Is Partially Paid Leave" />
+                {isPartiallyPaidWatch && (
+                  <FormInput
+                    name="fractionOfDailySalaryPerLeave"
+                    label="Fraction of Daily Salary per Leave"
                     w="-webkit-fit-content"
-                    alignSelf="flex-end"
-                    type="submit"
-                    isLoading={isLoading}
-                  >
-                    Save
-                  </Button>
-                </Box>
-              </GridItem>
-            </Grid>
-          </form>
+                  />
+                )}
+                <FormCheckbox name="isOptionalLeave" label="Is Optional Leave" />
+                <FormCheckbox
+                  name="includeHolidaysWithLeavesAsLeaves"
+                  label="Include holidays within leaves as leaves"
+                />
+                <FormCheckbox name="isCompensatory" label="Is Compensatory" />
+                <Button
+                  w="-webkit-fit-content"
+                  alignSelf="flex-end"
+                  onClick={onSubmit}
+                  isLoading={isLoading}
+                >
+                  Save
+                </Button>
+              </Box>
+            </GridItem>
+          </Grid>
         </FormProvider>
       </Modal>
       <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">

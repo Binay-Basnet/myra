@@ -40,7 +40,7 @@ export const EmployeeHealthInsuranceTable = () => {
   }, [healthInsuranceDataEdit]);
 
   const methods = useForm();
-  const { getValues, handleSubmit, reset } = methods;
+  const { getValues, reset } = methods;
 
   const rowData = useMemo(
     () =>
@@ -192,21 +192,19 @@ export const EmployeeHealthInsuranceTable = () => {
         width="xl"
       >
         <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Box display="flex" flexDir="column" gap="s16">
-              <FormInput name="healthInsuranceProvider" label="Health Insurance Provider" />
-              <FormInput name="healthInsuranceNumber" label="Health Insurance Number" />
-              <Divider />
-              <Button
-                w="-webkit-fit-content"
-                alignSelf="flex-end"
-                type="submit"
-                isLoading={isLoading}
-              >
-                Save
-              </Button>
-            </Box>
-          </form>
+          <Box display="flex" flexDir="column" gap="s16">
+            <FormInput name="healthInsuranceProvider" label="Health Insurance Provider" />
+            <FormInput name="healthInsuranceNumber" label="Health Insurance Number" />
+            <Divider />
+            <Button
+              w="-webkit-fit-content"
+              alignSelf="flex-end"
+              onClick={onSubmit}
+              isLoading={isLoading}
+            >
+              Save
+            </Button>
+          </Box>
         </FormProvider>
       </Modal>
       <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">
