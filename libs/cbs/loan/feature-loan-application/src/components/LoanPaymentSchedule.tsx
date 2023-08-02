@@ -160,9 +160,10 @@ export const LoanPaymentSchedule = () => {
         />
         <FormDatePicker
           name="installmentBeginDate"
-          label="Installment Begin Date"
+          label="First Installment Date"
           // minDate={closingDate ? new Date(localizedDate(closingDate) as string) : new Date()}
           minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
+          // helperText="This is the date when the first payment should be received from the Member."
           isRequired
         />
       </Grid>

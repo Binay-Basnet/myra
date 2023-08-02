@@ -12,13 +12,13 @@ import {
   useSetNewLeaveMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormDatePicker, FormLayout, FormSelect, FormTextArea } from '@coop/shared/form';
+import { FormDatePicker, FormInput, FormLayout, FormSelect, FormTextArea } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const HrLeaveAdd = () => {
   const methods = useForm();
   const router = useRouter();
-  const { getValues, reset } = methods;
+  const { getValues, reset, watch, setValue } = methods;
 
   const { data: employeeListData } = useGetEmployeeListQuery({
     pagination: {
@@ -71,6 +71,21 @@ export const HrLeaveAdd = () => {
       value: item?.node?.id as string,
     }));
 
+  const fromDateWatch = watch('leaveFrom');
+  const toDateWatch = watch('leaveTo');
+
+  useEffect(() => {
+    const startDate = new Date(fromDateWatch?.en) as unknown as number;
+    const endDate = new Date(toDateWatch?.en) as unknown as number;
+
+    // Calculate the difference in milliseconds
+    const timeDifference = endDate - startDate;
+
+    // Convert milliseconds to days
+    const daysDifference = timeDifference / (1000 * 60 * 60 * 24) || 0;
+    setValue('totalLeaveDays', daysDifference);
+  }, [fromDateWatch, toDateWatch]);
+
   const submitForm = () => {
     asyncToast({
       id: 'add-new-leave',
@@ -102,6 +117,7 @@ export const HrLeaveAdd = () => {
           <FormSection templateColumns={3} divider>
             <FormDatePicker name="leaveFrom" label="From Date" />
             <FormDatePicker name="leaveTo" label="To Date" />
+            <FormInput name="totalLeaveDays" label="Total Leave Days" isDisabled />
             <GridItem colSpan={3}>
               <FormTextArea name="leaveNote" label="Reason" isRequired />
             </GridItem>
