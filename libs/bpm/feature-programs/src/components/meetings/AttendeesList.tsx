@@ -126,7 +126,21 @@ export const BPMAttendanceTable = () => {
   const itemDetails = watch('itemDetails');
 
   useDeepCompareEffect(() => {
-    if (itemDetails?.length) {
+    if (department && departmentId) {
+      setValue(
+        'itemDetails',
+        employeeList?.map((items) => {
+          const employeeDeginationName = items?.node?.designation;
+          const employeeId = items?.node?.id;
+
+          return {
+            attendee: employeeId,
+            department: employeeDeginationName as string,
+          };
+        })
+      );
+    }
+    if (itemDetails?.length && !department) {
       setValue(
         'itemDetails',
         itemDetails?.map((items: AttendeeType) => {
@@ -144,7 +158,7 @@ export const BPMAttendanceTable = () => {
   }, [itemDetails, employeeList, fullEmployeeList]);
 
   return (
-    <FormSection flexLayout>
+    <FormSection flexLayout header="Attendees List">
       <FormEditableTable<AttendeeType> name="itemDetails" columns={tableColumns} />
       <Box display="flex" pt="s32" flexDirection="column" gap="s32">
         <FormCheckbox name="sendInvitaionEmail" label="Send Invitation Via Email" />
