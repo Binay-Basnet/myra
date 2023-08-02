@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { asyncToast, FormSection, GridItem } from '@myra-ui';
+import { asyncToast, Column, FormSection, GridItem, Table } from '@myra-ui';
 
 import {
   LeaveInput,
+  useGetEmployeeLeaveListQuery,
   useGetEmployeeLeaveTypeListQuery,
   useGetEmployeeListQuery,
   useGetLeaveQuery,
@@ -51,6 +52,41 @@ export const HrLeaveAdd = () => {
   );
 
   const leaveEditData = leaveData?.hr?.employee?.leave?.getLeave?.record;
+
+  const employeeIdWatch = watch('employeeId');
+
+  const { data: employeeLeaveList, isFetching } = useGetEmployeeLeaveListQuery(
+    {
+      employeeId: employeeIdWatch as string,
+    },
+    { enabled: !!employeeIdWatch }
+  );
+
+  const rowData = useMemo(
+    () => employeeLeaveList?.hr?.employee?.leave?.getLeaveLists?.data ?? [],
+    [employeeLeaveList]
+  );
+  const columns = useMemo<Column<typeof rowData[0]>[]>(
+    () => [
+      {
+        header: 'Leave Type',
+        accessorFn: (row) => row?.leaveTypeName,
+      },
+      {
+        header: 'Total Allocated',
+        accessorFn: (row) => row?.allocatedDays,
+      },
+      {
+        header: 'Used Leaves',
+        accessorFn: (row) => row?.usedDays,
+      },
+      {
+        header: 'Available Leaves',
+        accessorFn: (row) => row?.remainingDays,
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     if (leaveEditData) {
@@ -113,6 +149,18 @@ export const HrLeaveAdd = () => {
               <FormSelect name="employeeId" label="Employee" options={employeeOptions} />
             </GridItem>
             <FormSelect name="leaveTypeId" label="Leave Type" options={leaveTypeOptions} />
+          </FormSection>
+          <FormSection templateColumns={3} divider header="Allocated Leaves">
+            <GridItem colSpan={3} p="s4">
+              <Table
+                data={rowData}
+                columns={columns}
+                variant="report"
+                size="report"
+                isStatic
+                isLoading={isFetching}
+              />
+            </GridItem>
           </FormSection>
           <FormSection templateColumns={3} divider>
             <FormDatePicker name="leaveFrom" label="From Date" />
