@@ -92,7 +92,7 @@ export const SalaryStructureTable = () => {
   const methods = useForm<InputSalaryStructure>({
     defaultValues: defaultFormValue,
   });
-  const { getValues, handleSubmit, reset } = methods;
+  const { getValues, reset } = methods;
 
   const rowData = useMemo(
     () => data?.settings?.general?.HCM?.payroll?.salaryStructure?.listSalaryStructure?.edges ?? [],
@@ -273,186 +273,182 @@ export const SalaryStructureTable = () => {
         width="4xl"
       >
         <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid templateColumns="repeat(3,1fr)" gap="s16">
-              <GridItem colSpan={2}>
-                <FormInput name="name" label="Name" />
-              </GridItem>
-              <FormSelect
-                name="payrollFrequency"
-                label="Payroll Frequency"
-                options={[
-                  { label: PayrollFrequencyEnum?.Monthly, value: PayrollFrequencyEnum?.Monthly },
-                  { label: PayrollFrequencyEnum?.Yearly, value: PayrollFrequencyEnum?.Yearly },
+          <Grid templateColumns="repeat(3,1fr)" gap="s16">
+            <GridItem colSpan={2}>
+              <FormInput name="name" label="Name" />
+            </GridItem>
+            <FormSelect
+              name="payrollFrequency"
+              label="Payroll Frequency"
+              options={[
+                { label: PayrollFrequencyEnum?.Monthly, value: PayrollFrequencyEnum?.Monthly },
+                { label: PayrollFrequencyEnum?.Yearly, value: PayrollFrequencyEnum?.Yearly },
+              ]}
+            />
+            <GridItem colSpan={3}>
+              <FormTextArea name="description" label="Description" />
+            </GridItem>
+            <GridItem colSpan={3}>
+              <Text fontSize="r1" fontWeight="medium">
+                Salary breakdown based on Earning and Deduction
+              </Text>
+            </GridItem>
+            <GridItem colSpan={3}>
+              <FormEditableTable
+                name="salaryEarnings"
+                label="Earnings"
+                columns={[
+                  {
+                    accessor: 'id',
+                    header: 'Component',
+                    fieldType: 'select',
+                    selectOptions: earningComponentData?.map((item) => ({
+                      label: item?.node?.name as string,
+                      value: item?.node?.id as string,
+                    })),
+                  },
+                  {
+                    accessor: 'abbr',
+                    header: 'Abbr',
+                    cell: (row) => {
+                      const selectedEarningComponent = earningComponentData?.find(
+                        (item) => item?.node?.id === row?.id
+                      );
+                      return <Box textAlign="right">{selectedEarningComponent?.node?.abbr}</Box>;
+                    },
+                  },
+                  {
+                    accessor: 'amount',
+                    header: 'Amount',
+                    isNumeric: true,
+                  },
+
+                  {
+                    accessor: 'formula',
+                    header: 'Formula',
+                    isNumeric: true,
+                    cell: (row) => {
+                      const selectedEarningComponent = earningComponentData?.find(
+                        (item) => item?.node?.id === row?.id
+                      );
+                      if (!selectedEarningComponent?.node?.baseMultiple) {
+                        return <Box />;
+                      }
+                      return (
+                        <Box textAlign="right">
+                          {selectedEarningComponent?.node?.baseMultiple} × &nbsp;
+                          {selectedEarningComponent?.node?.multiplier}
+                        </Box>
+                      );
+                    },
+                  },
                 ]}
               />
-              <GridItem colSpan={3}>
-                <FormTextArea name="description" label="Description" />
-              </GridItem>
-              <GridItem colSpan={3}>
-                <Text fontSize="r1" fontWeight="medium">
-                  Salary breakdown based on Earning and Deduction
-                </Text>
-              </GridItem>
-              <GridItem colSpan={3}>
-                <FormEditableTable
-                  name="salaryEarnings"
-                  label="Earnings"
-                  columns={[
+            </GridItem>
+            <GridItem colSpan={3}>
+              <FormEditableTable
+                name="salaryDeduction"
+                label="Deductions"
+                columns={[
+                  {
+                    accessor: 'id',
+                    header: 'Component',
+                    fieldType: 'select',
+                    selectOptions: deductionComponentData?.map((item) => ({
+                      label: item?.node?.name as string,
+                      value: item?.node?.id as string,
+                    })),
+                  },
+                  {
+                    accessor: 'abbr',
+                    header: 'Abbr',
+                    cell: (row) => {
+                      const selectedDeductionComponent = deductionComponentData?.find(
+                        (item) => item?.node?.id === row?.id
+                      );
+                      return <Box textAlign="right">{selectedDeductionComponent?.node?.abbr}</Box>;
+                    },
+                  },
+                  {
+                    accessor: 'amount',
+                    header: 'Amount',
+                    isNumeric: true,
+                  },
+                  {
+                    accessor: 'formula',
+                    header: 'Formula',
+                    isNumeric: true,
+                    cell: (row) => {
+                      const selectedDeductionComponent = deductionComponentData?.find(
+                        (item) => item?.node?.id === row?.id
+                      );
+                      if (!selectedDeductionComponent?.node?.baseMultiple) {
+                        return <Box />;
+                      }
+                      return (
+                        <Box textAlign="right">
+                          {selectedDeductionComponent?.node?.baseMultiple} × &nbsp;
+                          {selectedDeductionComponent?.node?.multiplier}
+                        </Box>
+                      );
+                    },
+                  },
+                ]}
+              />
+            </GridItem>
+            <GridItem colSpan={3}>
+              <Box display="flex" gap="s16">
+                <FormSelect
+                  name="modeOfPayment"
+                  label="Mode of payment"
+                  options={[
                     {
-                      accessor: 'id',
-                      header: 'Component',
-                      fieldType: 'select',
-                      selectOptions: earningComponentData?.map((item) => ({
-                        label: item?.node?.name as string,
-                        value: item?.node?.id as string,
-                      })),
+                      label: 'Bank Transfer',
+                      value: PaymentModeEnum?.BankTransfer,
                     },
                     {
-                      accessor: 'abbr',
-                      header: 'Abbr',
-                      cell: (row) => {
-                        const selectedEarningComponent = earningComponentData?.find(
-                          (item) => item?.node?.id === row?.id
-                        );
-                        return <Box textAlign="right">{selectedEarningComponent?.node?.abbr}</Box>;
-                      },
+                      label: 'Cash',
+                      value: PaymentModeEnum?.Cash,
                     },
                     {
-                      accessor: 'amount',
-                      header: 'Amount',
-                      isNumeric: true,
-                    },
-
-                    {
-                      accessor: 'formula',
-                      header: 'Formula',
-                      isNumeric: true,
-                      cell: (row) => {
-                        const selectedEarningComponent = earningComponentData?.find(
-                          (item) => item?.node?.id === row?.id
-                        );
-                        if (!selectedEarningComponent?.node?.baseMultiple) {
-                          return <Box />;
-                        }
-                        return (
-                          <Box textAlign="right">
-                            {selectedEarningComponent?.node?.baseMultiple} × &nbsp;
-                            {selectedEarningComponent?.node?.multiplier}
-                          </Box>
-                        );
-                      },
-                    },
-                  ]}
-                />
-              </GridItem>
-              <GridItem colSpan={3}>
-                <FormEditableTable
-                  name="salaryDeduction"
-                  label="Deductions"
-                  columns={[
-                    {
-                      accessor: 'id',
-                      header: 'Component',
-                      fieldType: 'select',
-                      selectOptions: deductionComponentData?.map((item) => ({
-                        label: item?.node?.name as string,
-                        value: item?.node?.id as string,
-                      })),
-                    },
-                    {
-                      accessor: 'abbr',
-                      header: 'Abbr',
-                      cell: (row) => {
-                        const selectedDeductionComponent = deductionComponentData?.find(
-                          (item) => item?.node?.id === row?.id
-                        );
-                        return (
-                          <Box textAlign="right">{selectedDeductionComponent?.node?.abbr}</Box>
-                        );
-                      },
-                    },
-                    {
-                      accessor: 'amount',
-                      header: 'Amount',
-                      isNumeric: true,
-                    },
-                    {
-                      accessor: 'formula',
-                      header: 'Formula',
-                      isNumeric: true,
-                      cell: (row) => {
-                        const selectedDeductionComponent = deductionComponentData?.find(
-                          (item) => item?.node?.id === row?.id
-                        );
-                        if (!selectedDeductionComponent?.node?.baseMultiple) {
-                          return <Box />;
-                        }
-                        return (
-                          <Box textAlign="right">
-                            {selectedDeductionComponent?.node?.baseMultiple} × &nbsp;
-                            {selectedDeductionComponent?.node?.multiplier}
-                          </Box>
-                        );
-                      },
+                      label: 'Check',
+                      value: PaymentModeEnum?.Check,
                     },
                   ]}
                 />
-              </GridItem>
-              <GridItem colSpan={3}>
-                <Box display="flex" gap="s16">
-                  <FormSelect
-                    name="modeOfPayment"
-                    label="Mode of payment"
-                    options={[
-                      {
-                        label: 'Bank Transfer',
-                        value: PaymentModeEnum?.BankTransfer,
-                      },
-                      {
-                        label: 'Cash',
-                        value: PaymentModeEnum?.Cash,
-                      },
-                      {
-                        label: 'Check',
-                        value: PaymentModeEnum?.Check,
-                      },
-                    ]}
-                  />
-                  <FormSelect
-                    name="salaryPaymentLedger"
-                    label="Salary Payment Ledger"
-                    options={[
-                      {
-                        label: LedgerPaymentEnum?.LedgerPayment_1,
-                        value: LedgerPaymentEnum?.LedgerPayment_1,
-                      },
-                      {
-                        label: LedgerPaymentEnum?.LedgerPayment_2,
-                        value: LedgerPaymentEnum?.LedgerPayment_2,
-                      },
-                    ]}
-                  />
-                </Box>
-              </GridItem>
-              <GridItem colSpan={3}>
-                <FormCheckbox name="makeThisActive" label="Make this Active" />
-              </GridItem>
-              <GridItem colSpan={3}>
-                <Box display="flex" flexDir="column" gap="s16">
-                  <Divider />
-                  <Button
-                    w="-webkit-fit-content"
-                    alignSelf="flex-end"
-                    type="submit"
-                    isLoading={isLoading}
-                  >
-                    Save
-                  </Button>
-                </Box>
-              </GridItem>
-            </Grid>
-          </form>
+                <FormSelect
+                  name="salaryPaymentLedger"
+                  label="Salary Payment Ledger"
+                  options={[
+                    {
+                      label: LedgerPaymentEnum?.LedgerPayment_1,
+                      value: LedgerPaymentEnum?.LedgerPayment_1,
+                    },
+                    {
+                      label: LedgerPaymentEnum?.LedgerPayment_2,
+                      value: LedgerPaymentEnum?.LedgerPayment_2,
+                    },
+                  ]}
+                />
+              </Box>
+            </GridItem>
+            <GridItem colSpan={3}>
+              <FormCheckbox name="makeThisActive" label="Make this Active" />
+            </GridItem>
+            <GridItem colSpan={3}>
+              <Box display="flex" flexDir="column" gap="s16">
+                <Divider />
+                <Button
+                  w="-webkit-fit-content"
+                  alignSelf="flex-end"
+                  onClick={onSubmit}
+                  isLoading={isLoading}
+                >
+                  Save
+                </Button>
+              </Box>
+            </GridItem>
+          </Grid>
         </FormProvider>
       </Modal>
       <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">

@@ -38,7 +38,7 @@ export const DesignationsTable = () => {
   }, [designationDataEdit]);
 
   const methods = useForm();
-  const { getValues, handleSubmit, reset } = methods;
+  const { getValues, reset } = methods;
 
   const rowData = useMemo(
     () => data?.settings?.general?.HCM?.employee?.employee?.listDesignation?.edges ?? [],
@@ -189,21 +189,19 @@ export const DesignationsTable = () => {
         width="xl"
       >
         <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Box display="flex" flexDir="column" gap="s16">
-              <FormInput name="name" label="Name" />
-              <FormInput name="description" label="Description" />
-              <Divider />
-              <Button
-                w="-webkit-fit-content"
-                alignSelf="flex-end"
-                type="submit"
-                isLoading={isLoading}
-              >
-                Save
-              </Button>
-            </Box>
-          </form>
+          <Box display="flex" flexDir="column" gap="s16">
+            <FormInput name="name" label="Name" />
+            <FormInput name="description" label="Description" />
+            <Divider />
+            <Button
+              w="-webkit-fit-content"
+              alignSelf="flex-end"
+              onClick={onSubmit}
+              isLoading={isLoading}
+            >
+              Save
+            </Button>
+          </Box>
         </FormProvider>
       </Modal>
       <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">

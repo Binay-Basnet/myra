@@ -1757,6 +1757,7 @@ export type BpmMeetingInput = {
   agenda?: InputMaybe<Scalars['String']>;
   attendeesId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   date?: InputMaybe<Scalars['Localized']>;
+  departmentIds?: InputMaybe<Array<Scalars['String']>>;
   files?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   priority?: InputMaybe<Priority>;
   scheduledBy?: InputMaybe<Scalars['String']>;
@@ -6041,11 +6042,13 @@ export type EmployeeLeaveType = {
 
 export type EmployeeLeaveTypeGet = {
   employeeId: Scalars['String'];
+  employeeName: Scalars['String'];
   id: Scalars['String'];
   leaveFrom: Scalars['Localized'];
   leaveNote?: Maybe<Scalars['String']>;
   leaveTo: Scalars['Localized'];
   leaveTypeId: Scalars['String'];
+  leaveTypeName: Scalars['String'];
   status?: Maybe<Scalars['String']>;
   totalLeaveDays: Scalars['Int'];
 };
@@ -8221,11 +8224,16 @@ export type HrEmployeeLeavePolicyEdges = {
 
 export type HrEmployeeLeaveQuery = {
   getLeave: LeaveOutputType;
+  getLeaveLists?: Maybe<LeaveTypesWithError>;
   listLeave: HrEmployeeLeaveConnection;
 };
 
 export type HrEmployeeLeaveQueryGetLeaveArgs = {
   id: Scalars['String'];
+};
+
+export type HrEmployeeLeaveQueryGetLeaveListsArgs = {
+  employeeId: Scalars['ID'];
 };
 
 export type HrEmployeeLeaveQueryListLeaveArgs = {
@@ -11947,6 +11955,13 @@ export const LeaveStatusEnum = {
 } as const;
 
 export type LeaveStatusEnum = typeof LeaveStatusEnum[keyof typeof LeaveStatusEnum];
+export type LeaveType = {
+  allocatedDays?: Maybe<Scalars['Int']>;
+  leaveTypeName?: Maybe<Scalars['String']>;
+  remainingDays?: Maybe<Scalars['Int']>;
+  usedDays?: Maybe<Scalars['Int']>;
+};
+
 export const LeaveTypeEnum = {
   Paid: 'PAID',
   Unpaid: 'UNPAID',
@@ -11992,6 +12007,11 @@ export type LeaveTypeNode = {
 export type LeaveTypeOutput = {
   error?: Maybe<MutationError>;
   recordId: Scalars['String'];
+};
+
+export type LeaveTypesWithError = {
+  data?: Maybe<Array<Maybe<LeaveType>>>;
+  error?: Maybe<MutationError>;
 };
 
 export type LedgerAllTransactionConnection = {
@@ -14450,10 +14470,12 @@ export type MeetingOverview = {
   agenda?: Maybe<Scalars['String']>;
   attendees?: Maybe<Array<Maybe<BpmEmployeeMinimal>>>;
   date?: Maybe<Scalars['Localized']>;
+  departmentIds?: Maybe<Array<Scalars['String']>>;
   id: Scalars['ID'];
   position?: Maybe<Scalars['String']>;
   priority?: Maybe<Priority>;
   scheduledBy?: Maybe<Scalars['String']>;
+  scheduledById?: Maybe<Scalars['String']>;
   status?: Maybe<MeetingStatus>;
   time?: Maybe<Scalars['Time']>;
   title?: Maybe<Scalars['String']>;
@@ -22234,6 +22256,71 @@ export type ChangeUserStateMutationVariables = Exact<{
 
 export type ChangeUserStateMutation = { auth: { changeState?: string | null } };
 
+export type SetBpmMeetingsMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  data: BpmMeetingInput;
+}>;
+
+export type SetBpmMeetingsMutation = {
+  bpm: {
+    programs: {
+      upsertMeeting: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type SetCloseBpmMeetingsMutationVariables = Exact<{
+  meetingID: Scalars['ID'];
+}>;
+
+export type SetCloseBpmMeetingsMutation = {
+  bpm: {
+    programs: {
+      closeMeeting: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type SetAddMinutesMutationVariables = Exact<{
+  meetingID: Scalars['ID'];
+  data: MinuteInput;
+}>;
+
+export type SetAddMinutesMutation = {
+  bpm: {
+    programs: {
+      addMinute: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
 export type AddNewAccountInCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
 }>;
@@ -28785,6 +28872,102 @@ export type GetBankListQuery = {
   bank: { bank?: { list?: Array<{ id: string; name?: string | null } | null> | null } | null };
 };
 
+export type GetBpmEmployeeDetailsQueryVariables = Exact<{
+  employeeId: Scalars['ID'];
+}>;
+
+export type GetBpmEmployeeDetailsQuery = {
+  bpm: {
+    programs: {
+      getEmployeeDetails: {
+        contact?: string | null;
+        designation?: string | null;
+        email?: string | null;
+        id: string;
+        name?: string | null;
+      };
+    };
+  };
+};
+
+export type GetMeetingsListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetMeetingsListQuery = {
+  bpm: {
+    programs: {
+      listMeetings: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            title?: string | null;
+            type?: MeetingType | null;
+            totalAttendees?: number | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            status?: MeetingStatus | null;
+            time?: string | null;
+            priority?: Priority | null;
+            scheduledBy?: string | null;
+            position?: string | null;
+            agenda?: string | null;
+            attendees?: Array<{
+              contact?: string | null;
+              designation?: string | null;
+              email?: string | null;
+              id: string;
+              name?: string | null;
+            } | null> | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      };
+    };
+  };
+};
+
+export type GetMeetingsEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMeetingsEditDataQuery = {
+  bpm: {
+    programs: {
+      meetingDetail: {
+        overview?: {
+          id: string;
+          title?: string | null;
+          type?: MeetingType | null;
+          totalAttendees?: number | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          status?: MeetingStatus | null;
+          time?: string | null;
+          priority?: Priority | null;
+          scheduledBy?: string | null;
+          scheduledById?: string | null;
+          position?: string | null;
+          agenda?: string | null;
+          departmentIds?: Array<string> | null;
+          attendees?: Array<{
+            contact?: string | null;
+            designation?: string | null;
+            email?: string | null;
+            id: string;
+            name?: string | null;
+          } | null> | null;
+        } | null;
+        minute?: {
+          notes?: string | null;
+          files?: Array<{ identifier: string; url: string }> | null;
+        } | null;
+      };
+    };
+  };
+};
+
 export type GetUserBranchListQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetUserBranchListQuery = {
@@ -29232,6 +29415,7 @@ export type GetEmployeeListQuery = {
               employeeContact?: string | null;
               employeeEmail?: string | null;
               employeeDateOfJoining?: Record<'local' | 'en' | 'np', string> | null;
+              designation?: string | null;
               employeeAddress?: AddressFragment | null;
             };
           } | null> | null;
@@ -29372,6 +29556,7 @@ export type GetLeaveQuery = {
             id: string;
             employeeId: string;
             leaveTypeId: string;
+            leaveTypeName: string;
             leaveFrom: Record<'local' | 'en' | 'np', string>;
             leaveTo: Record<'local' | 'en' | 'np', string>;
             leaveNote?: string | null;
@@ -29384,6 +29569,34 @@ export type GetLeaveQuery = {
             | MutationError_ServerError_Fragment
             | null;
         };
+      };
+    };
+  };
+};
+
+export type GetEmployeeLeaveListQueryVariables = Exact<{
+  employeeId: Scalars['ID'];
+}>;
+
+export type GetEmployeeLeaveListQuery = {
+  hr: {
+    employee: {
+      leave: {
+        getLeaveLists?: {
+          data?: Array<{
+            leaveTypeName?: string | null;
+            allocatedDays?: number | null;
+            usedDays?: number | null;
+            remainingDays?: number | null;
+          } | null> | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
       };
     };
   };
@@ -43356,6 +43569,89 @@ export const useChangeUserStateMutation = <TError = unknown, TContext = unknown>
     useAxios<ChangeUserStateMutation, ChangeUserStateMutationVariables>(ChangeUserStateDocument),
     options
   );
+export const SetBpmMeetingsDocument = `
+    mutation setBPMMeetings($id: ID, $data: BPMMeetingInput!) {
+  bpm {
+    programs {
+      upsertMeeting(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetBpmMeetingsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetBpmMeetingsMutation,
+    TError,
+    SetBpmMeetingsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetBpmMeetingsMutation, TError, SetBpmMeetingsMutationVariables, TContext>(
+    ['setBPMMeetings'],
+    useAxios<SetBpmMeetingsMutation, SetBpmMeetingsMutationVariables>(SetBpmMeetingsDocument),
+    options
+  );
+export const SetCloseBpmMeetingsDocument = `
+    mutation setCloseBPMMeetings($meetingID: ID!) {
+  bpm {
+    programs {
+      closeMeeting(meetingId: $meetingID) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetCloseBpmMeetingsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetCloseBpmMeetingsMutation,
+    TError,
+    SetCloseBpmMeetingsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetCloseBpmMeetingsMutation, TError, SetCloseBpmMeetingsMutationVariables, TContext>(
+    ['setCloseBPMMeetings'],
+    useAxios<SetCloseBpmMeetingsMutation, SetCloseBpmMeetingsMutationVariables>(
+      SetCloseBpmMeetingsDocument
+    ),
+    options
+  );
+export const SetAddMinutesDocument = `
+    mutation setAddMinutes($meetingID: ID!, $data: MinuteInput!) {
+  bpm {
+    programs {
+      addMinute(meetingId: $meetingID, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAddMinutesMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAddMinutesMutation,
+    TError,
+    SetAddMinutesMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetAddMinutesMutation, TError, SetAddMinutesMutationVariables, TContext>(
+    ['setAddMinutes'],
+    useAxios<SetAddMinutesMutation, SetAddMinutesMutationVariables>(SetAddMinutesDocument),
+    options
+  );
 export const AddNewAccountInCoaDocument = `
     mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
   settings {
@@ -52565,6 +52861,131 @@ export const useGetBankListQuery = <TData = GetBankListQuery, TError = unknown>(
     ),
     options
   );
+export const GetBpmEmployeeDetailsDocument = `
+    query getBPMEmployeeDetails($employeeId: ID!) {
+  bpm {
+    programs {
+      getEmployeeDetails(employeeId: $employeeId) {
+        contact
+        designation
+        email
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+export const useGetBpmEmployeeDetailsQuery = <TData = GetBpmEmployeeDetailsQuery, TError = unknown>(
+  variables: GetBpmEmployeeDetailsQueryVariables,
+  options?: UseQueryOptions<GetBpmEmployeeDetailsQuery, TError, TData>
+) =>
+  useQuery<GetBpmEmployeeDetailsQuery, TError, TData>(
+    ['getBPMEmployeeDetails', variables],
+    useAxios<GetBpmEmployeeDetailsQuery, GetBpmEmployeeDetailsQueryVariables>(
+      GetBpmEmployeeDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMeetingsListDocument = `
+    query getMeetingsList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    programs {
+      listMeetings(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            title
+            type
+            totalAttendees
+            date
+            status
+            time
+            priority
+            scheduledBy
+            position
+            agenda
+            attendees {
+              contact
+              designation
+              email
+              id
+              name
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetMeetingsListQuery = <TData = GetMeetingsListQuery, TError = unknown>(
+  variables?: GetMeetingsListQueryVariables,
+  options?: UseQueryOptions<GetMeetingsListQuery, TError, TData>
+) =>
+  useQuery<GetMeetingsListQuery, TError, TData>(
+    variables === undefined ? ['getMeetingsList'] : ['getMeetingsList', variables],
+    useAxios<GetMeetingsListQuery, GetMeetingsListQueryVariables>(GetMeetingsListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetMeetingsEditDataDocument = `
+    query getMeetingsEditData($id: ID!) {
+  bpm {
+    programs {
+      meetingDetail(id: $id) {
+        overview {
+          id
+          title
+          type
+          totalAttendees
+          date
+          status
+          time
+          priority
+          scheduledBy
+          scheduledById
+          position
+          agenda
+          departmentIds
+          attendees {
+            contact
+            designation
+            email
+            id
+            name
+          }
+        }
+        minute {
+          files {
+            identifier
+            url
+          }
+          notes
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMeetingsEditDataQuery = <TData = GetMeetingsEditDataQuery, TError = unknown>(
+  variables: GetMeetingsEditDataQueryVariables,
+  options?: UseQueryOptions<GetMeetingsEditDataQuery, TError, TData>
+) =>
+  useQuery<GetMeetingsEditDataQuery, TError, TData>(
+    ['getMeetingsEditData', variables],
+    useAxios<GetMeetingsEditDataQuery, GetMeetingsEditDataQueryVariables>(
+      GetMeetingsEditDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetUserBranchListDocument = `
     query getUserBranchList {
   bank {
@@ -53047,6 +53468,7 @@ export const GetEmployeeListDocument = `
               }
               employeeEmail
               employeeDateOfJoining
+              designation
             }
             cursor
           }
@@ -53229,6 +53651,7 @@ export const GetLeaveDocument = `
             id
             employeeId
             leaveTypeId
+            leaveTypeName
             leaveFrom
             leaveTo
             leaveNote
@@ -53250,6 +53673,38 @@ export const useGetLeaveQuery = <TData = GetLeaveQuery, TError = unknown>(
   useQuery<GetLeaveQuery, TError, TData>(
     ['getLeave', variables],
     useAxios<GetLeaveQuery, GetLeaveQueryVariables>(GetLeaveDocument).bind(null, variables),
+    options
+  );
+export const GetEmployeeLeaveListDocument = `
+    query getEmployeeLeaveList($employeeId: ID!) {
+  hr {
+    employee {
+      leave {
+        getLeaveLists(employeeId: $employeeId) {
+          data {
+            leaveTypeName
+            allocatedDays
+            usedDays
+            remainingDays
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEmployeeLeaveListQuery = <TData = GetEmployeeLeaveListQuery, TError = unknown>(
+  variables: GetEmployeeLeaveListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeLeaveListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeLeaveListQuery, TError, TData>(
+    ['getEmployeeLeaveList', variables],
+    useAxios<GetEmployeeLeaveListQuery, GetEmployeeLeaveListQueryVariables>(
+      GetEmployeeLeaveListDocument
+    ).bind(null, variables),
     options
   );
 export const GetHrEmployeeOnboardingListDocument = `

@@ -1,6 +1,13 @@
-import { asyncToast, Grid, GridItem, Modal, Text } from '@myra-ui';
+import { useMemo } from 'react';
 
-import { LeaveStatusEnum, useApproveLeaveMutation, useGetLeaveQuery } from '@coop/cbs/data-access';
+import { asyncToast, Column, Divider, Grid, GridItem, Modal, Table, Text } from '@myra-ui';
+
+import {
+  LeaveStatusEnum,
+  useApproveLeaveMutation,
+  useGetEmployeeLeaveListQuery,
+  useGetLeaveQuery,
+} from '@coop/cbs/data-access';
 
 interface Props {
   selectedLeaveId: string;
@@ -26,7 +33,40 @@ const LeaveApproveModal = (props: Props) => {
 
   const leaveDataForApprove = leaveData?.hr?.employee?.leave?.getLeave?.record;
 
+  const { data: employeeLeaveList, isFetching } = useGetEmployeeLeaveListQuery(
+    {
+      employeeId: leaveDataForApprove?.employeeId as string,
+    },
+    { enabled: !!leaveDataForApprove?.employeeId }
+  );
+
   const { mutateAsync } = useApproveLeaveMutation();
+
+  const rowData = useMemo(
+    () => employeeLeaveList?.hr?.employee?.leave?.getLeaveLists?.data ?? [],
+    [employeeLeaveList]
+  );
+  const columns = useMemo<Column<typeof rowData[0]>[]>(
+    () => [
+      {
+        header: 'Leave Type',
+        accessorFn: (row) => row?.leaveTypeName,
+      },
+      {
+        header: 'Total Allocated',
+        accessorFn: (row) => row?.allocatedDays,
+      },
+      {
+        header: 'Used Leaves',
+        accessorFn: (row) => row?.usedDays,
+      },
+      {
+        header: 'Available Leaves',
+        accessorFn: (row) => row?.remainingDays,
+      },
+    ],
+    []
+  );
 
   const handleModalClose = () => {
     handleClearLeaveId();
@@ -82,10 +122,30 @@ const LeaveApproveModal = (props: Props) => {
       secondaryButtonHandler={rejectLeave}
     >
       <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-        <GridItem>
+        <GridItem colSpan={2} p="s4">
+          <Text fontSize="r1" fontWeight="medium">
+            Leave Balance
+          </Text>
+        </GridItem>
+        <GridItem colSpan={2} p="s4">
+          <Table
+            data={rowData}
+            columns={columns}
+            variant="report"
+            size="report"
+            isStatic
+            isLoading={isFetching}
+          />
+        </GridItem>
+        <GridItem colSpan={2}>
+          {' '}
+          <Divider />
+        </GridItem>
+
+        <GridItem gap={5}>
           <Text fontSize="r1">Leave Type</Text>
           <Text fontSize="r1" fontWeight="semibold">
-            -
+            {leaveDataForApprove?.leaveTypeName}
           </Text>
         </GridItem>
         <GridItem>
@@ -109,7 +169,7 @@ const LeaveApproveModal = (props: Props) => {
         <GridItem>
           <Text fontSize="r1">Reason</Text>
           <Text fontSize="r1" fontWeight="semibold">
-            -
+            {leaveDataForApprove?.leaveNote}
           </Text>
         </GridItem>
       </Grid>

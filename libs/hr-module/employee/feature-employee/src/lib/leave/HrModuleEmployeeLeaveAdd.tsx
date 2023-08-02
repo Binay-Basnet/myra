@@ -1,24 +1,25 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { asyncToast, FormSection, GridItem } from '@myra-ui';
+import { asyncToast, Column, FormSection, GridItem, Table } from '@myra-ui';
 
 import {
   LeaveInput,
+  useGetEmployeeLeaveListQuery,
   useGetEmployeeLeaveTypeListQuery,
   useGetEmployeeListQuery,
   useGetLeaveQuery,
   useSetNewLeaveMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormDatePicker, FormLayout, FormSelect, FormTextArea } from '@coop/shared/form';
+import { FormDatePicker, FormInput, FormLayout, FormSelect, FormTextArea } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const HrLeaveAdd = () => {
   const methods = useForm();
   const router = useRouter();
-  const { getValues, reset } = methods;
+  const { getValues, reset, watch, setValue } = methods;
 
   const { data: employeeListData } = useGetEmployeeListQuery({
     pagination: {
@@ -52,6 +53,41 @@ export const HrLeaveAdd = () => {
 
   const leaveEditData = leaveData?.hr?.employee?.leave?.getLeave?.record;
 
+  const employeeIdWatch = watch('employeeId');
+
+  const { data: employeeLeaveList, isFetching } = useGetEmployeeLeaveListQuery(
+    {
+      employeeId: employeeIdWatch as string,
+    },
+    { enabled: !!employeeIdWatch }
+  );
+
+  const rowData = useMemo(
+    () => employeeLeaveList?.hr?.employee?.leave?.getLeaveLists?.data ?? [],
+    [employeeLeaveList]
+  );
+  const columns = useMemo<Column<typeof rowData[0]>[]>(
+    () => [
+      {
+        header: 'Leave Type',
+        accessorFn: (row) => row?.leaveTypeName,
+      },
+      {
+        header: 'Total Allocated',
+        accessorFn: (row) => row?.allocatedDays,
+      },
+      {
+        header: 'Used Leaves',
+        accessorFn: (row) => row?.usedDays,
+      },
+      {
+        header: 'Available Leaves',
+        accessorFn: (row) => row?.remainingDays,
+      },
+    ],
+    []
+  );
+
   useEffect(() => {
     if (leaveEditData) {
       reset(leaveEditData);
@@ -70,6 +106,21 @@ export const HrLeaveAdd = () => {
       label: item?.node?.name as string,
       value: item?.node?.id as string,
     }));
+
+  const fromDateWatch = watch('leaveFrom');
+  const toDateWatch = watch('leaveTo');
+
+  useEffect(() => {
+    const startDate = new Date(fromDateWatch?.en) as unknown as number;
+    const endDate = new Date(toDateWatch?.en) as unknown as number;
+
+    // Calculate the difference in milliseconds
+    const timeDifference = endDate - startDate;
+
+    // Convert milliseconds to days
+    const daysDifference = timeDifference / (1000 * 60 * 60 * 24) || 0;
+    setValue('totalLeaveDays', daysDifference);
+  }, [fromDateWatch, toDateWatch]);
 
   const submitForm = () => {
     asyncToast({
@@ -99,9 +150,22 @@ export const HrLeaveAdd = () => {
             </GridItem>
             <FormSelect name="leaveTypeId" label="Leave Type" options={leaveTypeOptions} />
           </FormSection>
+          <FormSection templateColumns={3} divider header="Allocated Leaves">
+            <GridItem colSpan={3} p="s4">
+              <Table
+                data={rowData}
+                columns={columns}
+                variant="report"
+                size="report"
+                isStatic
+                isLoading={isFetching}
+              />
+            </GridItem>
+          </FormSection>
           <FormSection templateColumns={3} divider>
             <FormDatePicker name="leaveFrom" label="From Date" />
             <FormDatePicker name="leaveTo" label="To Date" />
+            <FormInput name="totalLeaveDays" label="Total Leave Days" isDisabled />
             <GridItem colSpan={3}>
               <FormTextArea name="leaveNote" label="Reason" isRequired />
             </GridItem>

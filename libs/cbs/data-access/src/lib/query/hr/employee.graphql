@@ -15,6 +15,7 @@ query getEmployeeList($filter: Filter, $pagination: Pagination) {
               }
               employeeEmail
               employeeDateOfJoining
+              designation
             }
             cursor
           }
@@ -155,10 +156,31 @@ query getLeave($id: String!) {
             id
             employeeId
             leaveTypeId
+            leaveTypeName
             leaveFrom
             leaveTo
             leaveNote
             status
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getEmployeeLeaveList($employeeId: ID!) {
+  hr {
+    employee {
+      leave {
+        getLeaveLists(employeeId: $employeeId) {
+          data {
+            leaveTypeName
+            allocatedDays
+            usedDays
+            remainingDays
           }
           error {
             ...MutationError
