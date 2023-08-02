@@ -1,0 +1,87 @@
+query getBPMEmployeeDetails($employeeId: ID!) {
+  bpm {
+    programs {
+      getEmployeeDetails(employeeId: $employeeId) {
+        contact
+        designation
+        email
+        id
+        name
+      }
+    }
+  }
+}
+
+query getMeetingsList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    programs {
+      listMeetings(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            title
+            type
+            totalAttendees
+            date
+            status
+            time
+            priority
+            scheduledBy
+            position
+            agenda
+            attendees {
+              contact
+              designation
+              email
+              id
+              name
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getMeetingsEditData($id: ID!) {
+  bpm {
+    programs {
+      meetingDetail(id: $id) {
+        overview {
+          id
+          title
+          type
+          totalAttendees
+          date
+          status
+          time
+          priority
+          scheduledBy
+          scheduledById
+          position
+          agenda
+          departmentIds
+          attendees {
+            contact
+            designation
+            email
+            id
+            name
+          }
+        }
+        minute {
+          files {
+            identifier
+            url
+          }
+          notes
+        }
+      }
+    }
+  }
+}
