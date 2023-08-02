@@ -1,0 +1,25 @@
+mutation setBPMMeetings($id: ID, $data: BPMMeetingInput!) {
+  bpm {
+    programs {
+      upsertMeeting(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setCloseBPMMeetings($meetingID: ID!) {
+  bpm {
+    programs {
+      closeMeeting(meetingId: $meetingID) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
