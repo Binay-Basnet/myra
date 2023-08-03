@@ -2962,6 +2962,17 @@ export const CashValue = {
 } as const;
 
 export type CashValue = typeof CashValue[keyof typeof CashValue];
+export type CenterOverview = {
+  centerCoordinator?: Maybe<Member>;
+  centerId?: Maybe<Scalars['String']>;
+  centerName?: Maybe<Scalars['String']>;
+  groupList?: Maybe<Array<Maybe<MfGroupOverview>>>;
+  toalLoan?: Maybe<Scalars['String']>;
+  totalGroups?: Maybe<Scalars['Int']>;
+  totalMembers?: Maybe<Scalars['Int']>;
+  totalSaving?: Maybe<Scalars['String']>;
+};
+
 export type CertificatePrint = {
   fbCertificateReport?: Maybe<CertificatePrintReportResult>;
   issueCertificateReport?: Maybe<CertificatePrintReportResult>;
@@ -7862,6 +7873,20 @@ export type GraphData = {
   time?: Maybe<Scalars['Int']>;
 };
 
+export type GroupBalanceHistory = {
+  avgBalance?: Maybe<Scalars['String']>;
+  totalDeposit?: Maybe<Scalars['String']>;
+  totalWithdraw?: Maybe<Scalars['String']>;
+  trend?: Maybe<Array<Maybe<Scalars['Int']>>>;
+};
+
+export const GroupMeetingStatus = {
+  AttendancePending: 'ATTENDANCE_PENDING',
+  Completed: 'COMPLETED',
+  DecisionPending: 'DECISION_PENDING',
+} as const;
+
+export type GroupMeetingStatus = typeof GroupMeetingStatus[keyof typeof GroupMeetingStatus];
 export type GuaranteeAccountsMinView = {
   loanAccountName?: Maybe<Scalars['String']>;
   loanId?: Maybe<Scalars['String']>;
@@ -14323,6 +14348,11 @@ export type MBankingTransactionResult = {
   error?: Maybe<QueryError>;
 };
 
+export type MfCenterDetail = {
+  error?: Maybe<QueryError>;
+  overview?: Maybe<CenterOverview>;
+};
+
 export type MfCenterEntry = {
   address?: Maybe<Address>;
   code: Scalars['String'];
@@ -14358,6 +14388,22 @@ export type MfCenterResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type MfGroupDetails = {
+  error?: Maybe<QueryError>;
+  groupMembers?: Maybe<Array<Maybe<Member>>>;
+  meetings?: Maybe<MpGroupMeetings>;
+  overview?: Maybe<MfGroupOverview>;
+};
+
+export type MfGroupEntry = {
+  createdDate?: Maybe<Scalars['Localized']>;
+  groupCoordinator?: Maybe<Member>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  totalMembers?: Maybe<Scalars['Int']>;
+};
+
 export type MfGroupInput = {
   Documents: Array<DocumentInsertInput>;
   MaxMmebers?: InputMaybe<Scalars['Int']>;
@@ -14370,12 +14416,40 @@ export type MfGroupInput = {
   minMembers?: InputMaybe<Scalars['Int']>;
 };
 
+export type MfGroupListConnection = {
+  edges?: Maybe<Array<Maybe<MfGroupListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type MfGroupListEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<MfGroupEntry>;
+};
+
+export type MfGroupMembersInput = {
+  groupId: Scalars['ID'];
+  memberIds?: InputMaybe<Array<Scalars['String']>>;
+};
+
 export const MfGroupObjectState = {
   Active: 'ACTIVE',
   Inactive: 'INACTIVE',
 } as const;
 
 export type MfGroupObjectState = typeof MfGroupObjectState[keyof typeof MfGroupObjectState];
+export type MfGroupOverview = {
+  balanceHistory?: Maybe<GroupBalanceHistory>;
+  createdDate?: Maybe<Scalars['Localized']>;
+  groupCoordinator?: Maybe<Member>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
+  newMemberCount?: Maybe<Scalars['Int']>;
+  totalBalance?: Maybe<Scalars['String']>;
+  totalMeeting?: Maybe<Scalars['Int']>;
+  totalMember?: Maybe<Scalars['Int']>;
+};
+
 export type MfGroupResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['ID']>;
@@ -14387,6 +14461,14 @@ export const MfObjectState = {
 } as const;
 
 export type MfObjectState = typeof MfObjectState[keyof typeof MfObjectState];
+export type MpGroupMeetings = {
+  pastMeetingCount?: Maybe<Scalars['Int']>;
+  pastMeetings?: Maybe<Array<Maybe<Meetings>>>;
+  totalMeetings?: Maybe<Scalars['Int']>;
+  upcomingMeeting?: Maybe<Array<Maybe<Meetings>>>;
+  upcomingMeetingCount?: Maybe<Scalars['Int']>;
+};
+
 export const MrTransactionFilter = {
   Deposit: 'DEPOSIT',
   Withdraw: 'WITHDRAW',
@@ -14498,6 +14580,15 @@ export const MeetingType = {
 } as const;
 
 export type MeetingType = typeof MeetingType[keyof typeof MeetingType];
+export type Meetings = {
+  agenda?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  endTime?: Maybe<Scalars['Time']>;
+  startTime?: Maybe<Scalars['Time']>;
+  status?: Maybe<GroupMeetingStatus>;
+  totalMember?: Maybe<Scalars['Int']>;
+};
+
 export type Member = Base & {
   activeDate?: Maybe<Scalars['Localized']>;
   address?: Maybe<Address>;
@@ -14510,6 +14601,7 @@ export type Member = Base & {
   createdAt: Scalars['Time'];
   createdBy: Identity;
   dateJoined?: Maybe<Scalars['Localized']>;
+  email?: Maybe<Scalars['String']>;
   gender?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   inactiveDate?: Maybe<Scalars['Localized']>;
@@ -15578,7 +15670,12 @@ export type MicroFinanceCenterMutationAddMfCenterArgs = {
 };
 
 export type MicroFinanceCenterQuery = {
+  centerDetail: MfCenterDetail;
   listMFCenter: MfCenterListConnection;
+};
+
+export type MicroFinanceCenterQueryCenterDetailArgs = {
+  centerId: Scalars['ID'];
 };
 
 export type MicroFinanceCenterQueryListMfCenterArgs = {
@@ -15588,10 +15685,29 @@ export type MicroFinanceCenterQueryListMfCenterArgs = {
 
 export type MicroFinanceGroupMutation = {
   addMFGroup: MfGroupResult;
+  addMembers: MfGroupResult;
 };
 
 export type MicroFinanceGroupMutationAddMfGroupArgs = {
   input: MfGroupInput;
+};
+
+export type MicroFinanceGroupMutationAddMembersArgs = {
+  input: MfGroupMembersInput;
+};
+
+export type MicroFinanceGroupQuery = {
+  groupDetails?: Maybe<MfGroupDetails>;
+  listGroup: MfGroupListConnection;
+};
+
+export type MicroFinanceGroupQueryGroupDetailsArgs = {
+  groupId: Scalars['ID'];
+};
+
+export type MicroFinanceGroupQueryListGroupArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type MicroFinanceMutation = {
@@ -15601,6 +15717,7 @@ export type MicroFinanceMutation = {
 
 export type MicroFinanceQuery = {
   center: MicroFinanceCenterQuery;
+  group: MicroFinanceGroupQuery;
 };
 
 export type MinMaxFilter = {
