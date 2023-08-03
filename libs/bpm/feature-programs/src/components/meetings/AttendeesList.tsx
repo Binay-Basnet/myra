@@ -146,8 +146,21 @@ export const BPMAttendanceTable = () => {
           };
         })
       );
-    }
-    if (itemDetails?.length && !department) {
+    } else if (itemDetails?.length && !department) {
+      setValue(
+        'itemDetails',
+        itemDetails?.map((items: AttendeeType) => {
+          const employeeDeginationName = department
+            ? employeeList?.find((d) => d?.node?.id === items?.attendee)?.node?.designation
+            : fullEmployeeList?.find((d) => d?.node?.id === items?.attendee)?.node?.designation;
+
+          return {
+            attendee: items?.attendee,
+            department: employeeDeginationName as string,
+          };
+        })
+      );
+    } else if (itemDetails?.length && department) {
       setValue(
         'itemDetails',
         itemDetails?.map((items: AttendeeType) => {
