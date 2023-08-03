@@ -86,6 +86,6 @@ export const MICROFINANCE: NavType = {
           addRoute: ROUTES.MICRO_FINANCE_SAVING_PRODUCTS_ADD,
         },
       ],
-    }
+    },
   },
 };

@@ -1,12 +1,24 @@
 import { useMemo } from 'react';
 
-import { asyncToast, Column, Divider, Grid, GridItem, Modal, Table, Text } from '@myra-ui';
+import {
+  asyncToast,
+  Avatar,
+  Box,
+  Column,
+  Divider,
+  Grid,
+  GridItem,
+  Modal,
+  Table,
+  Text,
+} from '@myra-ui';
 
 import {
   LeaveStatusEnum,
   useApproveLeaveMutation,
   useGetEmployeeLeaveListQuery,
   useGetLeaveQuery,
+  useGetSingleEmployeeDetailsQuery,
 } from '@coop/cbs/data-access';
 
 interface Props {
@@ -39,6 +51,15 @@ const LeaveApproveModal = (props: Props) => {
     },
     { enabled: !!leaveDataForApprove?.employeeId }
   );
+
+  const { data: employee } = useGetSingleEmployeeDetailsQuery(
+    {
+      id: leaveDataForApprove?.employeeId as string,
+    },
+    { enabled: !!leaveDataForApprove?.employeeId }
+  );
+
+  const employeeData = employee?.hr?.employee?.employee?.getEmployee?.record;
 
   const { mutateAsync } = useApproveLeaveMutation();
 
@@ -122,6 +143,21 @@ const LeaveApproveModal = (props: Props) => {
       secondaryButtonHandler={rejectLeave}
     >
       <Grid templateColumns="repeat(2, 1fr)" gap="s16">
+        <GridItem colSpan={2} p="s4">
+          <Box display="flex" gap="s8" alignItems="center">
+            <Avatar src={employeeData?.documents?.[0]?.identifiers?.[0]?.url as string} size="lg" />
+            <Box>
+              <Text fontSize="r1" fontWeight="medium" color="primary">
+                {leaveDataForApprove?.employeeName}
+              </Text>
+              <Text fontSize="r1">{employeeData?.id}</Text>
+            </Box>
+          </Box>
+        </GridItem>
+        <GridItem colSpan={2}>
+          {' '}
+          <Divider />
+        </GridItem>
         <GridItem colSpan={2} p="s4">
           <Text fontSize="r1" fontWeight="medium">
             Leave Balance

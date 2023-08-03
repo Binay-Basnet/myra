@@ -12,7 +12,8 @@ import {
   HRMODULE,
   INVENTORY,
   MICROFINANCE,
-  SETTINGS} from './navigations';
+  SETTINGS,
+} from './navigations';
 
 export type ModuleType =
   | 'CBS'
@@ -98,7 +99,7 @@ export const APP_NAVS = {
   INVENTORY,
   HRMODULE,
   BPM,
-  MICROFINANCE
+  MICROFINANCE,
 };
 
 export const useLink = (app: ModuleType = 'CBS') => {
