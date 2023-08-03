@@ -41,7 +41,12 @@ export const MYRA_APPS = [
     key: 'BPM',
     title: 'businessProcessManagement',
     img: '/rvn.svg',
-
     link: ROUTES.BPM_TASKS_LISTS,
+  },
+  {
+    key: 'MICROFINANCE',
+    title: 'microfinance',
+    img: '/cbs.svg',
+    link: ROUTES.MICRO_FINANCE_GROUPS_LIST,
   },
 ] as const;

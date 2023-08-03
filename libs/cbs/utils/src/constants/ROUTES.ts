@@ -555,6 +555,23 @@ export const ROUTES = {
   BPM_REQUESTS_ALTERNATIVE_CHANNEL_REQUESTS: '/bpm/requests/alternative-channel/list',
   BPM_REQUESTS_MEMBER_BRANCH_TRANSFER_REQUESTS: '/bpm/requests/memebrship-branch/list',
   BPM_REQUESTS_NOMINEE_BALANCE_TRANSFER_REQUESTS: '/bpm/requests/nominee-balance-transfer/list',
+
+
+  MICRO_FINANCE_GROUPS_LIST: '/micro-finance/groups/list',
+  MICRO_FINANCE_GROUPS_ADD: '/micro-finance/groups/add',
+  MICRO_FINANCE_GROUPS_MEETINGS_LIST: '/micro-finance/groups/groups-meetings/list',
+  MICRO_FINANCE_GROUPS_MEETINGS_ADD: '/micro-finance/groups/groups-meetings/add',
+
+  MICRO_FINANCE_SAVING_ACCOUNTS_LIST: '/micro-finance/savings/accounts/list',
+  MICRO_FINANCE_SAVING_ACCOUNTS_ADD: '/micro-finance/savings/accounts/add',
+  MICRO_FINANCE_DEPOSIT_LIST: '/micro-finance/savings/deposit/list',
+  MICRO_FINANCE_DEPOSIT_ADD: '/micro-finance/savings/deposit/add',
+  MICRO_FINANCE_WITHDRAW_LIST: '/micro-finance/savings/withdraw/list',
+  MICRO_FINANCE_WITHDRAW_ADD: '/micro-finance/savings/withdraw/add',
+  MICRO_FINANCE_SAVING_PRODUCTS_LIST: '/micro-finance/savings/products/list',
+  MICRO_FINANCE_SAVING_PRODUCTS_ADD: '/micro-finance/savings/products--/add',
+
+
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;
