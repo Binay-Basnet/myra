@@ -1733,6 +1733,11 @@ export type AuthorizationError = {
   message: Scalars['String'];
 };
 
+export type BpmAnnouncements = {
+  description?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
 export type BpmEmployeeMinimal = {
   contact?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
@@ -1741,6 +1746,72 @@ export type BpmEmployeeMinimal = {
   name?: Maybe<Scalars['String']>;
 };
 
+export type BpmEventAnnouncementInput = {
+  description: Scalars['String'];
+  title: Scalars['String'];
+};
+
+export type BpmEventConnection = {
+  edges?: Maybe<Array<Maybe<BpmEventNode>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type BpmEventDetail = {
+  announcements?: Maybe<Array<Maybe<BpmAnnouncements>>>;
+  error?: Maybe<QueryError>;
+  overview?: Maybe<BpmEventOverview>;
+};
+
+export type BpmEventInput = {
+  attendeeIds?: InputMaybe<Array<Scalars['String']>>;
+  dateEntry?: InputMaybe<Array<InputMaybe<DateEntry>>>;
+  departmentIds?: InputMaybe<Array<Scalars['String']>>;
+  eventDays?: InputMaybe<EventDays>;
+  eventType: BpmEventType;
+  files?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  priority?: InputMaybe<Priority>;
+  scheduledBy?: InputMaybe<Scalars['String']>;
+  sendInvitationEmail?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type BpmEventNode = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<BpmEventOverview>;
+};
+
+export type BpmEventOverview = {
+  attendees?: Maybe<Array<Maybe<BpmEmployeeMinimal>>>;
+  departmentIds?: Maybe<Array<Scalars['String']>>;
+  eventDates?: Maybe<Array<Maybe<DateResult>>>;
+  eventDays?: Maybe<EventDays>;
+  eventName?: Maybe<Scalars['String']>;
+  eventType?: Maybe<BpmEventType>;
+  id: Scalars['ID'];
+  note?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['String']>;
+  priority?: Maybe<Priority>;
+  scheduledBy?: Maybe<Scalars['String']>;
+  scheduledById?: Maybe<Scalars['String']>;
+  startDate?: Maybe<Scalars['Localized']>;
+  startTime?: Maybe<Scalars['Time']>;
+  status?: Maybe<MeetingStatus>;
+  totalAttendees?: Maybe<Scalars['Int']>;
+};
+
+export type BpmEventResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export const BpmEventType = {
+  Indoor: 'INDOOR',
+  Outdoor: 'OUTDOOR',
+} as const;
+
+export type BpmEventType = typeof BpmEventType[keyof typeof BpmEventType];
 export type BpmMeetingConnection = {
   edges?: Maybe<Array<Maybe<BpmMeetingNode>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -1782,10 +1853,17 @@ export type BpmMutation = {
 };
 
 export type BpmProgramsMutation = {
+  addAnnouncements: BpmEventResult;
   addAttendees: BpmMeetingResult;
   addMinute: BpmMeetingResult;
   closeMeeting: BpmMeetingResult;
+  upsertEvent: BpmEventResult;
   upsertMeeting: BpmMeetingResult;
+};
+
+export type BpmProgramsMutationAddAnnouncementsArgs = {
+  data: BpmEventAnnouncementInput;
+  eventId: Scalars['ID'];
 };
 
 export type BpmProgramsMutationAddAttendeesArgs = {
@@ -1802,19 +1880,35 @@ export type BpmProgramsMutationCloseMeetingArgs = {
   meetingId: Scalars['ID'];
 };
 
+export type BpmProgramsMutationUpsertEventArgs = {
+  data: BpmEventInput;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
 export type BpmProgramsMutationUpsertMeetingArgs = {
   data: BpmMeetingInput;
   id?: InputMaybe<Scalars['ID']>;
 };
 
 export type BpmProgramsQuery = {
+  eventDetails: BpmEventDetail;
   getEmployeeDetails: BpmEmployeeMinimal;
+  listEvents: BpmEventConnection;
   listMeetings: BpmMeetingConnection;
   meetingDetail: BpmMeetingDetail;
 };
 
+export type BpmProgramsQueryEventDetailsArgs = {
+  id: Scalars['ID'];
+};
+
 export type BpmProgramsQueryGetEmployeeDetailsArgs = {
   employeeId: Scalars['ID'];
+};
+
+export type BpmProgramsQueryListEventsArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type BpmProgramsQueryListMeetingsArgs = {
@@ -4107,6 +4201,12 @@ export type DataMigration = {
   updateSavingEndDate?: Maybe<Scalars['String']>;
 };
 
+export type DateEntry = {
+  date?: InputMaybe<Scalars['Localized']>;
+  endTime?: InputMaybe<Scalars['Time']>;
+  startTime?: InputMaybe<Scalars['Time']>;
+};
+
 export type DateFilter = {
   from?: InputMaybe<Scalars['String']>;
   to?: InputMaybe<Scalars['String']>;
@@ -4115,6 +4215,12 @@ export type DateFilter = {
 export type DateFilterOutput = {
   from?: Maybe<Scalars['String']>;
   to?: Maybe<Scalars['String']>;
+};
+
+export type DateResult = {
+  date?: Maybe<Scalars['Localized']>;
+  endTime?: Maybe<Scalars['Time']>;
+  startTime?: Maybe<Scalars['Time']>;
 };
 
 export const DateType = {
@@ -6318,6 +6424,12 @@ export type EndOfDayDetailsEdges = {
   node?: Maybe<EndOfDayDetail>;
 };
 
+export const EventDays = {
+  MultipleDays: 'MULTIPLE_DAYS',
+  SingleDay: 'SINGLE_DAY',
+} as const;
+
+export type EventDays = typeof EventDays[keyof typeof EventDays];
 export type Example = {
   age: Scalars['Int'];
   enrolledAt: Scalars['Time'];
