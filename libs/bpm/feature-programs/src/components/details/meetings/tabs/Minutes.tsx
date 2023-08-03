@@ -34,7 +34,7 @@ export const Minutes = () => {
             <Icon color="primary.500" as={IoAddOutline} />
 
             <Text fontWeight="500" fontSize="s3">
-              Add Minute
+              Add Minutes
             </Text>
           </Box>
         </Grid>

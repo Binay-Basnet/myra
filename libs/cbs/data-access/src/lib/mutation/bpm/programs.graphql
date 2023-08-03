@@ -36,3 +36,16 @@ mutation setAddMinutes($meetingID: ID!, $data: MinuteInput!) {
     }
   }
 }
+
+mutation setAddMeetingAttendees($meetingID: ID!, $attendees: [String!]) {
+  bpm {
+    programs {
+      addAttendees(meetingId: $meetingID, attendeeIds: $attendees) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
