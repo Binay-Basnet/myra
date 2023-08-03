@@ -11,6 +11,7 @@ import {
   CBS,
   HRMODULE,
   INVENTORY,
+  MICROFINANCE,
   SETTINGS,
 } from './navigations';
 
@@ -21,7 +22,8 @@ export type ModuleType =
   | 'ACCOUNTING'
   | 'INVENTORY'
   | 'HRMODULE'
-  | 'BPM';
+  | 'BPM'
+  | 'MICROFINANCE';
 
 export type MenuType =
   | 'MEMBERS'
@@ -56,7 +58,8 @@ export type MenuType =
   | 'POLICY'
   | 'TASKS'
   | 'PROGRAMS'
-  | 'OPERATIONS';
+  | 'OPERATIONS'
+  | 'GROUPS';
 
 export type Page = {
   label: string;
@@ -96,6 +99,7 @@ export const APP_NAVS = {
   INVENTORY,
   HRMODULE,
   BPM,
+  MICROFINANCE,
 };
 
 export const useLink = (app: ModuleType = 'CBS') => {

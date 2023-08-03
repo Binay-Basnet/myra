@@ -1733,6 +1733,11 @@ export type AuthorizationError = {
   message: Scalars['String'];
 };
 
+export type BpmAnnouncements = {
+  description?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
 export type BpmEmployeeMinimal = {
   contact?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
@@ -1741,6 +1746,72 @@ export type BpmEmployeeMinimal = {
   name?: Maybe<Scalars['String']>;
 };
 
+export type BpmEventAnnouncementInput = {
+  description: Scalars['String'];
+  title: Scalars['String'];
+};
+
+export type BpmEventConnection = {
+  edges?: Maybe<Array<Maybe<BpmEventNode>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type BpmEventDetail = {
+  announcements?: Maybe<Array<Maybe<BpmAnnouncements>>>;
+  error?: Maybe<QueryError>;
+  overview?: Maybe<BpmEventOverview>;
+};
+
+export type BpmEventInput = {
+  attendeeIds?: InputMaybe<Array<Scalars['String']>>;
+  dateEntry?: InputMaybe<Array<InputMaybe<DateEntry>>>;
+  departmentIds?: InputMaybe<Array<Scalars['String']>>;
+  eventDays?: InputMaybe<EventDays>;
+  eventType: BpmEventType;
+  files?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  priority?: InputMaybe<Priority>;
+  scheduledBy?: InputMaybe<Scalars['String']>;
+  sendInvitationEmail?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type BpmEventNode = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<BpmEventOverview>;
+};
+
+export type BpmEventOverview = {
+  attendees?: Maybe<Array<Maybe<BpmEmployeeMinimal>>>;
+  departmentIds?: Maybe<Array<Scalars['String']>>;
+  eventDates?: Maybe<Array<Maybe<DateResult>>>;
+  eventDays?: Maybe<EventDays>;
+  eventName?: Maybe<Scalars['String']>;
+  eventType?: Maybe<BpmEventType>;
+  id: Scalars['ID'];
+  note?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['String']>;
+  priority?: Maybe<Priority>;
+  scheduledBy?: Maybe<Scalars['String']>;
+  scheduledById?: Maybe<Scalars['String']>;
+  startDate?: Maybe<Scalars['Localized']>;
+  startTime?: Maybe<Scalars['Time']>;
+  status?: Maybe<MeetingStatus>;
+  totalAttendees?: Maybe<Scalars['Int']>;
+};
+
+export type BpmEventResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export const BpmEventType = {
+  Indoor: 'INDOOR',
+  Outdoor: 'OUTDOOR',
+} as const;
+
+export type BpmEventType = typeof BpmEventType[keyof typeof BpmEventType];
 export type BpmMeetingConnection = {
   edges?: Maybe<Array<Maybe<BpmMeetingNode>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -1782,10 +1853,17 @@ export type BpmMutation = {
 };
 
 export type BpmProgramsMutation = {
+  addAnnouncements: BpmEventResult;
   addAttendees: BpmMeetingResult;
   addMinute: BpmMeetingResult;
   closeMeeting: BpmMeetingResult;
+  upsertEvent: BpmEventResult;
   upsertMeeting: BpmMeetingResult;
+};
+
+export type BpmProgramsMutationAddAnnouncementsArgs = {
+  data: BpmEventAnnouncementInput;
+  eventId: Scalars['ID'];
 };
 
 export type BpmProgramsMutationAddAttendeesArgs = {
@@ -1802,19 +1880,35 @@ export type BpmProgramsMutationCloseMeetingArgs = {
   meetingId: Scalars['ID'];
 };
 
+export type BpmProgramsMutationUpsertEventArgs = {
+  data: BpmEventInput;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
 export type BpmProgramsMutationUpsertMeetingArgs = {
   data: BpmMeetingInput;
   id?: InputMaybe<Scalars['ID']>;
 };
 
 export type BpmProgramsQuery = {
+  eventDetails: BpmEventDetail;
   getEmployeeDetails: BpmEmployeeMinimal;
+  listEvents: BpmEventConnection;
   listMeetings: BpmMeetingConnection;
   meetingDetail: BpmMeetingDetail;
 };
 
+export type BpmProgramsQueryEventDetailsArgs = {
+  id: Scalars['ID'];
+};
+
 export type BpmProgramsQueryGetEmployeeDetailsArgs = {
   employeeId: Scalars['ID'];
+};
+
+export type BpmProgramsQueryListEventsArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type BpmProgramsQueryListMeetingsArgs = {
@@ -2962,6 +3056,17 @@ export const CashValue = {
 } as const;
 
 export type CashValue = typeof CashValue[keyof typeof CashValue];
+export type CenterOverview = {
+  centerCoordinator?: Maybe<Member>;
+  centerId?: Maybe<Scalars['String']>;
+  centerName?: Maybe<Scalars['String']>;
+  groupList?: Maybe<Array<Maybe<MfGroupOverview>>>;
+  toalLoan?: Maybe<Scalars['String']>;
+  totalGroups?: Maybe<Scalars['Int']>;
+  totalMembers?: Maybe<Scalars['Int']>;
+  totalSaving?: Maybe<Scalars['String']>;
+};
+
 export type CertificatePrint = {
   fbCertificateReport?: Maybe<CertificatePrintReportResult>;
   issueCertificateReport?: Maybe<CertificatePrintReportResult>;
@@ -4096,6 +4201,12 @@ export type DataMigration = {
   updateSavingEndDate?: Maybe<Scalars['String']>;
 };
 
+export type DateEntry = {
+  date?: InputMaybe<Scalars['Localized']>;
+  endTime?: InputMaybe<Scalars['Time']>;
+  startTime?: InputMaybe<Scalars['Time']>;
+};
+
 export type DateFilter = {
   from?: InputMaybe<Scalars['String']>;
   to?: InputMaybe<Scalars['String']>;
@@ -4104,6 +4215,12 @@ export type DateFilter = {
 export type DateFilterOutput = {
   from?: Maybe<Scalars['String']>;
   to?: Maybe<Scalars['String']>;
+};
+
+export type DateResult = {
+  date?: Maybe<Scalars['Localized']>;
+  endTime?: Maybe<Scalars['Time']>;
+  startTime?: Maybe<Scalars['Time']>;
 };
 
 export const DateType = {
@@ -6307,6 +6424,12 @@ export type EndOfDayDetailsEdges = {
   node?: Maybe<EndOfDayDetail>;
 };
 
+export const EventDays = {
+  MultipleDays: 'MULTIPLE_DAYS',
+  SingleDay: 'SINGLE_DAY',
+} as const;
+
+export type EventDays = typeof EventDays[keyof typeof EventDays];
 export type Example = {
   age: Scalars['Int'];
   enrolledAt: Scalars['Time'];
@@ -7862,6 +7985,20 @@ export type GraphData = {
   time?: Maybe<Scalars['Int']>;
 };
 
+export type GroupBalanceHistory = {
+  avgBalance?: Maybe<Scalars['String']>;
+  totalDeposit?: Maybe<Scalars['String']>;
+  totalWithdraw?: Maybe<Scalars['String']>;
+  trend?: Maybe<Array<Maybe<Scalars['Int']>>>;
+};
+
+export const GroupMeetingStatus = {
+  AttendancePending: 'ATTENDANCE_PENDING',
+  Completed: 'COMPLETED',
+  DecisionPending: 'DECISION_PENDING',
+} as const;
+
+export type GroupMeetingStatus = typeof GroupMeetingStatus[keyof typeof GroupMeetingStatus];
 export type GuaranteeAccountsMinView = {
   loanAccountName?: Maybe<Scalars['String']>;
   loanId?: Maybe<Scalars['String']>;
@@ -14323,6 +14460,11 @@ export type MBankingTransactionResult = {
   error?: Maybe<QueryError>;
 };
 
+export type MfCenterDetail = {
+  error?: Maybe<QueryError>;
+  overview?: Maybe<CenterOverview>;
+};
+
 export type MfCenterEntry = {
   address?: Maybe<Address>;
   code: Scalars['String'];
@@ -14358,6 +14500,22 @@ export type MfCenterResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type MfGroupDetails = {
+  error?: Maybe<QueryError>;
+  groupMembers?: Maybe<Array<Maybe<Member>>>;
+  meetings?: Maybe<MpGroupMeetings>;
+  overview?: Maybe<MfGroupOverview>;
+};
+
+export type MfGroupEntry = {
+  createdDate?: Maybe<Scalars['Localized']>;
+  groupCoordinator?: Maybe<Member>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  totalMembers?: Maybe<Scalars['Int']>;
+};
+
 export type MfGroupInput = {
   Documents: Array<DocumentInsertInput>;
   MaxMmebers?: InputMaybe<Scalars['Int']>;
@@ -14370,12 +14528,40 @@ export type MfGroupInput = {
   minMembers?: InputMaybe<Scalars['Int']>;
 };
 
+export type MfGroupListConnection = {
+  edges?: Maybe<Array<Maybe<MfGroupListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type MfGroupListEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<MfGroupEntry>;
+};
+
+export type MfGroupMembersInput = {
+  groupId: Scalars['ID'];
+  memberIds?: InputMaybe<Array<Scalars['String']>>;
+};
+
 export const MfGroupObjectState = {
   Active: 'ACTIVE',
   Inactive: 'INACTIVE',
 } as const;
 
 export type MfGroupObjectState = typeof MfGroupObjectState[keyof typeof MfGroupObjectState];
+export type MfGroupOverview = {
+  balanceHistory?: Maybe<GroupBalanceHistory>;
+  createdDate?: Maybe<Scalars['Localized']>;
+  groupCoordinator?: Maybe<Member>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
+  newMemberCount?: Maybe<Scalars['Int']>;
+  totalBalance?: Maybe<Scalars['String']>;
+  totalMeeting?: Maybe<Scalars['Int']>;
+  totalMember?: Maybe<Scalars['Int']>;
+};
+
 export type MfGroupResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['ID']>;
@@ -14387,6 +14573,14 @@ export const MfObjectState = {
 } as const;
 
 export type MfObjectState = typeof MfObjectState[keyof typeof MfObjectState];
+export type MpGroupMeetings = {
+  pastMeetingCount?: Maybe<Scalars['Int']>;
+  pastMeetings?: Maybe<Array<Maybe<Meetings>>>;
+  totalMeetings?: Maybe<Scalars['Int']>;
+  upcomingMeeting?: Maybe<Array<Maybe<Meetings>>>;
+  upcomingMeetingCount?: Maybe<Scalars['Int']>;
+};
+
 export const MrTransactionFilter = {
   Deposit: 'DEPOSIT',
   Withdraw: 'WITHDRAW',
@@ -14498,6 +14692,15 @@ export const MeetingType = {
 } as const;
 
 export type MeetingType = typeof MeetingType[keyof typeof MeetingType];
+export type Meetings = {
+  agenda?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  endTime?: Maybe<Scalars['Time']>;
+  startTime?: Maybe<Scalars['Time']>;
+  status?: Maybe<GroupMeetingStatus>;
+  totalMember?: Maybe<Scalars['Int']>;
+};
+
 export type Member = Base & {
   activeDate?: Maybe<Scalars['Localized']>;
   address?: Maybe<Address>;
@@ -14510,6 +14713,7 @@ export type Member = Base & {
   createdAt: Scalars['Time'];
   createdBy: Identity;
   dateJoined?: Maybe<Scalars['Localized']>;
+  email?: Maybe<Scalars['String']>;
   gender?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   inactiveDate?: Maybe<Scalars['Localized']>;
@@ -15578,7 +15782,12 @@ export type MicroFinanceCenterMutationAddMfCenterArgs = {
 };
 
 export type MicroFinanceCenterQuery = {
+  centerDetail: MfCenterDetail;
   listMFCenter: MfCenterListConnection;
+};
+
+export type MicroFinanceCenterQueryCenterDetailArgs = {
+  centerId: Scalars['ID'];
 };
 
 export type MicroFinanceCenterQueryListMfCenterArgs = {
@@ -15588,10 +15797,29 @@ export type MicroFinanceCenterQueryListMfCenterArgs = {
 
 export type MicroFinanceGroupMutation = {
   addMFGroup: MfGroupResult;
+  addMembers: MfGroupResult;
 };
 
 export type MicroFinanceGroupMutationAddMfGroupArgs = {
   input: MfGroupInput;
+};
+
+export type MicroFinanceGroupMutationAddMembersArgs = {
+  input: MfGroupMembersInput;
+};
+
+export type MicroFinanceGroupQuery = {
+  groupDetails?: Maybe<MfGroupDetails>;
+  listGroup: MfGroupListConnection;
+};
+
+export type MicroFinanceGroupQueryGroupDetailsArgs = {
+  groupId: Scalars['ID'];
+};
+
+export type MicroFinanceGroupQueryListGroupArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type MicroFinanceMutation = {
@@ -15601,6 +15829,7 @@ export type MicroFinanceMutation = {
 
 export type MicroFinanceQuery = {
   center: MicroFinanceCenterQuery;
+  group: MicroFinanceGroupQuery;
 };
 
 export type MinMaxFilter = {
@@ -22308,6 +22537,28 @@ export type SetAddMinutesMutation = {
   bpm: {
     programs: {
       addMinute: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type SetAddMeetingAttendeesMutationVariables = Exact<{
+  meetingID: Scalars['ID'];
+  attendees?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+}>;
+
+export type SetAddMeetingAttendeesMutation = {
+  bpm: {
+    programs: {
+      addAttendees: {
         recordId?: string | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -29555,6 +29806,7 @@ export type GetLeaveQuery = {
           record?: {
             id: string;
             employeeId: string;
+            employeeName: string;
             leaveTypeId: string;
             leaveTypeName: string;
             leaveFrom: Record<'local' | 'en' | 'np', string>;
@@ -43652,6 +43904,40 @@ export const useSetAddMinutesMutation = <TError = unknown, TContext = unknown>(
     useAxios<SetAddMinutesMutation, SetAddMinutesMutationVariables>(SetAddMinutesDocument),
     options
   );
+export const SetAddMeetingAttendeesDocument = `
+    mutation setAddMeetingAttendees($meetingID: ID!, $attendees: [String!]) {
+  bpm {
+    programs {
+      addAttendees(meetingId: $meetingID, attendeeIds: $attendees) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAddMeetingAttendeesMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAddMeetingAttendeesMutation,
+    TError,
+    SetAddMeetingAttendeesMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAddMeetingAttendeesMutation,
+    TError,
+    SetAddMeetingAttendeesMutationVariables,
+    TContext
+  >(
+    ['setAddMeetingAttendees'],
+    useAxios<SetAddMeetingAttendeesMutation, SetAddMeetingAttendeesMutationVariables>(
+      SetAddMeetingAttendeesDocument
+    ),
+    options
+  );
 export const AddNewAccountInCoaDocument = `
     mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
   settings {
@@ -53650,6 +53936,7 @@ export const GetLeaveDocument = `
           record {
             id
             employeeId
+            employeeName
             leaveTypeId
             leaveTypeName
             leaveFrom

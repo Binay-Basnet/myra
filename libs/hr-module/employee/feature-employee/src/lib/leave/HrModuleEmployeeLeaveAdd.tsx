@@ -150,18 +150,20 @@ export const HrLeaveAdd = () => {
             </GridItem>
             <FormSelect name="leaveTypeId" label="Leave Type" options={leaveTypeOptions} />
           </FormSection>
-          <FormSection templateColumns={3} divider header="Allocated Leaves">
-            <GridItem colSpan={3} p="s4">
-              <Table
-                data={rowData}
-                columns={columns}
-                variant="report"
-                size="report"
-                isStatic
-                isLoading={isFetching}
-              />
-            </GridItem>
-          </FormSection>
+          {employeeIdWatch && (
+            <FormSection templateColumns={3} divider header="Allocated Leaves">
+              <GridItem colSpan={3} p="s4">
+                <Table
+                  data={rowData}
+                  columns={columns}
+                  variant="report"
+                  size="report"
+                  isStatic
+                  isLoading={isFetching}
+                />
+              </GridItem>
+            </FormSection>
+          )}
           <FormSection templateColumns={3} divider>
             <FormDatePicker name="leaveFrom" label="From Date" />
             <FormDatePicker name="leaveTo" label="To Date" />

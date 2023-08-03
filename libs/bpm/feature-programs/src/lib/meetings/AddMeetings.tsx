@@ -132,7 +132,8 @@ export const BPMMeetingsAdd = () => {
       methods?.reset({
         ...filteredValues,
         time: dayjs(itemFormData?.time)?.format('HH:mm'),
-        scheduledBy: itemFormData?.scheduledBy,
+        scheduledBy: itemFormData?.scheduledById,
+        position: itemFormData?.position as string,
         department: !!itemFormData?.departmentIds?.length,
         departmentIds: itemFormData?.departmentIds?.map((item) => ({
           label: departmentOptions?.find((d) => d?.value === item)?.label,

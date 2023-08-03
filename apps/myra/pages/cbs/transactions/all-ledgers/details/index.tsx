@@ -11,10 +11,11 @@ const COADetailPage = () => {
 
   const { id } = router.query;
 
-  if (id?.includes('-')) {
-    return <COAAccountDetail />;
+  if (/^\d+(\.\d+)*$/.test(id as string)) {
+    return <COALeafDetail />;
   }
-  return <COALeafDetail />;
+
+  return <COAAccountDetail />;
 };
 
 COADetailPage.getLayout = function getLayout(page: ReactElement) {
