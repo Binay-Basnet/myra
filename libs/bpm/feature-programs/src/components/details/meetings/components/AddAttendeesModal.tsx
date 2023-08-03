@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
@@ -9,6 +9,8 @@ import { Column } from '@myra-ui/editable-table';
 
 import { useGetEmployeeListQuery, useSetAddMeetingAttendeesMutation } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
+
+import { useMeetingDetailsHook } from '../hooks/useMeetingDetails';
 
 interface IUpdateBalanceProps {
   isOpen: boolean;
@@ -31,6 +33,7 @@ type FormType = {
 export const AddAttendeesModal = ({ isOpen, onClose }: IUpdateBalanceProps) => {
   const methods = useForm<FormType>({});
   const { watch, setValue } = methods;
+  const { detailData } = useMeetingDetailsHook();
   const queryClient = useQueryClient();
   const router = useRouter();
   const id = router?.query['id'];
@@ -118,6 +121,23 @@ export const AddAttendeesModal = ({ isOpen, onClose }: IUpdateBalanceProps) => {
       );
     }
   }, [itemDetails, fullEmployeeList]);
+
+  const itemFormData = detailData?.overview?.attendees?.map((d) => ({
+    attendee: d?.id,
+    position: d?.designation,
+  }));
+
+  useEffect(() => {
+    if (itemFormData) {
+      methods?.reset({
+        data: itemFormData?.map((items) => ({
+          attendee: items?.attendee as string,
+
+          department: String(items?.position),
+        })),
+      });
+    }
+  }, [id, isOpen]);
 
   return (
     <Modal
