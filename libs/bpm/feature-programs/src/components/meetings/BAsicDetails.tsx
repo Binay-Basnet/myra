@@ -25,7 +25,7 @@ const meetingType = [
     value: MeetingType?.Casual,
   },
   {
-    label: 'BOD',
+    label: 'Other',
     value: MeetingType?.Other,
   },
 ];

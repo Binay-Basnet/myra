@@ -80,7 +80,17 @@ export const BPMProgramsMeetingsList = () => {
               node={props?.row?.original}
               items={[
                 {
-                  title: 'Edit',
+                  title: 'View Details',
+                  aclKey: 'CBS_MEMBERS_MEMBER',
+                  action: 'VIEW',
+                  onClick: () => {
+                    router.push(
+                      `${ROUTES.BPM_PROGRAMS_MEETINGS_DETAILS}?id=${props?.row?.original?.node?.id}`
+                    );
+                  },
+                },
+                {
+                  title: 'Edit Meeting',
                   aclKey: 'CBS_MEMBERS_MEMBER',
                   action: 'VIEW',
                   onClick: () => {
@@ -91,6 +101,7 @@ export const BPMProgramsMeetingsList = () => {
                 },
                 {
                   title: 'Close Meeting',
+
                   aclKey: 'CBS_MEMBERS_MEMBER',
                   action: 'VIEW',
                   onClick: (row) => handleCloseMeeting(row?.node?.id as string),
@@ -112,9 +123,9 @@ export const BPMProgramsMeetingsList = () => {
       <Table
         isLoading={isLoading}
         data={rowData}
-        // rowOnClick={(row) => {
-        //   router.push(`${ROUTES.BPM_PROGRAMS_MEETINGS_DETAILS}?id=${row?.node?.id}`);
-        // }}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.BPM_PROGRAMS_MEETINGS_DETAILS}?id=${row?.node?.id}`);
+        }}
         columns={columns}
         pagination={{
           total: meetingData?.bpm?.programs?.listMeetings?.totalCount ?? 'Many',

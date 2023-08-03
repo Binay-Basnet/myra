@@ -22550,6 +22550,28 @@ export type SetAddMinutesMutation = {
   };
 };
 
+export type SetAddMeetingAttendeesMutationVariables = Exact<{
+  meetingID: Scalars['ID'];
+  attendees?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+}>;
+
+export type SetAddMeetingAttendeesMutation = {
+  bpm: {
+    programs: {
+      addAttendees: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
 export type AddNewAccountInCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
 }>;
@@ -43880,6 +43902,40 @@ export const useSetAddMinutesMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetAddMinutesMutation, TError, SetAddMinutesMutationVariables, TContext>(
     ['setAddMinutes'],
     useAxios<SetAddMinutesMutation, SetAddMinutesMutationVariables>(SetAddMinutesDocument),
+    options
+  );
+export const SetAddMeetingAttendeesDocument = `
+    mutation setAddMeetingAttendees($meetingID: ID!, $attendees: [String!]) {
+  bpm {
+    programs {
+      addAttendees(meetingId: $meetingID, attendeeIds: $attendees) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAddMeetingAttendeesMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAddMeetingAttendeesMutation,
+    TError,
+    SetAddMeetingAttendeesMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAddMeetingAttendeesMutation,
+    TError,
+    SetAddMeetingAttendeesMutationVariables,
+    TContext
+  >(
+    ['setAddMeetingAttendees'],
+    useAxios<SetAddMeetingAttendeesMutation, SetAddMeetingAttendeesMutationVariables>(
+      SetAddMeetingAttendeesDocument
+    ),
     options
   );
 export const AddNewAccountInCoaDocument = `

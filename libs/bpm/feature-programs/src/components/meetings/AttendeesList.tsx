@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 
@@ -29,6 +29,7 @@ const pirorityType = [
 ];
 export const BPMAttendanceTable = () => {
   const methods = useFormContext();
+  const [triggerReset, setTriggerReset] = useState(false);
   const { watch, setValue } = methods;
   const department = watch('department');
   const departmentId = watch('departmentIds') as { label: string; value: string }[];
@@ -124,9 +125,15 @@ export const BPMAttendanceTable = () => {
   ];
 
   const itemDetails = watch('itemDetails');
+  useEffect(() => {
+    if (departmentId?.length) {
+      setTriggerReset(true);
+    }
+  }, [departmentId]);
 
   useDeepCompareEffect(() => {
-    if (department && departmentId) {
+    if (triggerReset) {
+      setTriggerReset(false);
       setValue(
         'itemDetails',
         employeeList?.map((items) => {
