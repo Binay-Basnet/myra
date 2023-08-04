@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { omit } from 'lodash';
 
 import { asyncToast } from '@myra-ui';
-import { ad2bs } from '@myra-ui/date-picker';
 
 import {
   EmployeeOnboardingInput,
@@ -40,17 +38,17 @@ export const HrLifecycleOnboardingAdd = () => {
 
   const submitForm = () => {
     const data = methods.getValues();
-    const activityDetails =
-      data?.activity_details?.map((item) => ({
-        isDone: item?.isDone,
-        name: item?.name,
-        userName: item?.userName,
-        role: item?.role,
-        beginsOn: convertDate(item?.beginsOn as unknown as string),
-        duration: item?.duration,
-      })) || [];
+    // const activityDetails =
+    //   data?.activity_details?.map((item) => ({
+    //     isDone: item?.isDone,
+    //     name: item?.name,
+    //     userName: item?.userName,
+    //     role: item?.role,
+    //     beginsOn: convertDate(item?.beginsOn as unknown as string),
+    //     duration: item?.duration,
+    //   })) || [];
 
-    const filteredValues = omit({ ...data }, ['activity_details']);
+    // const filteredValues = omit({ ...data }, ['activity_details']);
 
     asyncToast({
       id: 'employee-onboarding',
@@ -63,11 +61,7 @@ export const HrLifecycleOnboardingAdd = () => {
       },
       promise: mutateAsync({
         id: id ? (id as string) : null,
-        input: {
-          ...filteredValues,
-
-          activity_details: activityDetails,
-        } as EmployeeOnboardingInput,
+        input: data as EmployeeOnboardingInput,
       }),
     });
   };
@@ -112,19 +106,19 @@ export const HrLifecycleOnboardingAdd = () => {
 
 export default HrLifecycleOnboardingAdd;
 
-const convertDate = (dateString: string) => {
-  const date = new Date(dateString);
+// const convertDate = (dateString: string) => {
+//   const date = new Date(dateString);
 
-  const convertedDate = {
-    year: date.getFullYear(),
-    month: date.getMonth() + 1,
-    day: date.getDate(),
-  };
-  const bsDate = ad2bs(convertedDate.year, Number(convertedDate.month), Number(convertedDate.day));
-  const nepaliDate = `${bsDate?.year}-${bsDate?.month.toString().padStart(2, '0')}-${bsDate?.day
-    .toString()
-    .padStart(2, '0')}`;
+//   const convertedDate = {
+//     year: date.getFullYear(),
+//     month: date.getMonth() + 1,
+//     day: date.getDate(),
+//   };
+//   const bsDate = ad2bs(convertedDate.year, Number(convertedDate.month), Number(convertedDate.day));
+//   const nepaliDate = `${bsDate?.year}-${bsDate?.month.toString().padStart(2, '0')}-${bsDate?.day
+//     .toString()
+//     .padStart(2, '0')}`;
 
-  const dateObj = { np: nepaliDate, en: dateString, local: '' };
-  return dateObj;
-};
+//   const dateObj = { np: nepaliDate, en: dateString, local: '' };
+//   return dateObj;
+// };
