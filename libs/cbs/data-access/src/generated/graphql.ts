@@ -1848,8 +1848,80 @@ export type BpmMeetingResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type BpmMinorConnection = {
+  edges?: Maybe<Array<Maybe<BpmMinorNode>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type BpmMinorInput = {
+  dateOfBirth?: InputMaybe<Scalars['Localized']>;
+  documents?: InputMaybe<Array<Scalars['String']>>;
+  fullName?: InputMaybe<Scalars['String']>;
+  memberId: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  relationshipId?: InputMaybe<Scalars['String']>;
+};
+
+export type BpmMinorMutation = {
+  addMinor?: Maybe<BpmMinorResult>;
+  minorAction?: Maybe<BpmMinorResult>;
+};
+
+export type BpmMinorMutationAddMinorArgs = {
+  data: BpmMinorInput;
+};
+
+export type BpmMinorMutationMinorActionArgs = {
+  actionType: TransferRequestAction;
+  requestId: Scalars['ID'];
+};
+
+export type BpmMinorNode = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<BpmMinorOverview>;
+};
+
+export type BpmMinorOverview = {
+  address?: Maybe<Address>;
+  approvedDate?: Maybe<Scalars['Localized']>;
+  code: Scalars['String'];
+  contact?: Maybe<Scalars['String']>;
+  dob?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  memberId: Scalars['ID'];
+  minorName?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  relation?: Maybe<Scalars['String']>;
+  requestedDate?: Maybe<Scalars['Localized']>;
+  status?: Maybe<LeaveStatusEnum>;
+};
+
+export type BpmMinorQuery = {
+  listMinors: BpmMinorConnection;
+};
+
+export type BpmMinorQueryListMinorsArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type BpmMinorResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type BpmMutation = {
+  operations: BpmOperationsMutation;
   programs: BpmProgramsMutation;
+};
+
+export type BpmOperationsMutation = {
+  minor: BpmMinorMutation;
+};
+
+export type BpmOperationsQuery = {
+  minor: BpmMinorQuery;
 };
 
 export type BpmProgramsMutation = {
@@ -1921,6 +1993,7 @@ export type BpmProgramsQueryMeetingDetailArgs = {
 };
 
 export type BpmQuery = {
+  operations: BpmOperationsQuery;
   programs: BpmProgramsQuery;
 };
 
@@ -4198,6 +4271,7 @@ export type DataMigration = {
   allLoanSchedule?: Maybe<Scalars['String']>;
   dumpAccountInterest?: Maybe<Scalars['String']>;
   dumpProductCharges?: Maybe<Scalars['String']>;
+  reseedRepayment?: Maybe<Scalars['String']>;
   updateSavingEndDate?: Maybe<Scalars['String']>;
 };
 
@@ -5887,6 +5961,12 @@ export type EachJobOfferRecords = {
 export type EachJobOpeningRecord = {
   data?: Maybe<JobOpeningRecord>;
   error?: Maybe<QueryError>;
+};
+
+export type EachLeaveAllocationConnection = {
+  edges?: Maybe<Array<Maybe<LeaveAllocations>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
 };
 
 export type EachPayrollRunRecords = {
@@ -8510,6 +8590,7 @@ export type HrEmployeeListEdges = {
 export type HrEmployeeMutation = {
   employee: HrEmployeeKyeMutation;
   leave: HrEmployeeLeaveMutation;
+  leaveAllocation: HrEmployeeLeaveAllocationMutation;
 };
 
 export type HrEmployeePromotionConnection = {
@@ -8526,6 +8607,7 @@ export type HrEmployeePromotionEdges = {
 export type HrEmployeeQuery = {
   employee: HrEmployeeKyeQuery;
   leave: HrEmployeeLeaveQuery;
+  leaveAllocation: HrEmployeeLeaveAllocationQuery;
 };
 
 export type HrEmployeeSeparationConnection = {
@@ -8831,6 +8913,29 @@ export type HrEmployeeEducationDetailType = {
   degree_diploma?: Maybe<Scalars['String']>;
   instituteName?: Maybe<Scalars['String']>;
   specialization?: Maybe<Scalars['String']>;
+};
+
+export type HrEmployeeLeaveAllocationMutation = {
+  upsertLeaveAllocation: LeaveAllocationReturn;
+};
+
+export type HrEmployeeLeaveAllocationMutationUpsertLeaveAllocationArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: LeaveAllocationInput;
+};
+
+export type HrEmployeeLeaveAllocationQuery = {
+  getLeaveAllocation: LeaveAllocationGetWithError;
+  listLeaveAllocation: EachLeaveAllocationConnection;
+};
+
+export type HrEmployeeLeaveAllocationQueryGetLeaveAllocationArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrEmployeeLeaveAllocationQueryListLeaveAllocationArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HrEmployeeWorkExperience = {
@@ -12038,6 +12143,59 @@ export type LeafCoaHeadsListConnection = {
   totalCount: Scalars['Int'];
 };
 
+export const LeaveAllocationFor = {
+  Department: 'DEPARTMENT',
+  Designation: 'DESIGNATION',
+  Employee: 'EMPLOYEE',
+  EmployeeLevel: 'EMPLOYEE_LEVEL',
+} as const;
+
+export type LeaveAllocationFor = typeof LeaveAllocationFor[keyof typeof LeaveAllocationFor];
+export type LeaveAllocationGet = {
+  addUnusedLeaveFromPreviousSection?: Maybe<Scalars['Boolean']>;
+  allocation?: Maybe<Array<Maybe<AllocationType>>>;
+  description?: Maybe<Scalars['String']>;
+  effectiveFrom?: Maybe<Scalars['Localized']>;
+  empLevDepDesig?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
+  leaveAllocationFor?: Maybe<LeaveAllocationFor>;
+  leavePolicy?: Maybe<Scalars['ID']>;
+};
+
+export type LeaveAllocationGetWithError = {
+  data?: Maybe<LeaveAllocationGet>;
+  error?: Maybe<QueryError>;
+};
+
+export type LeaveAllocationInput = {
+  addUnusedLeaveFromPreviousSection?: InputMaybe<Scalars['Boolean']>;
+  allocation?: InputMaybe<Array<InputMaybe<AllocationTypeInput>>>;
+  description?: InputMaybe<Scalars['String']>;
+  effectiveFrom?: InputMaybe<Scalars['Localized']>;
+  empLevDepDesig?: InputMaybe<Scalars['ID']>;
+  leaveAllocationFor?: InputMaybe<LeaveAllocationFor>;
+  leavePolicy?: InputMaybe<Scalars['ID']>;
+};
+
+export type LeaveAllocationListed = {
+  effectiveDate?: Maybe<Scalars['Localized']>;
+  employeeId?: Maybe<Scalars['ID']>;
+  employeeName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  lastUpdated?: Maybe<Scalars['Localized']>;
+  leavePolicy?: Maybe<Scalars['String']>;
+};
+
+export type LeaveAllocationReturn = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type LeaveAllocations = {
+  cursor: Scalars['Cursor'];
+  node: LeaveAllocationListed;
+};
+
 export type LeaveInput = {
   employeeId: Scalars['String'];
   leaveFrom: Scalars['Localized'];
@@ -14500,6 +14658,11 @@ export type MfCenterResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type MfDecisions = {
+  files?: Maybe<Array<UploadedDocumentData>>;
+  note?: Maybe<Scalars['String']>;
+};
+
 export type MfGroupDetails = {
   error?: Maybe<QueryError>;
   groupMembers?: Maybe<Array<Maybe<Member>>>;
@@ -14564,6 +14727,71 @@ export type MfGroupOverview = {
 
 export type MfGroupResult = {
   error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type MfMeetingAttendanceInput = {
+  attendedMembers?: InputMaybe<Array<Scalars['String']>>;
+  meetingId: Scalars['ID'];
+};
+
+export type MfMeetingConnection = {
+  edges?: Maybe<Array<Maybe<MfMeetingNode>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type MfMeetingDecision = {
+  files?: InputMaybe<Array<Scalars['String']>>;
+  note?: InputMaybe<Scalars['String']>;
+};
+
+export type MfMeetingDetails = {
+  attendance?: Maybe<Array<Maybe<MfMeetingMembers>>>;
+  decision?: Maybe<MfDecisions>;
+  error?: Maybe<QueryError>;
+  oveview?: Maybe<MfMeetingOverview>;
+};
+
+export type MfMeetingInput = {
+  agenda?: InputMaybe<Scalars['String']>;
+  centerId: Scalars['ID'];
+  date?: InputMaybe<Scalars['Localized']>;
+  endTime?: InputMaybe<Scalars['Time']>;
+  groupId: Scalars['ID'];
+  memberIds?: InputMaybe<Array<Scalars['String']>>;
+  notes?: InputMaybe<Scalars['String']>;
+  startTime?: InputMaybe<Scalars['Time']>;
+};
+
+export type MfMeetingMembers = {
+  code?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  isPresent?: Maybe<Scalars['Boolean']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type MfMeetingNode = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<MfMeetingOverview>;
+};
+
+export type MfMeetingOverview = {
+  agenda?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  endTime?: Maybe<Scalars['Time']>;
+  groupCode?: Maybe<Scalars['String']>;
+  groupId: Scalars['ID'];
+  groupName?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  membersInvited?: Maybe<Scalars['Int']>;
+  presentMembers?: Maybe<Scalars['Int']>;
+  startTime?: Maybe<Scalars['Time']>;
+  status?: Maybe<GroupMeetingStatus>;
+};
+
+export type MfMeetingResult = {
+  error?: Maybe<QueryError>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -15121,6 +15349,7 @@ export type MemberMutation = {
 };
 
 export type MemberMutationBalanceCertificateArgs = {
+  date: Scalars['Localized'];
   id: Scalars['ID'];
 };
 
@@ -15795,6 +16024,40 @@ export type MicroFinanceCenterQueryListMfCenterArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type MicroFinanceGroupMeetingMutation = {
+  addAttendance?: Maybe<MfMeetingResult>;
+  upsertDecision?: Maybe<MfMeetingResult>;
+  upsertMeeting?: Maybe<MfMeetingResult>;
+};
+
+export type MicroFinanceGroupMeetingMutationAddAttendanceArgs = {
+  data: MfMeetingAttendanceInput;
+};
+
+export type MicroFinanceGroupMeetingMutationUpsertDecisionArgs = {
+  data: MfMeetingDecision;
+  meetingId: Scalars['ID'];
+};
+
+export type MicroFinanceGroupMeetingMutationUpsertMeetingArgs = {
+  data: MfMeetingInput;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type MicroFinanceGroupMeetingQuery = {
+  listMFMeetings: MfMeetingConnection;
+  mfMeetingDetail?: Maybe<MfMeetingDetails>;
+};
+
+export type MicroFinanceGroupMeetingQueryListMfMeetingsArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type MicroFinanceGroupMeetingQueryMfMeetingDetailArgs = {
+  meetingID: Scalars['ID'];
+};
+
 export type MicroFinanceGroupMutation = {
   addMFGroup: MfGroupResult;
   addMembers: MfGroupResult;
@@ -15825,11 +16088,13 @@ export type MicroFinanceGroupQueryListGroupArgs = {
 export type MicroFinanceMutation = {
   center?: Maybe<MicroFinanceCenterMutation>;
   group?: Maybe<MicroFinanceGroupMutation>;
+  groupMeeting: MicroFinanceGroupMeetingMutation;
 };
 
 export type MicroFinanceQuery = {
   center: MicroFinanceCenterQuery;
   group: MicroFinanceGroupQuery;
+  groupMeeting: MicroFinanceGroupMeetingQuery;
 };
 
 export type MinMaxFilter = {
@@ -21581,6 +21846,18 @@ export type ActivityInput = {
   userName?: InputMaybe<Scalars['String']>;
 };
 
+export type AllocationType = {
+  leaveId?: Maybe<Scalars['ID']>;
+  newLeaveAllocated?: Maybe<Scalars['Int']>;
+  totalLeavesAllocated?: Maybe<Scalars['Int']>;
+};
+
+export type AllocationTypeInput = {
+  leaveId?: InputMaybe<Scalars['ID']>;
+  newLeaveAllocated?: InputMaybe<Scalars['Int']>;
+  totalLeavesAllocated?: InputMaybe<Scalars['Int']>;
+};
+
 export const ApplicantStatus = {
   Accepted: 'ACCEPTED',
   NotAccepted: 'NOT_ACCEPTED',
@@ -23982,6 +24259,7 @@ export type MemberTransferActionMutation = {
 
 export type BalanceCertificateMutationVariables = Exact<{
   id: Scalars['ID'];
+  date: Scalars['Localized'];
 }>;
 
 export type BalanceCertificateMutation = { members: { balanceCertificate: string } };
@@ -45897,9 +46175,9 @@ export const useMemberTransferActionMutation = <TError = unknown, TContext = unk
     options
   );
 export const BalanceCertificateDocument = `
-    mutation balanceCertificate($id: ID!) {
+    mutation balanceCertificate($id: ID!, $date: Localized!) {
   members {
-    balanceCertificate(id: $id)
+    balanceCertificate(id: $id, date: $date)
   }
 }
     `;
