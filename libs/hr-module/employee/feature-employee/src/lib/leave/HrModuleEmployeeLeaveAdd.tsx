@@ -1,47 +1,26 @@
 import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useGetEployeeOptions, useGetLeaveTypeOptions } from '@hr/common';
 
 import { asyncToast, Column, FormSection, GridItem, Table } from '@myra-ui';
 
 import {
   LeaveInput,
   useGetEmployeeLeaveListQuery,
-  useGetEmployeeLeaveTypeListQuery,
-  useGetEmployeeListQuery,
   useGetLeaveQuery,
   useSetNewLeaveMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormDatePicker, FormInput, FormLayout, FormSelect, FormTextArea } from '@coop/shared/form';
-import { getPaginationQuery } from '@coop/shared/utils';
 
 export const HrLeaveAdd = () => {
   const methods = useForm();
   const router = useRouter();
   const { getValues, reset, watch, setValue } = methods;
 
-  const { data: employeeListData } = useGetEmployeeListQuery({
-    pagination: {
-      ...getPaginationQuery(),
-      first: -1,
-      order: {
-        arrange: 'ASC',
-        column: 'ID',
-      },
-    },
-  });
-
-  const { data: leaveTypeData } = useGetEmployeeLeaveTypeListQuery({
-    pagination: {
-      ...getPaginationQuery(),
-      first: -1,
-      order: {
-        arrange: 'ASC',
-        column: 'ID',
-      },
-    },
-  });
+  const { employeeOptions } = useGetEployeeOptions();
+  const { leaveTypeOptions } = useGetLeaveTypeOptions();
 
   const { mutateAsync } = useSetNewLeaveMutation();
   const { data: leaveData } = useGetLeaveQuery(
@@ -94,19 +73,6 @@ export const HrLeaveAdd = () => {
     }
   }, [JSON.stringify(leaveEditData)]);
 
-  const employeeOptions = employeeListData?.hr?.employee?.employee?.listEmployee?.edges?.map(
-    (item) => ({
-      label: item?.node?.employeeName as string,
-      value: item?.node?.id as string,
-    })
-  );
-
-  const leaveTypeOptions =
-    leaveTypeData?.settings?.general?.HCM?.employee?.leave?.listLeaveType?.edges?.map((item) => ({
-      label: item?.node?.name as string,
-      value: item?.node?.id as string,
-    }));
-
   const fromDateWatch = watch('leaveFrom');
   const toDateWatch = watch('leaveTo');
 
@@ -123,20 +89,37 @@ export const HrLeaveAdd = () => {
   }, [fromDateWatch, toDateWatch]);
 
   const submitForm = () => {
-    asyncToast({
-      id: 'add-new-leave',
-      msgs: {
-        success: 'new leave added succesfully',
-        loading: 'adding new leave',
-      },
-      onSuccess: () => {
-        router.push(ROUTES?.HRMODULE_LEAVE_LIST);
-      },
-      promise: mutateAsync({
-        id: null,
-        input: getValues() as LeaveInput,
-      }),
-    });
+    if (router?.query?.['id']) {
+      asyncToast({
+        id: 'edit-new-leave',
+        msgs: {
+          success: 'leave edited succesfully',
+          loading: 'editing leave',
+        },
+        onSuccess: () => {
+          router.push(ROUTES?.HRMODULE_LEAVE_LIST);
+        },
+        promise: mutateAsync({
+          id: router?.query?.['id'] as string,
+          input: getValues() as LeaveInput,
+        }),
+      });
+    } else {
+      asyncToast({
+        id: 'add-new-leave',
+        msgs: {
+          success: 'new leave added succesfully',
+          loading: 'adding new leave',
+        },
+        onSuccess: () => {
+          router.push(ROUTES?.HRMODULE_LEAVE_LIST);
+        },
+        promise: mutateAsync({
+          id: null,
+          input: getValues() as LeaveInput,
+        }),
+      });
+    }
   };
   return (
     <FormLayout methods={methods}>

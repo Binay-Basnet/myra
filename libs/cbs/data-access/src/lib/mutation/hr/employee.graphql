@@ -42,3 +42,18 @@ mutation approveLeave($id: String!, $input: LeaveStatusEnum!) {
     }
   }
 }
+
+mutation setLeaveAllocation($id: ID, $input: LeaveAllocationInput!) {
+  hr {
+    employee {
+      leaveAllocation {
+        upsertLeaveAllocation(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
