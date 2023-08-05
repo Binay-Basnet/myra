@@ -123,8 +123,8 @@ mutation memberTransferAction($requestId: ID!, $state: MemberTransferState!, $no
   }
 }
 
-mutation balanceCertificate($id: ID!) {
+mutation balanceCertificate($id: ID!, $date: Localized!) {
   members {
-    balanceCertificate(id: $id)
+    balanceCertificate(id: $id, date: $date)
   }
 }

@@ -2,6 +2,7 @@ import React, { Fragment, Reducer, useEffect, useMemo, useReducer, useState } fr
 import { BsChevronRight } from 'react-icons/bs';
 import { IoAdd, IoCloseCircleOutline } from 'react-icons/io5';
 import { useDeepCompareEffect } from 'react-use';
+import { useRouter } from 'next/router';
 import {
   Box,
   Collapse,
@@ -21,10 +22,18 @@ import _, { debounce, uniqueId } from 'lodash';
 import { Checkbox, Grid, GridItem, SwitchTabs } from '@myra-ui';
 import { DatePicker } from '@myra-ui/date-picker';
 
+import { useAppSelector } from '@coop/cbs/data-access';
+
 import { chakraDefaultStyles, getSearchBarStyle } from '../utils/ChakraSelectTheme';
 import { getComponents } from '../utils/SelectComponents';
 
 export const isArrayEqual = <T,>(x: T[], y: T[]) => _(x).xorWith(y, _.isEqual).isEmpty();
+
+type DateValue = {
+  local?: string;
+  en?: string;
+  np?: string;
+};
 
 type EditableValue =
   | string
@@ -33,7 +42,8 @@ type EditableValue =
   | {
       label: string;
       value: string;
-    };
+    }
+  | DateValue;
 
 interface RecordWithId {
   _id?: number;
@@ -136,7 +146,7 @@ type EditableTableAction<TData extends RecordWithId & Record<string, EditableVal
       payload: {
         data: TData;
         column: Column<TData>;
-        newValue: string | boolean;
+        newValue: string | boolean | DateValue;
       };
     }
   | {
@@ -746,6 +756,10 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
   dispatch,
   data,
 }: EditableCellProps<T>) => {
+  const router = useRouter();
+
+  const preference = useAppSelector((state) => state?.auth?.preference);
+
   const [asyncOptions, setAsyncOptions] = useState<{ label: string; value: string }[]>([]);
 
   const Modal = column.modal;
@@ -952,13 +966,15 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
         />
       ) : column?.fieldType === 'date' ? (
         <DatePicker
-          calendarType="AD"
+          calendarType={preference?.date || 'AD'}
+          locale={router.locale as 'en' | 'ne'}
+          value={dataValue ? { ad: (dataValue as DateValue).en } : undefined}
           onChange={(e) => {
             dispatch({
               type: EditableTableActionKind.EDIT,
               payload: {
                 data,
-                newValue: e.ad ?? '',
+                newValue: { np: e.bs, en: e.ad, local: '' },
                 column,
               },
             });
