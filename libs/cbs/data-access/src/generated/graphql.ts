@@ -5889,6 +5889,12 @@ export type EachJobOpeningRecord = {
   error?: Maybe<QueryError>;
 };
 
+export type EachLeaveAllocationConnection = {
+  edges?: Maybe<Array<Maybe<LeaveAllocations>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
 export type EachPayrollRunRecords = {
   data?: Maybe<PayrollRunRecord>;
   error?: Maybe<QueryError>;
@@ -8510,6 +8516,7 @@ export type HrEmployeeListEdges = {
 export type HrEmployeeMutation = {
   employee: HrEmployeeKyeMutation;
   leave: HrEmployeeLeaveMutation;
+  leaveAllocation: HrEmployeeLeaveAllocationMutation;
 };
 
 export type HrEmployeePromotionConnection = {
@@ -8526,6 +8533,7 @@ export type HrEmployeePromotionEdges = {
 export type HrEmployeeQuery = {
   employee: HrEmployeeKyeQuery;
   leave: HrEmployeeLeaveQuery;
+  leaveAllocation: HrEmployeeLeaveAllocationQuery;
 };
 
 export type HrEmployeeSeparationConnection = {
@@ -8831,6 +8839,29 @@ export type HrEmployeeEducationDetailType = {
   degree_diploma?: Maybe<Scalars['String']>;
   instituteName?: Maybe<Scalars['String']>;
   specialization?: Maybe<Scalars['String']>;
+};
+
+export type HrEmployeeLeaveAllocationMutation = {
+  upsertLeaveAllocation: LeaveAllocationReturn;
+};
+
+export type HrEmployeeLeaveAllocationMutationUpsertLeaveAllocationArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: LeaveAllocationInput;
+};
+
+export type HrEmployeeLeaveAllocationQuery = {
+  getLeaveAllocation: LeaveAllocationGetWithError;
+  listLeaveAllocation: EachLeaveAllocationConnection;
+};
+
+export type HrEmployeeLeaveAllocationQueryGetLeaveAllocationArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrEmployeeLeaveAllocationQueryListLeaveAllocationArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HrEmployeeWorkExperience = {
@@ -12036,6 +12067,59 @@ export type LeafCoaHeadsListConnection = {
   edges?: Maybe<Array<Maybe<LeafCoaHeadsEdge>>>;
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
+};
+
+export const LeaveAllocationFor = {
+  Department: 'DEPARTMENT',
+  Designation: 'DESIGNATION',
+  Employee: 'EMPLOYEE',
+  EmployeeLevel: 'EMPLOYEE_LEVEL',
+} as const;
+
+export type LeaveAllocationFor = typeof LeaveAllocationFor[keyof typeof LeaveAllocationFor];
+export type LeaveAllocationGet = {
+  addUnusedLeaveFromPreviousSection?: Maybe<Scalars['Boolean']>;
+  allocation?: Maybe<Array<Maybe<AllocationType>>>;
+  description?: Maybe<Scalars['String']>;
+  effectiveFrom?: Maybe<Scalars['Localized']>;
+  empLevDepDesig?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
+  leaveAllocationFor?: Maybe<LeaveAllocationFor>;
+  leavePolicy?: Maybe<Scalars['ID']>;
+};
+
+export type LeaveAllocationGetWithError = {
+  data?: Maybe<LeaveAllocationGet>;
+  error?: Maybe<QueryError>;
+};
+
+export type LeaveAllocationInput = {
+  addUnusedLeaveFromPreviousSection?: InputMaybe<Scalars['Boolean']>;
+  allocation?: InputMaybe<Array<InputMaybe<AllocationTypeInput>>>;
+  description?: InputMaybe<Scalars['String']>;
+  effectiveFrom?: InputMaybe<Scalars['Localized']>;
+  empLevDepDesig?: InputMaybe<Scalars['ID']>;
+  leaveAllocationFor?: InputMaybe<LeaveAllocationFor>;
+  leavePolicy?: InputMaybe<Scalars['ID']>;
+};
+
+export type LeaveAllocationListed = {
+  effectiveDate?: Maybe<Scalars['Localized']>;
+  employeeId?: Maybe<Scalars['ID']>;
+  employeeName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  lastUpdated?: Maybe<Scalars['Localized']>;
+  leavePolicy?: Maybe<Scalars['String']>;
+};
+
+export type LeaveAllocationReturn = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type LeaveAllocations = {
+  cursor: Scalars['Cursor'];
+  node: LeaveAllocationListed;
 };
 
 export type LeaveInput = {
@@ -21581,6 +21665,18 @@ export type ActivityInput = {
   userName?: InputMaybe<Scalars['String']>;
 };
 
+export type AllocationType = {
+  leaveId?: Maybe<Scalars['ID']>;
+  newLeaveAllocated?: Maybe<Scalars['Int']>;
+  totalLeavesAllocated?: Maybe<Scalars['Int']>;
+};
+
+export type AllocationTypeInput = {
+  leaveId?: InputMaybe<Scalars['ID']>;
+  newLeaveAllocated?: InputMaybe<Scalars['Int']>;
+  totalLeavesAllocated?: InputMaybe<Scalars['Int']>;
+};
+
 export const ApplicantStatus = {
   Accepted: 'ACCEPTED',
   NotAccepted: 'NOT_ACCEPTED',
@@ -22559,6 +22655,28 @@ export type SetAddMeetingAttendeesMutation = {
   bpm: {
     programs: {
       addAttendees: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type SetBpmAddEventsMutationVariables = Exact<{
+  Id?: InputMaybe<Scalars['ID']>;
+  data: BpmEventInput;
+}>;
+
+export type SetBpmAddEventsMutation = {
+  bpm: {
+    programs: {
+      upsertEvent: {
         recordId?: string | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -43936,6 +44054,33 @@ export const useSetAddMeetingAttendeesMutation = <TError = unknown, TContext = u
     useAxios<SetAddMeetingAttendeesMutation, SetAddMeetingAttendeesMutationVariables>(
       SetAddMeetingAttendeesDocument
     ),
+    options
+  );
+export const SetBpmAddEventsDocument = `
+    mutation setBPMAddEvents($Id: ID, $data: BPMEventInput!) {
+  bpm {
+    programs {
+      upsertEvent(data: $data, id: $Id) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetBpmAddEventsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetBpmAddEventsMutation,
+    TError,
+    SetBpmAddEventsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetBpmAddEventsMutation, TError, SetBpmAddEventsMutationVariables, TContext>(
+    ['setBPMAddEvents'],
+    useAxios<SetBpmAddEventsMutation, SetBpmAddEventsMutationVariables>(SetBpmAddEventsDocument),
     options
   );
 export const AddNewAccountInCoaDocument = `
