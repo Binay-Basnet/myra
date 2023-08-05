@@ -198,7 +198,6 @@ query getLeaveAllocation($id: ID!) {
       leaveAllocation {
         getLeaveAllocation(id: $id) {
           data {
-            id
             leaveAllocationFor
             empLevDepDesig
             leavePolicy
