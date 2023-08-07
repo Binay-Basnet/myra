@@ -199,7 +199,13 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
 
             {isDiffMember && (
               <GridItem colSpan={3}>
-                <FormMemberSelect isRequired name="withdrawSlip.memberId" label="Member" />
+                <FormMemberSelect
+                  isRequired
+                  name="withdrawSlip.memberId"
+                  label="Member"
+                  forceEnableAll
+                  excludeIds={[memberId]}
+                />
               </GridItem>
             )}
 
