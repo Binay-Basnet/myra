@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import dayjs from 'dayjs';
 import { omit } from 'lodash';
 
 import { asyncToast } from '@myra-ui';
@@ -45,14 +46,16 @@ type CustomBPMInput = Omit<BpmEventInput, 'departmentIds' | 'dateEntry'> & {
 
     department: string;
   }[];
-  dateEntry?: {
-    date: string;
-    startTime: string;
-    endTime: string;
-  }[];
+  dateEntry?:
+    | ({
+        date: string | null | Record<'local' | 'en' | 'np', string> | undefined;
+        startTime: string | null;
+        endTime: string | null;
+      } | null)[]
+    | null;
   singleDayDate?: Record<'local' | 'en' | 'np', string> | null;
-  singlDayStart?: string;
-  singleDayEnd?: string;
+  singlDayStart?: string | null;
+  singleDayEnd?: string | null;
 };
 
 export const BPMEventsAdd = () => {
@@ -157,14 +160,39 @@ export const BPMEventsAdd = () => {
         'id',
         'position',
         'status',
+        'scheduledById',
+        'eventDates',
+        'note',
+        'eventName',
       ]);
 
       methods?.reset({
         ...filteredValues,
         // time: dayjs(itemFormData?.time)?.format('HH:mm'),
         scheduledBy: itemFormData?.scheduledById,
+        name: itemFormData?.eventName as string,
         eventType: itemFormData?.eventType ?? undefined,
+        notes: itemFormData?.note,
+        dateEntry:
+          itemFormData?.eventDays === 'MULTIPLE_DAYS'
+            ? itemFormData?.eventDates?.map((d) => ({
+                date: d?.date,
+                startTime: dayjs(d?.startTime)?.format('HH:mm'),
+                endTime: dayjs(d?.endTime)?.format('HH:mm'),
+              }))
+            : [],
         position: itemFormData?.position as string,
+        singleDayDate:
+          itemFormData?.eventDays === 'SINGLE_DAY' ? itemFormData?.eventDates?.[0]?.date : null,
+        singlDayStart:
+          itemFormData?.eventDays === 'SINGLE_DAY'
+            ? dayjs(itemFormData?.eventDates?.[0]?.startTime).format('HH:mm')
+            : null,
+        singleDayEnd:
+          itemFormData?.eventDays === 'SINGLE_DAY'
+            ? dayjs(itemFormData?.eventDates?.[0]?.endTime).format('HH:mm')
+            : null,
+
         department: !!itemFormData?.departmentIds?.length,
         departmentIds: itemFormData?.departmentIds?.map((item) => ({
           label: departmentOptions?.find((d) => d?.value === item)?.label,

@@ -1,9 +1,11 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { PageHeader } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { useGetEventsListQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const BPMProgramsEventsList = () => {
@@ -11,7 +13,7 @@ export const BPMProgramsEventsList = () => {
     pagination: getPaginationQuery(),
   });
   const rowData = meetingData?.bpm?.programs?.listEvents?.edges ?? [];
-  // const router = useRouter();
+  const router = useRouter();
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -35,49 +37,49 @@ export const BPMProgramsEventsList = () => {
         header: 'Status',
         accessorKey: 'node.status',
       },
-      // {
-      //   id: '_actions',
-      //   header: '',
+      {
+        id: '_actions',
+        header: '',
 
-      //   cell: (props) =>
-      //     props?.row?.original && (
-      //       <TablePopover
-      //         node={props?.row?.original}
-      //         items={[
-      //           // {
-      //           //   title: 'View Details',
-      //           //   aclKey: 'CBS_MEMBERS_MEMBER',
-      //           //   action: 'VIEW',
-      //           //   onClick: () => {
-      //           //     router.push(
-      //           //       `${ROUTES.BPM_PROGRAMS_MEETINGS_DETAILS}?id=${props?.row?.original?.node?.id}`
-      //           //     );
-      //           //   },
-      //           // },
-      //           {
-      //             title: 'Edit Meeting',
-      //             aclKey: 'CBS_MEMBERS_MEMBER',
-      //             action: 'VIEW',
-      //             onClick: () => {
-      //               router.push(
-      //                 `${ROUTES?.BPM_PROGRAMS_EVENTS_EDIT}?id=${props?.row?.original?.node?.id}`
-      //               );
-      //             },
-      //           },
-      //           // {
-      //           //   title: 'Close Meeting',
+        cell: (props) =>
+          props?.row?.original && (
+            <TablePopover
+              node={props?.row?.original}
+              items={[
+                // {
+                //   title: 'View Details',
+                //   aclKey: 'CBS_MEMBERS_MEMBER',
+                //   action: 'VIEW',
+                //   onClick: () => {
+                //     router.push(
+                //       `${ROUTES.BPM_PROGRAMS_MEETINGS_DETAILS}?id=${props?.row?.original?.node?.id}`
+                //     );
+                //   },
+                // },
+                {
+                  title: 'Edit Event',
+                  aclKey: 'CBS_MEMBERS_MEMBER',
+                  action: 'VIEW',
+                  onClick: () => {
+                    router.push(
+                      `${ROUTES?.BPM_PROGRAMS_EVENTS_EDIT}?id=${props?.row?.original?.node?.id}`
+                    );
+                  },
+                },
+                // {
+                //   title: 'Close Meeting',
 
-      //           //   aclKey: 'CBS_MEMBERS_MEMBER',
-      //           //   action: 'VIEW',
-      //           //   onClick: (row) => handleCloseMeeting(row?.node?.id as string),
-      //           // },
-      //         ]}
-      //       />
-      //     ),
-      //   meta: {
-      //     width: '20px',
-      //   },
-      // },
+                //   aclKey: 'CBS_MEMBERS_MEMBER',
+                //   action: 'VIEW',
+                //   onClick: (row) => handleCloseMeeting(row?.node?.id as string),
+                // },
+              ]}
+            />
+          ),
+        meta: {
+          width: '20px',
+        },
+      },
     ],
     []
   );
