@@ -91,24 +91,45 @@ export const LeaveAllocationAdd = () => {
       newLeaveAllocated: item?.newLeaveAllocated,
       totalLeavesAllocated: item?.totalLeavesAllocated,
     }));
-    asyncToast({
-      id: 'add-new-leave-allocation',
-      msgs: {
-        success: 'new leave allocation added succesfully',
-        loading: 'adding new leave allocation',
-      },
-      onSuccess: () => {
-        router.push(ROUTES?.HRMODULE_LEAVE_ALLOCATION_LIST);
-      },
-      promise: mutateAsync({
-        id: null,
-        input: {
-          ...values,
-          leaveAllocationFor: LeaveAllocationFor?.Employee,
-          allocation: allocation as AllocationTypeInput,
-        } as LeaveAllocationInput,
-      }),
-    });
+    if (router?.query?.['id']) {
+      asyncToast({
+        id: 'edit-leave-allocation',
+        msgs: {
+          success: 'leave allocation edited succesfully',
+          loading: 'editing leave allocation',
+        },
+        onSuccess: () => {
+          router.push(ROUTES?.HRMODULE_LEAVE_ALLOCATION_LIST);
+        },
+        promise: mutateAsync({
+          id: router?.query?.['id'] as string,
+          input: {
+            ...values,
+            leaveAllocationFor: LeaveAllocationFor?.Employee,
+            allocation: allocation as AllocationTypeInput,
+          } as LeaveAllocationInput,
+        }),
+      });
+    } else {
+      asyncToast({
+        id: 'add-new-leave-allocation',
+        msgs: {
+          success: 'new leave allocation added succesfully',
+          loading: 'adding new leave allocation',
+        },
+        onSuccess: () => {
+          router.push(ROUTES?.HRMODULE_LEAVE_ALLOCATION_LIST);
+        },
+        promise: mutateAsync({
+          id: null,
+          input: {
+            ...values,
+            leaveAllocationFor: LeaveAllocationFor?.Employee,
+            allocation: allocation as AllocationTypeInput,
+          } as LeaveAllocationInput,
+        }),
+      });
+    }
   };
   return (
     <FormLayout methods={methods}>
