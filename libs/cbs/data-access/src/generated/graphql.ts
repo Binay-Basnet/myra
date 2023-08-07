@@ -1773,7 +1773,7 @@ export type BpmEventInput = {
   name: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
   priority?: InputMaybe<Priority>;
-  scheduledBy?: InputMaybe<Scalars['String']>;
+  scheduledBy: Scalars['String'];
   sendInvitationEmail?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -4047,6 +4047,7 @@ export type CooperativeBasicMinInfo = {
   memberCode?: Maybe<Scalars['String']>;
   memberJoined?: Maybe<Scalars['Localized']>;
   memberName?: Maybe<Scalars['String']>;
+  panVatNo?: Maybe<Scalars['String']>;
   profilePic?: Maybe<Scalars['String']>;
   registrationDate?: Maybe<Scalars['Localized']>;
   registrationNo?: Maybe<Scalars['String']>;
@@ -9073,6 +9074,7 @@ export type IndividualBasicMinInfo = {
   memberJoined?: Maybe<Scalars['Localized']>;
   memberName?: Maybe<Scalars['String']>;
   mothersName?: Maybe<Scalars['String']>;
+  panVatNo?: Maybe<Scalars['String']>;
   profilePic?: Maybe<Scalars['String']>;
 };
 
@@ -33675,6 +33677,7 @@ export type GetMemberKymDetailsOverviewQuery = {
                 registrationDate?: Record<'local' | 'en' | 'np', string> | null;
                 branchId?: string | null;
                 branchName?: string | null;
+                panVatNo?: string | null;
               }
             | {
                 __typename: 'CooperativeUnionBasicMinInfo';
@@ -33706,6 +33709,7 @@ export type GetMemberKymDetailsOverviewQuery = {
                 mothersName?: string | null;
                 grandFathersName?: string | null;
                 isStaff?: boolean | null;
+                panVatNo?: string | null;
                 familyMembers?: Array<{
                   fullName?: string | null;
                   relationship?: string | null;
@@ -59059,6 +59063,7 @@ export const GetMemberKymDetailsOverviewDocument = `
                 dob
               }
               isStaff
+              panVatNo
             }
             ... on InstitutionBasicMinInfo {
               memberName
@@ -59083,6 +59088,7 @@ export const GetMemberKymDetailsOverviewDocument = `
               registrationDate
               branchId
               branchName
+              panVatNo
             }
             ... on CooperativeUnionBasicMinInfo {
               memberName

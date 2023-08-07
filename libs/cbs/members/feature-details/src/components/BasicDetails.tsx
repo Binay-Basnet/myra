@@ -89,6 +89,11 @@ export const MemberBasicInformation = () => {
               Grandfather’s Name:<b> {memberBasicInfo?.grandFathersName} </b>
             </Text>
           )}
+          {memberBasicInfo?.panVatNo && (
+            <Text fontSize="s2" fontWeight="400">
+              VAT/PAN No:<b> {memberBasicInfo?.panVatNo} </b>
+            </Text>
+          )}
         </DetailsCard>
       )}
       {memberBasicInstitution && (
@@ -136,6 +141,7 @@ export const MemberBasicInformation = () => {
             title="Registration Date"
             subtitle={memberBasicCooperative?.registrationDate?.local}
           />
+          <DetailCardContent title="VAT/PAN No" subtitle={memberBasicCooperative?.panVatNo} />
         </DetailsCard>
       )}
       {memberBasicCooperativeUnion && (

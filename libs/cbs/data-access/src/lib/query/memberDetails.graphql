@@ -60,6 +60,7 @@ query getMemberKYMDetailsOverview($id: ID!) {
                 dob
               }
               isStaff
+              panVatNo
             }
             ... on InstitutionBasicMinInfo {
               memberName
@@ -84,6 +85,7 @@ query getMemberKYMDetailsOverview($id: ID!) {
               registrationDate
               branchId
               branchName
+              panVatNo
             }
             ... on CooperativeUnionBasicMinInfo {
               memberName
