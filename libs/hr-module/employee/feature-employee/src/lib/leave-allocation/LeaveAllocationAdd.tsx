@@ -44,12 +44,6 @@ export const LeaveAllocationAdd = () => {
   const leaveAllocationEditData =
     leaveAllocationData?.hr?.employee?.leaveAllocation?.getLeaveAllocation?.data;
 
-  useEffect(() => {
-    if (leaveAllocationEditData) {
-      reset(leaveAllocationEditData);
-    }
-  }, [JSON.stringify(leaveAllocationEditData)]);
-
   const leavePolicyWatch = watch('leavePolicy');
 
   const { data: leavePolicy } = useGetLeavePolicyQuery(
@@ -62,11 +56,29 @@ export const LeaveAllocationAdd = () => {
       ?.leavePolicyDetails;
 
   useEffect(() => {
+    if (leaveAllocationEditData) {
+      const map = new Map();
+
+      leavePolicyData?.forEach((item) => {
+        map?.set(item.leaveTypeId, item);
+      });
+
+      // Merge the arrays based on leaveId and leaveTypeId
+      const mergedArray = leaveAllocationEditData?.allocation?.map((item) => ({
+        ...map.get(item.leaveId),
+        ...item,
+      }));
+      reset({ ...leaveAllocationEditData, allocation: mergedArray });
+    }
+  }, [JSON.stringify(leaveAllocationEditData), JSON.stringify(leavePolicyData)]);
+
+  useEffect(() => {
     if (leavePolicyData && !router?.query?.['id']) {
       setValue(
         'allocation',
         leavePolicyData?.map((item) => ({
           leaveId: item?.leaveTypeId,
+          annualAllocation: item?.annualAllocation,
         }))
       );
     }
@@ -74,29 +86,50 @@ export const LeaveAllocationAdd = () => {
 
   const submitForm = () => {
     const values = getValues();
-    const allocation = values?.allocation?.map((item) => ({
+    const allocation = values?.allocation?.map((item: AllocationTypeInput) => ({
       leaveId: item?.leaveId,
       newLeaveAllocated: item?.newLeaveAllocated,
       totalLeavesAllocated: item?.totalLeavesAllocated,
     }));
-    asyncToast({
-      id: 'add-new-leave-allocation',
-      msgs: {
-        success: 'new leave allocation added succesfully',
-        loading: 'adding new leave allocation',
-      },
-      onSuccess: () => {
-        router.push(ROUTES?.HRMODULE_LEAVE_ALLOCATION_LIST);
-      },
-      promise: mutateAsync({
-        id: null,
-        input: {
-          ...values,
-          leaveAllocationFor: LeaveAllocationFor?.Employee,
-          allocation: allocation as AllocationTypeInput,
-        } as LeaveAllocationInput,
-      }),
-    });
+    if (router?.query?.['id']) {
+      asyncToast({
+        id: 'edit-leave-allocation',
+        msgs: {
+          success: 'leave allocation edited succesfully',
+          loading: 'editing leave allocation',
+        },
+        onSuccess: () => {
+          router.push(ROUTES?.HRMODULE_LEAVE_ALLOCATION_LIST);
+        },
+        promise: mutateAsync({
+          id: router?.query?.['id'] as string,
+          input: {
+            ...values,
+            leaveAllocationFor: LeaveAllocationFor?.Employee,
+            allocation: allocation as AllocationTypeInput,
+          } as LeaveAllocationInput,
+        }),
+      });
+    } else {
+      asyncToast({
+        id: 'add-new-leave-allocation',
+        msgs: {
+          success: 'new leave allocation added succesfully',
+          loading: 'adding new leave allocation',
+        },
+        onSuccess: () => {
+          router.push(ROUTES?.HRMODULE_LEAVE_ALLOCATION_LIST);
+        },
+        promise: mutateAsync({
+          id: null,
+          input: {
+            ...values,
+            leaveAllocationFor: LeaveAllocationFor?.Employee,
+            allocation: allocation as AllocationTypeInput,
+          } as LeaveAllocationInput,
+        }),
+      });
+    }
   };
   return (
     <FormLayout methods={methods}>
@@ -133,13 +166,13 @@ export const LeaveAllocationAdd = () => {
                     getDisabled: () => true,
                   },
                   {
-                    accessor: 'leaveAllocated',
+                    accessor: 'annualAllocation',
                     header: 'Leave Allocated',
                     getDisabled: () => true,
                     isNumeric: true,
-                    accessorFn: (row) =>
-                      leavePolicyData?.find((item) => item?.leaveTypeId === row?.leaveId)
-                        ?.annualAllocation as number,
+                    // accessorFn: (row) =>
+                    //   leavePolicyData?.find((item) => item?.leaveTypeId === row?.leaveId)
+                    //     ?.annualAllocation as number,
                   },
                   {
                     accessor: 'newLeaveAllocated',
@@ -150,7 +183,7 @@ export const LeaveAllocationAdd = () => {
                     accessor: 'totalLeavesAllocated',
                     header: 'Total Leave Allocated',
                     accessorFn: (row) =>
-                      Number(row?.leaveAllocated) + Number(row?.newLeaveAllocated) ||
+                      Number(row?.annualAllocation) + Number(row?.newLeaveAllocated) ||
                       row?.leaveAllocated,
                   },
                 ]}
