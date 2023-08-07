@@ -126,6 +126,7 @@ export const BPMMeetingsAdd = () => {
         'totalAttendees',
         'id',
         'position',
+        'scheduledById',
         'status',
       ]);
 
