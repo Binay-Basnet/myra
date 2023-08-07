@@ -49,3 +49,16 @@ mutation setAddMeetingAttendees($meetingID: ID!, $attendees: [String!]) {
     }
   }
 }
+
+mutation setBPMAddEvents($Id: ID, $data: BPMEventInput!) {
+  bpm {
+    programs {
+      upsertEvent(data: $data, id: $Id) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

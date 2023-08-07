@@ -13,10 +13,12 @@ export const useGetLeavePolicyOptions = () => {
     },
   });
   const leavePolicyOptions =
-    leavePolicyData?.settings?.general?.HCM?.employee?.leavePolicy?.listLeavePolicy?.edges?.map((item) => ({
-      label: item?.node?.name as string,
-      value: item?.node?.id as string,
-    }));
+    leavePolicyData?.settings?.general?.HCM?.employee?.leavePolicy?.listLeavePolicy?.edges?.map(
+      (item) => ({
+        label: item?.node?.name as string,
+        value: item?.node?.id as string,
+      })
+    );
   return { leavePolicyOptions };
 };
 

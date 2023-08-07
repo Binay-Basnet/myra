@@ -1,3 +1,4 @@
+export * from './components/ConvertTime';
 export * from './components/LocalizedDate';
 export * from './components/LocalizedText';
 export * from './components/LocalizedTime';

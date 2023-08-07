@@ -81,6 +81,7 @@ export type Column<T extends RecordWithId & Record<string, EditableValue>> = {
   loadOptions?: (row: T) => Promise<{ label: string; value: string }[]>;
 
   isNumeric?: boolean;
+  isTime?: boolean;
   getDisabled?: (row: T) => boolean;
 
   cell?: (row: T) => React.ReactNode;
@@ -1022,7 +1023,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
           //  mt="-1px"
           py="0"
           h="100%"
-          type={column.isNumeric ? 'number' : 'text'}
+          type={column.isNumeric ? 'number' : column.isTime ? 'time' : 'text'}
           w="100%"
           px="s8"
           minH="inherit"

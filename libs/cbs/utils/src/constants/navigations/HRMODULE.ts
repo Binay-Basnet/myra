@@ -28,7 +28,6 @@ export const HRMODULE: NavType = {
           aclKey: 'HCM_EMPLOYEE_LEAVE',
           route: ROUTES.HRMODULE_LEAVE_ALLOCATION_ADD,
         },
-
       ],
 
       pages: [

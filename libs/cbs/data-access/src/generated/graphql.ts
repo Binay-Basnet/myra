@@ -22849,6 +22849,28 @@ export type SetAddMeetingAttendeesMutation = {
   };
 };
 
+export type SetBpmAddEventsMutationVariables = Exact<{
+  Id?: InputMaybe<Scalars['ID']>;
+  data: BpmEventInput;
+}>;
+
+export type SetBpmAddEventsMutation = {
+  bpm: {
+    programs: {
+      upsertEvent: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
 export type AddNewAccountInCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
 }>;
@@ -29515,6 +29537,90 @@ export type GetMeetingsEditDataQuery = {
         minute?: {
           notes?: string | null;
           files?: Array<{ identifier: string; url: string }> | null;
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetEventsListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEventsListQuery = {
+  bpm: {
+    programs: {
+      listEvents: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            eventName?: string | null;
+            eventType?: BpmEventType | null;
+            eventDays?: EventDays | null;
+            totalAttendees?: number | null;
+            status?: MeetingStatus | null;
+            priority?: Priority | null;
+            scheduledById?: string | null;
+            scheduledBy?: string | null;
+            position?: string | null;
+            note?: string | null;
+            departmentIds?: Array<string> | null;
+            startDate?: Record<'local' | 'en' | 'np', string> | null;
+            startTime?: string | null;
+            eventDates?: Array<{
+              date?: Record<'local' | 'en' | 'np', string> | null;
+              endTime?: string | null;
+              startTime?: string | null;
+            } | null> | null;
+            attendees?: Array<{
+              contact?: string | null;
+              designation?: string | null;
+              email?: string | null;
+              id: string;
+              name?: string | null;
+            } | null> | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      };
+    };
+  };
+};
+
+export type GetEventsEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetEventsEditDataQuery = {
+  bpm: {
+    programs: {
+      eventDetails: {
+        overview?: {
+          id: string;
+          eventName?: string | null;
+          eventType?: BpmEventType | null;
+          eventDays?: EventDays | null;
+          status?: MeetingStatus | null;
+          priority?: Priority | null;
+          scheduledById?: string | null;
+          position?: string | null;
+          note?: string | null;
+          departmentIds?: Array<string> | null;
+          eventDates?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            startTime?: string | null;
+            endTime?: string | null;
+          } | null> | null;
+          attendees?: Array<{
+            id: string;
+            name?: string | null;
+            designation?: string | null;
+            email?: string | null;
+            contact?: string | null;
+          } | null> | null;
         } | null;
       };
     };
@@ -44303,6 +44409,33 @@ export const useSetAddMeetingAttendeesMutation = <TError = unknown, TContext = u
     ),
     options
   );
+export const SetBpmAddEventsDocument = `
+    mutation setBPMAddEvents($Id: ID, $data: BPMEventInput!) {
+  bpm {
+    programs {
+      upsertEvent(data: $data, id: $Id) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetBpmAddEventsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetBpmAddEventsMutation,
+    TError,
+    SetBpmAddEventsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetBpmAddEventsMutation, TError, SetBpmAddEventsMutationVariables, TContext>(
+    ['setBPMAddEvents'],
+    useAxios<SetBpmAddEventsMutation, SetBpmAddEventsMutationVariables>(SetBpmAddEventsDocument),
+    options
+  );
 export const AddNewAccountInCoaDocument = `
     mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
   settings {
@@ -53665,6 +53798,108 @@ export const useGetMeetingsEditDataQuery = <TData = GetMeetingsEditDataQuery, TE
     ['getMeetingsEditData', variables],
     useAxios<GetMeetingsEditDataQuery, GetMeetingsEditDataQueryVariables>(
       GetMeetingsEditDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEventsListDocument = `
+    query getEventsList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    programs {
+      listEvents(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            eventName
+            eventType
+            eventDays
+            totalAttendees
+            eventDates {
+              date
+              endTime
+              startTime
+            }
+            status
+            priority
+            scheduledById
+            scheduledBy
+            position
+            note
+            departmentIds
+            attendees {
+              contact
+              designation
+              email
+              id
+              name
+            }
+            startDate
+            startTime
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEventsListQuery = <TData = GetEventsListQuery, TError = unknown>(
+  variables?: GetEventsListQueryVariables,
+  options?: UseQueryOptions<GetEventsListQuery, TError, TData>
+) =>
+  useQuery<GetEventsListQuery, TError, TData>(
+    variables === undefined ? ['getEventsList'] : ['getEventsList', variables],
+    useAxios<GetEventsListQuery, GetEventsListQueryVariables>(GetEventsListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetEventsEditDataDocument = `
+    query getEventsEditData($id: ID!) {
+  bpm {
+    programs {
+      eventDetails(id: $id) {
+        overview {
+          id
+          eventName
+          eventType
+          eventDays
+          eventDates {
+            date
+            startTime
+            endTime
+          }
+          status
+          priority
+          scheduledById
+          position
+          note
+          departmentIds
+          attendees {
+            id
+            name
+            designation
+            email
+            contact
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetEventsEditDataQuery = <TData = GetEventsEditDataQuery, TError = unknown>(
+  variables: GetEventsEditDataQueryVariables,
+  options?: UseQueryOptions<GetEventsEditDataQuery, TError, TData>
+) =>
+  useQuery<GetEventsEditDataQuery, TError, TData>(
+    ['getEventsEditData', variables],
+    useAxios<GetEventsEditDataQuery, GetEventsEditDataQueryVariables>(
+      GetEventsEditDataDocument
     ).bind(null, variables),
     options
   );
