@@ -222,16 +222,17 @@ const TransactionHistoryPage = () => {
             <Box>
               <Box p="s16" borderBottom="1px" borderBottomColor="border.layout" fontSize="s3">
                 <Box as="span" display="flex" flexDir="column" gap="s8" mt="4px">
-                  {(filter?.accounts || Object.keys(accountMap))?.map((f) => (
+                  {(filter?.accounts || Object.keys(accountMap || {}))?.map((f) => (
                     <Box>
                       <Box fontWeight={600} color="gray.800">
                         {accountOptions?.find((a) => a.value === f)?.label}
                       </Box>
 
                       <Box>
-                        Opening Balance: {amountConverter(accountMap[f].Opening.Value)}{' '}
-                        {accountMap[f].Opening.Type}, Closing Balance:{' '}
-                        {amountConverter(accountMap[f].Closing.Value)} {accountMap[f].Closing.Type}
+                        Opening Balance: {amountConverter(accountMap?.[f]?.Opening?.Value)}{' '}
+                        {accountMap?.[f]?.Opening?.Type}, Closing Balance:{' '}
+                        {amountConverter(accountMap?.[f]?.Closing?.Value)}{' '}
+                        {accountMap?.[f]?.Closing?.Type}
                       </Box>
                     </Box>
                   ))}
