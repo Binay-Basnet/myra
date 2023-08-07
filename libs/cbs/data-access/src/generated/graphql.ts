@@ -15303,6 +15303,7 @@ export type MemberIndividualData = {
   memberId?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   other?: Maybe<Scalars['String']>;
+  panVatNo?: Maybe<Scalars['String']>;
   photo?: Maybe<Scalars['Boolean']>;
   profession?: Maybe<Scalars['String']>;
   shareInfo?: Maybe<ShareInformation>;
@@ -15417,6 +15418,7 @@ export type MemberOtherData = {
   memberId?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   other?: Maybe<Scalars['String']>;
+  panVatNo?: Maybe<Scalars['String']>;
   post?: Maybe<Scalars['String']>;
   shareInfo?: Maybe<ShareInformation>;
   stamp?: Maybe<Scalars['Boolean']>;
@@ -36290,6 +36292,7 @@ export type GetMemberRegistrationReportQuery = {
             contactNo?: string | null;
             email?: string | null;
             other?: string | null;
+            panVatNo?: string | null;
             address?: AddressFragment | null;
             shareInfo?: {
               perShareAmount?: string | null;
@@ -36313,6 +36316,7 @@ export type GetMemberRegistrationReportQuery = {
             contactNo?: string | null;
             email?: string | null;
             other?: string | null;
+            panVatNo?: string | null;
             address?: AddressFragment | null;
             shareInfo?: {
               perShareAmount?: string | null;
@@ -62451,6 +62455,7 @@ export const GetMemberRegistrationReportDocument = `
             contactNo
             email
             other
+            panVatNo
           }
           other {
             memberId
@@ -62476,6 +62481,7 @@ export const GetMemberRegistrationReportDocument = `
             contactNo
             email
             other
+            panVatNo
           }
         }
       }

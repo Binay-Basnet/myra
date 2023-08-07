@@ -185,6 +185,10 @@ export const MemberRegisterReport = () => {
                       accessorKey: 'email',
                     },
                     {
+                      header: 'VAT/PAN No',
+                      accessorKey: 'panVatNo',
+                    },
+                    {
                       header: 'Other',
                       accessorKey: 'other',
                     },
@@ -294,6 +298,10 @@ export const MemberRegisterReport = () => {
                     {
                       header: 'Email',
                       accessorKey: 'email',
+                    },
+                    {
+                      header: 'VAT/PAN No',
+                      accessorKey: 'panVatNo',
                     },
                     {
                       header: 'Other',
