@@ -1,37 +1,27 @@
 import { useMemo } from 'react';
-import dayjs from 'dayjs';
 
 import { PageHeader } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { localizedDate } from '@coop/cbs/utils';
+import { useGetEventsListQuery } from '@coop/cbs/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const BPMProgramsEventsList = () => {
-  const { data: meetingData, isLoading } = useGetGe({
+  const { data: meetingData, isLoading } = useGetEventsListQuery({
     pagination: getPaginationQuery(),
   });
-  const rowData = meetingData?.bpm?.programs?.listMeetings?.edges ?? [];
+  const rowData = meetingData?.bpm?.programs?.listEvents?.edges ?? [];
+  // const router = useRouter();
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Date',
-        accessorKey: 'node.date',
-        accessorFn: (props) => localizedDate(props?.node?.date),
+        header: 'Event Name',
+        accessorKey: 'node.eventName',
       },
       {
-        header: 'Time',
-        accessorKey: 'node.time',
-        accessorFn: (props) => dayjs(props?.node?.time)?.format('hh:mm A'),
-      },
-      {
-        header: 'Meeting Title',
-        accessorKey: 'node.title',
-      },
-      {
-        header: 'Meeting Type',
-        accessorKey: 'node.type',
+        header: 'Event Type',
+        accessorKey: 'node.eventType',
       },
       {
         header: 'Scheduled By ',
@@ -54,33 +44,33 @@ export const BPMProgramsEventsList = () => {
       //       <TablePopover
       //         node={props?.row?.original}
       //         items={[
-      //           {
-      //             title: 'View Details',
-      //             aclKey: 'CBS_MEMBERS_MEMBER',
-      //             action: 'VIEW',
-      //             onClick: () => {
-      //               router.push(
-      //                 `${ROUTES.BPM_PROGRAMS_MEETINGS_DETAILS}?id=${props?.row?.original?.node?.id}`
-      //               );
-      //             },
-      //           },
+      //           // {
+      //           //   title: 'View Details',
+      //           //   aclKey: 'CBS_MEMBERS_MEMBER',
+      //           //   action: 'VIEW',
+      //           //   onClick: () => {
+      //           //     router.push(
+      //           //       `${ROUTES.BPM_PROGRAMS_MEETINGS_DETAILS}?id=${props?.row?.original?.node?.id}`
+      //           //     );
+      //           //   },
+      //           // },
       //           {
       //             title: 'Edit Meeting',
       //             aclKey: 'CBS_MEMBERS_MEMBER',
       //             action: 'VIEW',
       //             onClick: () => {
       //               router.push(
-      //                 `${ROUTES?.BPM_PROGRAMS_MEETINGS_EDIT}?id=${props?.row?.original?.node?.id}`
+      //                 `${ROUTES?.BPM_PROGRAMS_EVENTS_EDIT}?id=${props?.row?.original?.node?.id}`
       //               );
       //             },
       //           },
-      //           {
-      //             title: 'Close Meeting',
+      //           // {
+      //           //   title: 'Close Meeting',
 
-      //             aclKey: 'CBS_MEMBERS_MEMBER',
-      //             action: 'VIEW',
-      //             onClick: (row) => handleCloseMeeting(row?.node?.id as string),
-      //           },
+      //           //   aclKey: 'CBS_MEMBERS_MEMBER',
+      //           //   action: 'VIEW',
+      //           //   onClick: (row) => handleCloseMeeting(row?.node?.id as string),
+      //           // },
       //         ]}
       //       />
       //     ),
@@ -103,8 +93,8 @@ export const BPMProgramsEventsList = () => {
         // }}
         columns={columns}
         pagination={{
-          total: meetingData?.bpm?.programs?.listMeetings?.totalCount ?? 'Many',
-          pageInfo: meetingData?.bpm?.programs?.listMeetings?.pageInfo,
+          total: meetingData?.bpm?.programs?.listEvents?.totalCount ?? 'Many',
+          pageInfo: meetingData?.bpm?.programs?.listEvents?.pageInfo,
         }}
       />
     </>

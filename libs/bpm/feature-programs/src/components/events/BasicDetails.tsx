@@ -17,6 +17,6 @@ const eventType = [
 export const EventsBasicDetails = () => (
   <FormSection templateColumns={2}>
     <FormInput name="name" label="Event Name" />
-    <FormSelect name="eventType" label="Meeting Type" options={eventType} />
+    <FormSelect name="eventType" label="Event Type" options={eventType} />
   </FormSection>
 );

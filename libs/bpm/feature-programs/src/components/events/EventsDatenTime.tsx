@@ -38,13 +38,13 @@ export const EventsDateAndTime = () => {
       accessor: 'startTime',
       header: 'Start Time',
       // hidden: true,
-      // isTime: true,
+      isTime: true,
     },
     {
       accessor: 'endTime',
       header: 'End Time',
       // hidden: true,
-      // isTime: true,
+      isTime: true,
     },
   ];
 

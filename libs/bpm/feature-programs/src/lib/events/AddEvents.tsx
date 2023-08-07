@@ -4,12 +4,11 @@ import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
 import { asyncToast } from '@myra-ui';
-import { ad2bs } from '@myra-ui/date-picker';
 
 import {
   BpmEventInput,
   useGetDepartmentListQuery,
-  useGetMeetingsEditDataQuery,
+  useGetEventsEditDataQuery,
   useSetBpmAddEventsMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES, timeConverter } from '@coop/cbs/utils';
@@ -72,7 +71,7 @@ export const BPMEventsAdd = () => {
 
     const dateEntryDetails =
       data?.dateEntry?.map((item) => ({
-        date: convertDate(item?.date),
+        date: item?.date,
         startTime: timeConverter(item?.startTime),
         endTime: timeConverter(item?.endTime),
       })) || [];
@@ -124,7 +123,7 @@ export const BPMEventsAdd = () => {
     });
   };
 
-  const itemData = useGetMeetingsEditDataQuery(
+  const itemData = useGetEventsEditDataQuery(
     {
       id: id as string,
     },
@@ -132,7 +131,7 @@ export const BPMEventsAdd = () => {
       enabled: router?.asPath?.includes('edit'),
     }
   );
-  const itemFormData = itemData?.data?.bpm?.programs?.meetingDetail?.overview;
+  const itemFormData = itemData?.data?.bpm?.programs?.eventDetails?.overview;
 
   const { data: depeartmentData } = useGetDepartmentListQuery({
     pagination: {
@@ -164,6 +163,7 @@ export const BPMEventsAdd = () => {
         ...filteredValues,
         // time: dayjs(itemFormData?.time)?.format('HH:mm'),
         scheduledBy: itemFormData?.scheduledById,
+        eventType: itemFormData?.eventType ?? undefined,
         position: itemFormData?.position as string,
         department: !!itemFormData?.departmentIds?.length,
         departmentIds: itemFormData?.departmentIds?.map((item) => ({
@@ -198,20 +198,3 @@ export const BPMEventsAdd = () => {
 };
 
 export default BPMEventsAdd;
-
-const convertDate = (dateString: string) => {
-  const date = new Date(dateString);
-
-  const convertedDate = {
-    year: date.getFullYear(),
-    month: date.getMonth() + 1,
-    day: date.getDate(),
-  };
-  const bsDate = ad2bs(convertedDate.year, Number(convertedDate.month), Number(convertedDate.day));
-  const nepaliDate = `${bsDate?.year}-${bsDate?.month.toString().padStart(2, '0')}-${bsDate?.day
-    .toString()
-    .padStart(2, '0')}`;
-
-  const dateObj = { np: nepaliDate, en: dateString, local: '' };
-  return dateObj;
-};
