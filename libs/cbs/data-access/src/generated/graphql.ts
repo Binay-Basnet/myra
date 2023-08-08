@@ -22999,6 +22999,72 @@ export type SetBpmAddEventsMutation = {
   };
 };
 
+export type SetNewTaskMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: NewTaskInput;
+}>;
+
+export type SetNewTaskMutation = {
+  bpm: {
+    task: {
+      upsertNewTask: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type ChangeStatusMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  status?: InputMaybe<StatusOfTask>;
+}>;
+
+export type ChangeStatusMutation = {
+  bpm: {
+    task: {
+      changeStatus: {
+        isChanged?: boolean | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type AssignTaskMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input?: InputMaybe<AssignTask>;
+}>;
+
+export type AssignTaskMutation = {
+  bpm: {
+    task: {
+      assignTask: {
+        assigned?: boolean | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
 export type AddNewAccountInCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
 }>;
@@ -29750,6 +29816,64 @@ export type GetEventsEditDataQuery = {
             contact?: string | null;
           } | null> | null;
         } | null;
+      };
+    };
+  };
+};
+
+export type GetTaskListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetTaskListQuery = {
+  bpm: {
+    task: {
+      listTask: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id?: string | null;
+            assignedDate?: Record<'local' | 'en' | 'np', string> | null;
+            taskTitle?: string | null;
+            assignedBy?: string | null;
+            assignedTo?: AssignedTo | null;
+            taskAuthority?: string | null;
+            status?: StatusOfTask | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      };
+    };
+  };
+};
+
+export type GetTaskQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+export type GetTaskQuery = {
+  bpm: {
+    task: {
+      getTask: {
+        data?: {
+          taskTitle?: string | null;
+          dueDate?: Record<'local' | 'en' | 'np', string> | null;
+          assignedBy?: string | null;
+          assignedTo?: AssignedTo | null;
+          name?: string | null;
+          department?: string | null;
+          minimumLevelOfAuthority?: string | null;
+          priority?: Priority | null;
+          notes?: string | null;
+        } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
       };
     };
   };
@@ -44568,6 +44692,77 @@ export const useSetBpmAddEventsMutation = <TError = unknown, TContext = unknown>
     useAxios<SetBpmAddEventsMutation, SetBpmAddEventsMutationVariables>(SetBpmAddEventsDocument),
     options
   );
+export const SetNewTaskDocument = `
+    mutation setNewTask($id: ID, $input: NewTaskInput!) {
+  bpm {
+    task {
+      upsertNewTask(id: $id, input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetNewTaskMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetNewTaskMutation, TError, SetNewTaskMutationVariables, TContext>
+) =>
+  useMutation<SetNewTaskMutation, TError, SetNewTaskMutationVariables, TContext>(
+    ['setNewTask'],
+    useAxios<SetNewTaskMutation, SetNewTaskMutationVariables>(SetNewTaskDocument),
+    options
+  );
+export const ChangeStatusDocument = `
+    mutation changeStatus($id: ID, $status: StatusOfTask) {
+  bpm {
+    task {
+      changeStatus(id: $id, status: $status) {
+        isChanged
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useChangeStatusMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ChangeStatusMutation,
+    TError,
+    ChangeStatusMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ChangeStatusMutation, TError, ChangeStatusMutationVariables, TContext>(
+    ['changeStatus'],
+    useAxios<ChangeStatusMutation, ChangeStatusMutationVariables>(ChangeStatusDocument),
+    options
+  );
+export const AssignTaskDocument = `
+    mutation assignTask($id: ID, $input: AssignTask) {
+  bpm {
+    task {
+      assignTask(id: $id, input: $input) {
+        assigned
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAssignTaskMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<AssignTaskMutation, TError, AssignTaskMutationVariables, TContext>
+) =>
+  useMutation<AssignTaskMutation, TError, AssignTaskMutationVariables, TContext>(
+    ['assignTask'],
+    useAxios<AssignTaskMutation, AssignTaskMutationVariables>(AssignTaskDocument),
+    options
+  );
 export const AddNewAccountInCoaDocument = `
     mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
   settings {
@@ -54033,6 +54228,77 @@ export const useGetEventsEditDataQuery = <TData = GetEventsEditDataQuery, TError
     useAxios<GetEventsEditDataQuery, GetEventsEditDataQueryVariables>(
       GetEventsEditDataDocument
     ).bind(null, variables),
+    options
+  );
+export const GetTaskListDocument = `
+    query getTaskList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    task {
+      listTask(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            assignedDate
+            taskTitle
+            assignedBy
+            assignedTo
+            taskAuthority
+            status
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetTaskListQuery = <TData = GetTaskListQuery, TError = unknown>(
+  variables?: GetTaskListQueryVariables,
+  options?: UseQueryOptions<GetTaskListQuery, TError, TData>
+) =>
+  useQuery<GetTaskListQuery, TError, TData>(
+    variables === undefined ? ['getTaskList'] : ['getTaskList', variables],
+    useAxios<GetTaskListQuery, GetTaskListQueryVariables>(GetTaskListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetTaskDocument = `
+    query getTask($id: ID) {
+  bpm {
+    task {
+      getTask(id: $id) {
+        data {
+          taskTitle
+          dueDate
+          assignedBy
+          assignedTo
+          name
+          department
+          minimumLevelOfAuthority
+          priority
+          notes
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetTaskQuery = <TData = GetTaskQuery, TError = unknown>(
+  variables?: GetTaskQueryVariables,
+  options?: UseQueryOptions<GetTaskQuery, TError, TData>
+) =>
+  useQuery<GetTaskQuery, TError, TData>(
+    variables === undefined ? ['getTask'] : ['getTask', variables],
+    useAxios<GetTaskQuery, GetTaskQueryVariables>(GetTaskDocument).bind(null, variables),
     options
   );
 export const GetUserBranchListDocument = `

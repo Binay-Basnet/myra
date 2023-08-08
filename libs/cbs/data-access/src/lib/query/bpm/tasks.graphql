@@ -1,0 +1,47 @@
+query getTaskList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    task {
+      listTask(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            assignedDate
+            taskTitle
+            assignedBy
+            assignedTo
+            taskAuthority
+            status
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getTask($id: ID) {
+  bpm {
+    task {
+      getTask(id: $id) {
+        data {
+          taskTitle
+          dueDate
+          assignedBy
+          assignedTo
+          name
+          department
+          minimumLevelOfAuthority
+          priority
+          notes
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
