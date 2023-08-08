@@ -525,8 +525,8 @@ export const ROUTES = {
 
   HR_REPORTS: '/hr/reports/transactions',
 
-  BPM_TASKS_LISTS: '/bpm/tasks/tasks/list',
-  BPM_TASKS_ADD: '/bpm/tasks/tasks/add',
+  BPM_TASKS_LISTS: '/bpm/tasks/list',
+  BPM_TASKS_ADD: '/bpm/tasks/add',
 
   BPM_PROGRAMS_EVENTS_LIST: '/bpm/programs/events/list',
   BPM_PROGRAMS_EVENTS_EDIT: '/bpm/programs/events/edit',

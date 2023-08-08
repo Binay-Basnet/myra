@@ -1,0 +1,38 @@
+mutation setNewTask($id: ID, $input: NewTaskInput!) {
+  bpm {
+    task {
+      upsertNewTask(id: $id, input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation changeStatus($id: ID, $status: StatusOfTask) {
+  bpm {
+    task {
+      changeStatus(id: $id, status: $status) {
+        isChanged
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation assignTask($id: ID, $input: AssignTask) {
+  bpm {
+    task {
+      assignTask(id: $id, input: $input) {
+        assigned
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
