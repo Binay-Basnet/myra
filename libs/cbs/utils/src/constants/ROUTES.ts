@@ -530,8 +530,8 @@ export const ROUTES = {
 
   BPM_PROGRAMS_EVENTS_LIST: '/bpm/programs/events/list',
   BPM_PROGRAMS_EVENTS_EDIT: '/bpm/programs/events/edit',
-
   BPM_PROGRAMS_EVENTS_ADD: '/bpm/programs/events/add',
+  BPM_PROGRAMS_EVENTS_DETAILS: '/bpm/programs/events/details',
   BPM_PROGRAMS_MEETINGS_LIST: '/bpm/programs/meetings/list',
   BPM_PROGRAMS_MEETINGS_ADD: '/bpm/programs/meetings/add',
   BPM_PROGRAMS_MEETINGS_EDIT: '/bpm/programs/meetings/edit',

@@ -62,3 +62,29 @@ mutation setBPMAddEvents($Id: ID, $data: BPMEventInput!) {
     }
   }
 }
+
+mutation setBPMEventsAddAnnouncements($eventId: ID!, $data: BPMEventAnnouncementInput!) {
+  bpm {
+    programs {
+      addAnnouncements(data: $data, eventId: $eventId) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setBPMEventsAddAttendees($eventId: ID!, $attendees: [String!]) {
+  bpm {
+    programs {
+      addEventAttendees(eventId: $eventId, attendeeIds: $attendees) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
