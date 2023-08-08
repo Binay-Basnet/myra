@@ -1937,10 +1937,17 @@ export type BpmMutation = {
 
 export type BpmOperationsMutation = {
   minor: BpmMinorMutation;
+  savingProduct: BpmSavingProductMutation;
 };
 
 export type BpmOperationsQuery = {
   minor: BpmMinorQuery;
+  savingProduct: BpmSavingProductQuery;
+};
+
+export type BpmProductUpdateResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type BpmProgramsMutation = {
@@ -2021,6 +2028,45 @@ export type BpmQuery = {
   operations: BpmOperationsQuery;
   programs: BpmProgramsQuery;
   task: BpmTaskQuery;
+};
+
+export type BpmsvConnection = {
+  edges?: Maybe<Array<Maybe<BpmsvNode>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type BpmsvList = {
+  date?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  productCode: Scalars['String'];
+  productId: Scalars['ID'];
+  productName: Scalars['String'];
+  updateType?: Maybe<Scalars['String']>;
+};
+
+export type BpmsvNode = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<BpmsvList>;
+};
+
+export type BpmSavingProductMutation = {
+  updateSVProduct: BpmProductUpdateResult;
+};
+
+export type BpmSavingProductMutationUpdateSvProductArgs = {
+  data: SvUpdateData;
+  productId: Scalars['ID'];
+  updateType: SvUpdateType;
+};
+
+export type BpmSavingProductQuery = {
+  listSavingProductUpdateHistory: BpmsvConnection;
+};
+
+export type BpmSavingProductQueryListSavingProductUpdateHistoryArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type BpmTaskMutation = {
@@ -3242,6 +3288,11 @@ export type CharKhataReportFilter = {
   period: LocalizedDateFilter;
 };
 
+export type ChargeInput = {
+  additionalData: ProductChargeAdditionalDataInput;
+  payload?: InputMaybe<Array<ServiceType>>;
+};
+
 export type ChartsOfAccount = Base & {
   accountClass: Scalars['String'];
   accountCode: Scalars['String'];
@@ -3457,6 +3508,11 @@ export const ChequePickUpMethod = {
 } as const;
 
 export type ChequePickUpMethod = typeof ChequePickUpMethod[keyof typeof ChequePickUpMethod];
+export type ChequeUpdate = {
+  chequeCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
+  ischequeIssueAllowed: Scalars['Boolean'];
+};
+
 export type Citizenship = {
   inNepali?: Maybe<CitizenshipInNepali>;
   issueDate?: Maybe<Scalars['Localized']>;
@@ -16658,6 +16714,7 @@ export type NewTaskInput = {
   assignedTo?: InputMaybe<AssignedTo>;
   department?: InputMaybe<Scalars['ID']>;
   dueDate?: InputMaybe<Scalars['Localized']>;
+  files?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   minimumLevelOfAuthority?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
   notes?: InputMaybe<Scalars['String']>;
@@ -17249,6 +17306,11 @@ export type Penalty = {
   penaltyType?: Maybe<PenaltyType>;
 };
 
+export type PenaltyEdit = {
+  additionalData: ProductChargeAdditionalDataInput;
+  payload?: InputMaybe<PenaltyTypeInput>;
+};
+
 export type PenaltyFormState = {
   dayAfterInstallmentDate?: Maybe<Scalars['Int']>;
   penaltyAmount?: Maybe<Scalars['Amount']>;
@@ -17413,6 +17475,11 @@ export const PrematurePenaltyDateType = {
 
 export type PrematurePenaltyDateType =
   typeof PrematurePenaltyDateType[keyof typeof PrematurePenaltyDateType];
+export type PrematurePenaltyEdit = {
+  allowPenalty: Scalars['Boolean'];
+  payload?: InputMaybe<PrematurePenalty>;
+};
+
 export type PrematurePenaltyFormState = {
   noOfDays?: Maybe<Scalars['Int']>;
   penaltyAmount?: Maybe<Scalars['Amount']>;
@@ -17960,6 +18027,11 @@ export type Rebate = {
   rebateRate?: Maybe<Scalars['Float']>;
 };
 
+export type RebateEditInput = {
+  isRebateAllowed: Scalars['Boolean'];
+  rebate?: InputMaybe<RebateTypeInput>;
+};
+
 export type RebateFormState = {
   dayBeforeInstallmentDate?: Maybe<Scalars['Int']>;
   noOfInstallment?: Maybe<Scalars['Int']>;
@@ -18466,6 +18538,37 @@ export type StrTransactionDetailQuery = {
   error?: Maybe<QueryError>;
 };
 
+export type SvUpdateData = {
+  accountPremium?: InputMaybe<AccountPremium>;
+  balanceLimit?: InputMaybe<AmountLimit>;
+  chequeUpdate?: InputMaybe<ChequeUpdate>;
+  closeCharge?: InputMaybe<ChargeInput>;
+  files?: InputMaybe<Array<Scalars['String']>>;
+  interestUpdate?: InputMaybe<InterestRateSetupInput>;
+  notes?: InputMaybe<Scalars['String']>;
+  openCharge?: InputMaybe<ChargeInput>;
+  penaltyCharge?: InputMaybe<PenaltyEdit>;
+  prematurePenalty?: InputMaybe<PrematurePenaltyEdit>;
+  rebate?: InputMaybe<RebateEditInput>;
+  tenure?: InputMaybe<TenureUpdateData>;
+  withdrawPenalty?: InputMaybe<WithdrawPenalty>;
+};
+
+export const SvUpdateType = {
+  AccountCloseFeesAndChargeUpdate: 'ACCOUNT_CLOSE_FEES_AND_CHARGE_UPDATE',
+  AccountOpenFeesAndChargeUpdate: 'ACCOUNT_OPEN_FEES_AND_CHARGE_UPDATE',
+  AccountPremiumUpdate: 'ACCOUNT_PREMIUM_UPDATE',
+  BalanceLimitUpdate: 'BALANCE_LIMIT_UPDATE',
+  ChequeSettingsUpdate: 'CHEQUE_SETTINGS_UPDATE',
+  PenaltyChargeUpdate: 'PENALTY_CHARGE_UPDATE',
+  PrematurePenaltyUpdate: 'PREMATURE_PENALTY_UPDATE',
+  ProductInterestUpdate: 'PRODUCT_INTEREST_UPDATE',
+  ProductTenureUpdate: 'PRODUCT_TENURE_UPDATE',
+  RebateUpdate: 'REBATE_UPDATE',
+  WithdrawPenaltyUpdate: 'WITHDRAW_PENALTY_UPDATE',
+} as const;
+
+export type SvUpdateType = typeof SvUpdateType[keyof typeof SvUpdateType];
 export type SalStructAssignOutput = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
@@ -22992,6 +23095,50 @@ export type SetBpmAddEventsMutation = {
   bpm: {
     programs: {
       upsertEvent: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type SetBpmEventsAddAnnouncementsMutationVariables = Exact<{
+  eventId: Scalars['ID'];
+  data: BpmEventAnnouncementInput;
+}>;
+
+export type SetBpmEventsAddAnnouncementsMutation = {
+  bpm: {
+    programs: {
+      addAnnouncements: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type SetBpmEventsAddAttendeesMutationVariables = Exact<{
+  eventId: Scalars['ID'];
+  attendees?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+}>;
+
+export type SetBpmEventsAddAttendeesMutation = {
+  bpm: {
+    programs: {
+      addEventAttendees: {
         recordId?: string | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -29822,6 +29969,48 @@ export type GetEventsEditDataQuery = {
             contact?: string | null;
           } | null> | null;
         } | null;
+      };
+    };
+  };
+};
+
+export type GetEventsDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetEventsDetailsQuery = {
+  bpm: {
+    programs: {
+      eventDetails: {
+        overview?: {
+          id: string;
+          eventName?: string | null;
+          eventType?: BpmEventType | null;
+          eventDays?: EventDays | null;
+          totalAttendees?: number | null;
+          status?: MeetingStatus | null;
+          priority?: Priority | null;
+          scheduledById?: string | null;
+          scheduledBy?: string | null;
+          position?: string | null;
+          note?: string | null;
+          departmentIds?: Array<string> | null;
+          startDate?: Record<'local' | 'en' | 'np', string> | null;
+          startTime?: string | null;
+          eventDates?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            startTime?: string | null;
+            endTime?: string | null;
+          } | null> | null;
+          attendees?: Array<{
+            id: string;
+            name?: string | null;
+            designation?: string | null;
+            email?: string | null;
+            contact?: string | null;
+          } | null> | null;
+        } | null;
+        announcements?: Array<{ title?: string | null; description?: string | null } | null> | null;
       };
     };
   };
@@ -44698,6 +44887,74 @@ export const useSetBpmAddEventsMutation = <TError = unknown, TContext = unknown>
     useAxios<SetBpmAddEventsMutation, SetBpmAddEventsMutationVariables>(SetBpmAddEventsDocument),
     options
   );
+export const SetBpmEventsAddAnnouncementsDocument = `
+    mutation setBPMEventsAddAnnouncements($eventId: ID!, $data: BPMEventAnnouncementInput!) {
+  bpm {
+    programs {
+      addAnnouncements(data: $data, eventId: $eventId) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetBpmEventsAddAnnouncementsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetBpmEventsAddAnnouncementsMutation,
+    TError,
+    SetBpmEventsAddAnnouncementsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetBpmEventsAddAnnouncementsMutation,
+    TError,
+    SetBpmEventsAddAnnouncementsMutationVariables,
+    TContext
+  >(
+    ['setBPMEventsAddAnnouncements'],
+    useAxios<SetBpmEventsAddAnnouncementsMutation, SetBpmEventsAddAnnouncementsMutationVariables>(
+      SetBpmEventsAddAnnouncementsDocument
+    ),
+    options
+  );
+export const SetBpmEventsAddAttendeesDocument = `
+    mutation setBPMEventsAddAttendees($eventId: ID!, $attendees: [String!]) {
+  bpm {
+    programs {
+      addEventAttendees(eventId: $eventId, attendeeIds: $attendees) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetBpmEventsAddAttendeesMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetBpmEventsAddAttendeesMutation,
+    TError,
+    SetBpmEventsAddAttendeesMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetBpmEventsAddAttendeesMutation,
+    TError,
+    SetBpmEventsAddAttendeesMutationVariables,
+    TContext
+  >(
+    ['setBPMEventsAddAttendees'],
+    useAxios<SetBpmEventsAddAttendeesMutation, SetBpmEventsAddAttendeesMutationVariables>(
+      SetBpmEventsAddAttendeesDocument
+    ),
+    options
+  );
 export const SetNewTaskDocument = `
     mutation setNewTask($id: ID, $input: NewTaskInput!) {
   bpm {
@@ -54234,6 +54491,60 @@ export const useGetEventsEditDataQuery = <TData = GetEventsEditDataQuery, TError
     useAxios<GetEventsEditDataQuery, GetEventsEditDataQueryVariables>(
       GetEventsEditDataDocument
     ).bind(null, variables),
+    options
+  );
+export const GetEventsDetailsDocument = `
+    query getEventsDetails($id: ID!) {
+  bpm {
+    programs {
+      eventDetails(id: $id) {
+        overview {
+          id
+          eventName
+          eventType
+          eventDays
+          totalAttendees
+          eventDates {
+            date
+            startTime
+            endTime
+          }
+          status
+          priority
+          scheduledById
+          scheduledBy
+          position
+          note
+          departmentIds
+          attendees {
+            id
+            name
+            designation
+            email
+            contact
+          }
+          startDate
+          startTime
+        }
+        announcements {
+          title
+          description
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetEventsDetailsQuery = <TData = GetEventsDetailsQuery, TError = unknown>(
+  variables: GetEventsDetailsQueryVariables,
+  options?: UseQueryOptions<GetEventsDetailsQuery, TError, TData>
+) =>
+  useQuery<GetEventsDetailsQuery, TError, TData>(
+    ['getEventsDetails', variables],
+    useAxios<GetEventsDetailsQuery, GetEventsDetailsQueryVariables>(GetEventsDetailsDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetTaskListDocument = `

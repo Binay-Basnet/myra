@@ -1,2 +1,2 @@
-export * from './lib/tasks/AddTask'
-export * from './lib/tasks/TaskList'
+export * from './lib/tasks/AddTask';
+export * from './lib/tasks/TaskList';

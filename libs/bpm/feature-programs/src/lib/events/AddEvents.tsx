@@ -169,7 +169,7 @@ export const BPMEventsAdd = () => {
       methods?.reset({
         ...filteredValues,
         // time: dayjs(itemFormData?.time)?.format('HH:mm'),
-        scheduledBy: itemFormData?.scheduledById,
+        scheduledBy: itemFormData?.scheduledById as string,
         name: itemFormData?.eventName as string,
         eventType: itemFormData?.eventType ?? undefined,
         notes: itemFormData?.note,
@@ -209,7 +209,7 @@ export const BPMEventsAdd = () => {
 
   return (
     <FormLayout methods={methods}>
-      <FormLayout.Header title="New Meeting" />
+      <FormLayout.Header title="New Events" />
 
       <FormLayout.Content>
         <FormLayout.Form>

@@ -90,9 +90,9 @@ export const BPMProgramsEventsList = () => {
       <Table
         isLoading={isLoading}
         data={rowData}
-        // rowOnClick={(row) => {
-        //   router.push(`${ROUTES.BPM_PROGRAMS_MEETINGS_DETAILS}?id=${row?.node?.id}`);
-        // }}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.BPM_PROGRAMS_EVENTS_DETAILS}?id=${row?.node?.id}`);
+        }}
         columns={columns}
         pagination={{
           total: meetingData?.bpm?.programs?.listEvents?.totalCount ?? 'Many',
