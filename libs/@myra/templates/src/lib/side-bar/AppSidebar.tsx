@@ -87,6 +87,7 @@ export const AppSidebar = ({ module = 'CBS', menu, forms }: ISidebarProps) => {
                     <Box>
                       <AddButtonList
                         testId={t[item.label] || item?.label}
+                        data-testid={t[item.label] || item?.label}
                         label={t[item.label] || item?.label}
                         onClick={() => {
                           if (item.idType) {

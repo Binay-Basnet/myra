@@ -24,28 +24,28 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
   switch (shade) {
     case 'primary':
       buttonComp = (
-        <ChakraButton colorScheme="primary" ref={ref} {...rest}>
+        <ChakraButton colorScheme="primary" ref={ref} {...rest} data-testid={children}>
           {children}
         </ChakraButton>
       );
       break;
     case 'danger':
       buttonComp = (
-        <ChakraButton colorScheme="danger" ref={ref} {...rest}>
+        <ChakraButton colorScheme="danger" ref={ref} {...rest} data-testid={children}>
           {children}
         </ChakraButton>
       );
       break;
     case 'neutral':
       buttonComp = (
-        <ChakraButton colorScheme="gray" ref={ref} {...rest}>
+        <ChakraButton colorScheme="gray" ref={ref} {...rest} data-testid={children}>
           {children}
         </ChakraButton>
       );
       break;
     default:
       buttonComp = (
-        <ChakraButton ref={ref} {...rest}>
+        <ChakraButton ref={ref} {...rest} data-testid={children}>
           {children}
         </ChakraButton>
       );

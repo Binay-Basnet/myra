@@ -1597,6 +1597,18 @@ export type AssignMembersInput = {
   memberId: Scalars['String'];
 };
 
+export type AssignTask = {
+  assignedTo?: InputMaybe<AssignedTo>;
+  department?: InputMaybe<Scalars['ID']>;
+  minimumLevelOfAuthority?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['ID']>;
+};
+
+export type AssignTaskWithError = {
+  assigned?: Maybe<Scalars['Boolean']>;
+  error?: Maybe<MutationError>;
+};
+
 export type AssignedMemberList = {
   account?: Maybe<DepositLoanAccount>;
   assignedDate?: Maybe<Scalars['Localized']>;
@@ -1629,6 +1641,12 @@ export type AssignedMembersListConnection = {
   totalCount: Scalars['Int'];
 };
 
+export const AssignedTo = {
+  Department: 'DEPARTMENT',
+  Person: 'PERSON',
+} as const;
+
+export type AssignedTo = typeof AssignedTo[keyof typeof AssignedTo];
 export type AssociatedGuaranteeAccountListResult = {
   data?: Maybe<Array<Maybe<AssociatedGuaranteeDetails>>>;
   error?: Maybe<QueryError>;
@@ -1914,6 +1932,7 @@ export type BpmMinorResult = {
 export type BpmMutation = {
   operations: BpmOperationsMutation;
   programs: BpmProgramsMutation;
+  task: BpmTaskMutation;
 };
 
 export type BpmOperationsMutation = {
@@ -1995,6 +2014,42 @@ export type BpmProgramsQueryMeetingDetailArgs = {
 export type BpmQuery = {
   operations: BpmOperationsQuery;
   programs: BpmProgramsQuery;
+  task: BpmTaskQuery;
+};
+
+export type BpmTaskMutation = {
+  assignTask: AssignTaskWithError;
+  changeStatus: StatusChangedWithError;
+  upsertNewTask: ReturnTaskUpsert;
+};
+
+export type BpmTaskMutationAssignTaskArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input?: InputMaybe<AssignTask>;
+};
+
+export type BpmTaskMutationChangeStatusArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  status?: InputMaybe<StatusOfTask>;
+};
+
+export type BpmTaskMutationUpsertNewTaskArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: NewTaskInput;
+};
+
+export type BpmTaskQuery = {
+  getTask: GetTaskWithError;
+  listTask: ListTaskConnection;
+};
+
+export type BpmTaskQueryGetTaskArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type BpmTaskQueryListTaskArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type BadRequestError = {
@@ -7994,6 +8049,24 @@ export type GetSupplierResponse = {
   error?: Maybe<QueryError>;
 };
 
+export type GetTask = {
+  assignedBy?: Maybe<Scalars['ID']>;
+  assignedTo?: Maybe<AssignedTo>;
+  department?: Maybe<Scalars['ID']>;
+  dueDate?: Maybe<Scalars['Localized']>;
+  id?: Maybe<Scalars['ID']>;
+  minimumLevelOfAuthority?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  notes?: Maybe<Scalars['String']>;
+  priority?: Maybe<Priority>;
+  taskTitle?: Maybe<Scalars['String']>;
+};
+
+export type GetTaskWithError = {
+  data?: Maybe<GetTask>;
+  error?: Maybe<QueryError>;
+};
+
 export type GetUnitResponse = {
   data?: Maybe<FormStateInvUnitOfMeasureInput>;
   error?: Maybe<QueryError>;
@@ -12518,6 +12591,17 @@ export type Level2HelloArgs = {
   data: ExampleInput;
 };
 
+export type ListTaskConnection = {
+  edges?: Maybe<Array<Maybe<ListTaskEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ListTaskEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<TaskListed>;
+};
+
 export const ListType = {
   All: 'ALL',
   NotPrinted: 'NOT_PRINTED',
@@ -16563,6 +16647,18 @@ export type NewEmployeeType = {
   name: Scalars['String'];
 };
 
+export type NewTaskInput = {
+  assignedBy?: InputMaybe<Scalars['ID']>;
+  assignedTo?: InputMaybe<AssignedTo>;
+  department?: InputMaybe<Scalars['ID']>;
+  dueDate?: InputMaybe<Scalars['Localized']>;
+  minimumLevelOfAuthority?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
+  notes?: InputMaybe<Scalars['String']>;
+  priority?: InputMaybe<Priority>;
+  taskTitle?: InputMaybe<Scalars['String']>;
+};
+
 export type NewTaxInput = {
   default?: InputMaybe<Scalars['Boolean']>;
   rate?: InputMaybe<Scalars['Float']>;
@@ -18242,6 +18338,11 @@ export type ReturnStaffPlan = {
   error?: Maybe<MutationError>;
   record?: Maybe<StaffPlanRecord>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type ReturnTaskUpsert = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type ReturnTaxSlab = {
@@ -20114,6 +20215,19 @@ export type StatementReportInput = {
   reportType?: InputMaybe<Scalars['String']>;
 };
 
+export type StatusChangedWithError = {
+  error?: Maybe<MutationError>;
+  isChanged?: Maybe<Scalars['Boolean']>;
+};
+
+export const StatusOfTask = {
+  Assigned: 'ASSIGNED',
+  Completed: 'COMPLETED',
+  Pending: 'PENDING',
+  Started: 'STARTED',
+} as const;
+
+export type StatusOfTask = typeof StatusOfTask[keyof typeof StatusOfTask];
 export type StrTransactionActionInput = {
   declineReason?: InputMaybe<Scalars['String']>;
   isAccepted: Scalars['Boolean'];
@@ -20292,6 +20406,16 @@ export type TagLedger = {
   name?: Maybe<Scalars['String']>;
   tagId?: Maybe<Scalars['String']>;
   tagName?: Maybe<Scalars['String']>;
+};
+
+export type TaskListed = {
+  assignedBy?: Maybe<Scalars['String']>;
+  assignedDate?: Maybe<Scalars['Localized']>;
+  assignedTo?: Maybe<AssignedTo>;
+  id?: Maybe<Scalars['ID']>;
+  status?: Maybe<StatusOfTask>;
+  taskAuthority?: Maybe<Scalars['String']>;
+  taskTitle?: Maybe<Scalars['String']>;
 };
 
 export const TaxPayerOptions = {

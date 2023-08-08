@@ -119,7 +119,7 @@ export const FileInput = ({
         {...getRootProps({ style })}
         data-testid={name}
       >
-        <input {...getInputProps()} />
+        <input {...getInputProps()} data-testid={`${name}-input`} />
         <Flex
           direction="column"
           gap={size === 'md' ? 's8' : 's16'}

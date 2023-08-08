@@ -78,6 +78,7 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
     <Controller
       render={({ field: { value, onChange } }) => (
         <BankSelect
+          name={name}
           label={label}
           value={bankOptions?.find((option) => option.value === value)}
           isLoading={isFetching}

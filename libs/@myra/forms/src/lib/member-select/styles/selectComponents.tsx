@@ -21,7 +21,9 @@ export interface Option {
   };
 }
 
-export const components: SelectComponentsConfig<Option, boolean, GroupBase<Option>> = {
+export const components: (
+  name?: string
+) => SelectComponentsConfig<Option, boolean, GroupBase<Option>> = (name) => ({
   Placeholder: ({ children, ...props }) => (
     <chakraComponents.Placeholder {...props}>
       {props.isMulti ? (
@@ -37,6 +39,17 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
       )}
     </chakraComponents.Placeholder>
   ),
+  Control: ({ innerProps, ...props }) => (
+    <chakraComponents.Control
+      {...props}
+      innerProps={
+        {
+          ...innerProps,
+          'data-testid': `${name}`,
+        } as unknown as Record<string, string>
+      }
+    />
+  ),
   DropdownIndicator: (props) => {
     const { options } = props;
     return (
@@ -50,9 +63,18 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
     );
   },
   Option: (props) => {
-    const { data } = props;
+    const { data, ...rest } = props;
+
     return (
-      <chakraComponents.Option {...props}>
+      <chakraComponents.Option
+        {...props}
+        innerProps={
+          {
+            ...rest.innerProps,
+            'data-testid': `${name}-${data?.value?.toString()}`,
+          } as unknown as Record<string, string>
+        }
+      >
         <Box display="flex" justifyContent="space-between" width="100%">
           <Box gap="s16" display="flex">
             <Box borderRadius="50%">
@@ -138,4 +160,4 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
       </chakraComponents.SingleValue>
     );
   },
-};
+});
