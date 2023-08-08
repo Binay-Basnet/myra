@@ -1023,6 +1023,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
           //  mt="-1px"
           py="0"
           h="100%"
+          data-testId={`${column?.accessor?.toString()}-${data?._id}`}
           type={column.isNumeric ? 'number' : column.isTime ? 'time' : 'text'}
           w="100%"
           px="s8"
