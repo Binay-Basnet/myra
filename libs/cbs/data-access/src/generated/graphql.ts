@@ -1946,6 +1946,7 @@ export type BpmOperationsQuery = {
 export type BpmProgramsMutation = {
   addAnnouncements: BpmEventResult;
   addAttendees: BpmMeetingResult;
+  addEventAttendees: BpmEventResult;
   addMinute: BpmMeetingResult;
   closeMeeting: BpmMeetingResult;
   upsertEvent: BpmEventResult;
@@ -1960,6 +1961,11 @@ export type BpmProgramsMutationAddAnnouncementsArgs = {
 export type BpmProgramsMutationAddAttendeesArgs = {
   attendeeIds?: InputMaybe<Array<Scalars['String']>>;
   meetingId: Scalars['ID'];
+};
+
+export type BpmProgramsMutationAddEventAttendeesArgs = {
+  attendeeIds?: InputMaybe<Array<Scalars['String']>>;
+  eventId: Scalars['ID'];
 };
 
 export type BpmProgramsMutationAddMinuteArgs = {

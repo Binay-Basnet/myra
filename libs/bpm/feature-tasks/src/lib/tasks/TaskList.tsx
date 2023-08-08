@@ -1,12 +1,26 @@
 import { useMemo } from 'react';
+import { IoIosArrowDown } from 'react-icons/io';
 import { useRouter } from 'next/router';
+import { Portal } from '@chakra-ui/react';
 import { ApprovalStatusItem } from 'libs/cbs/requests/feature-lists/src/components/ApprovalStatusItem';
 
-import { Column, PageHeader, Table, TablePopover } from '@myra-ui';
+import {
+  Box,
+  Column,
+  Icon,
+  PageHeader,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Table,
+  TablePopover,
+} from '@myra-ui';
 
 import { LeaveStatusEnum, useGetTaskListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
+
+import PopoverItem from './components/PopoverItem';
 
 export const TaskList = () => {
   const router = useRouter();
@@ -43,9 +57,55 @@ export const TaskList = () => {
         header: 'Status',
         accessorFn: (row) => row?.node?.status,
 
-        cell: (props) => (
-          <ApprovalStatusItem status={props?.row?.original?.node?.status as LeaveStatusEnum} />
-        ),
+        cell: (props) => {
+          const popOverItemData = [
+            {
+              itemColor: 'red.500',
+              itemText: 'Assigned',
+            },
+            {
+              itemColor: 'yellow.500',
+              itemText: 'Pending',
+            },
+            {
+              itemColor: 'blue.500',
+              itemText: 'Started',
+            },
+            {
+              itemColor: 'red.500',
+              itemText: 'Completed',
+            },
+          ];
+          return (
+            <Box display="flex" alignItems="center" gap="s8">
+              <ApprovalStatusItem status={props?.row?.original?.node?.status as LeaveStatusEnum} />
+
+              <Popover isLazy placement="bottom-start" colorScheme="primary">
+                {({ onClose }) => (
+                  <>
+                    <PopoverTrigger>
+                      <Box as="button" display="flex" alignItems="center">
+                        <Icon size="sm" as={IoIosArrowDown} />
+                      </Box>
+                    </PopoverTrigger>
+                    <Portal>
+                      <PopoverContent w="100%" boxShadow="E2" border="none" borderRadius="br2">
+                        {popOverItemData?.map((item) => (
+                          <PopoverItem
+                            itemColor={item?.itemColor}
+                            itemText={item?.itemText}
+                            taskId={props?.cell?.row?.original?.node?.id}
+                            onClose={onClose}
+                          />
+                        ))}
+                      </PopoverContent>
+                    </Portal>
+                  </>
+                )}
+              </Popover>
+            </Box>
+          );
+        },
       },
       {
         id: '_actions',

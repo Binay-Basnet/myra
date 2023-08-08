@@ -1,11 +1,16 @@
 import { Box, Text } from '@myra-ui';
 
-import { MemberTransferState, PayrollStatus, RequestStatus } from '@coop/cbs/data-access';
+import {
+  MemberTransferState,
+  PayrollStatus,
+  RequestStatus,
+  StatusOfTask,
+} from '@coop/cbs/data-access';
 
 export const ApprovalStatusItem = ({
   status,
 }: {
-  status?: RequestStatus | MemberTransferState | PayrollStatus;
+  status?: RequestStatus | MemberTransferState | PayrollStatus | StatusOfTask;
 }) => (
   /* eslint-disable no-nested-ternary */
   <Box display="flex" alignItems="center" gap="s8">
@@ -16,8 +21,13 @@ export const ApprovalStatusItem = ({
       bg={
         status === RequestStatus.Approved || status === PayrollStatus.Paid
           ? 'green.300'
-          : status === RequestStatus.Declined || status === MemberTransferState?.Rejected
+          : status === RequestStatus.Declined ||
+            status === MemberTransferState?.Rejected ||
+            status === StatusOfTask?.Assigned ||
+            status === StatusOfTask?.Completed
           ? 'red.500'
+          : status === StatusOfTask?.Started
+          ? 'blue.500'
           : 'yellow.500'
       }
     />
