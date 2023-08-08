@@ -62,6 +62,7 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
             <Can I="SHOW_IN_MENU" a={item.aclKey}>
               <Link href={item.route} style={{ width: '100%' }}>
                 <TabCol
+                  data-testid={`${t[item.label as keyof typeof en] ?? item.label}-tab`}
                   sx={
                     isActive
                       ? {
@@ -87,6 +88,7 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
                 <IconButton
                   aria-label="add-Button"
                   size="md"
+                  data-testid={`${t[item.label as keyof typeof en] ?? item.label}-addButton`}
                   height="40px"
                   variant="ghost"
                   icon={<Icon as={IoAdd} />}

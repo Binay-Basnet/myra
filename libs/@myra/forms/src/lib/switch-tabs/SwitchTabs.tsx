@@ -12,7 +12,7 @@ const SwitchTab = (props: UseRadioProps & { children: React.ReactNode }) => {
 
   return (
     <Box as="label">
-      <input {...input} id={id ?? name} />
+      <input {...input} id={id ?? name} data-testid={children} />
       <Box
         {...checkbox}
         cursor="pointer"

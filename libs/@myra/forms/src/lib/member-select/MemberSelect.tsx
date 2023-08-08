@@ -35,6 +35,7 @@ export interface MemberSelectProps
   helperText?: string;
   errorText?: string;
   label?: string;
+  name?: string;
   // size?: 'sm' | 'default';`
   onChange?: ((newValue: Option) => void) | any;
 }
@@ -46,6 +47,8 @@ export const MemberSelect = ({
   label,
   options,
   value,
+
+  name,
   isRequired,
   ...rest
 }: MemberSelectProps) => (
@@ -53,9 +56,11 @@ export const MemberSelect = ({
     <Text variant="formLabel" color="gray.700">
       {isRequired ? `${label} *` : label}
     </Text>
+    {/* <div data-testid={`${name}`}> */}
     <ChakraSelect<Option, boolean, GroupBase<Option>>
       options={options}
       value={value}
+      name={name}
       controlShouldRenderValue={!isMulti}
       closeMenuOnSelect={!isMulti}
       isMulti={isMulti}
@@ -63,10 +68,13 @@ export const MemberSelect = ({
       isClearable
       chakraStyles={chakraDefaultStyles as ChakraStylesConfig<Option, boolean, GroupBase<Option>>}
       components={
-        customComponents as Partial<SelectComponentsConfig<Option, boolean, GroupBase<Option>>>
+        customComponents(name) as Partial<
+          SelectComponentsConfig<Option, boolean, GroupBase<Option>>
+        >
       }
       {...rest}
     />
+    {/* </div> */}
     {errorText ? (
       <Text variant="formHelper" color="danger.500">
         {errorText}
