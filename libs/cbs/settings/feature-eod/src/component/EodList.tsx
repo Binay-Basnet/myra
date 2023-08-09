@@ -66,7 +66,7 @@ export const EodList = () => {
               </Text>
               <Text fontSize="s2" fontWeight={400} color="gray.600">
                 Day End: {format(new Date(eod?.completedTime ?? ''), 'dd MMM, yyyy')} at{' '}
-                {format(new Date(eod?.completedTime ?? ''), 'KK:MMbbb')}
+                {format(new Date(eod?.completedTime ?? ''), 'KK:mm aaa')}
               </Text>
             </Box>
 
