@@ -9227,6 +9227,7 @@ export type IndividualBio = {
   memberName?: Maybe<Scalars['String']>;
   mobile?: Maybe<Scalars['String']>;
   nationality?: Maybe<Scalars['String']>;
+  panNo?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<Scalars['Localized']>;
   profession?: Maybe<Scalars['String']>;
   profilePic?: Maybe<Scalars['String']>;
@@ -34794,6 +34795,7 @@ export type GetMemberKymDetailsBioQuery = {
               currentAddress?: Record<'local' | 'en' | 'np', string> | null;
               permanentAddress?: Record<'local' | 'en' | 'np', string> | null;
               maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
+              panNo?: string | null;
               familyMembers?: Array<{
                 relationship?: string | null;
                 fullName?: string | null;
@@ -60355,6 +60357,7 @@ export const GetMemberKymDetailsBioDocument = `
               key
               value
             }
+            panNo
           }
           ... on InstitutionBio {
             basicInfo {
