@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 
 import { Box, Scrollable } from '@myra-ui';
 
@@ -7,13 +8,17 @@ import {
   CooperativeUnionBasicMinInfo,
   IndividualBasicMinInfo,
   InstitutionBasicMinInfo,
-  useBalanceCertificateMutation,
   useGetMemberKymDetailsOverviewQuery,
   useIssueCertificateMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 
-import { AddMinorModal, MemberDetailsPathBar, MemberDetailsSidebar } from '../components';
+import {
+  AddMinorModal,
+  BalanceCertificateModal,
+  MemberDetailsPathBar,
+  MemberDetailsSidebar,
+} from '../components';
 import {
   Accounts,
   Activity,
@@ -41,9 +46,13 @@ export const MemberDetails = ({
 }: CbsMemberDetailsProps) => {
   const router = useRouter();
 
-  const { mutateAsync } = useIssueCertificateMutation();
+  const {
+    isOpen: isBalanceCertModalOpen,
+    onClose: onBalanceCertModalClose,
+    onToggle: onBalanceCertModalToggle,
+  } = useDisclosure();
 
-  const { mutateAsync: issueBalanceCertificate } = useBalanceCertificateMutation();
+  const { mutateAsync } = useIssueCertificateMutation();
 
   const memberId = router.query['id'] as string;
   const tabQuery = router.query['tab'] as string;
@@ -120,10 +129,7 @@ export const MemberDetails = ({
                 },
                 {
                   label: 'Issue Balance Certificate',
-                  handler: () =>
-                    issueBalanceCertificate({ id: memberId }).then((res) =>
-                      window.open(res?.members?.balanceCertificate, '_blank')
-                    ),
+                  handler: onBalanceCertModalToggle,
                 },
               ]
             : [
@@ -138,10 +144,7 @@ export const MemberDetails = ({
                 },
                 {
                   label: 'Issue Balance Certificate',
-                  handler: () =>
-                    issueBalanceCertificate({ id: memberId }).then((res) =>
-                      window.open(res?.members?.balanceCertificate, '_blank')
-                    ),
+                  handler: onBalanceCertModalToggle,
                 },
               ]
         }
@@ -179,6 +182,12 @@ export const MemberDetails = ({
       <AddMinorModal
         isOpen={isAddMinorModalOpen as boolean}
         onClose={handleMinorAccountClose}
+        memberId={memberId}
+      />
+
+      <BalanceCertificateModal
+        isOpen={isBalanceCertModalOpen}
+        onClose={onBalanceCertModalClose}
         memberId={memberId}
       />
     </>

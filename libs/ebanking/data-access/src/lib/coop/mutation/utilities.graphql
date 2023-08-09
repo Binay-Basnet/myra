@@ -60,3 +60,31 @@ mutation completeSendMoney($data: EbankingSendMoneyInput, $transactionPin: Strin
     }
   }
 }
+
+mutation useUtility($input: UtilityInput!) {
+  eBanking {
+    utility {
+      useUtility(input: $input) {
+        data
+        status
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation makePayment($input: UtilityInput!) {
+  eBanking {
+    utility {
+      makePayment(input: $input) {
+        data
+        status
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

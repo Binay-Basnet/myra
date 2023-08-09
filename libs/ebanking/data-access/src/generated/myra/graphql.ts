@@ -80,19 +80,15 @@ export const SignUpDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSignUpMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.SignUpMutation,
-    TError,
-    Types.SignUpMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<Types.SignUpMutation, TError, Types.SignUpMutationVariables, TContext>(
-    ['signUp'],
-    useAxios<Types.SignUpMutation, Types.SignUpMutationVariables>(SignUpDocument),
-    options
-  );
+export const useSignUpMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.SignUpMutation, TError, Types.SignUpMutationVariables, TContext>) =>
+    useMutation<Types.SignUpMutation, TError, Types.SignUpMutationVariables, TContext>(
+      ['signUp'],
+      useAxios<Types.SignUpMutation, Types.SignUpMutationVariables>(SignUpDocument),
+      options
+    );
 export const VerifyOtpDocument = `
     mutation verifyOTP($data: EbankingOtpInput!) {
   eBanking(source: EBANKING) {
@@ -107,19 +103,15 @@ export const VerifyOtpDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useVerifyOtpMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.VerifyOtpMutation,
-    TError,
-    Types.VerifyOtpMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<Types.VerifyOtpMutation, TError, Types.VerifyOtpMutationVariables, TContext>(
-    ['verifyOTP'],
-    useAxios<Types.VerifyOtpMutation, Types.VerifyOtpMutationVariables>(VerifyOtpDocument),
-    options
-  );
+export const useVerifyOtpMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.VerifyOtpMutation, TError, Types.VerifyOtpMutationVariables, TContext>) =>
+    useMutation<Types.VerifyOtpMutation, TError, Types.VerifyOtpMutationVariables, TContext>(
+      ['verifyOTP'],
+      useAxios<Types.VerifyOtpMutation, Types.VerifyOtpMutationVariables>(VerifyOtpDocument),
+      options
+    );
 export const EBankingLoginDocument = `
     mutation eBankingLogin($data: EbankingLoginInput!) {
   eBanking(source: EBANKING) {
@@ -152,21 +144,15 @@ export const EBankingLoginDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useEBankingLoginMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.EBankingLoginMutation,
-    TError,
-    Types.EBankingLoginMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<Types.EBankingLoginMutation, TError, Types.EBankingLoginMutationVariables, TContext>(
-    ['eBankingLogin'],
-    useAxios<Types.EBankingLoginMutation, Types.EBankingLoginMutationVariables>(
-      EBankingLoginDocument
-    ),
-    options
-  );
+export const useEBankingLoginMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.EBankingLoginMutation, TError, Types.EBankingLoginMutationVariables, TContext>) =>
+    useMutation<Types.EBankingLoginMutation, TError, Types.EBankingLoginMutationVariables, TContext>(
+      ['eBankingLogin'],
+      useAxios<Types.EBankingLoginMutation, Types.EBankingLoginMutationVariables>(EBankingLoginDocument),
+      options
+    );
 export const CheckAccountDocument = `
     mutation checkAccount($id: ID!, $mobileNumber: String!, $pin: Int!) {
   eBanking(source: EBANKING) {
@@ -181,19 +167,15 @@ export const CheckAccountDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useCheckAccountMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.CheckAccountMutation,
-    TError,
-    Types.CheckAccountMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<Types.CheckAccountMutation, TError, Types.CheckAccountMutationVariables, TContext>(
-    ['checkAccount'],
-    useAxios<Types.CheckAccountMutation, Types.CheckAccountMutationVariables>(CheckAccountDocument),
-    options
-  );
+export const useCheckAccountMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.CheckAccountMutation, TError, Types.CheckAccountMutationVariables, TContext>) =>
+    useMutation<Types.CheckAccountMutation, TError, Types.CheckAccountMutationVariables, TContext>(
+      ['checkAccount'],
+      useAxios<Types.CheckAccountMutation, Types.CheckAccountMutationVariables>(CheckAccountDocument),
+      options
+    );
 export const SetNewPinDocument = `
     mutation setNewPin($data: CooperativeConnectInput) {
   eBanking(source: EBANKING) {
@@ -216,19 +198,15 @@ export const SetNewPinDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetNewPinMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.SetNewPinMutation,
-    TError,
-    Types.SetNewPinMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<Types.SetNewPinMutation, TError, Types.SetNewPinMutationVariables, TContext>(
-    ['setNewPin'],
-    useAxios<Types.SetNewPinMutation, Types.SetNewPinMutationVariables>(SetNewPinDocument),
-    options
-  );
+export const useSetNewPinMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.SetNewPinMutation, TError, Types.SetNewPinMutationVariables, TContext>) =>
+    useMutation<Types.SetNewPinMutation, TError, Types.SetNewPinMutationVariables, TContext>(
+      ['setNewPin'],
+      useAxios<Types.SetNewPinMutation, Types.SetNewPinMutationVariables>(SetNewPinDocument),
+      options
+    );
 export const LoginToCooperativeDocument = `
     mutation loginToCooperative($cooperativeId: ID!, $pinCode: String!, $mobileNumber: String!) {
   eBanking(source: EBANKING) {
@@ -267,26 +245,15 @@ export const LoginToCooperativeDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useLoginToCooperativeMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.LoginToCooperativeMutation,
-    TError,
-    Types.LoginToCooperativeMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    Types.LoginToCooperativeMutation,
-    TError,
-    Types.LoginToCooperativeMutationVariables,
-    TContext
-  >(
-    ['loginToCooperative'],
-    useAxios<Types.LoginToCooperativeMutation, Types.LoginToCooperativeMutationVariables>(
-      LoginToCooperativeDocument
-    ),
-    options
-  );
+export const useLoginToCooperativeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.LoginToCooperativeMutation, TError, Types.LoginToCooperativeMutationVariables, TContext>) =>
+    useMutation<Types.LoginToCooperativeMutation, TError, Types.LoginToCooperativeMutationVariables, TContext>(
+      ['loginToCooperative'],
+      useAxios<Types.LoginToCooperativeMutation, Types.LoginToCooperativeMutationVariables>(LoginToCooperativeDocument),
+      options
+    );
 export const ResendOtpDocument = `
     mutation resendOTP($mobile: String!, $otpFor: OtpFor!) {
   eBanking(source: EBANKING) {
@@ -301,48 +268,15 @@ export const ResendOtpDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useResendOtpMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.ResendOtpMutation,
-    TError,
-    Types.ResendOtpMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<Types.ResendOtpMutation, TError, Types.ResendOtpMutationVariables, TContext>(
-    ['resendOTP'],
-    useAxios<Types.ResendOtpMutation, Types.ResendOtpMutationVariables>(ResendOtpDocument),
-    options
-  );
-export const ResetPasswordDocument = `
-    mutation resetPassword($mobileNo: String!, $newPassword: String!) {
-  eBanking(source: EBANKING) {
-    auth {
-      resetPassword(mobileNo: $mobileNo, newPassword: $newPassword) {
-        success
-        error {
-          ...MutationError
-        }
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useResetPasswordMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.ResetPasswordMutation,
-    TError,
-    Types.ResetPasswordMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<Types.ResetPasswordMutation, TError, Types.ResetPasswordMutationVariables, TContext>(
-    ['resetPassword'],
-    useAxios<Types.ResetPasswordMutation, Types.ResetPasswordMutationVariables>(
-      ResetPasswordDocument
-    ),
-    options
-  );
+export const useResendOtpMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.ResendOtpMutation, TError, Types.ResendOtpMutationVariables, TContext>) =>
+    useMutation<Types.ResendOtpMutation, TError, Types.ResendOtpMutationVariables, TContext>(
+      ['resendOTP'],
+      useAxios<Types.ResendOtpMutation, Types.ResendOtpMutationVariables>(ResendOtpDocument),
+      options
+    );
 export const NewMembershipRequestDocument = `
     mutation newMembershipRequest($cooperativeId: String!, $data: MembershipRequestInput) {
   eBanking(source: EBANKING) {
@@ -357,26 +291,15 @@ export const NewMembershipRequestDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useNewMembershipRequestMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.NewMembershipRequestMutation,
-    TError,
-    Types.NewMembershipRequestMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    Types.NewMembershipRequestMutation,
-    TError,
-    Types.NewMembershipRequestMutationVariables,
-    TContext
-  >(
-    ['newMembershipRequest'],
-    useAxios<Types.NewMembershipRequestMutation, Types.NewMembershipRequestMutationVariables>(
-      NewMembershipRequestDocument
-    ),
-    options
-  );
+export const useNewMembershipRequestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.NewMembershipRequestMutation, TError, Types.NewMembershipRequestMutationVariables, TContext>) =>
+    useMutation<Types.NewMembershipRequestMutation, TError, Types.NewMembershipRequestMutationVariables, TContext>(
+      ['newMembershipRequest'],
+      useAxios<Types.NewMembershipRequestMutation, Types.NewMembershipRequestMutationVariables>(NewMembershipRequestDocument),
+      options
+    );
 export const GetMyraMeDocument = `
     query getMyraMe {
   eBanking {
@@ -399,18 +322,18 @@ export const GetMyraMeDocument = `
   }
 }
     `;
-export const useGetMyraMeQuery = <TData = Types.GetMyraMeQuery, TError = unknown>(
-  variables?: Types.GetMyraMeQueryVariables,
-  options?: UseQueryOptions<Types.GetMyraMeQuery, TError, TData>
-) =>
-  useQuery<Types.GetMyraMeQuery, TError, TData>(
-    variables === undefined ? ['getMyraMe'] : ['getMyraMe', variables],
-    useAxios<Types.GetMyraMeQuery, Types.GetMyraMeQueryVariables>(GetMyraMeDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetMyraMeQuery = <
+      TData = Types.GetMyraMeQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetMyraMeQueryVariables,
+      options?: UseQueryOptions<Types.GetMyraMeQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetMyraMeQuery, TError, TData>(
+      variables === undefined ? ['getMyraMe'] : ['getMyraMe', variables],
+      useAxios<Types.GetMyraMeQuery, Types.GetMyraMeQueryVariables>(GetMyraMeDocument).bind(null, variables),
+      options
+    );
 export const GetCoopListDocument = `
     query getCoopList {
   eBanking {
@@ -422,18 +345,18 @@ export const GetCoopListDocument = `
   }
 }
     `;
-export const useGetCoopListQuery = <TData = Types.GetCoopListQuery, TError = unknown>(
-  variables?: Types.GetCoopListQueryVariables,
-  options?: UseQueryOptions<Types.GetCoopListQuery, TError, TData>
-) =>
-  useQuery<Types.GetCoopListQuery, TError, TData>(
-    variables === undefined ? ['getCoopList'] : ['getCoopList', variables],
-    useAxios<Types.GetCoopListQuery, Types.GetCoopListQueryVariables>(GetCoopListDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetCoopListQuery = <
+      TData = Types.GetCoopListQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetCoopListQueryVariables,
+      options?: UseQueryOptions<Types.GetCoopListQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetCoopListQuery, TError, TData>(
+      variables === undefined ? ['getCoopList'] : ['getCoopList', variables],
+      useAxios<Types.GetCoopListQuery, Types.GetCoopListQueryVariables>(GetCoopListDocument).bind(null, variables),
+      options
+    );
 export const GetKymGenderDocument = `
     query getKYMGender($id: String!) {
   genderOptions(cooperativeId: $id) {
@@ -443,15 +366,15 @@ export const GetKymGenderDocument = `
   }
 }
     `;
-export const useGetKymGenderQuery = <TData = Types.GetKymGenderQuery, TError = unknown>(
-  variables: Types.GetKymGenderQueryVariables,
-  options?: UseQueryOptions<Types.GetKymGenderQuery, TError, TData>
-) =>
-  useQuery<Types.GetKymGenderQuery, TError, TData>(
-    ['getKYMGender', variables],
-    useAxios<Types.GetKymGenderQuery, Types.GetKymGenderQueryVariables>(GetKymGenderDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetKymGenderQuery = <
+      TData = Types.GetKymGenderQuery,
+      TError = unknown
+    >(
+      variables: Types.GetKymGenderQueryVariables,
+      options?: UseQueryOptions<Types.GetKymGenderQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetKymGenderQuery, TError, TData>(
+      ['getKYMGender', variables],
+      useAxios<Types.GetKymGenderQuery, Types.GetKymGenderQueryVariables>(GetKymGenderDocument).bind(null, variables),
+      options
+    );

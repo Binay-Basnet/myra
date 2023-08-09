@@ -30,15 +30,21 @@ interface WhatsNewModalProps {
 const whatsNewData = {
   features: {
     title: 'New Features',
-    data: [],
+    data: [
+      'Custom date for balance certificate',
+      'Regular Savings Installment to be updated by headteller.',
+    ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Resend password when email changed',
-      'FD Account creation due to double deposit',
-      'Installment Date Begin label changed',
-      'Ledger not found issue while giving role of teller for user',
+      'Show Province and District in member detail',
+      'Date filter in All transaction , adjusted transaction, All user accounts',
+      'pan no in member detail page and member register report',
+      'Proper error message for ledger not found',
+      'Cash denomination issue',
+      'EOD history proper time',
+      'Installment total issue during loan repayment',
     ],
   },
 };
@@ -76,8 +82,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.86</Text>
-          <Text fontSize="s3">August 2, 2023</Text>
+          <Text fontSize="r2">Version 1.0.87</Text>
+          <Text fontSize="s3">August 9, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>

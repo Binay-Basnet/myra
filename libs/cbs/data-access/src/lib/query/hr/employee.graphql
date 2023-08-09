@@ -155,6 +155,7 @@ query getLeave($id: String!) {
           record {
             id
             employeeId
+            employeeName
             leaveTypeId
             leaveTypeName
             leaveFrom
@@ -184,6 +185,59 @@ query getEmployeeLeaveList($employeeId: ID!) {
           }
           error {
             ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLeaveAllocation($id: ID!) {
+  hr {
+    employee {
+      leaveAllocation {
+        getLeaveAllocation(id: $id) {
+          data {
+            leaveAllocationFor
+            empLevDepDesig
+            leavePolicy
+            effectiveFrom
+            description
+            addUnusedLeaveFromPreviousSection
+            allocation {
+              leaveId
+              newLeaveAllocated
+              totalLeavesAllocated
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLeaveAllocationList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employee {
+      leaveAllocation {
+        listLeaveAllocation(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              employeeId
+              employeeName
+              leavePolicy
+              effectiveDate
+              lastUpdated
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
           }
         }
       }

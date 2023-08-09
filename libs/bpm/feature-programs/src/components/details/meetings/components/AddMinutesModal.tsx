@@ -53,7 +53,7 @@ export const AddMinutesModal = ({ isOpen, onClose }: IUpdateBalanceProps) => {
 
   return (
     <Modal
-      title="Add New Members"
+      title="Add Minutes"
       open={isOpen}
       onClose={onClose}
       primaryButtonLabel="Save"

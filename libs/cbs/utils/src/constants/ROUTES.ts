@@ -132,15 +132,15 @@ export const ROUTES = {
   SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/charges/configure',
 
   SETTINGS_GENERAL_AUDIT_LOG: '/settings/monitor/audit-log/list',
-  SETTINGS_EOD_SETUP: '/settings/general/eod/setup',
-  SETTINGS_GENERAL_BANK: '/settings/general/bank/configure',
+  SETTINGS_EOD_SETUP: '/settings/global/eod/setup',
+  SETTINGS_GENERAL_BANK: '/settings/global/bank/configure',
 
-  SETTINGS_GENERAL_COA: '/settings/general/coa/list',
-  SETTINGS_GENERAL_COA_DETAILS: '/settings/general/coa/details',
+  SETTINGS_GENERAL_COA: '/settings/global/coa/list',
+  SETTINGS_GENERAL_COA_DETAILS: '/settings/global/coa/details',
 
   SETTINGS_GENERAL_CODE_MANAGEMENT_ACCOUNTING: '/settings/general/code-management/accounting',
   SETTINGS_GENERAL_CODE_MANAGEMENT_CBS:
-    '/settings/general/code-management/core-banking-system/configure',
+    '/settings/global/code-management/core-banking-system/configure',
   SETTINGS_GENERAL_CODE_MANAGEMENT_INVENTORY: '/settings/general/code-management/inventory',
 
   SETTINGS_GENERAL_SAVINGS_TDS: '/settings/general/savings/tds/configure',
@@ -160,7 +160,7 @@ export const ROUTES = {
   SETTINGS_GENERAL_LP_EDIT: '/settings/general/loan-products/edit',
   SETTINGS_GENERAL_LP_DETAILS: '/settings/general/loan-products/details',
 
-  SETTINGS_GENERAL_INDEXING: '/settings/general/indexing',
+  SETTINGS_GENERAL_INDEXING: '/settings/global/indexing',
 
   SETTINGS_GENERAL_MEMBERS: '/settings/general/members/configure',
   SETTINGS_GENERAL_MEMBERS_KYM_IND: '/settings/general/members/kym-individual/configure',
@@ -169,9 +169,9 @@ export const ROUTES = {
   SETTINGS_GENERAL_MEMBERS_KYM_COOP_UNION:
     '/settings/general/members/kym-cooperative-union/configure',
 
-  SETTINGS_GENERAL_SERVICE_CENTER_LIST: '/settings/general/service-center/list',
-  SETTINGS_GENERAL_SERVICE_CENTER_LIST_ADD: '/settings/general/service-center/add',
-  SETTINGS_GENERAL_SERVICE_CENTER_LIST_EDIT: '/settings/general/service-center/edit',
+  SETTINGS_GENERAL_SERVICE_CENTER_LIST: '/settings/global/service-center/list',
+  SETTINGS_GENERAL_SERVICE_CENTER_LIST_ADD: '/settings/global/service-center/add',
+  SETTINGS_GENERAL_SERVICE_CENTER_LIST_EDIT: '/settings/global/service-center/edit',
 
   SETTINGS_GENERAL_SHARE: '/settings/general/share/configure',
   SETTINGS_GENERAL_SHARE_ISSUES: '/settings/general/share/issues/configure',
@@ -397,20 +397,20 @@ export const ROUTES = {
   CBS_LOAN_ACCOUNT_CLOSED_DETAILS: '/cbs/loan/closed-accounts/details',
   CBS_ACCOUNT_CLOSED_DETAILS: '/cbs/savings/account-close/details',
 
-  SETTINGS_GENERAL_PRINT_PREFERENCE: '/settings/general/print-preference/withdraw-slip',
+  SETTINGS_GENERAL_PRINT_PREFERENCE: '/settings/global/print-preference/withdraw-slip',
 
-  SETTINGS_EOD_HISTORY: '/settings/general/eod/history',
+  SETTINGS_EOD_HISTORY: '/settings/global/eod/history',
 
   SETTINGS_GENERAL_SAVINGS_ORGANIZATION_RATE: '/settings/general/savings/organization-rate',
 
   SETTINGS_GENERAL_LOAN_ORGANIZATION_RATE: '/settings/general/loan/organization-rate',
 
-  SETTINGS_GENERAL_ORGANIZATION_DETAILS: '/settings/general/organization',
-  SETTINGS_GENERAL_ORGANIZATION_EDIT: '/settings/general/organization/edit',
+  SETTINGS_GENERAL_ORGANIZATION_DETAILS: '/settings/global/organization',
+  SETTINGS_GENERAL_ORGANIZATION_EDIT: '/settings/global/organization/edit',
 
-  SETTINGS_EOD_HISTORY_DETAILS: '/settings/general/eod/history/details',
-  SETTINGS_GENERAL_COMMITTEE: '/settings/general/committee/list',
-  SETTINGS_GENERAL_COMMITTEE_DETAILS: '/settings/general/committee/details',
+  SETTINGS_EOD_HISTORY_DETAILS: '/settings/global/eod/history/details',
+  SETTINGS_GENERAL_COMMITTEE: '/settings/global/committee/list',
+  SETTINGS_GENERAL_COMMITTEE_DETAILS: '/settings/global/committee/details',
 
   DAY_CLOSE: '/day-close',
 
@@ -433,13 +433,16 @@ export const ROUTES = {
   HRMODULE_EMPLOYEES_LIST: '/hr/employee/employee/list',
   HRMODULE_ATTENDENCE_LIST: '/hr/employee/attendence/list',
   HRMODULE_LEAVE_LIST: '/hr/employee/leave/list',
+  HRMODULE_LEAVE_ALLOCATION_LIST: '/hr/employee/leave-allocation/list',
 
   HRMODULE_EMPLOYEES_ADD: '/hr/employee/employee/add',
   HRMODULE_ATTENDENCE_ADD: '/hr/employee/attendence/add',
   HRMODULE_LEAVE_ADD: '/hr/employee/leave/add',
+  HRMODULE_LEAVE_ALLOCATION_ADD: '/hr/employee/leave-allocation/add',
 
   HRMODULE_EMPLOYEES_EDIT: '/hr/employee/employee/edit',
   HRMODULE_LEAVE_EDIT: '/hr/employee/leave/edit',
+  HRMODULE_LEAVE_ALLOCATION_EDIT: '/hr/employee/leave-allocation/edit',
 
   HRMODULE_EMPLOYEES_SETTINGS: '/settings/general/hcm-employee',
   HRMODULE_EMPLOYEES_LEAVE_SETTINGS: '/settings/general/hcm-employee/leave',
@@ -522,11 +525,14 @@ export const ROUTES = {
 
   HR_REPORTS: '/hr/reports/transactions',
 
-  BPM_TASKS_LISTS: '/bpm/tasks/tasks/list',
-  BPM_TASKS_ADD: '/bpm/tasks/tasks/add',
+  BPM_TASKS_LISTS: '/bpm/tasks/list',
+  BPM_TASKS_ADD: '/bpm/tasks/add',
+  BPM_TASKS_EDIT: '/bpm/tasks/edit',
 
   BPM_PROGRAMS_EVENTS_LIST: '/bpm/programs/events/list',
+  BPM_PROGRAMS_EVENTS_EDIT: '/bpm/programs/events/edit',
   BPM_PROGRAMS_EVENTS_ADD: '/bpm/programs/events/add',
+  BPM_PROGRAMS_EVENTS_DETAILS: '/bpm/programs/events/details',
   BPM_PROGRAMS_MEETINGS_LIST: '/bpm/programs/meetings/list',
   BPM_PROGRAMS_MEETINGS_ADD: '/bpm/programs/meetings/add',
   BPM_PROGRAMS_MEETINGS_EDIT: '/bpm/programs/meetings/edit',
@@ -555,6 +561,20 @@ export const ROUTES = {
   BPM_REQUESTS_ALTERNATIVE_CHANNEL_REQUESTS: '/bpm/requests/alternative-channel/list',
   BPM_REQUESTS_MEMBER_BRANCH_TRANSFER_REQUESTS: '/bpm/requests/memebrship-branch/list',
   BPM_REQUESTS_NOMINEE_BALANCE_TRANSFER_REQUESTS: '/bpm/requests/nominee-balance-transfer/list',
+
+  MICRO_FINANCE_GROUPS_LIST: '/micro-finance/groups/list',
+  MICRO_FINANCE_GROUPS_ADD: '/micro-finance/groups/add',
+  MICRO_FINANCE_GROUPS_MEETINGS_LIST: '/micro-finance/groups/groups-meetings/list',
+  MICRO_FINANCE_GROUPS_MEETINGS_ADD: '/micro-finance/groups/groups-meetings/add',
+
+  MICRO_FINANCE_SAVING_ACCOUNTS_LIST: '/micro-finance/savings/accounts/list',
+  MICRO_FINANCE_SAVING_ACCOUNTS_ADD: '/micro-finance/savings/accounts/add',
+  MICRO_FINANCE_DEPOSIT_LIST: '/micro-finance/savings/deposit/list',
+  MICRO_FINANCE_DEPOSIT_ADD: '/micro-finance/savings/deposit/add',
+  MICRO_FINANCE_WITHDRAW_LIST: '/micro-finance/savings/withdraw/list',
+  MICRO_FINANCE_WITHDRAW_ADD: '/micro-finance/savings/withdraw/add',
+  MICRO_FINANCE_SAVING_PRODUCTS_LIST: '/micro-finance/savings/products/list',
+  MICRO_FINANCE_SAVING_PRODUCTS_ADD: '/micro-finance/savings/products--/add',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

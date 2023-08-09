@@ -15,6 +15,7 @@ import { chakraDefaultStyles } from './styles/selectStyles';
 interface Option {
   label?: string;
   value: string;
+  name?: string;
   accountInfo?: {
     accountName?: string;
     accountId?: string;
@@ -44,6 +45,7 @@ export const AccountSelect = ({
   options,
   isRequired,
   value,
+  name,
   ...rest
 }: AccountSelectProps) => {
   // a filter function that runs against each 'option' in `options`
@@ -59,13 +61,16 @@ export const AccountSelect = ({
         options={options}
         value={value}
         controlShouldRenderValue={!isMulti}
+        name={name}
         closeMenuOnSelect={!isMulti}
         isMulti={isMulti}
         hideSelectedOptions={false}
         isClearable
         chakraStyles={chakraDefaultStyles as ChakraStylesConfig<Option, boolean, GroupBase<Option>>}
         components={
-          customComponents as Partial<SelectComponentsConfig<Option, boolean, GroupBase<Option>>>
+          customComponents(name) as Partial<
+            SelectComponentsConfig<Option, boolean, GroupBase<Option>>
+          >
         }
         filterOption={filterOption}
         {...rest}

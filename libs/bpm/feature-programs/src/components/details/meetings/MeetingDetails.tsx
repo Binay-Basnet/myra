@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
 
-import { Box, Scrollable } from '@myra-ui';
+import { Box, PageHeader, Scrollable } from '@myra-ui';
 
-import { ProductDetailPathBar } from '@coop/cbs/settings/ui-layout';
+import { ROUTES } from '@coop/cbs/utils';
 
 import { MeetingDetailsSideBar } from './components/MeetingsDetailsSidebar';
+import { useMeetingDetailsHook } from './hooks/useMeetingDetails';
 import { Minutes } from './tabs/Minutes';
 import { Overview } from './tabs/OVerview';
 
@@ -12,10 +13,23 @@ export const BPMMeetingsDetails = () => {
   const router = useRouter();
 
   const tabQuery = router.query['tab'] as string;
+  const { detailData } = useMeetingDetailsHook();
+  const paths = [
+    {
+      label: 'Meetings',
+      link: ROUTES.BPM_PROGRAMS_MEETINGS_LIST,
+    },
+
+    {
+      label: `${detailData?.overview?.title}`,
+      link: `${ROUTES.BPM_PROGRAMS_MEETINGS_DETAILS}?id=${router?.query['id']}`,
+    },
+  ];
 
   return (
     <>
-      <ProductDetailPathBar name="Product Update" title="Meetings" />
+      <PageHeader paths={paths} />
+
       <Box display="flex">
         <Box
           w="320px"

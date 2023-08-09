@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 
@@ -29,6 +29,7 @@ const pirorityType = [
 ];
 export const BPMAttendanceTable = () => {
   const methods = useFormContext();
+  const [triggerReset, setTriggerReset] = useState(false);
   const { watch, setValue } = methods;
   const department = watch('department');
   const departmentId = watch('departmentIds') as { label: string; value: string }[];
@@ -124,9 +125,42 @@ export const BPMAttendanceTable = () => {
   ];
 
   const itemDetails = watch('itemDetails');
+  useEffect(() => {
+    if (departmentId?.length) {
+      setTriggerReset(true);
+    }
+  }, [departmentId]);
 
   useDeepCompareEffect(() => {
-    if (itemDetails?.length) {
+    if (triggerReset) {
+      setTriggerReset(false);
+      setValue(
+        'itemDetails',
+        employeeList?.map((items) => {
+          const employeeDeginationName = items?.node?.designation;
+          const employeeId = items?.node?.id;
+
+          return {
+            attendee: employeeId,
+            department: employeeDeginationName as string,
+          };
+        })
+      );
+    } else if (itemDetails?.length && !department) {
+      setValue(
+        'itemDetails',
+        itemDetails?.map((items: AttendeeType) => {
+          const employeeDeginationName = department
+            ? employeeList?.find((d) => d?.node?.id === items?.attendee)?.node?.designation
+            : fullEmployeeList?.find((d) => d?.node?.id === items?.attendee)?.node?.designation;
+
+          return {
+            attendee: items?.attendee,
+            department: employeeDeginationName as string,
+          };
+        })
+      );
+    } else if (itemDetails?.length && department) {
       setValue(
         'itemDetails',
         itemDetails?.map((items: AttendeeType) => {
@@ -144,7 +178,7 @@ export const BPMAttendanceTable = () => {
   }, [itemDetails, employeeList, fullEmployeeList]);
 
   return (
-    <FormSection flexLayout>
+    <FormSection flexLayout header="Attendees List">
       <FormEditableTable<AttendeeType> name="itemDetails" columns={tableColumns} />
       <Box display="flex" pt="s32" flexDirection="column" gap="s32">
         <FormCheckbox name="sendInvitaionEmail" label="Send Invitation Via Email" />

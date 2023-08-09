@@ -9,7 +9,6 @@ export {
   useLoginToCooperativeMutation,
   useNewMembershipRequestMutation,
   useResendOtpMutation,
-  useResetPasswordMutation,
   useSetNewPinMutation,
   useSignUpMutation,
   useVerifyOtpMutation,

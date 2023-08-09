@@ -1,13 +1,12 @@
 import { ReactElement } from 'react';
 
 import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
+import { EbankingFeatureUtilityPayment } from '@coop/ebanking/utility-payment';
 
-import Temp from '../temp';
+const UtilityPayments = () => <EbankingFeatureUtilityPayment />;
 
-const UtilityPayments = () => <Temp />;
-
-UtilityPayments.getLayout = function (page: ReactElement) {
-  return <EbankingAccountLayout>{page}</EbankingAccountLayout>;
-};
+UtilityPayments.getLayout = (page: ReactElement) => (
+  <EbankingAccountLayout>{page}</EbankingAccountLayout>
+);
 
 export default UtilityPayments;

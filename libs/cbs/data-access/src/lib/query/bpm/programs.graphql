@@ -85,3 +85,125 @@ query getMeetingsEditData($id: ID!) {
     }
   }
 }
+
+query getEventsList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    programs {
+      listEvents(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            eventName
+            eventType
+            eventDays
+            totalAttendees
+            eventDates {
+              date
+              endTime
+              startTime
+            }
+            status
+            priority
+            scheduledById
+            scheduledBy
+            position
+            note
+            departmentIds
+            attendees {
+              contact
+              designation
+              email
+              id
+              name
+            }
+            startDate
+            startTime
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getEventsEditData($id: ID!) {
+  bpm {
+    programs {
+      eventDetails(id: $id) {
+        overview {
+          id
+          eventName
+          eventType
+          eventDays
+          # totalAttendees
+          eventDates {
+            date
+            startTime
+            endTime
+          }
+          status
+          priority
+          scheduledById
+          # scheduledBy
+          position
+          note
+          departmentIds
+          attendees {
+            id
+            name
+            designation
+            email
+            contact
+          }
+          # startDate
+          # startTime
+        }
+      }
+    }
+  }
+}
+
+query getEventsDetails($id: ID!) {
+  bpm {
+    programs {
+      eventDetails(id: $id) {
+        overview {
+          id
+          eventName
+          eventType
+          eventDays
+          totalAttendees
+          eventDates {
+            date
+            startTime
+            endTime
+          }
+          status
+          priority
+          scheduledById
+          scheduledBy
+          position
+          note
+          departmentIds
+          attendees {
+            id
+            name
+            designation
+            email
+            contact
+          }
+          startDate
+          startTime
+        }
+        announcements {
+          title
+          description
+        }
+      }
+    }
+  }
+}

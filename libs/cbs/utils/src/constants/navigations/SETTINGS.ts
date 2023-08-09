@@ -9,22 +9,7 @@ export const SETTINGS: NavType = {
       label: 'General',
       pages: [
         {
-          label: 'serviceCenterSettings',
-          aclKey: 'SETTINGS_SERVICE_CENTER',
-          route: ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST,
-        },
-        {
-          label: 'settingsSideBarChartsOfAccounts',
-          aclKey: 'SETTINGS_COA',
-          route: ROUTES.SETTINGS_GENERAL_COA,
-        },
-        {
-          label: 'bank',
-          aclKey: 'SETTINGS_BANK',
-          route: ROUTES.SETTINGS_GENERAL_BANK,
-        },
-        {
-          label: 'settingsSideBarMembers',
+          label: 'Members',
           aclKey: 'SETTINGS_MEMBER',
           route: ROUTES.SETTINGS_GENERAL_MEMBERS,
         },
@@ -54,20 +39,11 @@ export const SETTINGS: NavType = {
           aclKey: 'SETTINGS_LOAN_PRODUCTS',
           route: ROUTES.SETTINGS_GENERAL_LP_LIST,
         },
-        {
-          label: 'Code Management',
-          aclKey: 'SETTINGS_CODE_MANAGEMENT',
-          route: ROUTES.SETTINGS_GENERAL_CODE_MANAGEMENT_CBS,
-        },
+
         {
           label: 'settingsAlternativeChannel',
           aclKey: 'SETTINGS_ALTERNATIVE_CHANNELS',
           route: ROUTES.SETTINGS_GENERAL_ALTERNATIVE_CHANNELS,
-        },
-        {
-          label: 'Indexing',
-          route: ROUTES.SETTINGS_GENERAL_INDEXING,
-          aclKey: 'SETTINGS_INDEXING',
         },
       ],
     },
@@ -95,6 +71,37 @@ export const SETTINGS: NavType = {
           label: 'settingsAccessLog',
           route: ROUTES.SETTINGS_ACCESS_LOG,
           aclKey: 'SETTINGS_AUDIT_LOG',
+        },
+      ],
+    },
+    GLOBAL: {
+      aclKey: 'SETTINGS_AUDIT_LOG',
+      label: 'GLOBAL',
+      pages: [
+        {
+          label: 'serviceCenterSettings',
+          aclKey: 'SETTINGS_SERVICE_CENTER',
+          route: ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST,
+        },
+        {
+          label: 'settingsSideBarChartsOfAccounts',
+          aclKey: 'SETTINGS_COA',
+          route: ROUTES.SETTINGS_GENERAL_COA,
+        },
+        {
+          label: 'bank',
+          aclKey: 'SETTINGS_BANK',
+          route: ROUTES.SETTINGS_GENERAL_BANK,
+        },
+        {
+          label: 'Code Management',
+          aclKey: 'SETTINGS_CODE_MANAGEMENT',
+          route: ROUTES.SETTINGS_GENERAL_CODE_MANAGEMENT_CBS,
+        },
+        {
+          label: 'Indexing',
+          route: ROUTES.SETTINGS_GENERAL_INDEXING,
+          aclKey: 'SETTINGS_INDEXING',
         },
       ],
     },

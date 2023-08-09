@@ -23,6 +23,11 @@ export const HRMODULE: NavType = {
           aclKey: 'HCM_EMPLOYEE_LEAVE',
           route: ROUTES.HRMODULE_LEAVE_ADD,
         },
+        {
+          label: 'New Leave Allocation',
+          aclKey: 'HCM_EMPLOYEE_LEAVE',
+          route: ROUTES.HRMODULE_LEAVE_ALLOCATION_ADD,
+        },
       ],
 
       pages: [
@@ -43,6 +48,12 @@ export const HRMODULE: NavType = {
           route: ROUTES.HRMODULE_LEAVE_LIST,
           aclKey: 'HCM_EMPLOYEE_LEAVE',
           addRoute: ROUTES.HRMODULE_LEAVE_ADD,
+        },
+        {
+          label: 'Leave Allocation',
+          route: ROUTES.HRMODULE_LEAVE_ALLOCATION_LIST,
+          aclKey: 'HCM_EMPLOYEE_LEAVE',
+          addRoute: ROUTES.HRMODULE_LEAVE_ALLOCATION_ADD,
         },
       ],
       settingPages: [

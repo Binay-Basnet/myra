@@ -19,6 +19,7 @@ export const MemberBasicInfo = () => {
     <DetailsCard title="Basic Information" bg="white">
       <DetailCardContent title="Full Name" subtitle={bioDataInd?.memberName} />
       <DetailCardContent title="Gender" subtitle={bioDataInd?.gender?.local} />
+      <DetailCardContent title="Pan No" subtitle={bioDataInd?.panNo} />
     </DetailsCard>
   );
 };

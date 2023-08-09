@@ -172,7 +172,7 @@ export const Payment = ({
               <FormAccountSelect
                 isRequired
                 name="account.destination_account"
-                label="Destination Account"
+                label="Source Account"
                 memberId={memberId}
                 filterBy={ObjState.Active}
                 includeLoc

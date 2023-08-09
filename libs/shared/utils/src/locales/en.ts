@@ -3563,6 +3563,7 @@ const en: Record<string, string> = {
 
   complainceManagement: 'Compliance Management',
   businessProcessManagement: 'Business Process Management',
+  microfinance: 'Microfinance',
 
   fixedAssetManagement: 'Fixed Asset Management',
   otherApplications: 'OTHER APPLICATIONS',

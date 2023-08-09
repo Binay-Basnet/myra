@@ -353,7 +353,7 @@ export const TopLevelHeader = () => {
               color="white"
               borderRadius="br1"
               _hover={{ backgroundColor: 'secondary.900' }}
-              onClick={() => router.push(ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST)}
+              onClick={() => router.push(ROUTES?.SETTINGS_GENERAL_ORGANIZATION_DETAILS)}
               ref={settingShortcut}
             />
 
@@ -403,7 +403,9 @@ export const TopLevelHeader = () => {
                         <Divider my="s8" />
                         <Box>
                           <AppSwitcherIconWrapper
-                            onClick={() => router.push(ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST)}
+                            onClick={() =>
+                              router.push(ROUTES.SETTINGS_GENERAL_ORGANIZATION_DETAILS)
+                            }
                           >
                             <Image width={32} height={32} src="/settings.svg" alt="Settings" />
                             <AppSwitcherText>{t['settings']}</AppSwitcherText>

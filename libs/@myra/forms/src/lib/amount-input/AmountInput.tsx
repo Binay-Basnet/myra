@@ -8,10 +8,11 @@ import { amountToWordsConverter } from '@coop/shared/utils';
 export interface AmountInputProps extends InputProps {
   label?: string | number;
   errorText?: string;
+  name?: string;
 }
 
 export const AmountInput = (props: AmountInputProps) => {
-  const { label, value, errorText, isRequired, ...rest } = props;
+  const { label, value, errorText, isRequired, name, ...rest } = props;
 
   return (
     <Box display="flex" flexDirection="column" gap="s4">
@@ -23,6 +24,7 @@ export const AmountInput = (props: AmountInputProps) => {
       <InputGroup display="flex" flexDirection="column">
         <Input
           onWheel={(e) => e.currentTarget.blur()}
+          data-testid={name}
           variant="outline"
           value={value}
           type="number"

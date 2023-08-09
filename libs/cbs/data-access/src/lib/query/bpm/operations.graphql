@@ -1,0 +1,42 @@
+query getOperationsMinorList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      minor {
+        listMinors(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              memberId
+              code
+              name
+              requestedDate
+              approvedDate
+              minorName
+              contact
+              relation
+              dob
+              status
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  latitude
+                  longitude
+                }
+              }
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

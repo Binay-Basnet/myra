@@ -5,7 +5,8 @@ export type ModuleType =
   | 'ACCOUNTING'
   | 'INVENTORY'
   | 'HCM'
-  | 'BPM';
+  | 'BPM'
+  | 'MICROFINANCE';
 
 const modules = {
   CBS: {
@@ -33,6 +34,10 @@ const modules = {
     prod: false,
   },
   BPM: {
+    dev: true,
+    prod: false,
+  },
+  MICROFINANCE: {
     dev: true,
     prod: false,
   },

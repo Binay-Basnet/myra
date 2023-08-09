@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
+
+import { Box, Button, Grid, Icon, PasswordInput, Text, toast } from '@myra-ui';
 
 import { InfoCard } from '@coop/ebanking/cards';
 import {
@@ -10,10 +12,13 @@ import {
   useCompleteSendMoneyMutation,
   useGetAccountListQuery,
 } from '@coop/ebanking/data-access';
-import { Box, Button, Grid, Icon, PasswordInput, Text, toast } from '@myra-ui';
+import {
+  CardBodyContainer,
+  CardContainer,
+  CardContent,
+  CardHeader,
+} from '@coop/ebanking/ui-layout';
 import { amountConverter } from '@coop/shared/utils';
-
-import { CardBodyContainer, CardContainer, CardContent, CardHeader } from '../CardContainer';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'loading';
 

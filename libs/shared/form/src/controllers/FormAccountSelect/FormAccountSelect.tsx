@@ -138,6 +138,7 @@ export const FormAccountSelect = ({
         <AccountSelect
           label={label}
           isRequired={isRequired}
+          name={name}
           value={
             isLinkedAccounts
               ? linkedAccountsOptions?.find((option) => option.value === value)

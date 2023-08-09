@@ -152,19 +152,6 @@ mutation resendOTP($mobile: String!, $otpFor: OtpFor!) {
   }
 }
 
-mutation resetPassword($mobileNo: String!, $newPassword: String!) {
-  eBanking(source: EBANKING) {
-    auth {
-      resetPassword(mobileNo: $mobileNo, newPassword: $newPassword) {
-        success
-        error {
-          ...MutationError
-        }
-      }
-    }
-  }
-}
-
 mutation newMembershipRequest($cooperativeId: String!, $data: MembershipRequestInput) {
   eBanking(source: EBANKING) {
     membershipRequest {
