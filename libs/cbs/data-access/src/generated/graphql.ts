@@ -23000,6 +23000,53 @@ export type ChangeUserStateMutationVariables = Exact<{
 
 export type ChangeUserStateMutation = { auth: { changeState?: string | null } };
 
+export type SetBpmOperationsAddMinorMutationVariables = Exact<{
+  data: BpmMinorInput;
+}>;
+
+export type SetBpmOperationsAddMinorMutation = {
+  bpm: {
+    operations: {
+      minor: {
+        addMinor?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      };
+    };
+  };
+};
+
+export type SetBpmOperationsMinorActionMutationVariables = Exact<{
+  requestid: Scalars['ID'];
+  actionType: TransferRequestAction;
+}>;
+
+export type SetBpmOperationsMinorActionMutation = {
+  bpm: {
+    operations: {
+      minor: {
+        minorAction?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      };
+    };
+  };
+};
+
 export type SetBpmMeetingsMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: BpmMeetingInput;
@@ -29793,6 +29840,49 @@ export type GetBankListQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetBankListQuery = {
   bank: { bank?: { list?: Array<{ id: string; name?: string | null } | null> | null } | null };
+};
+
+export type GetOperationsMinorListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetOperationsMinorListQuery = {
+  bpm: {
+    operations: {
+      minor: {
+        listMinors: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node?: {
+              id: string;
+              memberId: string;
+              code: string;
+              name?: string | null;
+              requestedDate?: Record<'local' | 'en' | 'np', string> | null;
+              approvedDate?: Record<'local' | 'en' | 'np', string> | null;
+              minorName?: string | null;
+              contact?: string | null;
+              relation?: string | null;
+              dob?: Record<'local' | 'en' | 'np', string> | null;
+              status?: LeaveStatusEnum | null;
+              address?: {
+                state?: Record<'local' | 'en' | 'np', string> | null;
+                district?: Record<'local' | 'en' | 'np', string> | null;
+                localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                wardNo?: string | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: { latitude?: number | null; longitude?: number | null } | null;
+              } | null;
+            } | null;
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
 };
 
 export type GetBpmEmployeeDetailsQueryVariables = Exact<{
@@ -44745,6 +44835,78 @@ export const useChangeUserStateMutation = <TError = unknown, TContext = unknown>
     useAxios<ChangeUserStateMutation, ChangeUserStateMutationVariables>(ChangeUserStateDocument),
     options
   );
+export const SetBpmOperationsAddMinorDocument = `
+    mutation setBPMOperationsAddMinor($data: BPMMinorInput!) {
+  bpm {
+    operations {
+      minor {
+        addMinor(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetBpmOperationsAddMinorMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetBpmOperationsAddMinorMutation,
+    TError,
+    SetBpmOperationsAddMinorMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetBpmOperationsAddMinorMutation,
+    TError,
+    SetBpmOperationsAddMinorMutationVariables,
+    TContext
+  >(
+    ['setBPMOperationsAddMinor'],
+    useAxios<SetBpmOperationsAddMinorMutation, SetBpmOperationsAddMinorMutationVariables>(
+      SetBpmOperationsAddMinorDocument
+    ),
+    options
+  );
+export const SetBpmOperationsMinorActionDocument = `
+    mutation setBPMOperationsMinorAction($requestid: ID!, $actionType: TransferRequestAction!) {
+  bpm {
+    operations {
+      minor {
+        minorAction(actionType: $actionType, requestId: $requestid) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetBpmOperationsMinorActionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetBpmOperationsMinorActionMutation,
+    TError,
+    SetBpmOperationsMinorActionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetBpmOperationsMinorActionMutation,
+    TError,
+    SetBpmOperationsMinorActionMutationVariables,
+    TContext
+  >(
+    ['setBPMOperationsMinorAction'],
+    useAxios<SetBpmOperationsMinorActionMutation, SetBpmOperationsMinorActionMutationVariables>(
+      SetBpmOperationsMinorActionDocument
+    ),
+    options
+  );
 export const SetBpmMeetingsDocument = `
     mutation setBPMMeetings($id: ID, $data: BPMMeetingInput!) {
   bpm {
@@ -54266,6 +54428,64 @@ export const useGetBankListQuery = <TData = GetBankListQuery, TError = unknown>(
       null,
       variables
     ),
+    options
+  );
+export const GetOperationsMinorListDocument = `
+    query getOperationsMinorList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      minor {
+        listMinors(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              memberId
+              code
+              name
+              requestedDate
+              approvedDate
+              minorName
+              contact
+              relation
+              dob
+              status
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  latitude
+                  longitude
+                }
+              }
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetOperationsMinorListQuery = <
+  TData = GetOperationsMinorListQuery,
+  TError = unknown
+>(
+  variables?: GetOperationsMinorListQueryVariables,
+  options?: UseQueryOptions<GetOperationsMinorListQuery, TError, TData>
+) =>
+  useQuery<GetOperationsMinorListQuery, TError, TData>(
+    variables === undefined ? ['getOperationsMinorList'] : ['getOperationsMinorList', variables],
+    useAxios<GetOperationsMinorListQuery, GetOperationsMinorListQueryVariables>(
+      GetOperationsMinorListDocument
+    ).bind(null, variables),
     options
   );
 export const GetBpmEmployeeDetailsDocument = `

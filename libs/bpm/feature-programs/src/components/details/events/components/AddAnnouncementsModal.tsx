@@ -56,7 +56,7 @@ export const AddAnnouncemnetModal = ({ isOpen, onClose }: IUpdateBalanceProps) =
 
   return (
     <Modal
-      title="Add Minutes"
+      title="Add Announcements"
       open={isOpen}
       onClose={onClose}
       primaryButtonLabel="Save"
