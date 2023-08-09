@@ -1,0 +1,29 @@
+mutation setBPMOperationsAddMinor($data: BPMMinorInput!) {
+  bpm {
+    operations {
+      minor {
+        addMinor(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setBPMOperationsMinorAction($requestid: ID!, $actionType: TransferRequestAction!) {
+  bpm {
+    operations {
+      minor {
+        minorAction(actionType: $actionType, requestId: $requestid) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
