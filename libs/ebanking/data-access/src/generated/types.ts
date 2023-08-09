@@ -249,8 +249,13 @@ export type CollateralFormState = {
 };
 
 export const ComparatorType = {
+  Between: 'BETWEEN',
+  Contains: 'CONTAINS',
   EqualTo: 'EqualTo',
   GreaterThan: 'GreaterThan',
+  HasNoValue: 'HasNoValue',
+  HasValue: 'HasValue',
+  In: 'IN',
   LessThan: 'LessThan',
 } as const;
 
@@ -306,6 +311,12 @@ export const CriteriaSection = {
 } as const;
 
 export type CriteriaSection = typeof CriteriaSection[keyof typeof CriteriaSection];
+export type DataType = {
+  length?: Maybe<Scalars['String']>;
+  minLength?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+};
+
 export type DateFilter = {
   from?: InputMaybe<Scalars['String']>;
   to?: InputMaybe<Scalars['String']>;
@@ -623,6 +634,7 @@ export type EBankingAuthMutationResendOtpArgs = {
 export type EBankingAuthMutationResetPasswordArgs = {
   mobileNo: Scalars['String'];
   newPassword: Scalars['String'];
+  otp: Scalars['String'];
 };
 
 export type EBankingAuthMutationSetNewPinArgs = {
@@ -867,6 +879,7 @@ export type EBankingMutation = {
   auth?: Maybe<EBankingAuthMutation>;
   cooperativeServices?: Maybe<EBankingCooperativeServiceMutation>;
   membershipRequest?: Maybe<MembershipRequestMutation>;
+  utility: UtilityMutation;
   utilityPayment: UtilityPayemntMutation;
   webUtilityPayments?: Maybe<EbankingWebUtilityPaymentsMutation>;
 };
@@ -892,6 +905,7 @@ export type EBankingQuery = {
   profile?: Maybe<EbankingMemberProfileData>;
   services?: Maybe<Array<Maybe<Services>>>;
   share?: Maybe<EBankingShareQuery>;
+  utility: UtilityQuery;
   utilityPayments?: Maybe<Array<Maybe<UtilityPayments>>>;
   withdraw?: Maybe<EbankingWithdrawQuery>;
 };
@@ -1104,6 +1118,7 @@ export type EbankingMemberProfileData = {
 export type EbankingOtpInput = {
   mobile: Scalars['String'];
   otp: Scalars['String'];
+  otpFor: OtpFor;
 };
 
 export type EbankingOtpResult = {
@@ -1306,7 +1321,8 @@ export type EbankingWithdrawSlipResult = {
 };
 
 export type Filter = {
-  orConditions: Array<OrConditions>;
+  orConditions?: InputMaybe<Array<OrConditions>>;
+  query?: InputMaybe<Scalars['String']>;
 };
 
 export const Frequency = {
@@ -1734,6 +1750,15 @@ export type MembershipRequestResult = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export const MobileOperator = {
+  Ncell: 'NCELL',
+  Ntc: 'NTC',
+  Ntcdma: 'NTCDMA',
+  Smartcell: 'SMARTCELL',
+  Utl: 'UTL',
+} as const;
+
+export type MobileOperator = typeof MobileOperator[keyof typeof MobileOperator];
 export type MonthlyTransactions = {
   closingBalance?: Maybe<Scalars['String']>;
   id: Scalars['String'];
@@ -2092,12 +2117,35 @@ export type RecentTransactionFilter = {
   limit: Scalars['Int'];
 };
 
+export type RequestResponseOptions = {
+  key?: Maybe<Scalars['String']>;
+  param1?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
 export const RequestSource = {
   Ebanking: 'EBANKING',
   MobileBanking: 'MOBILE_BANKING',
 } as const;
 
 export type RequestSource = typeof RequestSource[keyof typeof RequestSource];
+export type RequiredFields = {
+  addnUrl?: Maybe<Scalars['String']>;
+  dataType?: Maybe<DataType>;
+  fieldLabel?: Maybe<Scalars['String']>;
+  fieldName?: Maybe<Scalars['String']>;
+  fieldType?: Maybe<Scalars['String']>;
+  inputFormat?: Maybe<Scalars['String']>;
+  isRequired?: Maybe<Scalars['String']>;
+};
+
+export type ResponseFieldMapping = {
+  fieldLabel?: Maybe<Scalars['String']>;
+  fieldName?: Maybe<Scalars['String']>;
+  mapField?: Maybe<Scalars['String']>;
+  options?: Maybe<RequestResponseOptions>;
+};
+
 export type Result = {
   id: Scalars['Int'];
   name: Scalars['String'];
@@ -2113,6 +2161,13 @@ export const Roles = {
 } as const;
 
 export type Roles = typeof Roles[keyof typeof Roles];
+export type Sequence = {
+  processSeq?: Maybe<Scalars['String']>;
+  processUrl?: Maybe<Scalars['String']>;
+  requiredFields?: Maybe<Array<Maybe<RequiredFields>>>;
+  responseFieldMapping?: Maybe<Array<Maybe<ResponseFieldMapping>>>;
+};
+
 export type ServerError = {
   code: Scalars['Int'];
   message: Scalars['String'];
@@ -2190,6 +2245,62 @@ export const UserType = {
 } as const;
 
 export type UserType = typeof UserType[keyof typeof UserType];
+export type UtilitiesListConnection = {
+  edges?: Maybe<Array<Maybe<UtilititesListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type UtilititesEntry = {
+  id: Scalars['String'];
+  name: Scalars['String'];
+  serviceType: Scalars['String'];
+  slug: Scalars['String'];
+};
+
+export type UtilititesListEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<UtilititesEntry>;
+};
+
+export type Utility = {
+  banner?: Maybe<Scalars['String']>;
+  isActive: Scalars['String'];
+  logo?: Maybe<Scalars['String']>;
+  sequence: Array<Sequence>;
+  slug: Scalars['String'];
+  totalProcessingSequence: Scalars['String'];
+  vendorUrl1: Scalars['String'];
+};
+
+export type UtilityInfoResult = {
+  error?: Maybe<QueryError>;
+  utility?: Maybe<Utility>;
+};
+
+export type UtilityInput = {
+  inputData: Scalars['Map'];
+  processSeq: Scalars['String'];
+  slug: Scalars['String'];
+  sourceAccount: Scalars['String'];
+  totalProcessingSequence: Scalars['String'];
+  txnPin?: InputMaybe<Scalars['String']>;
+  vendor?: InputMaybe<Scalars['String']>;
+};
+
+export type UtilityMutation = {
+  makePayment: UtilityResponseResult;
+  useUtility: UtilityResponseResult;
+};
+
+export type UtilityMutationMakePaymentArgs = {
+  input: UtilityInput;
+};
+
+export type UtilityMutationUseUtilityArgs = {
+  input: UtilityInput;
+};
+
 export type UtilityPayemntMutation = {
   post?: Maybe<UtilityPaymentResult>;
 };
@@ -2211,6 +2322,14 @@ export type UtilityPaymentLayoutComponent = {
   type?: Maybe<Scalars['String']>;
 };
 
+export const UtilityPaymentObjectState = {
+  Cancelled: 'CANCELLED',
+  Pending: 'PENDING',
+  Success: 'SUCCESS',
+} as const;
+
+export type UtilityPaymentObjectState =
+  typeof UtilityPaymentObjectState[keyof typeof UtilityPaymentObjectState];
 export type UtilityPaymentRecord = {
   components?: Maybe<Array<Maybe<UtilityPaymentLayoutComponent>>>;
   header_name?: Maybe<Scalars['String']>;
@@ -2230,6 +2349,26 @@ export type UtilityPayments = {
   id: Scalars['String'];
   name: Scalars['String'];
   service_id: Scalars['String'];
+};
+
+export type UtilityQuery = {
+  getUtility: UtilityInfoResult;
+  listUtilities: UtilitiesListConnection;
+};
+
+export type UtilityQueryGetUtilityArgs = {
+  slug: Scalars['String'];
+};
+
+export type UtilityQueryListUtilitiesArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type UtilityResponseResult = {
+  data?: Maybe<Scalars['Map']>;
+  error?: Maybe<MutationError>;
+  status?: Maybe<UtilityPaymentObjectState>;
 };
 
 export type ValidationError = {
@@ -2582,6 +2721,58 @@ export type CompleteSendMoneyMutation = {
         } | null;
       } | null;
     } | null;
+  };
+};
+
+export type UseUtilityMutationVariables = Exact<{
+  input: UtilityInput;
+}>;
+
+export type UseUtilityMutation = {
+  eBanking: {
+    utility: {
+      useUtility: {
+        data?: Record<string, string> | null;
+        status?: UtilityPaymentObjectState | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      };
+    };
+  };
+};
+
+export type MakePaymentMutationVariables = Exact<{
+  input: UtilityInput;
+}>;
+
+export type MakePaymentMutation = {
+  eBanking: {
+    utility: {
+      makePayment: {
+        data?: Record<string, string> | null;
+        status?: UtilityPaymentObjectState | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      };
+    };
   };
 };
 
@@ -3468,6 +3659,75 @@ export type GetUtilityListQuery = {
   };
 };
 
+export type GetUtilityQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+export type GetUtilityQuery = {
+  eBanking: {
+    utility: {
+      getUtility: {
+        utility?: {
+          slug: string;
+          isActive: string;
+          logo?: string | null;
+          banner?: string | null;
+          totalProcessingSequence: string;
+          vendorUrl1: string;
+          sequence: Array<{
+            processSeq?: string | null;
+            processUrl?: string | null;
+            requiredFields?: Array<{
+              fieldName?: string | null;
+              fieldLabel?: string | null;
+              fieldType?: string | null;
+              addnUrl?: string | null;
+              isRequired?: string | null;
+              inputFormat?: string | null;
+              dataType?: {
+                type?: string | null;
+                length?: string | null;
+                minLength?: string | null;
+              } | null;
+            } | null> | null;
+            responseFieldMapping?: Array<{
+              fieldName?: string | null;
+              mapField?: string | null;
+              fieldLabel?: string | null;
+              options?: { key?: string | null; value?: string | null } | null;
+            } | null> | null;
+          }>;
+        } | null;
+      };
+    };
+  };
+};
+
+export type ListUtilitiesQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type ListUtilitiesQuery = {
+  eBanking: {
+    utility: {
+      listUtilities: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: { id: string; name: string; slug: string; serviceType: string } | null;
+        } | null> | null;
+        pageInfo?: {
+          endCursor?: string | null;
+          startCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+        } | null;
+      };
+    };
+  };
+};
+
 export type SignUpMutationVariables = Exact<{
   mobileNo: Scalars['String'];
 }>;
@@ -3669,32 +3929,6 @@ export type ResendOtpMutation = {
     auth?: {
       resendOtp?: {
         success?: boolean | null;
-        error?:
-          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
-          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
-          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
-          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
-          | {
-              __typename: 'ValidationError';
-              code: number;
-              validationErrorMsg: Record<string, Array<string>>;
-            }
-          | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type ResetPasswordMutationVariables = Exact<{
-  mobileNo: Scalars['String'];
-  newPassword: Scalars['String'];
-}>;
-
-export type ResetPasswordMutation = {
-  eBanking: {
-    auth?: {
-      resetPassword?: {
-        success: boolean;
         error?:
           | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
           | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }

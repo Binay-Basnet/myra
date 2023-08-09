@@ -455,6 +455,62 @@ export const useCompleteSendMoneyMutation = <TError = unknown, TContext = unknow
     ),
     options
   );
+export const UseUtilityDocument = `
+    mutation useUtility($input: UtilityInput!) {
+  eBanking {
+    utility {
+      useUtility(input: $input) {
+        data
+        status
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUseUtilityMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    Types.UseUtilityMutation,
+    TError,
+    Types.UseUtilityMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<Types.UseUtilityMutation, TError, Types.UseUtilityMutationVariables, TContext>(
+    ['useUtility'],
+    useAxios<Types.UseUtilityMutation, Types.UseUtilityMutationVariables>(UseUtilityDocument),
+    options
+  );
+export const MakePaymentDocument = `
+    mutation makePayment($input: UtilityInput!) {
+  eBanking {
+    utility {
+      makePayment(input: $input) {
+        data
+        status
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useMakePaymentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    Types.MakePaymentMutation,
+    TError,
+    Types.MakePaymentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<Types.MakePaymentMutation, TError, Types.MakePaymentMutationVariables, TContext>(
+    ['makePayment'],
+    useAxios<Types.MakePaymentMutation, Types.MakePaymentMutationVariables>(MakePaymentDocument),
+    options
+  );
 export const GetAccountListDocument = `
     query getAccountList($transactionPagination: Pagination) {
   eBanking {
@@ -1782,6 +1838,99 @@ export const useGetUtilityListQuery = <TData = Types.GetUtilityListQuery, TError
     variables === undefined ? ['getUtilityList'] : ['getUtilityList', variables],
     useAxios<Types.GetUtilityListQuery, Types.GetUtilityListQueryVariables>(
       GetUtilityListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetUtilityDocument = `
+    query getUtility($slug: String!) {
+  eBanking {
+    utility {
+      getUtility(slug: $slug) {
+        utility {
+          slug
+          isActive
+          logo
+          banner
+          totalProcessingSequence
+          vendorUrl1
+          sequence {
+            processSeq
+            requiredFields {
+              fieldName
+              fieldLabel
+              fieldType
+              dataType {
+                type
+                length
+                minLength
+              }
+              addnUrl
+              isRequired
+              inputFormat
+            }
+            processUrl
+            responseFieldMapping {
+              fieldName
+              mapField
+              fieldLabel
+              options {
+                key
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetUtilityQuery = <TData = Types.GetUtilityQuery, TError = unknown>(
+  variables: Types.GetUtilityQueryVariables,
+  options?: UseQueryOptions<Types.GetUtilityQuery, TError, TData>
+) =>
+  useQuery<Types.GetUtilityQuery, TError, TData>(
+    ['getUtility', variables],
+    useAxios<Types.GetUtilityQuery, Types.GetUtilityQueryVariables>(GetUtilityDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const ListUtilitiesDocument = `
+    query listUtilities($pagination: Pagination, $filter: Filter) {
+  eBanking {
+    utility {
+      listUtilities(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            slug
+            serviceType
+          }
+          cursor
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListUtilitiesQuery = <TData = Types.ListUtilitiesQuery, TError = unknown>(
+  variables?: Types.ListUtilitiesQueryVariables,
+  options?: UseQueryOptions<Types.ListUtilitiesQuery, TError, TData>
+) =>
+  useQuery<Types.ListUtilitiesQuery, TError, TData>(
+    variables === undefined ? ['listUtilities'] : ['listUtilities', variables],
+    useAxios<Types.ListUtilitiesQuery, Types.ListUtilitiesQueryVariables>(
+      ListUtilitiesDocument
     ).bind(null, variables),
     options
   );

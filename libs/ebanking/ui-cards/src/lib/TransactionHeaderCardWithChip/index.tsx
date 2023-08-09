@@ -5,15 +5,15 @@ import { Box, Button, Icon } from '@myra-ui';
 import { EbankingChip } from '../EbankingChip';
 
 interface TransactionHeaderCardWithChipProps {
-  isSuccess: boolean;
   downloadHandler?: () => void;
   chipText: string;
+  status: 'success' | 'failure' | 'pending';
 }
 
 export const TransactionHeaderCardWithChip = ({
   chipText,
-  isSuccess,
   downloadHandler,
+  status,
 }: TransactionHeaderCardWithChipProps) => (
   <Box
     display="flex"
@@ -23,7 +23,7 @@ export const TransactionHeaderCardWithChip = ({
     alignItems="center"
     justifyContent="space-between"
   >
-    <EbankingChip type={isSuccess ? 'success' : 'failure'} text={chipText} />
+    <EbankingChip type={status} text={chipText} />
     <Button variant="link" onClick={downloadHandler}>
       <Icon as={DownloadIcon} />
     </Button>

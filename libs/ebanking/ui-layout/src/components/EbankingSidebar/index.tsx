@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 
 import { Box, Text } from '@myra-ui';
 
+import { checkEbankingModuleAccess } from '@coop/ebanking/utils';
+
 import { EbankingSidebarNavItem } from '../EbankingSidebarNavItem';
 import { SIDEBAR_NAV_ITEMS } from '../../constants/SIDEBAR_NAV_ITEMS';
 
@@ -18,7 +20,7 @@ export const EbankingSidebar = () => {
       justifyContent="space-between"
     >
       <Box w="100%">
-        {SIDEBAR_NAV_ITEMS.map((navItem) => (
+        {SIDEBAR_NAV_ITEMS.filter((f) => checkEbankingModuleAccess(f.key)).map((navItem) => (
           <EbankingSidebarNavItem
             item={navItem}
             isActive={router.asPath.includes(navItem.link ?? '/home')}

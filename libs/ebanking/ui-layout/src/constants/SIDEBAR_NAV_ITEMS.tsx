@@ -1,4 +1,11 @@
-import { IoCube, IoCubeOutline, IoDocumentText, IoDocumentTextOutline } from 'react-icons/io5';
+import {
+  IoCube,
+  IoCubeOutline,
+  IoDocumentText,
+  IoDocumentTextOutline,
+  IoWaterOutline,
+  IoWaterSharp,
+} from 'react-icons/io5';
 import {
   MdCalendarViewDay,
   MdHome,
@@ -10,6 +17,7 @@ import {
 
 export const SIDEBAR_NAV_ITEMS = [
   {
+    key: 'HOME',
     label: 'Home',
     link: '/home',
     icon: {
@@ -18,6 +26,7 @@ export const SIDEBAR_NAV_ITEMS = [
     },
   },
   {
+    key: 'ACCOUNTS',
     label: 'Accounts',
     link: '/accounts',
     icon: {
@@ -25,14 +34,15 @@ export const SIDEBAR_NAV_ITEMS = [
       inactive: MdOutlineCalendarViewDay,
     },
   },
-  // {
-  //   label: 'Utility Payments',
-  //   link: '/utility-payments',
-  //   icon: {
-  //     active: IoWaterSharp,
-  //     inactive: IoWaterOutline,
-  //   },
-  // },
+  {
+    key: 'UTILITY_PAYMENTS',
+    label: 'Utility Payments',
+    link: '/utility-payments',
+    icon: {
+      active: IoWaterSharp,
+      inactive: IoWaterOutline,
+    },
+  },
   // {
   //   label: 'Saved Payment',
   //   link: '/saved-payments',
@@ -50,6 +60,7 @@ export const SIDEBAR_NAV_ITEMS = [
   //   },
   // },
   {
+    key: 'COOP',
     label: 'COOP',
     link: '/coop',
     icon: {
@@ -59,6 +70,7 @@ export const SIDEBAR_NAV_ITEMS = [
   },
 
   {
+    key: 'SHARE_INFO',
     label: 'Share Info',
     link: '/share-info',
     icon: {
@@ -67,6 +79,7 @@ export const SIDEBAR_NAV_ITEMS = [
     },
   },
   {
+    key: 'TRANSACTION_HISTORY',
     label: 'Transaction History',
     link: '/transaction-history',
     icon: {
@@ -75,6 +88,7 @@ export const SIDEBAR_NAV_ITEMS = [
     },
   },
   {
+    key: 'SETTINGS',
     label: 'Settings',
     link: '/settings',
     icon: {
@@ -82,4 +96,4 @@ export const SIDEBAR_NAV_ITEMS = [
       inactive: MdOutlineSettings,
     },
   },
-];
+] as const;

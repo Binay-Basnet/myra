@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import { IconType } from 'react-icons';
 import { FiChevronRight } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 
@@ -6,9 +7,10 @@ import { Box, Icon, Text } from '@myra-ui';
 
 interface BreadcrumbComponentProps {
   paths: { label: string; link?: string }[];
+  separator?: IconType | string;
 }
 
-export const Breadcrumb = ({ paths }: BreadcrumbComponentProps) => {
+export const Breadcrumb = ({ paths, separator }: BreadcrumbComponentProps) => {
   const router = useRouter();
   return (
     <Box display="flex" alignItems="center">
@@ -35,7 +37,13 @@ export const Breadcrumb = ({ paths }: BreadcrumbComponentProps) => {
           >
             {item.label}
           </Text>
-          {index + 1 !== paths.length && <Icon as={FiChevronRight} size="lg" />}
+
+          {index + 1 !== paths.length &&
+            (typeof separator === 'string' ? (
+              separator
+            ) : (
+              <Icon as={(separator as IconType) || FiChevronRight} size="lg" />
+            ))}
         </Fragment>
       ))}
     </Box>

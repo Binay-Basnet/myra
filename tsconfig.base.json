@@ -155,6 +155,8 @@
       "@coop/ebanking/products": ["libs/ebanking/feature-products/src/index.ts"],
       "@coop/ebanking/settings": ["libs/ebanking/feature-settings/src/index.ts"],
       "@coop/ebanking/ui-layout": ["libs/ebanking/ui-layout/src/index.ts"],
+      "@coop/ebanking/utility-payment": ["libs/ebanking/feature-utility-payment/src/index.ts"],
+      "@coop/ebanking/utils": ["libs/ebanking/utils/src/index.ts"],
       "@coop/employee-portal/attendance": ["libs/employee-portal/feature-attendance/src/index.ts"],
       "@coop/employee-portal/components": ["libs/employee-portal/ui-components/src/index.ts"],
       "@coop/employee-portal/data-access": ["libs/employee-portal/data-access/src/index.ts"],
