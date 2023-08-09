@@ -59,7 +59,8 @@ export type MenuType =
   | 'TASKS'
   | 'PROGRAMS'
   | 'OPERATIONS'
-  | 'GROUPS';
+  | 'GROUPS'
+  | 'GLOBAL';
 
 export type Page = {
   label: string;

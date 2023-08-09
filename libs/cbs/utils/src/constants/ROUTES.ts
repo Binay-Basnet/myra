@@ -132,15 +132,15 @@ export const ROUTES = {
   SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/charges/configure',
 
   SETTINGS_GENERAL_AUDIT_LOG: '/settings/monitor/audit-log/list',
-  SETTINGS_EOD_SETUP: '/settings/general/eod/setup',
-  SETTINGS_GENERAL_BANK: '/settings/general/bank/configure',
+  SETTINGS_EOD_SETUP: '/settings/global/eod/setup',
+  SETTINGS_GENERAL_BANK: '/settings/global/bank/configure',
 
-  SETTINGS_GENERAL_COA: '/settings/general/coa/list',
-  SETTINGS_GENERAL_COA_DETAILS: '/settings/general/coa/details',
+  SETTINGS_GENERAL_COA: '/settings/global/coa/list',
+  SETTINGS_GENERAL_COA_DETAILS: '/settings/global/coa/details',
 
   SETTINGS_GENERAL_CODE_MANAGEMENT_ACCOUNTING: '/settings/general/code-management/accounting',
   SETTINGS_GENERAL_CODE_MANAGEMENT_CBS:
-    '/settings/general/code-management/core-banking-system/configure',
+    '/settings/global/code-management/core-banking-system/configure',
   SETTINGS_GENERAL_CODE_MANAGEMENT_INVENTORY: '/settings/general/code-management/inventory',
 
   SETTINGS_GENERAL_SAVINGS_TDS: '/settings/general/savings/tds/configure',
@@ -160,7 +160,7 @@ export const ROUTES = {
   SETTINGS_GENERAL_LP_EDIT: '/settings/general/loan-products/edit',
   SETTINGS_GENERAL_LP_DETAILS: '/settings/general/loan-products/details',
 
-  SETTINGS_GENERAL_INDEXING: '/settings/general/indexing',
+  SETTINGS_GENERAL_INDEXING: '/settings/global/indexing',
 
   SETTINGS_GENERAL_MEMBERS: '/settings/general/members/configure',
   SETTINGS_GENERAL_MEMBERS_KYM_IND: '/settings/general/members/kym-individual/configure',
@@ -169,9 +169,9 @@ export const ROUTES = {
   SETTINGS_GENERAL_MEMBERS_KYM_COOP_UNION:
     '/settings/general/members/kym-cooperative-union/configure',
 
-  SETTINGS_GENERAL_SERVICE_CENTER_LIST: '/settings/general/service-center/list',
-  SETTINGS_GENERAL_SERVICE_CENTER_LIST_ADD: '/settings/general/service-center/add',
-  SETTINGS_GENERAL_SERVICE_CENTER_LIST_EDIT: '/settings/general/service-center/edit',
+  SETTINGS_GENERAL_SERVICE_CENTER_LIST: '/settings/global/service-center/list',
+  SETTINGS_GENERAL_SERVICE_CENTER_LIST_ADD: '/settings/global/service-center/add',
+  SETTINGS_GENERAL_SERVICE_CENTER_LIST_EDIT: '/settings/global/service-center/edit',
 
   SETTINGS_GENERAL_SHARE: '/settings/general/share/configure',
   SETTINGS_GENERAL_SHARE_ISSUES: '/settings/general/share/issues/configure',
@@ -397,20 +397,20 @@ export const ROUTES = {
   CBS_LOAN_ACCOUNT_CLOSED_DETAILS: '/cbs/loan/closed-accounts/details',
   CBS_ACCOUNT_CLOSED_DETAILS: '/cbs/savings/account-close/details',
 
-  SETTINGS_GENERAL_PRINT_PREFERENCE: '/settings/general/print-preference/withdraw-slip',
+  SETTINGS_GENERAL_PRINT_PREFERENCE: '/settings/global/print-preference/withdraw-slip',
 
-  SETTINGS_EOD_HISTORY: '/settings/general/eod/history',
+  SETTINGS_EOD_HISTORY: '/settings/global/eod/history',
 
   SETTINGS_GENERAL_SAVINGS_ORGANIZATION_RATE: '/settings/general/savings/organization-rate',
 
   SETTINGS_GENERAL_LOAN_ORGANIZATION_RATE: '/settings/general/loan/organization-rate',
 
-  SETTINGS_GENERAL_ORGANIZATION_DETAILS: '/settings/general/organization',
-  SETTINGS_GENERAL_ORGANIZATION_EDIT: '/settings/general/organization/edit',
+  SETTINGS_GENERAL_ORGANIZATION_DETAILS: '/settings/global/organization',
+  SETTINGS_GENERAL_ORGANIZATION_EDIT: '/settings/global/organization/edit',
 
-  SETTINGS_EOD_HISTORY_DETAILS: '/settings/general/eod/history/details',
-  SETTINGS_GENERAL_COMMITTEE: '/settings/general/committee/list',
-  SETTINGS_GENERAL_COMMITTEE_DETAILS: '/settings/general/committee/details',
+  SETTINGS_EOD_HISTORY_DETAILS: '/settings/global/eod/history/details',
+  SETTINGS_GENERAL_COMMITTEE: '/settings/global/committee/list',
+  SETTINGS_GENERAL_COMMITTEE_DETAILS: '/settings/global/committee/details',
 
   DAY_CLOSE: '/day-close',
 

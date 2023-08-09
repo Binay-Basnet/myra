@@ -1,5 +1,5 @@
 import { CbsSettingsServiceCenter } from '@coop/cbs/settings/branches';
-import { SettingsGeneralLayout, SettingsLayout } from '@coop/cbs/settings/ui-layout';
+import { SettingsGlobalLayout, SettingsLayout } from '@coop/cbs/settings/ui-layout';
 import { Can } from '@coop/cbs/utils';
 
 const ServiceCenter = () => (
@@ -12,7 +12,7 @@ export default ServiceCenter;
 ServiceCenter.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
-      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+      <SettingsGlobalLayout>{page}</SettingsGlobalLayout>
     </SettingsLayout>
   );
 };

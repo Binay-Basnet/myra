@@ -1,4 +1,4 @@
-import { SettingsGeneralLayout, SettingsLayout } from '@coop/cbs/settings/ui-layout';
+import { SettingsGlobalLayout, SettingsLayout } from '@coop/cbs/settings/ui-layout';
 import { Can } from '@coop/cbs/utils';
 import { CbsSettingsFeatureBank } from '@coop/settings/bank';
 
@@ -13,7 +13,7 @@ export default BankPage;
 BankPage.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
-      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+      <SettingsGlobalLayout>{page}</SettingsGlobalLayout>
     </SettingsLayout>
   );
 };

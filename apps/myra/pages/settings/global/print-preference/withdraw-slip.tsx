@@ -1,6 +1,6 @@
 import { WithdrawSlipPrintPreference } from '@coop/cbs/settings/print-preference';
 import {
-  SettingsGeneralLayout,
+  SettingsGlobalLayout,
   SettingsLayout,
   SettingsPrintPreferenceLayout,
 } from '@coop/cbs/settings/ui-layout';
@@ -15,9 +15,9 @@ const WithdrawSlipPrintPreferencePage = () => (
 WithdrawSlipPrintPreferencePage.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
-      <SettingsGeneralLayout>
+      <SettingsGlobalLayout>
         <SettingsPrintPreferenceLayout>{page}</SettingsPrintPreferenceLayout>
-      </SettingsGeneralLayout>
+      </SettingsGlobalLayout>
     </SettingsLayout>
   );
 };

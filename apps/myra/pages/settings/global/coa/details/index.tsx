@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import { useRouter } from 'next/router';
 
 import { COAAccountDetail, COALeafDetail } from '@coop/cbs/settings/coa';
-import { SettingsGeneralLayout, SettingsLayout } from '@coop/cbs/settings/ui-layout';
+import { SettingsGlobalLayout, SettingsLayout } from '@coop/cbs/settings/ui-layout';
 
 const COADetailPage = () => {
   const router = useRouter();
@@ -19,7 +19,7 @@ const COADetailPage = () => {
 COADetailPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <SettingsLayout>
-      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+      <SettingsGlobalLayout>{page}</SettingsGlobalLayout>
     </SettingsLayout>
   );
 };

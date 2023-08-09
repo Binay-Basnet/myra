@@ -21,44 +21,6 @@ type TabList = {
   aclKey: AclKey;
 };
 
-const orgTabList: TabList[] = [
-  {
-    label: 'serviceCenterSettings',
-    aclKey: 'SETTINGS_SERVICE_CENTER',
-    route: ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST,
-  },
-  {
-    label: 'settingsSideBarChartsOfAccounts',
-    aclKey: 'SETTINGS_COA',
-    route: ROUTES.SETTINGS_GENERAL_COA,
-  },
-  {
-    label: 'Day End',
-    aclKey: 'SETTINGS_SERVICE_CENTER',
-    route: ROUTES.SETTINGS_EOD_HISTORY,
-  },
-  {
-    label: 'Organization',
-    aclKey: 'SETTINGS_SERVICE_CENTER',
-    route: ROUTES.SETTINGS_GENERAL_ORGANIZATION_DETAILS,
-  },
-  {
-    label: 'Committee',
-    aclKey: 'SETTINGS_SERVICE_CENTER',
-    route: ROUTES.SETTINGS_GENERAL_COMMITTEE,
-  },
-  {
-    label: 'bank',
-    aclKey: 'SETTINGS_BANK',
-    route: ROUTES.SETTINGS_GENERAL_BANK,
-  },
-  {
-    label: 'Print Preference',
-    aclKey: 'SETTINGS_PRINT_PREFERENCE',
-    route: ROUTES.SETTINGS_GENERAL_PRINT_PREFERENCE,
-  },
-];
-
 const tabList: TabList[] = [
   {
     label: 'settingsSideBarMembers',
@@ -105,19 +67,9 @@ const tabList: TabList[] = [
 
 const otherTabList: TabList[] = [
   {
-    label: 'Code Management',
-    aclKey: 'SETTINGS_CODE_MANAGEMENT',
-    route: ROUTES.SETTINGS_GENERAL_CODE_MANAGEMENT_CBS,
-  },
-  {
     label: 'settingsAlternativeChannel',
     aclKey: 'SETTINGS_ALTERNATIVE_CHANNELS',
     route: ROUTES.SETTINGS_GENERAL_ALTERNATIVE_CHANNELS,
-  },
-  {
-    label: 'Indexing',
-    route: ROUTES.SETTINGS_GENERAL_INDEXING,
-    aclKey: 'SETTINGS_INDEXING',
   },
 ];
 
@@ -211,7 +163,7 @@ export const SettingSideBar = () => {
         </Box>
         <Box py="s16" px="s16">
           <Accordion allowToggle defaultIndex={0}>
-            <AccordionItem bg="transparent" border="none">
+            {/* <AccordionItem bg="transparent" border="none">
               {({ isExpanded }) => (
                 <>
                   <AccordionButton
@@ -265,7 +217,7 @@ export const SettingSideBar = () => {
                   </AccordionPanel>
                 </>
               )}
-            </AccordionItem>
+            </AccordionItem> */}
 
             <AccordionItem bg="transparent" border="none">
               {({ isExpanded }) => (

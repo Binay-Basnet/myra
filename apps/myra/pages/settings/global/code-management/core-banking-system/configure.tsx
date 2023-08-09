@@ -2,7 +2,7 @@ import { CoreBankingSystemCodeManagement } from 'libs/cbs/settings/feature-code-
 
 import {
   SettingsCodeManagementLayout,
-  SettingsGeneralLayout,
+  SettingsGlobalLayout,
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
 import { Can } from '@coop/cbs/utils';
@@ -16,9 +16,9 @@ const CBSCodeManagementPage = () => (
 CBSCodeManagementPage.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
-      <SettingsGeneralLayout>
+      <SettingsGlobalLayout>
         <SettingsCodeManagementLayout>{page}</SettingsCodeManagementLayout>
-      </SettingsGeneralLayout>
+      </SettingsGlobalLayout>
     </SettingsLayout>
   );
 };

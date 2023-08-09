@@ -6,7 +6,7 @@ import {
   useSearchInternalIndexingMutation,
 } from '@coop/cbs/data-access';
 import {
-  SettingsGeneralLayout,
+  SettingsGlobalLayout,
   SettingsLayout,
   SettingsPageHeader,
 } from '@coop/cbs/settings/ui-layout';
@@ -116,7 +116,7 @@ const Indexing = () => {
 Indexing.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
-      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+      <SettingsGlobalLayout>{page}</SettingsGlobalLayout>
     </SettingsLayout>
   );
 };

@@ -2,7 +2,7 @@ import { Box } from '@myra-ui';
 
 import { CoaTreeTableView } from '@coop/cbs/settings/coa';
 import {
-  SettingsGeneralLayout,
+  SettingsGlobalLayout,
   SettingsLayout,
   SettingsPageHeader,
 } from '@coop/cbs/settings/ui-layout';
@@ -50,7 +50,7 @@ export default ChartsOfAccounts;
 ChartsOfAccounts.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
-      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+      <SettingsGlobalLayout>{page}</SettingsGlobalLayout>
     </SettingsLayout>
   );
 };
