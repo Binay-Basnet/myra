@@ -128,7 +128,7 @@ export const TaskList = () => {
                 {
                   title: 'Edit',
                   onClick: (row) => {
-                    router.push(`${ROUTES?.BPM_TASKS_ADD}?id=${row?.id}`);
+                    router.push(`${ROUTES?.BPM_TASKS_EDIT}?id=${row?.id}`);
                   },
                 },
                 {

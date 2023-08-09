@@ -527,6 +527,7 @@ export const ROUTES = {
 
   BPM_TASKS_LISTS: '/bpm/tasks/list',
   BPM_TASKS_ADD: '/bpm/tasks/add',
+  BPM_TASKS_EDIT: '/bpm/tasks/edit',
 
   BPM_PROGRAMS_EVENTS_LIST: '/bpm/programs/events/list',
   BPM_PROGRAMS_EVENTS_EDIT: '/bpm/programs/events/edit',
