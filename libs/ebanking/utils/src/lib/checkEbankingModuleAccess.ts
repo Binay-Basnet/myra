@@ -34,7 +34,7 @@ const modules = {
   },
   SETTINGS: {
     dev: true,
-    prod: false,
+    prod: true,
   },
 };
 
