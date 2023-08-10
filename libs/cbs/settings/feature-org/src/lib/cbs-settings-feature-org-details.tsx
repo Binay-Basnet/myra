@@ -7,7 +7,10 @@ import { Avatar, Box, DetailPageTabs, Divider, Icon, Scrollable, Text } from '@m
 import { useGetOrganizationDataQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 
+import Department from '../components/Department';
+import Designation from '../components/Designation';
 import Documents from '../components/Documents';
+import { EmployeeLevel } from '../components/EmployeeLevel';
 import { OrganizationalProfile } from '../components/OrganizationalProfile';
 
 /* eslint-disable-next-line */
@@ -59,22 +62,19 @@ export const CbsSettingsFeatureOrgDetails = () => {
             </Box>
           </Box>
           <Divider />
-          <DetailPageTabs tabs={['Organizational Profile', 'Documents']} />
+          <DetailPageTabs
+            tabs={['Profile', 'Documents', 'Employee Level', 'Department', 'Designation']}
+          />
         </Box>
         <Scrollable detailPage>
-          <Box
-            bg="background.500"
-            ml="320px"
-            p="s16"
-            display="flex"
-            flexDir="column"
-            gap="s16"
-            minH="100%"
-          >
-            {(tabQuery === 'organizational profile' || tabQuery === 'undefined' || !tabQuery) && (
+          <Box bg="white" ml="320px" p="s16" display="flex" flexDir="column" gap="s16" minH="100%">
+            {(tabQuery === 'profile' || tabQuery === 'undefined' || !tabQuery) && (
               <OrganizationalProfile data={organizationData} />
             )}
             {tabQuery === 'documents' && <Documents data={organizationData} />}
+            {tabQuery === 'employee level' && <EmployeeLevel />}
+            {tabQuery === 'department' && <Department />}
+            {tabQuery === 'designation' && <Designation />}
           </Box>
         </Scrollable>
       </Box>

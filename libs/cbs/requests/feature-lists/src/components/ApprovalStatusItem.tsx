@@ -19,12 +19,13 @@ export const ApprovalStatusItem = ({
       h="s10"
       rounded="100%"
       bg={
-        status === RequestStatus.Approved || status === PayrollStatus.Paid
+        status === RequestStatus.Approved ||
+        status === PayrollStatus.Paid ||
+        status === StatusOfTask?.Completed
           ? 'green.300'
           : status === RequestStatus.Declined ||
             status === MemberTransferState?.Rejected ||
-            status === StatusOfTask?.Assigned ||
-            status === StatusOfTask?.Completed
+            status === StatusOfTask?.Assigned
           ? 'red.500'
           : status === StatusOfTask?.Started
           ? 'blue.500'

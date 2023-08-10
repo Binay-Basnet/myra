@@ -16,7 +16,7 @@ import { SettingsCard } from '@coop/cbs/settings/ui-components';
 import { FormInput } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
-export const EmployeeLevelTable = () => {
+export const EmployeeLevel = () => {
   const [isAddModal, setIsAddModal] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedEmployeeLevelId, setSelectedEmployeeLevelId] = useState('');
@@ -215,4 +215,4 @@ export const EmployeeLevelTable = () => {
   );
 };
 
-export default EmployeeLevelTable;
+export default EmployeeLevel;
