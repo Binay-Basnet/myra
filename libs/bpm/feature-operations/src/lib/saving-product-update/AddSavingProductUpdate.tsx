@@ -17,6 +17,7 @@ import {
   AccountPremiumUpdate,
   BalanceLimitUpdate,
   ChequeServicesUpdate,
+  PrematurePenaltyUpdate,
   ProductTenureUpdate,
   SavingProductUpdateBasicDetails,
 } from '../../components/savingProductUpdate';
@@ -79,6 +80,9 @@ export const BPMOperationsSavingProductUpdate = () => {
             <AccountPremiumUpdate />
           )}
           {productId && updateType === SvUpdateType?.ProductTenureUpdate && <ProductTenureUpdate />}
+          {productId && updateType === SvUpdateType?.PrematurePenaltyUpdate && (
+            <PrematurePenaltyUpdate />
+          )}
         </FormLayout.Form>
       </FormLayout.Content>
       <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={submitForm} />
