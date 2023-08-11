@@ -30004,6 +30004,36 @@ export type GetOperationsMinorListQuery = {
   };
 };
 
+export type GetOperationsSavingProductUpdateListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetOperationsSavingProductUpdateListQuery = {
+  bpm: {
+    operations: {
+      savingProduct: {
+        listSavingProductUpdateHistory: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node?: {
+              id: string;
+              productCode: string;
+              productId: string;
+              productName: string;
+              productType?: string | null;
+              date?: Record<'local' | 'en' | 'np', string> | null;
+              updateType?: string | null;
+            } | null;
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetBpmEmployeeDetailsQueryVariables = Exact<{
   employeeId: Scalars['ID'];
 }>;
@@ -54645,6 +54675,51 @@ export const useGetOperationsMinorListQuery = <
     useAxios<GetOperationsMinorListQuery, GetOperationsMinorListQueryVariables>(
       GetOperationsMinorListDocument
     ).bind(null, variables),
+    options
+  );
+export const GetOperationsSavingProductUpdateListDocument = `
+    query getOperationsSavingProductUpdateList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      savingProduct {
+        listSavingProductUpdateHistory(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              productCode
+              productId
+              productName
+              productType
+              date
+              updateType
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetOperationsSavingProductUpdateListQuery = <
+  TData = GetOperationsSavingProductUpdateListQuery,
+  TError = unknown
+>(
+  variables?: GetOperationsSavingProductUpdateListQueryVariables,
+  options?: UseQueryOptions<GetOperationsSavingProductUpdateListQuery, TError, TData>
+) =>
+  useQuery<GetOperationsSavingProductUpdateListQuery, TError, TData>(
+    variables === undefined
+      ? ['getOperationsSavingProductUpdateList']
+      : ['getOperationsSavingProductUpdateList', variables],
+    useAxios<
+      GetOperationsSavingProductUpdateListQuery,
+      GetOperationsSavingProductUpdateListQueryVariables
+    >(GetOperationsSavingProductUpdateListDocument).bind(null, variables),
     options
   );
 export const GetBpmEmployeeDetailsDocument = `

@@ -95,7 +95,7 @@ export const BPMOperationsSavingProductUpdate = () => {
         loading: 'Updating Saving Product',
       },
       onSuccess: () => {
-        router.push(ROUTES?.BPM_OPERATIONS_MINOR_ADDITION_LIST);
+        router.push(ROUTES?.BPM_OPERATIONS_SAVING_PRODUCT_UPDATES_LIST);
       },
       promise: mutateAsync({
         productId: data?.productId as string,

@@ -40,3 +40,30 @@ query getOperationsMinorList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getOperationsSavingProductUpdateList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      savingProduct {
+        listSavingProductUpdateHistory(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              productCode
+              productId
+              productName
+              productType
+              date
+              updateType
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
