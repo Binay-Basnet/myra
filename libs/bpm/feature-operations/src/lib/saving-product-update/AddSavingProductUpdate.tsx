@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { omit } from 'lodash';
+import { omit, pick } from 'lodash';
 
 import { asyncToast, Text } from '@myra-ui';
 
@@ -51,7 +51,43 @@ export const BPMOperationsSavingProductUpdate = () => {
   const submitForm = () => {
     const data = methods.getValues();
     const filteredValue = omit({ ...data }, 'productId', 'updateType');
+    let updatedData;
 
+    if (data?.updateType === 'ACCOUNT_CLOSE_FEES_AND_CHARGE_UPDATE') {
+      updatedData = pick({ ...filteredValue }, 'closeCharge');
+    }
+    if (data?.updateType === 'ACCOUNT_OPEN_FEES_AND_CHARGE_UPDATE') {
+      updatedData = pick({ ...filteredValue }, 'openCharge');
+    }
+    if (data?.updateType === 'ACCOUNT_PREMIUM_UPDATE') {
+      updatedData = pick({ ...filteredValue }, 'accountPremium');
+    }
+
+    if (data?.updateType === 'BALANCE_LIMIT_UPDATE') {
+      updatedData = pick({ ...filteredValue }, 'balanceLimit');
+    }
+
+    if (data?.updateType === 'CHEQUE_SETTINGS_UPDATE') {
+      updatedData = pick({ ...filteredValue }, 'chequeUpdate');
+    }
+    if (data?.updateType === 'PENALTY_CHARGE_UPDATE') {
+      updatedData = pick({ ...filteredValue }, 'penaltyCharge');
+    }
+    if (data?.updateType === 'PREMATURE_PENALTY_UPDATE') {
+      updatedData = pick({ ...filteredValue }, 'prematurePenalty');
+    }
+    if (data?.updateType === 'PRODUCT_PREMIUM_UPDATE') {
+      updatedData = pick({ ...filteredValue }, 'interestUpdate');
+    }
+    if (data?.updateType === 'PRODUCT_TENURE_UPDATE') {
+      updatedData = pick({ ...filteredValue }, 'tenure');
+    }
+    if (data?.updateType === 'REBATE_UPDATE') {
+      updatedData = pick({ ...filteredValue }, 'rebate');
+    }
+    if (data?.updateType === 'WITHDRAW_PENALTY_UPDATE') {
+      updatedData = pick({ ...filteredValue }, 'withdrawPenalty');
+    }
     asyncToast({
       id: 'bpm-event',
       msgs: {
@@ -65,7 +101,7 @@ export const BPMOperationsSavingProductUpdate = () => {
         productId: data?.productId as string,
         updateType: data?.updateType as SvUpdateType,
         data: {
-          ...filteredValue,
+          ...updatedData,
         } as SvUpdateData,
       }),
     });
@@ -107,13 +143,48 @@ export const BPMOperationsSavingProductUpdate = () => {
           {productId && updateType === SvUpdateType?.AccountPremiumUpdate && (
             <AccountPremiumUpdate />
           )}
-          {productId && updateType === SvUpdateType?.ProductTenureUpdate && <ProductTenureUpdate />}
-          {productId && updateType === SvUpdateType?.PrematurePenaltyUpdate && (
-            <PrematurePenaltyUpdate />
-          )}
-          {productId && updateType === SvUpdateType?.WithdrawPenaltyUpdate && (
-            <WithdrawPenaltyUpdate />
-          )}
+          {productId &&
+            updateType === SvUpdateType?.ProductTenureUpdate &&
+            (natureOfProduct === 'RECURRING_SAVING' || natureOfProduct === 'TERM_SAVING_OR_FD') && (
+              <ProductTenureUpdate />
+            )}
+          {productId &&
+            updateType === SvUpdateType?.ProductTenureUpdate &&
+            !(
+              natureOfProduct === 'RECURRING_SAVING' || natureOfProduct === 'TERM_SAVING_OR_FD'
+            ) && (
+              <Text p="s32" color="danger.500">
+                This Feature is not applicable for this product.{' '}
+              </Text>
+            )}
+          {productId &&
+            updateType === SvUpdateType?.PrematurePenaltyUpdate &&
+            (natureOfProduct === 'RECURRING_SAVING' || natureOfProduct === 'TERM_SAVING_OR_FD') && (
+              <PrematurePenaltyUpdate />
+            )}
+          {productId &&
+            updateType === SvUpdateType?.PrematurePenaltyUpdate &&
+            !(
+              natureOfProduct === 'RECURRING_SAVING' || natureOfProduct === 'TERM_SAVING_OR_FD'
+            ) && (
+              <Text p="s32" color="danger.500">
+                This Feature is not applicable for this product.{' '}
+              </Text>
+            )}
+          {productId &&
+            updateType === SvUpdateType?.WithdrawPenaltyUpdate &&
+            (natureOfProduct === 'RECURRING_SAVING' || natureOfProduct === 'TERM_SAVING_OR_FD') && (
+              <WithdrawPenaltyUpdate />
+            )}
+          {productId &&
+            updateType === SvUpdateType?.WithdrawPenaltyUpdate &&
+            !(
+              natureOfProduct === 'RECURRING_SAVING' || natureOfProduct === 'TERM_SAVING_OR_FD'
+            ) && (
+              <Text p="s32" color="danger.500">
+                This Feature is not applicable for this product.{' '}
+              </Text>
+            )}
           {productId &&
             updateType === SvUpdateType?.RebateUpdate &&
             (natureOfProduct === 'RECURRING_SAVING' ||
