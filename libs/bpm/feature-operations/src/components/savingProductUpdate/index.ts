@@ -7,3 +7,4 @@ export * from './ChequeSettingsUpdate';
 export * from './PrematurePenaltyUpdate';
 export * from './ProductInterestUpdate';
 export * from './ProductTenureUpdate';
+export * from './WithdrawPenaltyUpdate';

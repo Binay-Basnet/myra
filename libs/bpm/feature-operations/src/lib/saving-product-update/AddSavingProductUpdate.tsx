@@ -20,6 +20,7 @@ import {
   PrematurePenaltyUpdate,
   ProductTenureUpdate,
   SavingProductUpdateBasicDetails,
+  WithdrawPenaltyUpdate,
 } from '../../components/savingProductUpdate';
 import { AccountOpenFeesAndChargesUpdate } from '../../components/savingProductUpdate/AccountOpenFeesAndChargesUpdate';
 import { ProductInterestUpdate } from '../../components/savingProductUpdate/ProductInterestUpdate';
@@ -82,6 +83,9 @@ export const BPMOperationsSavingProductUpdate = () => {
           {productId && updateType === SvUpdateType?.ProductTenureUpdate && <ProductTenureUpdate />}
           {productId && updateType === SvUpdateType?.PrematurePenaltyUpdate && (
             <PrematurePenaltyUpdate />
+          )}
+          {productId && updateType === SvUpdateType?.WithdrawPenaltyUpdate && (
+            <WithdrawPenaltyUpdate />
           )}
         </FormLayout.Form>
       </FormLayout.Content>
