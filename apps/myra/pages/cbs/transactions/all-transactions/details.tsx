@@ -12,16 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import {
-  asyncToast,
-  Box,
-  Button,
-  DetailPageHeader,
-  MainLayout,
-  Modal,
-  Text,
-  toast,
-} from '@myra-ui';
+import { asyncToast, Box, Button, DetailPageHeader, MainLayout, Modal, Text } from '@myra-ui';
 import { checkDateInFiscalYear } from '@myra-ui/date-picker';
 
 import {
@@ -134,23 +125,18 @@ const DepositDetailsPage = () => {
             <Button onClick={() => handleRevertTransactionModalClose()}>Cancel</Button>
             <Button
               onClick={() =>
-                mutateAsync({ journalId: router?.query?.['id'] as string })
-                  .then(() => {
+                asyncToast({
+                  id: 'all-transaction-revert',
+                  msgs: {
+                    loading: 'Reverting transaction',
+                    success: 'Transaction reverted successfully!!!',
+                  },
+                  promise: mutateAsync({ journalId: router?.query?.['id'] as string }),
+                  onSuccess: () => {
                     router.push(ROUTES?.CBS_TRANS_ALL_TRANSACTION_LIST);
                     handleRevertTransactionModalClose();
-                    toast({
-                      id: 'revert-transaction',
-                      type: 'success',
-                      message: 'Transaction reverted successfully!!!',
-                    });
-                  })
-                  .catch(() =>
-                    toast({
-                      id: 'revert-transaction',
-                      type: 'error',
-                      message: 'Something went wrong!!!',
-                    })
-                  )
+                  },
+                })
               }
             >
               Ok
