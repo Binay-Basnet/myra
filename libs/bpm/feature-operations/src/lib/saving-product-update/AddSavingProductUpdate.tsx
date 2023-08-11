@@ -103,6 +103,8 @@ export const BPMOperationsSavingProductUpdate = () => {
         updateType: data?.updateType as SvUpdateType,
         data: {
           ...updatedData,
+          notes: data?.notes,
+          files: data?.files,
         } as SvUpdateData,
       }),
     });
