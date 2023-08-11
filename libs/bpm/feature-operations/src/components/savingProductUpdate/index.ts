@@ -4,6 +4,7 @@ export * from './AccountPRemiumUpdate';
 export * from './BalanceLimitUpdate';
 export * from './BasicDetails';
 export * from './ChequeSettingsUpdate';
+export * from './Notes';
 export * from './PenaltyChargeUpdate';
 export * from './PrematurePenaltyUpdate';
 export * from './ProductInterestUpdate';

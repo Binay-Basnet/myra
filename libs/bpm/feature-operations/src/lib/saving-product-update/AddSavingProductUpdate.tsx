@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { omit, pick } from 'lodash';
 
-import { asyncToast, Text } from '@myra-ui';
+import { Alert, asyncToast, Box } from '@myra-ui';
 
 import {
   SvUpdateData,
@@ -23,6 +23,7 @@ import {
   PrematurePenaltyUpdate,
   ProductTenureUpdate,
   RebateUpdate,
+  SavingNotes,
   SavingProductUpdateBasicDetails,
   WithdrawPenaltyUpdate,
 } from '../../components/savingProductUpdate';
@@ -126,9 +127,12 @@ export const BPMOperationsSavingProductUpdate = () => {
           {productId &&
             updateType === SvUpdateType?.ProductPremiumUpdate &&
             natureOfProduct === 'CURRENT' && (
-              <Text p="s32" color="danger.500">
-                This Feature is not applicable for this product.{' '}
-              </Text>
+              <Box p="s32">
+                {' '}
+                <Alert hideCloseIcon status="error">
+                  This Feature is not applicable for this product.{' '}
+                </Alert>{' '}
+              </Box>
             )}
           {productId && updateType === SvUpdateType?.AccountOpenFeesAndChargeUpdate && (
             <AccountOpenFeesAndChargesUpdate />
@@ -153,9 +157,12 @@ export const BPMOperationsSavingProductUpdate = () => {
             !(
               natureOfProduct === 'RECURRING_SAVING' || natureOfProduct === 'TERM_SAVING_OR_FD'
             ) && (
-              <Text p="s32" color="danger.500">
-                This Feature is not applicable for this product.{' '}
-              </Text>
+              <Box p="s32">
+                {' '}
+                <Alert hideCloseIcon status="error">
+                  This Feature is not applicable for this product.{' '}
+                </Alert>{' '}
+              </Box>
             )}
           {productId &&
             updateType === SvUpdateType?.PrematurePenaltyUpdate &&
@@ -167,9 +174,12 @@ export const BPMOperationsSavingProductUpdate = () => {
             !(
               natureOfProduct === 'RECURRING_SAVING' || natureOfProduct === 'TERM_SAVING_OR_FD'
             ) && (
-              <Text p="s32" color="danger.500">
-                This Feature is not applicable for this product.{' '}
-              </Text>
+              <Box p="s32">
+                {' '}
+                <Alert hideCloseIcon status="error">
+                  This Feature is not applicable for this product.{' '}
+                </Alert>{' '}
+              </Box>
             )}
           {productId &&
             updateType === SvUpdateType?.WithdrawPenaltyUpdate &&
@@ -181,9 +191,12 @@ export const BPMOperationsSavingProductUpdate = () => {
             !(
               natureOfProduct === 'RECURRING_SAVING' || natureOfProduct === 'TERM_SAVING_OR_FD'
             ) && (
-              <Text p="s32" color="danger.500">
-                This Feature is not applicable for this product.{' '}
-              </Text>
+              <Box p="s32">
+                {' '}
+                <Alert hideCloseIcon status="error">
+                  This Feature is not applicable for this product.{' '}
+                </Alert>{' '}
+              </Box>
             )}
           {productId &&
             updateType === SvUpdateType?.RebateUpdate &&
@@ -195,11 +208,15 @@ export const BPMOperationsSavingProductUpdate = () => {
               natureOfProduct === 'RECURRING_SAVING' ||
               (natureOfProduct === 'SAVING' && isMandatoryFlag)
             ) && (
-              <Text p="s32" color="danger.500">
-                This Feature is not applicable for this product.{' '}
-              </Text>
+              <Box p="s32">
+                {' '}
+                <Alert hideCloseIcon status="error">
+                  This Feature is not applicable for this product.{' '}
+                </Alert>{' '}
+              </Box>
             )}
           {productId && updateType === SvUpdateType?.PenaltyChargeUpdate && <PenaltyChargeUpdate />}
+          {productId && updateType && <SavingNotes />}
         </FormLayout.Form>
       </FormLayout.Content>
       <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={submitForm} />
