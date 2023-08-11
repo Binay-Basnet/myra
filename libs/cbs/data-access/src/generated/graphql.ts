@@ -1751,9 +1751,52 @@ export type AuthorizationError = {
   message: Scalars['String'];
 };
 
+export type AutoOpenAccountQuery = {
+  getAutoOpenAccounts: BpmAutoOpenDetail;
+  listAutoOpenAccount: BpmAutoOpenConnection;
+};
+
+export type AutoOpenAccountQueryGetAutoOpenAccountsArgs = {
+  memberId: Scalars['ID'];
+};
+
+export type AutoOpenAccountQueryListAutoOpenAccountArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type AutoOpenDetails = {
+  accountID: Scalars['ID'];
+  accountName?: Maybe<Scalars['String']>;
+  status?: Maybe<ObjState>;
+};
+
 export type BpmAnnouncements = {
   description?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
+};
+
+export type BpmAutoOpenConnection = {
+  edges?: Maybe<Array<Maybe<BpmAutoOpenNode>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type BpmAutoOpenDetail = {
+  data?: Maybe<Array<Maybe<AutoOpenDetails>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type BpmAutoOpenList = {
+  code?: Maybe<Scalars['String']>;
+  count?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+};
+
+export type BpmAutoOpenNode = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<BpmAutoOpenList>;
 };
 
 export type BpmEmployeeMinimal = {
@@ -1830,6 +1873,25 @@ export const BpmEventType = {
 } as const;
 
 export type BpmEventType = typeof BpmEventType[keyof typeof BpmEventType];
+export type BpmLoanProductMutation = {
+  updateLoanProduct: BpmProductUpdateResult;
+};
+
+export type BpmLoanProductMutationUpdateLoanProductArgs = {
+  data: LoanUpdateData;
+  productId: Scalars['ID'];
+  updateType: LoanUpdateType;
+};
+
+export type BpmLoanProductQuery = {
+  listLoanProductUpdateHistory: BpmsvConnection;
+};
+
+export type BpmLoanProductQueryListLoanProductUpdateHistoryArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type BpmMeetingConnection = {
   edges?: Maybe<Array<Maybe<BpmMeetingNode>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -1876,6 +1938,7 @@ export type BpmMinorInput = {
   dateOfBirth?: InputMaybe<Scalars['Localized']>;
   documents?: InputMaybe<Array<Scalars['String']>>;
   fullName?: InputMaybe<Scalars['String']>;
+  genderId?: InputMaybe<Scalars['String']>;
   memberId: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
   relationshipId?: InputMaybe<Scalars['String']>;
@@ -1906,6 +1969,7 @@ export type BpmMinorOverview = {
   code: Scalars['String'];
   contact?: Maybe<Scalars['String']>;
   dob?: Maybe<Scalars['Localized']>;
+  gender?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   memberId: Scalars['ID'];
   minorName?: Maybe<Scalars['String']>;
@@ -1936,11 +2000,14 @@ export type BpmMutation = {
 };
 
 export type BpmOperationsMutation = {
+  loanProduct: BpmLoanProductMutation;
   minor: BpmMinorMutation;
   savingProduct: BpmSavingProductMutation;
 };
 
 export type BpmOperationsQuery = {
+  autoOpenAccount: AutoOpenAccountQuery;
+  loanProduct: BpmLoanProductQuery;
   minor: BpmMinorQuery;
   savingProduct: BpmSavingProductQuery;
 };
@@ -2042,6 +2109,7 @@ export type BpmsvList = {
   productCode: Scalars['String'];
   productId: Scalars['ID'];
   productName: Scalars['String'];
+  productType?: Maybe<Scalars['String']>;
   updateType?: Maybe<Scalars['String']>;
 };
 
@@ -13004,6 +13072,7 @@ export type LoanAccountMutation = {
   loanCollateralActions?: Maybe<LoanCollateralActionsMutation>;
   loanGuaranteeActions?: Maybe<LoanGuaranteeActionsMutation>;
   loanProvision?: Maybe<LoanProvisionResult>;
+  makeActive?: Maybe<MutationResult>;
   repayment?: Maybe<LoanRepaymentResult>;
   updateAccountInterest: InterestSetupMutationResult;
   updateLinkedAccount?: Maybe<LoanAccountResult>;
@@ -13042,6 +13111,10 @@ export type LoanAccountMutationEditAccountInterestArgs = {
 
 export type LoanAccountMutationLoanProvisionArgs = {
   data?: InputMaybe<LoanLossProvisionInput>;
+};
+
+export type LoanAccountMutationMakeActiveArgs = {
+  id: Scalars['ID'];
 };
 
 export type LoanAccountMutationRepaymentArgs = {
@@ -14654,6 +14727,27 @@ export type LoanStatementReportSettings = {
   period: LocalizedDateFilter;
 };
 
+export type LoanUpdateData = {
+  accountPremium?: InputMaybe<AccountPremium>;
+  files?: InputMaybe<Array<Scalars['String']>>;
+  loanLimit?: InputMaybe<AmountLimit>;
+  loanProcessingCharge?: InputMaybe<ChargeInput>;
+  notes?: InputMaybe<Scalars['String']>;
+  penalty?: InputMaybe<PenaltyEdit>;
+  productPremium?: InputMaybe<InterestRateSetupInput>;
+  tenure?: InputMaybe<TenureUpdateData>;
+};
+
+export const LoanUpdateType = {
+  AccountPremiumUpdate: 'ACCOUNT_PREMIUM_UPDATE',
+  LoanLimitUpdate: 'LOAN_LIMIT_UPDATE',
+  LoanProcessingChargeUpdate: 'LOAN_PROCESSING_CHARGE_UPDATE',
+  PenaltyUpdate: 'PENALTY_UPDATE',
+  ProductPremiumUpdate: 'PRODUCT_PREMIUM_UPDATE',
+  ProductTenureUpdate: 'PRODUCT_TENURE_UPDATE',
+} as const;
+
+export type LoanUpdateType = typeof LoanUpdateType[keyof typeof LoanUpdateType];
 export type LoanWriteOffReportData = {
   disbursedPrincipal?: Maybe<Scalars['String']>;
   loanId?: Maybe<Scalars['String']>;
@@ -18563,7 +18657,7 @@ export const SvUpdateType = {
   ChequeSettingsUpdate: 'CHEQUE_SETTINGS_UPDATE',
   PenaltyChargeUpdate: 'PENALTY_CHARGE_UPDATE',
   PrematurePenaltyUpdate: 'PREMATURE_PENALTY_UPDATE',
-  ProductInterestUpdate: 'PRODUCT_INTEREST_UPDATE',
+  ProductPremiumUpdate: 'PRODUCT_PREMIUM_UPDATE',
   ProductTenureUpdate: 'PRODUCT_TENURE_UPDATE',
   RebateUpdate: 'REBATE_UPDATE',
   WithdrawPenaltyUpdate: 'WITHDRAW_PENALTY_UPDATE',
@@ -23042,6 +23136,31 @@ export type SetBpmOperationsMinorActionMutation = {
             | MutationError_ValidationError_Fragment
             | null;
         } | null;
+      };
+    };
+  };
+};
+
+export type SetBpmOperationsSavingProductUpdateMutationVariables = Exact<{
+  updateType: SvUpdateType;
+  productId: Scalars['ID'];
+  data: SvUpdateData;
+}>;
+
+export type SetBpmOperationsSavingProductUpdateMutation = {
+  bpm: {
+    operations: {
+      savingProduct: {
+        updateSVProduct: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
       };
     };
   };
@@ -44905,6 +45024,46 @@ export const useSetBpmOperationsMinorActionMutation = <TError = unknown, TContex
     useAxios<SetBpmOperationsMinorActionMutation, SetBpmOperationsMinorActionMutationVariables>(
       SetBpmOperationsMinorActionDocument
     ),
+    options
+  );
+export const SetBpmOperationsSavingProductUpdateDocument = `
+    mutation setBPMOperationsSavingProductUpdate($updateType: SVUpdateType!, $productId: ID!, $data: SVUpdateData!) {
+  bpm {
+    operations {
+      savingProduct {
+        updateSVProduct(updateType: $updateType, productId: $productId, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetBpmOperationsSavingProductUpdateMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetBpmOperationsSavingProductUpdateMutation,
+    TError,
+    SetBpmOperationsSavingProductUpdateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetBpmOperationsSavingProductUpdateMutation,
+    TError,
+    SetBpmOperationsSavingProductUpdateMutationVariables,
+    TContext
+  >(
+    ['setBPMOperationsSavingProductUpdate'],
+    useAxios<
+      SetBpmOperationsSavingProductUpdateMutation,
+      SetBpmOperationsSavingProductUpdateMutationVariables
+    >(SetBpmOperationsSavingProductUpdateDocument),
     options
   );
 export const SetBpmMeetingsDocument = `

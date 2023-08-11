@@ -27,3 +27,22 @@ mutation setBPMOperationsMinorAction($requestid: ID!, $actionType: TransferReque
     }
   }
 }
+
+mutation setBPMOperationsSavingProductUpdate(
+  $updateType: SVUpdateType!
+  $productId: ID!
+  $data: SVUpdateData!
+) {
+  bpm {
+    operations {
+      savingProduct {
+        updateSVProduct(updateType: $updateType, productId: $productId, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
