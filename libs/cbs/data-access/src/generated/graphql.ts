@@ -1810,9 +1810,54 @@ export type AuthorizationError = {
   message: Scalars['String'];
 };
 
+export type AutoOpenAccountQuery = {
+  getAutoOpenAccounts: BpmAutoOpenDetail;
+  listAutoOpenAccount: BpmAutoOpenConnection;
+};
+
+
+export type AutoOpenAccountQueryGetAutoOpenAccountsArgs = {
+  memberId: Scalars['ID'];
+};
+
+
+export type AutoOpenAccountQueryListAutoOpenAccountArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type AutoOpenDetails = {
+  accountID: Scalars['ID'];
+  accountName?: Maybe<Scalars['String']>;
+  status?: Maybe<ObjState>;
+};
+
 export type BpmAnnouncements = {
   description?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
+};
+
+export type BpmAutoOpenConnection = {
+  edges?: Maybe<Array<Maybe<BpmAutoOpenNode>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type BpmAutoOpenDetail = {
+  data?: Maybe<Array<Maybe<AutoOpenDetails>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type BpmAutoOpenList = {
+  code?: Maybe<Scalars['String']>;
+  count?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+};
+
+export type BpmAutoOpenNode = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<BpmAutoOpenList>;
 };
 
 export type BpmEmployeeMinimal = {
@@ -1956,6 +2001,7 @@ export type BpmMinorInput = {
   dateOfBirth?: InputMaybe<Scalars['Localized']>;
   documents?: InputMaybe<Array<Scalars['String']>>;
   fullName?: InputMaybe<Scalars['String']>;
+  genderId?: InputMaybe<Scalars['String']>;
   memberId: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
   relationshipId?: InputMaybe<Scalars['String']>;
@@ -1988,6 +2034,7 @@ export type BpmMinorOverview = {
   code: Scalars['String'];
   contact?: Maybe<Scalars['String']>;
   dob?: Maybe<Scalars['Localized']>;
+  gender?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   memberId: Scalars['ID'];
   minorName?: Maybe<Scalars['String']>;
@@ -2025,6 +2072,7 @@ export type BpmOperationsMutation = {
 };
 
 export type BpmOperationsQuery = {
+  autoOpenAccount: AutoOpenAccountQuery;
   loanProduct: BpmLoanProductQuery;
   minor: BpmMinorQuery;
   savingProduct: BpmSavingProductQuery;
@@ -19085,7 +19133,7 @@ export const SvUpdateType = {
   ChequeSettingsUpdate: 'CHEQUE_SETTINGS_UPDATE',
   PenaltyChargeUpdate: 'PENALTY_CHARGE_UPDATE',
   PrematurePenaltyUpdate: 'PREMATURE_PENALTY_UPDATE',
-  ProductInterestUpdate: 'PRODUCT_INTEREST_UPDATE',
+  ProductPremiumUpdate: 'PRODUCT_PREMIUM_UPDATE',
   ProductTenureUpdate: 'PRODUCT_TENURE_UPDATE',
   RebateUpdate: 'REBATE_UPDATE',
   WithdrawPenaltyUpdate: 'WITHDRAW_PENALTY_UPDATE'
