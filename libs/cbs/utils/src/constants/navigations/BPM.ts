@@ -153,6 +153,14 @@ export const BPM: NavType = {
       aclKey: 'HCM_PAYROLL',
       label: 'Requests',
 
+      forms: [
+        {
+          label: 'Add loan request',
+          aclKey: 'HCM_EMPLOYEE',
+          route: ROUTES.BPM_REQUESTS_LOAN_REQUESTS_ADD,
+        },
+      ],
+
       pages: [
         {
           label: 'Membership Requests',
