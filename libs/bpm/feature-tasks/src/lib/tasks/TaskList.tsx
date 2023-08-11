@@ -37,7 +37,7 @@ const popOverItemData = [
     itemText: 'Started',
   },
   {
-    itemColor: 'red.500',
+    itemColor: 'green.300',
     itemText: 'Completed',
   },
 ];

@@ -1,17 +1,15 @@
 import { ReactElement } from 'react';
 
-import { Box } from '@myra-ui';
-
 import { BPMLayout, BPMRequestsSidebarLayout } from '@coop/bpm/ui-layouts';
+import { LoanList } from '@coop/cbs/loan/lists';
 
-// TODO ( Update this page when design arrives )
-const AccountingQuickTransferList = () => <Box> BPM</Box>;
+const LoanApplicationListPage = () => <LoanList />;
 
-AccountingQuickTransferList.getLayout = function getLayout(page: ReactElement) {
+LoanApplicationListPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <BPMLayout>
       <BPMRequestsSidebarLayout>{page}</BPMRequestsSidebarLayout>
     </BPMLayout>
   );
 };
-export default AccountingQuickTransferList;
+export default LoanApplicationListPage;

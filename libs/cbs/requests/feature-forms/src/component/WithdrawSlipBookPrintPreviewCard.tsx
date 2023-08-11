@@ -46,12 +46,12 @@ export const WithdrawSlipBookPrintPreviewCard = ({
     boxShadow="E2"
     position="relative"
     fontWeight={700}
+    letterSpacing="1px"
     sx={{
       pageBreakAfter: number && number % 2 === 0 ? 'always' : 'avoid',
       '@media print': {
         display: 'flex',
         boxShadow: 'none',
-        // fontFamily: 'Arial',
       },
       '@page': {
         resolution: '360dpi',
@@ -65,7 +65,8 @@ export const WithdrawSlipBookPrintPreviewCard = ({
       position="absolute"
       top={`${branchPosition?.top || 0}mm`}
       left={`${branchPosition?.left || 0}mm`}
-      fontFamily="Arial"
+      fontFamily="Roboto-Bold"
+      textTransform="uppercase"
     >
       {details?.branch}
     </Text>
@@ -77,13 +78,13 @@ export const WithdrawSlipBookPrintPreviewCard = ({
       flexDirection="column"
       gap="s4"
     >
-      <Text fontSize="r1" color="black" fontFamily="Arial">
+      <Text fontSize="r1" color="black" fontFamily="Roboto-Bold" textTransform="uppercase">
         {`${details?.memberName} (${details?.memberCode})`}
       </Text>
-      <Text fontSize="r1" color="black" fontFamily="Arial">
+      <Text fontSize="r1" color="black" fontFamily="Roboto-Bold" textTransform="uppercase">
         {details?.accountNumber}
       </Text>
-      <Text fontSize="r1" color="black" fontFamily="Arial">
+      <Text fontSize="r1" color="black" fontFamily="Roboto-Bold" textTransform="uppercase">
         {details?.productName}
       </Text>
     </Box>
@@ -94,7 +95,8 @@ export const WithdrawSlipBookPrintPreviewCard = ({
       position="absolute"
       bottom={`${slipNumberPosition?.top || 0}mm`}
       left={`${slipNumberPosition?.left || 0}mm`}
-      fontFamily="Arial"
+      fontFamily="Roboto-Bold"
+      textTransform="uppercase"
     >
       {details?.slipNumber}
     </Text>

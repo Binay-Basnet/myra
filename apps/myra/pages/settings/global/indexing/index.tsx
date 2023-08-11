@@ -77,34 +77,30 @@ const Indexing = () => {
         >
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Text>Reset Search Index</Text>
-            <Button
-              onClick={resetSearchIndexHandler}
-              width={150}
-              isLoading={resetSearchIndexLoading}
-            >
-              Reset Search Index
+            <Button w={100} onClick={resetSearchIndexHandler} isLoading={resetSearchIndexLoading}>
+              Reset
             </Button>
           </Box>
           <Divider />
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Text>Reset Trial Balance Cache</Text>
             <Button
+              w={100}
               onClick={resetTrailBalanceCacheHandler}
-              width={200}
               isLoading={resetTrialBalanceCacheLoading}
             >
-              Reset Trial Balance Cache
+              Reset
             </Button>
           </Box>
           <Divider />
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Text>Reset Internal Search Index</Text>
             <Button
+              w={100}
               onClick={resetInternalSearchIndexHandler}
-              width={200}
               isLoading={resetInternalSearchIndexLoading}
             >
-              Reset Internal Search Index
+              Reset
             </Button>
           </Box>
         </Box>

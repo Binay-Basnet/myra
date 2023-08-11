@@ -562,6 +562,8 @@ export const ROUTES = {
   BPM_REQUESTS_MEMBER_BRANCH_TRANSFER_REQUESTS: '/bpm/requests/memebrship-branch/list',
   BPM_REQUESTS_NOMINEE_BALANCE_TRANSFER_REQUESTS: '/bpm/requests/nominee-balance-transfer/list',
 
+  BPM_REQUESTS_LOAN_REQUESTS_ADD: '/bpm/requests/loan/add',
+
   MICRO_FINANCE_GROUPS_LIST: '/micro-finance/groups/list',
   MICRO_FINANCE_GROUPS_ADD: '/micro-finance/groups/add',
   MICRO_FINANCE_GROUPS_MEETINGS_LIST: '/micro-finance/groups/groups-meetings/list',
