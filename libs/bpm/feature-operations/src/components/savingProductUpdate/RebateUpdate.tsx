@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 import { GridItem } from '@chakra-ui/react';
 
-import { Alert, Box, FormSection, Grid, Text } from '@myra-ui';
+import { Alert, Box, FormSection, Text } from '@myra-ui';
 
 import { useGetSavingsProductDetailQuery } from '@coop/cbs/data-access';
 import { FormAmountInput, FormNumberInput, FormSwitchTab } from '@coop/shared/form';
@@ -24,11 +24,11 @@ export const RebateUpdate = () => {
 
   const { data } = useGetSavingsProductDetailQuery({ id: productId as string });
   const detailData = data?.settings?.general?.depositProduct?.depositProductDetail?.data;
-  const isRebateAllowed = methods?.watch('rebate');
+  const isRebateAllowed = methods?.watch('rebate.isRebateAllowed');
 
   return (
     <FormSection templateColumns={2} header="Rebate Update">
-      <Box display="flex" flexDir="column" gap={5}>
+      <GridItem colSpan={2}>
         <Alert title="Existing Details" status="info" hideCloseIcon>
           <Box display="flex" flexDir="column">
             <ul>
@@ -61,48 +61,49 @@ export const RebateUpdate = () => {
             </ul>
           </Box>
         </Alert>
+      </GridItem>
+      <GridItem colSpan={2} pt="s16">
         <Box display="flex" flexDirection="row" justifyContent="space-between">
           <Text fontSize="s3" fontWeight="500" color="gray.700">
             Rebate Update
           </Text>
           <FormSwitchTab name="rebate.isRebateAllowed" options={enableSwitch} />
         </Box>
-        {isRebateAllowed && (
-          <Grid templateColumns="repeat(2,1fr)" gap="s16">
-            <FormNumberInput
-              name="rebate.rebate.dayBeforeInstallmentDate"
-              label="Day Before Installment Date "
-            />
-            <FormNumberInput
-              name="rebate.rebate.noOfInstallment"
-              label="No Of Installments"
-              helperText="Enter Number of Installments"
-            />
+      </GridItem>
+      {isRebateAllowed && (
+        <>
+          <FormNumberInput
+            name="rebate.rebate.dayBeforeInstallmentDate"
+            label="Day Before Installment Date "
+          />
+          <FormNumberInput
+            name="rebate.rebate.noOfInstallment"
+            label="No Of Installments"
+            helperText="Enter Number of Installments"
+          />
 
-            <FormNumberInput
-              isRequired
-              name="rebate.rebate.rebateRate"
-              label="Percentage of Deposited Amount"
-              rightElement={
-                <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-                  %
-                </Text>
-              }
-              textAlign="right"
-            />
-            <FormAmountInput name="rebate.rebate.rebateAmount" label="Rebate Amount" />
-            <GridItem colSpan={2}>
-              <Alert status="warning">
-                <Text fontWeight="Medium" fontSize="r1">
-                  If both rebate amount and rebate rate is filled, the total rebate is the total sum
-                  of the two.
-                </Text>
-              </Alert>
-            </GridItem>
-          </Grid>
-        )}
-      </Box>
-      ;
+          <FormNumberInput
+            isRequired
+            name="rebate.rebate.rebateRate"
+            label="Percentage of Deposited Amount"
+            rightElement={
+              <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                %
+              </Text>
+            }
+            textAlign="right"
+          />
+          <FormAmountInput name="rebate.rebate.rebateAmount" label="Rebate Amount" />
+          <GridItem colSpan={2}>
+            <Alert status="warning">
+              <Text fontWeight="Medium" fontSize="r1">
+                If both rebate amount and rebate rate is filled, the total rebate is the total sum
+                of the two.
+              </Text>
+            </Alert>
+          </GridItem>
+        </>
+      )}
     </FormSection>
   );
 };

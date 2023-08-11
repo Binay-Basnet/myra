@@ -1,12 +1,14 @@
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
-import { asyncToast } from '@myra-ui';
+import { asyncToast, Text } from '@myra-ui';
 
 import {
   SvUpdateData,
   SvUpdateType,
+  useGetSavingsProductDetailQuery,
   useSetBpmOperationsSavingProductUpdateMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -17,6 +19,7 @@ import {
   AccountPremiumUpdate,
   BalanceLimitUpdate,
   ChequeServicesUpdate,
+  PenaltyChargeUpdate,
   PrematurePenaltyUpdate,
   ProductTenureUpdate,
   RebateUpdate,
@@ -27,6 +30,7 @@ import { AccountOpenFeesAndChargesUpdate } from '../../components/savingProductU
 import { ProductInterestUpdate } from '../../components/savingProductUpdate/ProductInterestUpdate';
 
 export const BPMOperationsSavingProductUpdate = () => {
+  const [triggerQuery, setTriggerQury] = useState(false);
   const methods = useForm<SvUpdateData & { productId: string; updateType: SvUpdateType }>();
   const { watch } = methods;
   const router = useRouter();
@@ -34,6 +38,15 @@ export const BPMOperationsSavingProductUpdate = () => {
   const updateType = watch('updateType');
 
   const { mutateAsync } = useSetBpmOperationsSavingProductUpdateMutation();
+
+  const { data: dataDetails } = useGetSavingsProductDetailQuery(
+    { id: productId as string },
+    { enabled: triggerQuery }
+  );
+  const detailData = dataDetails?.settings?.general?.depositProduct?.depositProductDetail?.data;
+
+  const natureOfProduct = detailData?.nature;
+  const isMandatoryFlag = detailData?.isMandatorySaving;
 
   const submitForm = () => {
     const data = methods.getValues();
@@ -58,6 +71,12 @@ export const BPMOperationsSavingProductUpdate = () => {
     });
   };
 
+  useEffect(() => {
+    if (productId) {
+      setTriggerQury(true);
+    }
+  }, [productId]);
+
   return (
     <FormLayout methods={methods}>
       <FormLayout.Header title="Saving Product Updates" />
@@ -65,9 +84,16 @@ export const BPMOperationsSavingProductUpdate = () => {
       <FormLayout.Content>
         <FormLayout.Form>
           <SavingProductUpdateBasicDetails />
-          {productId && updateType === SvUpdateType?.ProductPremiumUpdate && (
-            <ProductInterestUpdate />
-          )}
+          {productId &&
+            updateType === SvUpdateType?.ProductPremiumUpdate &&
+            natureOfProduct !== 'CURRENT' && <ProductInterestUpdate />}
+          {productId &&
+            updateType === SvUpdateType?.ProductPremiumUpdate &&
+            natureOfProduct === 'CURRENT' && (
+              <Text p="s32" color="danger.500">
+                This Feature is not applicable for this product.{' '}
+              </Text>
+            )}
           {productId && updateType === SvUpdateType?.AccountOpenFeesAndChargeUpdate && (
             <AccountOpenFeesAndChargesUpdate />
           )}
@@ -88,7 +114,21 @@ export const BPMOperationsSavingProductUpdate = () => {
           {productId && updateType === SvUpdateType?.WithdrawPenaltyUpdate && (
             <WithdrawPenaltyUpdate />
           )}
-          {productId && updateType === SvUpdateType?.RebateUpdate && <RebateUpdate />}
+          {productId &&
+            updateType === SvUpdateType?.RebateUpdate &&
+            (natureOfProduct === 'RECURRING_SAVING' ||
+              (natureOfProduct === 'SAVING' && isMandatoryFlag)) && <RebateUpdate />}
+          {productId &&
+            updateType === SvUpdateType?.RebateUpdate &&
+            !(
+              natureOfProduct === 'RECURRING_SAVING' ||
+              (natureOfProduct === 'SAVING' && isMandatoryFlag)
+            ) && (
+              <Text p="s32" color="danger.500">
+                This Feature is not applicable for this product.{' '}
+              </Text>
+            )}
+          {productId && updateType === SvUpdateType?.PenaltyChargeUpdate && <PenaltyChargeUpdate />}
         </FormLayout.Form>
       </FormLayout.Content>
       <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={submitForm} />
