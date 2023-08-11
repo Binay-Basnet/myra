@@ -19,6 +19,7 @@ import {
   ChequeServicesUpdate,
   PrematurePenaltyUpdate,
   ProductTenureUpdate,
+  RebateUpdate,
   SavingProductUpdateBasicDetails,
   WithdrawPenaltyUpdate,
 } from '../../components/savingProductUpdate';
@@ -87,6 +88,7 @@ export const BPMOperationsSavingProductUpdate = () => {
           {productId && updateType === SvUpdateType?.WithdrawPenaltyUpdate && (
             <WithdrawPenaltyUpdate />
           )}
+          {productId && updateType === SvUpdateType?.RebateUpdate && <RebateUpdate />}
         </FormLayout.Form>
       </FormLayout.Content>
       <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={submitForm} />

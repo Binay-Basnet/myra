@@ -14,7 +14,7 @@ export const ProductTenureUpdate = () => {
   const detailData = data?.settings?.general?.depositProduct?.depositProductDetail?.data;
 
   return (
-    <FormSection templateColumns={2} header="Account Premium Update">
+    <FormSection templateColumns={2} header="Product Tenure Update">
       <GridItem colSpan={2}>
         <Alert title="Existing Details" status="info" hideCloseIcon>
           <Box display="flex" flexDir="column">

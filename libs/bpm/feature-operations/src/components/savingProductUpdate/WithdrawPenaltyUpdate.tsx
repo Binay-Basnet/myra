@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { GridItem } from '@chakra-ui/react';
 
 import { Alert, Box, FormSection, Text } from '@myra-ui';
 
@@ -15,7 +16,8 @@ export const WithdrawPenaltyUpdate = () => {
 
   return (
     <FormSection templateColumns={2} header="Withdraw Penalty Update">
-      <Box display="flex" flexDir="column" gap={5}>
+      <GridItem colSpan={2}>
+        {' '}
         <Alert title="Existing Details" status="info" hideCloseIcon>
           <Box display="flex" flexDir="column">
             <ul>
@@ -35,19 +37,17 @@ export const WithdrawPenaltyUpdate = () => {
             </ul>
           </Box>
         </Alert>
-        <Box display="flex" gap="s16">
-          <FormNumberInput label="Penalty Amount" name="withdrawPenalty.penaltyAmount" />
-          <FormNumberInput
-            label="Penalty Rate"
-            name="withdrawPenalty.penaltyRate"
-            rightElement={
-              <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-                %
-              </Text>
-            }
-          />
-        </Box>
-      </Box>
+      </GridItem>
+      <FormNumberInput label="Penalty Amount" name="withdrawPenalty.penaltyAmount" />
+      <FormNumberInput
+        label="Penalty Rate"
+        name="withdrawPenalty.penaltyRate"
+        rightElement={
+          <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+            %
+          </Text>
+        }
+      />
     </FormSection>
   );
 };
