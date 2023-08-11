@@ -7,7 +7,7 @@ import {
   useGetEndOfDayDateDataQuery,
   useGetSavingsProductDetailQuery,
 } from '@coop/cbs/data-access';
-import { FormDatePicker, FormFileInput, FormInput, FormTextArea } from '@coop/shared/form';
+import { FormDatePicker, FormInput } from '@coop/shared/form';
 
 export const ProductInterestUpdate = () => {
   const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
@@ -54,14 +54,6 @@ export const ProductInterestUpdate = () => {
         label="Effective Date"
         minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
       />
-
-      <GridItem colSpan={2}>
-        <FormFileInput name="interestUpdate.fileUploads" label="File Upload" size="md" />
-      </GridItem>
-
-      <GridItem colSpan={2}>
-        <FormTextArea name="interestUpdate.note" label="Note" rows={3} />
-      </GridItem>
     </FormSection>
   );
 };

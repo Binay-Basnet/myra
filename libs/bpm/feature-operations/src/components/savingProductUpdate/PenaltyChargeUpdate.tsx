@@ -9,13 +9,7 @@ import {
   useGetSavingProductPenaltyUpdateListQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
-import {
-  FormAmountInput,
-  FormDatePicker,
-  FormFileInput,
-  FormNumberInput,
-  FormTextArea,
-} from '@coop/shared/form';
+import { FormAmountInput, FormDatePicker, FormNumberInput } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 export const PenaltyChargeUpdate = () => {
@@ -100,18 +94,6 @@ export const PenaltyChargeUpdate = () => {
         label="Effective Date"
         minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
       />
-
-      <GridItem colSpan={2}>
-        <FormFileInput
-          name="penaltyCharge.additionalData.fileUploads"
-          label="File Upload"
-          size="md"
-        />
-      </GridItem>
-
-      <GridItem colSpan={2}>
-        <FormTextArea name="penaltyCharge.additionalData.notes" label="Note" rows={3} />
-      </GridItem>
     </FormSection>
   );
 };

@@ -21,6 +21,18 @@ export const MinorBasicDetails = () => {
     label: data?.name?.local as string,
     value: data?.id as string,
   }));
+
+  const { data: genderFields, isLoading: genderLoading } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.Gender,
+  });
+  const genderList = useMemo(
+    () => genderFields?.form?.options?.predefined?.data ?? [],
+    [relationshipData]
+  );
+  const genderOptions = genderList?.map((data) => ({
+    label: data?.name?.local as string,
+    value: data?.id as string,
+  }));
   return (
     <FormSection templateColumns={2}>
       <GridItem colSpan={2}>
@@ -39,7 +51,15 @@ export const MinorBasicDetails = () => {
         options={realationshipOptions}
         menuPosition="fixed"
       />
+
       <FormDatePicker name="dateOfBirth" label="Date of Birth" />
+      <FormSelect
+        isRequired
+        name="genderId"
+        label="Gender"
+        isLoading={genderLoading}
+        options={genderOptions}
+      />
     </FormSection>
   );
 };

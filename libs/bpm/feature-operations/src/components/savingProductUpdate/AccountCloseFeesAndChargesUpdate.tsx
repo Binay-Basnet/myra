@@ -6,7 +6,7 @@ import { Alert, Box, FormSection } from '@myra-ui';
 
 import { useGetCloseChargeListQuery, useGetEndOfDayDateDataQuery } from '@coop/cbs/data-access';
 import { COASelectModal } from '@coop/shared/components';
-import { FormDatePicker, FormEditableTable, FormFileInput, FormTextArea } from '@coop/shared/form';
+import { FormDatePicker, FormEditableTable } from '@coop/shared/form';
 
 type ServiceType = {
   serviceName: string;
@@ -87,8 +87,6 @@ export const AccountCloseFeesAndChargesUpdate = () => {
             minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
           />
         </Box>
-        <FormFileInput name="closeCharge.additionalData.fileUploads" label="File Upload" />
-        <FormTextArea name="closeCharge.additionalData.notes" label="Note" />
       </Box>
     </FormSection>
   );

@@ -6,7 +6,7 @@ import { Alert, Box, FormSection } from '@myra-ui';
 
 import { useGetEndOfDayDateDataQuery, useGetOpenChargeListQuery } from '@coop/cbs/data-access';
 import { COASelectModal } from '@coop/shared/components';
-import { FormDatePicker, FormEditableTable, FormFileInput, FormTextArea } from '@coop/shared/form';
+import { FormDatePicker, FormEditableTable } from '@coop/shared/form';
 
 type ServiceType = {
   serviceName: string;
@@ -86,8 +86,6 @@ export const AccountOpenFeesAndChargesUpdate = () => {
             minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
           />
         </Box>
-        <FormFileInput name="openCharge.additionalData.fileUploads" label="File Upload" />
-        <FormTextArea name="openCharge.additionalData.notes" label="Note" />
       </Box>
     </FormSection>
   );
