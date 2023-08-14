@@ -15,7 +15,7 @@ export const LedgerTabList = () => {
 
   const tableRef = useRef<HTMLTableElement>(null);
 
-  const { ledgerList } = useCOALeafNodeDetails();
+  const { ledgerList, isLedgerListLoading } = useCOALeafNodeDetails();
 
   const ledgersList = useMemo(
     () =>
@@ -46,6 +46,7 @@ export const LedgerTabList = () => {
           pageInfo: ledgerList?.pageInfo,
         }}
         tableRef={tableRef}
+        isLoading={isLedgerListLoading}
       />
     </DetailsCard>
   );

@@ -19,7 +19,7 @@ export const useCOALeafNodeDetails = () => {
     }
   );
 
-  const { data: list } = useGetLedgerListQuery({
+  const { data: list, isLoading: isLedgerListLoading } = useGetLedgerListQuery({
     id: id as string,
     branchId: branch ? JSON.parse(branch as string) : [],
     pagination: getPaginationQuery(),
@@ -32,5 +32,6 @@ export const useCOALeafNodeDetails = () => {
   return {
     leafNodeData: leafNodeQueryData?.settings?.chartsOfAccount?.coaLeafNodeDetails?.data,
     ledgerList,
+    isLedgerListLoading,
   };
 };

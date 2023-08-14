@@ -30,9 +30,15 @@ interface ILedgerTableProps {
   ledgersList: LedgerList[];
   pagination?: Pagination;
   tableRef?: RefObject<HTMLTableElement>;
+  isLoading?: boolean;
 }
 
-export const LedgerTable = ({ ledgersList, pagination, tableRef }: ILedgerTableProps) => {
+export const LedgerTable = ({
+  ledgersList,
+  pagination,
+  tableRef,
+  isLoading,
+}: ILedgerTableProps) => {
   const [selectedLedgerId, setSelectedLedgerId] = useState('');
   const [selectedTags, setSelectedTags] = useState<(TagConciseEntry | null)[]>([]);
 
@@ -181,6 +187,7 @@ export const LedgerTable = ({ ledgersList, pagination, tableRef }: ILedgerTableP
       <Table
         isDetailPageTable
         isStatic
+        isLoading={isLoading}
         data={ledgersList}
         columns={columns}
         pagination={pagination}

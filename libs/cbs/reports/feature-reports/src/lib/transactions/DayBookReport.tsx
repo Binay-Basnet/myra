@@ -102,7 +102,7 @@ export const DayBookReport = () => {
 
   return (
     <Report
-      data={receipts ?? payments}
+      data={receipts?.length ? receipts : payments}
       isLoading={isFetching}
       report={ReportEnum.TRANSACTION_DAY_BOOK_REPORT}
       filters={filters}
