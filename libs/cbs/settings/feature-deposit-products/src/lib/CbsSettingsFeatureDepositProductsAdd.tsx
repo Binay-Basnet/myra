@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader, Loader, Text } from '@myra-ui';
+import { asyncToast, Box, Loader, Text } from '@myra-ui';
 
 import {
   CriteriaSection,
@@ -20,6 +20,7 @@ import {
   useSetDepositProductMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
+import { FormLayout } from '@coop/shared/form';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import {
@@ -357,6 +358,7 @@ export const SettingsDepositProductsAdd = () => {
       if (editValueData) {
         reset({
           ...(editValueData as unknown as DepositForm),
+          isFrequencyMandatory: !!editValueData?.depositFrequency,
         });
       }
     }
@@ -389,25 +391,22 @@ export const SettingsDepositProductsAdd = () => {
   // }, [JSON.stringify(depositNature)]);
 
   return (
-    <>
-      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-        <Container minW="container.lg" height="fit-content" paddingInline="0">
-          <FormHeader
-            title={
-              router?.asPath?.includes('/edit')
-                ? 'Edit Saving Product'
-                : `${t['depositProductAddDepositProducts']} - ${featureCode.newSavingProduct}`
-            }
-          />
-        </Container>
-      </Box>
-      <Container bg="white" height="fit-content" minW="container.lg" pb="120px" paddingInline="0">
-        {editDataLoading && router?.asPath?.includes('edit') ? (
-          <Box display="flex" bg="white" h="100vh" justifyContent="center" pt="100px">
-            <Loader />
-          </Box>
-        ) : (
-          <FormProvider {...methods}>
+    <FormLayout methods={methods}>
+      <FormLayout.Header
+        title={
+          router?.asPath?.includes('/edit')
+            ? 'Edit Saving Product'
+            : `${t['depositProductAddDepositProducts']} - ${featureCode.newSavingProduct}`
+        }
+      />
+
+      <FormLayout.Content>
+        <FormLayout.Form>
+          {editDataLoading && router?.asPath?.includes('edit') ? (
+            <Box display="flex" bg="white" h="100vh" justifyContent="center" pt="100px">
+              <Loader />
+            </Box>
+          ) : (
             <form>
               <Box>
                 <Product />
@@ -484,27 +483,22 @@ export const SettingsDepositProductsAdd = () => {
                 )}
               </Box>
             </form>
-          </FormProvider>
-        )}
-      </Container>
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.lg" height="fit-content" p="0">
-            <FormFooter
-              status={
-                <Box display="flex" gap="s8">
-                  <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
-                    {t['depositProductPressCompletetosaveform']}
-                  </Text>
-                </Box>
-              }
-              mainButtonLabel={t['complete']}
-              mainButtonHandler={() => submitForm()}
-            />
-          </Container>
-        </Box>
-      </Box>
-    </>
+          )}
+        </FormLayout.Form>
+      </FormLayout.Content>
+
+      <FormLayout.Footer
+        status={
+          <Box display="flex" gap="s8">
+            <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
+              {t['depositProductPressCompletetosaveform']}
+            </Text>
+          </Box>
+        }
+        mainButtonLabel={t['complete']}
+        mainButtonHandler={() => submitForm()}
+      />
+    </FormLayout>
   );
 };
 
