@@ -1,6 +1,7 @@
 import { Box, Text } from '@myra-ui';
 
 import {
+  AlternativeChannelStatus,
   MemberTransferState,
   PayrollStatus,
   RequestStatus,
@@ -10,7 +11,12 @@ import {
 export const ApprovalStatusItem = ({
   status,
 }: {
-  status?: RequestStatus | MemberTransferState | PayrollStatus | StatusOfTask;
+  status?:
+    | RequestStatus
+    | MemberTransferState
+    | PayrollStatus
+    | StatusOfTask
+    | AlternativeChannelStatus;
 }) => (
   /* eslint-disable no-nested-ternary */
   <Box display="flex" alignItems="center" gap="s8">

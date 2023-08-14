@@ -3,13 +3,14 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 
+import { Box, DetailCardContent, Grid, Modal, SwitchTabs } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import {
   AlternativeChannelServiceType,
   AlternativeChannelStatus,
   useGetAlternativeChannelListQuery,
 } from '@coop/cbs/data-access';
-import { Column, Table } from '@myra-ui/table';
-import { Box, Modal, DetailCardContent, Grid, SwitchTabs } from '@myra-ui';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 interface ACTableProps {
