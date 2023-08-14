@@ -1,17 +1,16 @@
 import { ReactElement } from 'react';
-
-import { Box } from '@myra-ui';
+import { AlternativeChannelList } from '@bpm/feature-requests';
 
 import { BPMLayout, BPMRequestsSidebarLayout } from '@coop/bpm/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingQuickTransferList = () => <Box> BPM</Box>;
+const AlternativeChannelListPage = () => <AlternativeChannelList />;
 
-AccountingQuickTransferList.getLayout = function getLayout(page: ReactElement) {
+AlternativeChannelListPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <BPMLayout>
       <BPMRequestsSidebarLayout>{page}</BPMRequestsSidebarLayout>
     </BPMLayout>
   );
 };
-export default AccountingQuickTransferList;
+export default AlternativeChannelListPage;
