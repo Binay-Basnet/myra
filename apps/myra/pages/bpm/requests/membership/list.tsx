@@ -1,17 +1,16 @@
 import { ReactElement } from 'react';
 
-import { Box } from '@myra-ui';
-
 import { BPMLayout, BPMRequestsSidebarLayout } from '@coop/bpm/ui-layouts';
+import { MemberRequestPage } from '@coop/cbs/requests/lists';
 
 // TODO ( Update this page when design arrives )
-const AccountingQuickTransferList = () => <Box> BPM</Box>;
+const MembershipList = () => <MemberRequestPage />;
 
-AccountingQuickTransferList.getLayout = function getLayout(page: ReactElement) {
+MembershipList.getLayout = function getLayout(page: ReactElement) {
   return (
     <BPMLayout>
       <BPMRequestsSidebarLayout>{page}</BPMRequestsSidebarLayout>
     </BPMLayout>
   );
 };
-export default AccountingQuickTransferList;
+export default MembershipList;
