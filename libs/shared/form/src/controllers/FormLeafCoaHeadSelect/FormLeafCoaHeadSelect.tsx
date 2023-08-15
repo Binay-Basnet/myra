@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce';
 
 import { SelectOption, SelectProps } from '@myra-ui';
 
-import { useListLeafCoaHeadsQuery } from '@coop/cbs/data-access';
+import { CoaAccountClass, useListLeafCoaHeadsQuery } from '@coop/cbs/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 import FormSelect from '../FormSelect/FormSelect';
@@ -13,9 +13,15 @@ interface IFormLeafCoaHeadSelectProps extends SelectProps {
   name: string;
   label?: string;
   onChangeAction?: (newValue: MultiValue<SelectOption> | SingleValue<SelectOption>) => void;
+  coaClass?: CoaAccountClass[];
 }
 
-export const FormLeafCoaHeadSelect = ({ name, label, ...rest }: IFormLeafCoaHeadSelectProps) => {
+export const FormLeafCoaHeadSelect = ({
+  name,
+  label,
+  coaClass,
+  ...rest
+}: IFormLeafCoaHeadSelectProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const { data: leafCoaHeadsListData, isFetching } = useListLeafCoaHeadsQuery({
@@ -29,6 +35,13 @@ export const FormLeafCoaHeadSelect = ({ name, label, ...rest }: IFormLeafCoaHead
     },
     filter: {
       query: searchQuery,
+      orConditions: coaClass?.length
+        ? [
+            {
+              andConditions: [{ column: 'accountclass', comparator: 'IN', value: coaClass }],
+            },
+          ]
+        : [],
     },
   });
 
