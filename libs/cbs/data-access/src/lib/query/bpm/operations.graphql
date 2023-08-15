@@ -67,3 +67,30 @@ query getOperationsSavingProductUpdateList($filter: Filter, $pagination: Paginat
     }
   }
 }
+
+query getOperationsLoanProductUpdateList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      loanProduct {
+        listLoanProductUpdateHistory(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              productCode
+              productId
+              productName
+              productType
+              date
+              updateType
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
