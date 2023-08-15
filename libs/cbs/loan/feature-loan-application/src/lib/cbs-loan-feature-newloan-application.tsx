@@ -2,14 +2,19 @@ import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import { omit } from 'lodash';
 
 import { Alert, asyncToast, Box, MemberCard, Text } from '@myra-ui';
+import { getNextDate } from '@myra-ui/date-picker';
 
 import {
+  InstallmentFrequency,
   InterestAuthority,
   LoanAccountInput,
   NatureOfDepositProduct,
+  useAppSelector,
+  useGetEndOfDayDateDataQuery,
   useGetIndividualMemberDetails,
   useGetLoanApplicationDetailsQuery,
   useGetLoanProductSubTypeQuery,
@@ -266,6 +271,35 @@ export const NewLoanApplication = () => {
     resetField('productSubType');
     resetField('productId');
   }, [loanLinkedData, resetField]);
+
+  const installmentFrequency = watch('installmentFrequency');
+
+  const dateType = useAppSelector((state) => state.auth.preference?.date);
+  const { data } = useGetEndOfDayDateDataQuery();
+
+  const instMap = {
+    [InstallmentFrequency.Daily]: 'day',
+    [InstallmentFrequency.HalfYearly]: 'half-yearly',
+    [InstallmentFrequency.Monthly]: 'month',
+    [InstallmentFrequency.Quarterly]: 'quarterly',
+    [InstallmentFrequency.Weekly]: 'week',
+    [InstallmentFrequency.Yearly]: 'year',
+  } as const;
+
+  useEffect(() => {
+    if (data?.transaction?.endOfDayDate?.value?.en && dateType && installmentFrequency)
+      setValue('installmentBeginDate', {
+        local: '',
+        np: '',
+        en: dayjs(
+          getNextDate(
+            instMap[installmentFrequency],
+            dateType,
+            new Date(data?.transaction.endOfDayDate.value.en || '')
+          )
+        ).format('YYYY-MM-DD'),
+      });
+  }, [data?.transaction.endOfDayDate.value.en, dateType, instMap, installmentFrequency, setValue]);
 
   return (
     <FormLayout methods={methods} hasSidebar={!!memberId}>
