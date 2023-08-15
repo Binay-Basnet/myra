@@ -10,23 +10,23 @@ const updateOptions = [
   },
   {
     label: 'Loan Processing Charge Update',
-    value: LoanUpdateType?.ProductPremiumUpdate,
+    value: LoanUpdateType?.LoanProcessingChargeUpdate,
   },
   {
     label: 'Loan Limit Update',
-    value: LoanUpdateType?.ProductPremiumUpdate,
+    value: LoanUpdateType?.LoanLimitUpdate,
   },
   {
     label: 'Account Premium Update',
-    value: LoanUpdateType?.ProductPremiumUpdate,
+    value: LoanUpdateType?.AccountPremiumUpdate,
   },
   {
     label: 'Product Tenure Update ',
-    value: LoanUpdateType?.ProductPremiumUpdate,
+    value: LoanUpdateType?.ProductTenureUpdate,
   },
   {
     label: 'Penalty Update',
-    value: LoanUpdateType?.ProductPremiumUpdate,
+    value: LoanUpdateType?.PenaltyUpdate,
   },
 ];
 
@@ -45,7 +45,7 @@ export const LoanProductUpdateBasicDetails = () => {
       (previousValue, currentValue) => [
         ...previousValue,
         {
-          label: currentValue?.node?.productName as string,
+          label: `${currentValue?.node?.productName}`,
           value: currentValue?.node?.id as string,
         },
       ],

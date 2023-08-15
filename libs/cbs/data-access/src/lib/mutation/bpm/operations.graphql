@@ -46,3 +46,22 @@ mutation setBPMOperationsSavingProductUpdate(
     }
   }
 }
+
+mutation setBPMOperationsLoanProductUpdate(
+  $updateType: LoanUpdateType!
+  $productId: ID!
+  $data: LoanUpdateData!
+) {
+  bpm {
+    operations {
+      loanProduct {
+        updateLoanProduct(updateType: $updateType, productId: $productId, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
