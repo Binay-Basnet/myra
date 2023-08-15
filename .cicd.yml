@@ -50,7 +50,7 @@ volumes:
   - name: env-file-neosys
     host:
       path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.neosys
-  - name: env-file-neosys
+  - name: env-file-dhadda
     host:
       path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.dhadda
   - name: ebanking-app
