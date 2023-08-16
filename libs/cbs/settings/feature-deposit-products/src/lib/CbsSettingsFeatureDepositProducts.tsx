@@ -139,7 +139,9 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
       {
         header: t['depositInterest'],
         accessorFn: (row) => row?.node?.interest,
-        cell: (props) => <span>{props?.row?.original?.node?.interest} %</span>,
+        cell: (props) => (
+          <span>{Number(props?.row?.original?.node?.interest || 0).toFixed(2)} %</span>
+        ),
       },
 
       {

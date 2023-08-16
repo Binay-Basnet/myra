@@ -84,7 +84,9 @@ export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => {
         <DetailCardContent
           title="Interest Rate"
           subtitle={
-            data?.accountType === NatureOfDepositProduct.Current ? null : `${data?.interestRate} %`
+            data?.accountType === NatureOfDepositProduct.Current
+              ? null
+              : `${Number(data?.interestRate || 0)?.toFixed(2)} %`
           }
         />
         <DetailCardContent title="Guarantee Amount" subtitle={data?.guaranteedAmount ?? '0'} />

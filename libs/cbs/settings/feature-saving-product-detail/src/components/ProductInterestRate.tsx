@@ -44,7 +44,11 @@ export const ProductInterestRate = ({
 
           <li>
             Default Rate: &nbsp;
-            <b>{interestRate?.defaultRate !== null ? `${interestRate?.defaultRate} %` : 'N/A'}</b>
+            <b>
+              {interestRate?.defaultRate !== null
+                ? `${Number(interestRate?.defaultRate || 0)?.toFixed(2)} %`
+                : 'N/A'}
+            </b>
           </li>
         </ul>
       </Box>
