@@ -1572,6 +1572,13 @@ export type AppointmentTermInput = {
   title: Scalars['String'];
 };
 
+export const ApprovalStatusType = {
+  Approved: 'APPROVED',
+  Declined: 'DECLINED',
+  Pending: 'PENDING',
+} as const;
+
+export type ApprovalStatusType = typeof ApprovalStatusType[keyof typeof ApprovalStatusType];
 export type ApproveIbtResult = {
   error?: Maybe<MutationError>;
   record?: Maybe<JournalVoucherRecord>;
@@ -1584,6 +1591,17 @@ export type ApproveOrDeclineMutation = {
 
 export type ApproveOrDeclineMutationMembershipRequestArgs = {
   data?: InputMaybe<RequestApproveOrDeclineInput>;
+};
+
+export const ApproveOrNot = {
+  Approved: 'APPROVED',
+  Declined: 'DECLINED',
+} as const;
+
+export type ApproveOrNot = typeof ApproveOrNot[keyof typeof ApproveOrNot];
+export type ApprovedWithError = {
+  approvedOrNot: Scalars['Boolean'];
+  error?: Maybe<MutationError>;
 };
 
 export const Arrange = {
@@ -1983,6 +2001,43 @@ export type BpmMeetingResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type BpmMembershipRequestConnection = {
+  edges?: Maybe<Array<Maybe<BpmMembershipRequestEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type BpmMembershipRequestEdge = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<BpmMembershipRequestListed>;
+};
+
+export type BpmMembershipRequestListed = {
+  approvalStatus?: Maybe<ApprovalStatusType>;
+  contactNo?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  requestedDate?: Maybe<Scalars['Localized']>;
+};
+
+export type BpmMembershipRequestMutation = {
+  approveMembershipRequest: ApprovedWithError;
+};
+
+export type BpmMembershipRequestMutationApproveMembershipRequestArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  status?: InputMaybe<ApproveOrNot>;
+};
+
+export type BpmMembershipRequestQuery = {
+  listMembershipRequest: BpmMembershipRequestConnection;
+};
+
+export type BpmMembershipRequestQueryListMembershipRequestArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type BpmMinorConnection = {
   edges?: Maybe<Array<Maybe<BpmMinorNode>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -2051,6 +2106,7 @@ export type BpmMinorResult = {
 export type BpmMutation = {
   operations: BpmOperationsMutation;
   programs: BpmProgramsMutation;
+  requests: BpmRequestsMutation;
   task: BpmTaskMutation;
 };
 
@@ -2151,7 +2207,16 @@ export type BpmProgramsQueryMeetingDetailArgs = {
 export type BpmQuery = {
   operations: BpmOperationsQuery;
   programs: BpmProgramsQuery;
+  requests: BpmRequestsQuery;
   task: BpmTaskQuery;
+};
+
+export type BpmRequestsMutation = {
+  membershipRequest: BpmMembershipRequestMutation;
+};
+
+export type BpmRequestsQuery = {
+  membershipRequest: BpmMembershipRequestQuery;
 };
 
 export type BpmsvConnection = {
@@ -3147,6 +3212,28 @@ export type CoaView = {
   openingBalance: Scalars['Float'];
   transactionAllowed?: Maybe<CoaTypeOfTransaction>;
   under?: Maybe<Scalars['ID']>;
+};
+
+export type CashBack = {
+  cashBackAmount?: InputMaybe<Scalars['String']>;
+  cashBackPercent?: InputMaybe<Scalars['String']>;
+  maxRange: Scalars['String'];
+  minRange: Scalars['String'];
+  serviceCharge?: InputMaybe<Scalars['String']>;
+};
+
+export type CashBackInput = {
+  cashBackParams: Array<CashBack>;
+  slug: Scalars['String'];
+};
+
+export type CashBackLedgerInput = {
+  coaHead: Scalars['String'];
+};
+
+export type CashBackResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type CashDepositData = {
@@ -4571,9 +4658,11 @@ export type DayBookReportData = {
   openingBalance?: Maybe<Scalars['String']>;
   payments?: Maybe<Array<Maybe<DayBookDataValue>>>;
   receipts?: Maybe<Array<Maybe<DayBookDataValue>>>;
+  tellerBalance?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['String']>;
   totalPayment?: Maybe<Scalars['String']>;
   totalReceipts?: Maybe<Scalars['String']>;
+  vaultBalance?: Maybe<Scalars['String']>;
 };
 
 export type DayBookReportFilter = {
@@ -6314,6 +6403,10 @@ export type EbankingReportResult = {
   regDate?: Maybe<Scalars['Localized']>;
   registeredBy?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
+};
+
+export type EbankingSettingsMutation = {
+  utility?: Maybe<UtilityMutation>;
 };
 
 export type EbankingTransaction = {
@@ -16280,6 +16373,7 @@ export type MembershipPaymentRecord = {
   depositedBy?: Maybe<DepositedBy>;
   depositedOther?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  memberCode?: Maybe<Scalars['String']>;
   memberId: Scalars['ID'];
   memberName?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<DepositPaymentType>;
@@ -18146,6 +18240,7 @@ export const Resource = {
   SettingsAlternativeChannels: 'SETTINGS_ALTERNATIVE_CHANNELS',
   SettingsAuditLog: 'SETTINGS_AUDIT_LOG',
   SettingsBank: 'SETTINGS_BANK',
+  SettingsCashbackCoaHead: 'SETTINGS_CASHBACK_COA_HEAD',
   SettingsCoa: 'SETTINGS_COA',
   SettingsCoaLedgerTransfer: 'SETTINGS_COA_LEDGER_TRANSFER',
   SettingsCodeManagement: 'SETTINGS_CODE_MANAGEMENT',
@@ -19639,6 +19734,7 @@ export type SettingTagLedgersListEdge = {
 export type SettingsMutation = {
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsMutation>;
   declaration: DeclarationMutation;
+  ebanking?: Maybe<EbankingSettingsMutation>;
   form?: Maybe<FormSettingMutation>;
   general?: Maybe<GeneralSettingsMutation>;
   myraUser?: Maybe<MyraUserMutation>;
@@ -19676,6 +19772,8 @@ export type SetupMutation = {
   eodException?: Maybe<Scalars['Boolean']>;
   eodSeed?: Maybe<Scalars['String']>;
   migration?: Maybe<DataMigration>;
+  utilityCashBackLedger?: Maybe<Scalars['Boolean']>;
+  utilityServiceChargeLedger?: Maybe<Scalars['Boolean']>;
 };
 
 export type SetupMutationEodActionArgs = {
@@ -19688,6 +19786,14 @@ export type SetupMutationEodExceptionArgs = {
 
 export type SetupMutationEodSeedArgs = {
   date: Scalars['Localized'];
+};
+
+export type SetupMutationUtilityCashBackLedgerArgs = {
+  value: CashBackLedgerInput;
+};
+
+export type SetupMutationUtilityServiceChargeLedgerArgs = {
+  value: CashBackLedgerInput;
 };
 
 export type SetupQuery = {
@@ -21156,6 +21262,7 @@ export type TransactionMutationStrTransactionActionArgs = {
 
 export type TransactionMutationSwitchTransactionYearEndFlagArgs = {
   journalId: Scalars['ID'];
+  yearEndSettlement?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type TransactionMutationTellerTransferArgs = {
@@ -21670,6 +21777,14 @@ export const UserType = {
 } as const;
 
 export type UserType = typeof UserType[keyof typeof UserType];
+export type UtilityMutation = {
+  addCashBack: CashBackResult;
+};
+
+export type UtilityMutationAddCashBackArgs = {
+  input: CashBackInput;
+};
+
 export type ValidationError = {
   code: Scalars['Int'];
   message: Scalars['InvalidData'];
@@ -24962,6 +25077,17 @@ export type PayMembershipMutation = {
           | MutationError_ServerError_Fragment
           | MutationError_ValidationError_Fragment
           | null;
+        record?: {
+          id: string;
+          memberId: string;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          paymentMode?: DepositPaymentType | null;
+          depositedBy?: DepositedBy | null;
+          memberCode?: string | null;
+          depositedOther?: string | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -27914,6 +28040,7 @@ export type YearEndSettlementMutation = {
 
 export type SwitchTransactionYearEndFlagMutationVariables = Exact<{
   journalId: Scalars['ID'];
+  yearEndSettlement?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type SwitchTransactionYearEndFlagMutation = {
@@ -30135,6 +30262,36 @@ export type GetOperationsSavingProductUpdateListQuery = {
     operations: {
       savingProduct: {
         listSavingProductUpdateHistory: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node?: {
+              id: string;
+              productCode: string;
+              productId: string;
+              productName: string;
+              productType?: string | null;
+              date?: Record<'local' | 'en' | 'np', string> | null;
+              updateType?: string | null;
+            } | null;
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetOperationsLoanProductUpdateListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetOperationsLoanProductUpdateListQuery = {
+  bpm: {
+    operations: {
+      loanProduct: {
+        listLoanProductUpdateHistory: {
           totalCount: number;
           edges?: Array<{
             cursor: string;
@@ -47623,6 +47780,17 @@ export const PayMembershipDocument = `
         error {
           ...MutationError
         }
+        record {
+          id
+          memberId
+          memberName
+          date
+          amount
+          paymentMode
+          depositedBy
+          memberCode
+          depositedOther
+        }
         recordId
       }
     }
@@ -51926,9 +52094,12 @@ export const useYearEndSettlementMutation = <TError = unknown, TContext = unknow
     options
   );
 export const SwitchTransactionYearEndFlagDocument = `
-    mutation switchTransactionYearEndFlag($journalId: ID!) {
+    mutation switchTransactionYearEndFlag($journalId: ID!, $yearEndSettlement: Boolean) {
   transaction {
-    switchTransactionYearEndFlag(journalId: $journalId) {
+    switchTransactionYearEndFlag(
+      journalId: $journalId
+      yearEndSettlement: $yearEndSettlement
+    ) {
       recordId
       error {
         ...MutationError
@@ -54945,6 +55116,51 @@ export const useGetOperationsSavingProductUpdateListQuery = <
       GetOperationsSavingProductUpdateListQuery,
       GetOperationsSavingProductUpdateListQueryVariables
     >(GetOperationsSavingProductUpdateListDocument).bind(null, variables),
+    options
+  );
+export const GetOperationsLoanProductUpdateListDocument = `
+    query getOperationsLoanProductUpdateList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      loanProduct {
+        listLoanProductUpdateHistory(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              productCode
+              productId
+              productName
+              productType
+              date
+              updateType
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetOperationsLoanProductUpdateListQuery = <
+  TData = GetOperationsLoanProductUpdateListQuery,
+  TError = unknown
+>(
+  variables?: GetOperationsLoanProductUpdateListQueryVariables,
+  options?: UseQueryOptions<GetOperationsLoanProductUpdateListQuery, TError, TData>
+) =>
+  useQuery<GetOperationsLoanProductUpdateListQuery, TError, TData>(
+    variables === undefined
+      ? ['getOperationsLoanProductUpdateList']
+      : ['getOperationsLoanProductUpdateList', variables],
+    useAxios<
+      GetOperationsLoanProductUpdateListQuery,
+      GetOperationsLoanProductUpdateListQueryVariables
+    >(GetOperationsLoanProductUpdateListDocument).bind(null, variables),
     options
   );
 export const GetLoanCollateralListDocument = `

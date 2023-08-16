@@ -7,3 +7,16 @@ mutation setDefaultAccount($accountId: String!) {
     }
   }
 }
+
+mutation savingExcelExport($data: EbankingSavingFilter!) {
+  eBanking {
+    account {
+      savingExcelExport(data: $data) {
+        url
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

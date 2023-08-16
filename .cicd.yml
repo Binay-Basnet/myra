@@ -20,6 +20,8 @@ steps:
         path: /drone/src/apps/ebanking/.env
       - name: env-file-neosys
         path: /drone/src/apps/neosys-admin/.env
+      - name: env-file-dhadda
+        path: /drone/src/apps/dhadda-migration/.env
       - name: ebanking-app
         path: /drone/src/apps/ebanking/dist
       - name: myra-app
@@ -48,6 +50,9 @@ volumes:
   - name: env-file-neosys
     host:
       path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.neosys
+  - name: env-file-dhadda
+    host:
+      path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.dhadda
   - name: ebanking-app
     host:
       path: /build-cache/myra-ui-${DRONE_BRANCH}/ebanking-app
@@ -273,27 +278,18 @@ steps:
       - docker compose -f docker-compose.${DRONE_BRANCH}.yaml build dhadda-migration
       - docker compose -f docker-compose.${DRONE_BRANCH}.yaml push dhadda-migration
     volumes:
-      - name: env file
-        path: /drone/src/apps/dhadda-migration/.env
-      - name: env file
-        path: /drone/src/apps/.env
       - name: docker-sock
         path: /var/run/docker.sock
       - name: dhadda-migration-app
         path: /drone/src/apps/dhadda-migration/dist
 
 volumes:
-  - name: env file
-    host:
-      path: /build-cache/dhadda-migration/fe/.env
   - name: dhadda-migration-app
     host:
       path: /build-cache/myra-ui-${DRONE_BRANCH}/dhadda-migration-app
   - name: docker-sock
     host:
       path: /var/run/docker.sock
-  - name: dhadda-migration-app
-    temp: {}
 
 depends_on:
   - Build all the apps

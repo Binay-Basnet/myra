@@ -90,6 +90,13 @@ export const UpdateChargesModal = ({ isOpen, onClose, methods }: IUpdateChargesM
     });
   };
 
+  const payload = methods.watch('payload') as ServiceType[];
+
+  const isSaveButtonDisabled = useMemo(
+    () => payload?.findIndex((charge) => !charge?.ledgerName) !== -1,
+    [payload]
+  );
+
   return (
     <Modal
       title="Update Loan Processing Charges"
@@ -98,6 +105,7 @@ export const UpdateChargesModal = ({ isOpen, onClose, methods }: IUpdateChargesM
       primaryButtonLabel="Save Changes"
       width="3xl"
       primaryButtonHandler={handleSave}
+      isDisabled={isSaveButtonDisabled}
     >
       <FormProvider {...methods}>
         <form>
