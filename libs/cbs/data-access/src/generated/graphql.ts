@@ -16275,7 +16275,14 @@ export type MembershipPaymentInput = {
 };
 
 export type MembershipPaymentRecord = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  depositedBy?: Maybe<DepositedBy>;
+  depositedOther?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  memberId: Scalars['ID'];
+  memberName?: Maybe<Scalars['Localized']>;
+  paymentMode?: Maybe<DepositPaymentType>;
 };
 
 export type MembershipPaymentResult = {
@@ -23255,6 +23262,31 @@ export type SetBpmOperationsLoanProductUpdateMutation = {
   };
 };
 
+export type SetUpdateCollateralMutationVariables = Exact<{
+  loanAccountId: Scalars['ID'];
+  updateType: CollateralUpdateType;
+  data: BpmCollateralData;
+}>;
+
+export type SetUpdateCollateralMutation = {
+  bpm: {
+    operations: {
+      loanCollateral: {
+        updateCollateral?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      };
+    };
+  };
+};
+
 export type SetBpmMeetingsMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: BpmMeetingInput;
@@ -30114,6 +30146,38 @@ export type GetOperationsSavingProductUpdateListQuery = {
               productType?: string | null;
               date?: Record<'local' | 'en' | 'np', string> | null;
               updateType?: string | null;
+            } | null;
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetLoanCollateralListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetLoanCollateralListQuery = {
+  bpm: {
+    operations: {
+      loanCollateral: {
+        listCollateral: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node?: {
+              id: string;
+              date?: Record<'local' | 'en' | 'np', string> | null;
+              memberId?: string | null;
+              code?: string | null;
+              name?: string | null;
+              accountName?: string | null;
+              collateralType?: string | null;
+              collateralName?: string | null;
+              updateType?: CollateralUpdateType | null;
             } | null;
           } | null> | null;
           pageInfo?: PaginationFragment | null;
@@ -45222,6 +45286,41 @@ export const useSetBpmOperationsLoanProductUpdateMutation = <TError = unknown, T
     >(SetBpmOperationsLoanProductUpdateDocument),
     options
   );
+export const SetUpdateCollateralDocument = `
+    mutation setUpdateCollateral($loanAccountId: ID!, $updateType: CollateralUpdateType!, $data: BPMCollateralData!) {
+  bpm {
+    operations {
+      loanCollateral {
+        updateCollateral(
+          loanAccountId: $loanAccountId
+          updateType: $updateType
+          data: $data
+        ) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetUpdateCollateralMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetUpdateCollateralMutation,
+    TError,
+    SetUpdateCollateralMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetUpdateCollateralMutation, TError, SetUpdateCollateralMutationVariables, TContext>(
+    ['setUpdateCollateral'],
+    useAxios<SetUpdateCollateralMutation, SetUpdateCollateralMutationVariables>(
+      SetUpdateCollateralDocument
+    ),
+    options
+  );
 export const SetBpmMeetingsDocument = `
     mutation setBPMMeetings($id: ID, $data: BPMMeetingInput!) {
   bpm {
@@ -54846,6 +54945,47 @@ export const useGetOperationsSavingProductUpdateListQuery = <
       GetOperationsSavingProductUpdateListQuery,
       GetOperationsSavingProductUpdateListQueryVariables
     >(GetOperationsSavingProductUpdateListDocument).bind(null, variables),
+    options
+  );
+export const GetLoanCollateralListDocument = `
+    query getLoanCollateralList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      loanCollateral {
+        listCollateral(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              date
+              memberId
+              code
+              name
+              accountName
+              collateralType
+              collateralName
+              updateType
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetLoanCollateralListQuery = <TData = GetLoanCollateralListQuery, TError = unknown>(
+  variables?: GetLoanCollateralListQueryVariables,
+  options?: UseQueryOptions<GetLoanCollateralListQuery, TError, TData>
+) =>
+  useQuery<GetLoanCollateralListQuery, TError, TData>(
+    variables === undefined ? ['getLoanCollateralList'] : ['getLoanCollateralList', variables],
+    useAxios<GetLoanCollateralListQuery, GetLoanCollateralListQueryVariables>(
+      GetLoanCollateralListDocument
+    ).bind(null, variables),
     options
   );
 export const GetBpmEmployeeDetailsDocument = `
