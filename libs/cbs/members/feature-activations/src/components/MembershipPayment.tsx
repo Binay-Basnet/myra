@@ -441,7 +441,7 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
                 subTitle:
                   'Membership Payment successfull. Details of the transaction is listed below.',
                 meta: {
-                  memberId: result?.memberId,
+                  memberId: result?.memberCode,
                   member: result?.memberName?.local,
                 },
                 dublicate: true,

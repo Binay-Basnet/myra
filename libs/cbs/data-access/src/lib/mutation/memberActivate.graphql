@@ -13,6 +13,7 @@ mutation payMembership($data: MembershipPaymentInput, $memberId: ID!) {
           amount
           paymentMode
           depositedBy
+          memberCode
           depositedOther
         }
         recordId

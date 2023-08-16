@@ -3149,6 +3149,28 @@ export type CoaView = {
   under?: Maybe<Scalars['ID']>;
 };
 
+export type CashBack = {
+  cashBackAmount?: InputMaybe<Scalars['String']>;
+  cashBackPercent?: InputMaybe<Scalars['String']>;
+  maxRange: Scalars['String'];
+  minRange: Scalars['String'];
+  serviceCharge?: InputMaybe<Scalars['String']>;
+};
+
+export type CashBackInput = {
+  cashBackParams: Array<CashBack>;
+  slug: Scalars['String'];
+};
+
+export type CashBackLedgerInput = {
+  coaHead: Scalars['String'];
+};
+
+export type CashBackResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type CashDepositData = {
   cash: Scalars['String'];
   denominations?: InputMaybe<Array<InputMaybe<Denomination>>>;
@@ -6314,6 +6336,10 @@ export type EbankingReportResult = {
   regDate?: Maybe<Scalars['Localized']>;
   registeredBy?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
+};
+
+export type EbankingSettingsMutation = {
+  utility?: Maybe<UtilityMutation>;
 };
 
 export type EbankingTransaction = {
@@ -16280,6 +16306,7 @@ export type MembershipPaymentRecord = {
   depositedBy?: Maybe<DepositedBy>;
   depositedOther?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  memberCode?: Maybe<Scalars['String']>;
   memberId: Scalars['ID'];
   memberName?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<DepositPaymentType>;
@@ -18146,6 +18173,7 @@ export const Resource = {
   SettingsAlternativeChannels: 'SETTINGS_ALTERNATIVE_CHANNELS',
   SettingsAuditLog: 'SETTINGS_AUDIT_LOG',
   SettingsBank: 'SETTINGS_BANK',
+  SettingsCashbackCoaHead: 'SETTINGS_CASHBACK_COA_HEAD',
   SettingsCoa: 'SETTINGS_COA',
   SettingsCoaLedgerTransfer: 'SETTINGS_COA_LEDGER_TRANSFER',
   SettingsCodeManagement: 'SETTINGS_CODE_MANAGEMENT',
@@ -19639,6 +19667,7 @@ export type SettingTagLedgersListEdge = {
 export type SettingsMutation = {
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsMutation>;
   declaration: DeclarationMutation;
+  ebanking?: Maybe<EbankingSettingsMutation>;
   form?: Maybe<FormSettingMutation>;
   general?: Maybe<GeneralSettingsMutation>;
   myraUser?: Maybe<MyraUserMutation>;
@@ -19676,6 +19705,8 @@ export type SetupMutation = {
   eodException?: Maybe<Scalars['Boolean']>;
   eodSeed?: Maybe<Scalars['String']>;
   migration?: Maybe<DataMigration>;
+  utilityCashBackLedger?: Maybe<Scalars['Boolean']>;
+  utilityServiceChargeLedger?: Maybe<Scalars['Boolean']>;
 };
 
 export type SetupMutationEodActionArgs = {
@@ -19688,6 +19719,14 @@ export type SetupMutationEodExceptionArgs = {
 
 export type SetupMutationEodSeedArgs = {
   date: Scalars['Localized'];
+};
+
+export type SetupMutationUtilityCashBackLedgerArgs = {
+  value: CashBackLedgerInput;
+};
+
+export type SetupMutationUtilityServiceChargeLedgerArgs = {
+  value: CashBackLedgerInput;
 };
 
 export type SetupQuery = {
@@ -21670,6 +21709,14 @@ export const UserType = {
 } as const;
 
 export type UserType = typeof UserType[keyof typeof UserType];
+export type UtilityMutation = {
+  addCashBack: CashBackResult;
+};
+
+export type UtilityMutationAddCashBackArgs = {
+  input: CashBackInput;
+};
+
 export type ValidationError = {
   code: Scalars['Int'];
   message: Scalars['InvalidData'];
@@ -24945,6 +24992,7 @@ export type PayMembershipMutation = {
           amount?: string | null;
           paymentMode?: DepositPaymentType | null;
           depositedBy?: DepositedBy | null;
+          memberCode?: string | null;
           depositedOther?: string | null;
         } | null;
       } | null;
@@ -47579,6 +47627,7 @@ export const PayMembershipDocument = `
           amount
           paymentMode
           depositedBy
+          memberCode
           depositedOther
         }
         recordId
