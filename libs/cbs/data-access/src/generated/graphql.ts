@@ -30140,6 +30140,36 @@ export type GetOperationsSavingProductUpdateListQuery = {
   };
 };
 
+export type GetOperationsLoanProductUpdateListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetOperationsLoanProductUpdateListQuery = {
+  bpm: {
+    operations: {
+      loanProduct: {
+        listLoanProductUpdateHistory: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node?: {
+              id: string;
+              productCode: string;
+              productId: string;
+              productName: string;
+              productType?: string | null;
+              date?: Record<'local' | 'en' | 'np', string> | null;
+              updateType?: string | null;
+            } | null;
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetBpmEmployeeDetailsQueryVariables = Exact<{
   employeeId: Scalars['ID'];
 }>;
@@ -54873,6 +54903,51 @@ export const useGetOperationsSavingProductUpdateListQuery = <
       GetOperationsSavingProductUpdateListQuery,
       GetOperationsSavingProductUpdateListQueryVariables
     >(GetOperationsSavingProductUpdateListDocument).bind(null, variables),
+    options
+  );
+export const GetOperationsLoanProductUpdateListDocument = `
+    query getOperationsLoanProductUpdateList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      loanProduct {
+        listLoanProductUpdateHistory(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              productCode
+              productId
+              productName
+              productType
+              date
+              updateType
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetOperationsLoanProductUpdateListQuery = <
+  TData = GetOperationsLoanProductUpdateListQuery,
+  TError = unknown
+>(
+  variables?: GetOperationsLoanProductUpdateListQueryVariables,
+  options?: UseQueryOptions<GetOperationsLoanProductUpdateListQuery, TError, TData>
+) =>
+  useQuery<GetOperationsLoanProductUpdateListQuery, TError, TData>(
+    variables === undefined
+      ? ['getOperationsLoanProductUpdateList']
+      : ['getOperationsLoanProductUpdateList', variables],
+    useAxios<
+      GetOperationsLoanProductUpdateListQuery,
+      GetOperationsLoanProductUpdateListQueryVariables
+    >(GetOperationsLoanProductUpdateListDocument).bind(null, variables),
     options
   );
 export const GetBpmEmployeeDetailsDocument = `

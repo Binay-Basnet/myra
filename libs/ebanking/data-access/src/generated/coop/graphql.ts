@@ -97,6 +97,40 @@ export const useSetDefaultAccountMutation = <TError = unknown, TContext = unknow
     ),
     options
   );
+export const SavingExcelExportDocument = `
+    mutation savingExcelExport($data: EbankingSavingFilter!) {
+  eBanking {
+    account {
+      savingExcelExport(data: $data) {
+        url
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSavingExcelExportMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    Types.SavingExcelExportMutation,
+    TError,
+    Types.SavingExcelExportMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    Types.SavingExcelExportMutation,
+    TError,
+    Types.SavingExcelExportMutationVariables,
+    TContext
+  >(
+    ['savingExcelExport'],
+    useAxios<Types.SavingExcelExportMutation, Types.SavingExcelExportMutationVariables>(
+      SavingExcelExportDocument
+    ),
+    options
+  );
 export const ChangeCoopPinDocument = `
     mutation changeCoopPin($oldPin: String!, $newPin: String!) {
   eBanking(source: EBANKING) {

@@ -508,7 +508,12 @@ export type DormantSetupFormState = {
 };
 
 export type EBankingAccountMutation = {
+  savingExcelExport?: Maybe<EbankingSavingStatementExportData>;
   setDefaultAccount?: Maybe<EbankingSetDefaultAccountResult>;
+};
+
+export type EBankingAccountMutationSavingExcelExportArgs = {
+  data: EbankingSavingFilter;
 };
 
 export type EBankingAccountMutationSetDefaultAccountArgs = {
@@ -1138,6 +1143,17 @@ export type EbankingPasswordResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type EbankingSavingFilter = {
+  accountId: Scalars['ID'];
+  memberId?: InputMaybe<Scalars['ID']>;
+  period: LocalizedDateFilter;
+};
+
+export type EbankingSavingStatementExportData = {
+  error?: Maybe<MutationError>;
+  url?: Maybe<Scalars['String']>;
+};
+
 export type EbankingSendMoneyInput = {
   amount?: InputMaybe<Scalars['String']>;
   purposeOfTransaction?: InputMaybe<PurposeOfTransaction>;
@@ -1702,6 +1718,11 @@ export type LoanSettingsProductTypeData = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   productType?: Maybe<Scalars['String']>;
+};
+
+export type LocalizedDateFilter = {
+  from: Scalars['Localized'];
+  to: Scalars['Localized'];
 };
 
 export type LocationCoordinate = {
@@ -2462,6 +2483,31 @@ export type SetDefaultAccountMutationVariables = Exact<{
 
 export type SetDefaultAccountMutation = {
   eBanking: { account?: { setDefaultAccount?: { recordId?: string | null } | null } | null };
+};
+
+export type SavingExcelExportMutationVariables = Exact<{
+  data: EbankingSavingFilter;
+}>;
+
+export type SavingExcelExportMutation = {
+  eBanking: {
+    account?: {
+      savingExcelExport?: {
+        url?: string | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
 };
 
 export type ChangeCoopPinMutationVariables = Exact<{

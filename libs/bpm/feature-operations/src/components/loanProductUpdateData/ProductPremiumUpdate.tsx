@@ -36,7 +36,7 @@ export const LoanProductPremiumUpdate = () => {
         </Alert>
       </GridItem>
       <FormInput
-        name="rate"
+        name="productPremium.rate"
         type="number"
         label="Update Account Premium By"
         textAlign="right"
@@ -48,7 +48,7 @@ export const LoanProductPremiumUpdate = () => {
       />
 
       <FormDatePicker
-        name="effectiveDate"
+        name="productPremium.effectiveDate"
         label="Effective Date"
         minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
       />
