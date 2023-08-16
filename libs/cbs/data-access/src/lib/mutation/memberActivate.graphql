@@ -5,6 +5,16 @@ mutation payMembership($data: MembershipPaymentInput, $memberId: ID!) {
         error {
           ...MutationError
         }
+        record {
+          id
+          memberId
+          memberName
+          date
+          amount
+          paymentMode
+          depositedBy
+          depositedOther
+        }
         recordId
       }
     }

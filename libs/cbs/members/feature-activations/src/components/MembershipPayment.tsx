@@ -1,20 +1,10 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
-import {
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  Grid,
-  GridItem,
-} from '@myra-ui';
+import { Box, Button, FormSection, Grid, GridItem, ResponseDialog, Text } from '@myra-ui';
 
 import {
   DepositedBy,
@@ -27,6 +17,7 @@ import {
   usePayMembershipMutation,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
+import { localizedDate } from '@coop/cbs/utils';
 import { CashOptions, DenominationTable } from '@coop/shared/components';
 import {
   FormAccountSelect,
@@ -37,13 +28,14 @@ import {
   FormDatePicker,
   FormFileInput,
   FormInput,
+  FormLayout,
   FormMemberSelect,
   FormSelect,
   FormSwitch,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type CashPaid =
   | {
@@ -161,7 +153,7 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
     }
   }, [totalAmount]);
 
-  const onSubmit = async () => {
+  const onSubmit = () => {
     const values = methods.getValues();
     let updatedData;
 
@@ -196,32 +188,32 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
       };
     }
 
-    await asyncToast({
-      id: 'membership-payment',
-      msgs: {
-        success: 'Paid for Membership',
-        loading: 'Paying for Membership',
-      },
-      onSuccess: () => {
-        if (values.paymentMode === DepositPaymentType.WithdrawSlip) {
-          queryClient.invalidateQueries(['getAvailableSlipsList']);
-          queryClient.invalidateQueries(['getPastSlipsList']);
-        }
-        queryClient.invalidateQueries(['getMemberCheck']);
-        setMode('details');
-      },
-      promise: payFee({ memberId: id, data: updatedData as MembershipPaymentInput }),
-    });
+    // await asyncToast({
+    //   id: 'membership-payment',
+    //   msgs: {
+    //     success: 'Paid for Membership',
+    //     loading: 'Paying for Membership',
+    //   },
+    //   onSuccess: () => {
+    //     if (values.paymentMode === DepositPaymentType.WithdrawSlip) {
+    //       queryClient.invalidateQueries(['getAvailableSlipsList']);
+    //       queryClient.invalidateQueries(['getPastSlipsList']);
+    //     }
+    //     queryClient.invalidateQueries(['getMemberCheck']);
+    //     setMode('details');
+    //   },
+    //   promise: payFee({ memberId: id, data: updatedData as MembershipPaymentInput }),
+
+    // });
+
+    return updatedData as MembershipPaymentInput;
   };
 
   return (
-    <>
-      <Container p={0} minWidth="container.lg" bg="white" minH="calc(100vh - 110px)">
-        <FormProvider {...methods}>
-          <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-            <FormHeader title="Membership Payment" />
-          </Box>
-
+    <FormLayout methods={methods}>
+      <FormLayout.Header title="Membership Payment" />
+      <FormLayout.Content>
+        <FormLayout.Form>
           <Box display="flex" flexDirection="column" gap="s16">
             <Box px="s20" pt="s20">
               <FormSwitchTab
@@ -393,26 +385,78 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
               <FormTextArea name="remark" label={t['depositPaymentNote']} rows={5} />
             </FormSection>
           </Box>
-        </FormProvider>
-      </Container>
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.lg" height="fit-content" p="0">
-            <Box position="sticky" bottom={0} zIndex="11">
-              <FormFooter
-                status={
-                  <Button variant="outline" onClick={() => setMode('details')}>
-                    Previous
-                  </Button>
-                }
-                mainButtonLabel="Confirm Payment"
-                mainButtonHandler={onSubmit}
-              />
-            </Box>
-          </Container>
-        </Box>
-      </Box>
-    </>
+      <FormLayout.Footer
+        status={
+          <Button variant="outline" onClick={() => setMode('details')}>
+            Previous
+          </Button>
+        }
+        mainButton={
+          <ResponseDialog
+            onSuccess={() => {
+              const values = methods.getValues();
+              if (values.paymentMode === DepositPaymentType.WithdrawSlip) {
+                queryClient.invalidateQueries(['getAvailableSlipsList']);
+                queryClient.invalidateQueries(['getPastSlipsList']);
+              }
+              queryClient.invalidateQueries(['getMemberCheck']);
+              setMode('details');
+            }}
+            promise={() =>
+              payFee({
+                memberId: id,
+                data: onSubmit(),
+              })
+            }
+            successCardProps={(response) => {
+              const result = response?.members?.activateMember?.membershipPayment?.record;
+              const total = result?.amount;
+
+              return {
+                type: 'Membership Payment',
+                total: amountConverter(total || 0) as string,
+                title: 'Membership Payment successful',
+                details: {
+                  'Transaction Id': (
+                    <Text fontSize="s3" color="primary.500" fontWeight="600">
+                      {result?.id}
+                    </Text>
+                  ),
+                  'Member Name': (
+                    <Text fontSize="s3" color="primary.500" fontWeight="600">
+                      {result?.memberName?.local}
+                    </Text>
+                  ),
+                  Date: localizedDate(result?.date),
+                  'Payment Mode': result?.paymentMode,
+
+                  'Deposited By':
+                    result?.depositedBy === 'OTHER'
+                      ? `Other --${result?.depositedOther}`
+                      : result?.depositedBy,
+                },
+                subTitle:
+                  'Membership Payment successfull. Details of the transaction is listed below.',
+                meta: {
+                  memberId: result?.memberId,
+                  member: result?.memberName?.local,
+                },
+                dublicate: true,
+              };
+            }}
+            errorCardProps={{
+              title: 'Payment Failed',
+            }}
+          >
+            <Button width="160px">Confirm Payment</Button>
+          </ResponseDialog>
+        }
+        mainButtonLabel="Confirm Payment"
+        mainButtonHandler={onSubmit}
+      />
+    </FormLayout>
   );
 };

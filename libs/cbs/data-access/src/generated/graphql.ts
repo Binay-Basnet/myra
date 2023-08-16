@@ -16275,7 +16275,14 @@ export type MembershipPaymentInput = {
 };
 
 export type MembershipPaymentRecord = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  depositedBy?: Maybe<DepositedBy>;
+  depositedOther?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  memberId: Scalars['ID'];
+  memberName?: Maybe<Scalars['Localized']>;
+  paymentMode?: Maybe<DepositPaymentType>;
 };
 
 export type MembershipPaymentResult = {
@@ -24930,6 +24937,16 @@ export type PayMembershipMutation = {
           | MutationError_ServerError_Fragment
           | MutationError_ValidationError_Fragment
           | null;
+        record?: {
+          id: string;
+          memberId: string;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          paymentMode?: DepositPaymentType | null;
+          depositedBy?: DepositedBy | null;
+          depositedOther?: string | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -47523,6 +47540,16 @@ export const PayMembershipDocument = `
       membershipPayment(data: $data, memberId: $memberId) {
         error {
           ...MutationError
+        }
+        record {
+          id
+          memberId
+          memberName
+          date
+          amount
+          paymentMode
+          depositedBy
+          depositedOther
         }
         recordId
       }
