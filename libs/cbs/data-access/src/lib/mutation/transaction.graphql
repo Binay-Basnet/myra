@@ -255,9 +255,9 @@ mutation yearEndSettlement($destinationCOALeaf: ID!) {
   }
 }
 
-mutation switchTransactionYearEndFlag($journalId: ID!) {
+mutation switchTransactionYearEndFlag($journalId: ID!, $yearEndSettlement: Boolean) {
   transaction {
-    switchTransactionYearEndFlag(journalId: $journalId) {
+    switchTransactionYearEndFlag(journalId: $journalId, yearEndSettlement: $yearEndSettlement) {
       recordId
       error {
         ...MutationError

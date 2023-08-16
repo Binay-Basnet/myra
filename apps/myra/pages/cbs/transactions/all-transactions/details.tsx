@@ -1,4 +1,5 @@
 import { ReactElement, useRef, useState } from 'react';
+import { FieldValues, FormProvider, useForm, UseFormReturn } from 'react-hook-form';
 import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
 import {
@@ -23,6 +24,7 @@ import {
 import { AllTransactionDetailPage } from '@coop/cbs/transactions/feature-detail-page';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
 import { ROUTES } from '@coop/cbs/utils';
+import { FormCheckbox } from '@coop/shared/form';
 
 const DepositDetailsPage = () => {
   const router = useRouter();
@@ -31,6 +33,8 @@ const DepositDetailsPage = () => {
 
   const queryClient = useQueryClient();
   const { isOpen, onClose, onToggle } = useDisclosure();
+
+  const yearEndMethods = useForm();
 
   const { data: allTransactionsDetails } = useGetAllTransactionsDetailQuery(
     { id: id as string },
@@ -106,11 +110,15 @@ const DepositDetailsPage = () => {
               success: 'Year End Adjustment Flagged',
             },
             onSuccess: () => queryClient.invalidateQueries(['getAllTransactionsDetail']),
-            promise: switchTransactionYearEnd({ journalId: String(router.query['id']) }),
+            promise: switchTransactionYearEnd({
+              journalId: String(router.query['id']),
+              yearEndSettlement: yearEndMethods?.getValues()?.['yearEndSettlement'],
+            }),
           });
         }}
         onClose={onClose}
         onToggle={onToggle}
+        methods={yearEndMethods}
       />
       <Modal
         open={isRevertTransactionModalOpen}
@@ -155,6 +163,7 @@ type YearEndAdjustmentConfirmationDialogProps = {
 
   handleConfirm: () => void;
   isAdjusted: boolean;
+  methods: UseFormReturn<FieldValues, any>;
 };
 
 const YearEndAdjustmentConfirmationDialog = ({
@@ -163,6 +172,7 @@ const YearEndAdjustmentConfirmationDialog = ({
   onToggle,
   isAdjusted,
   handleConfirm,
+  methods,
 }: YearEndAdjustmentConfirmationDialogProps) => {
   const confirmCancelRef = useRef<HTMLButtonElement | null>(null);
 
@@ -187,11 +197,19 @@ const YearEndAdjustmentConfirmationDialog = ({
           </AlertDialogHeader>
 
           <AlertDialogBody borderBottom="1px solid" borderBottomColor="border.layout" p="s16">
-            <Text fontSize="s3" fontWeight={400} color="gray.800">
-              {!isAdjusted
-                ? 'This will make the transaction as previous fiscal year end adjustment'
-                : 'This will remove the adjustment from previous fiscal year and make it as current fiscal year'}
-            </Text>
+            <Box display="flex" flexDirection="column" gap="s16">
+              <Text fontSize="s3" fontWeight={400} color="gray.800">
+                {!isAdjusted
+                  ? 'This will make the transaction as previous fiscal year end adjustment'
+                  : 'This will remove the adjustment from previous fiscal year and make it as current fiscal year'}
+              </Text>
+
+              {!isAdjusted && (
+                <FormProvider {...methods}>
+                  <FormCheckbox name="yearEndSettlement" label="Flag this as year end settlement" />
+                </FormProvider>
+              )}
+            </Box>
           </AlertDialogBody>
 
           <AlertDialogFooter>
