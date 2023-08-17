@@ -5,15 +5,11 @@ import { GridItem } from '@myra-ui/components';
 import { Box } from '@myra-ui/foundations';
 import { ExpandedCell, ExpandedHeader, MultiFooter } from '@myra-ui/table';
 
-import {
-  LocalizedDateFilter,
-  useGetDayBookReportQuery,
-  useGetTellerListQuery,
-} from '@coop/cbs/data-access';
+import { LocalizedDateFilter, useGetDayBookReportQuery } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { RouteToDetailsPage } from '@coop/cbs/utils';
-import { FormBranchSelect, FormDatePicker, FormSelect } from '@coop/shared/form';
+import { FormBranchSelect, FormDatePicker } from '@coop/shared/form';
 import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
 type DayBookTable = {
@@ -58,17 +54,14 @@ export const DayBookReport = () => {
     { enabled: !!filters }
   );
 
-  const { data: userListData } = useGetTellerListQuery();
-
-  const userList = userListData?.settings?.myraUser?.tellers;
-
   const receiptData = data?.report?.transactionReport?.financial?.dayBookReport?.data;
   const totalAmount = receiptData?.totalAmount;
   const openingBalance = receiptData?.openingBalance;
   const totalReceipt = receiptData?.totalReceipts;
   const totalPayment = receiptData?.totalPayment;
   const closingAmount = receiptData?.closingAmount;
-
+  const tellerBalance = receiptData?.tellerBalance;
+  const vaultBalance = receiptData?.vaultBalance;
   const receipts: DayBookTable =
     data?.report?.transactionReport?.financial?.dayBookReport?.data?.receipts?.map((receipt) => ({
       accountHead: receipt?.accountHead,
@@ -144,9 +137,17 @@ export const DayBookReport = () => {
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
                 Receipts (Cr.)
               </Text>
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Opening Balance: {amountConverter(openingBalance || 0)}
-              </Text>
+              <Box display="flex" gap="s16">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  Teller Balance: {amountConverter(tellerBalance || 0)}
+                </Text>
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  Vault Balance: {amountConverter(vaultBalance || 0)}
+                </Text>
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  Opening Balance: {amountConverter(openingBalance || 0)}
+                </Text>
+              </Box>
             </Box>
 
             <Report.Table
@@ -322,18 +323,6 @@ export const DayBookReport = () => {
             />
           </Box>
         </Report.Content>
-        <Report.Filters>
-          <Report.Filter title="User">
-            <FormSelect
-              label="User"
-              options={userList?.map((user) => ({
-                label: user?.name as string,
-                value: user?.id as string,
-              }))}
-              name="filter.user"
-            />
-          </Report.Filter>
-        </Report.Filters>
       </Report.Body>
     </Report>
   );

@@ -2110,10 +2110,83 @@ export type BpmMutation = {
   task: BpmTaskMutation;
 };
 
+export type BpmntConnection = {
+  edges?: Maybe<Array<Maybe<BpmntNode>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type BpmntNode = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<BpmNomineeList>;
+};
+
+export type BpmNomineeList = {
+  date?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['String']>;
+  nomineeName?: Maybe<Scalars['String']>;
+  nomineeRelation?: Maybe<Scalars['String']>;
+  transactionId?: Maybe<Scalars['String']>;
+};
+
+export type BpmNomineeSuccessCard = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['String']>;
+  nomineeName?: Maybe<Scalars['String']>;
+  transactionId: Scalars['ID'];
+  transferType: NomineeTransferType;
+};
+
+export type BpmNomineeTransferInput = {
+  accountId: Scalars['String'];
+  amount?: InputMaybe<Scalars['String']>;
+  bankVoucher?: InputMaybe<DepositBankVoucher>;
+  benficiaryAccountId?: InputMaybe<Scalars['String']>;
+  cash?: InputMaybe<DepositCash>;
+  files?: InputMaybe<Array<Scalars['String']>>;
+  memberId?: InputMaybe<Scalars['String']>;
+  nomineeName?: InputMaybe<Scalars['String']>;
+  notes?: InputMaybe<Scalars['String']>;
+  paymentFiles?: InputMaybe<Array<Scalars['String']>>;
+  paymentNotes?: InputMaybe<Scalars['String']>;
+  relation?: InputMaybe<Scalars['String']>;
+  transferType: NomineeTransferType;
+};
+
+export type BpmNomineeTransferMutation = {
+  transfer?: Maybe<BpmNomineeTransferResult>;
+};
+
+export type BpmNomineeTransferMutationTransferArgs = {
+  data: BpmNomineeTransferInput;
+};
+
+export type BpmNomineeTransferQuery = {
+  listNomineeTransfer: BpmntConnection;
+};
+
+export type BpmNomineeTransferQueryListNomineeTransferArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type BpmNomineeTransferResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<BpmNomineeSuccessCard>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type BpmOperationsMutation = {
   loanCollateral: BpmLoanCollateralMutation;
   loanProduct: BpmLoanProductMutation;
   minor: BpmMinorMutation;
+  nomineeBalanceTransfer: BpmNomineeTransferMutation;
   savingProduct: BpmSavingProductMutation;
 };
 
@@ -2122,6 +2195,7 @@ export type BpmOperationsQuery = {
   loanCollateral: BpmLoanCollateralQuery;
   loanProduct: BpmLoanProductQuery;
   minor: BpmMinorQuery;
+  nomineeBalanceTransfer: BpmNomineeTransferQuery;
   savingProduct: BpmSavingProductQuery;
 };
 
@@ -17024,6 +17098,13 @@ export type NomineeInNepali = {
   title?: Maybe<Scalars['String']>;
 };
 
+export const NomineeTransferType = {
+  Account: 'ACCOUNT',
+  BankCheque: 'BANK_CHEQUE',
+  Cash: 'CASH',
+} as const;
+
+export type NomineeTransferType = typeof NomineeTransferType[keyof typeof NomineeTransferType];
 export type NotFoundError = {
   code: Scalars['Int'];
   message: Scalars['String'];
@@ -38345,6 +38426,8 @@ export type GetDayBookReportQuery = {
           data?: {
             closingAmount?: string | null;
             openingBalance?: string | null;
+            tellerBalance?: string | null;
+            vaultBalance?: string | null;
             totalAmount?: string | null;
             totalPayment?: string | null;
             totalReceipts?: string | null;
@@ -65526,6 +65609,8 @@ export const GetDayBookReportDocument = `
           data {
             closingAmount
             openingBalance
+            tellerBalance
+            vaultBalance
             payments {
               accountHead
               amount
