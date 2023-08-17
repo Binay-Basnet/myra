@@ -185,7 +185,6 @@ export const ROUTES = {
   SETTINGS_GENERAL_PEARLS_REPORT_P2: '/settings/general/pearls-report/p2/configure',
 
   SETTINGS_GENERAL_PEARLS_REPORT_P2X: '/settings/general/pearls-report/p2x/configure',
-
   SETTINGS_GENERAL_PEARLS_REPORT_E1: '/settings/general/pearls-report/e1/configure',
 
   SETTINGS_GENERAL_PEARLS_REPORT_E5: '/settings/general/pearls-report/e5/configure',
@@ -545,8 +544,7 @@ export const ROUTES = {
   BPM_OPERATIONS_SAVING_PRODUCT_UPDATES_LIST: '/bpm/operations/saving-product-updates/list',
   BPM_OPERATIONS_SAVING_PRODUCT_UPDATES_ADD: '/bpm/operations/saving-product-updates/add',
   BPM_OPERATIONS_AUTO_OPEN_ACCOUNT_UPDATES_LIST: '/bpm/operations/auto-open-account-updates/list',
-  BPM_OPERATIONS_AUTO_OPEN_ACCOUNT_UPDATES_ADD:
-    '/bpm/operations/operations/auto-open-account-updates/add',
+  BPM_OPERATIONS_AUTO_OPEN_ACCOUNT_UPDATES_EDIT: '/bpm/operations/auto-open-account-updates/edit',
   BPM_OPERATIONS_COLLATERAL_MANAGEMENT_LIST: '/bpm/operations/collateral/list',
   BPM_OPERATIONS_COLLATERAL_MANAGEMENT_ADD: '/bpm/operations/collateral/add',
   BPM_OPERATIONS_NOMINEE_BALANCE_TRANSFER_LIST: '/bpm/operations/nominee-balance-transfer/list',

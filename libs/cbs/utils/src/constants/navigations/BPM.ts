@@ -78,11 +78,7 @@ export const BPM: NavType = {
         //   aclKey: 'HCM_RECRUITMENT_INTERVIEW',
         //   route: ROUTES.HR_RECRUITMENT_INTERVIEW_ADD,
         // },
-        {
-          label: 'New Auto Open Account Update',
-          aclKey: 'HCM_RECRUITMENT_JOB_OFFER',
-          route: ROUTES.BPM_OPERATIONS_AUTO_OPEN_ACCOUNT_UPDATES_ADD,
-        },
+
         {
           label: 'New Collateral Management',
           aclKey: 'HCM_RECRUITMENT_APPOINTMENT_LETTER',
@@ -125,9 +121,8 @@ export const BPM: NavType = {
         // },
         {
           label: 'Auto Open Account Update',
-          aclKey: 'HCM_RECRUITMENT_JOB_OFFER',
+          aclKey: 'CBS_SAVINGS_SAVING_ACCOUNT',
           route: ROUTES.BPM_OPERATIONS_AUTO_OPEN_ACCOUNT_UPDATES_LIST,
-          addRoute: ROUTES.BPM_OPERATIONS_AUTO_OPEN_ACCOUNT_UPDATES_ADD,
         },
         {
           label: 'Collateral Management',
