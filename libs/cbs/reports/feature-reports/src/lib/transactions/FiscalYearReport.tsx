@@ -1,21 +1,25 @@
 import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
-import { GridItem } from '@myra-ui';
+import { Button, Column, ExpandedCell, ExpandedHeader, GridItem, MultiFooter } from '@myra-ui';
 
 import {
   LocalizedDateFilter,
   Maybe,
   Scalars,
   TrialSheetReportFilter,
+  useGetBranchListQuery,
   useGetFiscalYearTrialBalanceQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { ReportCustomDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedText, ROUTES } from '@coop/cbs/utils';
+import { arrayToTree } from '@coop/shared/components';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
-import { useIsCbs } from '@coop/shared/utils';
+import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
-import { COATable, generateAndSortCOATreeArray } from './TrialSheetReport';
+import { CoaTotalTable, generateAndSortCOATreeArray } from './TrialSheetReport';
 
 type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId'> & {
   branchId: { label: string; value: string }[];
@@ -26,7 +30,23 @@ type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId
   };
 };
 
-type TrialBalance = Record<string, { Dr: string; Cr: string; Total: string; Type: string }>;
+type TrialBalance = Record<
+  string,
+  {
+    Dr: string;
+    Cr: string;
+    Total: string;
+    Type: string;
+    AdjustmentDr: string;
+    AdjustmentCr: string;
+    AdjustmentTotal: string;
+    AdjustmentType: string;
+    ClosingCr: string;
+    ClosingDr: string;
+    ClosingBalance: string;
+    ClosingBalanceType: string;
+  }
+>;
 
 type TrialSheetReportDataEntry = {
   balance?: TrialBalance;
@@ -142,7 +162,7 @@ export const FiscalYearReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization />
-          <COATable
+          <FiscalYearCOATable
             type="Particulars"
             total={[
               {
@@ -158,7 +178,7 @@ export const FiscalYearReport = () => {
                 value: coaReportData?.totalLiablitiesIncome as unknown as TrialBalance,
               },
             ]}
-            data={coaReport}
+            data={coaReport as TrialSheetReportDataEntry[]}
             coaRedirect={false}
           />
         </Report.Content>
@@ -196,5 +216,347 @@ export const FiscalYearReport = () => {
         </Report.Filters>
       </Report.Body>
     </Report>
+  );
+};
+
+interface ICOATableProps {
+  data: TrialSheetReportDataEntry[];
+  type: string;
+  total: { label: string; value: TrialBalance }[];
+  coaRedirect?: boolean;
+}
+
+const FiscalYearCOATable = ({ data, type, total, coaRedirect = true }: ICOATableProps) => {
+  const { getValues } = useFormContext<TrialSheetReportFilters>();
+  const branchIDs = getValues()?.branchId?.map((a) => a.value);
+
+  const datePeriod = getValues()?.period;
+
+  const { data: branchListQueryData } = useGetBranchListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+
+  if (data?.length === 0 && !branchListQueryData) {
+    return null;
+  }
+
+  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
+  const headers =
+    branchIDs?.length === branchList?.length
+      ? ['Total']
+      : [
+          ...((branchList
+            ?.filter((a) => branchIDs?.includes(a?.node?.id || ''))
+            ?.map((a) => a.node?.id) || []) as string[]),
+          branchIDs?.length === 1 ? undefined : 'Total',
+        ]?.filter(Boolean);
+
+  const baseColumn: Column<TrialSheetReportDataEntry>[] = [
+    {
+      header: ({ table }) => <ExpandedHeader table={table} value={type} />,
+      accessorKey: 'ledgerName',
+      cell: (props) => (
+        <ExpandedCell
+          row={props.row}
+          value={
+            !props.row?.getCanExpand() ? (
+              coaRedirect ? (
+                <Button
+                  variant="link"
+                  color="primary.500"
+                  onClick={() =>
+                    window.open(
+                      `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
+                        props.row?.original?.ledgerId
+                      }&branch=${JSON.stringify(branchIDs)}&date=${datePeriod?.from?.en}`,
+                      '_blank'
+                    )
+                  }
+                >
+                  {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+                  {localizedText(props?.row?.original?.ledgerName)}
+                </Button>
+              ) : (
+                <>
+                  {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+                  {localizedText(props?.row?.original?.ledgerName)}
+                </>
+              )
+            ) : props?.row.original.under ? (
+              `${props.row.original.ledgerId} ${props?.row?.original?.ledgerName ? '-' : ''}
+                ${localizedText(props?.row?.original?.ledgerName)}`
+            ) : (
+              localizedText(props?.row?.original?.ledgerName)
+            )
+          }
+        />
+      ),
+      footer: () => <MultiFooter texts={total?.map((t) => t.label)} />,
+      meta: {
+        width: '80%',
+      },
+    },
+  ];
+
+  const columns: Column<TrialSheetReportDataEntry>[] = [
+    ...baseColumn,
+    ...headers.map(
+      (header) =>
+        ({
+          header: branchList?.find((b) => b?.node?.id === header)?.node?.name || 'Total',
+          // accessorKey: 'balance',
+          columns: [
+            {
+              header: 'Unadjusted Trial Balance',
+              columns: [
+                {
+                  header: 'Debit (Dr.)',
+                  accessorFn: (row) => row?.balance,
+                  cell: (props) =>
+                    amountConverter(props.row?.original?.balance?.[header || '']?.Dr || '0.00'),
+
+                  // footer: () => (
+                  //   <MultiFooter
+                  //     texts={total?.map((t) =>
+                  //       amountConverter(t.value?.[header || '']?.Dr || '0.00')
+                  //     )}
+                  //   />
+                  // ),
+
+                  meta: {
+                    isNumeric: true,
+                  },
+                },
+                {
+                  header: 'Credit (Cr.)',
+                  accessorFn: (row) => row?.balance,
+                  cell: (props) =>
+                    amountConverter(props.row?.original?.balance?.[header || '']?.Cr || '0.00'),
+
+                  // footer: () => (
+                  //   <MultiFooter
+                  //     texts={total?.map((t) =>
+                  //       amountConverter(t.value?.[header || '']?.Cr || '0.00')
+                  //     )}
+                  //   />
+                  // ),
+                  meta: {
+                    isNumeric: true,
+                  },
+                },
+                {
+                  header: 'Balance',
+                  accessorFn: (row) => row?.balance,
+                  cell: (props) =>
+                    header
+                      ? amountConverter(props.row?.original?.balance?.[header]?.Total || '0.00')
+                      : '0.00',
+                  // footer: () => (
+                  //   <MultiFooter
+                  //     texts={total?.map((t) =>
+                  //       amountConverter(t.value?.[header || '']?.Total || '0.00')
+                  //     )}
+                  //   />
+                  // ),
+                  meta: {
+                    isNumeric: true,
+                  },
+                },
+                {
+                  header: '',
+                  id: 'cr',
+                  accessorFn: (row) => (header ? row.balance?.[header]?.Type || '-' : '-'),
+                  // footer: () => (
+                  //   <MultiFooter
+                  //     texts={total?.map((t) => t.value?.[header || '']?.Type || '0.00' || '-')}
+                  //   />
+                  // ),
+                  meta: {
+                    width: '10px',
+                  },
+                },
+              ],
+            },
+            {
+              header: 'Adjustment',
+              columns: [
+                {
+                  header: 'Debit (Dr.)',
+                  accessorFn: (row) => row?.balance,
+                  cell: (props) =>
+                    amountConverter(
+                      props.row?.original?.balance?.[header || '']?.AdjustmentDr || '0.00'
+                    ),
+
+                  // footer: () => (
+                  //   <MultiFooter
+                  //     texts={total?.map((t) =>
+                  //       amountConverter(t.value?.[header || '']?.AdjustmentDr || '0.00')
+                  //     )}
+                  //   />
+                  // ),
+
+                  meta: {
+                    isNumeric: true,
+                  },
+                },
+                {
+                  header: 'Credit (Cr.)',
+                  accessorFn: (row) => row?.balance,
+                  cell: (props) =>
+                    amountConverter(
+                      props.row?.original?.balance?.[header || '']?.AdjustmentCr || '0.00'
+                    ),
+
+                  // footer: () => (
+                  //   <MultiFooter
+                  //     texts={total?.map((t) =>
+                  //       amountConverter(t.value?.[header || '']?.AdjustmentCr || '0.00')
+                  //     )}
+                  //   />
+                  // ),
+                  meta: {
+                    isNumeric: true,
+                  },
+                },
+                {
+                  header: 'Balance',
+                  accessorFn: (row) => row?.balance,
+                  cell: (props) =>
+                    header
+                      ? amountConverter(
+                          props.row?.original?.balance?.[header]?.AdjustmentTotal || '0.00'
+                        )
+                      : '0.00',
+                  footer: () => (
+                    <MultiFooter
+                      texts={total?.map((t) =>
+                        amountConverter(t.value?.[header || '']?.AdjustmentTotal || '0.00')
+                      )}
+                    />
+                  ),
+                  meta: {
+                    isNumeric: true,
+                  },
+                },
+                {
+                  header: '',
+                  id: 'cr',
+                  accessorFn: (row) =>
+                    header ? row.balance?.[header]?.AdjustmentType || '-' : '-',
+                  footer: () => (
+                    <MultiFooter
+                      texts={total?.map((t) => t.value?.[header || '']?.Type || '0.00' || '-')}
+                    />
+                  ),
+                  meta: {
+                    width: '10px',
+                  },
+                },
+              ],
+            },
+            {
+              header: 'Adjusted Trial Balance',
+              columns: [
+                {
+                  header: 'Debit (Dr.)',
+                  accessorFn: (row) => row?.balance,
+                  cell: (props) =>
+                    amountConverter(
+                      props.row?.original?.balance?.[header || '']?.ClosingDr || '0.00'
+                    ),
+
+                  // footer: () => (
+                  //   <MultiFooter
+                  //     texts={total?.map((t) =>
+                  //       amountConverter(t.value?.[header || '']?.Dr || '0.00')
+                  //     )}
+                  //   />
+                  // ),
+
+                  meta: {
+                    isNumeric: true,
+                  },
+                },
+                {
+                  header: 'Credit (Cr.)',
+                  accessorFn: (row) => row?.balance,
+                  cell: (props) =>
+                    amountConverter(
+                      props.row?.original?.balance?.[header || '']?.ClosingCr || '0.00'
+                    ),
+
+                  // footer: () => (
+                  //   <MultiFooter
+                  //     texts={total?.map((t) =>
+                  //       amountConverter(t.value?.[header || '']?.Cr || '0.00')
+                  //     )}
+                  //   />
+                  // ),
+                  meta: {
+                    isNumeric: true,
+                  },
+                },
+                {
+                  header: 'Balance',
+                  accessorFn: (row) => row?.balance,
+                  cell: (props) =>
+                    header
+                      ? amountConverter(
+                          props.row?.original?.balance?.[header]?.ClosingBalance || '0.00'
+                        )
+                      : '0.00',
+                  // footer: () => (
+                  //   <MultiFooter
+                  //     texts={total?.map((t) =>
+                  //       amountConverter(t.value?.[header || '']?.ClosingBalance || '0.00')
+                  //     )}
+                  //   />
+                  // ),
+                  meta: {
+                    isNumeric: true,
+                  },
+                },
+                {
+                  header: '',
+                  id: 'cr',
+                  accessorFn: (row) =>
+                    header ? row.balance?.[header]?.ClosingBalanceType || '-' : '-',
+                  // footer: () => (
+                  //   <MultiFooter
+                  //     texts={total?.map(
+                  //       (t) => t.value?.[header || '']?.ClosingBalanceType || '0.00' || '-'
+                  //     )}
+                  //   />
+                  // ),
+                  meta: {
+                    width: '10px',
+                  },
+                },
+              ],
+            },
+          ],
+        } as Column<TrialSheetReportDataEntry>)
+    ),
+  ];
+
+  const tree = arrayToTree(
+    data.map((d) => ({ ...d, id: d?.ledgerId as string })).filter((d) => !!d.id),
+    ''
+  );
+
+  return (
+    <>
+      <Report.Table<TrialSheetReportDataEntry>
+        data={tree}
+        columns={columns}
+        tableTitle={type}
+        expandFirstLevel
+      />
+      <CoaTotalTable total={total} />
+    </>
   );
 };

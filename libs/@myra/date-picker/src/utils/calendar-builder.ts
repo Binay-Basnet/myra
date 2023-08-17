@@ -105,10 +105,20 @@ export const getPreviousMonth = (month: number, year: number) => {
 // ({month, year}) Gets the month and year after the given month and year
 // For example: getNextMonth(1, 2000) => {month: 2, year: 2000}
 // while: getNextMonth(12, 2000) => {month: 1, year: 2001}
-export const getNextMonth = (month: number, year: number) => {
-  const nextMonth = month < 12 ? month + 1 : 1;
-  const nextMonthYear = month < 12 ? year : year + 1;
-  return { month: nextMonth, year: nextMonthYear };
+export const getNextMonth = (month: number, year: number, n = 1) => {
+  let nextMonth = month;
+  let nextYear = year;
+
+  for (let i = 0; i < n; i += 1) {
+    if (nextMonth === 12) {
+      nextMonth = 1;
+      nextYear += 1;
+    } else {
+      nextMonth += 1;
+    }
+  }
+
+  return { month: nextMonth, year: nextYear };
 };
 
 // Calendar builder for a month in the specified year

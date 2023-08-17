@@ -2110,10 +2110,83 @@ export type BpmMutation = {
   task: BpmTaskMutation;
 };
 
+export type BpmntConnection = {
+  edges?: Maybe<Array<Maybe<BpmntNode>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type BpmntNode = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<BpmNomineeList>;
+};
+
+export type BpmNomineeList = {
+  date?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['String']>;
+  nomineeName?: Maybe<Scalars['String']>;
+  nomineeRelation?: Maybe<Scalars['String']>;
+  transactionId?: Maybe<Scalars['String']>;
+};
+
+export type BpmNomineeSuccessCard = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['String']>;
+  nomineeName?: Maybe<Scalars['String']>;
+  transactionId: Scalars['ID'];
+  transferType: NomineeTransferType;
+};
+
+export type BpmNomineeTransferInput = {
+  accountId: Scalars['String'];
+  amount?: InputMaybe<Scalars['String']>;
+  bankVoucher?: InputMaybe<DepositBankVoucher>;
+  benficiaryAccountId?: InputMaybe<Scalars['String']>;
+  cash?: InputMaybe<DepositCash>;
+  files?: InputMaybe<Array<Scalars['String']>>;
+  memberId?: InputMaybe<Scalars['String']>;
+  nomineeName?: InputMaybe<Scalars['String']>;
+  notes?: InputMaybe<Scalars['String']>;
+  paymentFiles?: InputMaybe<Array<Scalars['String']>>;
+  paymentNotes?: InputMaybe<Scalars['String']>;
+  relation?: InputMaybe<Scalars['String']>;
+  transferType: NomineeTransferType;
+};
+
+export type BpmNomineeTransferMutation = {
+  transfer?: Maybe<BpmNomineeTransferResult>;
+};
+
+export type BpmNomineeTransferMutationTransferArgs = {
+  data: BpmNomineeTransferInput;
+};
+
+export type BpmNomineeTransferQuery = {
+  listNomineeTransfer: BpmntConnection;
+};
+
+export type BpmNomineeTransferQueryListNomineeTransferArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type BpmNomineeTransferResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<BpmNomineeSuccessCard>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type BpmOperationsMutation = {
   loanCollateral: BpmLoanCollateralMutation;
   loanProduct: BpmLoanProductMutation;
   minor: BpmMinorMutation;
+  nomineeBalanceTransfer: BpmNomineeTransferMutation;
   savingProduct: BpmSavingProductMutation;
 };
 
@@ -2122,6 +2195,7 @@ export type BpmOperationsQuery = {
   loanCollateral: BpmLoanCollateralQuery;
   loanProduct: BpmLoanProductQuery;
   minor: BpmMinorQuery;
+  nomineeBalanceTransfer: BpmNomineeTransferQuery;
   savingProduct: BpmSavingProductQuery;
 };
 
@@ -17024,6 +17098,13 @@ export type NomineeInNepali = {
   title?: Maybe<Scalars['String']>;
 };
 
+export const NomineeTransferType = {
+  Account: 'ACCOUNT',
+  BankCheque: 'BANK_CHEQUE',
+  Cash: 'CASH',
+} as const;
+
+export type NomineeTransferType = typeof NomineeTransferType[keyof typeof NomineeTransferType];
 export type NotFoundError = {
   code: Scalars['Int'];
   message: Scalars['String'];
@@ -30344,6 +30425,53 @@ export type GetLoanCollateralListQuery = {
   };
 };
 
+export type GetOperationsAutoOpenListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetOperationsAutoOpenListQuery = {
+  bpm: {
+    operations: {
+      autoOpenAccount: {
+        listAutoOpenAccount: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node?: {
+              id: string;
+              code?: string | null;
+              count?: string | null;
+              name?: string | null;
+            } | null;
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetOperationsAutoOpenDetailsQueryVariables = Exact<{
+  memberID: Scalars['ID'];
+}>;
+
+export type GetOperationsAutoOpenDetailsQuery = {
+  bpm: {
+    operations: {
+      autoOpenAccount: {
+        getAutoOpenAccounts: {
+          data?: Array<{
+            accountID: string;
+            accountName?: string | null;
+            status?: ObjState | null;
+          } | null> | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetBpmEmployeeDetailsQueryVariables = Exact<{
   employeeId: Scalars['ID'];
 }>;
@@ -38298,6 +38426,8 @@ export type GetDayBookReportQuery = {
           data?: {
             closingAmount?: string | null;
             openingBalance?: string | null;
+            tellerBalance?: string | null;
+            vaultBalance?: string | null;
             totalAmount?: string | null;
             totalPayment?: string | null;
             totalReceipts?: string | null;
@@ -55204,6 +55334,78 @@ export const useGetLoanCollateralListQuery = <TData = GetLoanCollateralListQuery
     ).bind(null, variables),
     options
   );
+export const GetOperationsAutoOpenListDocument = `
+    query getOperationsAutoOpenList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      autoOpenAccount {
+        listAutoOpenAccount(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              code
+              count
+              name
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetOperationsAutoOpenListQuery = <
+  TData = GetOperationsAutoOpenListQuery,
+  TError = unknown
+>(
+  variables?: GetOperationsAutoOpenListQueryVariables,
+  options?: UseQueryOptions<GetOperationsAutoOpenListQuery, TError, TData>
+) =>
+  useQuery<GetOperationsAutoOpenListQuery, TError, TData>(
+    variables === undefined
+      ? ['getOperationsAutoOpenList']
+      : ['getOperationsAutoOpenList', variables],
+    useAxios<GetOperationsAutoOpenListQuery, GetOperationsAutoOpenListQueryVariables>(
+      GetOperationsAutoOpenListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetOperationsAutoOpenDetailsDocument = `
+    query getOperationsAutoOpenDetails($memberID: ID!) {
+  bpm {
+    operations {
+      autoOpenAccount {
+        getAutoOpenAccounts(memberId: $memberID) {
+          data {
+            accountID
+            accountName
+            status
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetOperationsAutoOpenDetailsQuery = <
+  TData = GetOperationsAutoOpenDetailsQuery,
+  TError = unknown
+>(
+  variables: GetOperationsAutoOpenDetailsQueryVariables,
+  options?: UseQueryOptions<GetOperationsAutoOpenDetailsQuery, TError, TData>
+) =>
+  useQuery<GetOperationsAutoOpenDetailsQuery, TError, TData>(
+    ['getOperationsAutoOpenDetails', variables],
+    useAxios<GetOperationsAutoOpenDetailsQuery, GetOperationsAutoOpenDetailsQueryVariables>(
+      GetOperationsAutoOpenDetailsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetBpmEmployeeDetailsDocument = `
     query getBPMEmployeeDetails($employeeId: ID!) {
   bpm {
@@ -65407,6 +65609,8 @@ export const GetDayBookReportDocument = `
           data {
             closingAmount
             openingBalance
+            tellerBalance
+            vaultBalance
             payments {
               accountHead
               amount

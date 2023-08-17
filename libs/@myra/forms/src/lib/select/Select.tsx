@@ -63,6 +63,7 @@ export const Select = React.forwardRef(
       onChange,
       addItemHandler,
       addItemLabel,
+      onInputChange,
       ...rest
     }: SelectProps,
     ref: ForwardedRef<HTMLSelectElement>
@@ -111,6 +112,8 @@ export const Select = React.forwardRef(
             onChange={multiOnChange}
             chakraStyles={getChakraDefaultStyles(!!errorText, !!addItemHandler)}
             components={components}
+            {...(onInputChange && { filterOption: () => true })}
+            onInputChange={onInputChange}
             ref={
               ref as unknown as
                 | Ref<SelectInstance<SelectOption, boolean, GroupBase<SelectOption>>>
@@ -168,6 +171,7 @@ const useMulti = ({ isMulti, value, options, onChange: propOnChange }: IUseMulti
     isSelectAllSelected();
 
   const getOptions = () => (options.length !== 0 ? [selectAllOption, ...options] : []);
+
   const getValue = () => (isSelectAllSelected() ? [selectAllOption] : value);
 
   const onChange = (
