@@ -254,7 +254,6 @@ trigger:
     - push
 
 ---
-
 kind: pipeline
 name: Publish dhadda-migration
 type: docker
@@ -301,7 +300,6 @@ trigger:
     - push
 
 ---
-
 #kind: pipeline
 #name: Publish storybook
 #type: docker
@@ -638,7 +636,6 @@ trigger:
     - tag
 
 ---
-
 kind: pipeline
 type: exec
 name: Create new release

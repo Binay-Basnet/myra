@@ -23,7 +23,7 @@ import { getPaginationQuery } from '@coop/shared/utils';
 import CollateralCard from './components/CollateralCard';
 
 export const CollateralManagementAdd = () => {
-  const router = useRouter;
+  const router = useRouter();
   const [isRelease, setIsRelease] = React.useState(false);
   const methods = useForm();
   const { watch, getValues } = methods;
