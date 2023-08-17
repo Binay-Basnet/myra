@@ -2,14 +2,18 @@ import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import { omit } from 'lodash';
 
 import { Alert, asyncToast, Box, MemberCard, Text } from '@myra-ui';
+import { getNextDate } from '@myra-ui/date-picker';
 
 import {
+  InstallmentFrequency,
   InterestAuthority,
   LoanAccountInput,
   NatureOfDepositProduct,
+  useAppSelector,
   useGetIndividualMemberDetails,
   useGetLoanApplicationDetailsQuery,
   useGetLoanProductSubTypeQuery,
@@ -47,6 +51,15 @@ import { LoanAmountDetails } from '../components/LandAmountDetails';
 import { LoanPaymentSchedule } from '../components/LoanPaymentSchedule';
 import { LoanProductContext, useLoanProductDetails } from '../hooks/useLoanProduct';
 import { useLoanProductErrors } from '../hooks/useLoanProductListErrors';
+
+const instMap = {
+  [InstallmentFrequency.Daily]: 'day',
+  [InstallmentFrequency.HalfYearly]: 'half-yearly',
+  [InstallmentFrequency.Monthly]: 'month',
+  [InstallmentFrequency.Quarterly]: 'quarterly',
+  [InstallmentFrequency.Weekly]: 'week',
+  [InstallmentFrequency.Yearly]: 'year',
+} as const;
 
 type CustomLoanAccountInput = Omit<LoanAccountInput, 'interestAuthority'> & {
   // tenure?: FrequencyTenure | null | undefined;
@@ -267,6 +280,22 @@ export const NewLoanApplication = () => {
     resetField('productId');
   }, [loanLinkedData, resetField]);
 
+  const installmentFrequency = watch('installmentFrequency');
+  const disbursedDate = watch('disbursementDate');
+
+  const dateType = useAppSelector((state) => state.auth.preference?.date);
+
+  useEffect(() => {
+    if (disbursedDate && dateType && installmentFrequency)
+      setValue('installmentBeginDate', {
+        local: '',
+        np: '',
+        en: dayjs(
+          getNextDate(instMap[installmentFrequency], dateType, new Date(disbursedDate?.en || ''))
+        ).format('YYYY-MM-DD'),
+      });
+  }, [dateType, disbursedDate, installmentFrequency, setValue]);
+
   return (
     <FormLayout methods={methods} hasSidebar={!!memberId}>
       <FormLayout.Header title={`New Loan Application - ${featureCode.newLoanApplication} `} />
@@ -401,14 +430,14 @@ export const NewLoanApplication = () => {
                   memberID: memberDetailData?.id,
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,
-                  maritalStatus: memberDetailData?.maritalStatus,
+                  maritalStatus: memberDetailData?.maritalStatus as string,
                   dateJoined: memberDetailData?.dateJoined,
                   phoneNo: memberDetailData?.contact,
                   email: memberDetailData?.email,
                   address: memberDetailData?.address,
                 }}
-                signaturePath={memberSignatureUrl}
-                citizenshipPath={memberCitizenshipUrl}
+                signaturePath={memberSignatureUrl as string}
+                citizenshipPath={memberCitizenshipUrl as string}
               />
             </Box>
 

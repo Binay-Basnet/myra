@@ -95,6 +95,34 @@ query getOperationsLoanProductUpdateList($filter: Filter, $pagination: Paginatio
   }
 }
 
+query getLoanCollateralList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      loanCollateral {
+        listCollateral(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              date
+              memberId
+              code
+              name
+              accountName
+              collateralType
+              collateralName
+              updateType
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
 query getOperationsAutoOpenList($filter: Filter, $pagination: Pagination) {
   bpm {
     operations {

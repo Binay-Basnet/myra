@@ -65,3 +65,22 @@ mutation setBPMOperationsLoanProductUpdate(
     }
   }
 }
+
+mutation setUpdateCollateral(
+  $loanAccountId: ID!
+  $updateType: CollateralUpdateType!
+  $data: BPMCollateralData!
+) {
+  bpm {
+    operations {
+      loanCollateral {
+        updateCollateral(loanAccountId: $loanAccountId, updateType: $updateType, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
