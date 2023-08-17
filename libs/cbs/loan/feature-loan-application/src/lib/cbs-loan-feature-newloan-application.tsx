@@ -14,7 +14,6 @@ import {
   LoanAccountInput,
   NatureOfDepositProduct,
   useAppSelector,
-  useGetEndOfDayDateDataQuery,
   useGetIndividualMemberDetails,
   useGetLoanApplicationDetailsQuery,
   useGetLoanProductSubTypeQuery,
@@ -52,6 +51,15 @@ import { LoanAmountDetails } from '../components/LandAmountDetails';
 import { LoanPaymentSchedule } from '../components/LoanPaymentSchedule';
 import { LoanProductContext, useLoanProductDetails } from '../hooks/useLoanProduct';
 import { useLoanProductErrors } from '../hooks/useLoanProductListErrors';
+
+const instMap = {
+  [InstallmentFrequency.Daily]: 'day',
+  [InstallmentFrequency.HalfYearly]: 'half-yearly',
+  [InstallmentFrequency.Monthly]: 'month',
+  [InstallmentFrequency.Quarterly]: 'quarterly',
+  [InstallmentFrequency.Weekly]: 'week',
+  [InstallmentFrequency.Yearly]: 'year',
+} as const;
 
 type CustomLoanAccountInput = Omit<LoanAccountInput, 'interestAuthority'> & {
   // tenure?: FrequencyTenure | null | undefined;
@@ -273,33 +281,20 @@ export const NewLoanApplication = () => {
   }, [loanLinkedData, resetField]);
 
   const installmentFrequency = watch('installmentFrequency');
+  const disbursedDate = watch('disbursementDate');
 
   const dateType = useAppSelector((state) => state.auth.preference?.date);
-  const { data } = useGetEndOfDayDateDataQuery();
-
-  const instMap = {
-    [InstallmentFrequency.Daily]: 'day',
-    [InstallmentFrequency.HalfYearly]: 'half-yearly',
-    [InstallmentFrequency.Monthly]: 'month',
-    [InstallmentFrequency.Quarterly]: 'quarterly',
-    [InstallmentFrequency.Weekly]: 'week',
-    [InstallmentFrequency.Yearly]: 'year',
-  } as const;
 
   useEffect(() => {
-    if (data?.transaction?.endOfDayDate?.value?.en && dateType && installmentFrequency)
+    if (disbursedDate && dateType && installmentFrequency)
       setValue('installmentBeginDate', {
         local: '',
         np: '',
         en: dayjs(
-          getNextDate(
-            instMap[installmentFrequency],
-            dateType,
-            new Date(data?.transaction.endOfDayDate.value.en || '')
-          )
+          getNextDate(instMap[installmentFrequency], dateType, new Date(disbursedDate?.en || ''))
         ).format('YYYY-MM-DD'),
       });
-  }, [data?.transaction.endOfDayDate.value.en, dateType, instMap, installmentFrequency, setValue]);
+  }, [dateType, disbursedDate, installmentFrequency, setValue]);
 
   return (
     <FormLayout methods={methods} hasSidebar={!!memberId}>
@@ -435,14 +430,14 @@ export const NewLoanApplication = () => {
                   memberID: memberDetailData?.id,
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,
-                  maritalStatus: memberDetailData?.maritalStatus,
+                  maritalStatus: memberDetailData?.maritalStatus as string,
                   dateJoined: memberDetailData?.dateJoined,
                   phoneNo: memberDetailData?.contact,
                   email: memberDetailData?.email,
                   address: memberDetailData?.address,
                 }}
-                signaturePath={memberSignatureUrl}
-                citizenshipPath={memberCitizenshipUrl}
+                signaturePath={memberSignatureUrl as string}
+                citizenshipPath={memberCitizenshipUrl as string}
               />
             </Box>
 

@@ -35,38 +35,22 @@ export const getNextDate = (
   calendarType: 'AD' | 'BS',
   date: Date
 ) => {
+  const addMonths = { month: 1, quarterly: 3, 'half-yearly': 6 };
+
   if (calendarType === 'AD') {
-    if (type === 'half-yearly') {
-      return dayjs(date).add(6, 'months').toDate();
-    }
-    if (type === 'quarterly') {
-      return dayjs(date).add(3, 'months').toDate();
+    if (type === 'half-yearly' || type === 'quarterly') {
+      return dayjs(date).add(addMonths[type], 'months').toDate();
     }
 
     return dayjs(date).add(1, type).toDate();
   }
-  if (type === 'month' || type === 'quarterly' || type === 'half-yearly') {
-    const bsDate = ad2bs(date.getFullYear(), date.getMonth() + 1, date.getDate());
 
-    if (type === 'month') {
-      const { year, month } = getNextMonth(bsDate.month, bsDate.year);
+  const bsDate = ad2bs(date.getFullYear(), date.getMonth() + 1, date.getDate());
 
-      return getJSDate({ year, month: String(month), day: String(bsDate.day), dayOfWeek: 1 }, 'BS');
-    }
-
-    if (type === 'quarterly') {
-      const { month, year } = getNextMonth(bsDate.month, bsDate.year, 3);
-
-      return getJSDate({ year, month: String(month), day: String(bsDate.day), dayOfWeek: 1 }, 'BS');
-    }
-
-    if (type === 'half-yearly') {
-      const { month, year } = getNextMonth(bsDate.month, bsDate.year, 6);
-
-      return getJSDate({ year, month: String(month), day: String(bsDate.day), dayOfWeek: 1 }, 'BS');
-    }
-
-    return new Date();
+  if (type === 'quarterly' || type === 'half-yearly' || type === 'month') {
+    const { year, month } = getNextMonth(bsDate.month, bsDate.year, addMonths[type]);
+    return getJSDate({ year, month: String(month), day: String(bsDate.day), dayOfWeek: 1 }, 'BS');
   }
+
   return dayjs(date).add(1, type).toDate();
 };
