@@ -1,11 +1,10 @@
 import { ReactElement } from 'react';
 
-import { Box } from '@myra-ui';
-
+import { BPMOperationsAccountAutopUpdateList } from '@coop/bpm/operations';
 import { BPMLayout, BPMOperationsSidebarLayout } from '@coop/bpm/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingQuickTransferList = () => <Box> BPM</Box>;
+const AccountingQuickTransferList = () => <BPMOperationsAccountAutopUpdateList />;
 
 AccountingQuickTransferList.getLayout = function getLayout(page: ReactElement) {
   return (
