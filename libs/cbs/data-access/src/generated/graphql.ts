@@ -1572,6 +1572,13 @@ export type AppointmentTermInput = {
   title: Scalars['String'];
 };
 
+export const ApprovalStatusType = {
+  Approved: 'APPROVED',
+  Declined: 'DECLINED',
+  Pending: 'PENDING',
+} as const;
+
+export type ApprovalStatusType = typeof ApprovalStatusType[keyof typeof ApprovalStatusType];
 export type ApproveIbtResult = {
   error?: Maybe<MutationError>;
   record?: Maybe<JournalVoucherRecord>;
@@ -1584,6 +1591,17 @@ export type ApproveOrDeclineMutation = {
 
 export type ApproveOrDeclineMutationMembershipRequestArgs = {
   data?: InputMaybe<RequestApproveOrDeclineInput>;
+};
+
+export const ApproveOrNot = {
+  Approved: 'APPROVED',
+  Declined: 'DECLINED',
+} as const;
+
+export type ApproveOrNot = typeof ApproveOrNot[keyof typeof ApproveOrNot];
+export type ApprovedWithError = {
+  approvedOrNot: Scalars['Boolean'];
+  error?: Maybe<MutationError>;
 };
 
 export const Arrange = {
@@ -1983,6 +2001,43 @@ export type BpmMeetingResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type BpmMembershipRequestConnection = {
+  edges?: Maybe<Array<Maybe<BpmMembershipRequestEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type BpmMembershipRequestEdge = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<BpmMembershipRequestListed>;
+};
+
+export type BpmMembershipRequestListed = {
+  approvalStatus?: Maybe<ApprovalStatusType>;
+  contactNo?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  requestedDate?: Maybe<Scalars['Localized']>;
+};
+
+export type BpmMembershipRequestMutation = {
+  approveMembershipRequest: ApprovedWithError;
+};
+
+export type BpmMembershipRequestMutationApproveMembershipRequestArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  status?: InputMaybe<ApproveOrNot>;
+};
+
+export type BpmMembershipRequestQuery = {
+  listMembershipRequest: BpmMembershipRequestConnection;
+};
+
+export type BpmMembershipRequestQueryListMembershipRequestArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type BpmMinorConnection = {
   edges?: Maybe<Array<Maybe<BpmMinorNode>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -2051,6 +2106,7 @@ export type BpmMinorResult = {
 export type BpmMutation = {
   operations: BpmOperationsMutation;
   programs: BpmProgramsMutation;
+  requests: BpmRequestsMutation;
   task: BpmTaskMutation;
 };
 
@@ -2151,7 +2207,16 @@ export type BpmProgramsQueryMeetingDetailArgs = {
 export type BpmQuery = {
   operations: BpmOperationsQuery;
   programs: BpmProgramsQuery;
+  requests: BpmRequestsQuery;
   task: BpmTaskQuery;
+};
+
+export type BpmRequestsMutation = {
+  membershipRequest: BpmMembershipRequestMutation;
+};
+
+export type BpmRequestsQuery = {
+  membershipRequest: BpmMembershipRequestQuery;
 };
 
 export type BpmsvConnection = {
@@ -4593,9 +4658,11 @@ export type DayBookReportData = {
   openingBalance?: Maybe<Scalars['String']>;
   payments?: Maybe<Array<Maybe<DayBookDataValue>>>;
   receipts?: Maybe<Array<Maybe<DayBookDataValue>>>;
+  tellerBalance?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['String']>;
   totalPayment?: Maybe<Scalars['String']>;
   totalReceipts?: Maybe<Scalars['String']>;
+  vaultBalance?: Maybe<Scalars['String']>;
 };
 
 export type DayBookReportFilter = {
