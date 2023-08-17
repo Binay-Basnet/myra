@@ -127,6 +127,7 @@ export const convertDate = (
 export const getJSDate = (date: CalendarBuilderDate, calendarType?: 'AD' | 'BS') => {
   if (calendarType === 'BS') {
     const adDate = bs2ad(date.year, +date.month, +date.day);
+
     return new Date(adDate.year, +adDate.month - 1, +adDate.day);
   }
   return new Date(date.year, +date.month - 1, +date.day);

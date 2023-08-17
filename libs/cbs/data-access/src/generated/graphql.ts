@@ -23377,6 +23377,31 @@ export type SetBpmOperationsLoanProductUpdateMutation = {
   };
 };
 
+export type SetUpdateCollateralMutationVariables = Exact<{
+  loanAccountId: Scalars['ID'];
+  updateType: CollateralUpdateType;
+  data: BpmCollateralData;
+}>;
+
+export type SetUpdateCollateralMutation = {
+  bpm: {
+    operations: {
+      loanCollateral: {
+        updateCollateral?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      };
+    };
+  };
+};
+
 export type SetBpmMeetingsMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: BpmMeetingInput;
@@ -30281,6 +30306,85 @@ export type GetOperationsLoanProductUpdateListQuery = {
             } | null;
           } | null> | null;
           pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetLoanCollateralListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetLoanCollateralListQuery = {
+  bpm: {
+    operations: {
+      loanCollateral: {
+        listCollateral: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node?: {
+              id: string;
+              date?: Record<'local' | 'en' | 'np', string> | null;
+              memberId?: string | null;
+              code?: string | null;
+              name?: string | null;
+              accountName?: string | null;
+              collateralType?: string | null;
+              collateralName?: string | null;
+              updateType?: CollateralUpdateType | null;
+            } | null;
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetOperationsAutoOpenListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetOperationsAutoOpenListQuery = {
+  bpm: {
+    operations: {
+      autoOpenAccount: {
+        listAutoOpenAccount: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node?: {
+              id: string;
+              code?: string | null;
+              count?: string | null;
+              name?: string | null;
+            } | null;
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetOperationsAutoOpenDetailsQueryVariables = Exact<{
+  memberID: Scalars['ID'];
+}>;
+
+export type GetOperationsAutoOpenDetailsQuery = {
+  bpm: {
+    operations: {
+      autoOpenAccount: {
+        getAutoOpenAccounts: {
+          data?: Array<{
+            accountID: string;
+            accountName?: string | null;
+            status?: ObjState | null;
+          } | null> | null;
         };
       };
     };
@@ -45386,6 +45490,41 @@ export const useSetBpmOperationsLoanProductUpdateMutation = <TError = unknown, T
     >(SetBpmOperationsLoanProductUpdateDocument),
     options
   );
+export const SetUpdateCollateralDocument = `
+    mutation setUpdateCollateral($loanAccountId: ID!, $updateType: CollateralUpdateType!, $data: BPMCollateralData!) {
+  bpm {
+    operations {
+      loanCollateral {
+        updateCollateral(
+          loanAccountId: $loanAccountId
+          updateType: $updateType
+          data: $data
+        ) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetUpdateCollateralMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetUpdateCollateralMutation,
+    TError,
+    SetUpdateCollateralMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetUpdateCollateralMutation, TError, SetUpdateCollateralMutationVariables, TContext>(
+    ['setUpdateCollateral'],
+    useAxios<SetUpdateCollateralMutation, SetUpdateCollateralMutationVariables>(
+      SetUpdateCollateralDocument
+    ),
+    options
+  );
 export const SetBpmMeetingsDocument = `
     mutation setBPMMeetings($id: ID, $data: BPMMeetingInput!) {
   bpm {
@@ -55069,6 +55208,119 @@ export const useGetOperationsLoanProductUpdateListQuery = <
       GetOperationsLoanProductUpdateListQuery,
       GetOperationsLoanProductUpdateListQueryVariables
     >(GetOperationsLoanProductUpdateListDocument).bind(null, variables),
+    options
+  );
+export const GetLoanCollateralListDocument = `
+    query getLoanCollateralList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      loanCollateral {
+        listCollateral(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              date
+              memberId
+              code
+              name
+              accountName
+              collateralType
+              collateralName
+              updateType
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetLoanCollateralListQuery = <TData = GetLoanCollateralListQuery, TError = unknown>(
+  variables?: GetLoanCollateralListQueryVariables,
+  options?: UseQueryOptions<GetLoanCollateralListQuery, TError, TData>
+) =>
+  useQuery<GetLoanCollateralListQuery, TError, TData>(
+    variables === undefined ? ['getLoanCollateralList'] : ['getLoanCollateralList', variables],
+    useAxios<GetLoanCollateralListQuery, GetLoanCollateralListQueryVariables>(
+      GetLoanCollateralListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetOperationsAutoOpenListDocument = `
+    query getOperationsAutoOpenList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      autoOpenAccount {
+        listAutoOpenAccount(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              code
+              count
+              name
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetOperationsAutoOpenListQuery = <
+  TData = GetOperationsAutoOpenListQuery,
+  TError = unknown
+>(
+  variables?: GetOperationsAutoOpenListQueryVariables,
+  options?: UseQueryOptions<GetOperationsAutoOpenListQuery, TError, TData>
+) =>
+  useQuery<GetOperationsAutoOpenListQuery, TError, TData>(
+    variables === undefined
+      ? ['getOperationsAutoOpenList']
+      : ['getOperationsAutoOpenList', variables],
+    useAxios<GetOperationsAutoOpenListQuery, GetOperationsAutoOpenListQueryVariables>(
+      GetOperationsAutoOpenListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetOperationsAutoOpenDetailsDocument = `
+    query getOperationsAutoOpenDetails($memberID: ID!) {
+  bpm {
+    operations {
+      autoOpenAccount {
+        getAutoOpenAccounts(memberId: $memberID) {
+          data {
+            accountID
+            accountName
+            status
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetOperationsAutoOpenDetailsQuery = <
+  TData = GetOperationsAutoOpenDetailsQuery,
+  TError = unknown
+>(
+  variables: GetOperationsAutoOpenDetailsQueryVariables,
+  options?: UseQueryOptions<GetOperationsAutoOpenDetailsQuery, TError, TData>
+) =>
+  useQuery<GetOperationsAutoOpenDetailsQuery, TError, TData>(
+    ['getOperationsAutoOpenDetails', variables],
+    useAxios<GetOperationsAutoOpenDetailsQuery, GetOperationsAutoOpenDetailsQueryVariables>(
+      GetOperationsAutoOpenDetailsDocument
+    ).bind(null, variables),
     options
   );
 export const GetBpmEmployeeDetailsDocument = `
