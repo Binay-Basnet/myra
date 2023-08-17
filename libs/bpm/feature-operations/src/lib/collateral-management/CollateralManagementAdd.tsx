@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -24,7 +24,9 @@ import CollateralCard from './components/CollateralCard';
 
 export const CollateralManagementAdd = () => {
   const router = useRouter();
-  const [isRelease, setIsRelease] = React.useState(false);
+  const [isRelease, setIsRelease] = useState(false);
+  const [isSwitch, setIsSwitch] = useState(false);
+
   const methods = useForm();
   const { watch, getValues } = methods;
   const memberIdWatch = watch('memberId');
@@ -87,6 +89,10 @@ export const CollateralManagementAdd = () => {
 
   const releaseHandler = (value: boolean) => {
     setIsRelease(value);
+  };
+
+  const switchHandler = (value: boolean) => {
+    setIsSwitch(value);
   };
 
   const submitForm = () => {
@@ -152,6 +158,8 @@ export const CollateralManagementAdd = () => {
                   data={selectedCollateral?.[0]}
                   isRelease={isRelease}
                   releaseHandler={releaseHandler}
+                  isSwitch={isSwitch}
+                  switchHandler={switchHandler}
                 />
               </GridItem>
             )}
