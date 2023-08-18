@@ -206,7 +206,13 @@ export const TableHeadCell = <T,>({
     <Box
       display="flex"
       gap="s8"
-      justifyContent={header.column.columnDef.meta?.isNumeric ? 'end' : 'start'}
+      justifyContent={
+        header.column.columnDef.meta?.isNumeric
+          ? 'end'
+          : header.column.columns.length !== 0
+          ? 'center'
+          : 'start'
+      }
       alignItems="center"
     >
       {header.isPlaceholder ? null : (

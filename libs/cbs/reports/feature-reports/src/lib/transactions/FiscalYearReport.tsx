@@ -8,7 +8,7 @@ import {
   Maybe,
   Scalars,
   TrialSheetReportFilter,
-  useGetBranchListQuery,
+  useAppSelector,
   useGetFiscalYearTrialBalanceQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
@@ -232,25 +232,20 @@ const FiscalYearCOATable = ({ data, type, total, coaRedirect = true }: ICOATable
 
   const datePeriod = getValues()?.period;
 
-  const { data: branchListQueryData } = useGetBranchListQuery({
-    paginate: {
-      after: '',
-      first: -1,
-    },
-  });
+  const auth = useAppSelector((state) => state?.auth);
 
-  if (data?.length === 0 && !branchListQueryData) {
+  if (data?.length === 0 && !auth.availableBranches?.length) {
     return null;
   }
 
-  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
+  const branchList = auth.availableBranches;
+
   const headers =
     branchIDs?.length === branchList?.length
       ? ['Total']
       : [
-          ...((branchList
-            ?.filter((a) => branchIDs?.includes(a?.node?.id || ''))
-            ?.map((a) => a.node?.id) || []) as string[]),
+          ...((branchList?.filter((a) => branchIDs?.includes(a?.id || ''))?.map((a) => a?.id) ||
+            []) as string[]),
           branchIDs?.length === 1 ? undefined : 'Total',
         ]?.filter(Boolean);
 
@@ -306,7 +301,7 @@ const FiscalYearCOATable = ({ data, type, total, coaRedirect = true }: ICOATable
     ...headers.map(
       (header) =>
         ({
-          header: branchList?.find((b) => b?.node?.id === header)?.node?.name || 'Total',
+          header: branchList?.find((b) => b?.id === header)?.name || 'Total',
           // accessorKey: 'balance',
           columns: [
             {

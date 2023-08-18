@@ -7433,6 +7433,7 @@ export type FianancialTransactionReport = {
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
   serviceCenterBalanceReport: SericeCenterStatementResult;
   tagKhataReport: TagKhataReportResult;
+  tellerDayBookReport: DayBookReportResult;
   tellerReport: TellerReportResult;
   trialSheetReport: TrialSheetReportResult;
   vaultBalanceReport: VaultBalanceReportResult;
@@ -7476,6 +7477,10 @@ export type FianancialTransactionReportServiceCenterBalanceReportArgs = {
 
 export type FianancialTransactionReportTagKhataReportArgs = {
   data: TagKhataReportFilter;
+};
+
+export type FianancialTransactionReportTellerDayBookReportArgs = {
+  data: TellerDayBookReportFilter;
 };
 
 export type FianancialTransactionReportTellerReportArgs = {
@@ -21073,6 +21078,12 @@ export type TellerDataHolder = {
   inTransitTotal?: Maybe<Scalars['String']>;
   outAmountTotal?: Maybe<Scalars['String']>;
   stackTotal?: Maybe<Scalars['String']>;
+};
+
+export type TellerDayBookReportFilter = {
+  branchId: Array<InputMaybe<Scalars['String']>>;
+  period?: InputMaybe<LocalizedDateFilter>;
+  user: Scalars['ID'];
 };
 
 export type TellerFilter = {

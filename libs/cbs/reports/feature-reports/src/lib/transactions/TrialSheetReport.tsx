@@ -8,6 +8,7 @@ import {
   Maybe,
   Scalars,
   TrialSheetReportFilter,
+  useAppSelector,
   useGetBranchListQuery,
   useGetTrialSheetReportQuery,
 } from '@coop/cbs/data-access';
@@ -223,25 +224,19 @@ export const COATable = ({ data, type, total, coaRedirect = true }: ICOATablePro
 
   const datePeriod = getValues()?.period;
 
-  const { data: branchListQueryData } = useGetBranchListQuery({
-    paginate: {
-      after: '',
-      first: -1,
-    },
-  });
+  const auth = useAppSelector((state) => state?.auth);
 
-  if (data?.length === 0 && !branchListQueryData) {
+  if (data?.length === 0 && !auth?.availableBranches?.length) {
     return null;
   }
 
-  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
+  const branchList = auth?.availableBranches;
   const headers =
     branchIDs?.length === branchList?.length
       ? ['Total']
       : [
-          ...((branchList
-            ?.filter((a) => branchIDs?.includes(a?.node?.id || ''))
-            ?.map((a) => a.node?.id) || []) as string[]),
+          ...((branchList?.filter((a) => branchIDs?.includes(a?.id || ''))?.map((a) => a?.id) ||
+            []) as string[]),
           branchIDs?.length === 1 ? undefined : 'Total',
         ]?.filter(Boolean);
 
@@ -297,7 +292,7 @@ export const COATable = ({ data, type, total, coaRedirect = true }: ICOATablePro
     ...headers.map(
       (header) =>
         ({
-          header: branchList?.find((b) => b?.node?.id === header)?.node?.name || 'Total',
+          header: branchList?.find((b) => b?.id === header)?.name || 'Total',
           accessorKey: 'balance',
           columns: [
             {
@@ -406,9 +401,9 @@ export const CoaTotalTable = ({ total }: ICoaTotalTableProps) => {
       ? ['Total']
       : [
           ...((branchList
-            ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
+            ?.filter((a) => branchIDs?.includes(a?.node?.id || ''))
             ?.map((a) => a.node?.id) || []) as string[]),
-          branchIDs.length === 1 ? undefined : 'Total',
+          branchIDs?.length === 1 ? undefined : 'Total',
         ]?.filter(Boolean);
 
   const particularData: Record<string, string>[] = total?.map((t) => ({
