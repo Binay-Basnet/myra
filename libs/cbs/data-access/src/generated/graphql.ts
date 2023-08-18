@@ -7433,6 +7433,7 @@ export type FianancialTransactionReport = {
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
   serviceCenterBalanceReport: SericeCenterStatementResult;
   tagKhataReport: TagKhataReportResult;
+  tellerDayBookReport: DayBookReportResult;
   tellerReport: TellerReportResult;
   trialSheetReport: TrialSheetReportResult;
   vaultBalanceReport: VaultBalanceReportResult;
@@ -7476,6 +7477,10 @@ export type FianancialTransactionReportServiceCenterBalanceReportArgs = {
 
 export type FianancialTransactionReportTagKhataReportArgs = {
   data: TagKhataReportFilter;
+};
+
+export type FianancialTransactionReportTellerDayBookReportArgs = {
+  data: TellerDayBookReportFilter;
 };
 
 export type FianancialTransactionReportTellerReportArgs = {
@@ -21073,6 +21078,12 @@ export type TellerDataHolder = {
   inTransitTotal?: Maybe<Scalars['String']>;
   outAmountTotal?: Maybe<Scalars['String']>;
   stackTotal?: Maybe<Scalars['String']>;
+};
+
+export type TellerDayBookReportFilter = {
+  branchId: Array<InputMaybe<Scalars['String']>>;
+  period?: InputMaybe<LocalizedDateFilter>;
+  user: Scalars['ID'];
 };
 
 export type TellerFilter = {
@@ -38423,6 +38434,50 @@ export type GetDayBookReportQuery = {
     transactionReport: {
       financial: {
         dayBookReport: {
+          data?: {
+            closingAmount?: string | null;
+            openingBalance?: string | null;
+            tellerBalance?: string | null;
+            vaultBalance?: string | null;
+            totalAmount?: string | null;
+            totalPayment?: string | null;
+            totalReceipts?: string | null;
+            payments?: Array<{
+              accountHead?: string | null;
+              amount?: string | null;
+              entries?: Array<{
+                particular?: string | null;
+                ledger?: string | null;
+                voucherNo?: string | null;
+                amount?: string | null;
+              } | null> | null;
+            } | null> | null;
+            receipts?: Array<{
+              accountHead?: string | null;
+              amount?: string | null;
+              entries?: Array<{
+                particular?: string | null;
+                ledger?: string | null;
+                voucherNo?: string | null;
+                amount?: string | null;
+              } | null> | null;
+            } | null> | null;
+          } | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetTellerDayBookReportQueryVariables = Exact<{
+  data: TellerDayBookReportFilter;
+}>;
+
+export type GetTellerDayBookReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        tellerDayBookReport: {
           data?: {
             closingAmount?: string | null;
             openingBalance?: string | null;
@@ -65651,6 +65706,61 @@ export const useGetDayBookReportQuery = <TData = GetDayBookReportQuery, TError =
       null,
       variables
     ),
+    options
+  );
+export const GetTellerDayBookReportDocument = `
+    query getTellerDayBookReport($data: TellerDayBookReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        tellerDayBookReport(data: $data) {
+          data {
+            closingAmount
+            openingBalance
+            tellerBalance
+            vaultBalance
+            payments {
+              accountHead
+              amount
+              entries {
+                particular
+                ledger
+                voucherNo
+                amount
+              }
+            }
+            receipts {
+              accountHead
+              amount
+              entries {
+                particular
+                ledger
+                voucherNo
+                amount
+              }
+            }
+            totalAmount
+            totalPayment
+            totalReceipts
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetTellerDayBookReportQuery = <
+  TData = GetTellerDayBookReportQuery,
+  TError = unknown
+>(
+  variables: GetTellerDayBookReportQueryVariables,
+  options?: UseQueryOptions<GetTellerDayBookReportQuery, TError, TData>
+) =>
+  useQuery<GetTellerDayBookReportQuery, TError, TData>(
+    ['getTellerDayBookReport', variables],
+    useAxios<GetTellerDayBookReportQuery, GetTellerDayBookReportQueryVariables>(
+      GetTellerDayBookReportDocument
+    ).bind(null, variables),
     options
   );
 export const GetServiceCenterBalanceReportDocument = `

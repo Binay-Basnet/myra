@@ -105,6 +105,8 @@ export enum Report {
   TRANSACTION_CASH_LEDGER = 'Cash Ledger Report',
   TRANSACTION_VAULT_BALANCE = 'Vault Balance Report',
   TRANSACTION_DAY_BOOK_REPORT = 'Day Book Report',
+  TRANSACTION_TELLER_DAY_BOOK_REPORT = 'Teller Day Book Report',
+
   TRANSACTION_SUSPICIOUS_TRANSACTION_REPORT = 'Suspicious Transaction Report',
   TRANSACTION_BALANCE_SHEET_REPORT = 'Balance Sheet Report',
   TRANSACTION_SERVICE_CENTER_BALANCE_REPORT = 'Service Center Balance',
@@ -563,6 +565,11 @@ export const REPORTS = {
       id: '7.8',
       report: Report.TRANSACTION_DAY_BOOK_REPORT,
       link: 'day-book',
+    },
+    {
+      id: '7.8.2',
+      report: Report.TRANSACTION_TELLER_DAY_BOOK_REPORT,
+      link: 'teller-day-book',
     },
     {
       id: '7.1',
