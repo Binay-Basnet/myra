@@ -219,6 +219,45 @@ query getDayBookReport($data: DayBookReportFilter!) {
   }
 }
 
+query getTellerDayBookReport($data: TellerDayBookReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        tellerDayBookReport(data: $data) {
+          data {
+            closingAmount
+            openingBalance
+            tellerBalance
+            vaultBalance
+            payments {
+              accountHead
+              amount
+              entries {
+                particular
+                ledger
+                voucherNo
+                amount
+              }
+            }
+            receipts {
+              accountHead
+              amount
+              entries {
+                particular
+                ledger
+                voucherNo
+                amount
+              }
+            }
+            totalAmount
+            totalPayment
+            totalReceipts
+          }
+        }
+      }
+    }
+  }
+}
 query getServiceCenterBalanceReport($data: ServiceCenterBalanceFilter!) {
   report {
     transactionReport {

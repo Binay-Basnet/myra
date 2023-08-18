@@ -38469,6 +38469,50 @@ export type GetDayBookReportQuery = {
   };
 };
 
+export type GetTellerDayBookReportQueryVariables = Exact<{
+  data: TellerDayBookReportFilter;
+}>;
+
+export type GetTellerDayBookReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        tellerDayBookReport: {
+          data?: {
+            closingAmount?: string | null;
+            openingBalance?: string | null;
+            tellerBalance?: string | null;
+            vaultBalance?: string | null;
+            totalAmount?: string | null;
+            totalPayment?: string | null;
+            totalReceipts?: string | null;
+            payments?: Array<{
+              accountHead?: string | null;
+              amount?: string | null;
+              entries?: Array<{
+                particular?: string | null;
+                ledger?: string | null;
+                voucherNo?: string | null;
+                amount?: string | null;
+              } | null> | null;
+            } | null> | null;
+            receipts?: Array<{
+              accountHead?: string | null;
+              amount?: string | null;
+              entries?: Array<{
+                particular?: string | null;
+                ledger?: string | null;
+                voucherNo?: string | null;
+                amount?: string | null;
+              } | null> | null;
+            } | null> | null;
+          } | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetServiceCenterBalanceReportQueryVariables = Exact<{
   data: ServiceCenterBalanceFilter;
 }>;
@@ -65662,6 +65706,61 @@ export const useGetDayBookReportQuery = <TData = GetDayBookReportQuery, TError =
       null,
       variables
     ),
+    options
+  );
+export const GetTellerDayBookReportDocument = `
+    query getTellerDayBookReport($data: TellerDayBookReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        tellerDayBookReport(data: $data) {
+          data {
+            closingAmount
+            openingBalance
+            tellerBalance
+            vaultBalance
+            payments {
+              accountHead
+              amount
+              entries {
+                particular
+                ledger
+                voucherNo
+                amount
+              }
+            }
+            receipts {
+              accountHead
+              amount
+              entries {
+                particular
+                ledger
+                voucherNo
+                amount
+              }
+            }
+            totalAmount
+            totalPayment
+            totalReceipts
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetTellerDayBookReportQuery = <
+  TData = GetTellerDayBookReportQuery,
+  TError = unknown
+>(
+  variables: GetTellerDayBookReportQueryVariables,
+  options?: UseQueryOptions<GetTellerDayBookReportQuery, TError, TData>
+) =>
+  useQuery<GetTellerDayBookReportQuery, TError, TData>(
+    ['getTellerDayBookReport', variables],
+    useAxios<GetTellerDayBookReportQuery, GetTellerDayBookReportQueryVariables>(
+      GetTellerDayBookReportDocument
+    ).bind(null, variables),
     options
   );
 export const GetServiceCenterBalanceReportDocument = `
