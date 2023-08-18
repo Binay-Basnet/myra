@@ -75,7 +75,7 @@ export const FiscalYearReport = () => {
         filter: {
           includeZero: filters?.filter?.includeZero === 'include',
           includeFiscalReversal: filters?.filter?.includeFiscalReversal === 'YES',
-          inculdeAdjustment: filters?.filter?.inculdeAdjustment === 'YES',
+          // inculdeAdjustment: filters?.filter?.inculdeAdjustment === 'YES',
         },
       },
     },
@@ -203,7 +203,7 @@ export const FiscalYearReport = () => {
               direction="column"
             />
           </Report.Filter>
-          <Report.Filter title="Include Adjustments">
+          {/* <Report.Filter title="Include Adjustments">
             <FormRadioGroup
               name="filter.inculdeAdjustment"
               options={[
@@ -212,7 +212,7 @@ export const FiscalYearReport = () => {
               ]}
               direction="column"
             />
-          </Report.Filter>
+          </Report.Filter> */}
         </Report.Filters>
       </Report.Body>
     </Report>
