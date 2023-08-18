@@ -87,7 +87,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
             <GridItem colSpan={2}>
               <FormCheckbox
                 name="accountTransfer.isDifferentMember"
-                label="Withdraw Slip is from different member"
+                label="Destination account is from different member"
               />
             </GridItem>
 
