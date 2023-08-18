@@ -197,7 +197,11 @@ export const AddUser = () => {
 
       reset({
         ...formData,
-        branch: userData?.branch as unknown as { label: string; value: string }[],
+        // branch: userData?.branch as unknown as { label: string; value: string }[],
+        branch: userData?.branch?.map((b) => ({ value: b })) as unknown as {
+          label: string;
+          value: string;
+        }[],
         role: userData?.role as unknown as { label: string; value: string }[],
         permanentAddress: {
           ...userData?.permanentAddress,
