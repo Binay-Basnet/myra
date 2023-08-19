@@ -1679,6 +1679,19 @@ export type AssociatedGuaranteeDetails = {
   memberName?: Maybe<Scalars['String']>;
 };
 
+export type AttendanceInput = {
+  attendanceDate?: InputMaybe<Scalars['Localized']>;
+  checkInTime?: InputMaybe<Scalars['Time']>;
+  checkOutTime?: InputMaybe<Scalars['Time']>;
+  employeeId?: InputMaybe<Scalars['ID']>;
+};
+
+export const AttendanceStatus = {
+  Absent: 'ABSENT',
+  Present: 'PRESENT',
+} as const;
+
+export type AttendanceStatus = typeof AttendanceStatus[keyof typeof AttendanceStatus];
 export type AuditLog = {
   action?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -4732,6 +4745,7 @@ export type DayBookReportData = {
   openingBalance?: Maybe<Scalars['String']>;
   payments?: Maybe<Array<Maybe<DayBookDataValue>>>;
   receipts?: Maybe<Array<Maybe<DayBookDataValue>>>;
+  remainingBalance?: Maybe<Scalars['String']>;
   tellerBalance?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['String']>;
   totalPayment?: Maybe<Scalars['String']>;
@@ -5979,6 +5993,21 @@ export type Designation = {
 export type DesignationResult = {
   error?: Maybe<MutationError>;
   recordId: Scalars['String'];
+};
+
+export type DetailsByDayListed = {
+  absent?: Maybe<Scalars['Int']>;
+  day?: Maybe<Scalars['Localized']>;
+  present?: Maybe<Scalars['Int']>;
+  totalEmployee?: Maybe<Scalars['Int']>;
+};
+
+export type DetailsOfDayListed = {
+  attendanceDate?: Maybe<Scalars['Localized']>;
+  department?: Maybe<Scalars['String']>;
+  designation?: Maybe<Scalars['String']>;
+  employee?: Maybe<Scalars['String']>;
+  status?: Maybe<AttendanceStatus>;
 };
 
 export type DirectorDetailsFormState = {
@@ -8814,6 +8843,22 @@ export type HcmSettingsQuery = {
   payroll: HcmPayrollQuery;
 };
 
+export type HrEmployeeAttendanceQuery = {
+  listDetailsByDay: ListDetailsConnection;
+  listDetailsOfDay: ListDetailsOfDayConnection;
+};
+
+export type HrEmployeeAttendanceQueryListDetailsByDayArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HrEmployeeAttendanceQueryListDetailsOfDayArgs = {
+  date?: InputMaybe<Scalars['Localized']>;
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type HrEmployeeKyeMutation = {
   upsertEmployee: EmployeeReturnResult;
 };
@@ -9028,6 +9073,7 @@ export type HrEmployeeListEdges = {
 };
 
 export type HrEmployeeMutation = {
+  attendance: HrEmployeeAttendanceMutation;
   employee: HrEmployeeKyeMutation;
   leave: HrEmployeeLeaveMutation;
   leaveAllocation: HrEmployeeLeaveAllocationMutation;
@@ -9046,6 +9092,7 @@ export type HrEmployeePromotionEdges = {
 
 export type HrEmployeeQuery = {
   employee: HrEmployeeKyeQuery;
+  hrEmployeeAttendanceQuery: HrEmployeeAttendanceQuery;
   leave: HrEmployeeLeaveQuery;
   leaveAllocation: HrEmployeeLeaveAllocationQuery;
 };
@@ -9339,6 +9386,15 @@ export type HcmPayrollTaxSlabQueryGetTaxSlabArgs = {
 export type HcmPayrollTaxSlabQueryListTaxSlabArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type HrEmployeeAttendanceMutation = {
+  upsertAttendance: ReturnAttendanceMutation;
+};
+
+export type HrEmployeeAttendanceMutationUpsertAttendanceArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: AttendanceInput;
 };
 
 export type HrEmployeeEducationDetail = {
@@ -12956,6 +13012,28 @@ export type Level2AddArgs = {
 
 export type Level2HelloArgs = {
   data: ExampleInput;
+};
+
+export type ListDetailsByDayEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<DetailsByDayListed>;
+};
+
+export type ListDetailsConnection = {
+  edges?: Maybe<Array<Maybe<ListDetailsByDayEdges>>>;
+  pageinfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ListDetailsOfDayConnection = {
+  edges?: Maybe<Array<Maybe<ListDetailsOfDayEdges>>>;
+  pageinfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ListDetailsOfDayEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<DetailsOfDayListed>;
 };
 
 export type ListTaskConnection = {
@@ -18707,6 +18785,11 @@ export type ReturnApprovedOrNot = {
   error?: Maybe<MutationError>;
 };
 
+export type ReturnAttendanceMutation = {
+  error?: Maybe<MutationError>;
+  id?: Maybe<Scalars['ID']>;
+};
+
 export type ReturnDeductionComponent = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
@@ -23989,6 +24072,30 @@ export type SetLeaveAllocationMutation = {
       leaveAllocation: {
         upsertLeaveAllocation: {
           recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type SetAttendanceMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: AttendanceInput;
+}>;
+
+export type SetAttendanceMutation = {
+  hr: {
+    employee: {
+      attendance: {
+        upsertAttendance: {
+          id?: string | null;
           error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
@@ -31455,6 +31562,33 @@ export type GetLeaveAllocationListQuery = {
             };
           } | null> | null;
           pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetEmployeeAtendanceListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeAtendanceListQuery = {
+  hr: {
+    employee: {
+      hrEmployeeAttendanceQuery: {
+        listDetailsByDay: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              day?: Record<'local' | 'en' | 'np', string> | null;
+              totalEmployee?: number | null;
+              present?: number | null;
+              absent?: number | null;
+            } | null;
+          } | null> | null;
+          pageinfo?: PaginationFragment | null;
         };
       };
     };
@@ -46302,6 +46436,35 @@ export const useSetLeaveAllocationMutation = <TError = unknown, TContext = unkno
     ),
     options
   );
+export const SetAttendanceDocument = `
+    mutation setAttendance($id: ID, $input: AttendanceInput!) {
+  hr {
+    employee {
+      attendance {
+        upsertAttendance(id: $id, input: $input) {
+          id
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAttendanceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAttendanceMutation,
+    TError,
+    SetAttendanceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetAttendanceMutation, TError, SetAttendanceMutationVariables, TContext>(
+    ['setAttendance'],
+    useAxios<SetAttendanceMutation, SetAttendanceMutationVariables>(SetAttendanceDocument),
+    options
+  );
 export const SetEmployeeOnboardingUpsertDocument = `
     mutation setEmployeeOnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) {
   hr {
@@ -56612,6 +56775,47 @@ export const useGetLeaveAllocationListQuery = <
     variables === undefined ? ['getLeaveAllocationList'] : ['getLeaveAllocationList', variables],
     useAxios<GetLeaveAllocationListQuery, GetLeaveAllocationListQueryVariables>(
       GetLeaveAllocationListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeAtendanceListDocument = `
+    query getEmployeeAtendanceList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employee {
+      hrEmployeeAttendanceQuery {
+        listDetailsByDay(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              day
+              totalEmployee
+              present
+              absent
+            }
+            cursor
+          }
+          pageinfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeAtendanceListQuery = <
+  TData = GetEmployeeAtendanceListQuery,
+  TError = unknown
+>(
+  variables?: GetEmployeeAtendanceListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeAtendanceListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeAtendanceListQuery, TError, TData>(
+    variables === undefined
+      ? ['getEmployeeAtendanceList']
+      : ['getEmployeeAtendanceList', variables],
+    useAxios<GetEmployeeAtendanceListQuery, GetEmployeeAtendanceListQueryVariables>(
+      GetEmployeeAtendanceListDocument
     ).bind(null, variables),
     options
   );
