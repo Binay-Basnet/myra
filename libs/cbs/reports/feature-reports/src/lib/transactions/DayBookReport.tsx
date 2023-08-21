@@ -5,11 +5,15 @@ import { GridItem } from '@myra-ui/components';
 import { Box } from '@myra-ui/foundations';
 import { ExpandedCell, ExpandedHeader, MultiFooter } from '@myra-ui/table';
 
-import { LocalizedDateFilter, useGetDayBookReportQuery } from '@coop/cbs/data-access';
+import {
+  LocalizedDateFilter,
+  TransactionNature,
+  useGetDayBookReportQuery,
+} from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { RouteToDetailsPage } from '@coop/cbs/utils';
-import { FormBranchSelect, FormDatePicker } from '@coop/shared/form';
+import { FormBranchSelect, FormDatePicker, FormSelect } from '@coop/shared/form';
 import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
 type DayBookTable = {
@@ -24,9 +28,7 @@ type DayBookTable = {
 type ReportFilter = {
   branchId: { label: string; value: string }[];
   period: LocalizedDateFilter;
-  filter: {
-    user: string;
-  };
+  transactionNature: TransactionNature;
 };
 
 export const DayBookReport = () => {
@@ -46,8 +48,8 @@ export const DayBookReport = () => {
           from: filters?.period?.from,
           to: filters?.period?.from,
         } as LocalizedDateFilter,
-        user: filters?.filter?.user ? [filters?.filter?.user as string] : null,
         // date: filters?.date,
+        transactionNature: filters?.transactionNature as TransactionNature,
         branchId: branchIDs,
       },
     },
@@ -119,8 +121,19 @@ export const DayBookReport = () => {
         />
 
         <Report.Inputs>
-          <GridItem colSpan={3}>
+          <GridItem colSpan={2}>
             <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
+          </GridItem>
+          <GridItem colSpan={1}>
+            <FormSelect
+              label="Transaction Nature"
+              name="transactionNature"
+              options={[
+                { label: 'All', value: TransactionNature?.All },
+                { label: 'System', value: TransactionNature?.System },
+                { label: 'Manual', value: TransactionNature?.Manual },
+              ]}
+            />{' '}
           </GridItem>
           <GridItem colSpan={1}>
             <FormDatePicker name="period.from" label="Date" />

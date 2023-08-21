@@ -4757,7 +4757,7 @@ export type DayBookReportData = {
 export type DayBookReportFilter = {
   branchId: Array<InputMaybe<Scalars['String']>>;
   period?: InputMaybe<LocalizedDateFilter>;
-  user?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  transactionNature: TransactionNature;
 };
 
 export type DayBookReportResult = {
@@ -21481,6 +21481,13 @@ export type TransactionMyDayData = {
   error?: Maybe<QueryError>;
 };
 
+export const TransactionNature = {
+  All: 'ALL',
+  Manual: 'MANUAL',
+  System: 'SYSTEM',
+} as const;
+
+export type TransactionNature = typeof TransactionNature[keyof typeof TransactionNature];
 export type TransactionQuery = {
   cashInTransit: CashInTransitConnection;
   cashInTransitDetail?: Maybe<CashInTransitViewResult>;
