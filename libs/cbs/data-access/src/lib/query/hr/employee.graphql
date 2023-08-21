@@ -244,3 +244,27 @@ query getLeaveAllocationList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getEmployeeAtendanceList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employee {
+      hrEmployeeAttendanceQuery {
+        listDetailsByDay(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              day
+              totalEmployee
+              present
+              absent
+            }
+            cursor
+          }
+          pageinfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

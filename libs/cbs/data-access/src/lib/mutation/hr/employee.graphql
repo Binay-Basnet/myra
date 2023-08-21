@@ -57,3 +57,18 @@ mutation setLeaveAllocation($id: ID, $input: LeaveAllocationInput!) {
     }
   }
 }
+
+mutation setAttendance($id: ID, $input: AttendanceInput!) {
+  hr {
+    employee {
+      attendance {
+        upsertAttendance(id: $id, input: $input) {
+          id
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

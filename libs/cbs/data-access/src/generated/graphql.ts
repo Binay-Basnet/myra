@@ -13075,6 +13075,7 @@ export type LoanAccount = {
   appliedLoanAmount: Scalars['String'];
   approvedDate?: Maybe<Scalars['Localized']>;
   branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   closedDate?: Maybe<Scalars['Localized']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
@@ -24085,6 +24086,30 @@ export type SetLeaveAllocationMutation = {
   };
 };
 
+export type SetAttendanceMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: AttendanceInput;
+}>;
+
+export type SetAttendanceMutation = {
+  hr: {
+    employee: {
+      attendance: {
+        upsertAttendance: {
+          id?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type SetEmployeeOnboardingUpsertMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: EmployeeOnboardingInput;
@@ -31544,6 +31569,33 @@ export type GetLeaveAllocationListQuery = {
   };
 };
 
+export type GetEmployeeAtendanceListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeAtendanceListQuery = {
+  hr: {
+    employee: {
+      hrEmployeeAttendanceQuery: {
+        listDetailsByDay: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              day?: Record<'local' | 'en' | 'np', string> | null;
+              totalEmployee?: number | null;
+              present?: number | null;
+              absent?: number | null;
+            } | null;
+          } | null> | null;
+          pageinfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetHrEmployeeOnboardingListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -33775,6 +33827,8 @@ export type GetLoanListQuery = {
           id: string;
           appliedLoanAmount: string;
           totalSanctionedAmount?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
           LoanAccountName?: string | null;
           createdAt: string;
           closedDate?: Record<'local' | 'en' | 'np', string> | null;
@@ -46387,6 +46441,35 @@ export const useSetLeaveAllocationMutation = <TError = unknown, TContext = unkno
     ),
     options
   );
+export const SetAttendanceDocument = `
+    mutation setAttendance($id: ID, $input: AttendanceInput!) {
+  hr {
+    employee {
+      attendance {
+        upsertAttendance(id: $id, input: $input) {
+          id
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAttendanceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAttendanceMutation,
+    TError,
+    SetAttendanceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetAttendanceMutation, TError, SetAttendanceMutationVariables, TContext>(
+    ['setAttendance'],
+    useAxios<SetAttendanceMutation, SetAttendanceMutationVariables>(SetAttendanceDocument),
+    options
+  );
 export const SetEmployeeOnboardingUpsertDocument = `
     mutation setEmployeeOnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) {
   hr {
@@ -56700,6 +56783,47 @@ export const useGetLeaveAllocationListQuery = <
     ).bind(null, variables),
     options
   );
+export const GetEmployeeAtendanceListDocument = `
+    query getEmployeeAtendanceList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employee {
+      hrEmployeeAttendanceQuery {
+        listDetailsByDay(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              day
+              totalEmployee
+              present
+              absent
+            }
+            cursor
+          }
+          pageinfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeAtendanceListQuery = <
+  TData = GetEmployeeAtendanceListQuery,
+  TError = unknown
+>(
+  variables?: GetEmployeeAtendanceListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeAtendanceListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeAtendanceListQuery, TError, TData>(
+    variables === undefined
+      ? ['getEmployeeAtendanceList']
+      : ['getEmployeeAtendanceList', variables],
+    useAxios<GetEmployeeAtendanceListQuery, GetEmployeeAtendanceListQueryVariables>(
+      GetEmployeeAtendanceListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetHrEmployeeOnboardingListDocument = `
     query getHREmployeeOnboardingList($filter: Filter, $pagination: Pagination) {
   hr {
@@ -59596,6 +59720,8 @@ export const GetLoanListDocument = `
           product {
             productName
           }
+          branchId
+          branchName
           LoanAccountName
           createdAt
           closedDate

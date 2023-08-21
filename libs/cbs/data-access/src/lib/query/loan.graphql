@@ -238,6 +238,9 @@ query getLoanList($paginate: Pagination, $filter: Filter) {
           product {
             productName
           }
+          branchId
+          branchName
+
           LoanAccountName
           createdAt
           closedDate

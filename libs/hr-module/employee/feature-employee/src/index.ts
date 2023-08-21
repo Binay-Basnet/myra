@@ -1,3 +1,6 @@
+export * from './lib/attendance/AttendanceAdd'
+export * from './lib/attendance/AttendanceDetails'
+export * from './lib/attendance/AttendanceList';
 export * from './lib/HrModuleEmployeeFeatureEmployeeAdd';
 export * from './lib/HrModuleEmployeeFeatureEmployeeList';
 export * from './lib/leave/HrModuleEmployeeLeaveAdd';
