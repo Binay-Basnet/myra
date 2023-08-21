@@ -4741,6 +4741,7 @@ export type DayBookDataValue = {
 };
 
 export type DayBookReportData = {
+  cashToVault?: Maybe<Scalars['String']>;
   closingAmount?: Maybe<Scalars['String']>;
   openingBalance?: Maybe<Scalars['String']>;
   payments?: Maybe<Array<Maybe<DayBookDataValue>>>;
@@ -6007,6 +6008,7 @@ export type DetailsOfDayListed = {
   department?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
   employee?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
   status?: Maybe<AttendanceStatus>;
 };
 
@@ -13021,13 +13023,13 @@ export type ListDetailsByDayEdges = {
 
 export type ListDetailsConnection = {
   edges?: Maybe<Array<Maybe<ListDetailsByDayEdges>>>;
-  pageinfo?: Maybe<PageInfo>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
 export type ListDetailsOfDayConnection = {
   edges?: Maybe<Array<Maybe<ListDetailsOfDayEdges>>>;
-  pageinfo?: Maybe<PageInfo>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -19943,6 +19945,7 @@ export type SetupMutation = {
   eodSeed?: Maybe<Scalars['String']>;
   migration?: Maybe<DataMigration>;
   utilityCashBackLedger?: Maybe<Scalars['Boolean']>;
+  utilityOrganizationLedger?: Maybe<Scalars['Boolean']>;
   utilityServiceChargeLedger?: Maybe<Scalars['Boolean']>;
 };
 
@@ -19959,6 +19962,10 @@ export type SetupMutationEodSeedArgs = {
 };
 
 export type SetupMutationUtilityCashBackLedgerArgs = {
+  value: CashBackLedgerInput;
+};
+
+export type SetupMutationUtilityOrganizationLedgerArgs = {
   value: CashBackLedgerInput;
 };
 
@@ -21953,6 +21960,12 @@ export const UserType = {
 } as const;
 
 export type UserType = typeof UserType[keyof typeof UserType];
+export type UtilityCashBackSetup = {
+  cashBackCoaHead: Scalars['String'];
+  serviceChargeCoaHead: Scalars['String'];
+  utilityCoaHead: Scalars['String'];
+};
+
 export type UtilityMutation = {
   addCashBack: CashBackResult;
 };
@@ -31589,7 +31602,36 @@ export type GetEmployeeAtendanceListQuery = {
               absent?: number | null;
             } | null;
           } | null> | null;
-          pageinfo?: PaginationFragment | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetListDetailsOfDayQueryVariables = Exact<{
+  date?: InputMaybe<Scalars['Localized']>;
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetListDetailsOfDayQuery = {
+  hr: {
+    employee: {
+      hrEmployeeAttendanceQuery: {
+        listDetailsOfDay: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              employee?: string | null;
+              status?: AttendanceStatus | null;
+              attendanceDate?: Record<'local' | 'en' | 'np', string> | null;
+              department?: string | null;
+              designation?: string | null;
+            } | null;
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
         };
       };
     };
@@ -56797,7 +56839,7 @@ export const GetEmployeeAtendanceListDocument = `
             }
             cursor
           }
-          pageinfo {
+          pageInfo {
             ...Pagination
           }
         }
@@ -56819,6 +56861,43 @@ export const useGetEmployeeAtendanceListQuery = <
       : ['getEmployeeAtendanceList', variables],
     useAxios<GetEmployeeAtendanceListQuery, GetEmployeeAtendanceListQueryVariables>(
       GetEmployeeAtendanceListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetListDetailsOfDayDocument = `
+    query getListDetailsOfDay($date: Localized, $filter: Filter, $pagination: Pagination) {
+  hr {
+    employee {
+      hrEmployeeAttendanceQuery {
+        listDetailsOfDay(date: $date, filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employee
+              status
+              attendanceDate
+              department
+              designation
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetListDetailsOfDayQuery = <TData = GetListDetailsOfDayQuery, TError = unknown>(
+  variables?: GetListDetailsOfDayQueryVariables,
+  options?: UseQueryOptions<GetListDetailsOfDayQuery, TError, TData>
+) =>
+  useQuery<GetListDetailsOfDayQuery, TError, TData>(
+    variables === undefined ? ['getListDetailsOfDay'] : ['getListDetailsOfDay', variables],
+    useAxios<GetListDetailsOfDayQuery, GetListDetailsOfDayQueryVariables>(
+      GetListDetailsOfDayDocument
     ).bind(null, variables),
     options
   );

@@ -1,11 +1,14 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
 import { Arrange, useGetEmployeeAtendanceListQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const AttendanceList = () => {
+  const router = useRouter();
   const { data, isFetching } = useGetEmployeeAtendanceListQuery({
     pagination: {
       ...getPaginationQuery(),
@@ -52,8 +55,13 @@ export const AttendanceList = () => {
         pagination={{
           total: data?.hr?.employee?.hrEmployeeAttendanceQuery?.listDetailsByDay
             ?.totalCount as number,
-          pageInfo: data?.hr?.employee?.hrEmployeeAttendanceQuery?.listDetailsByDay?.pageinfo,
+          pageInfo: data?.hr?.employee?.hrEmployeeAttendanceQuery?.listDetailsByDay?.pageInfo,
         }}
+        rowOnClick={(row) =>
+          router?.push(
+            `${ROUTES?.HRMODULE_ATTENDENCE_DETAILS}?local=${row?.node?.day?.local}&&en=${row?.node?.day?.en}&&np=${row?.node?.day?.np}&&present=${row?.node?.present}&&absent=${row?.node?.absent}`
+          )
+        }
       />
     </>
   );
