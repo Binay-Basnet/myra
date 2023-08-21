@@ -38662,6 +38662,8 @@ export type GetTellerDayBookReportQuery = {
             openingBalance?: string | null;
             tellerBalance?: string | null;
             vaultBalance?: string | null;
+            remainingBalance?: string | null;
+            cashToVault?: string | null;
             totalAmount?: string | null;
             totalPayment?: string | null;
             totalReceipts?: string | null;
@@ -66009,6 +66011,8 @@ export const GetTellerDayBookReportDocument = `
             openingBalance
             tellerBalance
             vaultBalance
+            remainingBalance
+            cashToVault
             payments {
               accountHead
               amount
