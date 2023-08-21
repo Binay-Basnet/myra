@@ -13,7 +13,6 @@ import {
   InterestAuthority,
   LoanAccountInput,
   NatureOfDepositProduct,
-  useAppSelector,
   useGetIndividualMemberDetails,
   useGetLoanApplicationDetailsQuery,
   useGetLoanProductSubTypeQuery,
@@ -283,18 +282,16 @@ export const NewLoanApplication = () => {
   const installmentFrequency = watch('installmentFrequency');
   const disbursedDate = watch('disbursementDate');
 
-  const dateType = useAppSelector((state) => state.auth.preference?.date);
-
   useEffect(() => {
-    if (disbursedDate && dateType && installmentFrequency)
+    if (disbursedDate && installmentFrequency)
       setValue('installmentBeginDate', {
         local: '',
         np: '',
         en: dayjs(
-          getNextDate(instMap[installmentFrequency], dateType, new Date(disbursedDate?.en || ''))
+          getNextDate(instMap[installmentFrequency], 'BS', new Date(disbursedDate?.en || ''))
         ).format('YYYY-MM-DD'),
       });
-  }, [dateType, disbursedDate, installmentFrequency, setValue]);
+  }, [disbursedDate, installmentFrequency, setValue]);
 
   return (
     <FormLayout methods={methods} hasSidebar={!!memberId}>
