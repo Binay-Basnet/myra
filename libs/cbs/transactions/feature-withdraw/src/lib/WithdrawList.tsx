@@ -8,6 +8,7 @@ import {
   useGetMemberFilterMappingQuery,
   useGetWithdrawFilterMappingQuery,
   useGetWithdrawListDataQuery,
+  WithdrawBy,
 } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
@@ -18,6 +19,12 @@ import {
   getPaginationQuery,
   useTranslation,
 } from '@coop/shared/utils';
+
+const processedBy: Record<WithdrawBy, string> = {
+  SELF: 'Self',
+  AGENT: 'Market Representative',
+  OTHER: 'Other',
+};
 
 export const WithdrawList = () => {
   const { t } = useTranslation();
@@ -92,7 +99,7 @@ export const WithdrawList = () => {
       },
       {
         header: t['withdrawListWithdrawBy'],
-        accessorFn: (row) => row?.node?.name?.local,
+        accessorFn: (row) => processedBy[row?.node?.processedBy as WithdrawBy],
         meta: {
           width: '25%',
         },

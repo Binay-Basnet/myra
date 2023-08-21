@@ -107,6 +107,7 @@ export const HeaderTransactionDate = () => {
               _hover={{ backgroundColor: 'secondary.900' }}
               px="s12"
               py="s10"
+              data-testid="topheader-date"
               borderRadius="br1"
             >
               <Text p="s10 s12" fontSize="s3" fontWeight="500" color="gray.0">
@@ -232,6 +233,7 @@ export const HeaderTransactionDate = () => {
                           <Button
                             variant="ghost"
                             shade="neutral"
+                            testid={format(new Date(eod?.eodDate ?? ''), 'dd MMMM')}
                             onClick={() => {
                               if (eod?.status === 'ONGOING') {
                                 return router.push(ROUTES.DAY_CLOSE);

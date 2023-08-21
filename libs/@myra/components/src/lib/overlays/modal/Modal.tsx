@@ -73,6 +73,7 @@ export const Modal = (props: ModalProps) => {
       isCentered
       preserveScrollBarGap
       blockScrollOnMount
+      data-testid={title}
     >
       <ModalOverlay />
       <ModalContent maxW={width}>

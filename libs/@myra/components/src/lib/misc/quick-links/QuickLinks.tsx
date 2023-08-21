@@ -33,6 +33,7 @@ export const QuickLinks = ({
     alignItems="center"
     borderRadius="br2"
     cursor="pointer"
+    data-testid={text}
     onClick={onclick}
     border="1px"
     borderColor="border.layout"

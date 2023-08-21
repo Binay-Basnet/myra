@@ -39516,6 +39516,8 @@ export type GetLedgerForJvPostingQuery = {
             accountClass?: string | null;
             parentGroup?: Record<'local' | 'en' | 'np', string> | null;
             branch?: string | null;
+            balance?: string | null;
+            balanceType?: BalanceType | null;
           } | null;
         } | null> | null;
         pageInfo?: {
@@ -67149,6 +67151,8 @@ export const GetLedgerForJvPostingDocument = `
             accountClass
             parentGroup
             branch
+            balance
+            balanceType
           }
         }
         totalCount

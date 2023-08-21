@@ -30,6 +30,7 @@ export interface SuccessCardProps {
     accountName?: string | null;
     accountId?: string | null;
   };
+  receiptTitle?: string;
   showSignatures?: boolean;
   jVPrint?: {
     transactionId?: string | null;
@@ -68,6 +69,7 @@ export const SuccessCard = ({
   dublicate,
   showSignatures,
   jVPrint,
+  receiptTitle,
   nextInstallmentDetails,
   nextInstallmentTotal,
   transactionId,
@@ -226,6 +228,7 @@ export const SuccessCard = ({
       {!jVPrint && (
         <SuccessPrint
           meta={meta}
+          receiptTitle={receiptTitle}
           showSignatures={showSignatures}
           total={total as string}
           totalWords={totalWords as string}
@@ -273,6 +276,8 @@ interface SuccessPrintProps {
 
   showSignatures?: boolean;
   dublicate?: boolean;
+
+  receiptTitle?: string;
   glTransactions?:
     | ({
         account: string;
@@ -299,6 +304,7 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
       totalWords,
       dublicate,
       count,
+      receiptTitle,
     },
     ref
   ) => {
@@ -311,7 +317,7 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
         bg="white"
         p={dublicate ? 's8' : 's32'}
         flexDir="column"
-        gap={dublicate ? 's4' : 's8'}
+        gap={dublicate ? 's2' : 's8'}
         position="relative"
         sx={{
           '@media print': {
@@ -323,8 +329,8 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
           },
         }}
       >
-        <Box w="100%" mb={dublicate ? 's8' : 's12'}>
-          <Box display="flex" flexDir="column" gap={dublicate ? 's8' : 's12'}>
+        <Box w="100%" pt="s8" mb={dublicate ? 's4' : 's12'}>
+          <Box display="flex" flexDir="column" gap={dublicate ? 's4' : 's12'}>
             <Box display="flex" alignItems="flex-start" justifyContent="space-between" gap="s8">
               <Box display="flex" alignItems="center" flex={1} gap="s8">
                 <Box position="relative">
@@ -401,7 +407,20 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
           </Box>
         </Box>
 
-        <Divider mb={0} borderTop="1px solid" borderTopColor="background.500" />
+        {receiptTitle ? (
+          <>
+            <Divider mb={0} borderTop="1px solid" borderTopColor="background.500" />
+            <Box display="flex" py="s8" alignItems="center" justifyContent="center">
+              <Text fontSize="l1" fontWeight="500" color="primary.500">
+                {receiptTitle}
+              </Text>
+            </Box>
+            <Divider mb={0} borderTop="1px solid" borderTopColor="background.500" />
+          </>
+        ) : (
+          <Divider mb={0} borderTop="1px solid" borderTopColor="background.500" />
+        )}
+
         {meta && Object.keys(meta).length !== 0 && (
           <Box
             w="100%"
@@ -450,7 +469,7 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
             borderBottomColor="border.layout"
             display="flex"
             flexDir="column"
-            gap={dublicate ? 's4' : 's10'}
+            gap={dublicate ? 's2' : 's10'}
             py="s8"
           >
             {Object.entries(details).map((detail) => (
@@ -540,14 +559,14 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
             bottom="100px"
             left={0}
             bg="white"
-            p={dublicate ? 's8' : 's32'}
+            p={dublicate ? 's4' : 's32'}
             pt="s8"
             flexDir="column"
-            gap={dublicate ? 's4' : 's8'}
+            gap={dublicate ? 's2' : 's8'}
           >
             <Divider borderTop="1px dotted black" pb="s16" />
             <Box w="100%">
-              <Box display="flex" flexDir="column" gap={dublicate ? 's8' : 's12'}>
+              <Box display="flex" flexDir="column" gap={dublicate ? 's4' : 's12'}>
                 <Box display="flex" alignItems="center" gap="s8">
                   <Box position="relative">
                     <Avatar
@@ -611,7 +630,21 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                 </Box>
               </Box>
             </Box>
-            <Divider mb={0} borderTop="1px solid" borderTopColor="background.500" />
+
+            {receiptTitle ? (
+              <>
+                <Divider mb={0} borderTop="1px solid" borderTopColor="background.500" />
+                <Box display="flex" py="s8" alignItems="center" justifyContent="center">
+                  <Text fontSize="l1" fontWeight="500" color="primary.500">
+                    {receiptTitle}
+                  </Text>
+                </Box>
+                <Divider mb={0} borderTop="1px solid" borderTopColor="background.500" />
+              </>
+            ) : (
+              <Divider mb={0} borderTop="1px solid" borderTopColor="background.500" />
+            )}
+
             {meta && Object.keys(meta).length !== 0 && (
               <Box
                 w="100%"
@@ -645,7 +678,6 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                 )}
               </Box>
             )}
-
             <Box
               mt={dublicate ? 's8' : 's12'}
               w="100%"

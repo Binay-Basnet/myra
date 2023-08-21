@@ -404,6 +404,7 @@ export const LoanRepayment = () => {
 
                 return {
                   type: 'Loan Repayment',
+                  receiptTitle: 'Loan Repayment Receipt',
                   total: amountConverter(result?.totalAmount || 0) as string,
                   totalWords: amountToWordsConverter(
                     result?.totalAmount ? Number(result?.totalAmount) : 0
