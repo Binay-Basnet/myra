@@ -9,6 +9,7 @@ import {
   LoanAccountEdge,
   LoanObjState,
   useGetLoanFilterMappingQuery,
+  useGetMemberFilterMappingQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter, getUrl } from '@coop/shared/utils';
@@ -24,6 +25,7 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
   const router = useRouter();
 
   const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
+  const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
   const rowData = useMemo<LoanAccountEdge[]>(
     () => (data?.loanAccount?.list?.edges as LoanAccountEdge[]) ?? [],
@@ -89,6 +91,17 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
             </Text>
           </Box>
         ),
+      },
+      {
+        id: 'branchId',
+        header: 'Service Center',
+        accessorFn: (row) => row?.node?.branchName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: memberFilterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
       },
       {
         id: 'appliedLoanAmount',
