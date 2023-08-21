@@ -815,4 +815,3 @@ trigger:
     - box-migration
   event:
     - push
-
