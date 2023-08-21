@@ -1,15 +1,19 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetEmployeeAtendanceListQuery } from '@coop/cbs/data-access';
+import { Arrange, useGetEmployeeAtendanceListQuery } from '@coop/cbs/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const AttendanceList = () => {
-  const router = useRouter();
   const { data, isFetching } = useGetEmployeeAtendanceListQuery({
-    pagination: getPaginationQuery(),
+    pagination: {
+      ...getPaginationQuery(),
+      order: {
+        arrange: Arrange.Desc,
+        column: 'DAY',
+      },
+    },
   });
 
   const rowData = useMemo(
