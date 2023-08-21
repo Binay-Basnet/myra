@@ -211,6 +211,7 @@ export const FloatingShortcutButton = () => {
             aria-label="help"
             variant="ghost"
             color="white"
+            data-testid="helpButton"
             borderRadius="br1"
             _hover={{ backgroundColor: 'secondary.900' }}
           />
@@ -234,6 +235,7 @@ export const FloatingShortcutButton = () => {
                   px="s8"
                   cursor="pointer"
                   alignItems="center"
+                  data-testid="support-guide"
                   onClick={() => router.push('https://docs.migration.myraerp.com/')}
                 >
                   <Icon as={BsBook} />
@@ -252,6 +254,7 @@ export const FloatingShortcutButton = () => {
                   justifyContent="space-between"
                   cursor="pointer"
                   onClick={handleWhatsNewModalOpen}
+                  data-testid="whatsnewmodal"
                   alignItems="center"
                 >
                   <Box
@@ -278,6 +281,7 @@ export const FloatingShortcutButton = () => {
                   justifyContent="space-between"
                   cursor="pointer"
                   onClick={handleModalOpen}
+                  data-testid="keyboard-shortcuts"
                   alignItems="center"
                 >
                   <Box display="flex" gap="s8">
