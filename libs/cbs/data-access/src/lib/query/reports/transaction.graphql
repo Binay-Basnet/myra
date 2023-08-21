@@ -229,6 +229,8 @@ query getTellerDayBookReport($data: TellerDayBookReportFilter!) {
             openingBalance
             tellerBalance
             vaultBalance
+            remainingBalance
+            cashToVault
             payments {
               accountHead
               amount

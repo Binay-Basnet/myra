@@ -66,6 +66,12 @@ export const TellerDayBookReport = () => {
   const totalPayment = receiptData?.totalPayment;
   const closingAmount = receiptData?.closingAmount;
   const tellerBalance = receiptData?.tellerBalance;
+  const vaultBalance = receiptData?.vaultBalance;
+  const openingBalance = receiptData?.openingBalance;
+
+  const remainingBalance = receiptData?.remainingBalance;
+  const toVault = receiptData?.cashToVault;
+
   const receipts: DayBookTable =
     data?.report?.transactionReport?.financial?.tellerDayBookReport?.data?.receipts?.map(
       (receipt) => ({
@@ -153,13 +159,19 @@ export const TellerDayBookReport = () => {
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
                 Receipts (Cr.)
               </Text>
+
               <Box display="flex" gap="s16">
                 <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
                   Teller Balance: {amountConverter(tellerBalance || 0)}
                 </Text>
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  From Vault : {amountConverter(vaultBalance || 0)}
+                </Text>
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  Opening Balance: {amountConverter(openingBalance || 0)}
+                </Text>
               </Box>
             </Box>
-
             <Report.Table
               data={sortAccountHead(receipts)}
               showFooter
@@ -265,7 +277,9 @@ export const TellerDayBookReport = () => {
                       <ExpandedCell row={props.row} value={props.getValue() as string} />
                     </Box>
                   ),
-                  footer: () => <MultiFooter texts={['Total Payments', 'Total Amount']} />,
+                  footer: () => (
+                    <MultiFooter texts={['Total Payments', 'Remaining Balance', 'To Vault']} />
+                  ),
                   meta: {
                     width: '30%',
                     Footer: {
@@ -323,7 +337,9 @@ export const TellerDayBookReport = () => {
                     <MultiFooter
                       texts={[
                         amountConverter(totalPayment || '0') as string,
-                        amountConverter(closingAmount || '0') as string,
+                        amountConverter(remainingBalance || '0') as string,
+
+                        amountConverter(toVault || '0') as string,
                       ]}
                     />
                   ),
@@ -331,6 +347,11 @@ export const TellerDayBookReport = () => {
               ]}
               tableTitle="Payments (Dr.)"
             />
+            <Box display="flex" gap="s16" justifyContent="flex-end">
+              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                Closing Balance: {amountConverter(closingAmount || 0)}
+              </Text>
+            </Box>
           </Box>
         </Report.Content>
       </Report.Body>
