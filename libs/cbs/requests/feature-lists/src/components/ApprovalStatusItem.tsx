@@ -2,6 +2,7 @@ import { Box, Text } from '@myra-ui';
 
 import {
   AlternativeChannelStatus,
+  AttendanceStatus,
   MemberTransferState,
   PayrollStatus,
   RequestStatus,
@@ -16,7 +17,8 @@ export const ApprovalStatusItem = ({
     | MemberTransferState
     | PayrollStatus
     | StatusOfTask
-    | AlternativeChannelStatus;
+    | AlternativeChannelStatus
+    | AttendanceStatus;
 }) => (
   /* eslint-disable no-nested-ternary */
   <Box display="flex" alignItems="center" gap="s8">
@@ -27,11 +29,13 @@ export const ApprovalStatusItem = ({
       bg={
         status === RequestStatus.Approved ||
         status === PayrollStatus.Paid ||
-        status === StatusOfTask?.Completed
+        status === StatusOfTask?.Completed ||
+        status === AttendanceStatus?.Present
           ? 'green.300'
           : status === RequestStatus.Declined ||
             status === MemberTransferState?.Rejected ||
-            status === StatusOfTask?.Assigned
+            status === StatusOfTask?.Assigned ||
+            status === AttendanceStatus?.Absent
           ? 'red.500'
           : status === StatusOfTask?.Started
           ? 'blue.500'

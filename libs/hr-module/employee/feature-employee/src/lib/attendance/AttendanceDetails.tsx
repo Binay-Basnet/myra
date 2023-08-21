@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { format, parseISO } from 'date-fns';
+import { ApprovalStatusItem } from 'libs/cbs/requests/feature-lists/src/components/ApprovalStatusItem';
 
 import { Box, Column, Divider, PageHeader, Table, Text } from '@myra-ui';
 
-import { useGetListDetailsOfDayQuery } from '@coop/cbs/data-access';
+import { AttendanceStatus, useGetListDetailsOfDayQuery } from '@coop/cbs/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const AttendanceDetails = () => {
@@ -35,8 +36,13 @@ export const AttendanceDetails = () => {
         accessorFn: (row) => row?.node?.employee,
       },
       {
+        id: 'state',
         header: 'Status',
         accessorFn: (row) => row?.node?.status,
+
+        cell: (props) => (
+          <ApprovalStatusItem status={props?.row?.original?.node?.status as AttendanceStatus} />
+        ),
       },
       {
         header: 'Attendance Date',
