@@ -7,6 +7,7 @@ import { Box } from '@myra-ui';
 import { TableOverview, TableOverviewColumnType } from '@coop/accounting/ui-components';
 import { useGetLedgerForJvPostingQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
+import { debitCreditConverter } from '@coop/shared/utils';
 
 import { CustomJournalVoucherInput } from '../types';
 
@@ -16,6 +17,7 @@ type JournalVouchersTableType = {
   drAmount: string;
   crAmount: string;
   description: string;
+  balance: string;
 };
 
 export const JournalVouchersTable = () => {
@@ -105,6 +107,24 @@ export const JournalVouchersTable = () => {
               setSearchTerm(newSearch);
             },
             cellWidth: 'lg',
+          },
+          {
+            accessor: 'balance',
+            header: 'Balance',
+            cell: (row) => {
+              const selectedLedger = accountListData?.find(
+                (ledger) =>
+                  ledger?.node?.accountCode ===
+                  (row?.accountId as unknown as { value: string })?.value
+              );
+
+              return debitCreditConverter(
+                selectedLedger?.node?.balance as string,
+                selectedLedger?.node?.balanceType as string
+              );
+            },
+            cellWidth: 'lg',
+            isNumeric: true,
           },
           {
             accessor: 'drAmount',

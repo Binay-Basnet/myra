@@ -120,6 +120,8 @@ query getLedgerForJVPosting($pagination: Pagination, $filter: COAListFilter) {
             accountClass
             parentGroup
             branch
+            balance
+            balanceType
           }
         }
         totalCount

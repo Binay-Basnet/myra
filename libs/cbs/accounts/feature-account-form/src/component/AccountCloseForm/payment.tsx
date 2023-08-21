@@ -78,7 +78,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
   });
 
   return (
-    <ContainerWithDivider borderRight="1px" borderColor="border.layout" p="s16" pb="100px">
+    <ContainerWithDivider p="s16" pb="100px">
       <BoxContainer>
         <FormSwitchTab label="Payment Mode" options={paymentModes} name="paymentMode" />
 
