@@ -181,9 +181,7 @@ export const RangedDatePicker = ({
                   onChange={onChange}
                   onToggle={onToggle}
                 />
-              ) : selectedPeriod === 'TODAY' ||
-                selectedPeriod === 'YESTERDAY' ||
-                !selectedPeriod ? null : (
+              ) : selectedPeriod !== 'CUSTOM_PERIOD' || !selectedPeriod ? null : (
                 <Box display="flex" flexDir="column">
                   <HStack
                     display="flex"

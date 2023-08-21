@@ -74,7 +74,11 @@ export const Periods = ({
                     calendarType
                   ),
                   to: convertDate(
-                    getPeriodDate(defaultPeriod.lastDays, calendarType, baseDate),
+                    getPeriodDate(
+                      defaultPeriod.key.includes('LAST') ? 0 : defaultPeriod.lastDays,
+                      calendarType,
+                      baseDate
+                    ),
                     calendarType
                   ),
                 });
@@ -127,7 +131,12 @@ export const Periods = ({
             setRangeEndDate(getPeriodDate(0, calendarType, baseDate));
             setHoveredDate(getPeriodDate(0, calendarType, baseDate));
 
+            onChange({
+              from: convertDate(getPeriodDate(numberOfDays, calendarType, baseDate), calendarType),
+              to: convertDate(getPeriodDate(0, calendarType, baseDate), calendarType),
+            });
             setSelectedPeriod('TILL_DATE');
+            onToggle();
           }}
         />
       )}

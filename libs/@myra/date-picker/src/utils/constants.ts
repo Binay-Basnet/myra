@@ -310,13 +310,13 @@ export const DEFAULT_PERIODS = [
     title: 'last7Days',
     key: 'LAST_7_DAYS',
     lastDays: 7,
-    closePopover: false,
+    closePopover: true,
   },
   {
     title: 'last30Days',
     key: 'LAST_30_DAYS',
     lastDays: 30,
-    closePopover: false,
+    closePopover: true,
   },
 ];
 
