@@ -348,6 +348,7 @@ export const SharePurchaseForm = () => {
                 });
                 return {
                   type: 'Share Issue',
+                  receiptTitle: 'Share Issue Receipt',
                   total: amountConverter(totalAmountShare || 0) as string,
                   title: 'Share Issue Successful',
                   details: {

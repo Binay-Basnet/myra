@@ -618,6 +618,7 @@ export const AddDeposit = () => {
                     total: amountConverter(totalTxnAmount),
                     totalWords: amountToWordsConverter(totalTxnAmount),
                     title: 'Deposit Successful',
+                    receiptTitle: 'Deposit Receipt',
                     details: {
                       'Transaction Id': (
                         <Text fontSize="s3" color="primary.500" fontWeight="600">

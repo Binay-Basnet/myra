@@ -368,6 +368,7 @@ export const ShareReturnForm = () => {
 
                 return {
                   type: 'Share-Return',
+                  receiptTitle: 'Share Return Receipt',
                   total: String(amountConverter(totalAmountCard ?? '0')),
                   title: 'Share Return Successful',
                   details: {
