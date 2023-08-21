@@ -31,6 +31,10 @@ steps:
       - name: dhadda-migration-app
         path: /drone/src/apps/dhadda-migration/dist
     commands:
+      - echo APP_VERSION=${DRONE_TAG} >> ./apps/myra/.env
+      - echo APP_VERSION=${DRONE_TAG} >> ./apps/ebanking/.env
+      - echo APP_VERSION=${DRONE_TAG} >> ./apps/neosys-admin/.env
+      - echo APP_VERSION=${DRONE_TAG} >> ./apps/dhadda-migration/.env
       - yarn --pure-lockfile
       - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
 
@@ -481,6 +485,7 @@ steps:
       - name: myra-app
         path: /drone/src/apps/myra/dist
     commands:
+      - echo APP_VERSION=${DRONE_TAG} >> ./apps/myra/.env
       - yarn --pure-lockfile
       - npx nx run myra:build:production
 
@@ -539,6 +544,7 @@ steps:
       - name: neosys-app
         path: /drone/src/apps/neosys-admin/dist
     commands:
+      - echo APP_VERSION=${DRONE_TAG} >> ./apps/neosys-admin/.env
       - yarn
       - npx nx run neosys-admin:build:production
 
@@ -597,6 +603,7 @@ steps:
       - name: ebanking-app
         path: /drone/src/apps/ebanking/dist
     commands:
+      - echo APP_VERSION=${DRONE_TAG} >> ./apps/ebanking/.env
       - yarn
       - npx nx run ebanking:build:production
 
@@ -689,6 +696,8 @@ steps:
       - name: migration-app
         path: /drone/src/apps/migration/dist
     commands:
+      - echo APP_VERSION=${DRONE_TAG} >> ./apps/migration/.env
+      - echo APP_VERSION=${DRONE_TAG} >> ./apps/.env
       - yarn
       - npx nx run migration:build --configuration=production
 
@@ -754,6 +763,8 @@ steps:
       - name: box-migration-app
         path: /drone/src/apps/csv-viewer/dist
     commands:
+      - echo APP_VERSION=${DRONE_TAG} >> ./apps/csv-viewer/.env
+      - echo APP_VERSION=${DRONE_TAG} >> ./apps/.env
       - yarn
       - npx nx run csv-viewer:build:production
 
