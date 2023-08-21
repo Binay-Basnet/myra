@@ -69,7 +69,7 @@ const whatsNewData = {
 };
 const WhatsNewModal = (props: WhatsNewModalProps) => {
   const { whatsNewModalOpen, handleWhatsNewModalClose } = props;
-  const appVersion = process?.env['NX_APP_VERSION_PROD'] || process?.env['NX_APP_VERSION'];
+  // const appVersion = process?.env['NX_APP_VERSION_PROD'] || process?.env['NX_APP_VERSION'];
   return (
     <Modal
       open={whatsNewModalOpen}
@@ -102,7 +102,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version {appVersion}</Text>
+          <Text fontSize="r2">Version 1.0.88</Text>
           <Text fontSize="s3">August 21, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
