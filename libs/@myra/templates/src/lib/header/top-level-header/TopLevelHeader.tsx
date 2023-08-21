@@ -369,6 +369,7 @@ export const TopLevelHeader = () => {
                       aria-label="menu"
                       variant="ghost"
                       color="white"
+                      data-testid="menubuttons"
                       borderRadius="br1"
                       ref={appSwitcherRef}
                     />
@@ -394,7 +395,10 @@ export const TopLevelHeader = () => {
                       <PopoverBody p={0}>
                         <Box display="flex-column" gridTemplateColumns="repeat(3,1fr)" gap="s8">
                           {MYRA_APPS.filter((f) => checkModuleAccess(f.key))?.map((item) => (
-                            <AppSwitcherIconWrapper onClick={() => router.push(item.link)}>
+                            <AppSwitcherIconWrapper
+                              onClick={() => router.push(item.link)}
+                              data-testid={item?.title}
+                            >
                               <Image width={32} height={32} src={item.img} alt={item.title} />
                               <AppSwitcherText>{t[item.title]}</AppSwitcherText>
                             </AppSwitcherIconWrapper>

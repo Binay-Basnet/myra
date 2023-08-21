@@ -84,6 +84,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
                 borderRadius="br2"
                 gap="s16"
                 minH="48px"
+                data-testid={item?.title}
                 maxH="56px"
                 alignItems="center"
                 cursor="pointer"
