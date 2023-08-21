@@ -50,7 +50,7 @@ const whatsNewData = {
 };
 const WhatsNewModal = (props: WhatsNewModalProps) => {
   const { whatsNewModalOpen, handleWhatsNewModalClose } = props;
-  const appVersion = process?.env['NX_APP_VERSION'] || 'Version 1.0.87';
+  const appVersion = process?.env['NX_APP_VERSION_PROD'] || process?.env['NX_APP_VERSION'];
   return (
     <Modal
       open={whatsNewModalOpen}
