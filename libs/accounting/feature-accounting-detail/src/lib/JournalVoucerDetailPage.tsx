@@ -17,6 +17,7 @@ export interface JournalVoucerDetailPageProps {}
 
 export const JournalVoucerDetailPage = () => {
   const router = useRouter();
+
   const { id } = router.query;
   const { data } = useGetJournalVoucherDetailQuery({ entryId: id as string });
   const voucherData = data?.accounting?.journalVoucher?.viewJournalVoucherDetail?.data;

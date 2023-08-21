@@ -13075,6 +13075,7 @@ export type LoanAccount = {
   appliedLoanAmount: Scalars['String'];
   approvedDate?: Maybe<Scalars['Localized']>;
   branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   closedDate?: Maybe<Scalars['Localized']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
@@ -33826,6 +33827,8 @@ export type GetLoanListQuery = {
           id: string;
           appliedLoanAmount: string;
           totalSanctionedAmount?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
           LoanAccountName?: string | null;
           createdAt: string;
           closedDate?: Record<'local' | 'en' | 'np', string> | null;
@@ -59715,6 +59718,8 @@ export const GetLoanListDocument = `
           product {
             productName
           }
+          branchId
+          branchName
           LoanAccountName
           createdAt
           closedDate

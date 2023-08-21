@@ -9,6 +9,7 @@ import {
   LoanAccountEdge,
   LoanObjState,
   useGetLoanFilterMappingQuery,
+  useGetMemberFilterMappingQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
@@ -23,6 +24,7 @@ interface ILoanAccTable {
 export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable) => {
   const router = useRouter();
 
+  const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
   const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
 
   const rowData = useMemo<LoanAccountEdge[]>(
@@ -88,6 +90,17 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
             </Text>
           </Box>
         ),
+      },
+      {
+        id: 'branchId',
+        header: 'Service Center',
+        accessorFn: (row) => row?.node?.branchName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: memberFilterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
       },
       {
         id: 'totalSanctionedAmount',
