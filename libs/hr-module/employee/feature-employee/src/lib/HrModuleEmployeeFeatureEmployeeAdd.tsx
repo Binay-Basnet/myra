@@ -7,13 +7,18 @@ import { FormCheckbox, FormLayout, FormMemberSelect } from '@coop/shared/form';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
+  DocumentInsertInput,
+  EmployeeInput,
   MemberType,
-  useGetIndividualKymEditDataQuery,
+  useGetKymIndividualFormDataQuery,
+  useGetSingleEmployeeDetailsQuery,
   useSetNewEmployeeMutation,
 } from '@coop/cbs/data-access';
 import { useRouter } from 'next/router';
+import { omit } from 'lodash';
 import {
   Approvers,
+  Declarations,
   EmployeeAddress,
   EmployeeContactDetails,
   EmployeeHealthInsurance,
@@ -27,6 +32,8 @@ import {
 import { getEmployeeSection } from '../utils/getSectionEmployee';
 import { EducationalDetails } from '../components/EducationalDetails';
 
+const documentMap = ['passport', 'signature', 'citizenship', 'fingerprint'];
+
 export const EmployeeAddForm = () => {
   const router = useRouter();
   const [kymCurrentSection, setCurrentSection] = React.useState<{
@@ -35,67 +42,140 @@ export const EmployeeAddForm = () => {
   }>();
 
   const methods = useForm();
+
   const { getValues, watch, reset, setValue } = methods;
   const { mutateAsync } = useSetNewEmployeeMutation();
 
   const isCoopMemberWatch = watch('isCoopMember');
   const memberIdWatch = watch('memberId');
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery(
+  const { data: editValues } = useGetKymIndividualFormDataQuery(
     {
       id: String(memberIdWatch),
     },
     { enabled: !!memberIdWatch }
   );
 
-  const personalInfo = editValues?.members?.individual?.formState?.data?.formData?.basicInformation;
-  const contactInfo = editValues?.members?.individual?.formState?.data?.formData?.contactDetails;
-  const permanentAddressInfo =
-    editValues?.members?.individual?.formState?.data?.formData?.permanentAddress;
-  const temporaryAddressInfo =
-    editValues?.members?.individual?.formState?.data?.formData?.temporaryAddress;
+  const { data: employeeEditData } = useGetSingleEmployeeDetailsQuery(
+    {
+      id: router?.query?.['id'] as string,
+    },
+    { enabled: !!router?.query?.['id'] }
+  );
+
+  const employeeDetailData = employeeEditData?.hr?.employee?.employee?.getEmployee?.record;
 
   useEffect(() => {
-    if (personalInfo) {
+    if (employeeDetailData) {
       reset({
-        firstName: personalInfo?.firstName?.local,
-        middleName: personalInfo?.middleName?.local,
-        lastName: personalInfo?.lastName?.local,
-        gender: personalInfo?.genderId,
-        dateOfBirth: personalInfo?.dateOfBirth,
-        personalPhoneNumber: contactInfo?.mobileNumber,
-        personalEmailAddress: contactInfo?.email,
+        ...employeeDetailData,
         permanentAddress: {
-          ...permanentAddressInfo,
-          locality: permanentAddressInfo?.locality?.local,
+          ...employeeDetailData?.permanentAddress,
+          locality: employeeDetailData?.permanentAddress?.locality?.local,
         },
-        isTemporarySameAsPermanent: temporaryAddressInfo?.sameTempAsPermanentAddress,
         temporaryAddress: {
-          ...temporaryAddressInfo?.address,
-          locality: temporaryAddressInfo?.address?.locality?.local,
+          ...employeeDetailData?.temporaryAddress,
+          locality: employeeDetailData?.temporaryAddress?.locality?.local,
+        },
+        documents:
+          documentMap?.map((document) => ({
+            fieldId: document,
+            identifiers:
+              employeeDetailData?.documents?.find((d) => d?.fieldId === document)?.identifiers ||
+              [],
+          })) || [],
+      });
+    }
+  }, [JSON.stringify(employeeDetailData)]);
+
+  const basicInfo = editValues?.members?.individual?.formState?.data;
+
+  useEffect(() => {
+    if (basicInfo) {
+      reset({
+        firstName: basicInfo?.firstName?.local,
+        middleName: basicInfo?.middleName?.local,
+        lastName: basicInfo?.lastName?.local,
+        gender: basicInfo?.genderId,
+        dateOfBirth: basicInfo?.dateOfBirth,
+        personalPhoneNumber: basicInfo?.mobileNumber,
+        personalEmailAddress: basicInfo?.email,
+        maritalStatus: basicInfo?.maritalStatusId,
+        permanentAddress: {
+          ...basicInfo?.permanentAddress,
+          locality: basicInfo?.permanentAddress?.locality?.local,
+        },
+        isTemporarySameAsPermanent: basicInfo?.sameTempAsPermanentAddress,
+        temporaryAddress: {
+          ...basicInfo?.temporaryAddress,
+          locality: basicInfo?.temporaryAddress?.locality?.local,
         },
       });
       setValue('isCoopMember', true);
     }
-  }, [JSON.stringify(personalInfo)]);
+  }, [JSON.stringify(basicInfo)]);
 
   const onSave = () => {
-    asyncToast({
-      id: 'add-employee',
-      msgs: {
-        success: 'new employee added succesfully',
-        loading: 'adding new employee',
-      },
-      onSuccess: () => {
-        router.push(ROUTES?.HRMODULE_EMPLOYEES_LIST);
-      },
-      promise: mutateAsync({
-        id: null,
-        input: {
-          ...getValues(),
+    const values = getValues();
+
+    if (router?.query?.['id']) {
+      asyncToast({
+        id: 'edit-employee',
+        msgs: {
+          success: 'employee edited succesfully',
+          loading: 'editing employee',
         },
-      }),
-    });
+        onSuccess: () => {
+          router.push(ROUTES?.HRMODULE_EMPLOYEES_LIST);
+        },
+        promise: mutateAsync({
+          id: router?.query?.['id'] as string,
+          input: omit(
+            {
+              ...values,
+              documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
+                fieldId: documentMap[index],
+                identifiers: item?.identifiers || [],
+              })),
+            },
+            ['isCoopMember', 'memberId', 'id']
+          ) as EmployeeInput,
+        }),
+      });
+    } else {
+      asyncToast({
+        id: 'add-employee',
+        msgs: {
+          success: 'new employee added succesfully',
+          loading: 'adding new employee',
+        },
+        onSuccess: () => {
+          router.push(ROUTES?.HRMODULE_EMPLOYEES_LIST);
+        },
+        promise: mutateAsync({
+          id: null,
+          input: omit(
+            {
+              ...values,
+              documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
+                fieldId: documentMap[index],
+                identifiers: item?.identifiers || [],
+              })),
+            },
+            ['isCoopMember', 'memberId']
+          ) as EmployeeInput,
+        }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof EmployeeInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
+      });
+    }
   };
 
   return (
@@ -121,11 +201,13 @@ export const EmployeeAddForm = () => {
                 <FormCheckbox label="Is Member" name="isCoopMember" />
               </GridItem>
               {isCoopMemberWatch && (
-                <FormMemberSelect
-                  label="Member"
-                  name="memberId"
-                  memberType={MemberType?.Individual}
-                />
+                <GridItem colSpan={3}>
+                  <FormMemberSelect
+                    label="Member"
+                    name="memberId"
+                    memberType={MemberType?.Individual}
+                  />
+                </GridItem>
               )}
             </FormSection>
             <SectionContainer>
@@ -153,12 +235,12 @@ export const EmployeeAddForm = () => {
               <Approvers />
               <EmployeeHealthInsurance />
             </SectionContainer>
-            {/* <SectionContainer>
+            <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 Declarations
               </Text>
-              <Declerations />
-            </SectionContainer> */}
+              <Declarations />
+            </SectionContainer>
           </Box>
         </FormLayout.Form>
       </FormLayout.Content>

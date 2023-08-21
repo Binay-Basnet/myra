@@ -2,17 +2,14 @@ import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoClose } from 'react-icons/io5';
-import NepaliDate from 'nepali-date-converter';
 
 import { Alert, Box, Button, Grid, Icon, IconButton, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import {
-  DateType,
   LoanAccountInput,
   LoanInstallment,
   LoanRepaymentScheme,
-  store,
   useGetEndOfDayDateDataQuery,
   useGetLoanInstallmentsQuery,
 } from '@coop/cbs/data-access';
@@ -39,7 +36,6 @@ export const LoanPaymentSchedule = () => {
 
   const disburseDate = watch('disbursementDate');
   const installmentBeginDate = watch('installmentBeginDate');
-  const dateType = store.getState().auth?.preference?.date || DateType.Ad;
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -159,26 +155,15 @@ export const LoanPaymentSchedule = () => {
         <FormDatePicker
           name="disbursementDate"
           label="Disburse Date"
-          minDate={
-            closingDate?.local
-              ? dateType === 'BS'
-                ? new NepaliDate(closingDate?.np ?? '').toJsDate()
-                : new Date(closingDate?.en ?? '')
-              : new Date()
-          }
+          minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
           isRequired
         />
         <FormDatePicker
           name="installmentBeginDate"
-          label="Installment Begin Date"
+          label="First Installment Date"
           // minDate={closingDate ? new Date(localizedDate(closingDate) as string) : new Date()}
-          minDate={
-            closingDate?.local
-              ? dateType === 'BS'
-                ? new NepaliDate(closingDate?.np ?? '').toJsDate()
-                : new Date(closingDate?.en ?? '')
-              : new Date()
-          }
+          minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
+          // helperText="This is the date when the first payment should be received from the Member."
           isRequired
         />
       </Grid>

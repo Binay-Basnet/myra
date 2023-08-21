@@ -1,19 +1,27 @@
-import { SelectProps } from '@myra-ui';
+import { MultiValue, SingleValue } from 'chakra-react-select';
 
-import { useGetBranchListQuery } from '@coop/cbs/data-access';
+import { SelectOption, SelectProps } from '@myra-ui';
+
+import { useAppSelector, useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 
 interface IFormBranchSelectProps extends SelectProps {
   name: string;
   label: string;
+  showUserBranchesOnly?: boolean;
+  onChangeAction?: (newValue: MultiValue<SelectOption> | SingleValue<SelectOption>) => void;
 }
 
 export const FormBranchSelect = (props: IFormBranchSelectProps) => {
-  const { name, label, ...rest } = props;
+  const { name, label, showUserBranchesOnly, ...rest } = props;
 
   // const { watch } = useFormContext();
 
   // const [branchId, setBranchId] = useState('');
+  const auth = useAppSelector((state) => state?.auth);
+
+  // const user = useAppSelector((state) => state.auth.user);
+  // const currentUserId = user?.id;
 
   const { data: branchListQueryData, isFetching } = useGetBranchListQuery(
     {
@@ -40,7 +48,30 @@ export const FormBranchSelect = (props: IFormBranchSelectProps) => {
     value: branch?.node?.id as string,
   }));
 
-  // const branch = watch(name);
+  const availableBranchesOptions = auth.availableBranches?.map((branch) => ({
+    label: branch.name,
+    value: branch.id,
+  }));
+  // const { data: userListQueryData, isLoading: isBranchFetching } = useGetSettingsUserListDataQuery(
+  //   {
+  //     paginate: {
+  //       first: -1,
+  //       after: '',
+  //       order: null,
+  //     },
+  //   },
+  //   { staleTime: 0 }
+  // );
+
+  // const rowData = userListQueryData?.settings?.myraUser?.list?.edges?.find(
+  //   (item) => item?.node?.id === currentUserId
+  // )?.node?.linkedBranches;
+
+  // const userBranchOptions = rowData?.map((options) => ({
+  //   label: `${options?.name} [${options?.branchCode}]` as string,
+  //   value: options?.id as string,
+  // }));
+  // const options = watch(name);
 
   // useEffect(() => {
   //   if (branch && !branchOptions?.length) {
@@ -52,14 +83,14 @@ export const FormBranchSelect = (props: IFormBranchSelectProps) => {
     <FormSelect
       name={name}
       label={label}
-      isLoading={isFetching}
+      isLoading={showUserBranchesOnly ? false : isFetching}
       // onInputChange={debounce((id) => {
       //   if (id) {
       //     setBranchId(id);
       //     // setTrigger(true);
       //   }
       // }, 800)}
-      options={branchOptions}
+      options={showUserBranchesOnly ? availableBranchesOptions : branchOptions}
       {...rest}
     />
   );

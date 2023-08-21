@@ -20,14 +20,14 @@ import { CalendarBuilderDate, DateRange, Period, TDateState } from '../../types/
 import { DEFAULT_PERIODS } from '../../utils/constants';
 import { convertTillDate, todayDate } from '../../utils/functions';
 
-const todayObj = [
-  {
-    title: 'today',
-    key: 'TODAY',
-    lastDays: 0,
-    closePopover: true,
-  },
-];
+// const last30Days = [
+//   {
+//     title: 'last30Days',
+//     key: 'LAST_30_DAYS',
+//     lastDays: 30,
+//     closePopover: false,
+//   },
+// ];
 
 interface IRangeDatePickerProps {
   tillDateStart: Date;
@@ -40,6 +40,8 @@ interface IRangeDatePickerProps {
   periods?: Period[];
   baseDate?: Date;
   showFiscalPeriod?: boolean;
+  showFiscalYearOnly?: boolean;
+
   showTillDatePeriod?: boolean;
   showCustomPeriod?: boolean;
   showPeriods?: boolean;
@@ -57,6 +59,7 @@ export const RangedDatePicker = ({
 
   showFiscalPeriod = true,
   showTillDatePeriod = true,
+  showFiscalYearOnly,
   showCustomPeriod = true,
   periods = DEFAULT_PERIODS,
 
@@ -88,7 +91,8 @@ export const RangedDatePicker = ({
   };
 
   const periodProps = {
-    periods: !showPeriods ? todayObj : periods,
+    periods: !showPeriods ? [] : periods,
+    // periods,
     baseDate,
     locale,
     onToggle,
@@ -99,6 +103,7 @@ export const RangedDatePicker = ({
     selectedPeriod,
     showPeriods,
     setSelectedPeriod,
+    showFiscalYearOnly,
     showFiscalPeriod,
     showCustomPeriod,
     showTillDatePeriod,
@@ -139,6 +144,9 @@ export const RangedDatePicker = ({
       } else {
         setSelectedPeriod('CUSTOM_PERIOD');
       }
+      if (showFiscalYearOnly) {
+        setSelectedPeriod('FISCAL_YEAR');
+      }
       setRangeStartDate(convertTillDate(value.from?.date, calendarType));
       setRangeEndDate(convertTillDate(value.to?.date, calendarType));
       setHoveredDate(convertTillDate(value.to?.date, calendarType));
@@ -164,7 +172,7 @@ export const RangedDatePicker = ({
             <Box display="flex" bg="white" borderRadius="br2" boxShadow="E2">
               <Periods {...periodProps} />
 
-              {selectedPeriod === 'FISCAL_YEAR' ? (
+              {selectedPeriod === 'FISCAL_YEAR' || showFiscalYearOnly ? (
                 <FiscalPeriod
                   tillDateStart={tillDateStart}
                   calendarType={calendarType}
@@ -173,9 +181,7 @@ export const RangedDatePicker = ({
                   onChange={onChange}
                   onToggle={onToggle}
                 />
-              ) : selectedPeriod === 'TODAY' ||
-                selectedPeriod === 'YESTERDAY' ||
-                !selectedPeriod ? null : (
+              ) : selectedPeriod !== 'CUSTOM_PERIOD' || !selectedPeriod ? null : (
                 <Box display="flex" flexDir="column">
                   <HStack
                     display="flex"

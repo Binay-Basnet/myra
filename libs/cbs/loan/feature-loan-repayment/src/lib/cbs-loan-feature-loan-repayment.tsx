@@ -101,7 +101,9 @@ export const LoanRepayment = () => {
   const memberId = watch('memberId');
   const loanAccountId = watch('loanAccountId');
   const isDisableDenomination = watch('cash.disableDenomination');
-  const amountPaid = watch('amountPaid') as unknown;
+
+  const finePaid = watch('penalty.amount');
+  const amountPaid = Number(watch('amountPaid') || 0) + Number(finePaid || 0);
 
   const cashPaid = watch('cash.cashPaid');
 
@@ -152,7 +154,7 @@ export const LoanRepayment = () => {
   const handleSubmit = () => {
     const values = getValues();
 
-    let filteredValues = { ...values };
+    let filteredValues = omit(values, ['isFinePaid']);
 
     if (!values?.penalty?.amount) {
       filteredValues = omit(filteredValues, ['penalty']);
@@ -309,7 +311,11 @@ export const LoanRepayment = () => {
                 ) : null} */}
 
                 <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-                  <FormAmountInput isRequired name="amountPaid" label="Amount to Pay" />
+                  <FormAmountInput
+                    isRequired
+                    name="amountPaid"
+                    label="Amount to Pay (Excluding Fine)"
+                  />
                 </Grid>
 
                 {memberDetailData?.type === KymMemberTypesEnum.Individual && (
@@ -348,14 +354,14 @@ export const LoanRepayment = () => {
                   code: memberDetailData?.code,
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,
-                  maritalStatus: memberDetailData?.maritalStatus,
+                  maritalStatus: memberDetailData?.maritalStatus as string,
                   dateJoined: memberDetailData?.dateJoined,
                   phoneNo: memberDetailData?.contact,
                   email: memberDetailData?.email,
                   address: memberDetailData?.address,
                 }}
-                signaturePath={memberSignatureUrl}
-                citizenshipPath={memberCitizenshipUrl}
+                signaturePath={memberSignatureUrl as string}
+                citizenshipPath={memberCitizenshipUrl as string}
               />
             </Box>
             {loanAccountId && (
@@ -398,6 +404,7 @@ export const LoanRepayment = () => {
 
                 return {
                   type: 'Loan Repayment',
+                  receiptTitle: 'Loan Repayment Receipt',
                   total: amountConverter(result?.totalAmount || 0) as string,
                   totalWords: amountToWordsConverter(
                     result?.totalAmount ? Number(result?.totalAmount) : 0
@@ -415,7 +422,6 @@ export const LoanRepayment = () => {
                     'Principal Amount': amountConverter(result?.principalAmount ?? '0'),
                     'Interest Amount': amountConverter(result?.interestAmount ?? '0'),
                     'Penalty Amount': amountConverter(result?.penaltyAmount ?? '0'),
-                    'Discount Amount': amountConverter(result?.discountAmount ?? '0'),
                     'Rebate Amount': amountConverter(result?.rebateAmount ?? '0'),
 
                     'Payment Mode': result?.paymentMethod,
@@ -428,27 +434,29 @@ export const LoanRepayment = () => {
                     accountId: result?.accountId,
                     accountName: result?.accountName,
                   },
-                  nextInstallmentDetails: result?.nextInstallment
-                    ? {
-                        'Installment No': String(result?.nextInstallment?.installmentNo),
-                        'Payment Date': localizedDate(
-                          result?.nextInstallment?.installmentDate
-                        ) as string,
-                        'Remaining Principal Amount': amountConverter(
-                          result?.nextInstallment?.currentRemainingPrincipal ?? 0
-                        ),
-                        'Remaining Interest Amount': amountConverter(
-                          result?.nextInstallment?.remainingInterest ?? 0
-                        ),
-                        'Total Payable Amount': amountConverter(
-                          Number(result?.nextInstallment?.currentRemainingPrincipal ?? 0) +
-                            Number(result?.nextInstallment?.remainingInterest ?? 0)
-                        ),
-                      }
-                    : null,
-                  nextInstallmentTotal:
-                    Number(result?.nextInstallment?.currentRemainingPrincipal ?? 0) +
-                    Number(result?.nextInstallment?.remainingInterest ?? 0),
+                  // nextInstallmentDetails: result?.nextInstallment
+                  //   ? {
+                  //       'Installment No': String(result?.nextInstallment?.installmentNo),
+                  //       'Payment Date': localizedDate(
+                  //         result?.nextInstallment?.installmentDate
+                  //       ) as string,
+                  //       'Remaining Principal Amount': amountConverter(
+                  //         result?.nextInstallment?.currentRemainingPrincipal ?? 0
+                  //       ),
+                  //       'Remaining Interest Amount': amountConverter(
+                  //         result?.nextInstallment?.remainingInterest ?? 0
+                  //       ),
+                  //       'Total Payable Amount': amountConverter(
+                  //         Number(result?.nextInstallment?.currentRemainingPrincipal ?? 0) +
+                  //           Number(result?.nextInstallment?.remainingInterest ?? 0)
+                  //       ),
+                  //     }
+                  //   : null,
+                  // nextInstallmentTotal:
+                  //   Number(result?.nextInstallment?.currentRemainingPrincipal ?? 0) +
+                  //   Number(result?.nextInstallment?.remainingInterest ?? 0),
+                  dublicate: true,
+                  transactionId: result?.transactionId as string,
                 };
               }}
               errorCardProps={{

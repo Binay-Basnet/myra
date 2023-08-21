@@ -28,8 +28,8 @@ export const CalendarCell = ({
   locale,
   calendarDate,
   onDateStateChange,
-  minDate = new Date('1921-01-01'),
-  maxDate = new Date('2042-12-31'),
+  minDate = new Date('1913-03-13'),
+  maxDate = new Date('2043-12-31'),
   testid,
 }: ICalendarCellProps) => {
   const isInvalid =

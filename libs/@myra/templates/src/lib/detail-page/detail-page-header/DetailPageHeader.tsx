@@ -116,7 +116,7 @@ export const DetailPageHeader = ({
                 </Button>
               </Box>
             </PopoverTrigger>
-            <PopoverContent minWidth="180px" w="180px" color="white" boxShadow="E2">
+            <PopoverContent minWidth="180px" w="100%" color="white" boxShadow="E2">
               <PopoverBody px="0" py="0">
                 <Grid>
                   {options.map(({ label, handler }) => (

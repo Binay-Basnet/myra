@@ -44,7 +44,7 @@ export const OnboardingJoiningDetails = () => {
       <FormDatePicker name="dateOfJoining" label="Date of Joining" />
       <FormSelect name="designation" label="Designation" options={degisnationOptions} />
       <FormSelect
-        name="serviceCenter"
+        name="onboarding_status"
         label="Onboarding Status"
         options={onboardingStatusOptions}
       />

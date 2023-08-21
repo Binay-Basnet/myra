@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { GridItem } from '@myra-ui';
 
@@ -18,8 +19,9 @@ import { localizedDate } from '@coop/cbs/utils';
 import { FormAmountFilter, FormBranchSelect, FormRadioGroup, FormSelect } from '@coop/shared/form';
 import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
-type Filters = Omit<BankGlStatementFilter, 'filter' | 'branchId'> & {
+type Filters = Omit<BankGlStatementFilter, 'filter' | 'branchId' | 'bankAccounts'> & {
   branchId: { label: string; value: string }[];
+  bankAccounts: { label: string; value: string }[];
   filter: {
     amount?: MinMaxFilter;
     bank?: { label: string; value: string }[];
@@ -36,21 +38,18 @@ export const BankGLStatementReport = () => {
     filters?.branchId && filters?.branchId.length !== 0
       ? filters?.branchId?.map((t) => t.value)
       : null;
+  const bankAccountsIds =
+    filters?.bankAccounts && filters?.bankAccounts.length !== 0
+      ? filters?.bankAccounts?.map((t) => t.value)
+      : null;
 
-  const bankIds =
-    filters?.filter?.bank && filters?.filter?.bank.length !== 0
-      ? filters?.filter?.bank?.map((t) => t.value)
-      : [];
-  const { data: bankListData } = useGetBankAccountListQuery({
-    pagination: { after: '', first: -1 },
-  });
   const { data, isFetching } = useGetBankGlStatementReportQuery(
     {
       data: {
         branchId: branchIds,
         period: filters?.period as LocalizedDateFilter,
+        bankAccounts: bankAccountsIds,
         filter: {
-          bank: bankIds,
           amount:
             filters?.filter?.amount?.max && filters?.filter?.amount?.min
               ? filters?.filter?.amount
@@ -93,12 +92,7 @@ export const BankGLStatementReport = () => {
           ]}
         />
         <Report.Inputs>
-          <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" isMulti />
-          </GridItem>
-          <GridItem colSpan={1}>
-            <ReportDateRange />
-          </GridItem>{' '}
+          <BankGlStatementInputs />
         </Report.Inputs>
       </Report.Header>
 
@@ -178,18 +172,65 @@ export const BankGLStatementReport = () => {
           <Report.Filter title="Balance Range">
             <FormAmountFilter name="filter.amount" />
           </Report.Filter>
-          <Report.Filter title="Bank">
-            <FormSelect
-              isMulti
-              options={bankListData?.accounting?.bankAccounts?.list?.edges?.map((bank) => ({
-                label: bank?.node?.bankName as string,
-                value: bank?.node?.id as string,
-              }))}
-              name="filter.bank"
-            />
-          </Report.Filter>
         </Report.Filters>
       </Report.Body>
     </Report>
+  );
+};
+
+const BankGlStatementInputs = () => {
+  const [triggerQuery, setTriggerQuery] = useState(false);
+  const methods = useFormContext<Filters>();
+  const { watch } = methods;
+  const branchIds = watch('branchId');
+  const branchesArray = branchIds && branchIds.length !== 0 ? branchIds?.map((t) => t.value) : null;
+  const { data: bankListData } = useGetBankAccountListQuery(
+    {
+      pagination: { after: '', first: -1 },
+      filter: {
+        orConditions: [
+          {
+            andConditions: [
+              {
+                column: 'branchId',
+                comparator: 'EqualTo',
+                value: branchesArray,
+              },
+            ],
+          },
+        ],
+      },
+    },
+    { enabled: triggerQuery }
+  );
+  useEffect(() => {
+    if (branchIds?.length) {
+      setTriggerQuery(true);
+    }
+  }, [branchIds]);
+  return (
+    <>
+      <GridItem colSpan={1}>
+        <FormBranchSelect showUserBranchesOnly name="branchId" label="Service Center" isMulti />
+      </GridItem>
+      <GridItem colSpan={2}>
+        <FormSelect
+          name="bankAccounts"
+          label="Select Bank Accounts"
+          isMulti
+          options={
+            branchIds
+              ? bankListData?.accounting?.bankAccounts?.list?.edges?.map((bank) => ({
+                  label: bank?.node?.displayName as string,
+                  value: bank?.node?.id as string,
+                }))
+              : undefined
+          }
+        />
+      </GridItem>
+      <GridItem colSpan={1}>
+        <ReportDateRange />
+      </GridItem>{' '}
+    </>
   );
 };

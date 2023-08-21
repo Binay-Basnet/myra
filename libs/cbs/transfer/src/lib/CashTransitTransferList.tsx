@@ -9,10 +9,17 @@ import {
   CashInTransitInfo,
   CashInTransitTransferType,
   RequestStatus,
+  useAppSelector,
   useGetCashInTransitListQuery,
+  useGetMemberFilterMappingQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  getFilterQuery,
+  getPaginationQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { CashInTransitTransferAproveModal } from '../components/cash-in-transit/CashInTransitTransferAproveModal';
 
@@ -38,34 +45,38 @@ const CASH_IN_TRANSIT_TAB_ITEMS = [
 
 export const CashTransitTransferList = () => {
   const router = useRouter();
+  const { data: filterMapping } = useGetMemberFilterMappingQuery();
+  const branchId = useAppSelector((state) => state.auth.user?.currentBranch?.id);
   const { t } = useTranslation();
   const modalProps = useDisclosure();
 
-  const { data, isFetching } = useGetCashInTransitListQuery(
-    {
-      pagination: getPaginationQuery(),
-      transferType: (router.query['objState'] ??
-        CashInTransitTransferType.Sent) as CashInTransitTransferType,
-    },
-    {
-      staleTime: 0,
-    }
-  );
+  const { data, isFetching } = useGetCashInTransitListQuery({
+    pagination: getPaginationQuery(),
+    filter: getFilterQuery(
+      router.query['objState'] === CashInTransitTransferType?.Received
+        ? { receiverBranch: { value: String(branchId), compare: '=' } }
+        : { senderBranch: { value: String(branchId), compare: '=' } }
+    ),
+  });
 
   const rowData = useMemo(() => data?.transaction?.cashInTransit?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'transferDate',
         header: 'Transfer Date',
         accessorFn: (row) => localizedDate(row?.node?.transferDate),
         cell: (props) => localizedDate(props?.row?.original?.node?.transferDate),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Transfer ID',
         accessorFn: (row) => row?.node?.transactionCode,
       },
       {
+        id: 'senderBranch',
         header: 'Sender',
         accessorFn: (row) => row?.node?.senderServiceCentreName,
         cell: (props) => (
@@ -78,15 +89,21 @@ export const CashTransitTransferList = () => {
             </Text>
           </Box>
         ),
+        enableColumnFilter: true,
+
         meta: {
           width: '20%',
+          filterMaps: { list: filterMapping?.members?.filterMapping?.serviceCenter || [] },
         },
       },
       {
+        id: 'receiverBranch',
         header: 'Receiver Service Center',
         accessorFn: (row) => row?.node?.receiverServiceCentreName,
+        enableColumnFilter: true,
         meta: {
           width: '20%',
+          filterMaps: { list: filterMapping?.members?.filterMapping?.serviceCenter || [] },
         },
       },
       {
@@ -102,9 +119,12 @@ export const CashTransitTransferList = () => {
         ),
       },
       {
+        id: 'amount',
         header: 'Amount',
         accessorFn: (row) => row?.node?.cashAmount,
         cell: (props) => amountConverter(props?.row?.original?.node?.cashAmount || 0),
+        enableColumnFilter: true,
+        filterFn: 'amount',
         meta: {
           isNumeric: true,
         },
@@ -135,7 +155,7 @@ export const CashTransitTransferList = () => {
         },
       },
     ],
-    [t]
+    [t, filterMapping?.members?.filterMapping?.serviceCenter]
   );
 
   const selectedTransfer = rowData?.find(

@@ -141,6 +141,7 @@ query getMemberRegistrationReport($data: MemberRegistrationReportData) {
             contactNo
             email
             other
+            panVatNo
           }
           other {
             memberId
@@ -166,6 +167,7 @@ query getMemberRegistrationReport($data: MemberRegistrationReportData) {
             contactNo
             email
             other
+            panVatNo
           }
         }
       }
@@ -287,11 +289,10 @@ query getIndividualMemberReport($memberId: ID!) {
   }
 }
 
-
 query getMinorListReport($data: MinorFilter) {
   report {
     memberReport {
-      minorReport(data: $data ) {
+      minorReport(data: $data) {
         data {
           id
           memberName
@@ -302,6 +303,51 @@ query getMinorListReport($data: MinorFilter) {
           serviceCentreName
           minorName
           relationshipId
+        }
+      }
+    }
+  }
+}
+
+query getMemberTransferReport($data: MemberTransferFilter!) {
+  report {
+    memberReport {
+      memberTransferReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          memberName
+          fromBranch {
+            id
+            branchCode
+            name
+          }
+          toBranch {
+            id
+            branchCode
+            name
+          }
+          transferredDate
+          transferredBy
+          shareBalance
+          savingAccounts {
+            accNo
+            balance {
+              amount
+              amountType
+            }
+            interestAccured
+            disbursedAmount
+          }
+          loanAccounts {
+            accNo
+            balance {
+              amount
+              amountType
+            }
+            interestAccured
+            disbursedAmount
+          }
         }
       }
     }

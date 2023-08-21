@@ -12,9 +12,13 @@ import {
   EbankingSendMoneyRecord,
   useGetAccountListQuery,
 } from '@coop/ebanking/data-access';
+import {
+  CardBodyContainer,
+  CardContainer,
+  CardContent,
+  CardHeader,
+} from '@coop/ebanking/ui-layout';
 import { amountConverter } from '@coop/shared/utils';
-
-import { CardBodyContainer, CardContainer, CardContent, CardHeader } from '../CardContainer';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'loading';
 
@@ -50,7 +54,7 @@ export const SendMoneyResult = ({ paymentStatus, setPaymentStatus }: SendMoneyRe
       <Box display="flex" flexDir="column" bg="white" borderRadius="br2" overflow="hidden">
         <TransactionHeaderCardWithChip
           chipText={paymentStatus === 'failure' ? 'Transfer Failed' : 'Transfer Successful'}
-          isSuccess={paymentStatus === 'success'}
+          status={paymentStatus}
         />
         <Box
           h="74px"

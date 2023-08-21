@@ -3,13 +3,10 @@ import { FormProvider, UseFormReturn } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
-import NepaliDate from 'nepali-date-converter';
 
 import { asyncToast, Box, Modal } from '@myra-ui';
 
 import {
-  DateType,
-  store,
   useGetEndOfDayDateDataQuery,
   useGetLoanProductProcessingChargesListQuery,
   useUpdateLoanProductProcessingChargeMutation,
@@ -31,7 +28,6 @@ type ServiceType = {
 
 export const UpdateChargesModal = ({ isOpen, onClose, methods }: IUpdateChargesModalProps) => {
   const router = useRouter();
-  const dateType = store.getState().auth?.preference?.date || DateType.Ad;
   const { mutateAsync: updateLoanProcessingCharges } =
     useUpdateLoanProductProcessingChargeMutation();
   const queryClient = useQueryClient();
@@ -94,6 +90,13 @@ export const UpdateChargesModal = ({ isOpen, onClose, methods }: IUpdateChargesM
     });
   };
 
+  const payload = methods.watch('payload') as ServiceType[];
+
+  const isSaveButtonDisabled = useMemo(
+    () => payload?.findIndex((charge) => !charge?.ledgerName) !== -1,
+    [payload]
+  );
+
   return (
     <Modal
       title="Update Loan Processing Charges"
@@ -102,6 +105,7 @@ export const UpdateChargesModal = ({ isOpen, onClose, methods }: IUpdateChargesM
       primaryButtonLabel="Save Changes"
       width="3xl"
       primaryButtonHandler={handleSave}
+      isDisabled={isSaveButtonDisabled}
     >
       <FormProvider {...methods}>
         <form>
@@ -138,13 +142,7 @@ export const UpdateChargesModal = ({ isOpen, onClose, methods }: IUpdateChargesM
               <FormDatePicker
                 name="additionalData.effectiveDate"
                 label="Effective From"
-                minDate={
-                  closingDate?.local
-                    ? dateType === 'BS'
-                      ? new NepaliDate(closingDate?.np ?? '').toJsDate()
-                      : new Date(closingDate?.en ?? '')
-                    : new Date()
-                }
+                minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
               />
             </Box>
             <FormFileInput name="additionalData.fileUploads" label="File Upload" />

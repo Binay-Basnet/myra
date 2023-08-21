@@ -187,6 +187,8 @@ query getDayBookReport($data: DayBookReportFilter!) {
           data {
             closingAmount
             openingBalance
+            tellerBalance
+            vaultBalance
             payments {
               accountHead
               amount
@@ -217,6 +219,47 @@ query getDayBookReport($data: DayBookReportFilter!) {
   }
 }
 
+query getTellerDayBookReport($data: TellerDayBookReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        tellerDayBookReport(data: $data) {
+          data {
+            closingAmount
+            openingBalance
+            tellerBalance
+            vaultBalance
+            remainingBalance
+            cashToVault
+            payments {
+              accountHead
+              amount
+              entries {
+                particular
+                ledger
+                voucherNo
+                amount
+              }
+            }
+            receipts {
+              accountHead
+              amount
+              entries {
+                particular
+                ledger
+                voucherNo
+                amount
+              }
+            }
+            totalAmount
+            totalPayment
+            totalReceipts
+          }
+        }
+      }
+    }
+  }
+}
 query getServiceCenterBalanceReport($data: ServiceCenterBalanceFilter!) {
   report {
     transactionReport {
@@ -376,6 +419,66 @@ query getMrTransactionReport($data: MRTransactionReportFilter!) {
           }
           error {
             ...QueryError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getFiscalYearTrialBalance($data: TrialSheetReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        fiscalTrialSheetReport(data: $data) {
+          data {
+            equityAndLiablities {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            expenses {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            income {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            assets {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            offBalance {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            orphanEntries {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+
+            equityAndLiablitiesTotal
+            assetsTotal
+            expenseTotal
+            incomeTotal
+            offBalanceTotal
+            orphanTotal
+
+            totalAssetExpense
+            totalLiablitiesIncome
+            totalProfitLoss
           }
         }
       }

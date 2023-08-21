@@ -1,8 +1,21 @@
 mutation setDefaultAccount($accountId: String!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     account {
       setDefaultAccount(accountId: $accountId) {
         recordId
+      }
+    }
+  }
+}
+
+mutation savingExcelExport($data: EbankingSavingFilter!) {
+  eBanking {
+    account {
+      savingExcelExport(data: $data) {
+        url
+        error {
+          ...MutationError
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { IoQrCode } from 'react-icons/io5';
 import { useDisclosure } from '@chakra-ui/react';
 
@@ -6,6 +6,7 @@ import { AccountQRModal, Box, IconButton, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data:
@@ -14,11 +15,11 @@ interface ILoanPaymentScheduleTableProps {
         id: string | null | undefined;
         accountType: string | null | undefined;
         accountName: string | null | undefined;
-        totalBalance: string | 0;
+        totalBalance: string | null | undefined;
         interestRate: string | null | undefined;
         accountNumber: string | null | undefined;
         subscriptionDate: string | null | undefined;
-        remainingPrincipal?: string | 0;
+        remainingPrincipal?: string | null | undefined;
       }[];
   memberName: string;
   contactNo?: string;
@@ -39,15 +40,42 @@ export const LoanTable = ({
     accountName: 'N/A',
   });
 
+  const { totalSanctionedAmount, totalRemainingBalance } = useMemo(
+    () => ({
+      totalSanctionedAmount:
+        data?.reduce(
+          (accumulator, loan) => accumulator + Number(loan?.totalBalance || 0),
+          0 as number
+        ) ?? 0,
+      totalRemainingBalance:
+        data?.reduce(
+          (accumulator, loan) => accumulator + Number(loan?.remainingPrincipal || 0),
+          0 as number
+        ) ?? 0,
+    }),
+    [data]
+  );
+
   const loanAccColumns = React.useMemo<Column<typeof data[0]>[]>(
     () => [
       {
         header: 'S.N.',
         accessorKey: 'sn',
+        footer: 'Total',
+        meta: {
+          Footer: {
+            colspan: 4,
+          },
+        },
       },
       {
         header: 'Account Type',
         accessorKey: 'accountType',
+        meta: {
+          Footer: {
+            display: 'none',
+          },
+        },
       },
       {
         header: 'Account Name',
@@ -58,21 +86,33 @@ export const LoanTable = ({
             link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props?.row?.original?.id}`}
           />
         ),
+        meta: {
+          Footer: {
+            display: 'none',
+          },
+        },
       },
       {
         header: 'Account Number',
         accessorKey: 'accountNumber',
+        meta: {
+          Footer: {
+            display: 'none',
+          },
+        },
       },
       {
         header: 'Sanctioned Balance',
-        accessorKey: 'totalBalance',
+        accessorFn: (row) => amountConverter(row?.totalBalance || 0),
+        footer: amountConverter(totalSanctionedAmount || 0),
         meta: {
           isNumeric: true,
         },
       },
       {
         header: 'Remaining Balance',
-        accessorKey: 'remainingPrincipal',
+        accessorFn: (row) => amountConverter(row?.remainingPrincipal || 0),
+        footer: amountConverter(totalRemainingBalance || 0),
         meta: {
           isNumeric: true,
         },
@@ -106,11 +146,19 @@ export const LoanTable = ({
         ),
         meta: {
           isNumeric: true,
+          // Footer: {
+          //   display: 'none',
+          // },
         },
       },
       {
         header: 'Disbursed Date',
         accessorKey: 'subscriptionDate',
+        meta: {
+          Footer: {
+            display: 'none',
+          },
+        },
       },
       {
         header: 'QR',
@@ -133,9 +181,14 @@ export const LoanTable = ({
             }}
           />
         ),
+        meta: {
+          Footer: {
+            display: 'none',
+          },
+        },
       },
     ],
-    [memberName, contactNo]
+    [memberName, contactNo, totalSanctionedAmount, totalRemainingBalance]
   );
 
   const closedAccColumns = React.useMemo<Column<typeof data[0]>[]>(
@@ -160,7 +213,7 @@ export const LoanTable = ({
       },
       {
         header: 'Balance',
-        accessorKey: 'totalBalance',
+        accessorFn: (row) => amountConverter(row?.totalBalance || 0),
         meta: {
           isNumeric: true,
         },
@@ -234,6 +287,7 @@ export const LoanTable = ({
         isStatic
         data={data ?? []}
         columns={isClosedAccount ? closedAccColumns : loanAccColumns}
+        showFooter
       />
       <AccountQRModal
         account={{

@@ -24,26 +24,32 @@ query getMemberList($pagination: Pagination!, $filter: Filter) {
           dateJoined
           activeDate
           inactiveDate
-          profile {
-            ... on KymIndFormStateQuery {
-              data {
-                formData {
-                  basicInformation {
-                    genderId
-                    gender
-                    age
-                  }
-                  contactDetails {
-                    mobileNumber
-                    phoneNumber
-                    email
-                  }
-                  maritalStatusId
-                  maritalStatus
-                }
-              }
-            }
-          }
+
+          gender
+          age
+          maritalStatus
+
+          # profile {
+          #   ... on KymIndFormStateQuery {
+          #     data {
+          #       formData {
+          #         genderId
+          #         # basicInformation {
+          #         #   genderId
+          #         #   gender
+          #         #   age
+          #         # }
+          #         # contactDetails {
+          #         #   mobileNumber
+          #         #   phoneNumber
+          #         #   email
+          #         # }
+          #         # maritalStatusId
+          #         # maritalStatus
+          #       }
+          #     }
+          #   }
+          # }
         }
         cursor
       }
@@ -77,23 +83,6 @@ query getMemberTranslation($id: ID!) {
   }
 }
 
-query getKymFormStatus($id: String!, $hasPressedNext: Boolean) {
-  members {
-    individual(id: $id, hasPressedNext: $hasPressedNext) {
-      formState {
-        sectionStatus {
-          id
-          errors
-          sectionStatus {
-            errors
-            incomplete
-          }
-        }
-      }
-    }
-  }
-}
-
 query getMemberIndividualData($id: ID!) {
   members {
     details(id: $id) {
@@ -113,268 +102,17 @@ query getMemberIndividualData($id: ID!) {
         }
         contact
         dateJoined
-        profile {
-          ... on KymIndFormStateQuery {
-            data {
-              formData {
-                basicInformation {
-                  dateOfBirth
-                  age
-                  gender
-                }
-                contactDetails {
-                  email
-                }
-                maritalStatus
-                maritalStatusId
-              }
-            }
-          }
-          ... on KymInsFormStateQuery {
-            data {
-              formData {
-                institutionName
-                institutionTypeId
-                natureOfBusiness
-              }
-            }
-          }
-          ... on KymCooperativeFormStateQuery {
-            data {
-              formData {
-                nameOfOrganization
-                regdNumber
-                regdDate
-              }
-            }
-          }
-          ... on CooperativeUnionMember {
-            id
-            institutionInformation {
-              data {
-                nameOfInstitutionEn
-                nameOfInstitutionNp
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-query getIndividualKymEditData($id: String!, $hasPressedNext: Boolean) {
-  members {
-    individual(id: $id, hasPressedNext: $hasPressedNext) {
-      formState {
-        sectionStatus {
-          id
-          errors
-          sectionStatus {
-            errors
-            incomplete
-          }
-        }
-        data {
-          formData {
-            basicInformation {
-              firstName
-              middleName
-              lastName
-              genderId
-              dateOfBirth
-              ethnicityId
-              nationalityId
-              educationQualificationId
-              religionId
-              educationQualificationId
-              religionId
-              panNo
-            }
-            contactDetails {
-              mobileNumber
-              phoneNumber
-              email
-            }
-            rentedHouse {
-              landlordName
-              landlordContact
-            }
-            maritalStatusId
-            profession {
-              professionId
-              otherProfession
-            }
-            foreignEmployment {
-              isForeignEmployment
-              foreignEmpCountryId
-              typeOfVisaId
-              foreignEstimatedAnnualIncome
-            }
-            annualIncomeSourceId
-            membershipDetails {
-              purposeId
-              isMemberOfAnotherCooperative
-              otherCoopName
-              otherCoopBranchId
-              otherCoopMemberId
-            }
-            introducers {
-              firstIntroducerId
-              secondIntroducerId
-            }
-            isFamilyAMember
-            initialTransactionDetails {
-              initialShare
-              initialSaving
-              initialLoan
-              otherFinancialAmount
-            }
-            estimatedTransactions {
-              estimatedAnnualTransactionAmount
-              estimatedAnnualLoanAmount
-              estimatedAnnualTransactionFrequencyId
-              estimatedAnnualDepositAmount
-            }
-            declaration {
-              isPoliticallyExposed
-              politicallyExposedDetails
-              hasBeneficialOwner
-              beneficialRelationshipId
-              beneficialFullName
-              isConvicted
-              convictedDetails
-              hasForeignResidentialPermit
-              foreignResidentialPermitTypeId
-              declarationAgreement
-            }
-            permanentAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-            temporaryAddress {
-              address {
-                provinceId
-                districtId
-                localGovernmentId
-                wardNo
-                locality
-                houseNo
-                coordinates {
-                  longitude
-                  latitude
-                }
-              }
-              sameTempAsPermanentAddress
-            }
-            identificationSelection
-          }
-        }
-      }
-    }
-  }
-}
-
-query getIndividualKymFamilyMembersList($id: String!, $isMember: Boolean) {
-  members {
-    individual(id: $id) {
-      listFamilyMember(isMember: $isMember) {
-        data {
-          id
-          relationshipId
-          fullName
-          familyMemberId
-          dateOfBirth
-        }
-      }
-    }
-  }
-}
-
-query getIndividualKymFamilyMembersInCoopList($id: String!, $isMember: Boolean) {
-  members {
-    individual(id: $id) {
-      listFamilyMember(isMember: $isMember) {
-        data {
-          id
-          relationshipId
-          fullName
-          familyMemberId
-          dateOfBirth
-        }
-      }
-    }
-  }
-}
-
-query getIndividualKymFamilyOccupationList($id: String!, $isSpouse: Boolean!) {
-  members {
-    individual(id: $id) {
-      listOccupation(isSpouse: $isSpouse) {
-        data {
-          id
-          occupationId
-          orgName
-          panVatNo
-          address
-          estimatedAnnualIncome
-          establishedDate
-          registrationNo
-          contact
-          isOwner
-        }
-      }
-    }
-  }
-}
-
-query getIndividualKymIncomeSourceList($id: String!) {
-  members {
-    individual(id: $id) {
-      listIncomeSource {
-        data {
-          id
-          incomeSource
-          amount
-        }
-      }
-    }
-  }
-}
-
-query getKYMDocumentsList($memberId: String!) {
-  document {
-    listKYMDocuments(memberId: $memberId) {
-      data {
-        fieldId
-        docData {
-          identifier
-          url
-        }
-      }
-    }
-  }
-}
-
-query getIndividualKymIdentificationList($id: String!) {
-  members {
-    individual(id: $id) {
-      listIdentification {
-        data {
-          id
-          idNo
-          idType
-          place
+        signaturePicUrl
+        citizenshipPicUrl
+        citizenship {
           date
+          id
+          idType
+          identificationNo
+          place
         }
+        gender
+        age
       }
     }
   }
@@ -410,19 +148,19 @@ query getMemberDetails($id: ID!) {
         }
         profilePicUrl
         signaturePicUrl
-        profile {
-          ... on KymIndFormStateQuery {
-            data {
-              formData {
-                basicInformation {
-                  gender
-                  dateOfBirth
-                  age
-                }
-              }
-            }
-          }
-        }
+        # profile {
+        #   ... on KymIndFormStateQuery {
+        #     data {
+        #       formData {
+        #         basicInformation {
+        #           gender
+        #           dateOfBirth
+        #           age
+        #         }
+        #       }
+        #     }
+        #   }
+        # }
       }
     }
   }
@@ -526,6 +264,73 @@ query memberDormancyDetails($memberId: ID!) {
         blockSavingTransaction
         blockLoanTransaction
         blockShareTransaction
+      }
+    }
+  }
+}
+
+query getMemberTransferList($filter: Filter, $pagination: Pagination) {
+  members {
+    transfer {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            prevBranchId
+            prevBranchName
+            newBranchId
+            newBranchName
+            state
+            approverId
+            approverName
+            reason
+            postNotes
+            requestDate
+            approvedDate
+            docs {
+              identifier
+              url
+            }
+          }
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getMemberTransfer($requestId: ID!) {
+  members {
+    transfer {
+      get(requestId: $requestId) {
+        data {
+          id
+          memberId
+          memberName
+          prevBranchId
+          prevBranchName
+          newBranchId
+          newBranchName
+          state
+          approverId
+          approverName
+          reason
+          postNotes
+          requestDate
+          approvedDate
+          docs {
+            identifier
+            url
+          }
+        }
+        error {
+          ...MutationError
+        }
       }
     }
   }

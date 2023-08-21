@@ -93,6 +93,13 @@ export interface TableProps<TData> {
 
   tablePagination?: boolean;
   enableAllFilters?: boolean;
+
+  /**
+   * Todo! make this number to freeze x number of columns.
+   */
+  freezeFirstColumn?: boolean;
+
+  expandFirstLevel?: boolean;
 }
 
 export type Column<TData> = Omit<ColumnDef<TData, unknown>, 'accessorKey' | 'accessorFn' | 'id'> & {

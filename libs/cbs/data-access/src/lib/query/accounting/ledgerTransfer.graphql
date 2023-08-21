@@ -1,0 +1,26 @@
+query getLedgerAccountsForTransfer($input: LedgerBalanceTransferRequestInput!) {
+  accounting {
+    ledgerBalanceTransfer {
+      getLedgerAccounts(input: $input) {
+        totalLedgerAccounts
+        totalTransferBalance {
+          amount
+          amountType
+        }
+        data {
+          ledgerId
+          ledgerName
+          currentBalance {
+            amount
+            amountType
+          }
+          transferBalance
+          newBalance {
+            amount
+            amountType
+          }
+        }
+      }
+    }
+  }
+}

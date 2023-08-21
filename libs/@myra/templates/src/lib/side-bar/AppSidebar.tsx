@@ -87,11 +87,12 @@ export const AppSidebar = ({ module = 'CBS', menu, forms }: ISidebarProps) => {
                     <Box>
                       <AddButtonList
                         testId={t[item.label] || item?.label}
+                        data-testid={t[item.label] || item?.label}
                         label={t[item.label] || item?.label}
                         onClick={() => {
                           if (item.idType) {
                             mutateAsync({ idType: item?.idType ?? null }).then((res) =>
-                              router.push(`${item.route}/${res?.newId}`)
+                              router.push(`${item.route}?id=${res?.newId}`)
                             );
                           } else {
                             router.push(item.route);

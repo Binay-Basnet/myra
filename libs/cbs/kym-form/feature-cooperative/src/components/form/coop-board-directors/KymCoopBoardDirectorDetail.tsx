@@ -1,86 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { useRouter } from 'next/router';
 
 import { Button, FormSection, GridItem, Icon } from '@myra-ui';
 
-import {
-  useDeleteCooPdirectorDataMutation,
-  useGetCoOperativeDirectorEditDataQuery,
-  useGetNewIdMutation,
-} from '@coop/cbs/data-access';
+import { KymCooperativeFormInput } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AddDirector } from '../../accordion-component/KymCoopDirectorAccordion';
 
-interface IProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
-}
-
-export const KymCoopBoardDirectorDetail = (props: IProps) => {
+export const KymCoopBoardDirectorDetail = () => {
   const { t } = useTranslation();
-  const { setSection } = props;
+  const { control } = useFormContext<KymCooperativeFormInput>();
 
-  const router = useRouter();
-  const id = String(router?.query?.['id']);
-
-  const [coopDirectorIds, setCoopDirectorIds] = useState<string[]>([]);
-
-  const { data: editValues, refetch } = useGetCoOperativeDirectorEditDataQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
-
-  useEffect(() => {
-    if (editValues) {
-      const editValueData = editValues?.members?.cooperative?.listDirectors?.data;
-
-      setCoopDirectorIds(
-        editValueData?.reduce(
-          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id as string] : prevVal),
-          [] as string[]
-        ) ?? []
-      );
-    }
-  }, [editValues]);
-
-  useEffect(() => {
-    if (id) {
-      refetch();
-    }
-  }, [id]);
-
-  const { mutate: newIdMutate } = useGetNewIdMutation({
-    onSuccess: (res) => {
-      setCoopDirectorIds([...coopDirectorIds, res.newId]);
-    },
+  const { fields, append, remove } = useFieldArray({
+    name: 'directorDetails',
+    control,
   });
-  const { mutate: deleteMutate } = useDeleteCooPdirectorDataMutation({
-    onSuccess: (res) => {
-      const deletedId = String(res?.members?.cooperative?.directorDetails?.Delete?.recordId);
-
-      const tempDirectorIds = [...coopDirectorIds];
-
-      tempDirectorIds.splice(tempDirectorIds.indexOf(deletedId), 1);
-
-      setCoopDirectorIds([...tempDirectorIds]);
-    },
-  });
-  const addCoopDirector = () => {
-    newIdMutate({});
-  };
-
-  const removeDirector = (directorId: string) => {
-    deleteMutate({ id, dirId: directorId });
-  };
 
   return (
     <FormSection id="kymCoopAccBoardOfDirectorDetails" header="kymCoopBoardofdirectordetails">
-      {coopDirectorIds.map((item) => (
-        <GridItem key={item} colSpan={3}>
-          <AddDirector setSection={setSection} directorId={item} removeDirector={removeDirector} />
+      {fields.map((item, index) => (
+        <GridItem key={item.id} colSpan={3}>
+          <AddDirector index={index} removeDirector={remove} />
         </GridItem>
       ))}
 
@@ -91,7 +32,22 @@ export const KymCoopBoardDirectorDetail = (props: IProps) => {
           leftIcon={<Icon size="md" as={AiOutlinePlus} />}
           variant="outline"
           onClick={() => {
-            addCoopDirector();
+            append({
+              documents: [
+                {
+                  fieldId: 'photograph',
+                  identifiers: [],
+                },
+                {
+                  fieldId: 'identityDocumentPhoto',
+                  identifiers: [],
+                },
+                {
+                  fieldId: 'signature',
+                  identifiers: [],
+                },
+              ],
+            });
           }}
         >
           {t['kymCoopAddDirector']}

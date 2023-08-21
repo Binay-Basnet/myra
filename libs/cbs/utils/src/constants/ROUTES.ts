@@ -9,6 +9,8 @@ export const ROUTES = {
   CBS_MEMBER_COOP_ADD: '/cbs/members/coop/add',
   CBS_MEMBER_COOP_UNION_ADD: '/cbs/members/coop_union/add',
   CBS_MEMBER_LIST: '/cbs/members/list',
+  CBS_MEMBER_DRAFT_LIST:
+    '/cbs/members/list?filter=objState%255Bvalue%255D%3DDRAFT%26objState%255Bcompare%255D%3D%253D',
   CBS_MEMBER_INACTIVE_LIST: '/cbs/members/inactive/list',
   CBS_MEMBER_DETAILS: '/cbs/members/details',
   CBS_MEMBER_ACTIVATION: '/cbs/members/activation',
@@ -16,6 +18,7 @@ export const ROUTES = {
   CBS_MEMBER_TRANSLATION: '/cbs/members/translation',
   CBS_MEMBER_MINOR_LIST: '/cbs/members/minor/list',
   CBS_MEMBER_DORMANCY: '/cbs/members/dormancy',
+  CBS_MEMBER_TRANSFER: '/cbs/members/transfer',
 
   CBS_SHARE_ISSUE_ADD: '/cbs/share/issue/add',
   CBS_SHARE_RETURN_ADD: '/cbs/share/return/add',
@@ -66,6 +69,9 @@ export const ROUTES = {
   CBS_TRANS_MARKET_REPRESENTATIVE_DETAILS: '/cbs/transactions/market-representative/details',
   CBS_TRANS_JOURNAL_VOUCHER_LIST: '/cbs/transactions/journal-vouchers/list',
   CBS_TRANS_ALL_TRANSACTION_LIST: '/cbs/transactions/all-transactions/list',
+  CBS_TRANS_ADJUSTED_TRANSACTIONS_LIST: '/cbs/transactions/adjusted-transactions/list',
+  CBS_TRANS_ADJUSTED_TRANSACTIONS_DETAILS: '/cbs/transactions/adjusted-transactions/details',
+
   CBS_TRANS_ALL_LEDGERS_LIST: '/cbs/transactions/all-ledgers/list',
   CBS_TRANS_ALL_ACCOUNTS_LIST: '/cbs/transactions/all-accounts/list',
   CBS_TRANS_ALL_HOLDING_ACCOUNTS_LIST: '/cbs/transactions/all-holding-accounts/list',
@@ -94,6 +100,8 @@ export const ROUTES = {
   CBS_REQUESTS_MEMBER_LIST: '/cbs/requests/member/list',
   CBS_REQUESTS_WITHDRAW_VIA_COLLECTOR_LIST: '/cbs/requests/withdraw-via-collector/list',
   CBS_REQUESTS_LOAN_LIST: '/cbs/requests/loan/list',
+  CBS_REQUESTS_MEMBER_TRANSFER_LIST: '/cbs/requests/member-transfer/list',
+
   CBS_WITHDRAW_SLIP_LIST: '/cbs/withdraw/withdraw-slip/list',
   CBS_WITHDRAW_SLIP_BOOK_ADD: '/cbs/withdraw/withdraw-slip-book/add',
   CBS_WITHDRAW_SLIP_BOOK_LIST: '/cbs/withdraw/withdraw-slip-book/list',
@@ -124,15 +132,15 @@ export const ROUTES = {
   SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/charges/configure',
 
   SETTINGS_GENERAL_AUDIT_LOG: '/settings/monitor/audit-log/list',
-  SETTINGS_EOD_SETUP: '/settings/general/eod/setup',
-  SETTINGS_GENERAL_BANK: '/settings/general/bank/configure',
+  SETTINGS_EOD_SETUP: '/settings/global/eod/setup',
+  SETTINGS_GENERAL_BANK: '/settings/global/bank/configure',
 
-  SETTINGS_GENERAL_COA: '/settings/general/coa/list',
-  SETTINGS_GENERAL_COA_DETAILS: '/settings/general/coa/details',
+  SETTINGS_GENERAL_COA: '/settings/global/coa/list',
+  SETTINGS_GENERAL_COA_DETAILS: '/settings/global/coa/details',
 
   SETTINGS_GENERAL_CODE_MANAGEMENT_ACCOUNTING: '/settings/general/code-management/accounting',
   SETTINGS_GENERAL_CODE_MANAGEMENT_CBS:
-    '/settings/general/code-management/core-banking-system/configure',
+    '/settings/global/code-management/core-banking-system/configure',
   SETTINGS_GENERAL_CODE_MANAGEMENT_INVENTORY: '/settings/general/code-management/inventory',
 
   SETTINGS_GENERAL_SAVINGS_TDS: '/settings/general/savings/tds/configure',
@@ -152,7 +160,7 @@ export const ROUTES = {
   SETTINGS_GENERAL_LP_EDIT: '/settings/general/loan-products/edit',
   SETTINGS_GENERAL_LP_DETAILS: '/settings/general/loan-products/details',
 
-  SETTINGS_GENERAL_INDEXING: '/settings/general/indexing',
+  SETTINGS_GENERAL_INDEXING: '/settings/global/indexing',
 
   SETTINGS_GENERAL_MEMBERS: '/settings/general/members/configure',
   SETTINGS_GENERAL_MEMBERS_KYM_IND: '/settings/general/members/kym-individual/configure',
@@ -161,9 +169,9 @@ export const ROUTES = {
   SETTINGS_GENERAL_MEMBERS_KYM_COOP_UNION:
     '/settings/general/members/kym-cooperative-union/configure',
 
-  SETTINGS_GENERAL_SERVICE_CENTER_LIST: '/settings/general/service-center/list',
-  SETTINGS_GENERAL_SERVICE_CENTER_LIST_ADD: '/settings/general/service-center/add',
-  SETTINGS_GENERAL_SERVICE_CENTER_LIST_EDIT: '/settings/general/service-center/edit',
+  SETTINGS_GENERAL_SERVICE_CENTER_LIST: '/settings/global/service-center/list',
+  SETTINGS_GENERAL_SERVICE_CENTER_LIST_ADD: '/settings/global/service-center/add',
+  SETTINGS_GENERAL_SERVICE_CENTER_LIST_EDIT: '/settings/global/service-center/edit',
 
   SETTINGS_GENERAL_SHARE: '/settings/general/share/configure',
   SETTINGS_GENERAL_SHARE_ISSUES: '/settings/general/share/issues/configure',
@@ -177,7 +185,6 @@ export const ROUTES = {
   SETTINGS_GENERAL_PEARLS_REPORT_P2: '/settings/general/pearls-report/p2/configure',
 
   SETTINGS_GENERAL_PEARLS_REPORT_P2X: '/settings/general/pearls-report/p2x/configure',
-
   SETTINGS_GENERAL_PEARLS_REPORT_E1: '/settings/general/pearls-report/e1/configure',
 
   SETTINGS_GENERAL_PEARLS_REPORT_E5: '/settings/general/pearls-report/e5/configure',
@@ -197,6 +204,8 @@ export const ROUTES = {
   SETTINGS_ACCESS_LOG: '/settings/monitor/access-log/list',
 
   SETTINGS_REPORTING_TAGS_LIST: '/settings/general/reporting-tags/list',
+
+  SETTINGS_GENERAL_TRANSACTION_CONSTRAINTS_LIST: '/settings/general/transaction-constraints/list',
 
   /* NOT INDEXED BY GLOBAL SEARCH */
 
@@ -260,6 +269,8 @@ export const ROUTES = {
 
   CBS_REPORTS_LOAN_STATEMENT: '/reports/cbs/loan/statement/new',
   CBS_REPORTS_LOAN_AGEING_REPORT: '/reports/cbs/loan/ageing/new',
+
+  CBS_REPORTS_LOAN_ACCOUNT_STATEMENT_REPORT: '/reports/cbs/loan/loan-transaction-statement/new',
 
   CBS_REPORTS_TRANS_TRIAL_SHEET: '/reports/cbs/transactions/trial-sheet/new',
   CBS_REPORTS_TRANS_CASH_LEDGER: '/reports/cbs/transactions/cash-ledger/new',
@@ -333,6 +344,11 @@ export const ROUTES = {
   ACCOUNTING_INTER_SERVICE_TRANS_LIST: '/accounting/accounting/service-center-transactions/list',
   ACCOUNTING_INTER_SERVICE_TRANS_ADD: '/accounting/accounting/service-center-transactions/add',
 
+  ACCOUNTING_LEDGER_BALANCE_TRANSFER_LIST: '/accounting/accounting/ledger-balance-transfer/list',
+  ACCOUNTING_LEDGER_BALANCE_TRANSFER_ADD: '/accounting/accounting/ledger-balance-transfer/add',
+  ACCOUNTING_LEDGER_BALANCE_TRANSFER_DETAILS:
+    '/accounting/accounting/ledger-balance-transfer/details',
+
   ACCOUNTING_CHAR_KHATA_REPORT: '/accounting/reports/transactions/charkhata/new',
   ACCOUNTING_DAY_BOOK_REPORT: '/accounting/reports/transactions/day-book/new',
   ACCOUNTING_TRAIL_BALANCE_REPORT: '/accounting/reports/transactions/trial-sheet/new',
@@ -380,24 +396,26 @@ export const ROUTES = {
   CBS_LOAN_ACCOUNT_CLOSED_DETAILS: '/cbs/loan/closed-accounts/details',
   CBS_ACCOUNT_CLOSED_DETAILS: '/cbs/savings/account-close/details',
 
-  SETTINGS_GENERAL_PRINT_PREFERENCE: '/settings/general/print-preference/withdraw-slip',
+  SETTINGS_GENERAL_PRINT_PREFERENCE: '/settings/global/print-preference/withdraw-slip',
 
-  SETTINGS_EOD_HISTORY: '/settings/general/eod/history',
+  SETTINGS_EOD_HISTORY: '/settings/global/eod/history',
 
   SETTINGS_GENERAL_SAVINGS_ORGANIZATION_RATE: '/settings/general/savings/organization-rate',
 
   SETTINGS_GENERAL_LOAN_ORGANIZATION_RATE: '/settings/general/loan/organization-rate',
 
-  SETTINGS_GENERAL_ORGANIZATION_DETAILS: '/settings/general/organization',
-  SETTINGS_GENERAL_ORGANIZATION_EDIT: '/settings/general/organization/edit',
+  SETTINGS_GENERAL_ORGANIZATION_DETAILS: '/settings/global/organization',
+  SETTINGS_GENERAL_ORGANIZATION_EDIT: '/settings/global/organization/edit',
 
-  SETTINGS_EOD_HISTORY_DETAILS: '/settings/general/eod/history/details',
-  SETTINGS_GENERAL_COMMITTEE: '/settings/general/committee/list',
-  SETTINGS_GENERAL_COMMITTEE_DETAILS: '/settings/general/committee/details',
+  SETTINGS_EOD_HISTORY_DETAILS: '/settings/global/eod/history/details',
+  SETTINGS_GENERAL_COMMITTEE: '/settings/global/committee/list',
+  SETTINGS_GENERAL_COMMITTEE_DETAILS: '/settings/global/committee/details',
 
   DAY_CLOSE: '/day-close',
 
   BRANCH_READINESS: '/branch-readiness',
+
+  YEAR_END_CLOSE: '/year-end-close',
 
   ACCOUNTING_INVESTMENT_ORGANIZTION_LIST: '/accounting/investment/organizations/list',
   ACCOUNTING_INVESTMENT_ORGANIZATION_ADD: '/accounting/investment/organizations/add',
@@ -414,13 +432,25 @@ export const ROUTES = {
   HRMODULE_EMPLOYEES_LIST: '/hr/employee/employee/list',
   HRMODULE_ATTENDENCE_LIST: '/hr/employee/attendence/list',
   HRMODULE_LEAVE_LIST: '/hr/employee/leave/list',
+  HRMODULE_LEAVE_ALLOCATION_LIST: '/hr/employee/leave-allocation/list',
 
   HRMODULE_EMPLOYEES_ADD: '/hr/employee/employee/add',
   HRMODULE_ATTENDENCE_ADD: '/hr/employee/attendence/add',
   HRMODULE_LEAVE_ADD: '/hr/employee/leave/add',
+  HRMODULE_LEAVE_ALLOCATION_ADD: '/hr/employee/leave-allocation/add',
 
-  HRMODULE_EMPLOYEES_SETTINGS: '/settings/general/hcm/employee',
-  HRMODULE_EMPLOYEES_LEAVE_SETTINGS: '/settings/general/hcm/employee/leave',
+  HRMODULE_ATTENDENCE_DETAILS: '/hr/employee/attendence/details',
+
+  HRMODULE_EMPLOYEES_EDIT: '/hr/employee/employee/edit',
+  HRMODULE_LEAVE_EDIT: '/hr/employee/leave/edit',
+  HRMODULE_LEAVE_ALLOCATION_EDIT: '/hr/employee/leave-allocation/edit',
+
+  HRMODULE_EMPLOYEES_SETTINGS: '/settings/general/hcm-employee',
+  HRMODULE_EMPLOYEES_LEAVE_SETTINGS: '/settings/general/hcm-employee/leave',
+
+  HRMODULE_PAYROLL_SALARY_COMPONENTS_SETTINGS: '/settings/general/hcm-payroll/salary-components',
+  HRMODULE_PAYROLL_SALARY_STRUCTURE_SETTINGS: '/settings/general/hcm-payroll/salary-structure',
+  HRMODULE_PAYROLL_INCOME_TAX_SLAB_SETTINGS: '/settings/general/hcm-payroll/income-tax-slab',
 
   HRMODULE_ATTENDENCE_SETTINGS: '/hr/employee/attendence/list',
   HRMODULE_LEAVE_SETTINGS: '/hr/employee/leave/list',
@@ -440,6 +470,12 @@ export const ROUTES = {
   HR_LIFECYCLE_EMPLOYEE_PROMOTION_ADD: '/hr/lifecycle/promotion/add',
   HR_LIFECYCLE_EMPLOYEE_EXIT_ADD: '/hr/lifecycle/exit/add',
 
+  HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_EDIT: '/hr/lifecycle/employee-onboarding/edit',
+  HR_LIFECYCLE_EMPLOYEE_TRANSFER_EDIT: '/hr/lifecycle/transfer/edit',
+  HR_LIFECYCLE_EMPLOYEE_SEPERATION_EDIT: '/hr/lifecycle/seperation/edit',
+  HR_LIFECYCLE_EMPLOYEE_PROMOTION_EDIT: '/hr/lifecycle/promotion/edit',
+  HR_LIFECYCLE_EMPLOYEE_EXIT_EDIT: '/hr/lifecycle/exit/edit',
+
   HR_RECRUITMENT_STAFF_PLANNING_LIST: '/hr/recruitment/staff-planning/list',
   HR_RECRUITMENT_JOB_OPENING_LIST: '/hr/recruitment/job-opening/list',
   HR_RECRUITMENT_JOB_APPLICATION_LIST: '/hr/recruitment/job-application/list',
@@ -454,17 +490,28 @@ export const ROUTES = {
   HR_RECRUITMENT_JOB_OFFER_ADD: '/hr/recruitment/job-offer/add',
   HR_RECRUITMENT_APPOINTMENT_LETTER_ADD: '/hr/recruitment/appointment-letter/add',
 
+  HR_RECRUITMENT_STAFF_PLANNING_EDIT: '/hr/recruitment/staff-planning/edit',
+  HR_RECRUITMENT_JOB_OPENING_EDIT: '/hr/recruitment/job-opening/edit',
+  HR_RECRUITMENT_JOB_APPLICATION_EDIT: '/hr/recruitment/job-application/edit',
+  HR_RECRUITMENT_INTERVIEW_EDIT: '/hr/recruitment/interview/edit',
+  HR_RECRUITMENT_JOB_OFFER_EDIT: '/hr/recruitment/job-offer/edit',
+  HR_RECRUITMENT_APPOINTMENT_LETTER_EDIT: '/hr/recruitment/appointment-letter/edit',
+
   HR_RECRUITMENT_SETTINGS: '/hr/recruitment/staff-planning/list',
   HR_INTERVIEW_ROUNDS: '/hr/recruitment/staff-planning/list',
   HR_EMAIL_TEMPLATES: '/hr/recruitment/staff-planning/list',
 
   HR_PAYROLL_ENTRY_LIST: '/hr/payroll/payroll-run/list',
-  HR_PAYROLL_SALARY_STRUCTURE_LIST: '/hr/payroll/salary-structure/list',
+  HR_PAYROLL_ENTRY_ADD: '/hr/payroll/payroll-run/add',
+  HR_PAYROLL_ENTRY_EDIT: '/hr/payroll/payroll-run/edit',
+
+  HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_LIST: '/hr/payroll/salary-structure-assignment/list',
   HR_PAYROLL_SALARY_SLIP_LIST: '/hr/payroll/salary-slip/list',
   HR_PAYROLL_EXPEN_LIST: '/hr/payroll/expen/list',
 
-  HR_PAYROLL_ENTRY_ADD: '/hr/payroll/payroll-run/add',
-  HR_PAYROLL_SALARY_STRUCTURE_ADD: '/hr/payroll/salary-structure/add',
+  HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_ADD: '/hr/payroll/salary-structure-assignment/add',
+  HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_EDIT: '/hr/payroll/salary-structure-assignment/edit',
+
   HR_PAYROLL_SALARY_SLIP_ADD: '/hr/payroll/salary-slip/add',
   HR_PAYROLL_EXPEN_ADD: '/hr/payroll/expen/add',
 
@@ -478,6 +525,58 @@ export const ROUTES = {
   HR_TRAINING_REPORTS: '/hr/training/courses/list',
 
   HR_REPORTS: '/hr/reports/transactions',
+
+  BPM_TASKS_LISTS: '/bpm/tasks/list',
+  BPM_TASKS_ADD: '/bpm/tasks/add',
+  BPM_TASKS_EDIT: '/bpm/tasks/edit',
+
+  BPM_PROGRAMS_EVENTS_LIST: '/bpm/programs/events/list',
+  BPM_PROGRAMS_EVENTS_EDIT: '/bpm/programs/events/edit',
+  BPM_PROGRAMS_EVENTS_ADD: '/bpm/programs/events/add',
+  BPM_PROGRAMS_EVENTS_DETAILS: '/bpm/programs/events/details',
+  BPM_PROGRAMS_MEETINGS_LIST: '/bpm/programs/meetings/list',
+  BPM_PROGRAMS_MEETINGS_ADD: '/bpm/programs/meetings/add',
+  BPM_PROGRAMS_MEETINGS_EDIT: '/bpm/programs/meetings/edit',
+  BPM_PROGRAMS_MEETINGS_DETAILS: '/bpm/programs/meetings/details',
+
+  BPM_OPERATIONS_MINOR_ADDITION_LIST: '/bpm/operations/minor-addition/list',
+  BPM_OPERATIONS_MINOR_ADDITION_ADD: '/bpm/operations/minor-addition/add',
+  BPM_OPERATIONS_LOAN_PRODUCT_UPDATES_LIST: '/bpm/operations/loan-product-updates/list',
+  BPM_OPERATIONS_LOAN_PRODUCT_UPDATES_ADD: '/bpm/operations/loan-product-updates/add',
+  BPM_OPERATIONS_SAVING_PRODUCT_UPDATES_LIST: '/bpm/operations/saving-product-updates/list',
+  BPM_OPERATIONS_SAVING_PRODUCT_UPDATES_ADD: '/bpm/operations/saving-product-updates/add',
+  BPM_OPERATIONS_AUTO_OPEN_ACCOUNT_UPDATES_LIST: '/bpm/operations/auto-open-account-updates/list',
+  BPM_OPERATIONS_AUTO_OPEN_ACCOUNT_UPDATES_EDIT: '/bpm/operations/auto-open-account-updates/edit',
+  BPM_OPERATIONS_COLLATERAL_MANAGEMENT_LIST: '/bpm/operations/collateral/list',
+  BPM_OPERATIONS_COLLATERAL_MANAGEMENT_ADD: '/bpm/operations/collateral/add',
+  BPM_OPERATIONS_NOMINEE_BALANCE_TRANSFER_LIST: '/bpm/operations/nominee-balance-transfer/list',
+  BPM_OPERATIONS_NOMINEE_BALANCE_TRANSFER_ADD: '/bpm/operations/nominee-balance-transfer/add',
+  BPM_OPERATIONS_MEMBER_DEACTIVATION_LIST: '/bpm/operations/member-deactivation/list',
+  BPM_OPERATIONS_MEMBER_DEACTIVATION_ADD: '/bpm/operations/member-deactivation/add',
+
+  BPM_REQUESTS_MEMBERSHIP_REQUESTS: '/bpm/requests/membership/list',
+  BPM_REQUESTS_MINOR_ADDITION_REQUESTS: '/bpm/requests/minor-addition/list',
+  BPM_REQUESTS_LOAN_REQUESTS: '/bpm/requests/loan/list',
+  BPM_REQUESTS_SAVING_ACCOUNTS_REQUESTS: '/bpm/requests/saving-accounts/list',
+  BPM_REQUESTS_ALTERNATIVE_CHANNEL_REQUESTS: '/bpm/requests/alternative-channel/list',
+  BPM_REQUESTS_MEMBER_BRANCH_TRANSFER_REQUESTS: '/bpm/requests/memebrship-branch/list',
+  BPM_REQUESTS_NOMINEE_BALANCE_TRANSFER_REQUESTS: '/bpm/requests/nominee-balance-transfer/list',
+
+  BPM_REQUESTS_LOAN_REQUESTS_ADD: '/bpm/requests/loan/add',
+
+  MICRO_FINANCE_GROUPS_LIST: '/micro-finance/groups/list',
+  MICRO_FINANCE_GROUPS_ADD: '/micro-finance/groups/add',
+  MICRO_FINANCE_GROUPS_MEETINGS_LIST: '/micro-finance/groups/groups-meetings/list',
+  MICRO_FINANCE_GROUPS_MEETINGS_ADD: '/micro-finance/groups/groups-meetings/add',
+
+  MICRO_FINANCE_SAVING_ACCOUNTS_LIST: '/micro-finance/savings/accounts/list',
+  MICRO_FINANCE_SAVING_ACCOUNTS_ADD: '/micro-finance/savings/accounts/add',
+  MICRO_FINANCE_DEPOSIT_LIST: '/micro-finance/savings/deposit/list',
+  MICRO_FINANCE_DEPOSIT_ADD: '/micro-finance/savings/deposit/add',
+  MICRO_FINANCE_WITHDRAW_LIST: '/micro-finance/savings/withdraw/list',
+  MICRO_FINANCE_WITHDRAW_ADD: '/micro-finance/savings/withdraw/add',
+  MICRO_FINANCE_SAVING_PRODUCTS_LIST: '/micro-finance/savings/products/list',
+  MICRO_FINANCE_SAVING_PRODUCTS_ADD: '/micro-finance/savings/products--/add',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

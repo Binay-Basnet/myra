@@ -19,8 +19,8 @@ query getMemberCheck($memberID: ID!) {
       memberActivateChecks(memberId: $memberID) {
         isFeePaid
         isShareIssued
-
         isAccountUpdated
+        isMemberActive
       }
     }
   }

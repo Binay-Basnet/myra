@@ -114,7 +114,7 @@ export const BioInstitution = () => {
                   mainDetails={{
                     contactNo: item?.mobileNo as string,
                     email: item?.email as string,
-                    pan: item?.email as string,
+                    pan: item?.panNo as string,
                   }}
                   temporaryAddress={{
                     province: item?.tempAddress?.state?.local as string,
@@ -173,7 +173,7 @@ export const BioInstitution = () => {
                   mainDetails={{
                     contactNo: item?.contactNo as string,
                     email: item?.email as string,
-                    pan: item?.email as string,
+                    pan: item?.panNo as string,
                   }}
                   temporaryAddress={{
                     province: item?.tempAddress?.state?.local as string,

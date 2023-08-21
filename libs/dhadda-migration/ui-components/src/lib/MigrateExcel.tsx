@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router';
 import { migrateExcel } from '@dhadda-migration/data-access';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { Box, Button, toast } from '@myra-ui';
 
 export const MigrateExcel = (props: { validationStatus: boolean }) => {
   const { validationStatus } = props;
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { mutateAsync: validateExcelMutation, isLoading } = useMutation(migrateExcel, {
     onSuccess: (res) => {
@@ -27,7 +28,9 @@ export const MigrateExcel = (props: { validationStatus: boolean }) => {
   const onMigrateExcel = () => {
     const formData = new FormData();
     formData.append('project_name', router?.query?.['projectName'] as string);
-    validateExcelMutation(formData as unknown as { project_name: string });
+    validateExcelMutation(formData as unknown as { project_name: string }).then(() => {
+      queryClient.invalidateQueries(['project-status']);
+    });
   };
 
   return (

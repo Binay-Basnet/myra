@@ -2,6 +2,7 @@ import React, { Fragment, Reducer, useEffect, useMemo, useReducer, useState } fr
 import { BsChevronRight } from 'react-icons/bs';
 import { IoAdd, IoCloseCircleOutline } from 'react-icons/io5';
 import { useDeepCompareEffect } from 'react-use';
+import { useRouter } from 'next/router';
 import {
   Box,
   Collapse,
@@ -18,13 +19,21 @@ import {
 import { AsyncSelect, chakraComponents, Select } from 'chakra-react-select';
 import _, { debounce, uniqueId } from 'lodash';
 
-import { Checkbox, Grid, GridItem } from '@myra-ui';
+import { Checkbox, Grid, GridItem, SwitchTabs } from '@myra-ui';
 import { DatePicker } from '@myra-ui/date-picker';
+
+import { useAppSelector } from '@coop/cbs/data-access';
 
 import { chakraDefaultStyles, getSearchBarStyle } from '../utils/ChakraSelectTheme';
 import { getComponents } from '../utils/SelectComponents';
 
 export const isArrayEqual = <T,>(x: T[], y: T[]) => _(x).xorWith(y, _.isEqual).isEmpty();
+
+type DateValue = {
+  local?: string;
+  en?: string;
+  np?: string;
+};
 
 type EditableValue =
   | string
@@ -33,7 +42,8 @@ type EditableValue =
   | {
       label: string;
       value: string;
-    };
+    }
+  | DateValue;
 
 interface RecordWithId {
   _id?: number;
@@ -63,13 +73,15 @@ export type Column<T extends RecordWithId & Record<string, EditableValue>> = {
     | 'date'
     | 'select'
     | 'checkbox'
-    | 'modal';
+    | 'modal'
+    | 'switch';
   selectOptions?: { label: string; value: string }[];
   searchOptions?: { label: string; value: string }[];
 
   loadOptions?: (row: T) => Promise<{ label: string; value: string }[]>;
 
   isNumeric?: boolean;
+  isTime?: boolean;
   getDisabled?: (row: T) => boolean;
 
   cell?: (row: T) => React.ReactNode;
@@ -135,7 +147,7 @@ type EditableTableAction<TData extends RecordWithId & Record<string, EditableVal
       payload: {
         data: TData;
         column: Column<TData>;
-        newValue: string | boolean;
+        newValue: string | boolean | DateValue;
       };
     }
   | {
@@ -207,7 +219,7 @@ function editableReducer<T extends RecordWithId & Record<string, EditableValue>>
             ? {
                 ...item,
                 [payload.column.accessor]: payload.column.isNumeric
-                  ? +payload.newValue
+                  ? payload.newValue || 0
                   : payload.newValue,
               }
             : item
@@ -745,6 +757,10 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
   dispatch,
   data,
 }: EditableCellProps<T>) => {
+  const router = useRouter();
+
+  const preference = useAppSelector((state) => state?.auth?.preference);
+
   const [asyncOptions, setAsyncOptions] = useState<{ label: string; value: string }[]>([]);
 
   const Modal = column.modal;
@@ -790,7 +806,11 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
       display="flex"
       alignItems="center"
       justifyContent={
-        column.isNumeric ? 'flex-end' : column.fieldType === 'checkbox' ? 'center' : 'flex-start'
+        column.isNumeric
+          ? 'flex-end'
+          : column.fieldType === 'checkbox' || column.fieldType === 'switch'
+          ? 'center'
+          : 'flex-start'
       }
       fontSize="r1"
       borderLeft="1px"
@@ -843,7 +863,8 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
             selectableNodes="leaf"
           />
         ) : null
-      ) : column.fieldType === 'checkbox' ? null : column.fieldType ===
+      ) : column.fieldType === 'checkbox' ||
+        column.fieldType === 'switch' ? null : column.fieldType ===
         'select' ? null : column.fieldType === 'date' ? null : column.cell ? (
         <Box px="s8" width="100%" cursor="not-allowed">
           {column.cell(data)}
@@ -946,24 +967,64 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
         />
       ) : column?.fieldType === 'date' ? (
         <DatePicker
-          calendarType="AD"
+          calendarType={preference?.date || 'AD'}
+          locale={router.locale as 'en' | 'ne'}
+          value={dataValue ? { ad: (dataValue as DateValue).en } : undefined}
           onChange={(e) => {
             dispatch({
               type: EditableTableActionKind.EDIT,
               payload: {
                 data,
-                newValue: e.ad ?? '',
+                newValue: { np: e.bs, en: e.ad, local: '' },
                 column,
               },
             });
           }}
+        />
+      ) : column?.fieldType === 'switch' ? (
+        <SwitchTabs
+          value={data[column.accessor] as string}
+          onChange={(nextValue) => {
+            if (nextValue === 'true' || nextValue === 'false') {
+              dispatch({
+                type: EditableTableActionKind.EDIT,
+                payload: {
+                  data,
+                  newValue: nextValue === 'true',
+                  column,
+                },
+              });
+            } else {
+              dispatch({
+                type: EditableTableActionKind.EDIT,
+                payload: {
+                  data,
+                  newValue: nextValue,
+                  column,
+                },
+              });
+            }
+          }}
+          options={[
+            {
+              label: 'No',
+              value: false,
+              isDisabled: column.getDisabled && column.getDisabled(data),
+            },
+            {
+              label: 'Yes',
+              value: true,
+              isDisabled: column.getDisabled && column.getDisabled(data),
+            },
+          ]}
         />
       ) : (
         <Input
           //  mt="-1px"
           py="0"
           h="100%"
-          type={column.isNumeric ? 'number' : 'text'}
+          data-testId={`${column?.accessor?.toString()}-${data?._id}`}
+          type={column.isNumeric ? 'number' : column.isTime ? 'time' : 'text'}
           w="100%"
           px="s8"
           minH="inherit"

@@ -12,3 +12,63 @@ mutation setEmployeeOnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) 
     }
   }
 }
+
+mutation setEmployeeTransferUpsert($input: EmployeeTransferInput!) {
+  hr {
+    employeelifecycle {
+      employeeTransfer {
+        insertEmployeeTransfer(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setEmployeeSeerationUpsert($input: EmployeeSeparationInput!) {
+  hr {
+    employeelifecycle {
+      employeeSeparation {
+        addEmployeeSeparation(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setEmployeePromotionUpsert($input: EmployeePromotionInput!) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        addEmployeePromotion(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setEmployeeExitUpsert($id: ID, $input: EmployeeExitInput!) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        upsertEmployeeExit(input: $input, id: $id) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

@@ -18,7 +18,7 @@ import { getComponents } from './styles/selectComponents';
 // import { getComponents } from './styles/selectComponents';
 import { getChakraDefaultStyles } from './styles/selectStyles';
 
-interface SelectOption {
+export interface SelectOption {
   label: string | number;
   value: string | number;
   disabled?: boolean;
@@ -63,6 +63,7 @@ export const Select = React.forwardRef(
       onChange,
       addItemHandler,
       addItemLabel,
+      onInputChange,
       ...rest
     }: SelectProps,
     ref: ForwardedRef<HTMLSelectElement>
@@ -111,6 +112,8 @@ export const Select = React.forwardRef(
             onChange={multiOnChange}
             chakraStyles={getChakraDefaultStyles(!!errorText, !!addItemHandler)}
             components={components}
+            {...(onInputChange && { filterOption: () => true })}
+            onInputChange={onInputChange}
             ref={
               ref as unknown as
                 | Ref<SelectInstance<SelectOption, boolean, GroupBase<SelectOption>>>
@@ -160,13 +163,15 @@ const useMulti = ({ isMulti, value, options, onChange: propOnChange }: IUseMulti
 
   const valueRefCurrent = valueRef?.current;
 
-  const isSelectAllSelected = () => valueRefCurrent?.length === options?.length;
+  const isSelectAllSelected = () =>
+    options.length !== 0 && valueRefCurrent?.length === options?.length;
 
   const isOptionSelected = (option: SelectOption) =>
     valueRef?.current?.some(({ value: newValue }) => newValue === option.value) ||
     isSelectAllSelected();
 
-  const getOptions = () => [selectAllOption, ...options];
+  const getOptions = () => (options.length !== 0 ? [selectAllOption, ...options] : []);
+
   const getValue = () => (isSelectAllSelected() ? [selectAllOption] : value);
 
   const onChange = (

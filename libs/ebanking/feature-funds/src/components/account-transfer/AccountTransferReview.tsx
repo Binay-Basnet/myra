@@ -3,12 +3,17 @@ import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useQueryClient } from '@tanstack/react-query';
 
+import { Box, Button, Icon } from '@myra-ui';
+
 import { InfoCard } from '@coop/ebanking/cards';
 import { useAccountTransferMutation, useGetAccountListQuery } from '@coop/ebanking/data-access';
 import { AccountTransferFormType } from '@coop/ebanking/funds';
-import { Box, Button, Icon } from '@myra-ui';
-
-import { CardBodyContainer, CardContainer, CardContent, CardHeader } from '../CardContainer';
+import {
+  CardBodyContainer,
+  CardContainer,
+  CardContent,
+  CardHeader,
+} from '@coop/ebanking/ui-layout';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'loading';
 

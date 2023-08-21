@@ -6,7 +6,7 @@ import { BankSelect, BankSelectProps } from '@myra-ui/forms';
 
 import {
   AccountingBankAccountType,
-  Filter_Mode,
+  useAppSelector,
   useGetBankAccountListQuery,
 } from '@coop/cbs/data-access';
 import { debitCreditConverter, getPaginationQuery } from '@coop/shared/utils';
@@ -31,6 +31,7 @@ interface IFormBankSelectProps extends BankSelectProps {
 }
 
 export const FormBankSelect = (props: IFormBankSelectProps) => {
+  const branchId = useAppSelector((state) => state.auth.user?.currentBranch?.id);
   const { name, label, currentBranchOnly = false, ...rest } = props;
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -38,12 +39,18 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
   const { data: bankAccountListQueryData, isFetching } = useGetBankAccountListQuery({
     pagination: { ...getPaginationQuery(), first: 20 },
     filter: {
-      id: searchQuery,
-      bankId: searchQuery,
-      bankName: searchQuery,
-      bankDisplayName: searchQuery,
-      accountName: searchQuery,
-      filterMode: Filter_Mode.Or,
+      query: searchQuery,
+      orConditions: [
+        {
+          andConditions: [
+            {
+              column: 'branchId',
+              value: branchId,
+              comparator: 'EqualTo',
+            },
+          ],
+        },
+      ],
     },
     currentBranchOnly,
   });
@@ -71,6 +78,7 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
     <Controller
       render={({ field: { value, onChange } }) => (
         <BankSelect
+          name={name}
           label={label}
           value={bankOptions?.find((option) => option.value === value)}
           isLoading={isFetching}

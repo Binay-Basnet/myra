@@ -238,6 +238,9 @@ query getLoanList($paginate: Pagination, $filter: Filter) {
           product {
             productName
           }
+          branchId
+          branchName
+
           LoanAccountName
           createdAt
           closedDate
@@ -476,16 +479,16 @@ query getLoanPreview($id: String!) {
         }
         repaymentDetails {
           lastPaymentDate
-          remainingPrincipal
-          remainingInterest
-          remainingTotal
-          remainingInstallments {
-            installmentNo
-            principal
-            fine
-            interestAmount
-          }
-          totalInstallmentAmount
+          #  remainingPrincipal
+          #  remainingInterest
+          #  remainingTotal
+          #  remainingInstallments {
+          #    installmentNo
+          #    principal
+          #    fine
+          #    interestAmount
+          #  }
+          #  totalInstallmentAmount
           nextInstallmentNo
         }
         member {
@@ -522,6 +525,9 @@ query getLoanPreview($id: String!) {
           duesSince
           totalPayablePrincipal
           totalPayableInterest
+          totalOverduePayable
+          totalOverduePrincipal
+          totalOverdueInterest
         }
         statistics {
           remainingPayableAmount
@@ -556,7 +562,7 @@ query getLoanPreview($id: String!) {
   }
 }
 
-query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) {
+query getLoanRepaymentList($paginate: Pagination, $filter: Filter) {
   loanAccount {
     repaymentList(paginate: $paginate, filter: $filter) {
       totalCount
@@ -668,6 +674,7 @@ query getLoanAccountDetails(
     loanAccountDetails(loanAccountId: $loanAccountId) {
       overView {
         isClosed
+        closedDate
         totalPrincipalPaid
         totalInterestPaid
         totalRemainingPrincipal

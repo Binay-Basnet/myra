@@ -14,7 +14,7 @@ export const UploadCsv = (props: { clearErrorData: () => void }) => {
   const [selectedFile, setSelectedFile] = useState();
   const queryClient = useQueryClient();
 
-  const { mutate: uploadExcelMutation } = useMutation(uploadExcel, {
+  const { mutate: uploadExcelMutation, isLoading } = useMutation(uploadExcel, {
     onSuccess: (res) => {
       toast({
         id: 'upload-csv',
@@ -61,7 +61,7 @@ export const UploadCsv = (props: { clearErrorData: () => void }) => {
             Upload Csv
           </Text>
           <Input type="file" border="none" onChange={handleUploadFile} w="-webkit-fit-content" />
-          <Button type="submit" w="-webkit-fit-content">
+          <Button type="submit" w="-webkit-fit-content" isLoading={isLoading}>
             Submit
           </Button>
         </Box>

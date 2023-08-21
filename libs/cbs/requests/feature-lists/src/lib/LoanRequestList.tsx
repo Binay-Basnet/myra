@@ -6,7 +6,12 @@ import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@m
 import { Column, Table } from '@myra-ui/table';
 
 import { RequestStatus, useGetLoanRequestsQuery } from '@coop/cbs/data-access';
-import { amountConverter, featureCode, getPaginationQuery } from '@coop/shared/utils';
+import {
+  amountConverter,
+  featureCode,
+  getFilterQuery,
+  getPaginationQuery,
+} from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { LoanApproveOrDeclineModal } from '../components/LoanApproveOrDeclineModal';
@@ -15,6 +20,7 @@ export const LoanRequestList = () => {
   const router = useRouter();
   const { data, isFetching } = useGetLoanRequestsQuery({
     pagination: getPaginationQuery(),
+    filter: getFilterQuery(),
   });
   const modalProps = useDisclosure();
 
@@ -23,9 +29,12 @@ export const LoanRequestList = () => {
   const columns = React.useMemo<Column<typeof loanRequests[0]>[]>(
     () => [
       {
+        id: 'requestedDate',
         header: 'Last Modified Date',
         accessorFn: (row) => row?.node?.lastModifiedDate,
         cell: (props) => props?.row?.original?.node?.lastModifiedDate,
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Request ID',
@@ -50,16 +59,28 @@ export const LoanRequestList = () => {
         },
       },
       {
+        id: 'amount',
         header: 'Applied Amount',
         accessorFn: (row) => row?.node?.loanAmount,
         cell: (props) => amountConverter(props.getValue() as string),
+        enableColumnFilter: true,
+        filterFn: 'amount',
       },
       {
+        id: 'status',
         header: 'Approval Status',
         accessorFn: (row) => row?.node?.approvalStatus,
         cell: (props) => <ApprovalStatusItem status={props.row.original?.node?.approvalStatus} />,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: [
+              { label: 'Approved', value: 'Completed' },
+              { label: 'Pending', value: 'Active' },
+            ],
+          },
+        },
       },
-
       {
         id: '_actions',
         header: '',

@@ -14,13 +14,15 @@ import {
   useReadyBranchEodMutation,
 } from '@coop/cbs/data-access';
 
-import { StatusList } from '../component';
+import { AllBranchReadiness, StatusList } from '../component';
 
 /* eslint-disable-next-line */
 export interface BranchReadinessProps {}
 
 export const BranchReadiness = () => {
   const router = useRouter();
+
+  const user = useAppSelector((state) => state?.auth?.user);
 
   const queryClient = useQueryClient();
 
@@ -64,7 +66,7 @@ export const BranchReadiness = () => {
         </Container>
       </Box>
       <Container bg="white" minHeight="calc(100vh - 110px)" pb="90px" minW="container.lg">
-        <Box display="flex" flexDirection="column" py="s16">
+        <Box display="flex" flexDirection="column" py="s16" gap="s16">
           <Box display="flex" flexDirection="column">
             <Box display="flex" py="s16" justifyContent="space-between" alignItems="center">
               <Text
@@ -83,6 +85,8 @@ export const BranchReadiness = () => {
 
             <StatusList statusList={statusList} />
           </Box>
+
+          {user?.currentBranch?.category === 'HEAD_OFFICE' && <AllBranchReadiness />}
         </Box>
       </Container>
       <Box position="relative" margin="0px auto">

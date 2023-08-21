@@ -1,0 +1,90 @@
+mutation setBPMMeetings($id: ID, $data: BPMMeetingInput!) {
+  bpm {
+    programs {
+      upsertMeeting(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setCloseBPMMeetings($meetingID: ID!) {
+  bpm {
+    programs {
+      closeMeeting(meetingId: $meetingID) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setAddMinutes($meetingID: ID!, $data: MinuteInput!) {
+  bpm {
+    programs {
+      addMinute(meetingId: $meetingID, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setAddMeetingAttendees($meetingID: ID!, $attendees: [String!]) {
+  bpm {
+    programs {
+      addAttendees(meetingId: $meetingID, attendeeIds: $attendees) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setBPMAddEvents($Id: ID, $data: BPMEventInput!) {
+  bpm {
+    programs {
+      upsertEvent(data: $data, id: $Id) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setBPMEventsAddAnnouncements($eventId: ID!, $data: BPMEventAnnouncementInput!) {
+  bpm {
+    programs {
+      addAnnouncements(data: $data, eventId: $eventId) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setBPMEventsAddAttendees($eventId: ID!, $attendees: [String!]) {
+  bpm {
+    programs {
+      addEventAttendees(eventId: $eventId, attendeeIds: $attendees) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

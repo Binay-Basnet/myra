@@ -73,7 +73,7 @@ export const AccountOperatorDetails = () => {
                 mainDetails={{
                   contactNo: item?.contactNo as string,
                   email: item?.email as string,
-                  pan: item?.email as string,
+                  pan: item?.panNo as string,
                 }}
                 temporaryAddress={{
                   province: item?.tempAddress?.state?.local as string,

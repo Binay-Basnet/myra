@@ -103,3 +103,20 @@ mutation updateLedgerName($ledgerId: ID!, $newName: String!) {
     }
   }
 }
+
+mutation changeLedgerParent($ledgerId: ID!, $newCOALeaf: ID!) {
+  settings {
+    general {
+      chartsOfAccount {
+        account {
+          changeLedgerParent(ledgerId: $ledgerId, newCOALeaf: $newCOALeaf) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}

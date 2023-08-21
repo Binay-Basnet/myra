@@ -10,3 +10,70 @@ query getUtilityList {
   }
 }
 
+query getUtility($slug: String!) {
+  eBanking {
+    utility {
+      getUtility(slug: $slug) {
+        utility {
+          slug
+          isActive
+          logo
+          banner
+          totalProcessingSequence
+          vendorUrl1
+          sequence {
+            processSeq
+            requiredFields {
+              fieldName
+              fieldLabel
+              fieldType
+              dataType {
+                type
+                length
+                minLength
+              }
+              addnUrl
+              isRequired
+              inputFormat
+            }
+            processUrl
+            responseFieldMapping {
+              fieldName
+              mapField
+              fieldLabel
+              options {
+                key
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query listUtilities($pagination: Pagination, $filter: Filter) {
+  eBanking {
+    utility {
+      listUtilities(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            slug
+            serviceType
+          }
+          cursor
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}

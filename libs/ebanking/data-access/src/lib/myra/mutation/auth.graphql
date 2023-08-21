@@ -1,5 +1,5 @@
 mutation signUp($mobileNo: String!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth(type: EBANKING) {
       signUp(mobileNo: $mobileNo) {
         error {
@@ -12,7 +12,7 @@ mutation signUp($mobileNo: String!) {
 }
 
 mutation verifyOTP($data: EbankingOtpInput!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth(type: EBANKING) {
       verifyOtp(data: $data) {
         error {
@@ -25,7 +25,7 @@ mutation verifyOTP($data: EbankingOtpInput!) {
 }
 
 # mutation setPassword($data: EbankingPasswordInput!, $userId: ID!) {
-#   eBanking {
+#   eBanking(source: EBANKING) {
 #     auth(type: EBANKING) {
 #       setPassword(data: $data, userID: $userId) {
 #         error {
@@ -38,7 +38,7 @@ mutation verifyOTP($data: EbankingOtpInput!) {
 # }
 
 mutation eBankingLogin($data: EbankingLoginInput!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth(type: EBANKING) {
       login(data: $data) {
         recordId
@@ -69,7 +69,7 @@ mutation eBankingLogin($data: EbankingLoginInput!) {
 }
 
 mutation checkAccount($id: ID!, $mobileNumber: String!, $pin: Int!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth(type: EBANKING) {
       checkAccount(coopId: $id, mobileNumber: $mobileNumber, pin: $pin) {
         success
@@ -82,7 +82,7 @@ mutation checkAccount($id: ID!, $mobileNumber: String!, $pin: Int!) {
 }
 
 mutation setNewPin($data: CooperativeConnectInput) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth(type: EBANKING) {
       setNewPin(data: $data) {
         record {
@@ -103,7 +103,7 @@ mutation setNewPin($data: CooperativeConnectInput) {
 }
 
 mutation loginToCooperative($cooperativeId: ID!, $pinCode: String!, $mobileNumber: String!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth(type: EBANKING) {
       loginToCooperative(
         cooperativeId: $cooperativeId
@@ -140,7 +140,7 @@ mutation loginToCooperative($cooperativeId: ID!, $pinCode: String!, $mobileNumbe
 }
 
 mutation resendOTP($mobile: String!, $otpFor: OtpFor!) {
-  eBanking {
+  eBanking(source: EBANKING) {
     auth {
       resendOtp(mobile: $mobile, otpFor: $otpFor) {
         success
@@ -152,21 +152,8 @@ mutation resendOTP($mobile: String!, $otpFor: OtpFor!) {
   }
 }
 
-mutation resetPassword($mobileNo: String!, $newPassword: String!) {
-  eBanking {
-    auth {
-      resetPassword(mobileNo: $mobileNo, newPassword: $newPassword) {
-        success
-        error {
-          ...MutationError
-        }
-      }
-    }
-  }
-}
-
 mutation newMembershipRequest($cooperativeId: String!, $data: MembershipRequestInput) {
-  eBanking {
+  eBanking(source: EBANKING) {
     membershipRequest {
       new(data: $data, cooperativeId: $cooperativeId) {
         error {

@@ -9,9 +9,10 @@ import {
   LoanAccountEdge,
   LoanObjState,
   useGetLoanFilterMappingQuery,
+  useGetMemberFilterMappingQuery,
 } from '@coop/cbs/data-access';
-import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { amountConverter } from '@coop/shared/utils';
+import { localizedDate } from '@coop/cbs/utils';
+import { amountConverter, getUrl } from '@coop/shared/utils';
 
 interface ILoanAppTable {
   data: GetLoanListQuery | undefined;
@@ -24,6 +25,7 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
   const router = useRouter();
 
   const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
+  const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
   const rowData = useMemo<LoanAccountEdge[]>(
     () => (data?.loanAccount?.list?.edges as LoanAccountEdge[]) ?? [],
@@ -91,6 +93,17 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
         ),
       },
       {
+        id: 'branchId',
+        header: 'Service Center',
+        accessorFn: (row) => row?.node?.branchName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: memberFilterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
+      },
+      {
         id: 'appliedLoanAmount',
         header: 'Applied Amount',
         meta: {
@@ -124,7 +137,7 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
                       {
                         title: 'Edit',
                         onClick: (row) =>
-                          router.push(`${ROUTES.CBS_LOAN_APPLICATIONS_EDIT}?id=${row.id}`),
+                          router.push(`/${getUrl(router.pathname, 3)}/edit?id=${row.id}`),
                       },
                       {
                         title: 'View Loan Application',
@@ -134,8 +147,8 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
                         title: type === LoanObjState.Approved ? 'Disburse Loan' : 'Process Loan',
                         onClick: (row) => {
                           type === LoanObjState.Approved
-                            ? router.push(`${ROUTES.CBS_LOAN_DISBURSE}?id=${row?.id}`)
-                            : router.push(`${ROUTES.CBS_LOAN_APPROVE}?id=${row?.id}`);
+                            ? router.push(`/${getUrl(router.pathname, 3)}/disburse?id=${row.id}`)
+                            : router.push(`/${getUrl(router.pathname, 3)}/approve?id=${row.id}`);
                         },
                       },
                     ]

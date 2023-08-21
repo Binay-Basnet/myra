@@ -21,6 +21,7 @@ import {
 import {
   AccountClosePaymentMode,
   AccountCloseReason,
+  AccountTransferPaymentForAccountClose,
   DepositAccountClose,
   NatureOfDepositProduct,
   ObjState,
@@ -342,8 +343,18 @@ export const CbsAccountClose = () => {
     }
 
     if (values.paymentMode === AccountClosePaymentMode?.AccountTransfer) {
-      filteredValues = omit({ ...filteredValues }, ['bankCheque', 'cash']);
+      filteredValues = omit(
+        {
+          ...filteredValues,
+          accountTransfer: omit({ ...filteredValues?.accountTransfer }, [
+            'isDifferentMember',
+            'memberId',
+          ]) as AccountTransferPaymentForAccountClose,
+        },
+        ['bankCheque', 'cash']
+      );
     }
+
     asyncToast({
       id: 'account-close-final-payment',
       msgs: {
@@ -623,7 +634,7 @@ export const CbsAccountClose = () => {
                 memberID: memberDetailData?.id,
                 gender: memberDetailData?.gender,
                 age: memberDetailData?.age,
-                maritalStatus: memberDetailData?.maritalStatus,
+                maritalStatus: memberDetailData?.maritalStatus as string,
                 dateJoined: memberDetailData?.dateJoined?.en,
                 // branch: 'Basantapur',
                 phoneNo: memberDetailData?.contact,
@@ -632,7 +643,7 @@ export const CbsAccountClose = () => {
               }}
               // notice="KYM needs to be updated"
               signaturePath={selectedAccount?.member?.signaturePicUrl ?? ''}
-              citizenshipPath={memberCitizenshipUrl}
+              citizenshipPath={memberCitizenshipUrl as string}
               accountInfo={
                 selectedAccount
                   ? {

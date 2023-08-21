@@ -97,11 +97,13 @@ export const StatusList = ({ statusList }: IStatusListProps) => {
                     onClick={() => handleShowErrors(errors, t[title] ?? title)}
                   >{`${errors.length} Errors in ${t[title] ?? title}`}</Text>
                 ) : null}
-                <Box display="flex" gap="s8" alignItems="center">
-                  {eodStatusIcon(status)}
-                  <Text fontSize="r1" fontWeight={400} color="gray.700" lineHeight="150%">
-                    {eodStatusText(status, title)}
-                  </Text>
+                <Box display="flex" gap="s8" alignItems="center" justifyContent="space-between">
+                  <Box display="flex" gap="s8" alignItems="center">
+                    {eodStatusIcon(status)}
+                    <Text fontSize="r1" fontWeight={400} color="gray.700" lineHeight="150%">
+                      {eodStatusText(status, title)}
+                    </Text>
+                  </Box>
                 </Box>
               </Box>
             </Box>

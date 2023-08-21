@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
@@ -29,6 +29,9 @@ type DepositAccountTable = {
 };
 
 export const MarketRepresentativeCollectionAdd = () => {
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [totalFine, setTotalFine] = useState(0);
+
   const user = useAppSelector((state) => state?.auth?.user);
 
   const router = useRouter();
@@ -141,6 +144,8 @@ export const MarketRepresentativeCollectionAdd = () => {
 
   useDeepCompareEffect(() => {
     if (accounts?.length) {
+      let tempAmount = 0;
+      let tempFine = 0;
       setValue(
         'accounts',
         accounts?.map(
@@ -155,6 +160,13 @@ export const MarketRepresentativeCollectionAdd = () => {
               (member) => member?.node?.account?.id === record?.account
             );
 
+            tempAmount +=
+              Number(record?.amount || 0) ??
+              Number(account?.node?.account?.dues?.totalDue || 0) -
+                Number(account?.node?.account?.dues?.fine || 0);
+
+            tempFine += Number(record?.fine ?? account?.node?.account?.dues?.fine ?? 0);
+
             return {
               id: record?.id,
               member: record?.member,
@@ -168,6 +180,9 @@ export const MarketRepresentativeCollectionAdd = () => {
           }
         )
       );
+
+      setTotalAmount(tempAmount);
+      setTotalFine(tempFine);
     }
   }, [accounts, assignedMemberListQueryData]);
 
@@ -365,6 +380,40 @@ export const MarketRepresentativeCollectionAdd = () => {
                 />
               </BoxContainer>
             )}
+
+            <Box
+              display="flex"
+              flexDirection="column"
+              gap="s4"
+              p="s16"
+              bg="background.500"
+              borderRadius="br2"
+            >
+              <Box display="flex" justifyContent="space-between">
+                <Text fontSize="r1" fontWeight={500} color="gray.700">
+                  Total Amount
+                </Text>
+                <Text fontSize="r1" fontWeight={500} color="gray.700">
+                  {amountConverter(totalAmount)}
+                </Text>
+              </Box>
+              <Box display="flex" justifyContent="space-between">
+                <Text fontSize="r1" fontWeight={500} color="gray.700">
+                  Total Fine
+                </Text>
+                <Text fontSize="r1" fontWeight={500} color="gray.700">
+                  {amountConverter(totalFine)}
+                </Text>
+              </Box>
+              <Box display="flex" justifyContent="space-between">
+                <Text fontSize="r1" fontWeight={500} color="gray.700">
+                  Total Collected
+                </Text>
+                <Text fontSize="r1" fontWeight={500} color="gray.700">
+                  {amountConverter(totalFine + totalAmount)}
+                </Text>
+              </Box>
+            </Box>
           </Box>
         </FormLayout.Form>
       </FormLayout.Content>

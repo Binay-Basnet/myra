@@ -5,11 +5,15 @@ import { Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { Filter_Mode, useGetJournalVoucherListQuery } from '@coop/cbs/data-access';
+import {
+  useGetJournalVoucherListQuery,
+  useGetMemberFilterMappingQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
+  getFilterQuery,
   getPaginationQuery,
   useTranslation,
 } from '@coop/shared/utils';
@@ -19,20 +23,13 @@ export interface AccountingFeatureJournalVouchersListProps {}
 
 export const AccountingFeatureJournalVouchersList = () => {
   const { t } = useTranslation();
+  const { data: filterMapping } = useGetMemberFilterMappingQuery();
 
   const router = useRouter();
-  const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching } = useGetJournalVoucherListQuery({
     pagination: getPaginationQuery(),
-    filter: {
-      id: searchTerm,
-      transactionId: searchTerm,
-      filterMode: Filter_Mode.Or,
-    },
-    // filter: {
-    //   objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    // },
+    filter: getFilterQuery(),
   });
 
   const rowData = useMemo(() => data?.accounting?.journalVoucher?.list?.edges ?? [], [data]);
@@ -44,8 +41,12 @@ export const AccountingFeatureJournalVouchersList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'transaction_date',
         header: 'Date',
+        accessorFn: (row) => row?.node?.transactionDate,
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.transactionDate)}</Text>,
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Transaction Id',
@@ -56,16 +57,26 @@ export const AccountingFeatureJournalVouchersList = () => {
         accessorFn: (row) => row?.node?.note,
       },
       {
+        id: 'branchId',
         header: 'Service Center',
         accessorFn: (row) => row?.node?.branchName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: filterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
       },
       {
+        id: 'amount',
         header: 'Amount',
         meta: {
           isNumeric: true,
           width: '15%',
         },
         accessorFn: (row) => amountConverter(row?.node?.amount || 0),
+        enableColumnFilter: true,
+        filterFn: 'amount',
       },
       {
         id: '_actions',
@@ -93,7 +104,7 @@ export const AccountingFeatureJournalVouchersList = () => {
           ),
       },
     ],
-    [t]
+    [baseRoute, filterMapping?.members?.filterMapping?.serviceCenter, router]
   );
 
   return (

@@ -1,11 +1,14 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
-import { Column, PageHeader, Table } from '@myra-ui';
+import { Column, PageHeader, Table, TablePopover } from '@myra-ui';
 
 import { useGetJobApplicationListQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const HrRecruitmentJobApplicationList = () => {
+  const router = useRouter();
   const { data, isFetching } = useGetJobApplicationListQuery({
     pagination: getPaginationQuery(),
   });
@@ -32,6 +35,27 @@ export const HrRecruitmentJobApplicationList = () => {
       {
         header: 'Status',
         accessorFn: (row) => row?.node?.applicantStatus,
+      },
+      {
+        id: '_actions',
+        header: '',
+        cell: (props) =>
+          props?.row?.original?.node && (
+            <TablePopover
+              node={props?.row?.original?.node}
+              items={[
+                {
+                  title: 'Edit',
+                  onClick: (row) => {
+                    router.push(`${ROUTES?.HR_RECRUITMENT_JOB_APPLICATION_EDIT}?id=${row?.id}`);
+                  },
+                },
+              ]}
+            />
+          ),
+        meta: {
+          width: '3.125rem',
+        },
       },
     ],
     []

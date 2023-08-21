@@ -259,7 +259,7 @@ export const SharePurchaseForm = () => {
               <FormSection>
                 <GridItem colSpan={3}>
                   <FormMemberSelect
-                    allMembers={redirectPath && redirectPath.includes('/members/activation/')}
+                    allMembers={redirectPath && redirectPath.includes('/members/activation')}
                     name="memberId"
                     label={t['sharePurchaseSelectMember']}
                     isDisabled={!!redirectMemberId}
@@ -348,6 +348,7 @@ export const SharePurchaseForm = () => {
                 });
                 return {
                   type: 'Share Issue',
+                  receiptTitle: 'Share Issue Receipt',
                   total: amountConverter(totalAmountShare || 0) as string,
                   title: 'Share Issue Successful',
                   details: {
@@ -370,6 +371,7 @@ export const SharePurchaseForm = () => {
                     memberId: result?.member?.code,
                     member: result?.member?.name?.local,
                   },
+                  dublicate: true,
                 };
               }}
               errorCardProps={{

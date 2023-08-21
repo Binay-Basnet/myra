@@ -7,9 +7,11 @@ import { AbilityContext, AclKey, Actions, RouteValue } from '@coop/cbs/utils';
 import {
   ACCOUNTING,
   ALTERNATIVE_CHANNELS,
+  BPM,
   CBS,
   HRMODULE,
   INVENTORY,
+  MICROFINANCE,
   SETTINGS,
 } from './navigations';
 
@@ -19,7 +21,9 @@ export type ModuleType =
   | 'ALTERNATIVE_CHANNELS'
   | 'ACCOUNTING'
   | 'INVENTORY'
-  | 'HRMODULE';
+  | 'HRMODULE'
+  | 'BPM'
+  | 'MICROFINANCE';
 
 export type MenuType =
   | 'MEMBERS'
@@ -51,7 +55,12 @@ export type MenuType =
   | 'PAYROLL'
   | 'TRAINING'
   | 'RECRUITMENT'
-  | 'POLICY';
+  | 'POLICY'
+  | 'TASKS'
+  | 'PROGRAMS'
+  | 'OPERATIONS'
+  | 'GROUPS'
+  | 'GLOBAL';
 
 export type Page = {
   label: string;
@@ -90,6 +99,8 @@ export const APP_NAVS = {
   ACCOUNTING,
   INVENTORY,
   HRMODULE,
+  BPM,
+  MICROFINANCE,
 };
 
 export const useLink = (app: ModuleType = 'CBS') => {
@@ -98,6 +109,7 @@ export const useLink = (app: ModuleType = 'CBS') => {
   const linkArr: string[] = [];
 
   const menuKeys = Object.keys(APP_NAVS[app].menus) as MenuType[];
+
   menuKeys.forEach((menu) => {
     const aclKey = APP_NAVS[app].menus?.[menu]?.aclKey;
 

@@ -1,6 +1,8 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { AiOutlinePrinter } from 'react-icons/ai';
 import { IoFilter } from 'react-icons/io5';
+import ReactToPrint from 'react-to-print';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import { GridItem } from '@chakra-ui/react';
 
@@ -28,6 +30,7 @@ import {
 } from '@coop/ebanking/data-access';
 import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 type TransactionFormFilters = {
   accounts: { label: string; value: string }[];
@@ -35,7 +38,23 @@ type TransactionFormFilters = {
   transactionDirection: EbankingTransactionCrOrDr | 'All';
 };
 
+type BalanceMap = Record<
+  string,
+  {
+    Closing: {
+      Value: string;
+      Type: string;
+    };
+    Opening: {
+      Value: string;
+      Type: string;
+    };
+  }
+>;
+
 const TransactionHistoryPage = () => {
+  const componentRef = useRef<HTMLInputElement | null>(null);
+
   const [filter, setFilter] = useState<EbankingTransactionFilter | null>(null);
 
   const methods = useForm<TransactionFormFilters>({
@@ -47,6 +66,14 @@ const TransactionHistoryPage = () => {
     pagination: { after: '', first: -1 },
     filter,
   });
+
+  const accountOptions = data?.eBanking?.account?.list?.accounts?.map((account) => ({
+    label: `${account?.name} - ${account.accountNumber.slice(0, 12)}`,
+    value: account?.id,
+  }));
+
+  const accountMap = data?.eBanking?.account?.list?.recentTransactions?.summary
+    ?.accountBalanceMap as unknown as BalanceMap;
 
   return (
     <Box display="flex" flexDir="column" gap="s16">
@@ -92,10 +119,7 @@ const TransactionHistoryPage = () => {
                         name="accounts"
                         label="Account Type"
                         isMulti
-                        options={data?.eBanking?.account?.list?.accounts?.map((account) => ({
-                          label: `${account?.name} - ${account.accountNumber.slice(0, 12)}`,
-                          value: account?.id,
-                        }))}
+                        options={accountOptions}
                       />
                       <FormSwitchTab
                         name="transactionDirection"
@@ -164,22 +188,71 @@ const TransactionHistoryPage = () => {
         </AccordionItem>
       </Accordion>
 
-      <InfoCard title="October 2022">
-        {isFetching ? (
-          <Loader />
-        ) : (
-          data?.eBanking?.account?.list?.recentTransactions?.edges?.map((transaction) => (
-            <TransactionCard
-              accountName={
-                data?.eBanking?.account?.list?.accounts?.find(
-                  (account) => account?.id === transaction?.node?.accountId
-                )?.name as string
-              }
-              transaction={transaction?.node}
+      <Box ref={componentRef} sx={{ '@media print': {} }}>
+        <InfoCard
+          title="All Transactions"
+          btn={
+            <ReactToPrint
+              content={() => componentRef.current}
+              trigger={() => (
+                <Button
+                  sx={{
+                    '@media print': {
+                      display: 'none',
+                    },
+                    '@page': {
+                      size: 'A4 potrait',
+                      margin: '0.2in',
+                      marginLeft: '0.4in',
+                      marginBottom: '0',
+                    },
+                  }}
+                  leftIcon={<Icon as={AiOutlinePrinter} />}
+                >
+                  {' '}
+                  Print{' '}
+                </Button>
+              )}
             />
-          ))
-        )}
-      </InfoCard>
+          }
+        >
+          {isFetching ? (
+            <Loader />
+          ) : (
+            <Box>
+              <Box p="s16" borderBottom="1px" borderBottomColor="border.layout" fontSize="s3">
+                <Box as="span" display="flex" flexDir="column" gap="s8" mt="4px">
+                  {(filter?.accounts || Object.keys(accountMap || {}))?.map((f) => (
+                    <Box>
+                      <Box fontWeight={600} color="gray.800">
+                        {accountOptions?.find((a) => a.value === f)?.label}
+                      </Box>
+
+                      <Box>
+                        Opening Balance: {amountConverter(accountMap?.[f]?.Opening?.Value)}{' '}
+                        {accountMap?.[f]?.Opening?.Type}, Closing Balance:{' '}
+                        {amountConverter(accountMap?.[f]?.Closing?.Value)}{' '}
+                        {accountMap?.[f]?.Closing?.Type}
+                      </Box>
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+
+              {data?.eBanking?.account?.list?.recentTransactions?.edges?.map((transaction) => (
+                <TransactionCard
+                  accountName={
+                    data?.eBanking?.account?.list?.accounts?.find(
+                      (account) => account?.id === transaction?.node?.accountId
+                    )?.name as string
+                  }
+                  transaction={transaction?.node}
+                />
+              ))}
+            </Box>
+          )}
+        </InfoCard>
+      </Box>
     </Box>
   );
 };

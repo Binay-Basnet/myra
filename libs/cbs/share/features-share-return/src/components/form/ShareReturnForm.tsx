@@ -356,7 +356,7 @@ export const ShareReturnForm = () => {
                 const result = response?.share?.return?.record;
 
                 const sum = result?.extraFee?.reduce((a, b) => a + Number(b?.value ?? 0), 0);
-                const totalAmountCard = Number(sum ?? 0) + Number(result?.shareAmount ?? 0);
+                const totalAmountCard = Number(result?.shareAmount ?? 0) - Number(sum ?? 0);
 
                 const temp: Record<string, string> = {};
 
@@ -368,6 +368,7 @@ export const ShareReturnForm = () => {
 
                 return {
                   type: 'Share-Return',
+                  receiptTitle: 'Share Return Receipt',
                   total: String(amountConverter(totalAmountCard ?? '0')),
                   title: 'Share Return Successful',
                   details: {
@@ -394,6 +395,7 @@ export const ShareReturnForm = () => {
                   },
                   subTitle:
                     'Share returned successfully. Details of the transaction is listed below.',
+                  dublicate: true,
                 };
               }}
               errorCardProps={{

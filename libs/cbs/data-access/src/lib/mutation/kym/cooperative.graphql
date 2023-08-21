@@ -1,0 +1,12 @@
+mutation setKYMCooperativeData($id: ID, $data: KymCooperativeFormInput!, $forDraft: Boolean) {
+  members {
+    cooperative {
+      add(data: $data, id: $id, forDraft: $forDraft) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

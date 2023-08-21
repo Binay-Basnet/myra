@@ -89,6 +89,11 @@ export const MemberBasicInformation = () => {
               Grandfather’s Name:<b> {memberBasicInfo?.grandFathersName} </b>
             </Text>
           )}
+          {memberBasicInfo?.panVatNo && (
+            <Text fontSize="s2" fontWeight="400">
+              VAT/PAN No:<b> {memberBasicInfo?.panVatNo} </b>
+            </Text>
+          )}
         </DetailsCard>
       )}
       {memberBasicInstitution && (
@@ -99,7 +104,7 @@ export const MemberBasicInformation = () => {
           />
           <DetailCardContent title="Institution Type" subtitle={memberBasicInstitution?.type} />
           <DetailCardContent
-            title="Member Service Centre"
+            title="Member Service Center"
             subtitle={memberBasicInstitution?.branchName}
           />
           <DetailCardContent title="Nature of Business" subtitle={memberBasicInstitution?.nature} />
@@ -109,7 +114,7 @@ export const MemberBasicInformation = () => {
           />
           <DetailCardContent title="VAT/PAN No" subtitle={memberBasicInstitution?.vatPanNo} />
           <DetailCardContent
-            title="No of Service Centre"
+            title="No of Service Center"
             subtitle={memberBasicInstitution?.noOfServiceCenters}
           />
         </DetailsCard>
@@ -125,7 +130,7 @@ export const MemberBasicInformation = () => {
             subtitle={memberBasicCooperative?.registrationNo}
           />
           <DetailCardContent
-            title="Member Service Centre"
+            title="Member Service Center"
             subtitle={memberBasicCooperative?.branchName}
           />
           <DetailCardContent
@@ -136,6 +141,7 @@ export const MemberBasicInformation = () => {
             title="Registration Date"
             subtitle={memberBasicCooperative?.registrationDate?.local}
           />
+          <DetailCardContent title="VAT/PAN No" subtitle={memberBasicCooperative?.panVatNo} />
         </DetailsCard>
       )}
       {memberBasicCooperativeUnion && (
@@ -149,7 +155,7 @@ export const MemberBasicInformation = () => {
             subtitle={memberBasicCooperativeUnion?.type}
           />
           <DetailCardContent
-            title="Member Service Centre"
+            title="Member Service Center"
             subtitle={memberBasicCooperativeUnion?.branchName}
           />
           <DetailCardContent
@@ -162,7 +168,7 @@ export const MemberBasicInformation = () => {
           />
           <DetailCardContent title="VAT/PAN No" subtitle={memberBasicCooperativeUnion?.vatPanNo} />
           <DetailCardContent
-            title="No of Service Centre"
+            title="No of Service Center"
             subtitle={memberBasicCooperativeUnion?.noOfServiceCenters}
           />
         </DetailsCard>

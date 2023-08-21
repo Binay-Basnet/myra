@@ -1,18 +1,23 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useGetJobOpeningOptions } from '@hr/common';
+import omit from 'lodash/omit';
 
 import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import {
   ApplicantStatus,
+  DocumentInsertInput,
   JobApplicationInput,
-  useGetJobOpeningListQuery,
+  useGetJobApplicationQuery,
   useSetJobApplicationMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAddress,
   FormEmailInput,
+  FormFileInput,
   FormInput,
   FormLayout,
   FormPhoneNumber,
@@ -20,26 +25,51 @@ import {
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import { getPaginationQuery } from '@coop/shared/utils';
 
 import { EducationalDetailsAdd } from '../../components/EducationDetailsAdd';
 import { ExperienceDetailsAdd } from '../../components/ExperienceDetailsAdd';
 
+const documentMap = ['resume', 'coverLetter'];
+
 export const HrRecruitmentJobApplicationAdd = () => {
   const router = useRouter();
   const methods = useForm();
-  const { watch, getValues } = methods;
-  const { data, isFetching } = useGetJobOpeningListQuery({
-    pagination: getPaginationQuery(),
-  });
+  const { watch, getValues, reset } = methods;
 
   const { mutateAsync } = useSetJobApplicationMutation();
 
-  const jobOpeningOptions =
-    data?.hr?.recruitment?.recruitmentJobOpening?.listJobOpening?.edges?.map((item) => ({
-      label: item?.node?.title as string,
-      value: item?.node?.id as string,
-    }));
+  const { jobOpeningOptions } = useGetJobOpeningOptions();
+
+  const { data: jobApplicationData } = useGetJobApplicationQuery(
+    { id: router?.query?.['id'] as string },
+    { enabled: !!router?.query?.['id'] }
+  );
+
+  const jobApplicationEditData =
+    jobApplicationData?.hr?.recruitment?.recruitmentJobApplication?.getJobApplication?.data;
+
+  useEffect(() => {
+    if (jobApplicationEditData) {
+      reset({
+        ...jobApplicationEditData,
+        permanentAddress: {
+          ...jobApplicationEditData?.permanentAddress,
+          locality: jobApplicationEditData?.permanentAddress?.locality?.en,
+        },
+        temporaryAddress: {
+          ...jobApplicationEditData?.temporaryAddress,
+          locality: jobApplicationEditData?.temporaryAddress?.locality?.en,
+        },
+        documents:
+          documentMap?.map((document) => ({
+            fieldId: document,
+            identifiers:
+              jobApplicationEditData?.documents?.find((d) => d?.fieldId === document)
+                ?.identifiers || [],
+          })) || [],
+      });
+    }
+  }, [JSON.stringify(jobApplicationEditData)]);
 
   const applicationStatusOptions = [
     { label: 'Accepted', value: ApplicantStatus?.Accepted },
@@ -51,22 +81,55 @@ export const HrRecruitmentJobApplicationAdd = () => {
   const isTempSameAsPerm = watch('tempSameAsPerm');
 
   const submitForm = () => {
-    asyncToast({
-      id: 'add-job-application',
-      msgs: {
-        success: 'new job application added succesfully',
-        loading: 'adding new job application',
-      },
-      onSuccess: () => {
-        router.push(ROUTES?.HR_RECRUITMENT_JOB_APPLICATION_LIST);
-      },
-      promise: mutateAsync({
-        id: null,
-        input: {
-          ...(getValues() as JobApplicationInput),
+    const values = getValues();
+    if (router?.query?.['id']) {
+      asyncToast({
+        id: 'edit-job-application',
+        msgs: {
+          success: 'job application edited succesfully',
+          loading: 'editing job application',
         },
-      }),
-    });
+        onSuccess: () => {
+          router.push(ROUTES?.HR_RECRUITMENT_JOB_APPLICATION_LIST);
+        },
+        promise: mutateAsync({
+          id: router?.query?.['id'] as string,
+          input: {
+            ...(omit(
+              {
+                ...values,
+                documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
+                  fieldId: documentMap[index],
+                  identifiers: item?.identifiers || [],
+                })),
+              },
+              ['id']
+            ) as JobApplicationInput),
+          },
+        }),
+      });
+    } else {
+      asyncToast({
+        id: 'add-job-application',
+        msgs: {
+          success: 'new job application added succesfully',
+          loading: 'adding new job application',
+        },
+        onSuccess: () => {
+          router.push(ROUTES?.HR_RECRUITMENT_JOB_APPLICATION_LIST);
+        },
+        promise: mutateAsync({
+          id: null,
+          input: {
+            ...values,
+            documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
+              fieldId: documentMap[index],
+              identifiers: item?.identifiers || [],
+            })),
+          } as JobApplicationInput,
+        }),
+      });
+    }
   };
 
   return (
@@ -78,12 +141,7 @@ export const HrRecruitmentJobApplicationAdd = () => {
             <GridItem colSpan={2}>
               <FormInput name="applicantName" type="text" label="Applicant Name" />
             </GridItem>
-            <FormSelect
-              name="jobOpening"
-              label="Job Opening"
-              options={jobOpeningOptions}
-              isLoading={isFetching}
-            />
+            <FormSelect name="jobOpening" label="Job Opening" options={jobOpeningOptions} />
           </FormSection>
           <FormSection templateColumns={3} header="Contact Details" divider>
             <FormEmailInput
@@ -106,10 +164,10 @@ export const HrRecruitmentJobApplicationAdd = () => {
             </GridItem>
             {!isTempSameAsPerm && <FormAddress name="temporaryAddress" />}
           </FormSection>
-          {/* <FormSection templateColumns={2} header="Document" divider>
-            <FormFileInput size="sm" name="resume" label="Resume/CV" />
-            <FormFileInput size="sm" name="coverLetter" label="Cover Letter" />
-          </FormSection> */}
+          <FormSection templateColumns={2} header="Document" divider>
+            <FormFileInput size="sm" name="documents.0.identifiers" label="Resume/CV" />
+            <FormFileInput size="sm" name="documents.1.identifiers" label="Cover Letter" />
+          </FormSection>
           <EducationalDetailsAdd />
           <ExperienceDetailsAdd />
           <FormSection templateColumns={2} header="Impression" divider>

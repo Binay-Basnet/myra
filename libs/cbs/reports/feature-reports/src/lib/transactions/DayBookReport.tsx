@@ -7,8 +7,8 @@ import { ExpandedCell, ExpandedHeader, MultiFooter } from '@myra-ui/table';
 
 import {
   LocalizedDateFilter,
+  TransactionNature,
   useGetDayBookReportQuery,
-  useGetTellerListQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
@@ -28,9 +28,7 @@ type DayBookTable = {
 type ReportFilter = {
   branchId: { label: string; value: string }[];
   period: LocalizedDateFilter;
-  filter: {
-    user: string;
-  };
+  transactionNature: TransactionNature;
 };
 
 export const DayBookReport = () => {
@@ -50,17 +48,13 @@ export const DayBookReport = () => {
           from: filters?.period?.from,
           to: filters?.period?.from,
         } as LocalizedDateFilter,
-        user: filters?.filter?.user ? [filters?.filter?.user as string] : null,
         // date: filters?.date,
+        transactionNature: filters?.transactionNature as TransactionNature,
         branchId: branchIDs,
       },
     },
     { enabled: !!filters }
   );
-
-  const { data: userListData } = useGetTellerListQuery();
-
-  const userList = userListData?.settings?.myraUser?.tellers;
 
   const receiptData = data?.report?.transactionReport?.financial?.dayBookReport?.data;
   const totalAmount = receiptData?.totalAmount;
@@ -68,7 +62,8 @@ export const DayBookReport = () => {
   const totalReceipt = receiptData?.totalReceipts;
   const totalPayment = receiptData?.totalPayment;
   const closingAmount = receiptData?.closingAmount;
-
+  const tellerBalance = receiptData?.tellerBalance;
+  const vaultBalance = receiptData?.vaultBalance;
   const receipts: DayBookTable =
     data?.report?.transactionReport?.financial?.dayBookReport?.data?.receipts?.map((receipt) => ({
       accountHead: receipt?.accountHead,
@@ -102,7 +97,7 @@ export const DayBookReport = () => {
 
   return (
     <Report
-      data={receipts ?? payments}
+      data={receipts?.length ? receipts : payments}
       isLoading={isFetching}
       report={ReportEnum.TRANSACTION_DAY_BOOK_REPORT}
       filters={filters}
@@ -126,8 +121,19 @@ export const DayBookReport = () => {
         />
 
         <Report.Inputs>
-          <GridItem colSpan={3}>
-            <FormBranchSelect isMulti name="branchId" label="Service Center" />
+          <GridItem colSpan={2}>
+            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
+          </GridItem>
+          <GridItem colSpan={1}>
+            <FormSelect
+              label="Transaction Nature"
+              name="transactionNature"
+              options={[
+                { label: 'All', value: TransactionNature?.All },
+                { label: 'System', value: TransactionNature?.System },
+                { label: 'Manual', value: TransactionNature?.Manual },
+              ]}
+            />{' '}
           </GridItem>
           <GridItem colSpan={1}>
             <FormDatePicker name="period.from" label="Date" />
@@ -144,9 +150,17 @@ export const DayBookReport = () => {
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
                 Receipts (Cr.)
               </Text>
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Opening Balance: {amountConverter(openingBalance || 0)}
-              </Text>
+              <Box display="flex" gap="s16">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  Teller Balance: {amountConverter(tellerBalance || 0)}
+                </Text>
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  Vault Balance: {amountConverter(vaultBalance || 0)}
+                </Text>
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  Opening Balance: {amountConverter(openingBalance || 0)}
+                </Text>
+              </Box>
             </Box>
 
             <Report.Table
@@ -322,18 +336,6 @@ export const DayBookReport = () => {
             />
           </Box>
         </Report.Content>
-        <Report.Filters>
-          <Report.Filter title="User">
-            <FormSelect
-              label="User"
-              options={userList?.map((user) => ({
-                label: user?.name as string,
-                value: user?.id as string,
-              }))}
-              name="filter.user"
-            />
-          </Report.Filter>
-        </Report.Filters>
       </Report.Body>
     </Report>
   );

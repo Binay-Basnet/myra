@@ -1,0 +1,164 @@
+query getOperationsMinorList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      minor {
+        listMinors(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              memberId
+              code
+              name
+              requestedDate
+              approvedDate
+              minorName
+              contact
+              relation
+              dob
+              status
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  latitude
+                  longitude
+                }
+              }
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getOperationsSavingProductUpdateList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      savingProduct {
+        listSavingProductUpdateHistory(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              productCode
+              productId
+              productName
+              productType
+              date
+              updateType
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getOperationsLoanProductUpdateList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      loanProduct {
+        listLoanProductUpdateHistory(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              productCode
+              productId
+              productName
+              productType
+              date
+              updateType
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLoanCollateralList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      loanCollateral {
+        listCollateral(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              date
+              memberId
+              code
+              name
+              accountName
+              collateralType
+              collateralName
+              updateType
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+query getOperationsAutoOpenList($filter: Filter, $pagination: Pagination) {
+  bpm {
+    operations {
+      autoOpenAccount {
+        listAutoOpenAccount(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              code
+              count
+              name
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getOperationsAutoOpenDetails($memberID: ID!) {
+  bpm {
+    operations {
+      autoOpenAccount {
+        getAutoOpenAccounts(memberId: $memberID) {
+          data {
+            accountID
+            accountName
+            status
+          }
+        }
+      }
+    }
+  }
+}

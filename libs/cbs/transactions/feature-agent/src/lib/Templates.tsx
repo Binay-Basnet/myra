@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { asyncToast, Box, Button, DetailPageContentCard, Grid, Icon, Text } from '@myra-ui';
 
 import {
-  useAppSelector,
   useGetAgentAssignedMemberListDataQuery,
   useListAgentTemplateQuery,
   useSetAgentTemplateMutation,
@@ -24,10 +23,6 @@ type DepositAccountTable = {
 export const Templates = () => {
   const [showTemplateTable, setShowTemplateTable] = useState(false);
 
-  const user = useAppSelector((state) => state?.auth?.user);
-
-  const agentId = user?.id;
-
   const methods = useForm();
 
   const { t } = useTranslation();
@@ -37,7 +32,7 @@ export const Templates = () => {
   const id = router?.query?.['id'];
 
   const { data: agentTemplateData, refetch } = useListAgentTemplateQuery({
-    agentId: agentId as string,
+    agentId: id as string,
   });
 
   useEffect(() => {
@@ -123,7 +118,7 @@ export const Templates = () => {
     asyncToast({
       id: 'set-agent-template',
       promise: setAgentTemplate({
-        agentId: agentId as string,
+        agentId: id as string,
         data: methods
           .getValues()
           ['accounts'].map((account: { memberId: string; accountId: string; amount: string }) => ({
@@ -143,7 +138,7 @@ export const Templates = () => {
   return (
     <Box display="flex" flexDir="column" gap="s16" bg="background.500">
       <Text fontSize="r3" fontWeight="600" color="gray.800">
-        Templates
+        Collection List
       </Text>
 
       {!showTemplateTable && (
@@ -164,7 +159,7 @@ export const Templates = () => {
             <Icon color="primary.500" as={IoAddOutline} />
 
             <Text fontWeight="500" fontSize="s3">
-              Create Template
+              Create Collection List
             </Text>
           </Box>
         </Grid>

@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import Link from 'next/link';
 
-import { Box, Button, Column, ExpandedCell, ExpandedHeader, GridItem, Text } from '@myra-ui';
+import { Box, Button, Column, ExpandedCell, ExpandedHeader, GridItem, MultiFooter } from '@myra-ui';
 
 import {
   LocalizedDateFilter,
   Maybe,
   Scalars,
   TrialSheetReportFilter,
+  useAppSelector,
   useGetBranchListQuery,
   useGetTrialSheetReportQuery,
 } from '@coop/cbs/data-access';
@@ -33,6 +33,42 @@ export type TrialSheetReportDataEntry = {
   ledgerId?: Maybe<Scalars['String']>;
   ledgerName?: Maybe<Scalars['Localized']>;
   under?: Maybe<Scalars['String']>;
+};
+
+const COAType = {
+  EQUITY_AND_LIABILITIES: 'Equity and Liabilities',
+  ASSETS: 'Assets',
+  EXPENSES: 'Expenses',
+  INCOME: 'Income',
+  OFF_BALANCE: 'Off Balance',
+  UNMAPPED_COA_HEADS: 'Unmapped COA Heads',
+} as const;
+
+export const generateAndSortCOATreeArray = ({
+  array,
+  type,
+  total,
+}: {
+  array: TrialSheetReportDataEntry[];
+  total: Record<string, unknown>;
+  type: keyof typeof COAType;
+}) => {
+  if (!array || !array.length) return [];
+
+  const arrayWithCoaHead = [
+    ...array.map((a) => ({
+      ...a,
+      under: !a?.under ? type : a.under,
+    })),
+    {
+      balance: total as unknown as TrialBalance,
+      ledgerId: type,
+      ledgerName: { local: COAType[type], en: COAType[type], np: COAType[type] },
+      under: '',
+    },
+  ];
+
+  return sortCoa(arrayWithCoaHead);
 };
 
 export const TrialSheetReport = () => {
@@ -60,32 +96,40 @@ export const TrialSheetReport = () => {
     { enabled: !!filters }
   );
 
-  const assetsReport = sortCoa(
-    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.assets ??
-      []) as unknown as TrialSheetReportDataEntry[]
-  );
-  const equityAndLiablities = sortCoa(
-    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.equityAndLiablities ??
-      []) as unknown as TrialSheetReportDataEntry[]
-  );
-  const incomeReport = sortCoa(
-    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.income ??
-      []) as unknown as TrialSheetReportDataEntry[]
-  );
-  const expensesReport = sortCoa(
-    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.expenses ??
-      []) as unknown as TrialSheetReportDataEntry[]
-  );
+  const coaReportData = data?.report?.transactionReport?.financial?.trialSheetReport?.data;
 
-  const offBalanceSheetReport = sortCoa(
-    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.offBalance ??
-      []) as unknown as TrialSheetReportDataEntry[]
-  );
-
-  const unMappedCoaHeads = sortCoa(
-    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.orphanEntries ??
-      []) as unknown as TrialSheetReportDataEntry[]
-  );
+  const coaReport = [
+    ...generateAndSortCOATreeArray({
+      array: (coaReportData?.equityAndLiablities || []) as TrialSheetReportDataEntry[],
+      type: 'EQUITY_AND_LIABILITIES',
+      total: coaReportData?.equityAndLiablitiesTotal || {},
+    }),
+    ...generateAndSortCOATreeArray({
+      array: (coaReportData?.assets || []) as TrialSheetReportDataEntry[],
+      type: 'ASSETS',
+      total: coaReportData?.assetsTotal || {},
+    }),
+    ...generateAndSortCOATreeArray({
+      array: (coaReportData?.expenses || []) as TrialSheetReportDataEntry[],
+      type: 'EXPENSES',
+      total: coaReportData?.expenseTotal || {},
+    }),
+    ...generateAndSortCOATreeArray({
+      array: (coaReportData?.income || []) as TrialSheetReportDataEntry[],
+      type: 'INCOME',
+      total: coaReportData?.incomeTotal || {},
+    }),
+    ...generateAndSortCOATreeArray({
+      array: (coaReportData?.offBalance || []) as TrialSheetReportDataEntry[],
+      type: 'OFF_BALANCE',
+      total: coaReportData?.offBalanceTotal || {},
+    }),
+    ...generateAndSortCOATreeArray({
+      array: (coaReportData?.orphanEntries || []) as TrialSheetReportDataEntry[],
+      type: 'UNMAPPED_COA_HEADS',
+      total: coaReportData?.orphanTotal || {},
+    }),
+  ];
 
   return (
     <Report
@@ -94,7 +138,7 @@ export const TrialSheetReport = () => {
           includeZero: 'include',
         },
       }}
-      data={assetsReport as TrialSheetReportDataEntry[]}
+      data={coaReport}
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
@@ -118,7 +162,7 @@ export const TrialSheetReport = () => {
 
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
           </GridItem>
 
           <GridItem colSpan={1}>
@@ -131,112 +175,23 @@ export const TrialSheetReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization />
 
-          {equityAndLiablities?.length !== 0 && (
-            <Box display="flex" py="s16" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                1. Equity and Liabilities
-              </Text>
-              <COATable
-                type="Liabilities"
-                total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.equityAndLiablitiesTotal as unknown as TrialBalance
-                }
-                data={equityAndLiablities as TrialSheetReportDataEntry[]}
-              />
-            </Box>
-          )}
-
-          {assetsReport?.length !== 0 && (
-            <Box display="flex" py="s16" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                2. Assets
-              </Text>
-              <COATable
-                total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.assetsTotal as unknown as TrialBalance
-                }
-                type="Assets"
-                data={assetsReport as TrialSheetReportDataEntry[]}
-              />
-            </Box>
-          )}
-
-          {expensesReport?.length !== 0 && (
-            <Box display="flex" py="s16" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                3. Expenses
-              </Text>
-
-              <COATable
-                total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.expenseTotal as unknown as TrialBalance
-                }
-                type="Expenses"
-                data={expensesReport as TrialSheetReportDataEntry[]}
-              />
-            </Box>
-          )}
-
-          {incomeReport?.length !== 0 && (
-            <Box display="flex" py="s16" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                4. Income
-              </Text>
-              <COATable
-                total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.incomeTotal as unknown as TrialBalance
-                }
-                type="Income"
-                data={incomeReport as TrialSheetReportDataEntry[]}
-              />
-            </Box>
-          )}
-
-          {offBalanceSheetReport?.length !== 0 && (
-            <Box display="flex" py="s16" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                5. Off Balance Sheet
-              </Text>
-              <COATable
-                type="Off Balance"
-                total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.offBalanceTotal as unknown as TrialBalance
-                }
-                data={offBalanceSheetReport as TrialSheetReportDataEntry[]}
-              />
-            </Box>
-          )}
-
-          {unMappedCoaHeads?.length !== 0 && (
-            <Box display="flex" py="s16" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                6. Unmapped COA Heads
-              </Text>
-              <COATable
-                total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.orphanTotal as unknown as TrialBalance
-                }
-                type="Unmapped COA Heads"
-                data={unMappedCoaHeads as TrialSheetReportDataEntry[]}
-              />
-            </Box>
-          )}
-
-          <CoaTotalTable
-            totals={[
-              data?.report?.transactionReport?.financial?.trialSheetReport?.data?.totalProfitLoss ||
-                {},
-              data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                ?.totalAssetExpense || {},
-              data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                ?.totalLiablitiesIncome || {},
+          <COATable
+            type="Particulars"
+            total={[
+              {
+                label: 'Total Profit/Loss (Total Income - Total Expenses)',
+                value: coaReportData?.totalProfitLoss as unknown as TrialBalance,
+              },
+              {
+                label: 'Total Assets + Total Expenses + Dr of Off Balance',
+                value: coaReportData?.totalAssetExpense as unknown as TrialBalance,
+              },
+              {
+                label: 'Total Liabilities + Total Income + Cr of Off Balance',
+                value: coaReportData?.totalLiablitiesIncome as unknown as TrialBalance,
+              },
             ]}
+            data={coaReport}
           />
         </Report.Content>
         <Report.Filters>
@@ -256,11 +211,180 @@ export const TrialSheetReport = () => {
   );
 };
 
-interface ICoaTotalTableProps {
-  totals: Record<string, string>[];
+interface ICOATableProps {
+  data: TrialSheetReportDataEntry[];
+  type: string;
+  total: { label: string; value: TrialBalance }[];
+  coaRedirect?: boolean;
 }
 
-export const CoaTotalTable = ({ totals }: ICoaTotalTableProps) => {
+export const COATable = ({ data, type, total, coaRedirect = true }: ICOATableProps) => {
+  const { getValues } = useFormContext<TrialSheetReportFilters>();
+  const branchIDs = getValues()?.branchId?.map((a) => a.value);
+
+  const datePeriod = getValues()?.period;
+
+  const auth = useAppSelector((state) => state?.auth);
+
+  if (data?.length === 0 && !auth?.availableBranches?.length) {
+    return null;
+  }
+
+  const branchList = auth?.availableBranches;
+  const headers =
+    branchIDs?.length === branchList?.length
+      ? ['Total']
+      : [
+          ...((branchList?.filter((a) => branchIDs?.includes(a?.id || ''))?.map((a) => a?.id) ||
+            []) as string[]),
+          branchIDs?.length === 1 ? undefined : 'Total',
+        ]?.filter(Boolean);
+
+  const baseColumn: Column<TrialSheetReportDataEntry>[] = [
+    {
+      header: ({ table }) => <ExpandedHeader table={table} value={type} />,
+      accessorKey: 'ledgerName',
+      cell: (props) => (
+        <ExpandedCell
+          row={props.row}
+          value={
+            !props.row?.getCanExpand() ? (
+              coaRedirect ? (
+                <Button
+                  variant="link"
+                  color="primary.500"
+                  onClick={() =>
+                    window.open(
+                      `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
+                        props.row?.original?.ledgerId
+                      }&branch=${JSON.stringify(branchIDs)}&date=${datePeriod?.from?.en}`,
+                      '_blank'
+                    )
+                  }
+                >
+                  {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+                  {localizedText(props?.row?.original?.ledgerName)}
+                </Button>
+              ) : (
+                <>
+                  {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+                  {localizedText(props?.row?.original?.ledgerName)}
+                </>
+              )
+            ) : props?.row.original.under ? (
+              `${props.row.original.ledgerId} ${props?.row?.original?.ledgerName ? '-' : ''}
+                ${localizedText(props?.row?.original?.ledgerName)}`
+            ) : (
+              localizedText(props?.row?.original?.ledgerName)
+            )
+          }
+        />
+      ),
+      footer: () => <MultiFooter texts={total?.map((t) => t.label)} />,
+      meta: {
+        width: '80%',
+      },
+    },
+  ];
+
+  const columns: Column<TrialSheetReportDataEntry>[] = [
+    ...baseColumn,
+    ...headers.map(
+      (header) =>
+        ({
+          header: branchList?.find((b) => b?.id === header)?.name || 'Total',
+          accessorKey: 'balance',
+          columns: [
+            {
+              header: 'Debit (Dr.)',
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                amountConverter(props.row?.original?.balance?.[header || '']?.Dr || '0.00'),
+
+              footer: () => (
+                <MultiFooter
+                  texts={total?.map((t) => amountConverter(t.value?.[header || '']?.Dr || '0.00'))}
+                />
+              ),
+
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: 'Credit (Cr.)',
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                amountConverter(props.row?.original?.balance?.[header || '']?.Cr || '0.00'),
+
+              footer: () => (
+                <MultiFooter
+                  texts={total?.map((t) => amountConverter(t.value?.[header || '']?.Cr || '0.00'))}
+                />
+              ),
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: 'Balance',
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                header
+                  ? amountConverter(props.row?.original?.balance?.[header]?.Total || '0.00')
+                  : '0.00',
+              footer: () => (
+                <MultiFooter
+                  texts={total?.map((t) =>
+                    amountConverter(t.value?.[header || '']?.Total || '0.00')
+                  )}
+                />
+              ),
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: '',
+              id: 'cr',
+              accessorFn: (row) => (header ? row.balance?.[header]?.Type || '-' : '-'),
+              footer: () => (
+                <MultiFooter
+                  texts={total?.map((t) => t.value?.[header || '']?.Type || '0.00' || '-')}
+                />
+              ),
+              meta: {
+                width: '10px',
+              },
+            },
+          ],
+        } as Column<TrialSheetReportDataEntry>)
+    ),
+  ];
+
+  const tree = arrayToTree(
+    data.map((d) => ({ ...d, id: d?.ledgerId as string })).filter((d) => !!d.id),
+    ''
+  );
+
+  return (
+    <>
+      <Report.Table<TrialSheetReportDataEntry>
+        data={tree}
+        columns={columns}
+        tableTitle={type}
+        expandFirstLevel
+      />
+      <CoaTotalTable total={total} />
+    </>
+  );
+};
+
+interface ICoaTotalTableProps {
+  total: { label: string; value: TrialBalance }[];
+}
+
+export const CoaTotalTable = ({ total }: ICoaTotalTableProps) => {
   const { getValues } = useFormContext<TrialSheetReportFilters>();
   const branchIDs = getValues()?.branchId?.map((a) => a.value);
 
@@ -277,26 +401,18 @@ export const CoaTotalTable = ({ totals }: ICoaTotalTableProps) => {
       ? ['Total']
       : [
           ...((branchList
-            ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
+            ?.filter((a) => branchIDs?.includes(a?.node?.id || ''))
             ?.map((a) => a.node?.id) || []) as string[]),
-          branchIDs.length === 1 ? undefined : 'Total',
+          branchIDs?.length === 1 ? undefined : 'Total',
         ]?.filter(Boolean);
 
-  const particularData: Record<string, string>[] = [
-    {
-      particular: 'Total Profit/Loss (Total Income - Total Expenses)',
-    },
-    {
-      particular: 'Total Assets + Total Expenses + Dr of Off Balance',
-    },
-    {
-      particular: 'Total Liabilities + Total Income + Cr of Off Balance',
-    },
-  ];
+  const particularData: Record<string, string>[] = total?.map((t) => ({
+    particular: t.label,
+  }));
 
   const data = particularData?.map((d, index) => ({
     ...d,
-    ...totals[index],
+    ...total[index].value,
   })) as unknown as TrialBalance[];
 
   const baseColumn: Column<typeof data[0]>[] = [
@@ -358,166 +474,11 @@ export const CoaTotalTable = ({ totals }: ICoaTotalTableProps) => {
     ),
   ];
 
-  return <Report.Table data={data} columns={columns} tableTitle="Total" />;
-};
-
-interface ICOATableProps {
-  data: TrialSheetReportDataEntry[];
-  type: string;
-  total: TrialBalance | null | undefined;
-}
-
-export const COATable = ({ data, type, total }: ICOATableProps) => {
-  const { getValues } = useFormContext<TrialSheetReportFilters>();
-  const branchIDs = getValues()?.branchId?.map((a) => a.value);
-
-  const { data: branchListQueryData } = useGetBranchListQuery({
-    paginate: {
-      after: '',
-      first: -1,
-    },
-  });
-
-  if (data?.length === 0 && !branchListQueryData) {
+  if (total.length === 0) {
     return null;
   }
 
-  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
-  const headers =
-    branchIDs?.length === branchList?.length
-      ? ['Total']
-      : [
-          ...((branchList
-            ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
-            ?.map((a) => a.node?.id) || []) as string[]),
-          branchIDs.length === 1 ? undefined : 'Total',
-        ]?.filter(Boolean);
-
-  const baseColumn: Column<TrialSheetReportDataEntry>[] = [
-    {
-      header: ({ table }) => <ExpandedHeader table={table} value={type} />,
-      accessorKey: 'ledgerName',
-      cell: (props) => (
-        <ExpandedCell
-          row={props.row}
-          value={
-            !props.row?.getCanExpand() ? (
-              <>
-                <Box
-                  sx={{
-                    '@media print': {
-                      display: 'none',
-                    },
-                  }}
-                >
-                  <Link
-                    target="_blank"
-                    href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
-                      props.row?.original?.ledgerId
-                    }&branch=${JSON.stringify(branchIDs)}`}
-                  >
-                    <Button variant="link" color="primary.500">
-                      {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
-                      {localizedText(props?.row?.original?.ledgerName)}
-                    </Button>
-                  </Link>
-                </Box>
-                <Text
-                  display="none"
-                  sx={{
-                    '@media print': {
-                      display: 'block',
-                    },
-                  }}
-                  px={0}
-                  fontSize="s3"
-                >
-                  {localizedText(props?.row?.original?.ledgerName)}
-                </Text>
-              </>
-            ) : (
-              ` ${props.row.original.ledgerId} ${
-                props?.row?.original?.ledgerName ? '-' : ''
-              } ${localizedText(props?.row?.original?.ledgerName)}`
-            )
-          }
-        />
-      ),
-      meta: {
-        width: '80%',
-      },
-      footer: () => <>Total {type}</>,
-    },
-  ];
-
-  const columns: Column<TrialSheetReportDataEntry>[] = [
-    ...baseColumn,
-    ...headers.map(
-      (header) =>
-        ({
-          header: branchList?.find((b) => b?.node?.id === header)?.node?.name || 'Total',
-          accessorKey: 'balance',
-          columns: [
-            {
-              header: 'Debit (Dr.)',
-              accessorFn: (row) => row?.balance,
-              cell: (props) =>
-                amountConverter(props.row?.original?.balance?.[header || '']?.Dr || '0.00'),
-
-              footer: () => amountConverter(total?.[header || '']?.Dr || '0.00'),
-              meta: {
-                isNumeric: true,
-              },
-            },
-            {
-              header: 'Credit (Cr.)',
-              accessorFn: (row) => row?.balance,
-              cell: (props) =>
-                amountConverter(props.row?.original?.balance?.[header || '']?.Cr || '0.00'),
-              footer: () => amountConverter(total?.[header || '']?.Cr || '0.00'),
-              meta: {
-                isNumeric: true,
-              },
-            },
-            {
-              header: 'Balance',
-              accessorFn: (row) => row?.balance,
-              cell: (props) =>
-                header
-                  ? amountConverter(props.row?.original?.balance?.[header]?.Total || '0.00')
-                  : '0.00',
-              footer: () => amountConverter(total?.[header || '']?.Total || '0.00'),
-              meta: {
-                isNumeric: true,
-              },
-            },
-            {
-              header: '',
-              id: 'cr',
-              accessorFn: (row) => (header ? row.balance?.[header]?.Type || '-' : '-'),
-              footer: () => total?.[header || '']?.Type || '-',
-              meta: {
-                width: '10px',
-              },
-            },
-          ],
-        } as Column<TrialSheetReportDataEntry>)
-    ),
-  ];
-
-  const tree = arrayToTree(
-    data.map((d) => ({ ...d, id: d?.ledgerId as string })).filter((d) => !!d.id),
-    ''
-  );
-
-  return (
-    <Report.Table<TrialSheetReportDataEntry>
-      showFooter
-      data={tree}
-      columns={columns}
-      tableTitle={type}
-    />
-  );
+  return <Report.Table data={data} columns={columns} tableTitle="Total" />;
 };
 
 export const sortCoa = (data: TrialSheetReportDataEntry[]) =>

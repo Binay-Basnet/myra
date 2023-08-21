@@ -1,38 +1,37 @@
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import { Box, Button, Collapse, FormSection, GridItem, Icon, IconButton, Text } from '@myra-ui';
 
-import { KymCoopAccountOperatorDetailsFormInput } from '@coop/cbs/data-access';
-import { DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormAddress, FormDatePicker, FormInput, FormSwitch } from '@coop/shared/form';
-import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
+import { KymCooperativeFormInput } from '@coop/cbs/data-access';
+import {
+  FormAddress,
+  FormDatePicker,
+  FormFileInput,
+  FormInput,
+  FormSwitch,
+} from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
-import { BottomOperatorCoop } from './accountOperatorDocuments';
 import { DynamicAddtraining } from './acoountOperatorTraining';
-import { useAccountOperators } from '../hooks/useAccountOperators';
 
 interface IAddDirector {
-  removeDirector: (directorId: string) => void;
-  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
-  accountId: string;
+  index: number;
+  removeDirector: (index: number) => void;
 }
 
-export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }: IAddDirector) => {
+export const AddOperator = ({ removeDirector, index }: IAddDirector) => {
   const { t } = useTranslation();
-
-  const methods = useForm<KymCoopAccountOperatorDetailsFormInput>();
-
-  useAccountOperators({ accountId, methods });
-
-  const { watch } = methods;
+  const { watch } = useFormContext<KymCooperativeFormInput>();
 
   const [isOpen, setIsOpen] = React.useState(true);
 
-  const isPermanentAndTemporaryAddressSame = watch(`isPermanentAndTemporaryAddressSame`);
+  const isPermanentAndTemporaryAddressSame = watch(
+    `accountOperator.${index}.isPermanentAndTemporaryAddressSame`
+  );
 
   return (
     <>
@@ -76,7 +75,7 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
             icon={<CloseIcon />}
             ml="s16"
             onClick={() => {
-              removeDirector(accountId);
+              removeDirector(index);
             }}
           />
         )}
@@ -86,113 +85,105 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
         in={isOpen}
         style={{ marginTop: '0px', border: '1px solid', borderColor: '#E0E5EB' }}
       >
-        <DynamicBoxGroupContainer>
-          <FormProvider {...methods}>
-            <form
-              onFocus={(e) => {
-                const kymSection = getKymCoopSection(e.target.id);
-                setKymCurrentSection(kymSection);
-              }}
-            >
-              <Box display="flex" flexDirection="column" gap="s48">
-                <FormSection>
-                  <FormInput
-                    isRequired
-                    id="accountOperatorCoop"
-                    type="text"
-                    name="nameEn"
-                    label={t['kymCoopFullName']}
-                  />
-                  <FormInput
-                    isRequired
-                    id="accountOperatorCoop"
-                    type="text"
-                    name="designation"
-                    label={t['kymCoopDesignation']}
-                  />
-                </FormSection>
+        <Box display="flex" flexDirection="column" gap="s48">
+          <FormSection>
+            <FormInput
+              isRequired
+              id="accountOperatorCoop"
+              type="text"
+              name={`accountOperator.${index}.nameEn`}
+              label={t['kymCoopFullName']}
+            />
+            <FormInput
+              isRequired
+              id="accountOperatorCoop"
+              type="text"
+              name={`accountOperator.${index}.designation`}
+              label={t['kymCoopDesignation']}
+            />
+          </FormSection>
 
-                <FormAddress
-                  sectionId="accountOperatorCoop"
-                  sectionHeader="kymCoopPermanentAddress"
-                  name="permanentAddress"
-                />
+          <FormAddress
+            sectionId="accountOperatorCoop"
+            sectionHeader="kymCoopPermanentAddress"
+            name={`accountOperator.${index}.permanentAddress`}
+          />
 
-                <FormSection header="kymCoopTemporaryAddress">
-                  <GridItem colSpan={3}>
-                    <FormSwitch
-                      name="isPermanentAndTemporaryAddressSame"
-                      label={t['kymCoopTemporaryAddressPermanent']}
-                    />
-                  </GridItem>
-
-                  {!isPermanentAndTemporaryAddressSame && <FormAddress name="temporaryAddress" />}
-                </FormSection>
-
-                <FormSection>
-                  <FormDatePicker
-                    id="accountOperatorCoop"
-                    name="dateOfMembership"
-                    label={t['kymCoopDateOfMembership']}
-                  />
-                  <FormInput
-                    type="text"
-                    id="accountOperatorCoop"
-                    name="highestQualification"
-                    label={t['kymCoopHighestQualification']}
-                  />
-                  <FormInput
-                    isRequired
-                    id="accountOperatorCoop"
-                    type="number"
-                    name="contactNumber"
-                    label={t['kymCoopMobileNo']}
-                  />
-                  <FormInput
-                    isRequired
-                    id="accountOperatorCoop"
-                    type="text"
-                    name="email"
-                    label={t['kymCoopEmail']}
-                  />
-                  <FormInput
-                    id="accountOperatorCoop"
-                    type="string"
-                    name="citizenshipNo"
-                    label={t['kymCoopCitizenshipPassportDrivingLicenseNo']}
-                  />
-                  <FormInput
-                    id="accountOperatorCoop"
-                    type="string"
-                    name="panNo"
-                    label={t['kymCoopPanOrVatNo']}
-                  />
-                </FormSection>
-                <DynamicAddtraining />
-              </Box>
-            </form>
-          </FormProvider>
-          {/* <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
-              <FormFileInput
-                size="lg"
-                label={t['kymCoopPhotograph']}
-                name={`accountOperatorsDetails.photograph`}
+          <FormSection header="kymCoopTemporaryAddress">
+            <GridItem colSpan={3}>
+              <FormSwitch
+                name={`accountOperator.${index}.isPermanentAndTemporaryAddressSame`}
+                label={t['kymCoopTemporaryAddressPermanent']}
               />
-              <FormFileInput
-                size="lg"
-                label={t['kymCoopPhotographOfIdentityProofDocument']}
-                name={`accountOperatorsDetails.identityDocumentPhoto`}
-              />
-              <Box w="124px">
-                <FormFileInput
-                  size="md"
-                  label={t['kymCoopSignature']}
-                  name={`boardOfDirectorsDetails.signature`}
-                />
-              </Box>
-            </Grid> */}
-          <BottomOperatorCoop accountId={accountId} setKymCurrentSection={setKymCurrentSection} />
-        </DynamicBoxGroupContainer>
+            </GridItem>
+
+            {!isPermanentAndTemporaryAddressSame && (
+              <FormAddress name={`accountOperator.${index}.temporaryAddress`} />
+            )}
+          </FormSection>
+
+          <FormSection>
+            <FormDatePicker
+              id="accountOperatorCoop"
+              name={`accountOperator.${index}.dateOfMembership`}
+              label={t['kymCoopDateOfMembership']}
+            />
+            <FormInput
+              type="text"
+              id="accountOperatorCoop"
+              name={`accountOperator.${index}.highestQualification`}
+              label={t['kymCoopHighestQualification']}
+            />
+            <FormInput
+              isRequired
+              id="accountOperatorCoop"
+              type="number"
+              name={`accountOperator.${index}.contactNumber`}
+              label={t['kymCoopMobileNo']}
+            />
+            <FormInput
+              isRequired
+              id="accountOperatorCoop"
+              type="text"
+              name={`accountOperator.${index}.email`}
+              label={t['kymCoopEmail']}
+            />
+            <FormInput
+              id="accountOperatorCoop"
+              type="string"
+              name={`accountOperator.${index}.citizenshipNo`}
+              label={t['kymCoopCitizenshipPassportDrivingLicenseNo']}
+            />
+            <FormInput
+              id="accountOperatorCoop"
+              type="string"
+              name={`accountOperator.${index}.panNo`}
+              label={t['kymCoopPanOrVatNo']}
+            />
+          </FormSection>
+          <DynamicAddtraining index={index} />
+        </Box>
+
+        <FormSection templateColumns={2}>
+          <FormFileInput
+            size="lg"
+            name={`accountOperator.${index}.documents.0.identifiers`}
+            label={t['kymCoopPhotograph']}
+          />
+          <FormFileInput
+            size="lg"
+            name={`accountOperator.${index}.documents.1.identifiers`}
+            label={t['kymCoopPhotographOfIdentityProofDocument']}
+          />
+          <Box w="124px">
+            <FormFileInput
+              size="md"
+              name={`accountOperator.${index}.documents.2.identifiers`}
+              label={t['kymCoopSignature']}
+            />
+          </Box>
+        </FormSection>
+
         <Box display="flex" justifyContent="flex-end" px="s20" py="s10" alignItems="center">
           <Button
             id="accountOperatorCloseButton"
@@ -200,7 +191,7 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
             shade="danger"
             leftIcon={<AiOutlineDelete height="11px" />}
             onClick={() => {
-              removeDirector(accountId);
+              removeDirector(index);
             }}
           >
             {t['kymInsDelete']}

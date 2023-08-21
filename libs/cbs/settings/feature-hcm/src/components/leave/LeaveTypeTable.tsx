@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { BiEdit } from 'react-icons/bi';
+import { omit } from 'lodash';
 
 import {
   asyncToast,
@@ -20,7 +21,7 @@ import {
 import {
   LeaveTypeEnum,
   LeaveTypeInput,
-  useDeleteHcmEmployeeGeneralMutation,
+  useDeleteLeaveTypeMutation,
   useGetEmployeeLeaveTypeListQuery,
   useGetLeaveTypeQuery,
   useSetEmployeeLeaveTypeMutation,
@@ -29,18 +30,35 @@ import { SettingsCard } from '@coop/cbs/settings/ui-components';
 import { FormCheckbox, FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
+const defaultFormValue = {
+  name: '',
+  typeOfLeave: null,
+  description: '',
+  applicableAfter: 0,
+  maximumLeaveAllowed: 0,
+  maximumContinuousDaysApplicable: 0,
+  isCarriedForward: false,
+  isPartiallyPaid: false,
+  fractionOfDailySalaryPerLeave: 0,
+  isOptionalLeave: false,
+  includeHolidaysWithLeavesAsLeaves: false,
+  isCompensatory: false,
+};
+
 export const LeaveTypeTable = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedLeaveTypeId, setSelectedLeaveTypeId] = useState('');
-  const methods = useForm();
-  const { getValues, handleSubmit, watch, reset } = methods;
+  const methods = useForm<LeaveTypeInput>({
+    defaultValues: defaultFormValue,
+  });
+  const { getValues, watch, reset } = methods;
 
   const { data, refetch } = useGetEmployeeLeaveTypeListQuery({
     pagination: getPaginationQuery(),
   });
   const { mutateAsync, isLoading } = useSetEmployeeLeaveTypeMutation();
-  const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+  const { mutateAsync: deleteMutateAsync } = useDeleteLeaveTypeMutation();
   const { data: leaveData } = useGetLeaveTypeQuery(
     { id: selectedLeaveTypeId },
     { enabled: !!selectedLeaveTypeId }
@@ -49,7 +67,7 @@ export const LeaveTypeTable = () => {
   const leaveDataEdit = leaveData?.settings?.general?.HCM?.employee?.leave?.getLeaveType?.record;
 
   useEffect(() => {
-    reset(leaveDataEdit as LeaveTypeInput);
+    reset(omit({ ...leaveDataEdit }, ['id']) as LeaveTypeInput);
   }, [leaveDataEdit]);
 
   const rowData = useMemo(
@@ -111,12 +129,13 @@ export const LeaveTypeTable = () => {
   const handleAddModalClose = () => {
     setIsAddModalOpen(false);
     setSelectedLeaveTypeId('');
-    reset();
+    reset(defaultFormValue);
   };
 
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
     setSelectedLeaveTypeId('');
+    reset(defaultFormValue);
   };
 
   const onSubmit = () => {
@@ -135,6 +154,15 @@ export const LeaveTypeTable = () => {
           id: selectedLeaveTypeId,
           input: getValues(),
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof LeaveTypeInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     } else {
       asyncToast({
@@ -151,6 +179,15 @@ export const LeaveTypeTable = () => {
           id: null,
           input: getValues(),
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof LeaveTypeInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     }
   };
@@ -206,60 +243,58 @@ export const LeaveTypeTable = () => {
         width="5xl"
       >
         <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid templateColumns="repeat(3,1fr)" gap="s16">
-              <GridItem colSpan={2}>
-                <FormInput name="name" label="Name" />
-              </GridItem>
+          <Grid templateColumns="repeat(3,1fr)" gap="s16">
+            <GridItem colSpan={2}>
+              <FormInput name="name" label="Name" />
+            </GridItem>
 
-              <FormSelect name="typeOfLeave" label="Type" options={typeOptions} />
-              <GridItem colSpan={3}>
-                <FormTextArea name="description" label="Description" />
-              </GridItem>
-              <FormInput
-                type="number"
-                name="applicableAfter"
-                label="Applicable After(Working Days)"
-              />
-              <FormInput type="number" name="maximumLeaveAllowed" label="Maximum Leave Allowed" />
-              <FormInput
-                type="number"
-                name="maximumContinuousDaysApplicable"
-                label="Maximum Continuous Days Applicable"
-              />
-              <GridItem colSpan={3}>
-                <Divider />
-              </GridItem>
-              <GridItem colSpan={3}>
-                <Box display="flex" flexDir="column" gap="s16">
-                  <Text fontSize="s3">Advance Setup</Text>
-                  <FormCheckbox name="isCarriedForward" label="Is Carry Forward" />
-                  <FormCheckbox name="isPartiallyPaid" label="Is Partially Paid Leave" />
-                  {isPartiallyPaidWatch && (
-                    <FormInput
-                      name="fractionOfDailySalaryPerLeave"
-                      label="Fraction of Daily Salary per Leave"
-                      w="-webkit-fit-content"
-                    />
-                  )}
-                  <FormCheckbox name="isOptionalLeave" label="Is Optional Leave" />
-                  <FormCheckbox
-                    name="includeHolidaysWithLeavesAsLeaves"
-                    label="Include holidays within leaves as leaves"
-                  />
-                  <FormCheckbox name="isCompensatory" label="Is Compensatory" />
-                  <Button
+            <FormSelect name="typeOfLeave" label="Type" options={typeOptions} />
+            <GridItem colSpan={3}>
+              <FormTextArea name="description" label="Description" />
+            </GridItem>
+            <FormInput
+              type="number"
+              name="applicableAfter"
+              label="Applicable After(Working Days)"
+            />
+            <FormInput type="number" name="maximumLeaveAllowed" label="Maximum Leave Allowed" />
+            <FormInput
+              type="number"
+              name="maximumContinuousDaysApplicable"
+              label="Maximum Continuous Days Applicable"
+            />
+            <GridItem colSpan={3}>
+              <Divider />
+            </GridItem>
+            <GridItem colSpan={3}>
+              <Box display="flex" flexDir="column" gap="s16">
+                <Text fontSize="s3">Advance Setup</Text>
+                <FormCheckbox name="isCarriedForward" label="Is Carry Forward" />
+                <FormCheckbox name="isPartiallyPaid" label="Is Partially Paid Leave" />
+                {isPartiallyPaidWatch && (
+                  <FormInput
+                    name="fractionOfDailySalaryPerLeave"
+                    label="Fraction of Daily Salary per Leave"
                     w="-webkit-fit-content"
-                    alignSelf="flex-end"
-                    type="submit"
-                    isLoading={isLoading}
-                  >
-                    Save
-                  </Button>
-                </Box>
-              </GridItem>
-            </Grid>
-          </form>
+                  />
+                )}
+                <FormCheckbox name="isOptionalLeave" label="Is Optional Leave" />
+                <FormCheckbox
+                  name="includeHolidaysWithLeavesAsLeaves"
+                  label="Include holidays within leaves as leaves"
+                />
+                <FormCheckbox name="isCompensatory" label="Is Compensatory" />
+                <Button
+                  w="-webkit-fit-content"
+                  alignSelf="flex-end"
+                  onClick={onSubmit}
+                  isLoading={isLoading}
+                >
+                  Save
+                </Button>
+              </Box>
+            </GridItem>
+          </Grid>
         </FormProvider>
       </Modal>
       <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">

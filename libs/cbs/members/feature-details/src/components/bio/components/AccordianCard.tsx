@@ -43,8 +43,8 @@ export const AccordianMemberDetailsCardComponent = ({
       </Text>
       <Grid p="s16" templateColumns="repeat(3,1fr)" gap="s16">
         <DetailCardContent title="Contact Number" subtitle={mainDetails?.contactNo} />
-        <DetailCardContent title="Email" subtitle={permanentAddress?.district} />
-        <DetailCardContent title="Pan" subtitle={permanentAddress?.localGovernment} />
+        <DetailCardContent title="Email" subtitle={mainDetails?.email} />
+        <DetailCardContent title="Pan" subtitle={mainDetails?.pan} />
       </Grid>
     </Box>
     <Divider />

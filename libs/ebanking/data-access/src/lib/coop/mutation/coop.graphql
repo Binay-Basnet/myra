@@ -1,5 +1,5 @@
 mutation setChequeRequestData($memberID: String!, $data: EBankingChequeRequestInput) {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       cheque {
         request(memberID: $memberID, data: $data) {
@@ -17,7 +17,7 @@ mutation setWithdrawViaCollectorRequestData(
   $memberID: String!
   $data: EBankingChequeWithdrawViaCollectorInput
 ) {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       cheque {
         withdrawViaCollector(memberID: $memberID, data: $data) {
@@ -29,7 +29,7 @@ mutation setWithdrawViaCollectorRequestData(
 }
 
 mutation setBlockChequeRequestData($memberID: String!, $data: EBankingChequeBlockInput) {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       cheque {
         block(memberID: $memberID, data: $data) {
@@ -41,7 +41,7 @@ mutation setBlockChequeRequestData($memberID: String!, $data: EBankingChequeBloc
 }
 
 mutation applyForLoan($memberId: String!, $data: EBankingApplyLoanInput) {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       loan {
         apply(memberID: $memberId, data: $data) {
@@ -56,7 +56,7 @@ mutation applyForLoan($memberId: String!, $data: EBankingApplyLoanInput) {
 }
 
 mutation addNewComplaint($memberId: String!, $data: EBankingRegisterComplaintInput) {
-  eBanking {
+  eBanking(source: EBANKING) {
     cooperativeServices {
       complaint {
         register(memberID: $memberId, data: $data) {

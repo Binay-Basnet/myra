@@ -1,3 +1,5 @@
+import { useGetSalaryStructureOptions } from '@hr/common';
+
 import { FormSection } from '@myra-ui';
 
 import { PaymentMode } from '@coop/cbs/data-access';
@@ -8,12 +10,18 @@ export const SalaryDetails = () => {
     { label: 'Cash', value: PaymentMode?.Cash },
     { label: 'Bank', value: PaymentMode?.Bank },
   ];
+  const { salaryStructureOptions } = useGetSalaryStructureOptions();
+
   return (
     <FormSection id="Salary Info" header="Salary Details">
       <FormSelect name="salaryPaymentMode" label="Payment Mode" options={paymentModeOptions} />
       <FormInput name="panNumber" label="PAN" />
       <FormSelect name="providentFund" label="Provident Fund Account" />
-      <FormSelect name="salaryStructureAssignment" label="Salary Structure Assignment" />
+      <FormSelect
+        name="salaryStructureId"
+        label="Salary Structure"
+        options={salaryStructureOptions}
+      />
     </FormSection>
   );
 };

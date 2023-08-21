@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 
 import { Box, Scrollable } from '@myra-ui';
 
@@ -10,8 +11,14 @@ import {
   useGetMemberKymDetailsOverviewQuery,
   useIssueCertificateMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 
-import { AddMinorModal, MemberDetailsPathBar, MemberDetailsSidebar } from '../components';
+import {
+  AddMinorModal,
+  BalanceCertificateModal,
+  MemberDetailsPathBar,
+  MemberDetailsSidebar,
+} from '../components';
 import {
   Accounts,
   Activity,
@@ -39,6 +46,12 @@ export const MemberDetails = ({
 }: CbsMemberDetailsProps) => {
   const router = useRouter();
 
+  const {
+    isOpen: isBalanceCertModalOpen,
+    onClose: onBalanceCertModalClose,
+    onToggle: onBalanceCertModalToggle,
+  } = useDisclosure();
+
   const { mutateAsync } = useIssueCertificateMutation();
 
   const memberId = router.query['id'] as string;
@@ -46,6 +59,10 @@ export const MemberDetails = ({
   const memberDetailsData = useGetMemberKymDetailsOverviewQuery({
     id: memberId as string,
   });
+
+  // const branchId =
+  //   memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation?.branchId;
+
   const memberIndividual =
     memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
       ?.__typename === 'IndividualBasicMinInfo'
@@ -103,16 +120,32 @@ export const MemberDetails = ({
                 ...(options || []),
                 {
                   label: 'Update Kym',
-                  handler: () => router.push(`/cbs/members/individual/update/${memberId}`),
+                  handler: () => router.push(`/cbs/members/individual/update?id=${memberId}`),
                 },
                 { label: 'Get Certificate', handler: getCertificate },
+                {
+                  label: 'Transfer Member',
+                  handler: () => router.push(`${ROUTES?.CBS_MEMBER_TRANSFER}?memberId=${memberId}`),
+                },
+                {
+                  label: 'Issue Balance Certificate',
+                  handler: onBalanceCertModalToggle,
+                },
               ]
             : [
                 {
                   label: 'Update Kym',
-                  handler: () => router.push(`/cbs/members/${memberType}/update/${memberId}`),
+                  handler: () => router.push(`/cbs/members/${memberType}/update?id=${memberId}`),
                 },
                 { label: 'Get Certificate', handler: getCertificate },
+                {
+                  label: 'Transfer Member',
+                  handler: () => router.push(`${ROUTES?.CBS_MEMBER_TRANSFER}?memberId=${memberId}`),
+                },
+                {
+                  label: 'Issue Balance Certificate',
+                  handler: onBalanceCertModalToggle,
+                },
               ]
         }
       />
@@ -149,6 +182,12 @@ export const MemberDetails = ({
       <AddMinorModal
         isOpen={isAddMinorModalOpen as boolean}
         onClose={handleMinorAccountClose}
+        memberId={memberId}
+      />
+
+      <BalanceCertificateModal
+        isOpen={isBalanceCertModalOpen}
+        onClose={onBalanceCertModalClose}
         memberId={memberId}
       />
     </>

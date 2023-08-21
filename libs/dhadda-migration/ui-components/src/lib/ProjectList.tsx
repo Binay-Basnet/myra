@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { getProjectList } from '@dhadda-migration/data-access';
@@ -7,7 +8,12 @@ import { Box, Loader, Text } from '@myra-ui';
 
 export const ProjectList = () => {
   const router = useRouter();
-  const { data, isLoading } = useQuery(['list'], getProjectList);
+  const { data, isLoading, refetch } = useQuery(['list'], getProjectList);
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
   if (isLoading) {
     return (
       <Box>

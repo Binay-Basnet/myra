@@ -1,8 +1,15 @@
+import { useRouter } from 'next/router';
+
 import { PageHeader } from '@myra-ui';
 
 import { LoanObjState, ObjState, useAppSelector, useGetLoanListQuery } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
-import { featureCode, getFilter, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
+import {
+  featureCode,
+  getFilter,
+  getFilterQuery,
+  getPaginationQuery,
+  getUrl,
+} from '@coop/shared/utils';
 
 import { LoanAppTable } from '../components/LoanTable';
 
@@ -18,6 +25,7 @@ export const LOAN_LIST_TAB_ITEMS = [
 ];
 
 export const LoanList = () => {
+  const router = useRouter();
   const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
 
   const objState = getFilter('objState');
@@ -38,7 +46,7 @@ export const LoanList = () => {
       />
       <LoanAppTable
         data={data}
-        viewLink={ROUTES.CBS_LOAN_APPLICATION_DETAILS}
+        viewLink={`/${getUrl(router.pathname, 3)}/details`}
         isLoading={isFetching}
         type={(objState ?? ObjState.Approved) as LoanObjState}
       />

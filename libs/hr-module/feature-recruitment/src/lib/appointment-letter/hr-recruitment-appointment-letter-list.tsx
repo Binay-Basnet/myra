@@ -1,11 +1,14 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
-import { Column, PageHeader, Table } from '@myra-ui';
+import { Column, PageHeader, Table, TablePopover } from '@myra-ui';
 
 import { useGetAppointmentLetterListQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const HrRecruitmentAppointmentLetterList = () => {
+  const router = useRouter();
   const { data, isFetching } = useGetAppointmentLetterListQuery({
     pagination: getPaginationQuery(),
   });
@@ -18,8 +21,8 @@ export const HrRecruitmentAppointmentLetterList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Application ID',
-        accessorFn: (row) => row?.node?.applicantId,
+        header: 'Appointment ID',
+        accessorFn: (row) => row?.node?.id,
       },
       {
         header: 'Name',
@@ -40,6 +43,27 @@ export const HrRecruitmentAppointmentLetterList = () => {
       {
         header: 'Designation',
         accessorFn: (row) => row?.node?.designation,
+      },
+      {
+        id: '_actions',
+        header: '',
+        cell: (props) =>
+          props?.row?.original?.node && (
+            <TablePopover
+              node={props?.row?.original?.node}
+              items={[
+                {
+                  title: 'Edit',
+                  onClick: (row) => {
+                    router.push(`${ROUTES?.HR_RECRUITMENT_APPOINTMENT_LETTER_EDIT}?id=${row?.id}`);
+                  },
+                },
+              ]}
+            />
+          ),
+        meta: {
+          width: '3.125rem',
+        },
       },
     ],
     []

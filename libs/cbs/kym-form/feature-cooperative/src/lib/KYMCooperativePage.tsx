@@ -1,32 +1,22 @@
 /* eslint-disable-next-line */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { featureCode, useTranslation } from '@coop/shared/utils';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormFooter,
-  FormHeader,
-  Icon,
-  Text,
-  toast,
-} from '@myra-ui';
+import { featureCode, getKymCoopSection, useTranslation } from '@coop/shared/utils';
+import { Box, Button, Checkbox, FormHeader, Icon, Text, asyncToast } from '@myra-ui';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
 import { AccordionKymCoopForm, KYMUpdateModal } from '@coop/cbs/kym-form/formElements';
 import {
-  addCooperativeAccountError,
-  addCooperativeDirectorError,
-  addCooperativeError,
-  setCooperativeHasPressedNext,
+  KymCooperativeFormInput,
   useAppSelector,
-  useGetKymCooperativeOverallFormStatusQuery,
+  useGetKymCooperativeFormDataQuery,
+  useSetKymCooperativeDataMutation,
+  GetKymCooperativeFormDataQuery,
 } from '@coop/cbs/data-access';
-import { useDispatch } from 'react-redux';
 import { ROUTES } from '@coop/cbs/utils';
-import { Spinner, useDisclosure } from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
+import { FormLayout } from '@coop/shared/form';
+import { useForm } from 'react-hook-form';
 import {
   KymAccountHolderDeclaration,
   KymCoopAccountOperatorDetail,
@@ -45,107 +35,259 @@ import {
   KymEquityLiabilities,
 } from '../components/form';
 
+type KYMSection = {
+  section: string;
+  subSection: string;
+};
+
+const documentMap = [
+  'agmBodDecisionDocument',
+  'registeredCertificate',
+  'moaAoa',
+  'panCertificate',
+  'taxClearance',
+  'latestAuditReport',
+  'logo',
+  'minuteOfCentralRep',
+  'accountHolderSignature',
+  'accountHolderStamp',
+];
+
+const directorDocumentMap = ['photograph', 'identityDocumentPhoto', 'signature'];
+const accountOepratorDocumentMap = ['photograph', 'identityDocumentPhoto', 'signature'];
+
+const getCooperativeData = (data: GetKymCooperativeFormDataQuery | undefined) => {
+  if (!data) {
+    return {};
+  }
+  const editValueData = data?.members?.cooperative?.formState?.data;
+  if (!editValueData) {
+    return {};
+  }
+  const registeredAddressLocality = editValueData?.registeredAddress?.locality?.local;
+
+  const operatingAddressLocality = editValueData?.operatingAddress?.locality?.local;
+  const permanentAdrressLocality = editValueData?.permanentRepresentativeAddress?.locality?.local;
+  const temporaryAddressLocality = editValueData?.temporaryRepresentativeAddress?.locality?.local;
+
+  return {
+    ...editValueData,
+
+    documents: documentMap?.map((document) => ({
+      fieldId: document,
+      identifiers:
+        editValueData?.documents?.find((d) => d?.fieldId === document)?.identifiers || [],
+    })),
+
+    accountOperator: editValueData?.accountOperator?.map((d) => ({
+      ...d,
+      documents: directorDocumentMap?.map((document) => ({
+        fieldId: document,
+        identifiers: d?.documents?.find((e) => e?.fieldId === document)?.identifiers || [],
+      })),
+
+      permanentAddress: {
+        ...d?.permanentAddress,
+        locality: d?.permanentAddress?.locality?.local,
+      },
+      temporaryAddress: {
+        ...d?.temporaryAddress,
+        locality: d?.temporaryAddress?.locality?.local,
+      },
+    })),
+    directorDetails: editValueData?.directorDetails?.map((d) => ({
+      ...d,
+      documents: accountOepratorDocumentMap?.map((document) => ({
+        fieldId: document,
+        identifiers: d?.documents?.find((e) => e?.fieldId === document)?.identifiers || [],
+      })),
+      permanentAddress: {
+        ...d?.permanentAddress,
+        locality: d?.permanentAddress?.locality?.local,
+      },
+      temporaryAddress: {
+        ...d?.temporaryAddress,
+        locality: d?.temporaryAddress?.locality?.local,
+      },
+    })),
+
+    noOfMaleEmployee: Number(editValueData.noOfMaleEmployee),
+    noOfFemaleEmployee: Number(editValueData.noOfFemaleEmployee),
+
+    registeredAddress: {
+      ...editValueData?.registeredAddress,
+      localGovernmentId: editValueData?.registeredAddress?.localGovernmentId || null,
+      locality: registeredAddressLocality,
+    },
+    operatingAddress: {
+      ...editValueData?.operatingAddress,
+      localGovernmentId: editValueData?.operatingAddress?.localGovernmentId || null,
+
+      locality: operatingAddressLocality,
+    },
+    permanentRepresentativeAddress: {
+      ...editValueData?.permanentRepresentativeAddress,
+      locality: permanentAdrressLocality,
+    },
+    temporaryRepresentativeAddress: {
+      ...editValueData?.temporaryRepresentativeAddress,
+      locality: temporaryAddressLocality,
+    },
+  };
+};
+
 export const KYMCooperativePage = () => {
+  const methods = useForm<KymCooperativeFormInput>({
+    defaultValues: {
+      directorDetails: [
+        {
+          documents: directorDocumentMap?.map((document) => ({
+            fieldId: document,
+            identifiers: [],
+          })),
+        },
+      ],
+      accountOperator: [
+        {
+          documents: accountOepratorDocumentMap?.map((document) => ({
+            fieldId: document,
+            identifiers: [],
+          })),
+        },
+      ],
+
+      documents: documentMap?.map((document) => ({
+        fieldId: document,
+        identifiers: [],
+      })),
+    },
+  });
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { t } = useTranslation();
-  const [kymCurrentSection, setKymCurrentSection] = useState<{
-    section: string;
-    subSection: string;
-  }>();
-
-  const isFormLoading = useAppSelector((state) => state.cooperative.isFormLoading);
-  const dispatch = useDispatch();
+  const [kymCurrentSection, setKymCurrentSection] = useState<KYMSection>();
 
   const router = useRouter();
-  const id = String(router?.query?.['id']);
   const action = String(router.query['action']);
+  const id = String(router.query['id']);
 
-  const { refetch } = useGetKymCooperativeOverallFormStatusQuery(
-    { id, hasPressedNext: true },
-    {
-      enabled: false,
-    }
-  );
-  const isFormDirty = useAppSelector((state) => state.cooperative.isFormDirty);
   const totalAssets = useAppSelector((state) => state.cooperative.totalAssets);
   const totalEquity = useAppSelector((state) => state.cooperative.totalEquity);
 
+  const { mutateAsync } = useSetKymCooperativeDataMutation();
+  const { data: editData, isFetching } = useGetKymCooperativeFormDataQuery(
+    { id },
+    { enabled: !!id }
+  );
+
+  useEffect(() => {
+    if (action !== 'add')
+      methods.reset({
+        ...getCooperativeData(editData),
+      });
+  }, [editData, isFetching, methods, action]);
+
+  const submitForm = (forDraft = false) => {
+    methods.handleSubmit(async (data) => {
+      await asyncToast({
+        id: 'individual-add',
+        msgs: {
+          loading: action === 'edit' ? 'Editing Member' : 'Adding Member',
+          success: action === 'edit' ? 'Member Edited Successfully' : 'Member Added Successfully',
+        },
+        promise: mutateAsync({
+          id: router.query['id'] as string,
+          data,
+          forDraft,
+        }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof KymCooperativeFormInput, {
+                message: error.validationErrorMsg[key][0],
+              })
+            );
+          }
+        },
+        onSuccess: () => {
+          if (forDraft) {
+            router.push(ROUTES.CBS_MEMBER_DRAFT_LIST);
+          } else {
+            router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}?id=${router.query['id']}`);
+          }
+        },
+      });
+    })();
+  };
+
   return (
-    <>
-      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-        <Container minW="container.xl" height="fit-content">
-          <FormHeader
-            isFormDirty={isFormLoading}
-            title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberCooperative}`}
-            closeLink={ROUTES.CBS_MEMBER_LIST}
-            alertTitle="Saving in Progress: Your Form Changes are Being Safeguarded!"
-            alertDescription="Please Hold On! We're in the middle of saving your valuable modifications to ensure nothing gets lost. If you close now. Everything will be lost"
-          />
-        </Container>
-      </Box>
+    <form
+      onFocus={(e) => {
+        const kymSection = getKymCoopSection(e.target.id);
+        if (kymSection.subSection === kymCurrentSection?.subSection) {
+          setKymCurrentSection(kymSection);
+        }
+      }}
+    >
+      <FormLayout methods={methods} hasSidebar>
+        <FormHeader
+          title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberCooperative}`}
+          closeLink={ROUTES.CBS_MEMBER_LIST}
+        />
 
-      <Container minW="container.xl" height="fit-content">
-        <Box>
-          <Box
-            w={320}
-            p="s16"
-            pr="s20"
-            position="fixed"
-            borderRight="1px solid"
-            borderColor="border.layout"
-            minHeight="100%"
-            bg="gray.0"
-          >
-            <AccordionKymCoopForm kymCurrentSection={kymCurrentSection} />
-          </Box>
+        <FormLayout.Content>
+          <FormLayout.Sidebar borderPosition="right">
+            <Box p="s16" pr="s20">
+              <AccordionKymCoopForm kymCurrentSection={kymCurrentSection} />
+            </Box>
+          </FormLayout.Sidebar>
 
-          <Box background="gray.0" ml="320" pb="120px">
+          <FormLayout.Form>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymCoop1InformationofOrganization']}
               </Text>
-              <KymCoopBasicInfo setSection={setKymCurrentSection} />
+              <KymCoopBasicInfo />
 
-              <KymCoopRegdAddress setSection={setKymCurrentSection} />
-              <KymCoopOpAddress setSection={setKymCurrentSection} />
+              <KymCoopRegdAddress />
+              <KymCoopOpAddress />
 
-              <KymCoopContactDetails setSection={setKymCurrentSection} />
-              <KymCoopCurrentMembers setSection={setKymCurrentSection} />
-              <KymCoopDate setSection={setKymCurrentSection} />
-              <KymCoopRepresentative setSection={setKymCurrentSection} />
-              <KymCoopAddCoopDetails setSection={setKymCurrentSection} />
-              <KymCoopNoEmployee setSection={setKymCurrentSection} />
+              <KymCoopContactDetails />
+              <KymCoopCurrentMembers />
+              <KymCoopDate />
+              <KymCoopRepresentative />
+              <KymCoopAddCoopDetails />
+              <KymCoopNoEmployee />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymCoop2EconomicDetails']}
               </Text>
-              <KymEquityLiabilities setSection={setKymCurrentSection} />
-              <KymCoopAssets setSection={setKymCurrentSection} />
+              <KymEquityLiabilities />
+              <KymCoopAssets />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymCoop3DetailsofBoardDirectors']}
               </Text>
-              <KymCoopBoardDirectorDetail setSection={setKymCurrentSection} />
+              <KymCoopBoardDirectorDetail />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymCoop4DetailsofAccountOperators']}
               </Text>
-              <KymCoopAccountOperatorDetail setSection={setKymCurrentSection} />
+              <KymCoopAccountOperatorDetail />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymCoop5Declaration']}
               </Text>
-              <KymAccountHolderDeclaration setSection={setKymCurrentSection} />
-              <KymCoopDocumentDeclarationForm setSection={setKymCurrentSection} />
+              <KymAccountHolderDeclaration />
+              <KymCoopDocumentDeclarationForm />
             </SectionContainer>
 
             <Box p="s20" display="flex" gap="s16" alignItems="start">
@@ -157,104 +299,54 @@ export const KYMCooperativePage = () => {
                 </Text>
               </Text>
             </Box>
-          </Box>
-        </Box>
-      </Container>
+          </FormLayout.Form>
+        </FormLayout.Content>
 
-      <Box position="sticky" bottom="0" bg="gray.100" width="100%" zIndex="10">
-        <Container minW="container.xl" height="fit-content">
-          <KYMUpdateModal isOpen={isOpen} onClose={onClose} />
-
-          <FormFooter
-            status={
-              <Box display="flex" gap="s8">
-                {isFormLoading ? (
-                  <>
-                    <Spinner />
-                    <Text as="i" fontSize="r1">
-                      Form is Being Saved. Please Don&apos;t Close the form
-                    </Text>
-                  </>
-                ) : (
-                  <Text as="i" fontSize="r1">
-                    {t['formDetails']}
-                  </Text>
-                )}
-              </Box>
-            }
-            draftButton={
-              <Button
-                type="submit"
-                variant="ghost"
-                onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}
+        <FormLayout.Footer
+          draftButton={
+            <Button
+              variant="ghost"
+              onClick={(e) => {
+                e.preventDefault();
+                submitForm(true);
+              }}
+            >
+              <Icon as={BiSave} color="primary.500" />
+              <Text
+                alignSelf="center"
+                color="primary.500"
+                fontWeight="Medium"
+                fontSize="s2"
+                ml="5px"
               >
-                <Icon as={BiSave} color="primary.500" />
-                <Text
-                  alignSelf="center"
-                  color="primary.500"
-                  fontWeight="Medium"
-                  fontSize="s2"
-                  ml="5px"
-                >
-                  {t['saveDraft']}
-                </Text>
-              </Button>
+                {t['saveDraft']}
+              </Text>
+            </Button>
+          }
+          mainButtonLabel={action === 'update' ? 'Update' : t['next']}
+          isMainButtonDisabled={!(totalAssets === totalEquity)}
+          mainButtonHandler={() => {
+            if (action === 'update') {
+              onOpen();
+            } else {
+              submitForm();
             }
-            mainButtonLabel={action === 'update' ? 'Update' : t['next']}
-            isMainButtonDisabled={!isFormDirty || !(totalAssets === totalEquity)}
-            mainButtonHandler={async () => {
-              if (action === 'update') {
-                onOpen();
-              } else {
-                const response = await refetch();
-                const sectionStatus = response?.data?.members?.cooperative?.overallFormStatus;
+          }}
+        />
 
-                const basicErrors = sectionStatus?.coopDetails?.errors;
-
-                const directorDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
-                  (director, index) => ({
-                    directorId: String(index),
-                    errors: director?.errors ?? {},
-                  })
-                );
-
-                const accountDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
-                  (accountOperator, index) => ({
-                    operatorId: String(index),
-                    errors: accountOperator?.errors ?? {},
-                  })
-                );
-
-                if (basicErrors) {
-                  dispatch(addCooperativeError(basicErrors));
-                }
-
-                if (directorDetailsErrors) {
-                  dispatch(addCooperativeDirectorError(directorDetailsErrors));
-                }
-
-                if (accountDetailsErrors) {
-                  dispatch(addCooperativeAccountError(accountDetailsErrors));
-                }
-
-                if (response) {
-                  dispatch(setCooperativeHasPressedNext(true));
-                  if (!basicErrors) {
-                    router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}`);
-                  } else {
-                    toast({
-                      id: 'validation-error',
-                      message: 'Some fields are empty or have error',
-                      type: 'error',
-                    });
-                  }
-                }
-              }
-            }}
-          />
-        </Container>
-      </Box>
-    </>
+        <KYMUpdateModal
+          isOpen={isOpen}
+          onClose={onClose}
+          onUpdateClick={() =>
+            mutateAsync({
+              id: router.query['id'] as string,
+              data: methods.getValues(),
+              forDraft: false,
+            })
+          }
+        />
+      </FormLayout>
+    </form>
   );
 };
 

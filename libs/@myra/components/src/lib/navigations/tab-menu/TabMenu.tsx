@@ -188,9 +188,11 @@ const MenuTab = ({ aclKey, icon, match, module, navMenu, title, routeIndex }: IM
           _focus={{}}
           px="s16"
           py="s4"
+          data-testid={`${title?.toLowerCase()}-tab`}
           display="flex"
           alignItems="center"
           gap="s8"
+          id={`${title?.toLowerCase()}-tab`}
           border="none"
           _hover={{
             bg: 'background.500',
@@ -214,7 +216,13 @@ const MenuTab = ({ aclKey, icon, match, module, navMenu, title, routeIndex }: IM
         >
           <Icon as={icon} size="md" color={isActive ? 'primary.500' : 'primary.300'} />
 
-          <Text fontSize="r1" w="max-content" lineHeight="0" fontWeight={isActive ? '600' : '500'}>
+          <Text
+            fontSize="r1"
+            w="max-content"
+            lineHeight="0"
+            fontWeight={isActive ? '600' : '500'}
+            data-testid={`${title?.toLowerCase()}-text`}
+          >
             {t[title] ?? title}
           </Text>
         </Tab>

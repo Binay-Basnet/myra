@@ -1,19 +1,14 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { IoPlayOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Spinner } from '@chakra-ui/react';
 import format from 'date-fns/format';
-import NepaliDate from 'nepali-date-converter';
 
 import { Box, Button, Chips, Icon, Text } from '@myra-ui';
 
-import {
-  DateType,
-  store,
-  useEodHistoryQuery,
-  useGetEndOfDayDateDataQuery,
-} from '@coop/cbs/data-access';
+import { useEodHistoryQuery, useGetEndOfDayDateDataQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/settings/ui-containers';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormDatePicker } from '@coop/shared/form';
@@ -24,8 +19,6 @@ export const EodList = () => {
   const [stopFetch, setStopFetch] = useState(false);
 
   const methods = useForm();
-
-  const dateType = store.getState().auth?.preference?.date || DateType.Ad;
 
   const transactionDate = methods.watch('transactionDate');
 
@@ -51,19 +44,13 @@ export const EodList = () => {
           <FormDatePicker
             name="transactionDate"
             label="Transaction Date"
-            minDate={
-              closingDate?.local
-                ? dateType === 'BS'
-                  ? new NepaliDate(closingDate?.np ?? '').toJsDate()
-                  : new Date(closingDate?.en ?? '')
-                : new Date()
-            }
+            minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
           />
         </InputGroupContainer>
       </FormProvider>
 
       <Box display="flex" flexDirection="column" gap="s16">
-        {eodHistoryData?.endOfDay?.history?.map((eod) => (
+        {eodHistoryData?.endOfDay?.history?.map((eod, index) => (
           <Box
             display="flex"
             justifyContent="space-between"
@@ -79,7 +66,7 @@ export const EodList = () => {
               </Text>
               <Text fontSize="s2" fontWeight={400} color="gray.600">
                 Day End: {format(new Date(eod?.completedTime ?? ''), 'dd MMM, yyyy')} at{' '}
-                {format(new Date(eod?.completedTime ?? ''), 'KK:MMbbb')}
+                {format(new Date(eod?.completedTime ?? ''), 'KK:mm aaa')}
               </Text>
             </Box>
 
@@ -105,15 +92,26 @@ export const EodList = () => {
                   />
                 ) : null}
               </Box>
-              <Button
-                variant="outline"
-                rightIcon={<Icon as={ChevronRightIcon} color="primary.500" />}
-                onClick={() =>
-                  router.push(`${ROUTES.SETTINGS_EOD_HISTORY_DETAILS}?id=${eod?.eodDate}`)
-                }
-              >
-                Full Details
-              </Button>
+              <Box display="flex" gap="s16">
+                <Button
+                  variant="outline"
+                  rightIcon={<Icon as={ChevronRightIcon} color="primary.500" />}
+                  onClick={() =>
+                    router.push(`${ROUTES.SETTINGS_EOD_HISTORY_DETAILS}?id=${eod?.eodDate}`)
+                  }
+                >
+                  Full Details
+                </Button>
+                {index === 0 && endOfDayData?.transaction?.endOfDayDate?.isYearEnd && (
+                  <Button
+                    // variant="outline"
+                    leftIcon={<Icon as={IoPlayOutline} color="white" />}
+                    onClick={() => router.push(`${ROUTES.YEAR_END_CLOSE}`)}
+                  >
+                    Initiate Year End
+                  </Button>
+                )}
+              </Box>
             </Box>
           </Box>
         ))}

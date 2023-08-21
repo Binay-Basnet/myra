@@ -1,4 +1,5 @@
 import React from 'react';
+import { BsGlobe } from 'react-icons/bs';
 import { FiActivity } from 'react-icons/fi';
 import { IoGridOutline, IoPerson } from 'react-icons/io5';
 
@@ -17,9 +18,17 @@ export const SettingsLayout = ({ children }: ISettingsLayoutProps) => (
       module="SETTINGS"
       tabs={[
         {
-          title: 'settingsTabMenuGeneral',
+          title: 'Global',
+          icon: BsGlobe,
+          link: ROUTES.SETTINGS_GENERAL_MEMBERS,
+          match: ['global'],
+          aclKey: 'SETTINGS_AUDIT_LOG',
+          navMenu: 'GLOBAL',
+        },
+        {
+          title: 'Application',
           icon: IoGridOutline,
-          link: ROUTES.CBS_MEMBER_LIST,
+          link: ROUTES.SETTINGS_GENERAL_MEMBERS,
           match: ['general'],
           aclKey: 'SETTINGS_GENERAL',
           navMenu: 'GENERAL',

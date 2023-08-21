@@ -33,8 +33,10 @@ export const QuickLinks = ({
     alignItems="center"
     borderRadius="br2"
     cursor="pointer"
+    data-testid={text}
     onClick={onclick}
-    boxShadow="E0"
+    border="1px"
+    borderColor="border.layout"
   >
     <Box display="flex" alignItems="center" gap="s8">
       {editLinks && <Icon as={GRID2X3} size="lg" />}

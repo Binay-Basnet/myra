@@ -580,6 +580,7 @@ query getAccountDetailsData($id: ID!) {
             penaltyRate
           }
           interest
+          depositFrequency
         }
         dues {
           fine
@@ -592,6 +593,13 @@ query getAccountDetailsData($id: ID!) {
         lastTransactionDate
         accountExpiryDate
         closedAt
+        transactionConstraints {
+          blockId
+          transactionType
+          effectiveSince
+          effectiveTill
+        }
+        lastInstallmentUpdatedDate
       }
     }
   }

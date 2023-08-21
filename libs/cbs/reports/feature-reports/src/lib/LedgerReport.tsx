@@ -97,6 +97,13 @@ export const LedgerReport = () => {
                 },
               },
               {
+                header: 'Old ID',
+                accessorFn: (row) => row?.oldId,
+                meta: {
+                  width: '3.125rem',
+                },
+              },
+              {
                 header: 'Particulars',
                 accessorFn: (row) => row?.account,
                 cell: (props) => (
@@ -156,7 +163,7 @@ const LedgerReportInputs = () => {
   return (
     <Report.Inputs>
       <GridItem colSpan={1}>
-        <FormBranchSelect name="branchId" label="Select Service Center" />
+        <FormBranchSelect showUserBranchesOnly name="branchId" label="Select Service Center" />
       </GridItem>
 
       <GridItem colSpan={2}>

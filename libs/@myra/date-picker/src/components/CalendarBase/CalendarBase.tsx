@@ -78,7 +78,8 @@ export const CalendarBase = ({
               calendarDate={calendarDate}
             />
           ))
-        : getNepaliCalendarDates().map((calendarDate) => (
+        : // JS
+          getNepaliCalendarDates().map((calendarDate) => (
             <CalendarCell
               maxDate={maxDate}
               minDate={minDate}

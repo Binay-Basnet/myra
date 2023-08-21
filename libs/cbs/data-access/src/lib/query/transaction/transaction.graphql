@@ -89,6 +89,7 @@ query getEndOfDayDateData {
   transaction {
     endOfDayDate {
       value
+      isYearEnd
       hasErrors
       isInitialized
       headOfficeReady
@@ -96,7 +97,7 @@ query getEndOfDayDateData {
   }
 }
 
-query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination: Pagination) {
+query getTellerTransactionListData($filter: Filter, $pagination: Pagination) {
   transaction {
     listTellerTransaction(filter: $filter, pagination: $pagination) {
       totalCount
@@ -386,6 +387,7 @@ query getAllTransactionsList($filter: Filter, $pagination: Pagination) {
           amount
           date
           branchName
+          yearEndAdjustment
         }
         cursor
       }
@@ -404,6 +406,7 @@ query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
     viewTransactionDetail(transactionId: $id, txnType: $txnType) {
       data {
         id
+        oldId
         user
         member {
           id
@@ -416,6 +419,7 @@ query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
         transactionMode
         amount
         branch
+        isYearEndAdjustment
         note
         status
         glTransaction {
@@ -461,7 +465,7 @@ query getSTRTransactionDetail($transactionId: ID!) {
           }
           identificationDetail {
             id
-            idNo
+            identificationNo
             idType
             place
             date
@@ -695,6 +699,65 @@ query getTagKhataReport($data: TagKhataReportFilter!) {
               crAmount
               netBalance
               closingBalance
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query yearEndLedgerAccountList {
+  transaction {
+    yearEnd {
+      getCurrentState {
+        data {
+          expenseEntries {
+            ledgerId
+            ledgerName
+            branchId
+            branchName
+            balance {
+              amount
+              amountType
+            }
+          }
+          totalExpense {
+            amount
+            amountType
+          }
+          incomeEntries {
+            ledgerId
+            ledgerName
+            branchId
+            branchName
+            balance {
+              amount
+              amountType
+            }
+          }
+          totalIncome {
+            amount
+            amountType
+          }
+        }
+      }
+    }
+  }
+}
+
+query getDailyBalanceReport($data: DailyBalanceReport!) {
+  report {
+    transactionReport {
+      financial {
+        dailyBalanceReport(data: $data) {
+          data {
+            date
+            debit
+            credit
+            balance {
+              amount
+              amountType
             }
           }
         }

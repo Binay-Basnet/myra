@@ -30,3 +30,13 @@
   /* src: local('Times New Roman'), url('https://fonts.cdnfonts.com/s/57197/times.woff') format('woff'); */
   src: url('/times.ttf');
 }
+
+@font-face {
+  font-family: 'Roboto-Bold';
+  src: url('/Roboto-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto-Medium';
+  src: url('/Roboto-Medium.ttf');
+}

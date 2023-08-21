@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import Link from 'next/link';
 
 import { Box, Button, Column, Text } from '@myra-ui';
 
@@ -281,6 +280,8 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
   const { getValues } = useFormContext<TrialSheetReportFilters>();
   const branchIDs = getValues()?.branchId?.map((a) => a.value);
 
+  const datePeriod = getValues()?.period;
+
   const { data: branchListQueryData } = useGetBranchListQuery({
     paginate: {
       after: '',
@@ -308,39 +309,21 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
       header: 'Ledger Name',
       accessorKey: 'ledgerName',
       cell: (props) => (
-        <>
-          <Box
-            sx={{
-              '@media print': {
-                display: 'none',
-              },
-            }}
-          >
-            <Link
-              target="_blank"
-              href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
+        <Button
+          variant="link"
+          color="primary.500"
+          onClick={() =>
+            window.open(
+              `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
                 props.row?.original?.ledgerId
-              }&branch=${JSON.stringify(branchIDs)}`}
-            >
-              <Button variant="link" color="primary.500">
-                {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
-                {localizedText(props?.row?.original?.ledgerName)}
-              </Button>
-            </Link>
-          </Box>
-          <Text
-            display="none"
-            sx={{
-              '@media print': {
-                display: 'block',
-              },
-            }}
-            px={0}
-            fontSize="s3"
-          >
-            {localizedText(props?.row?.original?.ledgerName)}
-          </Text>
-        </>
+              }&branch=${JSON.stringify(branchIDs)}&date=${datePeriod.to.en}`,
+              '_blank'
+            )
+          }
+        >
+          {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+          {localizedText(props?.row?.original?.ledgerName)}
+        </Button>
       ),
       meta: {
         width: '80%',
@@ -481,12 +464,7 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
   // );
 
   return (
-    <Report.Table<TrialSheetReportDataEntry>
-      showFooter
-      data={data}
-      columns={columns}
-      tableTitle={type}
-    />
+    <Report.Table<TrialSheetReportDataEntry> data={data} columns={columns} tableTitle={type} />
   );
 };
 

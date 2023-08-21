@@ -262,7 +262,7 @@ export const AccountOpenNew = () => {
   }));
   const minorDetails = minorData?.account?.listMinors?.data;
   const minorOptions = minorDetails?.map((item) => ({
-    label: item?.fullName?.local as string,
+    label: item?.fullName as string,
     value: item?.id as string,
   }));
   const minorselectedValue = watch('minor');
@@ -433,6 +433,7 @@ export const AccountOpenNew = () => {
         if (redirectPath) {
           router.push(String(redirectPath));
           queryClient.invalidateQueries(['getAccountCheck']);
+          queryClient.invalidateQueries(['getOperationsAutoOpenDetails']);
         } else {
           router.push(ROUTES.CBS_ACCOUNT_LIST);
         }
@@ -707,14 +708,14 @@ export const AccountOpenNew = () => {
                     code: memberDetailData?.code,
                     gender: memberDetailData?.gender,
                     age: memberDetailData?.age,
-                    maritalStatus: memberDetailData?.maritalStatus,
+                    maritalStatus: memberDetailData?.maritalStatus as string,
                     dateJoined: memberDetailData?.dateJoined?.en,
                     phoneNo: memberDetailData?.contact,
                     email: memberDetailData?.email,
                     address: memberDetailData?.address,
                   }}
-                  signaturePath={memberSignatureUrl}
-                  citizenshipPath={memberCitizenshipUrl}
+                  signaturePath={memberSignatureUrl as string}
+                  citizenshipPath={memberCitizenshipUrl as string}
                 />
               </Box>
               {productID && (

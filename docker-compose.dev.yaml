@@ -36,6 +36,18 @@ services:
     restart: unless-stopped
     networks:
       - myra-frontend
+    
+  dhadda-migration:
+    build:
+      context: apps/dhadda-migration
+      dockerfile: Dockerfile
+    image: 110278083494.dkr.ecr.ap-south-1.amazonaws.com/dev-dhadda-migration:dev
+    container_name: dhadda-migration-ui
+    ports:
+      - 8079:3000
+    restart: unless-stopped
+    networks:
+      - myra-frontend
 
 networks:
    myra-frontend:

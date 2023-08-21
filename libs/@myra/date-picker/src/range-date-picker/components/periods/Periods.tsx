@@ -25,6 +25,7 @@ interface IPeriodsProps {
   showFiscalPeriod: boolean;
   showCustomPeriod: boolean;
   showTillDatePeriod: boolean;
+  showFiscalYearOnly?: boolean;
   // eslint-disable-next-line react/no-unused-prop-types
   showPeriods: boolean;
 
@@ -50,7 +51,7 @@ export const Periods = ({
   showFiscalPeriod,
   showCustomPeriod,
   showTillDatePeriod,
-
+  showFiscalYearOnly,
   onChange,
   setState,
   baseDate,
@@ -60,7 +61,7 @@ export const Periods = ({
 
   return (
     <Box flexShrink={0} w="12rem" borderRight="1px" borderColor="border.layout" p="s8">
-      {periods.map((defaultPeriod) => (
+      {periods?.map((defaultPeriod) => (
         <Fragment key={defaultPeriod.key}>
           <PeriodWrapper
             title={t[defaultPeriod.title] || defaultPeriod.title}
@@ -73,7 +74,11 @@ export const Periods = ({
                     calendarType
                   ),
                   to: convertDate(
-                    getPeriodDate(defaultPeriod.lastDays, calendarType, baseDate),
+                    getPeriodDate(
+                      defaultPeriod.key.includes('LAST') ? 0 : defaultPeriod.lastDays,
+                      calendarType,
+                      baseDate
+                    ),
                     calendarType
                   ),
                 });
@@ -94,7 +99,7 @@ export const Periods = ({
       {showFiscalPeriod && (
         <PeriodWrapper
           title={t['fiscalYear']}
-          isSelected={selectedPeriod === 'FISCAL_YEAR'}
+          isSelected={selectedPeriod === 'FISCAL_YEAR' || showFiscalYearOnly}
           onClick={() => {
             setSelectedPeriod('FISCAL_YEAR');
             setRangeStartDate(null);
@@ -126,7 +131,12 @@ export const Periods = ({
             setRangeEndDate(getPeriodDate(0, calendarType, baseDate));
             setHoveredDate(getPeriodDate(0, calendarType, baseDate));
 
+            onChange({
+              from: convertDate(getPeriodDate(numberOfDays, calendarType, baseDate), calendarType),
+              to: convertDate(getPeriodDate(0, calendarType, baseDate), calendarType),
+            });
             setSelectedPeriod('TILL_DATE');
+            onToggle();
           }}
         />
       )}

@@ -1,96 +1,38 @@
-import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-
-import { KymCooperativeFormInput } from '@coop/cbs/data-access';
-import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { FormSection } from '@myra-ui';
-import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
-import { useCooperative } from '../../hooks/useCooperative';
+import { FormFileInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
-interface IProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
-}
-
-export const KymCoopDocumentDeclarationForm = (props: IProps) => {
+export const KymCoopDocumentDeclarationForm = () => {
   const { t } = useTranslation();
 
-  const router = useRouter();
-
-  const id = String(router?.query?.['id']);
-
-  const { setSection } = props;
-  const methods = useForm<KymCooperativeFormInput>({
-    defaultValues: {},
-  });
-  useCooperative({ methods });
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymCoopSection(e.target.id);
-          setSection(kymSection);
-        }}
-      >
-        <FormSection header="kymCoopDOCUMENTDECLARATION" templateColumns={2}>
-          <KYMDocumentField
-            mutationId={id}
-            label={t['kymCoopAGMDecisionDocument']}
-            name="agmBodDecisionDocument"
-            setKymCurrentSection={setSection}
-            getKymSection={getKymCoopSection}
-          />
-          <KYMDocumentField
-            mutationId={id}
-            label={t['kymCoopRegisteredCertificate']}
-            name="registeredCertificate"
-            setKymCurrentSection={setSection}
-            getKymSection={getKymCoopSection}
-          />
-          <KYMDocumentField
-            mutationId={id}
-            label="MOA/AOA"
-            name="moaAoa"
-            setKymCurrentSection={setSection}
-            getKymSection={getKymCoopSection}
-          />
-          <KYMDocumentField
-            mutationId={id}
-            label={t['kymCoopPANCertificate']}
-            name="panCertificate"
-            setKymCurrentSection={setSection}
-            getKymSection={getKymCoopSection}
-          />
-          <KYMDocumentField
-            mutationId={id}
-            label={t['kymCoopTaxClearance']}
-            name="taxClearance"
-            setKymCurrentSection={setSection}
-            getKymSection={getKymCoopSection}
-          />
-          <KYMDocumentField
-            mutationId={id}
-            label={t['kymCoopLatestAuditReport']}
-            name="latestAuditReport"
-            setKymCurrentSection={setSection}
-            getKymSection={getKymCoopSection}
-          />
-          <KYMDocumentField
-            mutationId={id}
-            label={t['kymCoopLogo']}
-            name="logo"
-            setKymCurrentSection={setSection}
-            getKymSection={getKymCoopSection}
-          />
-          <KYMDocumentField
-            mutationId={id}
-            label={t['kymCoopMinuteofCentralRep']}
-            name="minuteOfCentralRep"
-            setKymCurrentSection={setSection}
-            getKymSection={getKymCoopSection}
-          />
-        </FormSection>
-      </form>
-    </FormProvider>
+    <FormSection header="kymCoopDOCUMENTDECLARATION" templateColumns={2}>
+      <FormFileInput
+        size="lg"
+        label={t['kymCoopAGMDecisionDocument']}
+        name="documents.0.identifiers"
+      />
+
+      <FormFileInput
+        size="lg"
+        label={t['kymCoopRegisteredCertificate']}
+        name="documents.1.identifiers"
+      />
+      <FormFileInput size="lg" label="MOA/AOA" name="documents.2.identifiers" />
+      <FormFileInput size="lg" label={t['kymCoopPANCertificate']} name="documents.3.identifiers" />
+      <FormFileInput size="lg" label={t['kymCoopTaxClearance']} name="documents.4.identifiers" />
+      <FormFileInput
+        size="lg"
+        label={t['kymCoopLatestAuditReport']}
+        name="documents.5.identifiers"
+      />
+      <FormFileInput size="lg" label={t['kymCoopLogo']} name="documents.6.identifiers" />
+      <FormFileInput
+        size="lg"
+        label={t['kymCoopMinuteofCentralRep']}
+        name="documents.7.identifiers"
+      />
+    </FormSection>
   );
 };

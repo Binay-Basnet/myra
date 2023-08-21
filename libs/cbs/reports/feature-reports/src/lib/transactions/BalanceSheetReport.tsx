@@ -1,22 +1,18 @@
 import { useState } from 'react';
 
-import { Box, GridItem, Text } from '@myra-ui';
+import { GridItem } from '@myra-ui';
 
 import {
   LocalizedDateFilter,
   TrialSheetReportFilter,
   useGetTrialSheetReportQuery,
 } from '@coop/cbs/data-access';
-import {
-  COATable,
-  Report,
-  sortCoa,
-  TrialBalance,
-  TrialSheetReportDataEntry,
-} from '@coop/cbs/reports';
+import { Report, TrialSheetReportDataEntry } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
 import { useIsCbs } from '@coop/shared/utils';
+
+import { COATable, generateAndSortCOATreeArray } from './TrialSheetReport';
 
 type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId'> & {
   branchId: { label: string; value: string }[];
@@ -50,15 +46,20 @@ export const BalanceSheetReport = () => {
     },
     { enabled: !!filters }
   );
+  const coaReportData = data?.report?.transactionReport?.financial?.trialSheetReport?.data;
 
-  const assetsReport = sortCoa(
-    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.assets ??
-      []) as unknown as TrialSheetReportDataEntry[]
-  );
-  const equityAndLiablities = sortCoa(
-    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.equityAndLiablities ??
-      []) as unknown as TrialSheetReportDataEntry[]
-  );
+  const coaReport = [
+    ...generateAndSortCOATreeArray({
+      array: (coaReportData?.equityAndLiablities || []) as TrialSheetReportDataEntry[],
+      type: 'EQUITY_AND_LIABILITIES',
+      total: coaReportData?.equityAndLiablitiesTotal || {},
+    }),
+    ...generateAndSortCOATreeArray({
+      array: (coaReportData?.assets || []) as TrialSheetReportDataEntry[],
+      type: 'ASSETS',
+      total: coaReportData?.assetsTotal || {},
+    }),
+  ];
 
   return (
     <Report
@@ -67,7 +68,7 @@ export const BalanceSheetReport = () => {
           includeZero: 'include',
         },
       }}
-      data={assetsReport as TrialSheetReportDataEntry[]}
+      data={coaReport}
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
@@ -91,7 +92,7 @@ export const BalanceSheetReport = () => {
 
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <FormDatePicker name="period.from" label="Date" />
@@ -102,38 +103,7 @@ export const BalanceSheetReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization />
-
-          {equityAndLiablities?.length !== 0 && (
-            <Box display="flex" py="s16" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Equity and Liabilities
-              </Text>
-              <COATable
-                type="Liabilities"
-                total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.equityAndLiablitiesTotal as unknown as TrialBalance
-                }
-                data={equityAndLiablities as TrialSheetReportDataEntry[]}
-              />
-            </Box>
-          )}
-
-          {assetsReport?.length !== 0 && (
-            <Box display="flex" py="s16" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Assets
-              </Text>
-              <COATable
-                total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.assetsTotal as unknown as TrialBalance
-                }
-                type="Assets"
-                data={assetsReport as TrialSheetReportDataEntry[]}
-              />
-            </Box>
-          )}
+          <COATable type="Particulars" total={[]} data={coaReport} />
         </Report.Content>
         <Report.Filters>
           <Report.Filter title="Zero Balance">

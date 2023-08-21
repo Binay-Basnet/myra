@@ -178,6 +178,12 @@ export const ACCOUNTING: NavType = {
           aclKey: 'ACCOUNTING_SYSTEM_ACCOUNTING_CHARTS_OF_ACCOUNTS',
           route: ROUTES.ACCOUNTING_COA_LIST,
         },
+        {
+          label: 'Ledger Balance Transfer',
+          aclKey: 'ACCOUNTING_SYSTEM_ACCOUNTING_CHARTS_OF_ACCOUNTS',
+          route: ROUTES.ACCOUNTING_LEDGER_BALANCE_TRANSFER_LIST,
+          addRoute: ROUTES.ACCOUNTING_LEDGER_BALANCE_TRANSFER_ADD,
+        },
       ],
 
       reportPages: [

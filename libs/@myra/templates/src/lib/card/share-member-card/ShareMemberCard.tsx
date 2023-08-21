@@ -13,7 +13,7 @@ type MemberType = {
   id?: string | undefined | null;
   gender?: string | undefined | null;
   age?: string | number | undefined | null;
-  maritalStatus?: string;
+  maritalStatus?: string | null;
   dateJoined?: string | undefined | null | Record<'en' | 'local' | 'np', string>;
   branch?: string;
   phoneNo?: string | undefined | null;

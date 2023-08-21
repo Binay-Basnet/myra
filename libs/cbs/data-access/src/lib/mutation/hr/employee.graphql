@@ -27,3 +27,48 @@ mutation setNewLeave($id: String, $input: LeaveInput!) {
     }
   }
 }
+
+mutation approveLeave($id: String!, $input: LeaveStatusEnum!) {
+  hr {
+    employee {
+      leave {
+        approveLeave(id: $id, input: $input) {
+          isApproved
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setLeaveAllocation($id: ID, $input: LeaveAllocationInput!) {
+  hr {
+    employee {
+      leaveAllocation {
+        upsertLeaveAllocation(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setAttendance($id: ID, $input: AttendanceInput!) {
+  hr {
+    employee {
+      attendance {
+        upsertAttendance(id: $id, input: $input) {
+          id
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

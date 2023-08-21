@@ -692,7 +692,7 @@ const en: Record<string, string> = {
 
   kymCoopNameofOrganization: 'Name of Organization',
   kymCoopEnterNameofOrganization: 'Enter Name of Organization',
-  kymCoopRegisrationNo: 'Regisration No',
+  kymCoopRegisrationNo: 'Registration No',
   kymCoopEnterRegisteredNumber: 'Enter Registered Number',
   kymCoopRegistrationoffice: 'Registration Office',
   kymCoopEnterRegisteredAddress: 'Enter Registered Address',
@@ -1332,8 +1332,9 @@ const en: Record<string, string> = {
 
   kymAccIndPermanentAddress: 'Permanent Address',
   kymAccIndTemporaryAddress: 'Temporary Address',
-  kymAccIndIncaseofresidinginRentedHouse: 'Incase of residing in Rented House',
+  kymAccIndInCaseOfResidingInRentedHouse: 'Incase of residing in Rented House',
   kymAccIndFamilyDetails: 'Family Details',
+  kymAccIndFamilyMembers: 'Family Members',
   kymAccIndMainProfession: 'Main Profession',
   kymAccIndMainPurposeofBecomingMember: 'Main Purpose of Becoming a Member',
   kymAccIndMemberofAnothercooperative: 'Member of Another Cooperative',
@@ -3562,6 +3563,7 @@ const en: Record<string, string> = {
 
   complainceManagement: 'Compliance Management',
   businessProcessManagement: 'Business Process Management',
+  microfinance: 'Microfinance',
 
   fixedAssetManagement: 'Fixed Asset Management',
   otherApplications: 'OTHER APPLICATIONS',

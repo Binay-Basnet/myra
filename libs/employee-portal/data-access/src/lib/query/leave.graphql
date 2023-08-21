@@ -1,0 +1,58 @@
+query getLeaveStats {
+  employee {
+    leave {
+      statistics {
+        data {
+          leaveType
+          takenLeave
+          totalLeave
+        }
+      }
+    }
+  }
+}
+
+query getLeaveList($filter: Filter!, $pagination: Pagination!) {
+  employee {
+    leave {
+      list(filter: $filter, pagination: $pagination) {
+        data {
+          totalCount
+          edges {
+            node {
+              leaveStatus
+              leaveId
+              leaveFrom
+              leaveTo
+              leaveType
+
+              leaveReason
+              leaveStatus
+              leaveApprover
+            }
+            cursor
+          }
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLeaveTypeList($filter: Filter!, $pagination: Pagination!) {
+  employee {
+    settings {
+      listLeaveType(filter: $filter, pagination: $pagination) {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
-import { FaRegEdit } from 'react-icons/fa';
+import { BiPyramid } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
-import { Box, DetailCardContent, Grid, Icon, Text } from '@myra-ui';
+import { Box, Button, DetailCardContent, Divider, Grid, Icon, Text } from '@myra-ui';
 
 import { Organization } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -11,26 +11,33 @@ export const OrganizationalProfile = (props: { data?: Organization | null }) => 
   const router = useRouter();
   return (
     <>
-      <Text fontSize="r3" fontWeight="medium">
-        Organizational Profile
-      </Text>
       <Box
         display="flex"
+        w="100%"
         alignItems="center"
+        justifyContent="space-between"
         p="s16"
         bg="white"
         borderRadius={5}
-        w="-webkit-fit-content"
         gap={2}
         cursor="pointer"
-        onClick={() => router.push(ROUTES?.SETTINGS_GENERAL_ORGANIZATION_EDIT)}
       >
-        <Icon as={FaRegEdit} />
-        <Text cursor="pointer" fontSize="s3">
-          Edit Organization Data
-        </Text>
+        <Box>
+          <Text fontSize="r2" fontWeight="medium">
+            Overview
+          </Text>
+          <Text fontSize="r1">View organization details and edit if required</Text>
+        </Box>
+        <Button
+          leftIcon={<Icon as={BiPyramid} size="md" />}
+          variant="outline"
+          onClick={() => router.push(ROUTES?.SETTINGS_GENERAL_ORGANIZATION_EDIT)}
+        >
+          Edit Profile
+        </Button>
       </Box>
-      <Box p="s16" bg="white" borderRadius={5}>
+      <Divider />
+      <Box p="s16" bg="white" borderRadius={5} border="1px" borderColor="border.layout">
         <Text fontWeight="medium">Basic Details</Text>
         <Grid templateColumns="repeat(3, 1fr)" rowGap="s48" columnGap="80px" py="s8">
           <DetailCardContent title="Name of Organization" subtitle={data?.basicDetails?.name} />
@@ -40,7 +47,7 @@ export const OrganizationalProfile = (props: { data?: Organization | null }) => 
           />
         </Grid>
       </Box>
-      <Box p="s16" bg="white" borderRadius={5}>
+      <Box p="s16" bg="white" borderRadius={5} border="1px" borderColor="border.layout">
         <Text fontWeight="medium">Contact Details</Text>
         <Grid templateColumns="repeat(3, 1fr)" rowGap="s48" columnGap="80px" py="s8">
           <DetailCardContent title="Email" subtitle={data?.contactDetails?.email} />
@@ -48,7 +55,7 @@ export const OrganizationalProfile = (props: { data?: Organization | null }) => 
           <DetailCardContent title="Website" subtitle={data?.contactDetails?.website} />
         </Grid>
       </Box>
-      <Box p="s16" bg="white" borderRadius={5}>
+      <Box p="s16" bg="white" borderRadius={5} border="1px" borderColor="border.layout">
         <Text fontWeight="medium">Main Contact Person</Text>
         <Grid templateColumns="repeat(3, 1fr)" rowGap="s48" columnGap="80px" py="s8">
           <DetailCardContent
@@ -59,7 +66,7 @@ export const OrganizationalProfile = (props: { data?: Organization | null }) => 
           <DetailCardContent title="Title" subtitle={data?.mainContactPerson?.title} />
         </Grid>
       </Box>
-      <Box p="s16" bg="white" borderRadius={5}>
+      <Box p="s16" bg="white" borderRadius={5} border="1px" borderColor="border.layout">
         <Text fontWeight="medium">Address Details</Text>
         <Grid templateColumns="repeat(3, 1fr)" rowGap="s48" columnGap="80px" py="s8">
           <DetailCardContent title="Province" subtitle={data?.address?.state?.local} />
@@ -72,7 +79,7 @@ export const OrganizationalProfile = (props: { data?: Organization | null }) => 
           <DetailCardContent title="Locality" subtitle={data?.address?.locality?.local} />
         </Grid>
       </Box>
-      <Box p="s16" bg="white" borderRadius={5}>
+      <Box p="s16" bg="white" borderRadius={5} border="1px" borderColor="border.layout">
         <Text fontWeight="medium">Registered Details</Text>
         <Grid templateColumns="repeat(3, 1fr)" rowGap="s48" columnGap="80px" py="s8">
           <DetailCardContent

@@ -26,6 +26,7 @@ export enum Report {
   MEMBER_REGISTER_REPORT = 'Member Register Report',
   MEMBER_ACTIVATIONS = 'Active/Inactive Member',
   MEMBER_CLASSIFICATION_REPORT = 'Member Classification Reports',
+  MEMBER_TRANSFER_REPORT = 'Member Transfer Report',
   KYM_STATUS_REPORT = 'Kym Status Report',
   MINOR_LIST_REPORT = 'Minor List Report',
   MEMBER_WISE_BALANCE_REPORT = 'Member Wise Balance Report',
@@ -39,6 +40,8 @@ export enum Report {
   SHARE_BONUS_DISTRIBUTION_REPORT = 'Share Bonus Distribution Report',
 
   SAVING_STATEMENT = 'Saving Account Statement',
+  ADJUSTMENT_SAVING_STATEMENT = 'Adjustment Saving Account Statement',
+
   SAVING_INTEREST_STATEMENT = 'Interest Statement Report',
   DEPOSIT_CONSOLIDATED_REPORT = 'Deposit Consolidated Report',
   DEPOSIT_DAILY_TRANSACTION_REPORT = 'Deposit Daily Transaction Report',
@@ -74,7 +77,7 @@ export enum Report {
   LOAN_ACCOUNT_ACCRUED_INTEREST_REPORT = 'Loan Account Accrued Interest Report',
 
   LOAN_PERSONAL_GURANTEE_REPORT = 'Personal Guarantee Report',
-  LOAN_TRANSACTION_STATEMENT_REPORT = 'Loan Transaction Statement Report',
+  LOAN_TRANSACTION_STATEMENT_REPORT = 'Loan Account Statement Report',
   LOAN_WRITE_OFF_REPORT = 'Loan write off report',
   LOAN_PRE_INFORM_REPORT = 'Loan pre-inform report',
   LOAN_APPROVAL_REPORT_REJECT = 'Loan Approval Report / Reject Report',
@@ -90,6 +93,7 @@ export enum Report {
 
   THRESHOLD_TRANSACTION_REPORT = 'Threshold Transaction ',
   TRANSACTION_TRIAL_SHEET = 'Trial Balance',
+  TRANSACTION_FISCAL_YEAR = 'Fiscal Year and Adjustment Trial Balance',
   TRANSACTION_INCOME_STATEMENT = 'Income Statement',
   TRANSACTION_CASH_FLOW_STATEMENT = 'Cash Flow Statement',
   TRANSACTION_CHANGE_OF_EQUITY = 'Change of Equity',
@@ -101,6 +105,8 @@ export enum Report {
   TRANSACTION_CASH_LEDGER = 'Cash Ledger Report',
   TRANSACTION_VAULT_BALANCE = 'Vault Balance Report',
   TRANSACTION_DAY_BOOK_REPORT = 'Day Book Report',
+  TRANSACTION_TELLER_DAY_BOOK_REPORT = 'Teller Day Book Report',
+
   TRANSACTION_SUSPICIOUS_TRANSACTION_REPORT = 'Suspicious Transaction Report',
   TRANSACTION_BALANCE_SHEET_REPORT = 'Balance Sheet Report',
   TRANSACTION_SERVICE_CENTER_BALANCE_REPORT = 'Service Center Balance',
@@ -111,6 +117,7 @@ export enum Report {
   TRANSACTION_CHAR_KHATA_REPORT = 'Charkhata Ledger Report',
   TRANSACTION_MRTRANSACTION_REPORT = 'Market Representative Transaction Report',
   TRANSACTION_TAG_KHATA_REPORT = 'Ledger Group Report',
+  TRANSACTION_DAILY_BALANCE_REPORT = 'Daily Balance Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -155,6 +162,7 @@ export enum Report {
 
   INVENTORY_REGISTER_REPORT = 'Inventory Register Report',
   INVENTORY_SALES_REPORT = 'Inventory Item Sales Report',
+  INVENTORY_PURCHASE_ORDER_REPORT = 'Inventory Purchase Order Report',
   INVENTORY_STOCK_STATUS_REPORT = 'Inventory Stock Status Report',
 
   ACCOUNTING_EXTERNAL_LOAN_STATEMENT_REPORT = 'External Loan Statement Report',
@@ -217,6 +225,10 @@ export const REPORTS = {
       report: Report.MINOR_LIST_REPORT,
       link: 'minor-list',
     },
+    {
+      report: Report.MEMBER_TRANSFER_REPORT,
+      link: 'transfer',
+    },
   ],
 
   [ReportGroup.SHARE]: [
@@ -264,6 +276,11 @@ export const REPORTS = {
       id: '5.1',
       report: Report.SAVING_STATEMENT,
       link: 'statement',
+    },
+    {
+      id: '5.1.1',
+      report: Report.ADJUSTMENT_SAVING_STATEMENT,
+      // link: 'adjustment-statement',
     },
     {
       id: '5.2',
@@ -550,9 +567,20 @@ export const REPORTS = {
       link: 'day-book',
     },
     {
+      id: '7.8.2',
+      report: Report.TRANSACTION_TELLER_DAY_BOOK_REPORT,
+      link: 'teller-day-book',
+    },
+    {
       id: '7.1',
       report: Report.TRANSACTION_TRIAL_SHEET,
       link: 'trial-sheet',
+    },
+    {
+      id: '7.7.3',
+      report: Report.TRANSACTION_FISCAL_YEAR,
+
+      link: 'fiscal-year',
     },
     {
       id: '7.1.2',
@@ -628,6 +656,10 @@ export const REPORTS = {
     {
       report: Report.TRANSACTION_TAG_KHATA_REPORT,
       link: 'tag-khata',
+    },
+    {
+      report: Report.TRANSACTION_DAILY_BALANCE_REPORT,
+      link: 'daily-balance',
     },
   ],
   [ReportGroup.BRANCHLESS_BANKING]: [
@@ -742,6 +774,11 @@ export const REPORTS = {
       id: '',
       report: Report.INVENTORY_SALES_REPORT,
       link: 'item-sales',
+    },
+    {
+      id: '',
+      report: Report.INVENTORY_PURCHASE_ORDER_REPORT,
+      link: 'purchase-order',
     },
   ],
   [ReportGroup.ACCOUNTING]: [

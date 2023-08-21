@@ -1,0 +1,86 @@
+mutation setBPMOperationsAddMinor($data: BPMMinorInput!) {
+  bpm {
+    operations {
+      minor {
+        addMinor(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setBPMOperationsMinorAction($requestid: ID!, $actionType: TransferRequestAction!) {
+  bpm {
+    operations {
+      minor {
+        minorAction(actionType: $actionType, requestId: $requestid) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setBPMOperationsSavingProductUpdate(
+  $updateType: SVUpdateType!
+  $productId: ID!
+  $data: SVUpdateData!
+) {
+  bpm {
+    operations {
+      savingProduct {
+        updateSVProduct(updateType: $updateType, productId: $productId, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setBPMOperationsLoanProductUpdate(
+  $updateType: LoanUpdateType!
+  $productId: ID!
+  $data: LoanUpdateData!
+) {
+  bpm {
+    operations {
+      loanProduct {
+        updateLoanProduct(updateType: $updateType, productId: $productId, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setUpdateCollateral(
+  $loanAccountId: ID!
+  $updateType: CollateralUpdateType!
+  $data: BPMCollateralData!
+) {
+  bpm {
+    operations {
+      loanCollateral {
+        updateCollateral(loanAccountId: $loanAccountId, updateType: $updateType, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

@@ -15,6 +15,7 @@ query getEmployeeList($filter: Filter, $pagination: Pagination) {
               }
               employeeEmail
               employeeDateOfJoining
+              designation
             }
             cursor
           }
@@ -35,12 +36,252 @@ query getLeaveList($filter: Filter, $pagination: Pagination) {
           totalCount
           edges {
             node {
-              leaveId
+              id
               employeeId
-              leaveTypeId
+              employeeName
+              reason
+              leaveType
               leaveFrom
               leaveTo
-              leaveNote
+              approver
+              status
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSingleEmployeeDetails($id: String!) {
+  hr {
+    employee {
+      employee {
+        getEmployee(id: $id) {
+          record {
+            id
+            firstName
+            middleName
+            lastName
+            dateOfBirth
+            age
+            gender
+            maritalStatus
+            bloodGroup
+            workPhoneNumber
+            workEmailAddress
+            personalPhoneNumber
+            personalEmailAddress
+            educationDetails {
+              instituteName
+              degree_diploma
+              specialization
+              dateOfCompletion
+            }
+            permanentAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            isTemporarySameAsPermanent
+            temporaryAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            employeeLevelId
+            departmentId
+            designationId
+            serviceCenter
+            employmentType
+            employeeStatus
+            sourceOfHire
+            workExperience {
+              companyName
+              designation
+              salary
+              address
+            }
+            salaryPaymentMode
+            panNumber
+            providentFundAccount
+            salaryStructureId
+            jobApplicationId
+            jobOffer
+            appointmentLetter
+            dateOfJoining
+            reportsToId
+            leaveApproverId
+            expenseApproverId
+            healthInsuranceProviderId
+            healthInsuranceNumberId
+            documents {
+              fieldId
+              identifiers: docData {
+                identifier
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLeave($id: String!) {
+  hr {
+    employee {
+      leave {
+        getLeave(id: $id) {
+          record {
+            id
+            employeeId
+            employeeName
+            leaveTypeId
+            leaveTypeName
+            leaveFrom
+            leaveTo
+            leaveNote
+            status
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getEmployeeLeaveList($employeeId: ID!) {
+  hr {
+    employee {
+      leave {
+        getLeaveLists(employeeId: $employeeId) {
+          data {
+            leaveTypeName
+            allocatedDays
+            usedDays
+            remainingDays
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLeaveAllocation($id: ID!) {
+  hr {
+    employee {
+      leaveAllocation {
+        getLeaveAllocation(id: $id) {
+          data {
+            leaveAllocationFor
+            empLevDepDesig
+            leavePolicy
+            effectiveFrom
+            description
+            addUnusedLeaveFromPreviousSection
+            allocation {
+              leaveId
+              newLeaveAllocated
+              totalLeavesAllocated
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLeaveAllocationList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employee {
+      leaveAllocation {
+        listLeaveAllocation(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              employeeId
+              employeeName
+              leavePolicy
+              effectiveDate
+              lastUpdated
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getEmployeeAtendanceList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employee {
+      hrEmployeeAttendanceQuery {
+        listDetailsByDay(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              day
+              totalEmployee
+              present
+              absent
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getListDetailsOfDay($date: Localized, $filter: Filter, $pagination: Pagination) {
+  hr {
+    employee {
+      hrEmployeeAttendanceQuery {
+        listDetailsOfDay(date: $date, filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employee
+              status
+              attendanceDate
+              department
+              designation
             }
             cursor
           }

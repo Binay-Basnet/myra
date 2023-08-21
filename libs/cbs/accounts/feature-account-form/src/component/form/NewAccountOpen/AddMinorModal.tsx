@@ -5,9 +5,9 @@ import { asyncToast, Grid, GridItem, Modal } from '@myra-ui';
 
 import {
   FormFieldSearchTerm,
+  useAddFamilyMemberMutation,
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
-  useSetMemberFamilyDetailsMutation,
 } from '@coop/cbs/data-access';
 import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
@@ -33,12 +33,12 @@ export const AddMinorModal = ({ isOpen, onClose, memberId }: IAddMinorModalProps
 
   const { mutateAsync: newIDMutate } = useGetNewIdMutation();
 
-  const { mutateAsync: setMinor } = useSetMemberFamilyDetailsMutation();
+  const { mutateAsync: setMinor } = useAddFamilyMemberMutation();
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const values = methods.getValues();
 
-    asyncToast({
+    await asyncToast({
       id: 'account-open-add-minor',
       promise: newIDMutate({}).then((res) =>
         setMinor({
@@ -56,7 +56,6 @@ export const AddMinorModal = ({ isOpen, onClose, memberId }: IAddMinorModalProps
       onSuccess: () => {
         queryClient.invalidateQueries(['getAccountOpenMinorList']);
         onClose();
-        // router.push('/accounting/investment/investment-transaction/list');
       },
     });
   };

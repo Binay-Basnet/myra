@@ -21,44 +21,6 @@ type TabList = {
   aclKey: AclKey;
 };
 
-const orgTabList: TabList[] = [
-  {
-    label: 'serviceCenterSettings',
-    aclKey: 'SETTINGS_SERVICE_CENTER',
-    route: ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST,
-  },
-  {
-    label: 'settingsSideBarChartsOfAccounts',
-    aclKey: 'SETTINGS_COA',
-    route: ROUTES.SETTINGS_GENERAL_COA,
-  },
-  {
-    label: 'Day End',
-    aclKey: 'SETTINGS_SERVICE_CENTER',
-    route: ROUTES.SETTINGS_EOD_HISTORY,
-  },
-  {
-    label: 'Organization',
-    aclKey: 'SETTINGS_SERVICE_CENTER',
-    route: ROUTES.SETTINGS_GENERAL_ORGANIZATION_DETAILS,
-  },
-  {
-    label: 'Committee',
-    aclKey: 'SETTINGS_SERVICE_CENTER',
-    route: ROUTES.SETTINGS_GENERAL_COMMITTEE,
-  },
-  {
-    label: 'bank',
-    aclKey: 'SETTINGS_BANK',
-    route: ROUTES.SETTINGS_GENERAL_BANK,
-  },
-  {
-    label: 'Print Preference',
-    aclKey: 'SETTINGS_PRINT_PREFERENCE',
-    route: ROUTES.SETTINGS_GENERAL_PRINT_PREFERENCE,
-  },
-];
-
 const tabList: TabList[] = [
   {
     label: 'settingsSideBarMembers',
@@ -96,47 +58,42 @@ const tabList: TabList[] = [
     aclKey: 'SETTINGS_LOAN_PRODUCTS',
     route: ROUTES.SETTINGS_GENERAL_LP_LIST,
   },
+  {
+    label: 'Transaction Constraints',
+    aclKey: 'SETTINGS_LOAN_PRODUCTS',
+    route: ROUTES.SETTINGS_GENERAL_TRANSACTION_CONSTRAINTS_LIST,
+  },
 ];
 
 const otherTabList: TabList[] = [
-  {
-    label: 'Code Management',
-    aclKey: 'SETTINGS_CODE_MANAGEMENT',
-    route: ROUTES.SETTINGS_GENERAL_CODE_MANAGEMENT_CBS,
-  },
   {
     label: 'settingsAlternativeChannel',
     aclKey: 'SETTINGS_ALTERNATIVE_CHANNELS',
     route: ROUTES.SETTINGS_GENERAL_ALTERNATIVE_CHANNELS,
   },
-  {
-    label: 'Indexing',
-    route: ROUTES.SETTINGS_GENERAL_INDEXING,
-    aclKey: 'SETTINGS_INDEXING',
-  },
 ];
 
 const accountingTabList: TabList[] = [
-  {
-    label: 'General',
-    route: ROUTES.SETTINGS_GENERAL_ACCOUNTING_GENERAL,
-    aclKey: 'SETTINGS_INDEXING',
-  },
-  {
-    label: 'Credit Terms',
-    route: ROUTES.SETTINGS_GENERAL_ACCOUNTING_CREDIT_TERMS,
-    aclKey: 'SETTINGS_INDEXING',
-  },
-  {
-    label: 'Custom Fields',
-    route: '/settings/general/accounting/custom-fields',
-    aclKey: 'SETTINGS_INDEXING',
-  },
-  {
-    label: 'Default Ledger Mapping',
-    route: '/settings/general/accounting/default-ledger-mapping',
-    aclKey: 'SETTINGS_INDEXING',
-  },
+  // {
+  //   label: 'General',
+  //   route: ROUTES.SETTINGS_GENERAL_ACCOUNTING_GENERAL,
+  //   aclKey: 'SETTINGS_INDEXING',
+  // },
+  // {
+  //   label: 'Credit Terms',
+  //   route: ROUTES.SETTINGS_GENERAL_ACCOUNTING_CREDIT_TERMS,
+  //   aclKey: 'SETTINGS_INDEXING',
+  // },
+  // {
+  //   label: 'Custom Fields',
+  //   route: '/settings/general/accounting/custom-fields',
+  //   aclKey: 'SETTINGS_INDEXING',
+  // },
+  // {
+  //   label: 'Default Ledger Mapping',
+  //   route: '/settings/general/accounting/default-ledger-mapping',
+  //   aclKey: 'SETTINGS_INDEXING',
+  // },
   {
     label: 'Tax',
     route: '/settings/general/accounting/tax',
@@ -148,6 +105,11 @@ const hcmTabList: TabList[] = [
   {
     label: 'Employee',
     route: ROUTES.HRMODULE_EMPLOYEES_SETTINGS,
+    aclKey: 'SETTINGS_INDEXING',
+  },
+  {
+    label: 'Payroll',
+    route: ROUTES.HRMODULE_PAYROLL_SALARY_COMPONENTS_SETTINGS,
     aclKey: 'SETTINGS_INDEXING',
   },
 ];
@@ -201,7 +163,7 @@ export const SettingSideBar = () => {
         </Box>
         <Box py="s16" px="s16">
           <Accordion allowToggle defaultIndex={0}>
-            <AccordionItem bg="transparent" border="none">
+            {/* <AccordionItem bg="transparent" border="none">
               {({ isExpanded }) => (
                 <>
                   <AccordionButton
@@ -255,7 +217,7 @@ export const SettingSideBar = () => {
                   </AccordionPanel>
                 </>
               )}
-            </AccordionItem>
+            </AccordionItem> */}
 
             <AccordionItem bg="transparent" border="none">
               {({ isExpanded }) => (

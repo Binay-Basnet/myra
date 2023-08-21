@@ -31,6 +31,7 @@ export interface BankSelectProps
   helperText?: string;
   errorText?: string;
   label?: string;
+  name?: string;
   // size?: 'sm' | 'default';
   onChange?: ((newValue: Option) => void) | any;
 }
@@ -44,6 +45,7 @@ export const BankSelect = ({
   options,
   isRequired,
   value,
+  name,
   ...rest
 }: BankSelectProps) => (
   <Flex direction="column" gap="s4">
@@ -60,7 +62,9 @@ export const BankSelect = ({
       isClearable
       chakraStyles={chakraDefaultStyles as ChakraStylesConfig<Option, boolean, GroupBase<Option>>}
       components={
-        customComponents as Partial<SelectComponentsConfig<Option, boolean, GroupBase<Option>>>
+        customComponents(name) as Partial<
+          SelectComponentsConfig<Option, boolean, GroupBase<Option>>
+        >
       }
       {...rest}
     />

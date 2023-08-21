@@ -36,7 +36,7 @@ const paymentModes = [
     value: LoanRepaymentMethod.Account,
   },
   {
-    label: 'Bank Cheque',
+    label: 'Bank Voucher',
     value: LoanRepaymentMethod.BankVoucher,
   },
   {
@@ -104,11 +104,14 @@ export const Payment = ({
 
   useEffect(() => {
     setValue('cash.cashPaid', String(Math.ceil(Number(amountPaid))));
-    setValue('cash.returned_amount', Math.ceil(Number(amountPaid)) - Number(loanTotal));
+    setValue(
+      'cash.returned_amount',
+      (Math.ceil(Number(amountPaid)) - Number(loanTotal))?.toFixed(2)
+    );
   }, [amountPaid, loanTotal, setValue]);
 
   useEffect(() => {
-    setValue('cash.returned_amount', Number(cashPaid) - Number(loanTotal));
+    setValue('cash.returned_amount', (Number(cashPaid) - Number(loanTotal))?.toFixed(2));
   }, [cashPaid]);
 
   const { data: loanCloseData } = useGetLoanCloseDataQuery(
@@ -169,7 +172,7 @@ export const Payment = ({
               <FormAccountSelect
                 isRequired
                 name="account.destination_account"
-                label="Destination Account"
+                label="Source Account"
                 memberId={memberId}
                 filterBy={ObjState.Active}
                 includeLoc

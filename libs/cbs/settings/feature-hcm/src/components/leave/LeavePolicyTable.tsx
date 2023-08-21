@@ -19,7 +19,7 @@ import {
 
 import {
   LeavePolicyInput,
-  useDeleteHcmEmployeeGeneralMutation,
+  useDeleteLeavePolicyMutation,
   useGetEmployeeLeavePolicyListQuery,
   useGetEmployeeLeaveTypeListQuery,
   useGetEmployeeLevelListQuery,
@@ -41,19 +41,29 @@ type LeavePolicyType = {
   annualAllocation: number;
 };
 
+const defaultFormValue = {
+  name: '',
+  description: '',
+  employeeLevelId: '',
+  effectiveFrom: null,
+  leavePolicyDetails: [],
+};
+
 export const LeavePolicyTable = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedLeavePolicyId, setSelectedLeavePolicyId] = useState('');
 
-  const methods = useForm();
-  const { getValues, handleSubmit, reset } = methods;
+  const methods = useForm<LeavePolicyInput>({
+    defaultValues: defaultFormValue,
+  });
+  const { getValues, reset } = methods;
 
   const { data, refetch } = useGetEmployeeLeavePolicyListQuery({
     pagination: getPaginationQuery(),
   });
   const { mutateAsync, isLoading } = useSetEmployeeLeavePolicyMutation();
-  const { mutateAsync: deleteMutateAsync } = useDeleteHcmEmployeeGeneralMutation();
+  const { mutateAsync: deleteMutateAsync } = useDeleteLeavePolicyMutation();
   const { data: leavePolicyData } = useGetLeavePolicyQuery(
     { id: selectedLeavePolicyId },
     { enabled: !!selectedLeavePolicyId }
@@ -161,12 +171,13 @@ export const LeavePolicyTable = () => {
   const handleAddModalClose = () => {
     setIsAddModalOpen(false);
     setSelectedLeavePolicyId('');
-    reset();
+    reset(defaultFormValue);
   };
 
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
     setSelectedLeavePolicyId('');
+    reset(defaultFormValue);
   };
 
   const onSubmit = () => {
@@ -185,6 +196,15 @@ export const LeavePolicyTable = () => {
           id: selectedLeavePolicyId,
           input: getValues(),
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof LeavePolicyInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     } else {
       asyncToast({
@@ -201,6 +221,15 @@ export const LeavePolicyTable = () => {
           id: null,
           input: getValues(),
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof LeavePolicyInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     }
   };
@@ -249,57 +278,55 @@ export const LeavePolicyTable = () => {
         width="5xl"
       >
         <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid templateColumns="repeat(3,1fr)" gap="s16">
-              <GridItem colSpan={2}>
-                <FormInput name="name" label="Name" />
-              </GridItem>
-              <FormSelect
-                name="employeeLevelId"
-                label="Assign to Employee Level"
-                options={employeeLevelOptions}
-              />
-              <GridItem colSpan={3}>
-                <FormTextArea name="description" label="Description" />
-              </GridItem>
-              <FormDatePicker name="effectiveFrom" label="Effective From" />
+          <Grid templateColumns="repeat(3,1fr)" gap="s16">
+            <GridItem colSpan={2}>
+              <FormInput name="name" label="Name" />
+            </GridItem>
+            <FormSelect
+              name="employeeLevelId"
+              label="Assign to Employee Level"
+              options={employeeLevelOptions}
+            />
+            <GridItem colSpan={3}>
+              <FormTextArea name="description" label="Description" />
+            </GridItem>
+            <FormDatePicker name="effectiveFrom" label="Effective From" />
 
-              <GridItem colSpan={3}>
-                <Divider />
-              </GridItem>
-              <GridItem colSpan={3}>
-                <Box display="flex" flexDir="column" gap="s16">
-                  <Text fontSize="s3">Leave Policy Details</Text>
+            <GridItem colSpan={3}>
+              <Divider />
+            </GridItem>
+            <GridItem colSpan={3}>
+              <Box display="flex" flexDir="column" gap="s16">
+                <Text fontSize="s3">Leave Policy Details</Text>
 
-                  <FormEditableTable<LeavePolicyType>
-                    name="leavePolicyDetails"
-                    columns={[
-                      {
-                        accessor: 'leaveTypeId',
-                        header: 'Leave Type',
-                        cellWidth: 'auto',
-                        fieldType: 'select',
-                        selectOptions: leaveTypeOptions,
-                      },
-                      {
-                        accessor: 'annualAllocation',
-                        header: 'Annual Allocation',
-                      },
-                    ]}
-                  />
+                <FormEditableTable<LeavePolicyType>
+                  name="leavePolicyDetails"
+                  columns={[
+                    {
+                      accessor: 'leaveTypeId',
+                      header: 'Leave Type',
+                      cellWidth: 'auto',
+                      fieldType: 'select',
+                      selectOptions: leaveTypeOptions,
+                    },
+                    {
+                      accessor: 'annualAllocation',
+                      header: 'Annual Allocation',
+                    },
+                  ]}
+                />
 
-                  <Button
-                    w="-webkit-fit-content"
-                    alignSelf="flex-end"
-                    type="submit"
-                    isLoading={isLoading}
-                  >
-                    Save
-                  </Button>
-                </Box>
-              </GridItem>
-            </Grid>
-          </form>
+                <Button
+                  w="-webkit-fit-content"
+                  alignSelf="flex-end"
+                  onClick={onSubmit}
+                  isLoading={isLoading}
+                >
+                  Save
+                </Button>
+              </Box>
+            </GridItem>
+          </Grid>
         </FormProvider>
       </Modal>
       <Modal open={isDeleteModalOpen} onClose={handleDeleteModalClose} isCentered width="lg">

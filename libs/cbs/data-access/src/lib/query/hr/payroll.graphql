@@ -1,0 +1,133 @@
+query getSalaryStructureAssignmentList($filter: Filter, $pagination: Pagination) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        listSalaryStructureAssignment(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              employeeId
+              employeeName
+              department
+              contact
+              salaryStructure
+              email
+              baseSalary
+              lastUpdated
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSalaryStructureAssignment($id: String!) {
+  hr {
+    payroll {
+      salaryStructureAssignment {
+        getSalaryStructureAssignment(id: $id) {
+          data {
+            employeeId
+            salaryStructureId
+            baseSalary
+            fromDate
+            paymentMode
+            earnings {
+              id
+              amount
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getPayrollRunList($filter: Filter, $pagination: Pagination) {
+  hr {
+    payroll {
+      payrollRun {
+        listPayrollRun(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              payPeriod {
+                from
+                to
+              }
+              employees
+              payableCost
+              payDate
+              status
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getPayrollRun($id: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        getPayrollRun(id: $id) {
+          data {
+            payrollPeriod {
+              from
+              to
+            }
+            payDay
+            salaryAssignments
+            branchId
+            departmentId
+            designationId
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSalaryAssignmentListWithExtraDetailsList($filter: Filter, $pagination: Pagination) {
+  hr {
+    payroll {
+      payrollRun {
+        ListSalaryAssignmentWithExtraDetails(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              employeeName
+              paidDays
+              grossPay
+              deductions
+              netPay
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

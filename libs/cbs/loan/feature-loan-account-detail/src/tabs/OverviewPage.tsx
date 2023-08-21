@@ -2,7 +2,7 @@ import { AiOutlineFileText } from 'react-icons/ai';
 
 import { Alert, DetailPageQuickLinks } from '@myra-ui';
 
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 
 import {
   GeneralInfoCard,
@@ -23,6 +23,9 @@ export const OverviewPage = () => {
     isClosed,
     generalInfo,
     memberDetails,
+    isLocAccount,
+    locAccountSummary,
+    overviewData,
   } = useLoanAccountDetailHooks();
 
   const links = [
@@ -32,7 +35,7 @@ export const OverviewPage = () => {
     },
     {
       title: 'Loan Statement',
-      link: `${ROUTES.CBS_REPORTS_LOAN_STATEMENT}?memberId=${memberDetails?.memberId}&loanAccountId=${generalInfo?.accountId}`,
+      link: `${ROUTES.CBS_REPORTS_LOAN_ACCOUNT_STATEMENT_REPORT}?memberId=${memberDetails?.memberId}&loanAccountId=${generalInfo?.accountId}`,
       icon: AiOutlineFileText,
     },
   ];
@@ -42,9 +45,19 @@ export const OverviewPage = () => {
       <TabHeader heading="Overview" />
 
       {!isClosed && <DetailPageQuickLinks links={links} />}
-      {isClosed && <Alert status="error" subtitle="This Account is Closed" />}
+      {isClosed && (
+        <Alert
+          status="error"
+          subtitle={
+            overviewData?.closedDate?.local
+              ? `This account is closed at ${localizedDate(overviewData?.closedDate)}`
+              : 'This Account is Closed'
+          }
+          hideCloseIcon
+        />
+      )}
 
-      <Statistics statsData={accountSummary} />
+      <Statistics statsData={isLocAccount ? locAccountSummary : accountSummary} />
 
       <GeneralInfoCard
         title="General Information"

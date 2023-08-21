@@ -69,6 +69,13 @@ query getInventorySalesReport($data: SalesReportFilter!) {
   report {
     accountingReport {
       salesReport(data: $data) {
+        summationData {
+          totalPerQuantityPrice
+          totalPrice
+          totalPriceWithVat
+          totalQuantitySold
+          totalVatAmount
+        }
         data {
           itemId
           itemName
@@ -78,6 +85,39 @@ query getInventorySalesReport($data: SalesReportFilter!) {
           totalPrice
           vatAmount
           netAmountWithVat
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+
+query getInventoryPurchaseReport($data: PurchaseReportFilter!) {
+  report {
+    accountingReport {
+      purchaseReport(data: $data) {
+        footer {
+          totalQuantity
+          totalPreRate
+          sumPriceWithoutVat
+          totalVat
+          sumAmount
+        }
+        data {
+          purchaseOrderId
+          vendorName
+          productDetail
+          vendorId
+          purchaseOrderQuantity
+          referenceNo
+          date
+          deliveryDate
+          preRate
+          totalPriceWithoutVat
+          vat
+          totalAmount
         }
         error {
           ...QueryError

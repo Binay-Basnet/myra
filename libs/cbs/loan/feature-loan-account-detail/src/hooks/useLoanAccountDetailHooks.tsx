@@ -35,7 +35,8 @@ export const useLoanAccountDetailHooks = () => {
     loanAccountId: id as string,
   });
 
-  const { data: loanAccountLedgersData } = useGetLoanAccountLedgersListQuery({ id: id as string });
+  const { data: loanAccountLedgersData, isLoading: ledgerLoading } =
+    useGetLoanAccountLedgersListQuery({ id: id as string });
 
   const gauranteeData = loanAccountGuaranteeDetailsData?.loanAccount?.loanAccountDetails?.guarantee;
   const collatData = loanAccountCollateralDetailsData?.loanAccount?.loanAccountDetails?.collateral;
@@ -50,6 +51,7 @@ export const useLoanAccountDetailHooks = () => {
   const isClosed = overviewData?.isClosed;
 
   const length = paymentsListInfo?.installments?.length ?? 0;
+  const isLocAccount = generalInfo?.repaymentScheme === 'LOC';
 
   const generalInfoCardData = [
     { label: 'Account Name', value: generalInfo?.accountName ?? 'N/A' },
@@ -57,7 +59,7 @@ export const useLoanAccountDetailHooks = () => {
     { label: 'Account Open Date', value: generalInfo?.accountOpenDate?.local ?? 'N/A' },
     { label: 'Loan Account Open Branch', value: generalInfo?.loanAccountOpenBranchName ?? 'N/A' },
     { label: 'Payment Scheme', value: generalInfo?.repaymentScheme ?? 'N/A' },
-    { label: 'Interest Rate', value: `${generalInfo?.interestRate}%` ?? 'N/A' },
+    { label: 'Interest Rate', value: `${generalInfo?.interestRate.toFixed(2)}%` ?? 'N/A' },
     { label: 'Interest Accrued', value: generalInfo?.interestAccrued ?? 'N/A' },
     {
       label: 'Sanctioned Amount',
@@ -97,6 +99,26 @@ export const useLoanAccountDetailHooks = () => {
     },
   ];
 
+  const locAccountSummary = [
+    {
+      title: 'Total Principal Paid',
+      value: amountConverter(overviewData?.totalPrincipalPaid || 0),
+    },
+    {
+      title: 'Total Interest Paid',
+      value: amountConverter(overviewData?.totalInterestPaid || 0),
+    },
+    {
+      title: 'Remaining Principal Amount',
+      value: amountConverter(overviewData?.totalRemainingPrincipal || 0),
+    },
+    {
+      title: 'Withdrawable Amount',
+      value: amountConverter(
+        Number(generalInfo?.sanctionedAmount) - Number(overviewData?.totalRemainingPrincipal)
+      ),
+    },
+  ];
   const additionalFeatures = [
     {
       label: 'Allow Partial Installment',
@@ -203,6 +225,8 @@ export const useLoanAccountDetailHooks = () => {
     guaranteeSummary,
     gauranteeListInfo,
     collateralSummary,
+    locAccountSummary,
+    isLocAccount,
     productId,
     isClosed,
     collatListInfo,
@@ -210,5 +234,6 @@ export const useLoanAccountDetailHooks = () => {
     ledgerList,
     paymentAllList,
     refetch,
+    ledgerLoading,
   };
 };

@@ -5,6 +5,17 @@ mutation payMembership($data: MembershipPaymentInput, $memberId: ID!) {
         error {
           ...MutationError
         }
+        record {
+          id
+          memberId
+          memberName
+          date
+          amount
+          paymentMode
+          depositedBy
+          memberCode
+          depositedOther
+        }
         recordId
       }
     }
@@ -15,6 +26,19 @@ mutation inactivateMember($memberId: ID!) {
   members {
     makeInactive(memberId: $memberId) {
       recordId
+    }
+  }
+}
+
+mutation activateMemberWithoutSharePurchase($memberId: ID!) {
+  members {
+    activateMember {
+      activateMemberWithoutSharePurchase(memberId: $memberId) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
     }
   }
 }

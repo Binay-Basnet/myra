@@ -69,7 +69,7 @@ export const MemberBalanceReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <FormDatePicker name="period.from" label="Date" />
@@ -146,9 +146,12 @@ export const MemberBalanceReport = () => {
                 {
                   header: 'Saving Balance',
                   accessorKey: 'totalSavingCrBalance',
+                  id: 'SavingBalanceHeader',
                   columns: [
                     {
                       header: 'Debit (Dr.)',
+                      accessorKey: 'totalSavingDrBalance',
+
                       accessorFn: (row) => row?.totalSavingDrBalance,
                       cell: (props) =>
                         amountConverter(props.row?.original?.totalSavingDrBalance || '0.00'),
@@ -162,6 +165,8 @@ export const MemberBalanceReport = () => {
                     {
                       header: 'Credit (Cr.)',
                       accessorFn: (row) => row?.totalSavingCrBalance,
+                      accessorKey: 'totalSavingCrBalance',
+
                       cell: (props) =>
                         amountConverter(props.row?.original?.totalSavingCrBalance || '0.00'),
                       footer: () =>
@@ -176,10 +181,15 @@ export const MemberBalanceReport = () => {
                 {
                   header: 'Loan Balance',
                   accessorFn: (row) => row?.totalLoanCrBalance,
+                  accessorKey: 'totalLoanDrBalance',
+                  id: 'loanBalanceHeader',
+
                   columns: [
                     {
                       header: 'Debit (Dr.)',
                       accessorFn: (row) => row?.totalLoanDrBalance,
+                      accessorKey: 'totalLoanDrBalance',
+
                       cell: (props) =>
                         amountConverter(props.row?.original?.totalLoanDrBalance || '0.00'),
                       footer: () =>
@@ -192,6 +202,8 @@ export const MemberBalanceReport = () => {
                     {
                       header: 'Credit (Cr.)',
                       accessorFn: (row) => row?.totalLoanCrBalance,
+                      accessorKey: 'totalLoanCrBalance',
+
                       cell: (props) =>
                         amountConverter(props.row?.original?.totalLoanCrBalance || '0.00'),
                       footer: () =>
@@ -205,11 +217,13 @@ export const MemberBalanceReport = () => {
                 },
                 {
                   header: 'Share Balance',
-                  accessorKey: 'totalShareCrBalance',
+                  accessorKey: 'totalShareDrBalance',
+                  id: 'ShareBalanceHeader',
 
                   columns: [
                     {
                       header: 'Debit (Dr.)',
+                      accessorKey: 'totalShareDrBalance',
                       accessorFn: (row) => row?.totalShareDrBalance,
                       cell: (props) =>
                         amountConverter(props.row?.original?.totalShareDrBalance || '0.00'),
@@ -222,6 +236,8 @@ export const MemberBalanceReport = () => {
                     },
                     {
                       header: 'Credit (Cr.)',
+                      accessorKey: 'totalShareCrBalance',
+
                       accessorFn: (row) => row?.totalShareCrBalance,
                       cell: (props) =>
                         amountConverter(props.row?.original?.totalShareCrBalance || '0.00'),

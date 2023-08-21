@@ -6,6 +6,10 @@ platform:
   arch: amd64
   os: linux
 
+# - sed -i '/^NX_APP_VERSION/d' ./apps/myra/.env
+# - sed -i '/^NX_APP_VERSION/d' ./apps/ebanking/.env
+# - sed -i '/^NX_APP_VERSION/d' ./apps/neosys-admin/.env
+# - sed -i '/^NX_APP_VERSION/d' ./apps/dhadda-migration/.env
 steps:
   - name: build affected modules
     image: node:16
@@ -20,13 +24,21 @@ steps:
         path: /drone/src/apps/ebanking/.env
       - name: env-file-neosys
         path: /drone/src/apps/neosys-admin/.env
+      - name: env-file-dhadda
+        path: /drone/src/apps/dhadda-migration/.env
       - name: ebanking-app
         path: /drone/src/apps/ebanking/dist
       - name: myra-app
         path: /drone/src/apps/myra/dist
       - name: neosys-admin-app
         path: /drone/src/apps/neosys-admin/dist
+      - name: dhadda-migration-app
+        path: /drone/src/apps/dhadda-migration/dist
     commands:
+      - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/myra/.env
+      - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/ebanking/.env
+      - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/neosys-admin/.env
+      - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/dhadda-migration/.env
       - yarn --pure-lockfile
       - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
 
@@ -46,6 +58,9 @@ volumes:
   - name: env-file-neosys
     host:
       path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.neosys
+  - name: env-file-dhadda
+    host:
+      path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.dhadda
   - name: ebanking-app
     host:
       path: /build-cache/myra-ui-${DRONE_BRANCH}/ebanking-app
@@ -55,6 +70,9 @@ volumes:
   - name: neosys-admin-app
     host:
       path: /build-cache/myra-ui-${DRONE_BRANCH}/neosys-admin-app
+  - name: dhadda-migration-app
+    host:
+      path: /build-cache/myra-ui-${DRONE_BRANCH}/dhadda-migration-app
 
 trigger:
   branch:
@@ -244,6 +262,52 @@ trigger:
     - push
 
 ---
+kind: pipeline
+name: Publish dhadda-migration
+type: docker
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+  - name: publishing dhadda-migration
+    image: bentolor/docker-dind-awscli:dind
+    environment:
+      aws_access_key:
+        from_secret: aws_access_key
+      aws_secret_key:
+        from_secret: aws_secret_key
+    commands:
+      - aws configure set aws_access_key_id $aws_access_key
+      - aws configure set aws_secret_access_key $aws_secret_key
+      - aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.ap-south-1.amazonaws.com
+      - docker compose -f docker-compose.${DRONE_BRANCH}.yaml build dhadda-migration
+      - docker compose -f docker-compose.${DRONE_BRANCH}.yaml push dhadda-migration
+    volumes:
+      - name: docker-sock
+        path: /var/run/docker.sock
+      - name: dhadda-migration-app
+        path: /drone/src/apps/dhadda-migration/dist
+
+volumes:
+  - name: dhadda-migration-app
+    host:
+      path: /build-cache/myra-ui-${DRONE_BRANCH}/dhadda-migration-app
+  - name: docker-sock
+    host:
+      path: /var/run/docker.sock
+
+depends_on:
+  - Build all the apps
+
+trigger:
+  branch:
+    - dev
+  event:
+    - push
+
+---
 #kind: pipeline
 #name: Publish storybook
 #type: docker
@@ -315,6 +379,7 @@ depends_on:
   - Publish myra-app
   - Publish neosys-admin-app
   - Publish ebanking-app
+  - Publish dhadda-migration
 #- Publish storybook
 
 trigger:
@@ -372,7 +437,6 @@ trigger:
 #    - push
 #
 #---
-
 kind: pipeline
 type: docker
 name: Update last successful build commit SHA
@@ -414,6 +478,7 @@ platform:
   arch: amd64
   os: linux
 
+# - sed -i '/^NX_APP_VERSION/d' ./apps/myra/.env
 steps:
   - name: Build myra-ui
     image: node:16
@@ -425,6 +490,7 @@ steps:
       - name: myra-app
         path: /drone/src/apps/myra/dist
     commands:
+      - echo NX_APP_VERSION=${DRONE_TAG} >> ./apps/myra/.env
       - yarn --pure-lockfile
       - npx nx run myra:build:production
 
@@ -472,6 +538,7 @@ platform:
   arch: amd64
   os: linux
 
+# - sed -i '/^NX_APP_VERSION/d' ./apps/neosys-admin/.env
 steps:
   - name: Build neosys-ui
     image: node:16
@@ -483,6 +550,7 @@ steps:
       - name: neosys-app
         path: /drone/src/apps/neosys-admin/dist
     commands:
+      - echo NX_APP_VERSION=${DRONE_TAG} >> ./apps/neosys-admin/.env
       - yarn
       - npx nx run neosys-admin:build:production
 
@@ -530,6 +598,7 @@ platform:
   arch: amd64
   os: linux
 
+# - sed -i '/^NX_APP_VERSION/d' ./apps/ebanking/.env
 steps:
   - name: Build ebanking-ui
     image: node:16
@@ -541,6 +610,7 @@ steps:
       - name: ebanking-app
         path: /drone/src/apps/ebanking/dist
     commands:
+      - echo NX_APP_VERSION=${DRONE_TAG} >> ./apps/ebanking/.env
       - yarn
       - npx nx run ebanking:build:production
 
@@ -580,69 +650,32 @@ trigger:
     - tag
 
 ---
-#########################################################################################################
-#########################################################################################################
-###############                 D H A D D A - M I G R A T I O N                               ###########
-#########################################################################################################
-#########################################################################################################
-
 kind: pipeline
-name: Build and Push dhadda-migration
-type: docker
+type: exec
+name: Create new release
 
 platform:
   arch: amd64
   os: linux
 
 steps:
-  - name: build from dhadda-migration
-    image: node:16-alpine
-    volumes:
-      - name: env file
-        path: /drone/src/apps/dhadda-migration/.env
-      - name: env file
-        path: /drone/src/apps/.env
-      - name: dhadda-migration-app
-        path: /drone/src/apps/dhadda-migration/dist
+  - name: Creating release
     commands:
-      - yarn
-      - npx nx run dhadda-migration:build --configuration=production
-
-  - name: Publish dhadda-migration-ui to ECR
-    image: bentolor/docker-dind-awscli:dind
-    environment:
-      aws_access_key:
-        from_secret: aws_access_key
-      aws_secret_key:
-        from_secret: aws_secret_key
-    volumes:
-      - name: docker-sock
-        path: /var/run/docker.sock
-      - name: dhadda-migration-app
-        path: /drone/src/apps/dhadda-migration/dist
-
-    commands:
-      - aws configure set aws_access_key_id $aws_access_key
-      - aws configure set aws_secret_access_key $aws_secret_key
-      - aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.ap-south-1.amazonaws.com
-      - docker compose -f docker-compose.dhadda.yaml build
-      - docker compose -f docker-compose.dhadda.yaml push
-
-volumes:
-  - name: env file
-    host:
-      path: /build-cache/dhadda-migration/fe/.env
-  - name: docker-sock
-    host:
-      path: /var/run/docker.sock
-  - name: dhadda-migration-app
-    temp: {}
+      - cd /drone
+      - ./create-new-config.sh FE $DRONE_TAG
+      - cd /drone
+      - ./push-cluster-config.fe.sh $DRONE_TAG
 
 trigger:
   branch:
-    - dhadda
+    - main
   event:
-    - push
+    - tag
+
+depends_on:
+  - Build and Push myra
+  - Build and Push neosys
+  - Build and Push ebanking
 
 #########################################################################################################
 #########################################################################################################
@@ -659,6 +692,8 @@ platform:
   arch: amd64
   os: linux
 
+# - sed -i '/^NX_APP_VERSION/d' ./apps/.env
+# - sed -i '/^NX_APP_VERSION/d' ./apps/migration/.env
 steps:
   - name: build from migration
     image: node:16-alpine
@@ -670,6 +705,8 @@ steps:
       - name: migration-app
         path: /drone/src/apps/migration/dist
     commands:
+      - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/migration/.env
+      - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/.env
       - yarn
       - npx nx run migration:build --configuration=production
 
@@ -724,6 +761,9 @@ platform:
   arch: amd64
   os: linux
 
+# - sed -i '/^NX_APP_VERSION/d' ./apps/csv-viewer/.env
+# - sed -i '/^NX_APP_VERSION/d' ./apps/env
+
 steps:
   - name: build from box migration
     image: node:16-alpine
@@ -735,6 +775,8 @@ steps:
       - name: box-migration-app
         path: /drone/src/apps/csv-viewer/dist
     commands:
+      - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/csv-viewer/.env
+      - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/.env
       - yarn
       - npx nx run csv-viewer:build:production
 

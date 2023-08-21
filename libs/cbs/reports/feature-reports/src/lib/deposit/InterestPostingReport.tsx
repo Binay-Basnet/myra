@@ -78,8 +78,9 @@ export const InterestPostingReport = () => {
               name: metaData?.memberName,
               address: metaData?.address,
               branch: undefined,
-              code: metaData?.memberId || undefined,
+              code: metaData?.member?.code || undefined,
               activeDate: undefined,
+              panVatNo: metaData?.member?.panVatNo,
             }}
             savingData={{
               meta: {

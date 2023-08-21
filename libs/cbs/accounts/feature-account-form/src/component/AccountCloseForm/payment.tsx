@@ -10,7 +10,9 @@ import {
   FormAccountSelect,
   FormAmountInput,
   FormBankSelect,
+  FormCheckbox,
   FormInput,
+  FormMemberSelect,
   FormSwitch,
   FormSwitchTab,
   FormTextArea,
@@ -49,6 +51,10 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
       0 as number
     ) ?? 0;
 
+  const isDiffMember = watch('accountTransfer.isDifferentMember');
+
+  const dmemberId = watch('accountTransfer.memberId');
+
   const disableDenomination = watch('cash.disableDenomination');
 
   const cashPaid = watch('cash.cashPaid');
@@ -72,18 +78,36 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
   });
 
   return (
-    <ContainerWithDivider borderRight="1px" borderColor="border.layout" p="s16" pb="100px">
+    <ContainerWithDivider p="s16" pb="100px">
       <BoxContainer>
         <FormSwitchTab label="Payment Mode" options={paymentModes} name="paymentMode" />
 
         {selectedPaymentMode === AccountClosePaymentMode?.AccountTransfer && (
           <Grid templateColumns="repeat(2,1fr)" gap="s20">
             <GridItem colSpan={2}>
+              <FormCheckbox
+                name="accountTransfer.isDifferentMember"
+                label="Destination account is from different member"
+              />
+            </GridItem>
+
+            {isDiffMember && (
+              <GridItem colSpan={2}>
+                <FormMemberSelect
+                  isRequired
+                  name="accountTransfer.memberId"
+                  label="Member"
+                  forceEnableAll
+                  excludeIds={[memberId]}
+                />
+              </GridItem>
+            )}
+            <GridItem colSpan={2}>
               <FormAccountSelect
                 isRequired
                 name="accountTransfer.destination_account"
                 label="Destination Account"
-                memberId={memberId}
+                memberId={isDiffMember ? dmemberId : memberId}
                 filterBy={ObjState.Active}
               />
             </GridItem>

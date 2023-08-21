@@ -5,9 +5,14 @@ import { useDisclosure } from '@chakra-ui/react';
 import { Box, DetailCardContent, DetailsCard, Grid, PageHeader, TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { RequestStatus, useAppSelector, useGetMemberRequestListQuery } from '@coop/cbs/data-access';
+import {
+  ObjState,
+  RequestStatus,
+  useAppSelector,
+  useGetMemberRequestListQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, localizedText } from '@coop/cbs/utils';
-import { featureCode, getPaginationQuery } from '@coop/shared/utils';
+import { featureCode, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { MemberApproveOrDeclineModal } from '../components/MemberApproveOrDeclineModal';
@@ -19,15 +24,19 @@ export const MemberRequestPage = () => {
 
   const { data, isFetching } = useGetMemberRequestListQuery({
     pagination: getPaginationQuery(),
+    filter: getFilterQuery(),
   });
   const memberRequests = data?.requests?.list?.membershipRequest?.edges || [];
 
   const columns = React.useMemo<Column<typeof memberRequests[0]>[]>(
     () => [
       {
+        id: 'requestedDate',
         header: 'Requested Date',
         accessorFn: (row) => localizedDate(row?.node?.requestedDate),
         cell: (props) => localizedDate(props?.row?.original?.node?.requestedDate),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Request ID',
@@ -48,9 +57,18 @@ export const MemberRequestPage = () => {
       {
         header: 'Approval Status',
         accessorFn: (row) => row?.node?.status,
+        enableColumnFilter: true,
         cell: (props) => (
           <ApprovalStatusItem status={props.row.original?.node?.status as RequestStatus} />
         ),
+        meta: {
+          filterMaps: {
+            list: [
+              { label: 'Approved', value: ObjState.Approved },
+              { label: 'Pending', value: RequestStatus.Pending },
+            ],
+          },
+        },
       },
 
       {

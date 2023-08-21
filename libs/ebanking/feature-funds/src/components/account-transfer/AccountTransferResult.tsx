@@ -8,8 +8,12 @@ import { Box, Button, Icon, Text } from '@myra-ui';
 import { TransactionHeaderCardWithChip, TransferModal } from '@coop/ebanking/cards';
 import { useAccountTransferMutation, useGetAccountListQuery } from '@coop/ebanking/data-access';
 import { AccountTransferFormType } from '@coop/ebanking/funds';
-
-import { CardBodyContainer, CardContainer, CardContent, CardHeader } from '../CardContainer';
+import {
+  CardBodyContainer,
+  CardContainer,
+  CardContent,
+  CardHeader,
+} from '@coop/ebanking/ui-layout';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'loading';
 
@@ -44,7 +48,7 @@ export const AccountTransferResult = ({
       <Box display="flex" flexDir="column" bg="white" borderRadius="br2" overflow="hidden">
         <TransactionHeaderCardWithChip
           chipText={paymentStatus === 'failure' ? 'Transfer Failed' : 'Transfer Successful'}
-          isSuccess={paymentStatus === 'success'}
+          status={paymentStatus}
         />
         <Box
           h="74px"

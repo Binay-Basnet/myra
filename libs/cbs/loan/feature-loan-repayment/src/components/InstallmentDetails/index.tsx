@@ -74,12 +74,10 @@ export const InstallmentData = ({
   //   [overDueInstallments]
   // );
 
-  const payableFine = watch('penalty.amount');
-
-  const discountedFine = Number(payableFine ?? 0);
+  const payableFine = Number(watch('penalty.amount') ?? 0);
 
   const coveredInstallments: CoveredInstallment[] = useMemo(() => {
-    let tempAmount = Number(amountPaid) - discountedFine;
+    let tempAmount = Number(amountPaid);
 
     if (tempAmount < 0 || !remainingInstallments?.length) return [];
 
@@ -122,7 +120,8 @@ export const InstallmentData = ({
             (new Date(installment?.installmentDate?.en).getTime() <
               new Date(transactionDate?.en as string).getTime() ||
               installment?.status === 'CURRENT' ||
-              (installment?.status === 'PARTIAL' && installment?.remainingInterest !== '0'))))
+              (installment?.status === 'PARTIAL' && installment?.remainingInterest !== '0') ||
+              (!installment?.status && installment?.interest !== '0'))))
       ) {
         if (tempAmount >= interest) {
           if (existingIndex !== -1) {
@@ -174,7 +173,7 @@ export const InstallmentData = ({
     }
 
     return tempCoveredInstallments;
-  }, [amountPaid, remainingInstallments, loanType, discountedFine]);
+  }, [amountPaid, remainingInstallments, loanType]);
 
   const { totalCoveredPrincipal, totalCoveredInterest, returnAmount } = useMemo(() => {
     const tempPrincipal = coveredInstallments?.reduce(
@@ -187,14 +186,14 @@ export const InstallmentData = ({
       0
     );
 
-    setTotalPayableAmount(Number((tempPrincipal + tempInterest + discountedFine).toFixed(2)));
+    setTotalPayableAmount(Number((tempPrincipal + tempInterest + payableFine).toFixed(2)));
 
     return {
       totalCoveredPrincipal: tempPrincipal,
       totalCoveredInterest: tempInterest,
-      returnAmount: amountPaid - tempPrincipal - tempInterest - discountedFine,
+      returnAmount: amountPaid - tempPrincipal - tempInterest - payableFine,
     };
-  }, [coveredInstallments, amountPaid, discountedFine]);
+  }, [coveredInstallments, amountPaid, payableFine]);
 
   return amountPaid ? (
     <Box display="flex" flexDirection="column" gap="s16">
@@ -345,14 +344,14 @@ export const InstallmentData = ({
             </Text>
           </Box>
         ) : null}
-        {discountedFine ? (
+        {payableFine ? (
           <Box display="flex" justifyContent="space-between">
             <Text fontSize="s3" fontWeight={500} color="gray.700">
               Total Fine
             </Text>
 
             <Text fontSize="s3" fontWeight={500} color="gray.700">
-              {amountConverter(discountedFine)}
+              {amountConverter(payableFine)}
             </Text>
           </Box>
         ) : null}

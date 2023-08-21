@@ -7,6 +7,7 @@ import { Alert, Box, Button, MemberCard, ResponseDialog, Text } from '@myra-ui';
 
 import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
+  AccountObjState,
   KymMemberTypesEnum,
   NatureOfDepositProduct,
   useGetAccountDetailsDataQuery,
@@ -314,6 +315,12 @@ export const AddWithdraw = () => {
                   name="accountId"
                   label={t['addDepositSelectDepositAccount']}
                   memberId={memberId}
+                  natureOfDepositProduct={[
+                    NatureOfDepositProduct?.Current,
+                    NatureOfDepositProduct?.RecurringSaving,
+                    NatureOfDepositProduct?.Saving,
+                  ]}
+                  filterBy={AccountObjState?.Active}
                   includeLoc
                   isDisabled={!!redirectAccountId}
                 />
@@ -420,7 +427,7 @@ export const AddWithdraw = () => {
                 memberID: memberDetailData?.id,
                 gender: memberDetailData?.gender,
                 age: memberDetailData?.age,
-                maritalStatus: memberDetailData?.maritalStatus,
+                maritalStatus: memberDetailData?.maritalStatus as string,
                 dateJoined: memberDetailData?.dateJoined,
                 // branch: 'Basantapur',
                 phoneNo: memberDetailData?.contact,
@@ -430,7 +437,7 @@ export const AddWithdraw = () => {
               // notice="KYM needs to be updated"
               signaturePath={selectedAccount?.member?.signaturePicUrl ?? ''}
               showSignaturePreview
-              citizenshipPath={memberCitizenshipUrl}
+              citizenshipPath={memberCitizenshipUrl as string}
               accountInfo={
                 selectedAccount
                   ? {
@@ -482,6 +489,7 @@ export const AddWithdraw = () => {
 
                 return {
                   type: 'Withdraw',
+                  receiptTitle: 'Withdraw Receipt',
                   total: amountConverter(result?.amount || 0) as string,
                   totalWords: amountToWordsConverter(result?.amount || 0),
                   title: 'Withdraw Successful',

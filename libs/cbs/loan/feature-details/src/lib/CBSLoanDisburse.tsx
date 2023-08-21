@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { IoChevronBackOutline } from 'react-icons/io5';
@@ -20,6 +20,7 @@ import {
   Text,
 } from '@myra-ui';
 
+import { BPMRequestsSidebarLayout } from '@coop/bpm/ui-layouts';
 import {
   LoanDisbursementInput,
   LoanDisbursementMethod,
@@ -61,6 +62,16 @@ const paymentModes = [
   },
 ];
 
+const RequiredSideBarLayout = (props: { children: React.ReactNode }) => {
+  const { children } = props;
+  const router = useRouter();
+  const isBpm = router?.pathname?.includes('bpm');
+  if (isBpm) {
+    return <BPMRequestsSidebarLayout>{children}</BPMRequestsSidebarLayout>;
+  }
+  return <LoanListLayout>{children}</LoanListLayout>;
+};
+
 export const CBSLoanDisburse = () => {
   const { loanPreview } = useLoanDetails();
   const [mode, setMode] = useState<'details' | 'payment' | 'success'>('details');
@@ -75,7 +86,7 @@ export const CBSLoanDisburse = () => {
 
   if (mode === 'details') {
     return (
-      <LoanListLayout>
+      <RequiredSideBarLayout>
         <LoanDetailsHeader title="Loan Application List" />
         <CBSLoanDetails />
         <Box position="fixed" bottom="0" zIndex={10} w="calc(100% - 260px)">
@@ -88,7 +99,7 @@ export const CBSLoanDisburse = () => {
             }`}
           />
         </Box>
-      </LoanListLayout>
+      </RequiredSideBarLayout>
     );
   }
 

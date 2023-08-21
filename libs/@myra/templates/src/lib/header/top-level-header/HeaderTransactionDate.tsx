@@ -55,11 +55,12 @@ export const HeaderTransactionDate = () => {
 
   const { data: endOfDayData, refetch: refetchEndOfDay } = useGetEndOfDayDateDataQuery();
 
-  const { closingDate, hasEodErrors, isHeadOfficeReady } = useMemo(
+  const { closingDate, hasEodErrors, isHeadOfficeReady, isYearEnd } = useMemo(
     () => ({
       closingDate: endOfDayData?.transaction?.endOfDayDate?.value,
       hasEodErrors: endOfDayData?.transaction?.endOfDayDate?.hasErrors,
       isHeadOfficeReady: endOfDayData?.transaction?.endOfDayDate?.headOfficeReady,
+      isYearEnd: endOfDayData?.transaction?.endOfDayDate?.isYearEnd,
     }),
     [endOfDayData]
   );
@@ -106,6 +107,7 @@ export const HeaderTransactionDate = () => {
               _hover={{ backgroundColor: 'secondary.900' }}
               px="s12"
               py="s10"
+              data-testid="topheader-date"
               borderRadius="br1"
             >
               <Text p="s10 s12" fontSize="s3" fontWeight="500" color="gray.0">
@@ -192,6 +194,18 @@ export const HeaderTransactionDate = () => {
                                 Close Day
                               </Button>
                             )}
+                            {isYearEnd && (
+                              <Button
+                                variant="solid"
+                                display="flex"
+                                justifyContent="center"
+                                w="100%"
+                                // onClick={() => router.push(ROUTES.DAY_CLOSE)}
+                                onClick={() => router.push(ROUTES.YEAR_END_CLOSE)}
+                              >
+                                Initiate Year End
+                              </Button>
+                            )}
                           </>
                         )
                       ) : (
@@ -219,6 +233,7 @@ export const HeaderTransactionDate = () => {
                           <Button
                             variant="ghost"
                             shade="neutral"
+                            testid={format(new Date(eod?.eodDate ?? ''), 'dd MMMM')}
                             onClick={() => {
                               if (eod?.status === 'ONGOING') {
                                 return router.push(ROUTES.DAY_CLOSE);
