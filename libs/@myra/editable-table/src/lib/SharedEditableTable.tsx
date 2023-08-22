@@ -447,11 +447,16 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
             borderBottomRadius="br2"
           >
             <Select
-              components={getComponents(searchColumn?.addItemHandler, searchColumn?.addItemLabel)}
+              components={getComponents(
+                searchColumn?.addItemHandler,
+                searchColumn?.addItemLabel,
+                `Search-Select`
+              )}
               placeholder={searchPlaceholder ?? 'Search for items'}
               options={searchColumn?.searchOptions}
               chakraStyles={getSearchBarStyle(!!searchColumn?.addItemHandler)}
               value=""
+              data-testid={searchColumn?.accessorFn}
               filterOption={() => true}
               isLoading={searchColumn?.searchLoading}
               onInputChange={debounce((id) => {
@@ -595,6 +600,7 @@ const EditableTableRow = <T extends RecordWithId & Record<string, EditableValue>
             _hover={{ bg: 'gray.100' }}
             _focus={{ bg: 'background.500' }}
             _focusVisible={{ outline: 'none' }}
+            data-testid={`showMore${index}`}
             onClick={() => {
               setIsExpanded((previous) => !previous);
             }}
@@ -641,7 +647,7 @@ const EditableTableRow = <T extends RecordWithId & Record<string, EditableValue>
             }
             return (
               <Fragment key={column.accessor as string}>
-                <EditableCell column={column} data={data} dispatch={dispatch} />
+                <EditableCell column={column} data={data} dispatch={dispatch} index={index} />
               </Fragment>
             );
           })}
@@ -660,6 +666,7 @@ const EditableTableRow = <T extends RecordWithId & Record<string, EditableValue>
             _focus={{ bg: 'background.500' }}
             _focusVisible={{ outline: 'none' }}
             _hover={{ bg: 'gray.100' }}
+            data-testid={`deleteRow-${index}`}
             onClick={() => {
               dispatch({
                 type: EditableTableActionKind.DELETE,
@@ -749,6 +756,7 @@ const MemoEditableTableRow = React.memo(
 interface EditableCellProps<T extends RecordWithId & Record<string, EditableValue>> {
   column: Column<T>;
   data: T;
+  index?: number;
   dispatch: React.Dispatch<EditableTableAction<T>>;
 }
 
@@ -756,6 +764,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
   column,
   dispatch,
   data,
+  index,
 }: EditableCellProps<T>) => {
   const router = useRouter();
 
@@ -816,6 +825,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
       borderLeft="1px"
       borderLeftColor="border.layout"
       flexGrow={column.cellWidth === 'auto' ? 1 : 0}
+      data-testId={`${column?.accessor?.toString()}-${index}`}
       flexBasis={flexBasisFunc(column)}
       value={
         column.fieldType === 'search'
@@ -1023,7 +1033,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
           //  mt="-1px"
           py="0"
           h="100%"
-          data-testId={`${column?.accessor?.toString()}-${data?._id}`}
+          // data-testId={`${column?.accessor?.toString()}-${index}`}
           type={column.isNumeric ? 'number' : column.isTime ? 'time' : 'text'}
           w="100%"
           px="s8"
