@@ -55,6 +55,15 @@ export const JournalVouchersTable = () => {
 
   const accountListData = accountList?.settings?.chartsOfAccount?.ledgersForJVPosting?.edges;
 
+  const { data: jvLedgersList } = useGetLedgerForJvPostingQuery({
+    pagination: {
+      after: '',
+      first: -1,
+    },
+  });
+
+  const allAccountsList = jvLedgersList?.settings?.chartsOfAccount?.ledgersForJVPosting?.edges;
+
   const redirectEntries = router?.query['entries']
     ? JSON.parse(router.query['entries'] as string)
     : [];
@@ -112,7 +121,7 @@ export const JournalVouchersTable = () => {
             accessor: 'balance',
             header: 'Balance',
             cell: (row) => {
-              const selectedLedger = accountListData?.find(
+              const selectedLedger = allAccountsList?.find(
                 (ledger) =>
                   ledger?.node?.accountCode ===
                   (row?.accountId as unknown as { value: string })?.value
