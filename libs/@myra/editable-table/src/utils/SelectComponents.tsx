@@ -10,10 +10,12 @@ export interface Option {
 
 export const getComponents: (
   addItemHandler?: () => void,
-  addItemLabel?: string
+  addItemLabel?: string,
+  name?: string
 ) => SelectComponentsConfig<Option, boolean, GroupBase<Option>> = (
   addItemHandler,
-  addItemLabel
+  addItemLabel,
+  name
 ) => ({
   Menu: ({ children, ...props }) => (
     <chakraComponents.Menu {...props}>
@@ -42,6 +44,32 @@ export const getComponents: (
       </Box>
     </chakraComponents.Menu>
   ),
+  Control: ({ innerProps, ...props }) => (
+    <chakraComponents.Control
+      {...props}
+      innerProps={
+        {
+          ...innerProps,
+          'data-testid': `${name}`,
+        } as unknown as Record<string, string>
+      }
+    />
+  ),
+  Option: ({ children, ...props }) => (
+    <chakraComponents.Option
+      {...props}
+      data-testid="testID"
+      innerProps={
+        {
+          ...props.innerProps,
+          'data-testid': `${name}-${props?.data?.label?.toString().toLowerCase()}`,
+        } as unknown as Record<string, string>
+      }
+    >
+      {children}
+    </chakraComponents.Option>
+  ),
+
   DropdownIndicator: (props) => (
     <chakraComponents.DropdownIndicator {...props}>
       <Icon as={IoSearch} fontSize="lg" cursor="pointer" />
