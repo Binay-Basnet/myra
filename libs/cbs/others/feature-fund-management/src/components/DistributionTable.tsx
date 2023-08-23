@@ -4,7 +4,6 @@ import { useFormContext } from 'react-hook-form';
 import { GridItem } from '@myra-ui';
 import { Column } from '@myra-ui/editable-table';
 
-import { useGetPreviousYearFundManagementQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -14,36 +13,38 @@ import { CustomFundManagementInput, DistributionTableType } from '../lib/type';
 export const DistributionTable = () => {
   const { watch, setValue } = useFormContext<CustomFundManagementInput>();
 
-  const { data: previousYearData } = useGetPreviousYearFundManagementQuery();
+  // const { data: previousYearData } = useGetPreviousYearFundManagementQuery();
 
   useEffect(() => {
-    if (previousYearData) {
-      const patronageRefundFundAmount =
-        previousYearData?.profitToFundManagement?.previousYear?.find(
-          (fund) => fund?.accountCode === '20.2'
-        )?.amount;
+    // if (previousYearData) {
+    // const patronageRefundFundAmount =
+    //   previousYearData?.profitToFundManagement?.previousYear?.find(
+    //     (fund) => fund?.accountCode === '20.2'
+    //   )?.amount;
 
-      const cooperativePromotionFundAmount =
-        previousYearData?.profitToFundManagement?.previousYear?.find(
-          (fund) => fund?.accountCode === '20.3'
-        )?.amount;
+    // const cooperativePromotionFundAmount =
+    //   previousYearData?.profitToFundManagement?.previousYear?.find(
+    //     (fund) => fund?.accountCode === '20.3'
+    //   )?.amount;
 
-      setValue('distributionTable', [
-        {
-          distribution: '20.2 Patronage Refund Fund',
-          percent: 0,
-          thisYear: 0,
-          lastYear: Number(patronageRefundFundAmount ?? 0),
-        },
-        {
-          distribution: '20.3 Cooperative Promotion Fund',
-          percent: 0,
-          thisYear: 0,
-          lastYear: Number(cooperativePromotionFundAmount ?? 0),
-        },
-      ]);
-    }
-  }, [previousYearData]);
+    setValue('distributionTable', [
+      {
+        distribution: '20.2 Patronage Refund Fund',
+        percent: 0,
+        thisYear: 0,
+        // lastYear: Number(patronageRefundFundAmount ?? 0),
+        lastYear: 0,
+      },
+      {
+        distribution: '20.3 Cooperative Promotion Fund',
+        percent: 0,
+        thisYear: 0,
+        // lastYear: Number(cooperativePromotionFundAmount ?? 0),
+        lastYear: 0,
+      },
+    ]);
+    // }
+  }, []);
 
   const netProfit = watch('netProfit');
 
@@ -75,10 +76,10 @@ export const DistributionTable = () => {
       accessor: 'lastYear',
       header: 'Last Year',
       isNumeric: true,
-      accessorFn: (row) =>
-        previousYearData?.profitToFundManagement?.previousYear?.find(
-          (account) => account?.accountCode === row.distribution?.split(' ')[0]
-        )?.amount ?? 0,
+      // accessorFn: (row) =>
+      //   previousYearData?.profitToFundManagement?.previousYear?.find(
+      //     (account) => account?.accountCode === row.distribution?.split(' ')[0]
+      //   )?.amount ?? 0,
     },
   ];
 
@@ -123,6 +124,7 @@ export const DistributionTable = () => {
         name="distributionTable"
         columns={columns}
         canAddRow={false}
+        canDeleteRow={false}
         hideSN
       />
 

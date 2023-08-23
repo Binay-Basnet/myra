@@ -1,9 +1,54 @@
-query getPreviousYearFundManagement {
+query getCurrentFundAmount {
   profitToFundManagement {
-    previousYear {
-      accountCode
-      amount
-      percent
+    getCurrentFundAmount {
+      amount {
+        amount
+        amountType
+      }
+      coaHead
+      coaHeadName
+    }
+  }
+}
+
+query getFundManagement($id: ID!) {
+  profitToFundManagement {
+    get(id: $id) {
+      record {
+        grossProfit
+        grossProfitCoa
+        staffBonusFund
+        incomeTax
+        generalReserveFund
+        patronageRefundFund
+        cooperativePromotionFund
+        otherFunds {
+          accountCode
+          percent
+        }
+      }
+    }
+  }
+}
+
+query profitToFundManagementList($filter: Filter, $pagination: Pagination) {
+  profitToFundManagement {
+    list(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          fiscalYear
+          grossProfit
+          grossProfitCOA
+          staffBonusFund
+          incomeTax
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
     }
   }
 }
