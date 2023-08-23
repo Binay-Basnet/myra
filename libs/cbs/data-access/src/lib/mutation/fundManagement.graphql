@@ -1,6 +1,6 @@
-mutation addProfitToFundManagementData($data: FundManagementInput!) {
+mutation addProfitToFundManagementData($id: ID, $data: FundManagementInput!) {
   profitToFundManagement {
-    new(data: $data) {
+    new(id: $id, data: $data) {
       recordId
       error {
         ...MutationError

@@ -1,13 +1,22 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { PageHeader, TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useProfitToFundManagementListQuery } from '@coop/cbs/data-access';
-import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import { ROUTES } from '@coop/cbs/utils';
+import {
+  debitCreditConverter,
+  featureCode,
+  getPaginationQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 export const FundManagementList = () => {
   const { t } = useTranslation();
+
+  const router = useRouter();
 
   const { data, isFetching } = useProfitToFundManagementListQuery({
     pagination: getPaginationQuery(),
@@ -27,10 +36,17 @@ export const FundManagementList = () => {
       {
         header: 'Fiscal Year',
         accessorFn: (row) => row?.node?.fiscalYear,
+        meta: {
+          width: 'auto',
+        },
       },
       {
         header: 'Gross Profit',
-        accessorFn: (row) => row?.node?.grossProfit,
+        accessorFn: (row) =>
+          debitCreditConverter(
+            row?.node?.grossProfit?.amount as string,
+            row?.node?.grossProfit?.amountType as string
+          ),
       },
       {
         id: '_actions',
@@ -39,15 +55,14 @@ export const FundManagementList = () => {
           props?.row?.original?.node && (
             <TablePopover
               node={props?.row?.original?.node}
-              items={[]}
-              // items={[
-              //   {
-              //     title: t['transDetailViewDetail'],
-              //     onClick: (row) => {
-              //       router.push(`/transactions/deposit/view?id=${row?.ID}`);
-              //     },
-              //   },
-              // ]}
+              items={[
+                {
+                  title: 'Edit',
+                  onClick: (row) => {
+                    router.push(`${ROUTES.CBS_OTHERS_FUND_MANAGEMENT_EDIT}?id=${row?.id}`);
+                  },
+                },
+              ]}
             />
           ),
         meta: {

@@ -39,8 +39,10 @@ query profitToFundManagementList($filter: Filter, $pagination: Pagination) {
         node {
           id
           fiscalYear
-          grossProfit
-          grossProfitCOA
+          grossProfit {
+            amount
+            amountType
+          }
           staffBonusFund
           incomeTax
         }
@@ -48,6 +50,25 @@ query profitToFundManagementList($filter: Filter, $pagination: Pagination) {
       }
       pageInfo {
         ...Pagination
+      }
+    }
+  }
+}
+
+query getFundManagementFormState($id: ID!) {
+  profitToFundManagement {
+    get(id: $id) {
+      record {
+        staffBonusFund
+        incomeTax
+        generalReserveFund
+        patronageRefundFund
+        cooperativePromotionFund
+        otherFunds {
+          accountCode
+          accountName
+          percent
+        }
       }
     }
   }

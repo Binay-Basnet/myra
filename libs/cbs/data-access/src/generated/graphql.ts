@@ -8258,8 +8258,7 @@ export type FundManagementFilter = {
 
 export type FundManagementInfo = {
   fiscalYear?: Maybe<Scalars['String']>;
-  grossProfit?: Maybe<Scalars['String']>;
-  grossProfitCOA?: Maybe<Scalars['String']>;
+  grossProfit?: Maybe<BalanceValue>;
   id?: Maybe<Scalars['String']>;
   incomeTax?: Maybe<Scalars['Float']>;
   staffBonusFund?: Maybe<Scalars['Float']>;
@@ -15283,12 +15282,12 @@ export type MfCenterEntry = {
 };
 
 export type MfCenterInput = {
-  Documents?: InputMaybe<Array<DocumentInsertInput>>;
   centerCode: Scalars['String'];
   centerName: Scalars['String'];
   coordinatorId: Scalars['String'];
   coordinatorServiceCenter?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
+  documents?: InputMaybe<Array<DocumentInsertInput>>;
   serviceCenterChoice?: InputMaybe<ServiceCenterChoice>;
   serviceCenterIds?: InputMaybe<Array<Scalars['String']>>;
 };
@@ -15331,14 +15330,14 @@ export type MfGroupEntry = {
 };
 
 export type MfGroupInput = {
-  Documents: Array<DocumentInsertInput>;
-  MaxMmebers?: InputMaybe<Scalars['Int']>;
   branchId?: InputMaybe<Scalars['String']>;
   centerId?: InputMaybe<Scalars['String']>;
   coordinatorId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
+  documents?: InputMaybe<Array<DocumentInsertInput>>;
   groupCode?: InputMaybe<Scalars['String']>;
   groupName?: InputMaybe<Scalars['String']>;
+  maxMembers?: InputMaybe<Scalars['Int']>;
   minMembers?: InputMaybe<Scalars['Int']>;
 };
 
@@ -17557,6 +17556,7 @@ export type OrganizationStatisticsInput = {
 
 export type OtherFundDistribution = {
   accountCode?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
   percent?: Maybe<Scalars['Float']>;
 };
 
@@ -22090,6 +22090,12 @@ export type UtilitiesChargesConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type UtilitiesListConnection = {
+  edges?: Maybe<Array<Maybe<UtilititesListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
 export type UtilititesChargesEntry = {
   cashBackAmount?: Maybe<Scalars['String']>;
   cashBackPercent?: Maybe<Scalars['String']>;
@@ -22102,6 +22108,18 @@ export type UtilititesChargesEntry = {
 export type UtilititesChargesListEdges = {
   cursor?: Maybe<Scalars['Cursor']>;
   node?: Maybe<UtilititesChargesEntry>;
+};
+
+export type UtilititesEntry = {
+  id: Scalars['String'];
+  name: Scalars['String'];
+  serviceType: Scalars['String'];
+  slug: Scalars['String'];
+};
+
+export type UtilititesListEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<UtilititesEntry>;
 };
 
 export type UtilityCashBackSetup = {
@@ -22131,9 +22149,15 @@ export type UtilityMutationDeleteCashBackArgs = {
 export type UtilityQuery = {
   listCashBack: UtilitiesChargesConnection;
   listServiceType: ServiceTypeResult;
+  listUtilities: UtilitiesListConnection;
 };
 
 export type UtilityQueryListCashBackArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type UtilityQueryListUtilitiesArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -24149,6 +24173,7 @@ export type ChangeLedgerParentMutation = {
 };
 
 export type AddProfitToFundManagementDataMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
   data: FundManagementInput;
 }>;
 
@@ -31510,13 +31535,35 @@ export type ProfitToFundManagementListQuery = {
         node?: {
           id?: string | null;
           fiscalYear?: string | null;
-          grossProfit?: string | null;
-          grossProfitCOA?: string | null;
           staffBonusFund?: number | null;
           incomeTax?: number | null;
+          grossProfit?: { amount?: string | null; amountType?: BalanceType | null } | null;
         } | null;
       } | null> | null;
       pageInfo?: PaginationFragment | null;
+    } | null;
+  };
+};
+
+export type GetFundManagementFormStateQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetFundManagementFormStateQuery = {
+  profitToFundManagement: {
+    get?: {
+      record?: {
+        staffBonusFund?: number | null;
+        incomeTax?: number | null;
+        generalReserveFund?: number | null;
+        patronageRefundFund?: number | null;
+        cooperativePromotionFund?: number | null;
+        otherFunds?: Array<{
+          accountCode?: string | null;
+          accountName?: string | null;
+          percent?: number | null;
+        } | null> | null;
+      } | null;
     } | null;
   };
 };
@@ -46550,9 +46597,9 @@ export const useChangeLedgerParentMutation = <TError = unknown, TContext = unkno
     options
   );
 export const AddProfitToFundManagementDataDocument = `
-    mutation addProfitToFundManagementData($data: FundManagementInput!) {
+    mutation addProfitToFundManagementData($id: ID, $data: FundManagementInput!) {
   profitToFundManagement {
-    new(data: $data) {
+    new(id: $id, data: $data) {
       recordId
       error {
         ...MutationError
@@ -56737,8 +56784,10 @@ export const ProfitToFundManagementListDocument = `
         node {
           id
           fiscalYear
-          grossProfit
-          grossProfitCOA
+          grossProfit {
+            amount
+            amountType
+          }
           staffBonusFund
           incomeTax
         }
@@ -56764,6 +56813,40 @@ export const useProfitToFundManagementListQuery = <
       : ['profitToFundManagementList', variables],
     useAxios<ProfitToFundManagementListQuery, ProfitToFundManagementListQueryVariables>(
       ProfitToFundManagementListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetFundManagementFormStateDocument = `
+    query getFundManagementFormState($id: ID!) {
+  profitToFundManagement {
+    get(id: $id) {
+      record {
+        staffBonusFund
+        incomeTax
+        generalReserveFund
+        patronageRefundFund
+        cooperativePromotionFund
+        otherFunds {
+          accountCode
+          accountName
+          percent
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetFundManagementFormStateQuery = <
+  TData = GetFundManagementFormStateQuery,
+  TError = unknown
+>(
+  variables: GetFundManagementFormStateQueryVariables,
+  options?: UseQueryOptions<GetFundManagementFormStateQuery, TError, TData>
+) =>
+  useQuery<GetFundManagementFormStateQuery, TError, TData>(
+    ['getFundManagementFormState', variables],
+    useAxios<GetFundManagementFormStateQuery, GetFundManagementFormStateQueryVariables>(
+      GetFundManagementFormStateDocument
     ).bind(null, variables),
     options
   );

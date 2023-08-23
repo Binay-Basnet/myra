@@ -1,5 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
+import { useRouter } from 'next/router';
 
 import { GridItem } from '@myra-ui';
 import { Column } from '@myra-ui/editable-table';
@@ -12,6 +14,8 @@ import { CustomFundManagementInput, DistributionTableType } from '../lib/type';
 
 export const DistributionTable = () => {
   const { watch, setValue } = useFormContext<CustomFundManagementInput>();
+
+  const router = useRouter();
 
   // const { data: previousYearData } = useGetPreviousYearFundManagementQuery();
 
@@ -27,24 +31,26 @@ export const DistributionTable = () => {
     //     (fund) => fund?.accountCode === '20.3'
     //   )?.amount;
 
-    setValue('distributionTable', [
-      {
-        distribution: '20.2 Patronage Refund Fund',
-        percent: 0,
-        thisYear: 0,
-        // lastYear: Number(patronageRefundFundAmount ?? 0),
-        lastYear: 0,
-      },
-      {
-        distribution: '20.3 Cooperative Promotion Fund',
-        percent: 0,
-        thisYear: 0,
-        // lastYear: Number(cooperativePromotionFundAmount ?? 0),
-        lastYear: 0,
-      },
-    ]);
+    if (!router?.asPath?.includes('/edit')) {
+      setValue('distributionTable', [
+        {
+          distribution: '20.2 Patronage Refund Fund',
+          percent: 0,
+          thisYear: 0,
+          // lastYear: Number(patronageRefundFundAmount ?? 0),
+          lastYear: 0,
+        },
+        {
+          distribution: '20.3 Cooperative Promotion Fund',
+          percent: 0,
+          thisYear: 0,
+          // lastYear: Number(cooperativePromotionFundAmount ?? 0),
+          lastYear: 0,
+        },
+      ]);
+    }
     // }
-  }, []);
+  }, [router?.asPath]);
 
   const netProfit = watch('netProfit');
 
@@ -52,7 +58,7 @@ export const DistributionTable = () => {
 
   const remainingProfit =
     netProfit && generalReserveFund
-      ? Number(netProfit ?? 0) - Number(generalReserveFund[0].thisYear)
+      ? Number(netProfit ?? 0) - Number(generalReserveFund?.[0]?.thisYear)
       : 0;
 
   const columns: Column<DistributionTableType>[] = [
@@ -70,7 +76,9 @@ export const DistributionTable = () => {
       accessor: 'thisYear',
       header: 'This Year',
       isNumeric: true,
-      accessorFn: (row) => ((Number(row.percent) / 100) * remainingProfit).toFixed(2),
+      getDisabled: () => true,
+      // accessorFn: (row) => ((Number(row.percent) / 100) * remainingProfit).toFixed(2),
+      // cell: (props) => ((Number(props.percent) / 100) * remainingProfit).toFixed(2),
     },
     {
       accessor: 'lastYear',
@@ -84,6 +92,20 @@ export const DistributionTable = () => {
   ];
 
   const distributionTable = watch('distributionTable');
+
+  useDeepCompareEffect(() => {
+    if (distributionTable?.length) {
+      setValue(
+        'distributionTable',
+        distributionTable?.map((fund) => ({
+          distribution: fund?.distribution,
+          percent: fund?.percent,
+          thisYear: Number(((Number(fund?.percent) / 100) * remainingProfit || 0).toFixed(2)),
+          lastYear: 0,
+        }))
+      );
+    }
+  }, [distributionTable, remainingProfit]);
 
   const distributionTableSummary: TableOverviewColumnType[] = useMemo(
     () => [

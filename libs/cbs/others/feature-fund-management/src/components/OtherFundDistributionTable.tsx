@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 
 import { GridItem } from '@myra-ui';
 import { Column } from '@myra-ui/editable-table';
@@ -12,7 +13,7 @@ import { TableOverview, TableOverviewColumnType } from './TableOverview';
 import { CustomFundManagementInput, OtherFundDistributionTableType } from '../lib/type';
 
 export const OtherFundDistributionTable = () => {
-  const { watch } = useFormContext<CustomFundManagementInput>();
+  const { watch, setValue } = useFormContext<CustomFundManagementInput>();
 
   const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
@@ -89,7 +90,8 @@ export const OtherFundDistributionTable = () => {
       accessor: 'thisYear',
       header: 'This Year',
       isNumeric: true,
-      accessorFn: (row) => ((Number(row.percent) / 100) * remainingProfit).toFixed(2),
+      getDisabled: () => true,
+      // accessorFn: (row) => ((Number(row.percent) / 100) * remainingProfit).toFixed(2),
     },
     {
       accessor: 'lastYear',
@@ -103,6 +105,20 @@ export const OtherFundDistributionTable = () => {
   ];
 
   const otherFunds = watch('otherFunds');
+
+  useDeepCompareEffect(() => {
+    if (distributionTable?.length) {
+      setValue(
+        'otherFunds',
+        otherFunds?.map((fund) => ({
+          accountCode: fund?.accountCode,
+          percent: fund?.percent,
+          thisYear: Number(((Number(fund?.percent) / 100) * remainingProfit || 0).toFixed(2)),
+          lastYear: 0,
+        }))
+      );
+    }
+  }, [otherFunds, remainingProfit]);
 
   const otherFundsSummary: TableOverviewColumnType[] = useMemo(
     () => [

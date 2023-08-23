@@ -113,6 +113,7 @@ export const ROUTES = {
   CBS_REPORT_SAVED: '/reports/saved',
 
   CBS_OTHERS_FUND_MANAGEMENT_ADD: '/cbs/others/fund-management/add',
+  CBS_OTHERS_FUND_MANAGEMENT_EDIT: '/cbs/others/fund-management/edit',
   CBS_OTHERS_SHARE_DIVIDEND_POSTING_LIST: '/cbs/others/share-dividend-posting/list',
   CBS_OTHERS_FUND_MANAGEMENT_LIST: '/cbs/others/fund-management/list',
   CBS_OTHERS_SHARE_DIVIDEND_POSTING_ADD: '/cbs/others/share-dividend-posting/add',
