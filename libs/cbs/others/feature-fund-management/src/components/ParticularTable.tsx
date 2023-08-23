@@ -4,7 +4,6 @@ import { useFormContext } from 'react-hook-form';
 import { GridItem } from '@myra-ui';
 import { Column } from '@myra-ui/editable-table';
 
-import { useGetPreviousYearFundManagementQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -14,26 +13,29 @@ import { CustomFundManagementInput, ParticularTableType } from '../lib/type';
 export const ParticularTable = () => {
   const { watch, setValue } = useFormContext<CustomFundManagementInput>();
 
-  const { data: previousYearData } = useGetPreviousYearFundManagementQuery();
+  // const { data: previousYearData } = useGetPreviousYearFundManagementQuery();
+
+  // const { data } = useGetCurrentFundAmountQuery();
 
   const netProfit = watch('netProfit');
 
   useEffect(() => {
-    if (previousYearData) {
-      const generalReserveFundAmount = previousYearData?.profitToFundManagement?.previousYear?.find(
-        (fund) => fund?.accountCode === '20.1'
-      )?.amount;
+    // if (previousYearData) {
+    //   const generalReserveFundAmount = previousYearData?.profitToFundManagement?.previousYear?.find(
+    //     (fund) => fund?.accountCode === '20.1'
+    //   )?.amount;
 
-      setValue('generalReserveFund', [
-        {
-          particular: '20.1 General Reserve Fund',
-          percent: 0,
-          thisYear: 0,
-          lastYear: Number(generalReserveFundAmount ?? 0),
-        },
-      ]);
-    }
-  }, [previousYearData]);
+    setValue('generalReserveFund', [
+      {
+        particular: '20.1 General Reserve Fund',
+        percent: 0,
+        thisYear: 0,
+        // lastYear: Number(generalReserveFundAmount ?? 0),
+        lastYear: 0,
+      },
+    ]);
+    // }
+  }, []);
 
   const columns: Column<ParticularTableType>[] = [
     {
@@ -50,16 +52,16 @@ export const ParticularTable = () => {
       accessor: 'thisYear',
       header: 'This Year',
       isNumeric: true,
-      accessorFn: (row) => ((Number(row.percent) / 100) * Number(netProfit)).toFixed(2),
+      accessorFn: (row) => ((Number(row.percent) / 100) * Number(netProfit) || 0).toFixed(2),
     },
     {
       accessor: 'lastYear',
       header: 'Last Year',
       isNumeric: true,
-      accessorFn: () =>
-        previousYearData?.profitToFundManagement?.previousYear?.find(
-          (account) => account?.accountCode === '20.1'
-        )?.amount ?? 0,
+      // accessorFn: () =>
+      //   previousYearData?.profitToFundManagement?.previousYear?.find(
+      //     (account) => account?.accountCode === '20.1'
+      //   )?.amount ?? 0,
     },
   ];
 

@@ -258,6 +258,33 @@ export type AccountListFilter = {
   productID?: InputMaybe<Scalars['ID']>;
 };
 
+export type AccountLockStatusInput = {
+  accountType?: InputMaybe<Array<Scalars['String']>>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  period: Scalars['Localized'];
+};
+
+export type AccountLockStatusResult = {
+  data?: Maybe<Array<Maybe<AccountLockStatusResultData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type AccountLockStatusResultData = {
+  accountId?: Maybe<Scalars['String']>;
+  accountLockDateFrom?: Maybe<Scalars['Localized']>;
+  accountLockDateTo?: Maybe<Scalars['Localized']>;
+  accountName?: Maybe<Scalars['String']>;
+  branchCode?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
+  isAutoReleaseOnToDate?: Maybe<Scalars['Boolean']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  mobileNumber?: Maybe<Scalars['String']>;
+  reasonForLock?: Maybe<Scalars['String']>;
+  remarks?: Maybe<Scalars['String']>;
+};
+
 export const AccountObjState = {
   Active: 'ACTIVE',
   Inactive: 'INACTIVE',
@@ -906,6 +933,11 @@ export type AccruedInterestFilter = {
   accountId: Scalars['String'];
   memberId: Scalars['String'];
   period: LocalizedDateFilter;
+};
+
+export type ActivationInput = {
+  activate: Scalars['Boolean'];
+  id: Scalars['ID'];
 };
 
 export type ActiveInactiveMemberReport = {
@@ -3304,9 +3336,16 @@ export type CoaView = {
 export type CashBack = {
   cashBackAmount?: InputMaybe<Scalars['String']>;
   cashBackPercent?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
   maxRange: Scalars['String'];
   minRange: Scalars['String'];
   serviceCharge?: InputMaybe<Scalars['String']>;
+};
+
+export type CashBackDeleteResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<UtilityQuery>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type CashBackInput = {
@@ -4611,6 +4650,13 @@ export const CriteriaSection = {
 } as const;
 
 export type CriteriaSection = typeof CriteriaSection[keyof typeof CriteriaSection];
+export type CurrentFundResult = {
+  amount?: Maybe<BalanceValue>;
+  coaHead?: Maybe<Scalars['String']>;
+  coaHeadName?: Maybe<Scalars['String']>;
+  error?: Maybe<QueryError>;
+};
+
 export type CustomFormListQueryResult = {
   data?: Maybe<Array<Maybe<FormElement>>>;
   error?: Maybe<QueryError>;
@@ -4767,6 +4813,11 @@ export type DayBookReportFilter = {
 export type DayBookReportResult = {
   data?: Maybe<DayBookReportData>;
   error?: Maybe<QueryError>;
+};
+
+export type DeactivateServiceResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type Declaration = Base & {
@@ -5808,6 +5859,7 @@ export type DepositRecord = {
 export type DepositReport = {
   ETDSReport: EtdsReportResult;
   accountClosingReport?: Maybe<AccountClosingReportResult>;
+  accountLockStatusReport: AccountLockStatusResult;
   accountOpeningReport?: Maybe<AccountOpeningReportResult>;
   closedSavingAccountReport?: Maybe<ClosedSavingAccountResult>;
   dormantAccountReport?: Maybe<DormantAccountReportResult>;
@@ -5827,6 +5879,10 @@ export type DepositReportEtdsReportArgs = {
 
 export type DepositReportAccountClosingReportArgs = {
   data?: InputMaybe<AccountClosingReportInput>;
+};
+
+export type DepositReportAccountLockStatusReportArgs = {
+  data: AccountLockStatusInput;
 };
 
 export type DepositReportAccountOpeningReportArgs = {
@@ -6516,6 +6572,10 @@ export type EbankingReportResult = {
 
 export type EbankingSettingsMutation = {
   utility?: Maybe<UtilityMutation>;
+};
+
+export type EbankingSettingsQuery = {
+  utility?: Maybe<UtilityQuery>;
 };
 
 export type EbankingTransaction = {
@@ -8208,7 +8268,6 @@ export type FundManagementInfo = {
 export type FundManagementInput = {
   cooperativePromotionFund?: InputMaybe<Scalars['Float']>;
   generalReserveFund?: InputMaybe<Scalars['Float']>;
-  grossProfitCoa?: InputMaybe<Scalars['String']>;
   incomeTax?: InputMaybe<Scalars['Float']>;
   otherFunds?: InputMaybe<Array<InputMaybe<OtherFundDistributionInput>>>;
   patronageRefundFund?: InputMaybe<Scalars['Float']>;
@@ -8226,7 +8285,7 @@ export type FundManagementMutationNewArgs = {
 
 export type FundManagementQuery = {
   get?: Maybe<FundManagementQueryResult>;
-  getCurrentFundAmount?: Maybe<QueryResult>;
+  getCurrentFundAmount?: Maybe<CurrentFundResult>;
   list?: Maybe<FundManagementConnection>;
 };
 
@@ -18748,8 +18807,10 @@ export type RestrictTransactionInput = {
   effectiveSince: Scalars['Localized'];
   effectiveTill: Scalars['Localized'];
   ledgerId?: InputMaybe<Scalars['String']>;
+  lockReason?: InputMaybe<Scalars['String']>;
   memberId?: InputMaybe<Scalars['String']>;
   txnType: CoaTypeOfTransaction;
+  unlockReason?: InputMaybe<Scalars['String']>;
 };
 
 export type RestrictTransactionListEdge = {
@@ -19867,11 +19928,22 @@ export type ServiceType = {
   serviceName?: InputMaybe<Scalars['String']>;
 };
 
+export type ServiceTypeData = {
+  id: Scalars['String'];
+  name: Scalars['String'];
+  slug: Scalars['String'];
+};
+
 export type ServiceTypeFormState = {
   amount?: Maybe<Scalars['Amount']>;
   ledgerName?: Maybe<Scalars['String']>;
   percentage?: Maybe<Scalars['Float']>;
   serviceName?: Maybe<Scalars['String']>;
+};
+
+export type ServiceTypeResult = {
+  data?: Maybe<Array<Maybe<ServiceTypeData>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type SettingAddTagToLedgerResult = {
@@ -19966,6 +20038,7 @@ export type SettingsQuery = {
   allRoles?: Maybe<Array<Maybe<RoleInfo>>>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
   declaration: DeclarationQuery;
+  ebanking?: Maybe<EbankingSettingsQuery>;
   form?: Maybe<FormSettingQuery>;
   general?: Maybe<GeneralSettingsQuery>;
   getPrintCount: Scalars['Int'];
@@ -22011,6 +22084,26 @@ export const UserType = {
 } as const;
 
 export type UserType = typeof UserType[keyof typeof UserType];
+export type UtilitiesChargesConnection = {
+  edges?: Maybe<Array<Maybe<UtilititesChargesListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type UtilititesChargesEntry = {
+  cashBackAmount?: Maybe<Scalars['String']>;
+  cashBackPercent?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  maxRange: Scalars['String'];
+  minRange: Scalars['String'];
+  serviceCharge?: Maybe<Scalars['String']>;
+};
+
+export type UtilititesChargesListEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<UtilititesChargesEntry>;
+};
+
 export type UtilityCashBackSetup = {
   cashBackCoaHead: Scalars['String'];
   serviceChargeCoaHead: Scalars['String'];
@@ -22019,10 +22112,30 @@ export type UtilityCashBackSetup = {
 
 export type UtilityMutation = {
   addCashBack: CashBackResult;
+  deactivateService: DeactivateServiceResult;
+  deleteCashBack: CashBackDeleteResult;
 };
 
 export type UtilityMutationAddCashBackArgs = {
   input: CashBackInput;
+};
+
+export type UtilityMutationDeactivateServiceArgs = {
+  input: ActivationInput;
+};
+
+export type UtilityMutationDeleteCashBackArgs = {
+  id: Scalars['ID'];
+};
+
+export type UtilityQuery = {
+  listCashBack: UtilitiesChargesConnection;
+  listServiceType: ServiceTypeResult;
+};
+
+export type UtilityQueryListCashBackArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type ValidationError = {
@@ -31346,6 +31459,64 @@ export type GetDashboardInfoQuery = {
           totalBranch?: number | null;
         } | null;
       } | null;
+    } | null;
+  };
+};
+
+export type GetCurrentFundAmountQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCurrentFundAmountQuery = {
+  profitToFundManagement: {
+    getCurrentFundAmount?: {
+      coaHead?: string | null;
+      coaHeadName?: string | null;
+      amount?: { amount?: string | null; amountType?: BalanceType | null } | null;
+    } | null;
+  };
+};
+
+export type GetFundManagementQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetFundManagementQuery = {
+  profitToFundManagement: {
+    get?: {
+      record?: {
+        grossProfit?: string | null;
+        grossProfitCoa?: string | null;
+        staffBonusFund?: number | null;
+        incomeTax?: number | null;
+        generalReserveFund?: number | null;
+        patronageRefundFund?: number | null;
+        cooperativePromotionFund?: number | null;
+        otherFunds?: Array<{ accountCode?: string | null; percent?: number | null } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type ProfitToFundManagementListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type ProfitToFundManagementListQuery = {
+  profitToFundManagement: {
+    list?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor?: string | null;
+        node?: {
+          id?: string | null;
+          fiscalYear?: string | null;
+          grossProfit?: string | null;
+          grossProfitCOA?: string | null;
+          staffBonusFund?: number | null;
+          incomeTax?: number | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: PaginationFragment | null;
     } | null;
   };
 };
@@ -56498,6 +56669,102 @@ export const useGetDashboardInfoQuery = <TData = GetDashboardInfoQuery, TError =
       null,
       variables
     ),
+    options
+  );
+export const GetCurrentFundAmountDocument = `
+    query getCurrentFundAmount {
+  profitToFundManagement {
+    getCurrentFundAmount {
+      amount {
+        amount
+        amountType
+      }
+      coaHead
+      coaHeadName
+    }
+  }
+}
+    `;
+export const useGetCurrentFundAmountQuery = <TData = GetCurrentFundAmountQuery, TError = unknown>(
+  variables?: GetCurrentFundAmountQueryVariables,
+  options?: UseQueryOptions<GetCurrentFundAmountQuery, TError, TData>
+) =>
+  useQuery<GetCurrentFundAmountQuery, TError, TData>(
+    variables === undefined ? ['getCurrentFundAmount'] : ['getCurrentFundAmount', variables],
+    useAxios<GetCurrentFundAmountQuery, GetCurrentFundAmountQueryVariables>(
+      GetCurrentFundAmountDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetFundManagementDocument = `
+    query getFundManagement($id: ID!) {
+  profitToFundManagement {
+    get(id: $id) {
+      record {
+        grossProfit
+        grossProfitCoa
+        staffBonusFund
+        incomeTax
+        generalReserveFund
+        patronageRefundFund
+        cooperativePromotionFund
+        otherFunds {
+          accountCode
+          percent
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetFundManagementQuery = <TData = GetFundManagementQuery, TError = unknown>(
+  variables: GetFundManagementQueryVariables,
+  options?: UseQueryOptions<GetFundManagementQuery, TError, TData>
+) =>
+  useQuery<GetFundManagementQuery, TError, TData>(
+    ['getFundManagement', variables],
+    useAxios<GetFundManagementQuery, GetFundManagementQueryVariables>(
+      GetFundManagementDocument
+    ).bind(null, variables),
+    options
+  );
+export const ProfitToFundManagementListDocument = `
+    query profitToFundManagementList($filter: Filter, $pagination: Pagination) {
+  profitToFundManagement {
+    list(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          fiscalYear
+          grossProfit
+          grossProfitCOA
+          staffBonusFund
+          incomeTax
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useProfitToFundManagementListQuery = <
+  TData = ProfitToFundManagementListQuery,
+  TError = unknown
+>(
+  variables?: ProfitToFundManagementListQueryVariables,
+  options?: UseQueryOptions<ProfitToFundManagementListQuery, TError, TData>
+) =>
+  useQuery<ProfitToFundManagementListQuery, TError, TData>(
+    variables === undefined
+      ? ['profitToFundManagementList']
+      : ['profitToFundManagementList', variables],
+    useAxios<ProfitToFundManagementListQuery, ProfitToFundManagementListQueryVariables>(
+      ProfitToFundManagementListDocument
+    ).bind(null, variables),
     options
   );
 export const GetEmployeeListDocument = `
