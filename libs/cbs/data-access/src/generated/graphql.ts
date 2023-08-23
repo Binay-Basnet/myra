@@ -3536,7 +3536,7 @@ export const CashValue = {
 
 export type CashValue = typeof CashValue[keyof typeof CashValue];
 export type CenterOverview = {
-  centerCoordinator?: Maybe<Member>;
+  centerCoordinator?: Maybe<MyraUser>;
   centerId?: Maybe<Scalars['String']>;
   centerName?: Maybe<Scalars['String']>;
   groupList?: Maybe<Array<Maybe<MfGroupOverview>>>;
@@ -4695,8 +4695,12 @@ export type DataMigration = {
   allLoanSchedule?: Maybe<Scalars['String']>;
   dumpAccountInterest?: Maybe<Scalars['String']>;
   dumpProductCharges?: Maybe<Scalars['String']>;
-  reseedRepayment?: Maybe<Scalars['String']>;
+  reseedRepayment?: Maybe<MutationResult>;
   updateSavingEndDate?: Maybe<Scalars['String']>;
+};
+
+export type DataMigrationReseedRepaymentArgs = {
+  accountId?: InputMaybe<Scalars['String']>;
 };
 
 export type DateEntry = {
@@ -8166,6 +8170,17 @@ export const FrequencyTenure = {
 } as const;
 
 export type FrequencyTenure = typeof FrequencyTenure[keyof typeof FrequencyTenure];
+export type FundManagement = {
+  cooperativePromotionFund?: Maybe<Scalars['Float']>;
+  generalReserveFund?: Maybe<Scalars['Float']>;
+  grossProfit?: Maybe<Scalars['String']>;
+  grossProfitCoa?: Maybe<Scalars['String']>;
+  incomeTax?: Maybe<Scalars['Float']>;
+  otherFunds?: Maybe<Array<Maybe<OtherFundDistribution>>>;
+  patronageRefundFund?: Maybe<Scalars['Float']>;
+  staffBonusFund?: Maybe<Scalars['Float']>;
+};
+
 export type FundManagementConnection = {
   edges?: Maybe<Array<Maybe<FundManagementEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -8182,15 +8197,20 @@ export type FundManagementFilter = {
 };
 
 export type FundManagementInfo = {
+  fiscalYear?: Maybe<Scalars['String']>;
+  grossProfit?: Maybe<Scalars['String']>;
+  grossProfitCOA?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  incomeTax?: Maybe<Scalars['Float']>;
+  staffBonusFund?: Maybe<Scalars['Float']>;
 };
 
 export type FundManagementInput = {
   cooperativePromotionFund?: InputMaybe<Scalars['Float']>;
   generalReserveFund?: InputMaybe<Scalars['Float']>;
-  grossProfit?: InputMaybe<Scalars['String']>;
+  grossProfitCoa?: InputMaybe<Scalars['String']>;
   incomeTax?: InputMaybe<Scalars['Float']>;
-  otherFunds?: InputMaybe<Array<InputMaybe<OtherFundDistribution>>>;
+  otherFunds?: InputMaybe<Array<InputMaybe<OtherFundDistributionInput>>>;
   patronageRefundFund?: InputMaybe<Scalars['Float']>;
   staffBonusFund?: InputMaybe<Scalars['Float']>;
 };
@@ -8201,16 +8221,27 @@ export type FundManagementMutation = {
 
 export type FundManagementMutationNewArgs = {
   data?: InputMaybe<FundManagementInput>;
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type FundManagementQuery = {
+  get?: Maybe<FundManagementQueryResult>;
+  getCurrentFundAmount?: Maybe<QueryResult>;
   list?: Maybe<FundManagementConnection>;
-  previousYear?: Maybe<Array<Maybe<PreviousYearFundDistribution>>>;
+};
+
+export type FundManagementQueryGetArgs = {
+  id: Scalars['ID'];
 };
 
 export type FundManagementQueryListArgs = {
-  filter?: InputMaybe<FundManagementFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type FundManagementQueryResult = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<FundManagement>;
 };
 
 export type FundManagementResult = {
@@ -8856,7 +8887,6 @@ export type HrEmployeeAttendanceQueryListDetailsByDayArgs = {
 };
 
 export type HrEmployeeAttendanceQueryListDetailsOfDayArgs = {
-  date?: InputMaybe<Scalars['Localized']>;
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -15194,12 +15224,14 @@ export type MfCenterEntry = {
 };
 
 export type MfCenterInput = {
-  Documents: Array<DocumentInsertInput>;
-  branchIds: Array<Scalars['String']>;
+  Documents?: InputMaybe<Array<DocumentInsertInput>>;
   centerCode: Scalars['String'];
   centerName: Scalars['String'];
   coordinatorId: Scalars['String'];
+  coordinatorServiceCenter?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
+  serviceCenterChoice?: InputMaybe<ServiceCenterChoice>;
+  serviceCenterIds?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type MfCenterListConnection = {
@@ -16872,6 +16904,7 @@ export type MyCoopInfo = {
 };
 
 export type MyraUser = {
+  address?: Maybe<Address>;
   branch?: Maybe<Branch>;
   contactNo?: Maybe<Scalars['String']>;
   createdAt: Scalars['Localized'];
@@ -17464,6 +17497,11 @@ export type OrganizationStatisticsInput = {
 };
 
 export type OtherFundDistribution = {
+  accountCode?: Maybe<Scalars['String']>;
+  percent?: Maybe<Scalars['Float']>;
+};
+
+export type OtherFundDistributionInput = {
   accountCode?: InputMaybe<Scalars['String']>;
   percent?: InputMaybe<Scalars['Float']>;
 };
@@ -17929,12 +17967,6 @@ export type PresignedUrlOutput = {
   putUrl?: Maybe<Scalars['String']>;
 };
 
-export type PreviousYearFundDistribution = {
-  accountCode?: Maybe<Scalars['String']>;
-  amount?: Maybe<Scalars['String']>;
-  percent?: Maybe<Scalars['Float']>;
-};
-
 export type PrintPreference = {
   blockOne?: Maybe<SlipElementMeasurement>;
   blockThree?: Maybe<SlipElementMeasurement>;
@@ -18250,6 +18282,11 @@ export type Query = {
 };
 
 export type QueryError = AuthorizationError | BadRequestError | NotFoundError | ServerError;
+
+export type QueryResult = {
+  error?: Maybe<QueryError>;
+  result?: Maybe<Scalars['Any']>;
+};
 
 export const Resource = {
   AccountingAccounting: 'ACCOUNTING_ACCOUNTING',
@@ -19785,6 +19822,13 @@ export type ServiceCenterCashTransferView = {
   userProfileUrl?: Maybe<Scalars['String']>;
 };
 
+export const ServiceCenterChoice = {
+  All: 'ALL',
+  Current: 'CURRENT',
+  Selected: 'SELECTED',
+} as const;
+
+export type ServiceCenterChoice = typeof ServiceCenterChoice[keyof typeof ServiceCenterChoice];
 export type ServiceCenterTransactionFilter = {
   transactionId?: InputMaybe<Scalars['String']>;
 };
@@ -31306,18 +31350,6 @@ export type GetDashboardInfoQuery = {
   };
 };
 
-export type GetPreviousYearFundManagementQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetPreviousYearFundManagementQuery = {
-  profitToFundManagement: {
-    previousYear?: Array<{
-      accountCode?: string | null;
-      amount?: string | null;
-      percent?: number | null;
-    } | null> | null;
-  };
-};
-
 export type GetEmployeeListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -31617,7 +31649,6 @@ export type GetEmployeeAtendanceListQuery = {
 };
 
 export type GetListDetailsOfDayQueryVariables = Exact<{
-  date?: InputMaybe<Scalars['Localized']>;
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -56469,33 +56500,6 @@ export const useGetDashboardInfoQuery = <TData = GetDashboardInfoQuery, TError =
     ),
     options
   );
-export const GetPreviousYearFundManagementDocument = `
-    query getPreviousYearFundManagement {
-  profitToFundManagement {
-    previousYear {
-      accountCode
-      amount
-      percent
-    }
-  }
-}
-    `;
-export const useGetPreviousYearFundManagementQuery = <
-  TData = GetPreviousYearFundManagementQuery,
-  TError = unknown
->(
-  variables?: GetPreviousYearFundManagementQueryVariables,
-  options?: UseQueryOptions<GetPreviousYearFundManagementQuery, TError, TData>
-) =>
-  useQuery<GetPreviousYearFundManagementQuery, TError, TData>(
-    variables === undefined
-      ? ['getPreviousYearFundManagement']
-      : ['getPreviousYearFundManagement', variables],
-    useAxios<GetPreviousYearFundManagementQuery, GetPreviousYearFundManagementQueryVariables>(
-      GetPreviousYearFundManagementDocument
-    ).bind(null, variables),
-    options
-  );
 export const GetEmployeeListDocument = `
     query getEmployeeList($filter: Filter, $pagination: Pagination) {
   hr {
@@ -56876,11 +56880,11 @@ export const useGetEmployeeAtendanceListQuery = <
     options
   );
 export const GetListDetailsOfDayDocument = `
-    query getListDetailsOfDay($date: Localized, $filter: Filter, $pagination: Pagination) {
+    query getListDetailsOfDay($filter: Filter, $pagination: Pagination) {
   hr {
     employee {
       hrEmployeeAttendanceQuery {
-        listDetailsOfDay(date: $date, filter: $filter, pagination: $pagination) {
+        listDetailsOfDay(filter: $filter, pagination: $pagination) {
           totalCount
           edges {
             node {

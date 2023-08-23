@@ -269,11 +269,11 @@ query getEmployeeAtendanceList($filter: Filter, $pagination: Pagination) {
   }
 }
 
-query getListDetailsOfDay($date: Localized, $filter: Filter, $pagination: Pagination) {
+query getListDetailsOfDay($filter: Filter, $pagination: Pagination) {
   hr {
     employee {
       hrEmployeeAttendanceQuery {
-        listDetailsOfDay(date: $date, filter: $filter, pagination: $pagination) {
+        listDetailsOfDay(filter: $filter, pagination: $pagination) {
           totalCount
           edges {
             node {

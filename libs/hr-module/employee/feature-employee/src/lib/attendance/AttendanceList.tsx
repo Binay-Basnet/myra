@@ -59,7 +59,7 @@ export const AttendanceList = () => {
         }}
         rowOnClick={(row) =>
           router?.push(
-            `${ROUTES?.HRMODULE_ATTENDENCE_DETAILS}?local=${row?.node?.day?.local}&&en=${row?.node?.day?.en}&&np=${row?.node?.day?.np}&&present=${row?.node?.present}&&absent=${row?.node?.absent}`
+            `${ROUTES?.HRMODULE_ATTENDENCE_DETAILS}?en=${row?.node?.day?.en}&&present=${row?.node?.present}&&absent=${row?.node?.absent}`
           )
         }
       />
