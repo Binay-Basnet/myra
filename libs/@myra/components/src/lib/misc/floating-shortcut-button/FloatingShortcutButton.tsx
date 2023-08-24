@@ -30,40 +30,21 @@ interface WhatsNewModalProps {
 const whatsNewData = {
   features: {
     title: 'New Features',
-    data: [
-      'FD template enhancement.',
-      'Service center added in the loan list page.',
-      'Loan repayment cache recalculate.',
-      'Balance certificate title change as per member type “To Chairperson” , “To <Individual Member name>” ',
-      'e-Banking saving account statement report with startDate and end Date  selection. ( excel download).',
-      'FD template enhancement (text as per tenure).',
-      'Remove role for a user.',
-      'Installment Begin Date auto calculation based on period/frequency. ',
-      'Teller wise report.',
-    ],
+    data: [],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'In success card print, heading has been added in deposit, withdraw, share purchase and return.',
-      'Show Balance of particular ledger added in the journal voucher.',
-      'interest, tax posting particular should be generated.',
-      'Daily book report (80.1.1+80.1.2 duita show and total is opening).',
-      'Charkhata search of coa head.',
-      'Charkhata 1 day filter txn not included issue fixed.',
-      'Charkhata opening balance issue fixed.',
-      'Prevent multi revert of JV.',
-      'Adjusted transaction reflection in Adjustment Fiscal TB report not proper (check non zero issue in adjustment true, for other reverify with MT)',
-      'when branch removed for a user, it is still shown in the list of popup.',
-      'Regular Savings Installment to be updated by head teller.',
-      'Don’t revert txn except JV (only allow JV, Transaction Revert and Year End are allowed).',
-      'Saving and loan products - prefix counter not increasing issue fixed.',
-      'Day book report - print button not activated when their is no trans. Fixed.',
-      'Is regular freq. check box not selected after it update the product.',
-      'Interest rate decimal value still in some pages ( member loan pages).',
-      'Withdraw slip number added in the particulars in reports.',
-      'Loan schedule date fixed acc. to BS.',
-      'Automatic date filter selection in list page ( till date, 30 days, 7days, today , yesterday)',
+      'Loan balance report gender wise filter fixations.',
+      'Search issue for new ledger created in JV fixed.',
+      'Slow search fixed in JV entry.',
+      'Removed print and view Kym button from member Kym bio section.',
+      'branch Role and permission issue fixed for balance sheet.',
+      'Fd template with saccos logo fixed.',
+      'Branch name are concatenated in the error alert message while “ledger not found message”.',
+      'Teller wise balance report fixed.',
+      'Disable the Is regular checkbox in saving product edit section.',
+      'Closed account report fixed.',
     ],
   },
 };
@@ -102,8 +83,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.88</Text>
-          <Text fontSize="s3">August 21, 2023</Text>
+          <Text fontSize="r2">Version 1.0.89</Text>
+          <Text fontSize="s3">August 24, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>
