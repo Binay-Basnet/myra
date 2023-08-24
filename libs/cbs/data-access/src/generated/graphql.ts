@@ -258,6 +258,33 @@ export type AccountListFilter = {
   productID?: InputMaybe<Scalars['ID']>;
 };
 
+export type AccountLockStatusInput = {
+  accountType?: InputMaybe<Array<Scalars['String']>>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  period: Scalars['Localized'];
+};
+
+export type AccountLockStatusResult = {
+  data?: Maybe<Array<Maybe<AccountLockStatusResultData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type AccountLockStatusResultData = {
+  accountId?: Maybe<Scalars['String']>;
+  accountLockDateFrom?: Maybe<Scalars['Localized']>;
+  accountLockDateTo?: Maybe<Scalars['Localized']>;
+  accountName?: Maybe<Scalars['String']>;
+  branchCode?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
+  isAutoReleaseOnToDate?: Maybe<Scalars['Boolean']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  mobileNumber?: Maybe<Scalars['String']>;
+  reasonForLock?: Maybe<Scalars['String']>;
+  remarks?: Maybe<Scalars['String']>;
+};
+
 export const AccountObjState = {
   Active: 'ACTIVE',
   Inactive: 'INACTIVE',
@@ -906,6 +933,11 @@ export type AccruedInterestFilter = {
   accountId: Scalars['String'];
   memberId: Scalars['String'];
   period: LocalizedDateFilter;
+};
+
+export type ActivationInput = {
+  activate: Scalars['Boolean'];
+  id: Scalars['ID'];
 };
 
 export type ActiveInactiveMemberReport = {
@@ -3304,9 +3336,16 @@ export type CoaView = {
 export type CashBack = {
   cashBackAmount?: InputMaybe<Scalars['String']>;
   cashBackPercent?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
   maxRange: Scalars['String'];
   minRange: Scalars['String'];
   serviceCharge?: InputMaybe<Scalars['String']>;
+};
+
+export type CashBackDeleteResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<UtilityQuery>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type CashBackInput = {
@@ -3536,7 +3575,7 @@ export const CashValue = {
 
 export type CashValue = typeof CashValue[keyof typeof CashValue];
 export type CenterOverview = {
-  centerCoordinator?: Maybe<Member>;
+  centerCoordinator?: Maybe<MyraUser>;
   centerId?: Maybe<Scalars['String']>;
   centerName?: Maybe<Scalars['String']>;
   groupList?: Maybe<Array<Maybe<MfGroupOverview>>>;
@@ -4611,6 +4650,13 @@ export const CriteriaSection = {
 } as const;
 
 export type CriteriaSection = typeof CriteriaSection[keyof typeof CriteriaSection];
+export type CurrentFundResult = {
+  amount?: Maybe<BalanceValue>;
+  coaHead?: Maybe<Scalars['String']>;
+  coaHeadName?: Maybe<Scalars['String']>;
+  error?: Maybe<QueryError>;
+};
+
 export type CustomFormListQueryResult = {
   data?: Maybe<Array<Maybe<FormElement>>>;
   error?: Maybe<QueryError>;
@@ -4695,8 +4741,12 @@ export type DataMigration = {
   allLoanSchedule?: Maybe<Scalars['String']>;
   dumpAccountInterest?: Maybe<Scalars['String']>;
   dumpProductCharges?: Maybe<Scalars['String']>;
-  reseedRepayment?: Maybe<Scalars['String']>;
+  reseedRepayment?: Maybe<MutationResult>;
   updateSavingEndDate?: Maybe<Scalars['String']>;
+};
+
+export type DataMigrationReseedRepaymentArgs = {
+  accountId?: InputMaybe<Scalars['String']>;
 };
 
 export type DateEntry = {
@@ -4763,6 +4813,11 @@ export type DayBookReportFilter = {
 export type DayBookReportResult = {
   data?: Maybe<DayBookReportData>;
   error?: Maybe<QueryError>;
+};
+
+export type DeactivateServiceResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type Declaration = Base & {
@@ -5804,6 +5859,7 @@ export type DepositRecord = {
 export type DepositReport = {
   ETDSReport: EtdsReportResult;
   accountClosingReport?: Maybe<AccountClosingReportResult>;
+  accountLockStatusReport: AccountLockStatusResult;
   accountOpeningReport?: Maybe<AccountOpeningReportResult>;
   closedSavingAccountReport?: Maybe<ClosedSavingAccountResult>;
   dormantAccountReport?: Maybe<DormantAccountReportResult>;
@@ -5823,6 +5879,10 @@ export type DepositReportEtdsReportArgs = {
 
 export type DepositReportAccountClosingReportArgs = {
   data?: InputMaybe<AccountClosingReportInput>;
+};
+
+export type DepositReportAccountLockStatusReportArgs = {
+  data: AccountLockStatusInput;
 };
 
 export type DepositReportAccountOpeningReportArgs = {
@@ -6512,6 +6572,10 @@ export type EbankingReportResult = {
 
 export type EbankingSettingsMutation = {
   utility?: Maybe<UtilityMutation>;
+};
+
+export type EbankingSettingsQuery = {
+  utility?: Maybe<UtilityQuery>;
 };
 
 export type EbankingTransaction = {
@@ -8166,6 +8230,17 @@ export const FrequencyTenure = {
 } as const;
 
 export type FrequencyTenure = typeof FrequencyTenure[keyof typeof FrequencyTenure];
+export type FundManagement = {
+  cooperativePromotionFund?: Maybe<Scalars['Float']>;
+  generalReserveFund?: Maybe<Scalars['Float']>;
+  grossProfit?: Maybe<Scalars['String']>;
+  grossProfitCoa?: Maybe<Scalars['String']>;
+  incomeTax?: Maybe<Scalars['Float']>;
+  otherFunds?: Maybe<Array<Maybe<OtherFundDistribution>>>;
+  patronageRefundFund?: Maybe<Scalars['Float']>;
+  staffBonusFund?: Maybe<Scalars['Float']>;
+};
+
 export type FundManagementConnection = {
   edges?: Maybe<Array<Maybe<FundManagementEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -8182,15 +8257,18 @@ export type FundManagementFilter = {
 };
 
 export type FundManagementInfo = {
+  fiscalYear?: Maybe<Scalars['String']>;
+  grossProfit?: Maybe<BalanceValue>;
   id?: Maybe<Scalars['String']>;
+  incomeTax?: Maybe<Scalars['Float']>;
+  staffBonusFund?: Maybe<Scalars['Float']>;
 };
 
 export type FundManagementInput = {
   cooperativePromotionFund?: InputMaybe<Scalars['Float']>;
   generalReserveFund?: InputMaybe<Scalars['Float']>;
-  grossProfit?: InputMaybe<Scalars['String']>;
   incomeTax?: InputMaybe<Scalars['Float']>;
-  otherFunds?: InputMaybe<Array<InputMaybe<OtherFundDistribution>>>;
+  otherFunds?: InputMaybe<Array<InputMaybe<OtherFundDistributionInput>>>;
   patronageRefundFund?: InputMaybe<Scalars['Float']>;
   staffBonusFund?: InputMaybe<Scalars['Float']>;
 };
@@ -8201,16 +8279,27 @@ export type FundManagementMutation = {
 
 export type FundManagementMutationNewArgs = {
   data?: InputMaybe<FundManagementInput>;
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type FundManagementQuery = {
+  get?: Maybe<FundManagementQueryResult>;
+  getCurrentFundAmount?: Maybe<CurrentFundResult>;
   list?: Maybe<FundManagementConnection>;
-  previousYear?: Maybe<Array<Maybe<PreviousYearFundDistribution>>>;
+};
+
+export type FundManagementQueryGetArgs = {
+  id: Scalars['ID'];
 };
 
 export type FundManagementQueryListArgs = {
-  filter?: InputMaybe<FundManagementFilter>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type FundManagementQueryResult = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<FundManagement>;
 };
 
 export type FundManagementResult = {
@@ -8856,7 +8945,6 @@ export type HrEmployeeAttendanceQueryListDetailsByDayArgs = {
 };
 
 export type HrEmployeeAttendanceQueryListDetailsOfDayArgs = {
-  date?: InputMaybe<Scalars['Localized']>;
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -15194,12 +15282,14 @@ export type MfCenterEntry = {
 };
 
 export type MfCenterInput = {
-  Documents: Array<DocumentInsertInput>;
-  branchIds: Array<Scalars['String']>;
   centerCode: Scalars['String'];
   centerName: Scalars['String'];
   coordinatorId: Scalars['String'];
+  coordinatorServiceCenter?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
+  documents?: InputMaybe<Array<DocumentInsertInput>>;
+  serviceCenterChoice?: InputMaybe<ServiceCenterChoice>;
+  serviceCenterIds?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type MfCenterListConnection = {
@@ -15240,14 +15330,14 @@ export type MfGroupEntry = {
 };
 
 export type MfGroupInput = {
-  Documents: Array<DocumentInsertInput>;
-  MaxMmebers?: InputMaybe<Scalars['Int']>;
   branchId?: InputMaybe<Scalars['String']>;
   centerId?: InputMaybe<Scalars['String']>;
   coordinatorId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
+  documents?: InputMaybe<Array<DocumentInsertInput>>;
   groupCode?: InputMaybe<Scalars['String']>;
   groupName?: InputMaybe<Scalars['String']>;
+  maxMembers?: InputMaybe<Scalars['Int']>;
   minMembers?: InputMaybe<Scalars['Int']>;
 };
 
@@ -16872,6 +16962,7 @@ export type MyCoopInfo = {
 };
 
 export type MyraUser = {
+  address?: Maybe<Address>;
   branch?: Maybe<Branch>;
   contactNo?: Maybe<Scalars['String']>;
   createdAt: Scalars['Localized'];
@@ -17464,6 +17555,12 @@ export type OrganizationStatisticsInput = {
 };
 
 export type OtherFundDistribution = {
+  accountCode?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  percent?: Maybe<Scalars['Float']>;
+};
+
+export type OtherFundDistributionInput = {
   accountCode?: InputMaybe<Scalars['String']>;
   percent?: InputMaybe<Scalars['Float']>;
 };
@@ -17929,12 +18026,6 @@ export type PresignedUrlOutput = {
   putUrl?: Maybe<Scalars['String']>;
 };
 
-export type PreviousYearFundDistribution = {
-  accountCode?: Maybe<Scalars['String']>;
-  amount?: Maybe<Scalars['String']>;
-  percent?: Maybe<Scalars['Float']>;
-};
-
 export type PrintPreference = {
   blockOne?: Maybe<SlipElementMeasurement>;
   blockThree?: Maybe<SlipElementMeasurement>;
@@ -18250,6 +18341,11 @@ export type Query = {
 };
 
 export type QueryError = AuthorizationError | BadRequestError | NotFoundError | ServerError;
+
+export type QueryResult = {
+  error?: Maybe<QueryError>;
+  result?: Maybe<Scalars['Any']>;
+};
 
 export const Resource = {
   AccountingAccounting: 'ACCOUNTING_ACCOUNTING',
@@ -18711,8 +18807,10 @@ export type RestrictTransactionInput = {
   effectiveSince: Scalars['Localized'];
   effectiveTill: Scalars['Localized'];
   ledgerId?: InputMaybe<Scalars['String']>;
+  lockReason?: InputMaybe<Scalars['String']>;
   memberId?: InputMaybe<Scalars['String']>;
   txnType: CoaTypeOfTransaction;
+  unlockReason?: InputMaybe<Scalars['String']>;
 };
 
 export type RestrictTransactionListEdge = {
@@ -19785,6 +19883,13 @@ export type ServiceCenterCashTransferView = {
   userProfileUrl?: Maybe<Scalars['String']>;
 };
 
+export const ServiceCenterChoice = {
+  All: 'ALL',
+  Current: 'CURRENT',
+  Selected: 'SELECTED',
+} as const;
+
+export type ServiceCenterChoice = typeof ServiceCenterChoice[keyof typeof ServiceCenterChoice];
 export type ServiceCenterTransactionFilter = {
   transactionId?: InputMaybe<Scalars['String']>;
 };
@@ -19823,11 +19928,22 @@ export type ServiceType = {
   serviceName?: InputMaybe<Scalars['String']>;
 };
 
+export type ServiceTypeData = {
+  id: Scalars['String'];
+  name: Scalars['String'];
+  slug: Scalars['String'];
+};
+
 export type ServiceTypeFormState = {
   amount?: Maybe<Scalars['Amount']>;
   ledgerName?: Maybe<Scalars['String']>;
   percentage?: Maybe<Scalars['Float']>;
   serviceName?: Maybe<Scalars['String']>;
+};
+
+export type ServiceTypeResult = {
+  data?: Maybe<Array<Maybe<ServiceTypeData>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type SettingAddTagToLedgerResult = {
@@ -19922,6 +20038,7 @@ export type SettingsQuery = {
   allRoles?: Maybe<Array<Maybe<RoleInfo>>>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
   declaration: DeclarationQuery;
+  ebanking?: Maybe<EbankingSettingsQuery>;
   form?: Maybe<FormSettingQuery>;
   general?: Maybe<GeneralSettingsQuery>;
   getPrintCount: Scalars['Int'];
@@ -21967,6 +22084,44 @@ export const UserType = {
 } as const;
 
 export type UserType = typeof UserType[keyof typeof UserType];
+export type UtilitiesChargesConnection = {
+  edges?: Maybe<Array<Maybe<UtilititesChargesListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type UtilitiesListConnection = {
+  edges?: Maybe<Array<Maybe<UtilititesListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type UtilititesChargesEntry = {
+  cashBackAmount?: Maybe<Scalars['String']>;
+  cashBackPercent?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  maxRange: Scalars['String'];
+  minRange: Scalars['String'];
+  serviceCharge?: Maybe<Scalars['String']>;
+};
+
+export type UtilititesChargesListEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<UtilititesChargesEntry>;
+};
+
+export type UtilititesEntry = {
+  id: Scalars['String'];
+  name: Scalars['String'];
+  serviceType: Scalars['String'];
+  slug: Scalars['String'];
+};
+
+export type UtilititesListEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<UtilititesEntry>;
+};
+
 export type UtilityCashBackSetup = {
   cashBackCoaHead: Scalars['String'];
   serviceChargeCoaHead: Scalars['String'];
@@ -21975,10 +22130,36 @@ export type UtilityCashBackSetup = {
 
 export type UtilityMutation = {
   addCashBack: CashBackResult;
+  deactivateService: DeactivateServiceResult;
+  deleteCashBack: CashBackDeleteResult;
 };
 
 export type UtilityMutationAddCashBackArgs = {
   input: CashBackInput;
+};
+
+export type UtilityMutationDeactivateServiceArgs = {
+  input: ActivationInput;
+};
+
+export type UtilityMutationDeleteCashBackArgs = {
+  id: Scalars['ID'];
+};
+
+export type UtilityQuery = {
+  listCashBack: UtilitiesChargesConnection;
+  listServiceType: ServiceTypeResult;
+  listUtilities: UtilitiesListConnection;
+};
+
+export type UtilityQueryListCashBackArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type UtilityQueryListUtilitiesArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type ValidationError = {
@@ -23992,6 +24173,7 @@ export type ChangeLedgerParentMutation = {
 };
 
 export type AddProfitToFundManagementDataMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
   data: FundManagementInput;
 }>;
 
@@ -31306,15 +31488,83 @@ export type GetDashboardInfoQuery = {
   };
 };
 
-export type GetPreviousYearFundManagementQueryVariables = Exact<{ [key: string]: never }>;
+export type GetCurrentFundAmountQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetPreviousYearFundManagementQuery = {
+export type GetCurrentFundAmountQuery = {
   profitToFundManagement: {
-    previousYear?: Array<{
-      accountCode?: string | null;
-      amount?: string | null;
-      percent?: number | null;
-    } | null> | null;
+    getCurrentFundAmount?: {
+      coaHead?: string | null;
+      coaHeadName?: string | null;
+      amount?: { amount?: string | null; amountType?: BalanceType | null } | null;
+    } | null;
+  };
+};
+
+export type GetFundManagementQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetFundManagementQuery = {
+  profitToFundManagement: {
+    get?: {
+      record?: {
+        grossProfit?: string | null;
+        grossProfitCoa?: string | null;
+        staffBonusFund?: number | null;
+        incomeTax?: number | null;
+        generalReserveFund?: number | null;
+        patronageRefundFund?: number | null;
+        cooperativePromotionFund?: number | null;
+        otherFunds?: Array<{ accountCode?: string | null; percent?: number | null } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type ProfitToFundManagementListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type ProfitToFundManagementListQuery = {
+  profitToFundManagement: {
+    list?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor?: string | null;
+        node?: {
+          id?: string | null;
+          fiscalYear?: string | null;
+          staffBonusFund?: number | null;
+          incomeTax?: number | null;
+          grossProfit?: { amount?: string | null; amountType?: BalanceType | null } | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: PaginationFragment | null;
+    } | null;
+  };
+};
+
+export type GetFundManagementFormStateQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetFundManagementFormStateQuery = {
+  profitToFundManagement: {
+    get?: {
+      record?: {
+        staffBonusFund?: number | null;
+        incomeTax?: number | null;
+        generalReserveFund?: number | null;
+        patronageRefundFund?: number | null;
+        cooperativePromotionFund?: number | null;
+        otherFunds?: Array<{
+          accountCode?: string | null;
+          accountName?: string | null;
+          percent?: number | null;
+        } | null> | null;
+      } | null;
+    } | null;
   };
 };
 
@@ -31617,7 +31867,6 @@ export type GetEmployeeAtendanceListQuery = {
 };
 
 export type GetListDetailsOfDayQueryVariables = Exact<{
-  date?: InputMaybe<Scalars['Localized']>;
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -46348,9 +46597,9 @@ export const useChangeLedgerParentMutation = <TError = unknown, TContext = unkno
     options
   );
 export const AddProfitToFundManagementDataDocument = `
-    mutation addProfitToFundManagementData($data: FundManagementInput!) {
+    mutation addProfitToFundManagementData($id: ID, $data: FundManagementInput!) {
   profitToFundManagement {
-    new(data: $data) {
+    new(id: $id, data: $data) {
       recordId
       error {
         ...MutationError
@@ -56469,30 +56718,135 @@ export const useGetDashboardInfoQuery = <TData = GetDashboardInfoQuery, TError =
     ),
     options
   );
-export const GetPreviousYearFundManagementDocument = `
-    query getPreviousYearFundManagement {
+export const GetCurrentFundAmountDocument = `
+    query getCurrentFundAmount {
   profitToFundManagement {
-    previousYear {
-      accountCode
-      amount
-      percent
+    getCurrentFundAmount {
+      amount {
+        amount
+        amountType
+      }
+      coaHead
+      coaHeadName
     }
   }
 }
     `;
-export const useGetPreviousYearFundManagementQuery = <
-  TData = GetPreviousYearFundManagementQuery,
+export const useGetCurrentFundAmountQuery = <TData = GetCurrentFundAmountQuery, TError = unknown>(
+  variables?: GetCurrentFundAmountQueryVariables,
+  options?: UseQueryOptions<GetCurrentFundAmountQuery, TError, TData>
+) =>
+  useQuery<GetCurrentFundAmountQuery, TError, TData>(
+    variables === undefined ? ['getCurrentFundAmount'] : ['getCurrentFundAmount', variables],
+    useAxios<GetCurrentFundAmountQuery, GetCurrentFundAmountQueryVariables>(
+      GetCurrentFundAmountDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetFundManagementDocument = `
+    query getFundManagement($id: ID!) {
+  profitToFundManagement {
+    get(id: $id) {
+      record {
+        grossProfit
+        grossProfitCoa
+        staffBonusFund
+        incomeTax
+        generalReserveFund
+        patronageRefundFund
+        cooperativePromotionFund
+        otherFunds {
+          accountCode
+          percent
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetFundManagementQuery = <TData = GetFundManagementQuery, TError = unknown>(
+  variables: GetFundManagementQueryVariables,
+  options?: UseQueryOptions<GetFundManagementQuery, TError, TData>
+) =>
+  useQuery<GetFundManagementQuery, TError, TData>(
+    ['getFundManagement', variables],
+    useAxios<GetFundManagementQuery, GetFundManagementQueryVariables>(
+      GetFundManagementDocument
+    ).bind(null, variables),
+    options
+  );
+export const ProfitToFundManagementListDocument = `
+    query profitToFundManagementList($filter: Filter, $pagination: Pagination) {
+  profitToFundManagement {
+    list(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          fiscalYear
+          grossProfit {
+            amount
+            amountType
+          }
+          staffBonusFund
+          incomeTax
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useProfitToFundManagementListQuery = <
+  TData = ProfitToFundManagementListQuery,
   TError = unknown
 >(
-  variables?: GetPreviousYearFundManagementQueryVariables,
-  options?: UseQueryOptions<GetPreviousYearFundManagementQuery, TError, TData>
+  variables?: ProfitToFundManagementListQueryVariables,
+  options?: UseQueryOptions<ProfitToFundManagementListQuery, TError, TData>
 ) =>
-  useQuery<GetPreviousYearFundManagementQuery, TError, TData>(
+  useQuery<ProfitToFundManagementListQuery, TError, TData>(
     variables === undefined
-      ? ['getPreviousYearFundManagement']
-      : ['getPreviousYearFundManagement', variables],
-    useAxios<GetPreviousYearFundManagementQuery, GetPreviousYearFundManagementQueryVariables>(
-      GetPreviousYearFundManagementDocument
+      ? ['profitToFundManagementList']
+      : ['profitToFundManagementList', variables],
+    useAxios<ProfitToFundManagementListQuery, ProfitToFundManagementListQueryVariables>(
+      ProfitToFundManagementListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetFundManagementFormStateDocument = `
+    query getFundManagementFormState($id: ID!) {
+  profitToFundManagement {
+    get(id: $id) {
+      record {
+        staffBonusFund
+        incomeTax
+        generalReserveFund
+        patronageRefundFund
+        cooperativePromotionFund
+        otherFunds {
+          accountCode
+          accountName
+          percent
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetFundManagementFormStateQuery = <
+  TData = GetFundManagementFormStateQuery,
+  TError = unknown
+>(
+  variables: GetFundManagementFormStateQueryVariables,
+  options?: UseQueryOptions<GetFundManagementFormStateQuery, TError, TData>
+) =>
+  useQuery<GetFundManagementFormStateQuery, TError, TData>(
+    ['getFundManagementFormState', variables],
+    useAxios<GetFundManagementFormStateQuery, GetFundManagementFormStateQueryVariables>(
+      GetFundManagementFormStateDocument
     ).bind(null, variables),
     options
   );
@@ -56876,11 +57230,11 @@ export const useGetEmployeeAtendanceListQuery = <
     options
   );
 export const GetListDetailsOfDayDocument = `
-    query getListDetailsOfDay($date: Localized, $filter: Filter, $pagination: Pagination) {
+    query getListDetailsOfDay($filter: Filter, $pagination: Pagination) {
   hr {
     employee {
       hrEmployeeAttendanceQuery {
-        listDetailsOfDay(date: $date, filter: $filter, pagination: $pagination) {
+        listDetailsOfDay(filter: $filter, pagination: $pagination) {
           totalCount
           edges {
             node {

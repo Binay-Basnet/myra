@@ -1,10 +1,11 @@
 import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
+import { useRouter } from 'next/router';
 
 import { GridItem } from '@myra-ui';
 import { Column } from '@myra-ui/editable-table';
 
-import { useGetPreviousYearFundManagementQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -14,36 +15,42 @@ import { CustomFundManagementInput, DistributionTableType } from '../lib/type';
 export const DistributionTable = () => {
   const { watch, setValue } = useFormContext<CustomFundManagementInput>();
 
-  const { data: previousYearData } = useGetPreviousYearFundManagementQuery();
+  const router = useRouter();
+
+  // const { data: previousYearData } = useGetPreviousYearFundManagementQuery();
 
   useEffect(() => {
-    if (previousYearData) {
-      const patronageRefundFundAmount =
-        previousYearData?.profitToFundManagement?.previousYear?.find(
-          (fund) => fund?.accountCode === '20.2'
-        )?.amount;
+    // if (previousYearData) {
+    // const patronageRefundFundAmount =
+    //   previousYearData?.profitToFundManagement?.previousYear?.find(
+    //     (fund) => fund?.accountCode === '20.2'
+    //   )?.amount;
 
-      const cooperativePromotionFundAmount =
-        previousYearData?.profitToFundManagement?.previousYear?.find(
-          (fund) => fund?.accountCode === '20.3'
-        )?.amount;
+    // const cooperativePromotionFundAmount =
+    //   previousYearData?.profitToFundManagement?.previousYear?.find(
+    //     (fund) => fund?.accountCode === '20.3'
+    //   )?.amount;
 
+    if (!router?.asPath?.includes('/edit')) {
       setValue('distributionTable', [
         {
           distribution: '20.2 Patronage Refund Fund',
           percent: 0,
           thisYear: 0,
-          lastYear: Number(patronageRefundFundAmount ?? 0),
+          // lastYear: Number(patronageRefundFundAmount ?? 0),
+          lastYear: 0,
         },
         {
           distribution: '20.3 Cooperative Promotion Fund',
           percent: 0,
           thisYear: 0,
-          lastYear: Number(cooperativePromotionFundAmount ?? 0),
+          // lastYear: Number(cooperativePromotionFundAmount ?? 0),
+          lastYear: 0,
         },
       ]);
     }
-  }, [previousYearData]);
+    // }
+  }, [router?.asPath]);
 
   const netProfit = watch('netProfit');
 
@@ -51,7 +58,7 @@ export const DistributionTable = () => {
 
   const remainingProfit =
     netProfit && generalReserveFund
-      ? Number(netProfit ?? 0) - Number(generalReserveFund[0].thisYear)
+      ? Number(netProfit ?? 0) - Number(generalReserveFund?.[0]?.thisYear)
       : 0;
 
   const columns: Column<DistributionTableType>[] = [
@@ -69,20 +76,36 @@ export const DistributionTable = () => {
       accessor: 'thisYear',
       header: 'This Year',
       isNumeric: true,
-      accessorFn: (row) => ((Number(row.percent) / 100) * remainingProfit).toFixed(2),
+      getDisabled: () => true,
+      // accessorFn: (row) => ((Number(row.percent) / 100) * remainingProfit).toFixed(2),
+      // cell: (props) => ((Number(props.percent) / 100) * remainingProfit).toFixed(2),
     },
     {
       accessor: 'lastYear',
       header: 'Last Year',
       isNumeric: true,
-      accessorFn: (row) =>
-        previousYearData?.profitToFundManagement?.previousYear?.find(
-          (account) => account?.accountCode === row.distribution?.split(' ')[0]
-        )?.amount ?? 0,
+      // accessorFn: (row) =>
+      //   previousYearData?.profitToFundManagement?.previousYear?.find(
+      //     (account) => account?.accountCode === row.distribution?.split(' ')[0]
+      //   )?.amount ?? 0,
     },
   ];
 
   const distributionTable = watch('distributionTable');
+
+  useDeepCompareEffect(() => {
+    if (distributionTable?.length) {
+      setValue(
+        'distributionTable',
+        distributionTable?.map((fund) => ({
+          distribution: fund?.distribution,
+          percent: fund?.percent,
+          thisYear: Number(((Number(fund?.percent) / 100) * remainingProfit || 0).toFixed(2)),
+          lastYear: 0,
+        }))
+      );
+    }
+  }, [distributionTable, remainingProfit]);
 
   const distributionTableSummary: TableOverviewColumnType[] = useMemo(
     () => [
@@ -123,6 +146,7 @@ export const DistributionTable = () => {
         name="distributionTable"
         columns={columns}
         canAddRow={false}
+        canDeleteRow={false}
         hideSN
       />
 

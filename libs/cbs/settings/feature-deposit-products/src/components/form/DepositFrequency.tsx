@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { FormSection } from '@myra-ui';
 
@@ -41,6 +42,8 @@ type DepositForm = Omit<
 };
 
 export const DepositFrequency = () => {
+  const router = useRouter();
+
   const { t } = useTranslation();
 
   const { watch } = useFormContext<DepositForm>();
@@ -55,18 +58,22 @@ export const DepositFrequency = () => {
     {
       label: t['daily'],
       value: Frequency.Daily,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
     {
       label: t['weekly'],
       value: Frequency.Weekly,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
     {
       label: t['monthly'],
       value: Frequency.Monthly,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
     {
       label: t['yearly'],
       value: Frequency.Yearly,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
   ];
 
@@ -77,7 +84,11 @@ export const DepositFrequency = () => {
       templateColumns={1}
     >
       {depositNature === 'RECURRING_SAVING' && (
-        <FormCheckbox label="Is Frequency Regular" name="isFrequencyMandatory" />
+        <FormCheckbox
+          label="Is Frequency Regular"
+          name="isFrequencyMandatory"
+          isDisabled={router?.asPath?.includes('/edit')}
+        />
       )}
       {((depositNature === 'RECURRING_SAVING' && isFrequencyMandatory) ||
         (depositNature === 'SAVING' && isMandatorySaving)) && (

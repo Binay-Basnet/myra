@@ -3,30 +3,59 @@ import { useFormContext } from 'react-hook-form';
 
 import { FormSection, Text } from '@myra-ui';
 
-import { FormAmountInput, FormNumberInput } from '@coop/shared/form';
+import { useGetCurrentFundAmountQuery } from '@coop/cbs/data-access';
+import { FormAmountInput, FormInput, FormNumberInput } from '@coop/shared/form';
+import { debitCreditConverter } from '@coop/shared/utils';
 
 export const BasicFundManagement = () => {
   const { watch, setValue } = useFormContext();
 
-  const grossProfit = watch('grossProfit');
+  const { data: currentFundAmountData } = useGetCurrentFundAmountQuery();
 
-  const staffBonusFund = watch('staffBonusFund');
-
-  const profitBeforeTax = watch('profitBeforeTax');
-
-  const incomeTax = watch('incomeTax');
+  const currentFundAmount = currentFundAmountData?.profitToFundManagement?.getCurrentFundAmount;
 
   useEffect(() => {
-    setValue('profitBeforeTax', grossProfit - (staffBonusFund / 100) * grossProfit);
+    if (currentFundAmount) {
+      setValue(
+        'grossProfitCoa',
+        `${currentFundAmount?.coaHead} - ${currentFundAmount?.coaHeadName}`
+      );
+      setValue('grossProfit', currentFundAmount?.amount?.amount || 0);
+
+      setValue(
+        'grossProfitDr',
+        debitCreditConverter(
+          currentFundAmount?.amount?.amount as string,
+          currentFundAmount?.amount?.amountType as string
+        )
+      );
+    }
+  }, [currentFundAmount]);
+
+  const grossProfit = Number(watch('grossProfit') || 0);
+
+  const staffBonusFund = Number(watch('staffBonusFund') || 0);
+
+  const profitBeforeTax = Number(watch('profitBeforeTax') || 0);
+
+  const incomeTax = Number(watch('incomeTax') || 0);
+
+  useEffect(() => {
+    setValue(
+      'profitBeforeTax',
+      (grossProfit - (staffBonusFund / 100) * grossProfit || 0).toFixed(2)
+    );
   }, [grossProfit, staffBonusFund]);
 
   useEffect(() => {
-    setValue('netProfit', profitBeforeTax - (incomeTax / 100) * profitBeforeTax);
+    setValue('netProfit', (profitBeforeTax - (incomeTax / 100) * profitBeforeTax || 0).toFixed(2));
   }, [profitBeforeTax, incomeTax]);
 
   return (
     <FormSection>
-      <FormAmountInput name="grossProfit" label="Gross Profit" />
+      <FormInput name="grossProfitCoa" label="Gross Profit COA" isDisabled />
+
+      <FormInput name="grossProfitDr" label="Gross Profit" textAlign="right" isDisabled />
 
       <FormNumberInput
         name="staffBonusFund"

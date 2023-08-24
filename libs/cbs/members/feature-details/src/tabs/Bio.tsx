@@ -1,4 +1,4 @@
-import { IoCreateOutline, IoEyeOutline, IoPrintOutline } from 'react-icons/io5';
+import { IoCreateOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
 import { Box, Grid, GridItem, QuickLinks, Text } from '@myra-ui';
@@ -80,18 +80,18 @@ export const Bio = () => {
       icon: IoCreateOutline,
       onclick: () => router.push(`${ROUTES.CBS_MEMBER}/${memberType}/edit?id=${id}`),
     },
-    {
-      id: '2',
-      text: 'View KYM',
-      icon: IoEyeOutline,
-      onclick: () => router.push(`${ROUTES.CBS_MEMBER}/${memberType}/edit?id=${id}`),
-    },
-    {
-      id: '3',
-      text: 'Print KYM',
-      icon: IoPrintOutline,
-      onclick: () => router.push(`${ROUTES.CBS_MEMBER}/${memberType}/edit?id=${id}`),
-    },
+    // {
+    //   id: '2',
+    //   text: 'View KYM',
+    //   icon: IoEyeOutline,
+    //   onclick: () => router.push(`${ROUTES.CBS_MEMBER}/${memberType}/edit?id=${id}`),
+    // },
+    // {
+    //   id: '3',
+    //   text: 'Print KYM',
+    //   icon: IoPrintOutline,
+    //   onclick: () => router.push(`${ROUTES.CBS_MEMBER}/${memberType}/edit?id=${id}`),
+    // },
   ];
 
   return (

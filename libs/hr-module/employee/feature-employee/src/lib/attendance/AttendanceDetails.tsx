@@ -10,17 +10,21 @@ import { getPaginationQuery } from '@coop/shared/utils';
 
 export const AttendanceDetails = () => {
   const router = useRouter();
-  const requiredDate = {
-    local: router?.query?.['local'] as string,
-    en: router?.query?.['en'] as string,
-    np: router?.query?.['np'] as string,
-  };
 
-  const parsedDate = parseISO(router?.query?.['local'] as string);
+  const parsedDate = parseISO(router?.query?.['en'] as string);
   const formattedDate = format(parsedDate, 'EEEE, MMMM dd');
 
   const { data, isFetching } = useGetListDetailsOfDayQuery({
-    date: requiredDate,
+    filter: {
+      orConditions: [
+        {
+          andConditions: [
+            { column: 'attendancedate', comparator: 'EqualTo', value: router?.query?.['en'] },
+          ],
+        },
+        { andConditions: [{ column: 'attendancedate', comparator: 'HasNoValue', value: 'NULL' }] },
+      ],
+    },
     pagination: getPaginationQuery(),
   });
 

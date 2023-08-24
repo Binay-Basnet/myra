@@ -1,35 +1,23 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 
 import { GridItem } from '@myra-ui';
 import { Column } from '@myra-ui/editable-table';
 
-import {
-  useGetCoaAccountsUnderListQuery,
-  useGetPreviousYearFundManagementQuery,
-} from '@coop/cbs/data-access';
+import { useListLeafCoaHeadsQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 import { TableOverview, TableOverviewColumnType } from './TableOverview';
 import { CustomFundManagementInput, OtherFundDistributionTableType } from '../lib/type';
 
 export const OtherFundDistributionTable = () => {
-  const { watch } = useFormContext<CustomFundManagementInput>();
+  const { watch, setValue } = useFormContext<CustomFundManagementInput>();
 
-  const { data: previousYearData } = useGetPreviousYearFundManagementQuery();
+  const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
-  const { data: coaListQueryData } = useGetCoaAccountsUnderListQuery({
-    accountCode: ['20.4'],
-  });
-
-  const coaSearchOptions = useMemo(
-    () =>
-      coaListQueryData?.settings?.chartsOfAccount?.accountsUnder?.data?.map((account) => ({
-        label: `${account?.accountCode} ${account?.name?.local}`,
-        value: account?.accountCode as string,
-      })) ?? [],
-    [coaListQueryData]
-  );
+  // const { data: previousYearData } = useGetPreviousYearFundManagementQuery();
 
   const netProfit = Number(watch('netProfit') ?? 0);
 
@@ -45,23 +33,52 @@ export const OtherFundDistributionTable = () => {
     let tempRemProfit = Number(netProfit);
 
     if (generalReserveFund) {
-      tempRemProfit -= Number(generalReserveFund[0].thisYear);
+      tempRemProfit -= Number(generalReserveFund?.[0]?.thisYear);
     }
 
     if (distributionTable) {
       tempRemProfit -=
-        Number(distributionTable[0].thisYear) + Number(distributionTable[1].thisYear);
+        Number(distributionTable?.[0]?.thisYear) + Number(distributionTable?.[1]?.thisYear);
     }
 
     return tempRemProfit;
   }, [netProfit, generalReserveFund, distributionTable]);
+
+  const { data: leafCoaHeadsListData, isFetching } = useListLeafCoaHeadsQuery({
+    pagination: {
+      ...getPaginationQuery(),
+      // first: -1,
+      order: {
+        arrange: 'ASC',
+        column: 'accountCode',
+      },
+    },
+    filter: {
+      query: searchTerm,
+    },
+  });
+
+  const leafCoaHeadsList = leafCoaHeadsListData?.settings?.chartsOfAccount?.listLeafCoaHeads?.edges;
+
+  const accountSearchOptions = useMemo(
+    () =>
+      leafCoaHeadsList?.map((head) => ({
+        label: `${head?.node?.accountCode} - ${head?.node?.Name}`,
+        value: head?.node?.accountCode as string,
+      })),
+    [leafCoaHeadsList]
+  );
 
   const columns: Column<OtherFundDistributionTableType>[] = [
     {
       accessor: 'accountCode',
       header: 'Other Fund Distribution',
       fieldType: 'search',
-      searchOptions: coaSearchOptions,
+      searchOptions: accountSearchOptions,
+      searchLoading: isFetching,
+      searchCallback: (newSearch) => {
+        setSearchTerm(newSearch);
+      },
     },
     {
       accessor: 'percent',
@@ -73,20 +90,35 @@ export const OtherFundDistributionTable = () => {
       accessor: 'thisYear',
       header: 'This Year',
       isNumeric: true,
-      accessorFn: (row) => ((Number(row.percent) / 100) * remainingProfit).toFixed(2),
+      getDisabled: () => true,
+      // accessorFn: (row) => ((Number(row.percent) / 100) * remainingProfit).toFixed(2),
     },
     {
       accessor: 'lastYear',
       header: 'Last Year',
       isNumeric: true,
-      accessorFn: (row) =>
-        previousYearData?.profitToFundManagement?.previousYear?.find(
-          (account) => account?.accountCode === row.accountCode
-        )?.amount ?? 0,
+      // accessorFn: (row) =>
+      //   previousYearData?.profitToFundManagement?.previousYear?.find(
+      //     (account) => account?.accountCode === row.accountCode
+      //   )?.amount ?? 0,
     },
   ];
 
   const otherFunds = watch('otherFunds');
+
+  useDeepCompareEffect(() => {
+    if (distributionTable?.length) {
+      setValue(
+        'otherFunds',
+        otherFunds?.map((fund) => ({
+          accountCode: fund?.accountCode,
+          percent: fund?.percent,
+          thisYear: Number(((Number(fund?.percent) / 100) * remainingProfit || 0).toFixed(2)),
+          lastYear: 0,
+        }))
+      );
+    }
+  }, [otherFunds, remainingProfit]);
 
   const otherFundsSummary: TableOverviewColumnType[] = useMemo(
     () => [

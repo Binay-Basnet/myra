@@ -31,6 +31,7 @@ export const TextAreaInput = forwardRef<HTMLInputElement, TextAreaInputProps>((p
         borderColor={errorText ? 'danger.500' : 'gray.300'}
         variant="outline"
         maxH="200px"
+        data-testid={id as string}
         __placeholder={placeholder ?? 'Add description here'}
         id={id}
         size="sm"

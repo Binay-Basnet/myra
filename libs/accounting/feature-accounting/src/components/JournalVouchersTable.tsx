@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Box } from '@myra-ui';
 
 import { TableOverview, TableOverviewColumnType } from '@coop/accounting/ui-components';
-import { useGetLedgerForJvPostingQuery } from '@coop/cbs/data-access';
+import { useGetCoaAccountDetailsQuery, useGetLedgerForJvPostingQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 import { debitCreditConverter } from '@coop/shared/utils';
 
@@ -54,6 +54,15 @@ export const JournalVouchersTable = () => {
   });
 
   const accountListData = accountList?.settings?.chartsOfAccount?.ledgersForJVPosting?.edges;
+
+  // const { data: jvLedgersList } = useGetLedgerForJvPostingQuery({
+  //   pagination: {
+  //     after: '',
+  //     first: -1,
+  //   },
+  // });
+
+  // const allAccountsList = jvLedgersList?.settings?.chartsOfAccount?.ledgersForJVPosting?.edges;
 
   const redirectEntries = router?.query['entries']
     ? JSON.parse(router.query['entries'] as string)
@@ -111,18 +120,21 @@ export const JournalVouchersTable = () => {
           {
             accessor: 'balance',
             header: 'Balance',
-            cell: (row) => {
-              const selectedLedger = accountListData?.find(
-                (ledger) =>
-                  ledger?.node?.accountCode ===
-                  (row?.accountId as unknown as { value: string })?.value
-              );
+            // cell: (row) => {
+            //   const selectedLedger = allAccountsList?.find(
+            //     (ledger) =>
+            //       ledger?.node?.accountCode ===
+            //       (row?.accountId as unknown as { value: string })?.value
+            //   );
 
-              return debitCreditConverter(
-                selectedLedger?.node?.balance as string,
-                selectedLedger?.node?.balanceType as string
-              );
-            },
+            //   return debitCreditConverter(
+            //     selectedLedger?.node?.balance as string,
+            //     selectedLedger?.node?.balanceType as string
+            //   );
+            // },
+            cell: (row) => (
+              <LedgerBalance ledgerId={(row?.accountId as unknown as { value: string })?.value} />
+            ),
             cellWidth: 'lg',
             isNumeric: true,
           },
@@ -156,6 +168,28 @@ export const JournalVouchersTable = () => {
       <Box w="100%" textAlign="right" fontSize="s3" fontWeight={500} color="gray.700">
         Difference: NPR {(drTotal - crTotal).toFixed(2)}
       </Box>
+    </Box>
+  );
+};
+
+const LedgerBalance = ({ ledgerId }: { ledgerId: string }) => {
+  const { data: accountQueryData } = useGetCoaAccountDetailsQuery(
+    {
+      id: ledgerId as string,
+    },
+    {
+      enabled: !!ledgerId,
+    }
+  );
+
+  const accountDetail = accountQueryData?.settings?.chartsOfAccount?.coaAccountDetails?.data;
+
+  return (
+    <Box display="flex" justifyContent="flex-end">
+      {debitCreditConverter(
+        accountDetail?.overview?.closingBalance as string,
+        accountDetail?.overview?.balanceType as string
+      )}
     </Box>
   );
 };
