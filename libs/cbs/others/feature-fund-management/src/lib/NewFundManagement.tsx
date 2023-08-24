@@ -84,9 +84,12 @@ export const NewFundManagement = () => {
           },
         ],
         otherFunds: formData?.otherFunds?.map((other) => ({
-          accountCode: { label: other?.accountName, value: other?.accountCode },
+          accountCode: {
+            label: other?.accountName,
+            value: other?.accountCode,
+          } as unknown as string,
           // accountCode: other?.accountCode,
-          percent: other?.percent,
+          percent: other?.percent as number,
         })),
       });
     }
