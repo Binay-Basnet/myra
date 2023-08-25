@@ -25,7 +25,7 @@ publicAgent.interceptors.request.use(
   (request) => {
     request.headers = {
       ...request.headers,
-      slug: 'myra-devv',
+      slug: getDatabaseSlug(),
     };
     return request;
   },

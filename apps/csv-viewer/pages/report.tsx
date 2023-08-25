@@ -9,6 +9,8 @@ import { privateAgent } from '@coop/csv-viewer/data-access';
 import { getAPIUrl } from '@coop/shared/utils';
 
 import { Resizer, Tab, TableSvg } from '.';
+import LedgerStatementReport from '../components/LedgerStatementReport';
+import LoanStatementReport from '../components/LoanStatementReport';
 import { SubHeader } from '../components/SubHeader';
 
 const getReportTypes = async () => {
@@ -216,7 +218,8 @@ export const Report = () => {
             ))}
             <Box flex={1} h="40px" borderBottom="1px" borderBottomColor="border.layout" />
           </Box>
-          wip
+          {selectedTab?.value === 'LEDGER_STATEMENT' && <LedgerStatementReport />}
+          {selectedTab?.value === 'LOAN_STATEMENT' && <LoanStatementReport />}
         </Box>
       </Box>
     </Box>
