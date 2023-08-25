@@ -65,11 +65,16 @@ const tabList: TabList[] = [
   },
 ];
 
-const otherTabList: TabList[] = [
+const alternativeChannelTabList: TabList[] = [
   {
-    label: 'settingsAlternativeChannel',
+    label: 'M-banking/E-banking',
     aclKey: 'SETTINGS_ALTERNATIVE_CHANNELS',
     route: ROUTES.SETTINGS_GENERAL_ALTERNATIVE_CHANNELS,
+  },
+  {
+    label: 'Utility Payment',
+    aclKey: 'SETTINGS_ALTERNATIVE_CHANNELS',
+    route: ROUTES.SETTINGS_APPLICATION_ALTERNATIVE_CHANNEL_UTILITY_PAYMENT_GENERAL,
   },
 ];
 
@@ -302,9 +307,9 @@ export const SettingSideBar = () => {
                         cursor: 'pointer',
                         textDecoration: 'underline',
                       }}
-                      onClick={() => router.push(ROUTES.SETTINGS_GENERAL_CODE_MANAGEMENT_CBS)}
+                      onClick={() => router.push(ROUTES.SETTINGS_GENERAL_ALTERNATIVE_CHANNELS)}
                     >
-                      Others
+                      Alternative Channel
                     </Text>
                     <Box
                       _hover={{
@@ -323,7 +328,7 @@ export const SettingSideBar = () => {
                     </Box>
                   </AccordionButton>
                   <AccordionPanel px="s8" py="s4">
-                    <TabColumn list={otherTabList} />
+                    <TabColumn list={alternativeChannelTabList} />
                   </AccordionPanel>
                 </>
               )}
@@ -354,7 +359,7 @@ export const SettingSideBar = () => {
                         cursor: 'pointer',
                         textDecoration: 'underline',
                       }}
-                      onClick={() => router.push('/settings/general/accounting/general')}
+                      onClick={() => router.push('/settings/general/accounting/tax')}
                     >
                       Accounting{' '}
                     </Text>
@@ -406,7 +411,7 @@ export const SettingSideBar = () => {
                         cursor: 'pointer',
                         textDecoration: 'underline',
                       }}
-                      onClick={() => router.push(ROUTES.SETTINGS_GENERAL_CODE_MANAGEMENT_CBS)}
+                      onClick={() => router.push(ROUTES.SETTINGS_GENERAL_PEARLS_REPORT_P1)}
                     >
                       Reports
                     </Text>
@@ -458,7 +463,7 @@ export const SettingSideBar = () => {
                         cursor: 'pointer',
                         textDecoration: 'underline',
                       }}
-                      onClick={() => router.push(ROUTES.SETTINGS_GENERAL_CODE_MANAGEMENT_CBS)}
+                      onClick={() => router.push(ROUTES.HRMODULE_EMPLOYEES_SETTINGS)}
                     >
                       HCM
                     </Text>

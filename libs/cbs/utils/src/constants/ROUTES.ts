@@ -130,7 +130,14 @@ export const ROUTES = {
   SETTINGS_GENERAL_ACCOUNTING_CUSTOM_FIELDS: '/settings/general/accounting/custom-fields',
   SETTINGS_GENERAL_ACCOUNTING_TAX: '/settings/general/accounting/tax',
 
-  SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/charges/configure',
+  SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/configure',
+
+  SETTINGS_APPLICATION_ALTERNATIVE_CHANNEL_UTILITY_PAYMENT_GENERAL:
+    '/settings/general/utility-payment/general',
+  SETTINGS_APPLICATION_ALTERNATIVE_CHANNEL_UTILITY_PAYMENT_TOPUP:
+    '/settings/general/utility-payment/topup',
+  SETTINGS_APPLICATION_ALTERNATIVE_CHANNEL_UTILITY_PAYMENT_INTERNET:
+    '/settings/general/utility-payment/internet',
 
   SETTINGS_GENERAL_AUDIT_LOG: '/settings/monitor/audit-log/list',
   SETTINGS_EOD_SETUP: '/settings/global/eod/setup',

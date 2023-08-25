@@ -58,7 +58,7 @@ const FormControl = <T extends Record<string, unknown>>({
     ? [{ label: 'All', value: 'ALL' }, ...(selectOptions || [])]
     : selectOptions;
 
-  const foundValue = options?.find((option) => option.value === value);
+  const foundValue = options?.find((option) => option.value === value) ?? value;
 
   const methods = useFormContext();
   const { clearErrors } = methods;

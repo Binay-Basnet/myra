@@ -18,13 +18,53 @@ mutation saveAlternativeCharges($data: [AlternativeChannelChargesInput]) {
   }
 }
 
-mutation activateService($data: AlternativeChannelServiceActivationInput){
+mutation activateService($data: AlternativeChannelServiceActivationInput) {
   alternativeChannel {
-    serviceActivation(data: $data){
+    serviceActivation(data: $data) {
       error {
         ...MutationError
       }
       recordId
+    }
+  }
+}
+
+mutation addUtilityCashBack($input: CashBackInput!) {
+  settings {
+    ebanking {
+      utility {
+        addCashBack(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation utilityLedgerSetup($value: [UtilityLedgerSetupInput!]!) {
+  settings {
+    general {
+      setup {
+        utilityLedgerSetup(value: $value)
+      }
+    }
+  }
+}
+
+mutation changeUtilityServiceStatus($input: [ActivationInput!]!) {
+  settings {
+    ebanking {
+      utility {
+        deactivateService(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
     }
   }
 }
