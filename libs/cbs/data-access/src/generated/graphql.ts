@@ -212,6 +212,16 @@ export const AccountCloseReason = {
 } as const;
 
 export type AccountCloseReason = typeof AccountCloseReason[keyof typeof AccountCloseReason];
+export type AccountCloseSuccessCard = {
+  accCloseDate: Scalars['Localized'];
+  accId: Scalars['ID'];
+  accName?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  charges?: Maybe<Scalars['String']>;
+  interest?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<Scalars['String']>;
+};
+
 export type AccountClosingReport = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
@@ -5027,7 +5037,7 @@ export type DepositAccountClose = {
 export type DepositAccountCloseResult = {
   calculatedAmount?: Maybe<Scalars['String']>;
   error?: Maybe<MutationError>;
-  record?: Maybe<Scalars['Any']>;
+  record?: Maybe<AccountCloseSuccessCard>;
   recordId: Scalars['ID'];
 };
 
@@ -23285,6 +23295,15 @@ export type SetAccountCloseDataMutation = {
     close?: {
       recordId: string;
       calculatedAmount?: string | null;
+      record?: {
+        accId: string;
+        accCloseDate: Record<'local' | 'en' | 'np', string>;
+        accName?: string | null;
+        amount?: string | null;
+        interest?: string | null;
+        charges?: string | null;
+        paymentMode?: string | null;
+      } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -45413,6 +45432,15 @@ export const SetAccountCloseDataDocument = `
     close(data: $data) {
       recordId
       calculatedAmount
+      record {
+        accId
+        accCloseDate
+        accName
+        amount
+        interest
+        charges
+        paymentMode
+      }
       error {
         ...MutationError
       }
