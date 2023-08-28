@@ -93,7 +93,7 @@ export const UpdateLoanTenureModal = ({ isOpen, onClose }: IUpdateLoanTenureModa
           </Alert>
           <Box display="flex" gap="s16">
             <FormNumberInput
-              label="Minimum Interest Rate"
+              label="Minimum Tenure"
               name="minTenureUnitNumber"
               rightElement={
                 <Text fontSize="r1" fontWeight={500} color="accent.debit">
@@ -102,7 +102,7 @@ export const UpdateLoanTenureModal = ({ isOpen, onClose }: IUpdateLoanTenureModa
               }
             />
             <FormNumberInput
-              label="Maximum Interest Rate"
+              label="Maximum Tenure"
               name="maxTenureUnitNumber"
               rightElement={
                 <Text fontSize="r1" fontWeight={500} color="accent.debit">
