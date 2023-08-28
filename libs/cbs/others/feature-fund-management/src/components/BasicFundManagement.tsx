@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { FormSection, Text } from '@myra-ui';
 
@@ -8,6 +9,8 @@ import { FormAmountInput, FormInput, FormNumberInput } from '@coop/shared/form';
 import { debitCreditConverter } from '@coop/shared/utils';
 
 export const BasicFundManagement = () => {
+  const router = useRouter();
+
   const { watch, setValue } = useFormContext();
 
   const { data: currentFundAmountData } = useGetCurrentFundAmountQuery();
@@ -65,6 +68,7 @@ export const BasicFundManagement = () => {
             %
           </Text>
         }
+        isDisabled={router?.asPath?.includes('/view')}
       />
 
       <FormAmountInput name="profitBeforeTax" label="Profit Before Tax" isDisabled />
@@ -77,6 +81,7 @@ export const BasicFundManagement = () => {
             %
           </Text>
         }
+        isDisabled={router?.asPath?.includes('/view')}
       />
 
       <FormAmountInput name="netProfit" label="Net Profit" isDisabled />

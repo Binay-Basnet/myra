@@ -6,16 +6,9 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useProfitToFundManagementListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import {
-  debitCreditConverter,
-  featureCode,
-  getPaginationQuery,
-  useTranslation,
-} from '@coop/shared/utils';
+import { debitCreditConverter, featureCode, getPaginationQuery } from '@coop/shared/utils';
 
 export const FundManagementList = () => {
-  const { t } = useTranslation();
-
   const router = useRouter();
 
   const { data, isFetching } = useProfitToFundManagementListQuery({
@@ -55,14 +48,31 @@ export const FundManagementList = () => {
           props?.row?.original?.node && (
             <TablePopover
               node={props?.row?.original?.node}
-              items={[
-                {
-                  title: 'Edit',
-                  onClick: (row) => {
-                    router.push(`${ROUTES.CBS_OTHERS_FUND_MANAGEMENT_EDIT}?id=${row?.id}`);
-                  },
-                },
-              ]}
+              items={
+                props?.row?.original?.node?.state === 'CREATED'
+                  ? [
+                      {
+                        title: 'Edit',
+                        onClick: (row) => {
+                          router.push(`${ROUTES.CBS_OTHERS_FUND_MANAGEMENT_EDIT}?id=${row?.id}`);
+                        },
+                      },
+                      {
+                        title: 'View Detail',
+                        onClick: (row) => {
+                          router.push(`${ROUTES.CBS_OTHERS_FUND_MANAGEMENT_VIEW}?id=${row?.id}`);
+                        },
+                      },
+                    ]
+                  : [
+                      {
+                        title: 'View Detail',
+                        onClick: (row) => {
+                          router.push(`${ROUTES.CBS_OTHERS_FUND_MANAGEMENT_VIEW}?id=${row?.id}`);
+                        },
+                      },
+                    ]
+              }
             />
           ),
         meta: {
@@ -90,7 +100,7 @@ export const FundManagementList = () => {
           total: data?.profitToFundManagement?.list?.totalCount ?? 'Many',
           pageInfo: data?.profitToFundManagement?.list?.pageInfo,
         }}
-        searchPlaceholder={t['depositListSearchDeposit']}
+        // searchPlaceholder={t['depositListSearchDeposit']}
       />
     </>
   );

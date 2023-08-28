@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
+import { useRouter } from 'next/router';
 
 import { GridItem } from '@myra-ui';
 import { Column } from '@myra-ui/editable-table';
@@ -13,6 +14,8 @@ import { TableOverview, TableOverviewColumnType } from './TableOverview';
 import { CustomFundManagementInput, OtherFundDistributionTableType } from '../lib/type';
 
 export const OtherFundDistributionTable = () => {
+  const router = useRouter();
+
   const { watch, setValue } = useFormContext<CustomFundManagementInput>();
 
   const [searchTerm, setSearchTerm] = useState<string | null>(null);
@@ -79,12 +82,14 @@ export const OtherFundDistributionTable = () => {
       searchCallback: (newSearch) => {
         setSearchTerm(newSearch);
       },
+      getDisabled: () => router?.asPath?.includes('/view'),
     },
     {
       accessor: 'percent',
-      header: 'Percent',
+      header: 'Percent(%)',
       isNumeric: true,
-      fieldType: 'percentage',
+      // fieldType: 'percentage',
+      getDisabled: () => router?.asPath?.includes('/view'),
     },
     {
       accessor: 'thisYear',
@@ -107,7 +112,7 @@ export const OtherFundDistributionTable = () => {
   const otherFunds = watch('otherFunds');
 
   useDeepCompareEffect(() => {
-    if (distributionTable?.length) {
+    if (otherFunds?.length) {
       setValue(
         'otherFunds',
         otherFunds?.map((fund) => ({

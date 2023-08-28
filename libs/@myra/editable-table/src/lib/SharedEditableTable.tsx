@@ -486,6 +486,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
                   ) as T,
                 });
               }}
+              isDisabled={searchColumn?.getDisabled && searchColumn?.getDisabled({} as T)}
             />
           </Box>
         ) : (

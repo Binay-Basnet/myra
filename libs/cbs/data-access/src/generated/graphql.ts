@@ -6092,6 +6092,14 @@ export type DirectorDetailsFormState = {
   temporaryAddress?: Maybe<KymAddress>;
 };
 
+export const DistributionCondition = {
+  Daily: 'DAILY',
+  Monthly: 'MONTHLY',
+  Quarterly: 'QUARTERLY',
+} as const;
+
+export type DistributionCondition =
+  typeof DistributionCondition[keyof typeof DistributionCondition];
 export type District = {
   id: Scalars['Int'];
   municipalities: Array<Municipality>;
@@ -6125,6 +6133,13 @@ export const DividendTransferTreatment = {
 
 export type DividendTransferTreatment =
   typeof DividendTransferTreatment[keyof typeof DividendTransferTreatment];
+export const DividendTreatment = {
+  AccountTransfer: 'ACCOUNT_TRANSFER',
+  BookPayable: 'BOOK_PAYABLE',
+  ShareAndAccount: 'SHARE_AND_ACCOUNT',
+} as const;
+
+export type DividendTreatment = typeof DividendTreatment[keyof typeof DividendTreatment];
 export type Document = {
   photo?: Maybe<Scalars['String']>;
   signature?: Maybe<Scalars['String']>;
@@ -16985,6 +17000,7 @@ export type Mutation = {
   seed: Scalars['Boolean'];
   settings: SettingsMutation;
   share: ShareMutation;
+  shareDividend: ShareDividendMutation;
   transaction: TransactionMutation;
   user: UserMutation;
   withdrawSlip: WithdrawSlipMutation;
@@ -18001,6 +18017,11 @@ export type PickupMethod = typeof PickupMethod[keyof typeof PickupMethod];
 export type PictureData = {
   identifier?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
+};
+
+export type PostShareDividendResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Scalars['String']>;
 };
 
 export type PredefinedElementFilter = {
@@ -20279,6 +20300,23 @@ export type ShareDetailData = {
 export type ShareDetailResult = {
   data?: Maybe<ShareDetailData>;
   error?: Maybe<QueryError>;
+};
+
+export type ShareDividendInput = {
+  condition: DistributionCondition;
+  payableCOAHead: Scalars['ID'];
+  sourceCOAHead: Scalars['ID'];
+  taxLedgerCOAHead: Scalars['ID'];
+  taxRate: Scalars['Float'];
+  treatment: DividendTreatment;
+};
+
+export type ShareDividendMutation = {
+  postDividend?: Maybe<PostShareDividendResult>;
+};
+
+export type ShareDividendMutationPostDividendArgs = {
+  data: ShareDividendInput;
 };
 
 export type ShareDividendSettingsInput = {
@@ -24255,6 +24293,25 @@ export type AddProfitToFundManagementDataMutationVariables = Exact<{
 export type AddProfitToFundManagementDataMutation = {
   profitToFundManagement: {
     new?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type ExecuteProfitFundMangementMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type ExecuteProfitFundMangementMutation = {
+  profitToFundManagement: {
+    execute?: {
       recordId?: string | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -31666,6 +31723,7 @@ export type ProfitToFundManagementListQuery = {
           fiscalYear?: string | null;
           staffBonusFund?: number | null;
           incomeTax?: number | null;
+          state?: FundManagementState | null;
           grossProfit?: { amount?: string | null; amountType?: BalanceType | null } | null;
         } | null;
       } | null> | null;
@@ -31687,6 +31745,7 @@ export type GetFundManagementFormStateQuery = {
         generalReserveFund?: number | null;
         patronageRefundFund?: number | null;
         cooperativePromotionFund?: number | null;
+        state?: FundManagementState | null;
         otherFunds?: Array<{
           accountCode?: string | null;
           accountName?: string | null;
@@ -46845,6 +46904,38 @@ export const useAddProfitToFundManagementDataMutation = <TError = unknown, TCont
     ),
     options
   );
+export const ExecuteProfitFundMangementDocument = `
+    mutation executeProfitFundMangement($id: ID!) {
+  profitToFundManagement {
+    execute(id: $id) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useExecuteProfitFundMangementMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ExecuteProfitFundMangementMutation,
+    TError,
+    ExecuteProfitFundMangementMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    ExecuteProfitFundMangementMutation,
+    TError,
+    ExecuteProfitFundMangementMutationVariables,
+    TContext
+  >(
+    ['executeProfitFundMangement'],
+    useAxios<ExecuteProfitFundMangementMutation, ExecuteProfitFundMangementMutationVariables>(
+      ExecuteProfitFundMangementDocument
+    ),
+    options
+  );
 export const SetNewEmployeeDocument = `
     mutation setNewEmployee($id: String, $input: EmployeeInput!) {
   hr {
@@ -57100,6 +57191,7 @@ export const ProfitToFundManagementListDocument = `
           }
           staffBonusFund
           incomeTax
+          state
         }
         cursor
       }
@@ -57141,6 +57233,7 @@ export const GetFundManagementFormStateDocument = `
           accountName
           percent
         }
+        state
       }
     }
   }
