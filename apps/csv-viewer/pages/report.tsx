@@ -9,9 +9,9 @@ import { privateAgent } from '@coop/csv-viewer/data-access';
 import { getAPIUrl } from '@coop/shared/utils';
 
 import { Resizer, Tab, TableSvg } from '.';
+import { AppBar } from '../components/AppBar';
 import LedgerStatementReport from '../components/LedgerStatementReport';
 import LoanStatementReport from '../components/LoanStatementReport';
-import { SubHeader } from '../components/SubHeader';
 
 const getReportTypes = async () => {
   const response = await privateAgent.get<{ data: string[] }>(`${getAPIUrl()}/report_types`);
@@ -57,7 +57,7 @@ export const Report = () => {
   }, [tabs]);
   return (
     <Box h="100vh" w="100vw" display="flex" flexDir="column" bg="background.500" overflow="auto">
-      <SubHeader />
+      <AppBar />
       <Box bg="#f8f8f8" height="calc(100% - 5.75rem)" display="flex" flexDir="row">
         <Resizer width="12rem" constraints={['12rem', '50rem']}>
           <Box w="100%" display="flex" flexDir="column" gap="s16" p="s8">

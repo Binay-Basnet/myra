@@ -10,7 +10,7 @@ import { getDatabaseSlug } from '@coop/shared/utils';
 
 import { Header, LogoSecondary } from './Header';
 
-export const SubHeader = () => {
+export const AppBar = () => {
   const router = useRouter();
   const isReport = router?.pathname?.includes('report');
 
