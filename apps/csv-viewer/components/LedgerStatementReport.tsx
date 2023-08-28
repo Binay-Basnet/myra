@@ -1,32 +1,71 @@
 import { useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useQuery } from '@tanstack/react-query';
 
 import { Box, GridItem, Text } from '@myra-ui';
 
-import {
-  GeneralLedgerFilter,
-  GeneralLedgerReportEntry,
-  useGetLedgerReportQuery,
-} from '@coop/cbs/data-access';
+import { GeneralLedgerFilter, GeneralLedgerReportEntry } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
-import { FormBranchSelect, FormCOASelect } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { privateAgent } from '@coop/csv-viewer/data-access';
+import { FormSelect } from '@coop/shared/form';
+import { amountConverter, getAPIUrl } from '@coop/shared/utils';
+
+const getLedgerReport = async (filters: GeneralLedgerFilter) => {
+  const response = await privateAgent.get<{
+    report: {
+      otherReport: {
+        generalLedgerReport: {
+          data: unknown;
+          ledgerName: unknown;
+          summary: { openingBalance: unknown; closingBalance: unknown };
+        };
+      };
+    };
+    total_pages: number;
+  }>(`${getAPIUrl()}/report`, {
+    params: {
+      report_type: 'LEDGER_STATEMENT',
+      ...filters,
+    },
+  });
+
+  return response?.data;
+};
+
+const getMembers = async () => {
+  const response = await privateAgent.get<{
+    data: {
+      member_name: string;
+      member_code: string;
+    }[];
+    total_pages: number;
+  }>(`${getAPIUrl()}/member`, {});
+
+  return response?.data;
+};
+
+const getLedger = async () => {
+  const response = await privateAgent.get<{
+    data: {
+      ledger_name: string;
+      ledger_code: string;
+    }[];
+    total_pages: number;
+  }>(`${getAPIUrl()}/ledger`, {});
+
+  return response?.data;
+};
 
 export const LedgerStatementReport = () => {
   const [filters, setFilters] = useState<GeneralLedgerFilter | null>(null);
 
-  const { data, isFetching } = useGetLedgerReportQuery(
-    {
-      data: {
-        ledgerId: filters?.ledgerId,
-        period: filters?.period,
-      } as GeneralLedgerFilter,
-    },
-    { enabled: !!filters }
+  const { data, isFetching } = useQuery(
+    ['ledger-report', filters],
+    async () => getLedgerReport(filters),
+    {}
   );
+
   const ledgerReport = data?.report?.otherReport?.generalLedgerReport?.data;
   const ledgerName = data?.report?.otherReport?.generalLedgerReport?.ledgerName;
   const openingBalance = data?.report?.otherReport?.generalLedgerReport?.summary?.openingBalance;
@@ -156,22 +195,32 @@ export const LedgerStatementReport = () => {
 };
 
 const LedgerReportInputs = () => {
-  const { watch } = useFormContext();
+  const { data: memberData } = useQuery(['members'], async () => getMembers(), {});
 
-  const branchId = watch('branchId') as string;
+  const { data: ledgerData } = useQuery(['ledger'], async () => getLedger(), {});
 
   return (
-    <Report.Inputs>
-      <GridItem colSpan={1}>
-        <FormBranchSelect showUserBranchesOnly name="branchId" label="Select Service Center" />
+    <Report.Inputs hideDate>
+      <GridItem colSpan={2}>
+        <FormSelect
+          label="Select members"
+          name="member_id"
+          options={memberData?.data?.map((item) => ({
+            label: item?.member_name,
+            value: item?.member_code,
+          }))}
+        />
       </GridItem>
 
       <GridItem colSpan={2}>
-        <FormCOASelect branchId={branchId} name="ledgerId" label="Ledger Name" />
-      </GridItem>
-
-      <GridItem colSpan={1}>
-        <ReportDateRange />
+        <FormSelect
+          label="Select Ledger"
+          name="ledger_id"
+          options={ledgerData?.data?.map((item) => ({
+            label: item?.ledger_name,
+            value: item?.ledger_code,
+          }))}
+        />
       </GridItem>
     </Report.Inputs>
   );
