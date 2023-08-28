@@ -120,7 +120,6 @@ export const LoanStatementReport = () => {
                     />
                   ),
                   meta: {
-                    width: '100%',
                     Footer: {
                       display: 'none',
                     },
