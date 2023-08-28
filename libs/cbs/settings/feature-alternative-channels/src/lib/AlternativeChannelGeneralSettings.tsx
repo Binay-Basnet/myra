@@ -125,15 +125,24 @@ export const AlternativeChannelGeneralSettings = () => {
             promise: utilityLedgerSetup({
               value: [
                 {
-                  coaHead: values?.[UtilityLedgerType.Utility],
+                  coaHead:
+                    values && 'value' in values[UtilityLedgerType.Utility]
+                      ? values?.[UtilityLedgerType.Utility]?.value
+                      : values?.[UtilityLedgerType.Utility],
                   ledgerType: UtilityLedgerType.Utility,
                 },
                 {
-                  coaHead: values?.[UtilityLedgerType.CashBack],
+                  coaHead:
+                    values && 'value' in values[UtilityLedgerType.CashBack]
+                      ? values?.[UtilityLedgerType.CashBack]?.value
+                      : values?.[UtilityLedgerType.CashBack],
                   ledgerType: UtilityLedgerType.CashBack,
                 },
                 {
-                  coaHead: values?.[UtilityLedgerType.ServiceCharge],
+                  coaHead:
+                    values && 'value' in values[UtilityLedgerType.ServiceCharge]
+                      ? values?.[UtilityLedgerType.ServiceCharge]?.value
+                      : values?.[UtilityLedgerType.ServiceCharge],
                   ledgerType: UtilityLedgerType.ServiceCharge,
                 },
               ],
