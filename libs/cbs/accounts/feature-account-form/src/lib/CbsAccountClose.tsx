@@ -6,7 +6,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
-  asyncToast,
   Box,
   Button,
   Divider,
@@ -14,6 +13,7 @@ import {
   getError,
   Grid,
   MemberCard,
+  ResponseDialog,
   Text,
   toast,
 } from '@myra-ui';
@@ -40,7 +40,12 @@ import {
   FormRadioGroup,
   FormTextArea,
 } from '@coop/shared/form';
-import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  amountToWordsConverter,
+  featureCode,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { Payment } from '../component/AccountCloseForm/payment';
 
@@ -355,26 +360,28 @@ export const CbsAccountClose = () => {
       );
     }
 
-    asyncToast({
-      id: 'account-close-final-payment',
-      msgs: {
-        success: 'Account has been closed',
-        loading: 'Closing Account',
-      },
-      promise: mutateAsync({
-        data: {
-          ...(filteredValues as DepositAccountClose),
-        },
-      }),
-      onSuccess: () => {
-        if (redirectPath) {
-          router.push(String(redirectPath));
-          queryClient.invalidateQueries(['getAccountInactiveCheck']);
-        } else {
-          router.push(ROUTES.CBS_ACCOUNT_CLOSE_LIST);
-        }
-      },
-    });
+    // asyncToast({
+    //   id: 'account-close-final-payment',
+    //   msgs: {
+    //     success: 'Account has been closed',
+    //     loading: 'Closing Account',
+    //   },
+    //   promise: mutateAsync({
+    //     data: {
+    //       ...(filteredValues as DepositAccountClose),
+    //     },
+    //   }),
+    // onSuccess: () => {
+    //   if (redirectPath) {
+    //     router.push(String(redirectPath));
+    //     queryClient.invalidateQueries(['getAccountInactiveCheck']);
+    //   } else {
+    //     router.push(ROUTES.CBS_ACCOUNT_CLOSE_LIST);
+    //   }
+    // },
+    // });
+
+    return filteredValues as DepositAccountClose;
   };
 
   useEffect(() => {
@@ -700,7 +707,48 @@ export const CbsAccountClose = () => {
       {mode === '1' && (
         <FormLayout.Footer
           status={<Button onClick={previousButtonHandler}>Previous</Button>}
-          mainButtonLabel="Confirm Payment"
+          mainButton={
+            <ResponseDialog
+              onSuccess={() => {
+                if (redirectPath) {
+                  router.push(String(redirectPath));
+                  queryClient.invalidateQueries(['getAccountInactiveCheck']);
+                } else {
+                  router.push(ROUTES.CBS_ACCOUNT_CLOSE_LIST);
+                }
+              }}
+              promise={() => mutateAsync({ data: handleSubmit() })}
+              successCardProps={(response) => {
+                const result = response?.account?.close?.record;
+
+                return {
+                  type: 'Saving Account Close',
+                  total: amountConverter(result?.amount || 0) as string,
+                  totalWords: amountToWordsConverter(result?.amount ? Number(result?.amount) : 0),
+                  title: 'Account Close Successful',
+                  details: {
+                    'Account Id': (
+                      <Text fontSize="s3" color="primary.500" fontWeight="600">
+                        {result?.accId}
+                      </Text>
+                    ),
+                    'Account Closed Date': localizedDate(result?.accCloseDate),
+                    'Account Name': result?.accName,
+                    'Total Interest': result?.interest,
+                    Charges: result?.charges,
+
+                    'Payment Mode': result?.paymentMode,
+                  },
+                  subTitle: 'Account closed successfully. Details of the account is listed below.',
+                };
+              }}
+              errorCardProps={{
+                title: 'Saving Account Close Failed',
+              }}
+            >
+              <Button width="160px">Confirm Payment</Button>
+            </ResponseDialog>
+          }
           mainButtonHandler={handleSubmit}
           isMainButtonDisabled={disableSubmitButtonFxn(selectedPaymentMode)}
         />
