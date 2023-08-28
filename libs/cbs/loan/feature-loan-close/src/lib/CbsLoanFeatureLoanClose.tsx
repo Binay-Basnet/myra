@@ -14,6 +14,7 @@ import {
   LoanRepaymentMethod,
   useGetIndividualMemberDetails,
   useGetLoanCloseDataQuery,
+  useGetLoanPreviewQuery,
   useGetMemberLoanAccountsQuery,
   useSetLoanCloseMutation,
 } from '@coop/cbs/data-access';
@@ -92,6 +93,7 @@ export const LoanCloseForm = () => {
   const memberId = watch('memberId');
   const loanAccountId = watch('loanAccountId');
   const isDisableDenomination = watch('cash.disableDenomination');
+
   // const amountPaid = watch('amountPaid') as unknown;
 
   const cashPaid = watch('cash.cashPaid');
@@ -239,6 +241,12 @@ export const LoanCloseForm = () => {
     }
   }, [redirectloanAccountId, redirectMemberId]);
 
+  // to check if it is LOC type loan for not disabling close button
+  const loanDataPreview = useGetLoanPreviewQuery({ id: loanAccountId as string });
+  const isLocLoan =
+    loanDataPreview?.data?.loanAccount?.loanPreview?.data?.loanDetails?.loanRepaymentScheme;
+
+  // const isLocLoan = true;
   return (
     <FormLayout methods={methods} hasSidebar={Boolean(memberId)}>
       <FormLayout.Header title="Loan Account Close" />
@@ -290,14 +298,14 @@ export const LoanCloseForm = () => {
                   code: memberDetailData?.code,
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,
-                  maritalStatus: memberDetailData?.maritalStatus,
+                  maritalStatus: memberDetailData?.maritalStatus as string,
                   dateJoined: memberDetailData?.dateJoined,
                   phoneNo: memberDetailData?.contact,
                   email: memberDetailData?.email,
                   address: memberDetailData?.address,
                 }}
-                signaturePath={memberSignatureUrl}
-                citizenshipPath={memberCitizenshipUrl}
+                signaturePath={memberSignatureUrl as string}
+                citizenshipPath={memberCitizenshipUrl as string}
               />
 
               {loanAccountId && (
@@ -309,12 +317,11 @@ export const LoanCloseForm = () => {
           </FormLayout.Sidebar>
         )}
       </FormLayout.Content>
-
       {mode === '0' && (
         <FormLayout.Footer
           mainButtonLabel="Close Account"
           mainButtonHandler={proceedButtonHandler}
-          isMainButtonDisabled={!memberId || !loanAccountId || !totalPayableAmount}
+          isMainButtonDisabled={!memberId || !loanAccountId || (!totalPayableAmount && !isLocLoan)}
           dangerButton
         />
       )}
