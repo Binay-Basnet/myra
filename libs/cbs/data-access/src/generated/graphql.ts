@@ -218,6 +218,7 @@ export type AccountCloseSuccessCard = {
   accName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   charges?: Maybe<Scalars['String']>;
+  closeReason?: Maybe<Scalars['String']>;
   interest?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<Scalars['String']>;
 };
@@ -1057,6 +1058,27 @@ export type AddressInput = {
 export type AddressType = {
   permanent?: Maybe<Address>;
   temporary?: Maybe<Address>;
+};
+
+export type AdjustedLedgerReport = {
+  data?: Maybe<Array<Maybe<AdjustedLedgerReportData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type AdjustedLedgerReportData = {
+  adjustedBalance?: Maybe<BalanceValue>;
+  balance?: Maybe<BalanceValue>;
+  branchId: Scalars['ID'];
+  branchName: Scalars['String'];
+  cr?: Maybe<Scalars['String']>;
+  dr?: Maybe<Scalars['String']>;
+  ledgerId: Scalars['String'];
+};
+
+export type AdjustedLedgerReportInput = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  coaHead?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
 };
 
 export const AdjustmentUnit = {
@@ -6102,6 +6124,14 @@ export type DirectorDetailsFormState = {
   temporaryAddress?: Maybe<KymAddress>;
 };
 
+export const DistributionCondition = {
+  Daily: 'DAILY',
+  Monthly: 'MONTHLY',
+  Quarterly: 'QUARTERLY',
+} as const;
+
+export type DistributionCondition =
+  typeof DistributionCondition[keyof typeof DistributionCondition];
 export type District = {
   id: Scalars['Int'];
   municipalities: Array<Municipality>;
@@ -6135,6 +6165,13 @@ export const DividendTransferTreatment = {
 
 export type DividendTransferTreatment =
   typeof DividendTransferTreatment[keyof typeof DividendTransferTreatment];
+export const DividendTreatment = {
+  AccountTransfer: 'ACCOUNT_TRANSFER',
+  BookPayable: 'BOOK_PAYABLE',
+  ShareAndAccount: 'SHARE_AND_ACCOUNT',
+} as const;
+
+export type DividendTreatment = typeof DividendTreatment[keyof typeof DividendTreatment];
 export type Document = {
   photo?: Maybe<Scalars['String']>;
   signature?: Maybe<Scalars['String']>;
@@ -7530,6 +7567,7 @@ export type FamilyMemberDetails = {
 
 export type FianancialTransactionReport = {
   abbsTransactionReport?: Maybe<AbbsTransactionReportResult>;
+  adjustedLedgerReport: AdjustedLedgerReport;
   bankGLBalanceReport: BankGlBalanceResult;
   bankGLStatementReport: BankGlStatementResult;
   charKhataReport: TrialSheetReportResult;
@@ -7547,6 +7585,10 @@ export type FianancialTransactionReport = {
 
 export type FianancialTransactionReportAbbsTransactionReportArgs = {
   data?: InputMaybe<AbbsTransactionReportFilter>;
+};
+
+export type FianancialTransactionReportAdjustedLedgerReportArgs = {
+  data: AdjustedLedgerReportInput;
 };
 
 export type FianancialTransactionReportBankGlBalanceReportArgs = {
@@ -8340,6 +8382,7 @@ export type GlBalanceFilter = {
 };
 
 export type GlReportSummary = {
+  adjustedClosingBalance?: Maybe<BalanceValue>;
   closingBalance?: Maybe<Scalars['String']>;
   closingBalanceType?: Maybe<BalanceType>;
   openingBalance?: Maybe<Scalars['String']>;
@@ -8360,6 +8403,7 @@ export const GenderInputType = {
 
 export type GenderInputType = typeof GenderInputType[keyof typeof GenderInputType];
 export type GenderLedgerReportResult = {
+  adjustedEntries?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
   data?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
   error?: Maybe<QueryError>;
   ledgerName?: Maybe<Scalars['String']>;
@@ -8398,6 +8442,7 @@ export type GeneralBranchSettingsQueryListArgs = {
 };
 
 export type GeneralLedgerFilter = {
+  inculdeAdjustment?: InputMaybe<Scalars['Boolean']>;
   ledgerId: Scalars['ID'];
   period: LocalizedDateFilter;
 };
@@ -15552,6 +15597,11 @@ export type MrTransactionReportFilter = {
 export type MrTransactionReportResult = {
   data?: Maybe<Array<Maybe<MrTransactionReport>>>;
   error?: Maybe<QueryError>;
+  summary?: Maybe<MrTransactionReportSummary>;
+};
+
+export type MrTransactionReportSummary = {
+  totalAmount?: Maybe<BalanceValue>;
 };
 
 export type MRmemberInstallmentData = {
@@ -16995,6 +17045,7 @@ export type Mutation = {
   seed: Scalars['Boolean'];
   settings: SettingsMutation;
   share: ShareMutation;
+  shareDividend: ShareDividendMutation;
   transaction: TransactionMutation;
   user: UserMutation;
   withdrawSlip: WithdrawSlipMutation;
@@ -18011,6 +18062,11 @@ export type PickupMethod = typeof PickupMethod[keyof typeof PickupMethod];
 export type PictureData = {
   identifier?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
+};
+
+export type PostShareDividendResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Scalars['String']>;
 };
 
 export type PredefinedElementFilter = {
@@ -20289,6 +20345,23 @@ export type ShareDetailData = {
 export type ShareDetailResult = {
   data?: Maybe<ShareDetailData>;
   error?: Maybe<QueryError>;
+};
+
+export type ShareDividendInput = {
+  condition: DistributionCondition;
+  payableCOAHead: Scalars['ID'];
+  sourceCOAHead: Scalars['ID'];
+  taxLedgerCOAHead: Scalars['ID'];
+  taxRate: Scalars['Float'];
+  treatment: DividendTreatment;
+};
+
+export type ShareDividendMutation = {
+  postDividend?: Maybe<PostShareDividendResult>;
+};
+
+export type ShareDividendMutationPostDividendArgs = {
+  data: ShareDividendInput;
 };
 
 export type ShareDividendSettingsInput = {
@@ -28138,6 +28211,25 @@ export type SetValuatorMutation = {
             | null;
         } | null;
       } | null;
+    } | null;
+  };
+};
+
+export type PostShareDividendMutationVariables = Exact<{
+  data: ShareDividendInput;
+}>;
+
+export type PostShareDividendMutation = {
+  shareDividend: {
+    postDividend?: {
+      record?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
     } | null;
   };
 };
@@ -52487,6 +52579,33 @@ export const useSetValuatorMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetValuatorMutation, TError, SetValuatorMutationVariables, TContext>(
     ['setValuator'],
     useAxios<SetValuatorMutation, SetValuatorMutationVariables>(SetValuatorDocument),
+    options
+  );
+export const PostShareDividendDocument = `
+    mutation postShareDividend($data: ShareDividendInput!) {
+  shareDividend {
+    postDividend(data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const usePostShareDividendMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    PostShareDividendMutation,
+    TError,
+    PostShareDividendMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<PostShareDividendMutation, TError, PostShareDividendMutationVariables, TContext>(
+    ['postShareDividend'],
+    useAxios<PostShareDividendMutation, PostShareDividendMutationVariables>(
+      PostShareDividendDocument
+    ),
     options
   );
 export const AddSharePurchaseDocument = `

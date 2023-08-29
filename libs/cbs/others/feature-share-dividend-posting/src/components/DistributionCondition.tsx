@@ -1,8 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 
-import { DividendDistributionCondition } from '@coop/cbs/data-access';
-import { FormNumberInput, FormSwitchTab } from '@coop/shared/form';
 import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
+
+import { DistributionCondition, DividendDistributionCondition } from '@coop/cbs/data-access';
+import { FormNumberInput, FormSwitchTab } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 const months = [
@@ -56,36 +57,39 @@ const months = [
   },
 ];
 
-export const DistributionCondition = () => {
+export const DistributionConditionComp = () => {
   const { t } = useTranslation();
 
   const { watch } = useFormContext();
 
-  const distributionCondition = watch('distributionCondition');
+  const distributionCondition = watch('condition');
 
   return (
     <FormSection header={t['shareDividentDistributionCondition']}>
       <GridItem colSpan={3}>
         <FormSwitchTab
-          name="distributionCondition"
+          name="condition"
           label={t['shareAddDifferentShareDividentRate']}
           options={[
             {
               label: t['shareDividentDaily'],
-              value: DividendDistributionCondition?.Daily,
+              value: DistributionCondition.Daily,
+              isDisabled: true,
             },
             {
               label: t['shareDividentMonthly'],
-              value: DividendDistributionCondition?.Monthly,
+              value: DistributionCondition.Monthly,
+              isDisabled: true,
             },
             {
               label: t['shareDividentQuarterly'],
-              value: DividendDistributionCondition?.Quarterly,
+              value: DistributionCondition.Quarterly,
+              isDisabled: true,
             },
           ]}
         />
       </GridItem>
-      {distributionCondition === DividendDistributionCondition?.Daily && (
+      {distributionCondition === DistributionCondition.Daily && (
         <GridItem colSpan={3}>
           <Alert
             status="info"
@@ -94,7 +98,7 @@ export const DistributionCondition = () => {
           />
         </GridItem>
       )}
-      {distributionCondition === DividendDistributionCondition?.Quarterly && (
+      {distributionCondition === DistributionCondition.Quarterly && (
         <>
           <GridItem colSpan={3} display="flex" alignItems="center" justifyContent="space-between">
             <Text fontSize="r1" color="gray.800">

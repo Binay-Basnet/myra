@@ -1,78 +1,69 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
-import { Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { asyncToast, FormSection } from '@myra-ui';
 
-import { DividendDistributionCondition, DividendTransferTreatment } from '@coop/cbs/data-access';
+import {
+  DividendDistributionCondition,
+  DividendTransferTreatment,
+  ShareDividendInput,
+  usePostShareDividendMutation,
+} from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
+import { FormLayout, FormLeafCoaHeadSelect } from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 
 import {
-  AccountTransfer,
-  BookPayables,
-  DistributionCondition,
+  DistributionConditionComp,
   DividendTransferTreatmentSection,
-  ShareAndAccount,
   ShareDistribution,
-  ShareDividendFundInfo,
 } from '../components';
 
 export const NewShareDividendPosting = () => {
-  const methods = useForm({
+  const router = useRouter();
+
+  const methods = useForm<ShareDividendInput>({
     defaultValues: {
-      distributionCondition: DividendDistributionCondition.Daily,
-      dividendTransferTreatment: DividendTransferTreatment.ShareAndAccount,
+      condition: DividendDistributionCondition.Daily,
+      treatment: DividendTransferTreatment.ShareAndAccount,
     },
   });
 
-  const { watch } = methods;
+  const { mutateAsync: postShareDividend } = usePostShareDividendMutation();
 
-  const dividendTransferTreatment = watch('dividendTransferTreatment') as DividendTransferTreatment;
+  const handleSubmit = () => {
+    asyncToast({
+      id: 'share-dividend-posting',
+      msgs: { loading: 'Posting share dividend', success: 'Share dividend posted' },
+      promise: postShareDividend({ data: methods.getValues() }),
+      onSuccess: () => router.push(ROUTES.CBS_OTHERS_SHARE_DIVIDEND_POSTING_LIST),
+    });
+  };
 
   return (
-    <>
-      <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader
-            title={`Share Dividend Posting - ${featureCode.shareDividendPostingList}`}
-            // closeLink="/others/share-dividend-posting/list"
-          />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header
+        title={`Share Dividend Posting - ${featureCode.shareDividendPostingList}`}
+        // closeLink="/others/share-dividend-posting/list"
+      />
 
-        <Box bg="white" pb="60px">
-          <FormProvider {...methods}>
-            <form>
-              <Box minH="calc(100vh - 170px)">
-                <ShareDividendFundInfo />
+      <FormLayout.Content>
+        <FormLayout.Form>
+          {/* <ShareDividendFundInfo /> */}
 
-                <ShareDistribution />
+          <ShareDistribution />
 
-                <DistributionCondition />
+          <DistributionConditionComp />
 
-                <DividendTransferTreatmentSection />
+          <DividendTransferTreatmentSection />
 
-                {dividendTransferTreatment === DividendTransferTreatment.ShareAndAccount && (
-                  <ShareAndAccount />
-                )}
+          <FormSection header="Share Dividend Payable Ledger Mapping" divider={false}>
+            <FormLeafCoaHeadSelect name="payableCOAHead" label="Ledger Mapping" />
+          </FormSection>
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-                {dividendTransferTreatment === DividendTransferTreatment.AccountTransfer && (
-                  <AccountTransfer />
-                )}
-
-                {dividendTransferTreatment === DividendTransferTreatment.BookPayable && (
-                  <BookPayables />
-                )}
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
-
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter mainButtonLabel="Submit" />
-          </Container>
-        </Box>
-      </Box>
-    </>
+      <FormLayout.Footer mainButtonLabel="Submit" mainButtonHandler={handleSubmit} />
+    </FormLayout>
   );
 };

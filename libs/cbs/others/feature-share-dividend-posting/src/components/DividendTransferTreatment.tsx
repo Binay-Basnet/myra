@@ -1,6 +1,7 @@
-import { DividendTransferTreatment } from '@coop/cbs/data-access';
-import { FormRadioGroup } from '@coop/shared/form';
 import { FormSection } from '@myra-ui';
+
+import { DividendTreatment } from '@coop/cbs/data-access';
+import { FormRadioGroup } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 export const DividendTransferTreatmentSection = () => {
@@ -11,19 +12,19 @@ export const DividendTransferTreatmentSection = () => {
       subHeader={t['shareDividentTransferTreatmentSubtitle']}
     >
       <FormRadioGroup
-        name="dividendTransferTreatment"
+        name="treatment"
         options={[
           {
             label: t['shareDividentTransferTreatmentShareAndAccount'],
-            value: DividendTransferTreatment?.ShareAndAccount,
+            value: DividendTreatment.ShareAndAccount,
           },
           {
             label: t['shareDividentTransferTreatmentAccountTransfer'],
-            value: DividendTransferTreatment?.AccountTransfer,
+            value: DividendTreatment.AccountTransfer,
           },
           {
             label: t['shareDividentTransferTreatmentBookPayable'],
-            value: DividendTransferTreatment?.BookPayable,
+            value: DividendTreatment.BookPayable,
           },
         ]}
       />
