@@ -5,7 +5,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { Box, Button, Grid, Icon, Text } from '@myra-ui';
 
 import { InfoCard } from '@coop/ebanking/cards';
-import { useGetAccountListQuery } from '@coop/ebanking/data-access';
+import { useGetAccountListQuery, useGetCashBackChargesQuery } from '@coop/ebanking/data-access';
 import {
   CardBodyContainer,
   CardContainer,
@@ -48,6 +48,28 @@ export const MobileTopupPaymentReview = ({
 
   const serviceProvider = useMemo(() => getMobileServiceProvider(mobileNumber), [mobileNumber]);
 
+  const amount = watch('amount');
+
+  const { data: cashBackData } = useGetCashBackChargesQuery(
+    {
+      input: {
+        slug: serviceProvider as string,
+        amount,
+      },
+    },
+    {
+      enabled: !!serviceProvider && !!amount,
+    }
+  );
+
+  const { cashBackAmount, serviceChargeAmount } = useMemo(
+    () => ({
+      cashBackAmount: cashBackData?.eBanking?.utility?.getCashBackCharges?.data?.cashBack,
+      serviceChargeAmount: cashBackData?.eBanking?.utility?.getCashBackCharges?.data?.serviceCharge,
+    }),
+    [cashBackData]
+  );
+
   return (
     <>
       <InfoCard
@@ -70,7 +92,7 @@ export const MobileTopupPaymentReview = ({
               }
             />
 
-            <Grid templateColumns="repeat(3, 1fr)">
+            <Grid templateColumns="repeat(3, 1fr)" gap="s16">
               <CardContent title="Mobile Number" subtitle={getValues().mobileNumber} />
 
               <CardContent
@@ -79,6 +101,13 @@ export const MobileTopupPaymentReview = ({
               />
 
               <CardContent title="Topup Amount" subtitle={amountConverter(getValues().amount)} />
+
+              <CardContent title="Cashback" subtitle={amountConverter(cashBackAmount || 0)} />
+
+              <CardContent
+                title="Service Charge"
+                subtitle={amountConverter(serviceChargeAmount || 0)}
+              />
             </Grid>
           </CardBodyContainer>
 

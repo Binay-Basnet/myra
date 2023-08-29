@@ -1968,3 +1968,66 @@ export const useListUtilitiesQuery = <TData = Types.ListUtilitiesQuery, TError =
     ).bind(null, variables),
     options
   );
+export const GetCashBackChargesDocument = `
+    query getCashBackCharges($input: CheckCashBackInfo) {
+  eBanking {
+    utility {
+      getCashBackCharges(input: $input) {
+        data {
+          id
+          cashBack
+          serviceCharge
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCashBackChargesQuery = <TData = Types.GetCashBackChargesQuery, TError = unknown>(
+  variables?: Types.GetCashBackChargesQueryVariables,
+  options?: UseQueryOptions<Types.GetCashBackChargesQuery, TError, TData>
+) =>
+  useQuery<Types.GetCashBackChargesQuery, TError, TData>(
+    variables === undefined ? ['getCashBackCharges'] : ['getCashBackCharges', variables],
+    useAxios<Types.GetCashBackChargesQuery, Types.GetCashBackChargesQueryVariables>(
+      GetCashBackChargesDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListEbankingUtilitiesDocument = `
+    query listEbankingUtilities($pagination: Pagination, $filter: Filter) {
+  eBanking {
+    utility {
+      listUtilities(pagination: $pagination, filter: $filter) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          cursor
+          node {
+            id
+            name
+            slug
+            serviceType
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useListEbankingUtilitiesQuery = <
+  TData = Types.ListEbankingUtilitiesQuery,
+  TError = unknown
+>(
+  variables?: Types.ListEbankingUtilitiesQueryVariables,
+  options?: UseQueryOptions<Types.ListEbankingUtilitiesQuery, TError, TData>
+) =>
+  useQuery<Types.ListEbankingUtilitiesQuery, TError, TData>(
+    variables === undefined ? ['listEbankingUtilities'] : ['listEbankingUtilities', variables],
+    useAxios<Types.ListEbankingUtilitiesQuery, Types.ListEbankingUtilitiesQueryVariables>(
+      ListEbankingUtilitiesDocument
+    ).bind(null, variables),
+    options
+  );

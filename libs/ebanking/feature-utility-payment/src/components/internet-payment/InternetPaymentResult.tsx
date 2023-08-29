@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import { Box, Button, Grid } from '@myra-ui';
 
 import { ResultModal, TransactionHeaderCardWithChip } from '@coop/ebanking/cards';
-import { useGetAccountListQuery, Utility } from '@coop/ebanking/data-access';
+import {
+  useGetAccountListQuery,
+  useGetCashBackChargesQuery,
+  Utility,
+} from '@coop/ebanking/data-access';
 import {
   CardBodyContainer,
   CardContainer,
   CardContent,
   CardHeader,
 } from '@coop/ebanking/ui-layout';
+import { amountConverter } from '@coop/shared/utils';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'pending';
 
@@ -48,6 +53,28 @@ export const InternetPaymentResult = ({
   }));
 
   const values = methods.getValues();
+
+  const amount = methods.watch('amount');
+
+  const { data: cashBackData } = useGetCashBackChargesQuery(
+    {
+      input: {
+        slug: schema?.slug,
+        amount,
+      },
+    },
+    {
+      enabled: !!schema?.slug && !!amount,
+    }
+  );
+
+  const { cashBackAmount, serviceChargeAmount } = useMemo(
+    () => ({
+      cashBackAmount: cashBackData?.eBanking?.utility?.getCashBackCharges?.data?.cashBack,
+      serviceChargeAmount: cashBackData?.eBanking?.utility?.getCashBackCharges?.data?.serviceCharge,
+    }),
+    [cashBackData]
+  );
 
   return (
     <>
@@ -119,6 +146,13 @@ export const InternetPaymentResult = ({
                   );
                 }
               )}
+
+              <CardContent title="Cashback" subtitle={amountConverter(cashBackAmount || 0)} />
+
+              <CardContent
+                title="Service Charge"
+                subtitle={amountConverter(serviceChargeAmount || 0)}
+              />
             </Grid>
           </CardBodyContainer>
 

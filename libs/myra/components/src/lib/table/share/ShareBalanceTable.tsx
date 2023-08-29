@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Avatar, Box } from '@myra-ui';
-import { Column, Table, TablePopover } from '@myra-ui/table';
+import { Avatar, Box, Column, Table, TablePopover } from '@myra-ui';
 
 import { useGetShareBalanceListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
