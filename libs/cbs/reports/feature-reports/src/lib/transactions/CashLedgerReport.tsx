@@ -130,6 +130,7 @@ export const CashLedgersReport = () => {
                         Footer: {
                           colspan: 1,
                         },
+                        skipExcelFormatting: true,
                       },
                     },
                     {
@@ -223,6 +224,7 @@ export const CashLedgersReport = () => {
                         Footer: {
                           colspan: 1,
                         },
+                        skipExcelFormatting: true,
                       },
                     },
                     {

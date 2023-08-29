@@ -103,6 +103,7 @@ export const ClosedSavingAccountStatement = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -130,6 +131,7 @@ export const ClosedSavingAccountStatement = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {

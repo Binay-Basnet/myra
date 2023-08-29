@@ -107,6 +107,9 @@ export const InterestPostingReport = () => {
               {
                 header: 'Date',
                 accessorFn: (row) => localizedDate(row?.date),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               // {
               //   header: 'Days',

@@ -123,10 +123,16 @@ export const AccountCloseReport = () => {
               {
                 header: 'Account Opening Date',
                 accessorFn: (row) => localizedDate(row?.openingDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Account Closing Date',
                 accessorFn: (row) => localizedDate(row?.closingDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Closed Balance',

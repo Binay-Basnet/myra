@@ -448,6 +448,7 @@ export const IndividualMemberReport = () => {
                       Footer: {
                         display: 'none',
                       },
+                      skipExcelFormatting: true,
                     },
                   },
                   {
@@ -457,6 +458,7 @@ export const IndividualMemberReport = () => {
                       Footer: {
                         display: 'none',
                       },
+                      skipExcelFormatting: true,
                     },
                   },
                   {
@@ -530,6 +532,7 @@ export const IndividualMemberReport = () => {
                       Footer: {
                         display: 'none',
                       },
+                      skipExcelFormatting: true,
                     },
                   },
                   {

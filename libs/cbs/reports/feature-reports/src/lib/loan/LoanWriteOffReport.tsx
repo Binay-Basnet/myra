@@ -117,6 +117,7 @@ export const LoanWriteOffReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -128,6 +129,7 @@ export const LoanWriteOffReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -228,6 +230,9 @@ export const LoanWriteOffReport = () => {
                 header: 'Write off date',
                 accessorKey: 'writeOffDate',
                 cell: (props) => localizedDate(props?.row?.original?.writeOffDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Write off Reason',

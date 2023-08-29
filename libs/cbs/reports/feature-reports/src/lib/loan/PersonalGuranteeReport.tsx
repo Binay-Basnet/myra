@@ -202,6 +202,9 @@ export const LoanPersonalGuranteeReport = () => {
                     accessorKey: 'date',
                     cell: (props) =>
                       props.row?.original?.date ? localizedDate(props?.row?.original?.date) : '-',
+                    meta: {
+                      skipExcelFormatting: true,
+                    },
                   },
                   {
                     header: 'Status',

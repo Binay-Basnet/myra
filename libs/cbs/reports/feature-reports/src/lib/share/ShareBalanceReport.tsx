@@ -164,6 +164,7 @@ export const ShareBalanceReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -174,6 +175,7 @@ export const ShareBalanceReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {

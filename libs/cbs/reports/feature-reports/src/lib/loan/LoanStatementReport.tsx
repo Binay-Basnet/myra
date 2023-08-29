@@ -91,6 +91,7 @@ export const LoanStatementReport = () => {
                     Footer: {
                       display: 'none',
                     },
+                    skipExcelFormatting: true,
                   },
                 },
                 {

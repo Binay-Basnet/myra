@@ -168,6 +168,7 @@ export const ExceptionShareBalanceReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {

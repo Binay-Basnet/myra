@@ -135,6 +135,7 @@ export const ExceptionMemberBalanceReport = () => {
                     Footer: {
                       display: 'none',
                     },
+                    skipExcelFormatting: true,
                   },
                 },
                 {

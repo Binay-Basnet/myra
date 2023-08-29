@@ -130,6 +130,9 @@ export const MemberRegisterReport = () => {
                     {
                       header: 'DOB',
                       accessorFn: (row) => localizedDate(row?.dob),
+                      meta: {
+                        skipExcelFormatting: true,
+                      },
                     },
                     {
                       header: 'GrandFather Name',
@@ -179,6 +182,9 @@ export const MemberRegisterReport = () => {
                     {
                       header: 'Contact Number',
                       accessorKey: 'contactNo',
+                      meta: {
+                        skipExcelFormatting: true,
+                      },
                     },
                     {
                       header: 'Email',
@@ -187,6 +193,9 @@ export const MemberRegisterReport = () => {
                     {
                       header: 'VAT/PAN No',
                       accessorKey: 'panVatNo',
+                      meta: {
+                        skipExcelFormatting: true,
+                      },
                     },
                     {
                       header: 'Other',

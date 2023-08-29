@@ -116,6 +116,9 @@ export const BankGLStatementReport = () => {
               {
                 header: 'Date',
                 accessorFn: (row) => localizedDate(row?.date),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Particular',

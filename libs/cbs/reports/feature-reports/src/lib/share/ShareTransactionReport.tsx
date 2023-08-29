@@ -172,6 +172,7 @@ export const ShareTransactionsReport = () => {
                       Footer: {
                         colspan: 4,
                       },
+                      skipExcelFormatting: true,
                     },
                   },
                   {
@@ -188,6 +189,7 @@ export const ShareTransactionsReport = () => {
                       Footer: {
                         display: 'none',
                       },
+                      skipExcelFormatting: true,
                     },
                   },
                   {

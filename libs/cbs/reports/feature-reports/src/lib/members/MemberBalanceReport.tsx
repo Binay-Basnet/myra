@@ -132,6 +132,7 @@ export const MemberBalanceReport = () => {
                     Footer: {
                       display: 'none',
                     },
+                    skipExcelFormatting: true,
                   },
                 },
                 {

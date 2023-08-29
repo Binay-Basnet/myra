@@ -150,6 +150,7 @@ export const ExternalLoanReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -174,6 +175,9 @@ export const ExternalLoanReport = () => {
                 header: 'Maturity Date',
                 accessorKey: 'maturityDate',
                 cell: (props) => localizedDate(props?.row?.original?.maturityDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
 
               {
@@ -269,6 +273,9 @@ export const ExternalLoanReport = () => {
                 header: 'Loan Closed Date',
                 accessorKey: 'loanClosedDate',
                 cell: (props) => localizedDate(props?.row?.original?.loanClosedDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Related Branch',

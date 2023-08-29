@@ -101,6 +101,9 @@ export const ABBSTransactionReport = () => {
               {
                 header: 'Date',
                 accessorFn: (row) => localizedDate(row?.date),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Member Name',
@@ -131,6 +134,9 @@ export const ABBSTransactionReport = () => {
                     label={props?.row?.original?.transactionId as string}
                   />
                 ),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Member Branch',

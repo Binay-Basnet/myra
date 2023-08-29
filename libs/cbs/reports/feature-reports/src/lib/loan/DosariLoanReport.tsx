@@ -136,6 +136,9 @@ export const DosariLoanReport = () => {
               {
                 header: 'Phone No.',
                 accessorFn: (row) => row.phoneNumber,
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
 
               {
@@ -235,6 +238,7 @@ export const DosariLoanReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -244,6 +248,7 @@ export const DosariLoanReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -359,14 +364,23 @@ export const DosariLoanReport = () => {
               {
                 header: 'Last Principal Paid Date',
                 accessorFn: (row) => localizedDate(row?.lastPrincipalPaidDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Last Interest Paid Date',
                 accessorFn: (row) => localizedDate(row?.lastInterestPaidDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Next Installment Date',
                 accessorFn: (row) => localizedDate(row?.nextPaymentDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Installment Late Days',

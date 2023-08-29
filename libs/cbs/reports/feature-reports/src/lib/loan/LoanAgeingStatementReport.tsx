@@ -212,6 +212,7 @@ export const LoanAgingStatementsReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -221,6 +222,7 @@ export const LoanAgingStatementsReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -340,6 +342,7 @@ export const LoanAgingStatementsReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -349,6 +352,7 @@ export const LoanAgingStatementsReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -358,6 +362,7 @@ export const LoanAgingStatementsReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {

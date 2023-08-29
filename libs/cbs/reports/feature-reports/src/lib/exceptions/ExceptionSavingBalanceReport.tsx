@@ -223,6 +223,7 @@ export const ExceptionSavingBalanceReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -232,6 +233,7 @@ export const ExceptionSavingBalanceReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {

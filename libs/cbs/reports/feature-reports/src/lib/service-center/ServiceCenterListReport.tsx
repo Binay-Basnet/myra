@@ -176,6 +176,9 @@ export const ServiceCenterListReport = () => {
                   {
                     header: 'Service Center Opening Date',
                     accessorFn: (row) => localizedDate(row?.estDate),
+                    meta: {
+                      skipExcelFormatting: true,
+                    },
                   },
                   {
                     header: 'Service Center Status',

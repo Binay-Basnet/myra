@@ -89,6 +89,9 @@ export const FixedDepositsReport = () => {
                     label={props?.row?.original?.memberCode as string}
                   />
                 ),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Member Name',
@@ -102,6 +105,9 @@ export const FixedDepositsReport = () => {
               {
                 header: 'Mobile No.',
                 accessorKey: 'mobileNo',
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Account Name',
@@ -110,6 +116,9 @@ export const FixedDepositsReport = () => {
               {
                 header: 'Account Open Date',
                 accessorFn: (row) => localizedDate(row?.accountOpenDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Account No',
@@ -121,22 +130,37 @@ export const FixedDepositsReport = () => {
                     label={props?.row?.original?.accountNo as string}
                   />
                 ),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'FD Expiry Date',
                 accessorFn: (row) => localizedDate(row?.expiryDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Nominee Account No',
                 accessorKey: 'nomineeAccountNo',
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'FD Amount',
                 accessorKey: 'fdAmount',
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'Interest Amount',
                 accessorKey: 'interestAmount',
+                meta: {
+                  isNumeric: true,
+                },
               },
             ]}
           />

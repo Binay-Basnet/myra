@@ -398,6 +398,7 @@ export const TableBodyCell = <T,>({ cell, freezeFirstColumn, ...props }: TableBo
         : {},
     }}
     bg="white"
+    {...(cell.column.columnDef.meta?.skipExcelFormatting ? { 'data-t': 's' } : {})}
     {...props}
   >
     <Text as="div" textOverflow="ellipsis" overflow="hidden" color="gray.800" whiteSpace="nowrap">
