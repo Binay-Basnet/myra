@@ -93,6 +93,7 @@ export const ExternalLoanStatementReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {

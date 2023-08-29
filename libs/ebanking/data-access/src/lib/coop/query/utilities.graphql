@@ -77,3 +77,39 @@ query listUtilities($pagination: Pagination, $filter: Filter) {
     }
   }
 }
+
+query getCashBackCharges($input: CheckCashBackInfo) {
+  eBanking {
+    utility {
+      getCashBackCharges(input: $input) {
+        data {
+          id
+          cashBack
+          serviceCharge
+        }
+      }
+    }
+  }
+}
+
+query listEbankingUtilities($pagination: Pagination, $filter: Filter) {
+  eBanking {
+    utility {
+      listUtilities(pagination: $pagination, filter: $filter) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          cursor
+          node {
+            id
+            name
+            slug
+            serviceType
+          }
+        }
+      }
+    }
+  }
+}

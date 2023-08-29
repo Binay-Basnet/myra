@@ -1,28 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import DataGrid, { DataGridHandle } from 'react-data-grid';
-import { BsChevronRight } from 'react-icons/bs';
-import { FiDatabase } from 'react-icons/fi';
 import { IoMdClose } from 'react-icons/io';
 import { Spinner } from '@chakra-ui/react';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { startCase } from 'lodash';
 
 import { Box, Icon, Input, Text } from '@myra-ui';
 
 import { privateAgent } from '@coop/csv-viewer/data-access';
-import { getAPIUrl, getDatabaseSlug } from '@coop/shared/utils';
+import { getAPIUrl } from '@coop/shared/utils';
 
-import { Header, LogoSecondary } from '../components/Header';
+import { AppBar } from '../components/AppBar';
 
 import 'react-data-grid/lib/styles.css';
 
-type Tab = {
+export type Tab = {
   label: string;
   value: string;
 };
 
-const TableSvg = () => (
+export const TableSvg = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M15.8333 2.5H4.16667C3.24619 2.5 2.5 3.24619 2.5 4.16667V15.8333C2.5 16.7538 3.24619 17.5 4.16667 17.5H15.8333C16.7538 17.5 17.5 16.7538 17.5 15.8333V4.16667C17.5 3.24619 16.7538 2.5 15.8333 2.5Z"
@@ -109,45 +106,7 @@ export const Index = () => {
 
   return (
     <Box h="100vh" w="100vw" display="flex" flexDir="column" bg="background.500" overflow="auto">
-      <Header />
-      <Box
-        h="2.75rem"
-        px="s16"
-        borderBottom="1px"
-        bg="#F3F3F3"
-        borderBottomColor="border.layout"
-        display="flex"
-        alignItems="center"
-        flexShrink={0}
-      >
-        <Box display="flex" alignItems="center" gap="s16">
-          <Box display="flex" alignItems="center" gap="s8">
-            <LogoSecondary />
-            <Text fontSize="s3" fontWeight={500} color="gray.800" textTransform="capitalize">
-              {startCase(getDatabaseSlug())}
-            </Text>
-          </Box>
-
-          <Icon size="lg" as={BsChevronRight} color="gray.600" />
-
-          <Box
-            h="35px"
-            display="flex"
-            alignItems="center"
-            gap="s8"
-            bg="white"
-            cursor="pointer"
-            px="s16"
-            boxShadow="E1"
-            borderRadius="br1"
-          >
-            <Icon size="sm" as={FiDatabase} color="gray.600" />
-            <Text fontSize="s3" fontWeight={500} color="gray.800" textTransform="capitalize">
-              Table
-            </Text>
-          </Box>
-        </Box>
-      </Box>
+      <AppBar />
       <Box bg="#f8f8f8" height="calc(100% - 5.75rem)" display="flex" flexDir="row">
         <Resizer width="12rem" constraints={['12rem', '50rem']}>
           <Box w="100%" display="flex" flexDir="column" gap="s16" p="s8">
@@ -419,7 +378,7 @@ interface ResizerProps {
   constraints: [number | string, number | string];
 }
 
-const Resizer = ({ constraints, width, children }: ResizerProps) => {
+export const Resizer = ({ constraints, width, children }: ResizerProps) => {
   const sidebarRef = React.useRef<HTMLInputElement>(null);
   const [isResizing, setIsResizing] = React.useState(false);
   const [sidebarWidth, setSidebarWidth] = React.useState(width);

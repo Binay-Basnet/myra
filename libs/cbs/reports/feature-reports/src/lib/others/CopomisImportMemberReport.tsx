@@ -90,6 +90,9 @@ export const CopomisImportMemberReport = () => {
                 header: 'Membership Registration Date',
                 accessorFn: (row) => localizedDate(row?.memberRegistrationDate),
                 cell: (props) => localizedDate(props.row.original.memberRegistrationDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Gender Record',
@@ -99,6 +102,9 @@ export const CopomisImportMemberReport = () => {
                 header: 'DOB',
                 accessorKey: 'dateOfBirth',
                 cell: (props) => localizedDate(props.row.original.dateOfBirth),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Grandfather Name',

@@ -99,6 +99,9 @@ export const ShareCertificatePrintReport = () => {
                     header: 'Printed Date',
                     accessorKey: 'printedDate',
                     accessorFn: (row) => localizedDate(row?.printedDate),
+                    meta: {
+                      skipExcelFormatting: true,
+                    },
                   },
                   {
                     header: 'Print Count',

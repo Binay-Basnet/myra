@@ -107,11 +107,17 @@ export const FDInvestmentReport = () => {
                 header: 'FD Opening Date',
                 accessorKey: 'fdOpeningDate',
                 cell: (props) => localizedDate(props?.row?.original?.fdOpeningDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Maturity Date',
                 accessorKey: 'maturityDate',
                 cell: (props) => localizedDate(props?.row?.original?.maturityDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'FD Type',

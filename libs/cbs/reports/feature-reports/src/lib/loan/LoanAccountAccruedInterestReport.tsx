@@ -163,6 +163,9 @@ export const LoanAccountAccruedInterestReport = () => {
                 header: 'Date',
                 accessorKey: 'date',
                 cell: (props) => localizedDate(props.row.original.date),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Transaction Id',

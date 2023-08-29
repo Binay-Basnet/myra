@@ -152,6 +152,9 @@ export const LoanCallSheetReport = () => {
                   {
                     header: 'Installment Date',
                     accessorFn: (row) => localizedDate(row?.installmentDate),
+                    meta: {
+                      skipExcelFormatting: true,
+                    },
                   },
                   {
                     header: 'Installment Amount',

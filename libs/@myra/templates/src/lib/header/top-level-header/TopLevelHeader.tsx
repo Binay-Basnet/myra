@@ -89,9 +89,10 @@ const keyMap = {
 
 const AppSwitcherIconWrapper = (props: {
   children: React.ReactNode;
+  title?: string;
   onClick: React.MouseEventHandler<HTMLDivElement> | undefined;
 }) => {
-  const { children, onClick } = props;
+  const { children, onClick, title } = props;
   return (
     <Box
       display="flex"
@@ -102,6 +103,7 @@ const AppSwitcherIconWrapper = (props: {
       p="s12"
       cursor="pointer"
       borderRadius="br2"
+      data-testid={title}
       _hover={{ bg: 'primary.0' }}
       onClick={onClick}
     >
@@ -353,6 +355,7 @@ export const TopLevelHeader = () => {
               color="white"
               borderRadius="br1"
               _hover={{ backgroundColor: 'secondary.900' }}
+              data-testid="settings-button"
               onClick={() => router.push(ROUTES?.SETTINGS_GENERAL_ORGANIZATION_DETAILS)}
               ref={settingShortcut}
             />
@@ -397,7 +400,7 @@ export const TopLevelHeader = () => {
                           {MYRA_APPS.filter((f) => checkModuleAccess(f.key))?.map((item) => (
                             <AppSwitcherIconWrapper
                               onClick={() => router.push(item.link)}
-                              data-testid={item?.title}
+                              title={`appSwitcher-${item?.title}`}
                             >
                               <Image width={32} height={32} src={item.img} alt={item.title} />
                               <AppSwitcherText>{t[item.title]}</AppSwitcherText>
@@ -410,6 +413,7 @@ export const TopLevelHeader = () => {
                             onClick={() =>
                               router.push(ROUTES.SETTINGS_GENERAL_ORGANIZATION_DETAILS)
                             }
+                            title="settingsmenu"
                           >
                             <Image width={32} height={32} src="/settings.svg" alt="Settings" />
                             <AppSwitcherText>{t['settings']}</AppSwitcherText>
@@ -435,6 +439,7 @@ export const TopLevelHeader = () => {
                       variant="ghost"
                       color="white"
                       borderRadius="br1"
+                      data-testid="avatar-button"
                       ref={showProfile}
                     />
                     {/* <Box
@@ -499,6 +504,7 @@ export const TopLevelHeader = () => {
                             {user?.currentBranch && (
                               <Select
                                 menuPosition="absolute"
+                                name="branch-switcher"
                                 value={{
                                   label: user?.currentBranch?.name || 'Branch',
                                   value: user?.currentBranch?.id as string,
@@ -524,6 +530,7 @@ export const TopLevelHeader = () => {
                             {user?.currentRole && (
                               <Select
                                 menuPosition="absolute"
+                                name="current-role"
                                 value={{
                                   label: user?.currentRole?.name,
                                   value: user?.currentRole?.id as string,
@@ -619,6 +626,7 @@ export const TopLevelHeader = () => {
                             <SwitchTabs
                               value={preference?.date ?? DateType.Ad}
                               options={calendarList}
+                              name="calenderSwitcher"
                               onChange={(value) => {
                                 asyncToast({
                                   id: 'update-calendar-preference',
@@ -685,6 +693,7 @@ export const TopLevelHeader = () => {
                               display="flex"
                               alignItems="center"
                               cursor="pointer"
+                              data-testid="change-password"
                               onClick={() => router.push('/change-password')}
                             >
                               <Text
@@ -707,6 +716,7 @@ export const TopLevelHeader = () => {
                               display="flex"
                               alignItems="center"
                               cursor="pointer"
+                              data-testid="logout"
                               onClick={() => {
                                 dispatch(logout());
                                 router.replace('/login').then(() => queryClient.clear());

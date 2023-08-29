@@ -95,6 +95,9 @@ export const DailyBalanceReport = () => {
               {
                 header: 'Date',
                 accessorFn: (row) => localizedDate(row?.date),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Amount (Dr)',

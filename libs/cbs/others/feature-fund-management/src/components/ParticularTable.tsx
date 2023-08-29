@@ -47,12 +47,14 @@ export const ParticularTable = () => {
       {
         accessor: 'particular',
         header: 'Particular',
+        getDisabled: () => router?.asPath?.includes('/view'),
       },
       {
         accessor: 'percent',
-        header: 'Percent',
+        header: 'Percent(%)',
         isNumeric: true,
-        fieldType: 'percentage',
+        // fieldType: 'percentage',
+        getDisabled: () => router?.asPath?.includes('/view'),
       },
       {
         accessor: 'thisYear',

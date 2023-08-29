@@ -126,6 +126,9 @@ export const DosariMemberReport = () => {
               {
                 header: 'Phone No.',
                 accessorFn: (row) => row.phoneNumber,
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
 
               {

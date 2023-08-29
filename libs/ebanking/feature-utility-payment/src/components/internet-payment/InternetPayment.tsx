@@ -34,7 +34,7 @@ export const InternetPayment = ({ setCurrentSequence }: InternetPaymentProps) =>
     pagination: { ...getPaginationQuery(), first: -1 },
     filter: {
       orConditions: [
-        { andConditions: [{ column: 'servicetype', comparator: 'EqualTo', value: 'internet' }] },
+        { andConditions: [{ column: 'servicename', comparator: 'EqualTo', value: 'internet' }] },
       ],
     },
   });

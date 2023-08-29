@@ -115,6 +115,7 @@ export const FDInvestmentStatementReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {

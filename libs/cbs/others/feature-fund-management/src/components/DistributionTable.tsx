@@ -65,12 +65,14 @@ export const DistributionTable = () => {
     {
       accessor: 'distribution',
       header: 'Distribution',
+      getDisabled: () => router?.asPath?.includes('/view'),
     },
     {
       accessor: 'percent',
-      header: 'Percent',
+      header: 'Percent(%)',
       isNumeric: true,
-      fieldType: 'percentage',
+      getDisabled: () => router?.asPath?.includes('/view'),
+      // fieldType: 'percentage',
     },
     {
       accessor: 'thisYear',

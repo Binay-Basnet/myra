@@ -63,3 +63,86 @@ query getACFeeCOA {
     }
   }
 }
+
+query listUtilityServiceType {
+  settings {
+    ebanking {
+      utility {
+        listServiceType {
+          data {
+            id
+            name
+            slug
+            isActive
+          }
+        }
+      }
+    }
+  }
+}
+
+query listUtilityCashBack($pagination: Pagination, $filter: Filter) {
+  settings {
+    ebanking {
+      utility {
+        listCashBack(pagination: $pagination, filter: $filter) {
+          totalCount
+          pageInfo {
+            ...Pagination
+          }
+          edges {
+            cursor
+            node {
+              id
+              minRange
+              maxRange
+              cashBackAmount
+              cashBackPercent
+              serviceCharge
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query listUtilities($pagination: Pagination, $filter: Filter) {
+  settings {
+    ebanking {
+      utility {
+        listUtilities(pagination: $pagination, filter: $filter) {
+          totalCount
+          pageInfo {
+            ...Pagination
+          }
+          edges {
+            cursor
+            node {
+              id
+              name
+              slug
+              serviceType
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getUtilityLedgerSetup {
+  settings {
+    general {
+      setup {
+        getUtilityLedgerSetup {
+          data {
+            coaHead
+            coaHeadName
+            ledgerType
+          }
+        }
+      }
+    }
+  }
+}

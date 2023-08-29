@@ -13,35 +13,18 @@ describe('myra', () => {
     cy.contains('Log in').click({});
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(5000);
-    cy.get('[data-testid="corebankingSystems"]').click({ force: true });
-    cy.get('[data-testid="helpButton"]').click({ force: true });
+    cy.get('[data-testid="avatar-button"]').click({ force: true });
+
+    cy.get('[data-testid="branch-switcher"]').click({ force: true, multiple: true });
+    cy.get('[data-testid="branch-switcher-naya"]').click({ force: true, multiple: true });
+
+    // cy.get('[data-testid="appSwitcher-accountingSystem"]').click({ force: true });
+
+    // cy.get('[data-testid="support-guide"]').click({ force: true });
 
     // cy.contains('Core Banking Systems').click({ force: true });
-    cy.get('[data-testid="transactions-tab"]').click({ force: true });
+    // cy.get('[data-testid="transactions-tab"]').click({ force: true });
     // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < 100; i++) {
-      cy.get('[data-testid="New"]').click({ force: true });
-      cy.get('[data-testid="New Journal Voucher"]').click({ force: true });
-      cy.get('[data-testid="Search-Select"]').click({ force: true });
-      cy.get(
-        '[data-testid="Search-Select-80.1.1-cash in teller for suaysh(01gxqmqznr7y0399t44rvamyur) (naya)"]'
-      ).click({ force: true });
-      cy.get('[data-testid="deleteRow-0"]').click({ force: true });
-      cy.get('[data-testid="Search-Select"]').click({ force: true });
-
-      cy.get('[data-testid="Search-Select-80.1.2-cash in vault (naya)"]').click({ force: true });
-      cy.get('[data-testid="Search-Select"]').click({ force: true });
-
-      cy.get(
-        '[data-testid="Search-Select-80.1.1-cash in teller for suaysh(01gxqmqznr7y0399t44rvamyur) (naya)"]'
-      ).click({ force: true });
-
-      cy.get('[data-testid="drAmount-0"]').type('100');
-      cy.get('[data-testid="crAmount-1"]').type('100');
-      cy.get('[data-testid="notes"]').type('Nilu Chilu');
-      cy.get('[data-testid="Save"]').click({ force: true });
-      cy.get('[data-testid="Done"]', { withinSubject: null }).click({ force: true });
-    }
 
     // cy.get('[data-testid="memberId-01GXQSVQV3CQ27WQ82B40BINDI"]').click({ force: true });
     // cy.get('[data-testid="accountId"]').click({ force: true });

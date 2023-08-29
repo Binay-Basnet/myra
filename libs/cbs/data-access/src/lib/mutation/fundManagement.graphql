@@ -8,3 +8,14 @@ mutation addProfitToFundManagementData($id: ID, $data: FundManagementInput!) {
     }
   }
 }
+
+mutation executeProfitFundMangement($id: ID!) {
+  profitToFundManagement {
+    execute(id: $id) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

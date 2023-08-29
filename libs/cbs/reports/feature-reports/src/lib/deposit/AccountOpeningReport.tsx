@@ -108,6 +108,9 @@ export const AccountOpenReport = () => {
                     label={props?.row?.original?.accountNumber as string}
                   />
                 ),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Account Name',
@@ -128,6 +131,9 @@ export const AccountOpenReport = () => {
               {
                 header: 'Account Opening Date',
                 accessorFn: (row) => localizedDate(row?.openingDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Account Opened By User',

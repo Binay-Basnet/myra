@@ -86,6 +86,9 @@ export const ShareRegisterReport = () => {
                     label={props?.row?.original?.memberCode as string}
                   />
                 ),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Name',

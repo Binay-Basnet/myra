@@ -109,6 +109,9 @@ export const InterestTaxReport = () => {
               {
                 header: 'PAN NO.',
                 accessorFn: (row) => row?.panNo,
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Account No',
@@ -124,6 +127,9 @@ export const InterestTaxReport = () => {
               {
                 header: 'Tax Deduct Date',
                 accessorFn: (row) => localizedDate(row?.date),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Remarks',

@@ -136,6 +136,9 @@ export const MemberActiveInactiveReport = () => {
                     {
                       header: 'DOB',
                       accessorFn: (row) => localizedDate(row?.dob),
+                      meta: {
+                        skipExcelFormatting: true,
+                      },
                     },
                     {
                       header: 'Age',
@@ -148,6 +151,9 @@ export const MemberActiveInactiveReport = () => {
                     {
                       header: 'PAN No.',
                       accessorFn: (row) => row?.pan,
+                      meta: {
+                        skipExcelFormatting: true,
+                      },
                     },
                     {
                       header: 'Occupation',
@@ -156,6 +162,9 @@ export const MemberActiveInactiveReport = () => {
                     {
                       header: 'Member Registration Date',
                       accessorFn: (row) => localizedDate(row?.memberRegistrationDate),
+                      meta: {
+                        skipExcelFormatting: true,
+                      },
                     },
                     {
                       header: 'Status',
@@ -217,6 +226,9 @@ export const MemberActiveInactiveReport = () => {
                     {
                       header: 'DOE',
                       accessorFn: (row) => localizedDate(row?.dob),
+                      meta: {
+                        skipExcelFormatting: true,
+                      },
                     },
                     {
                       header: 'Age',
@@ -232,6 +244,9 @@ export const MemberActiveInactiveReport = () => {
                     {
                       header: 'PAN No.',
                       accessorFn: (row) => row?.pan,
+                      meta: {
+                        skipExcelFormatting: true,
+                      },
                     },
                     {
                       header: 'Nature',
@@ -240,6 +255,9 @@ export const MemberActiveInactiveReport = () => {
                     {
                       header: 'Member Registration Date',
                       accessorFn: (row) => localizedDate(row?.memberRegistrationDate),
+                      meta: {
+                        skipExcelFormatting: true,
+                      },
                     },
                     {
                       header: 'Status',

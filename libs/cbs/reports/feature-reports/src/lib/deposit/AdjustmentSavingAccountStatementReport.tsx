@@ -99,6 +99,7 @@ export const AdjustmentSavingStatementReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -131,6 +132,7 @@ export const AdjustmentSavingStatementReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {

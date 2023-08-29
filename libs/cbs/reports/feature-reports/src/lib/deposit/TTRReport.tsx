@@ -152,6 +152,9 @@ export const TTRReport = () => {
                     {
                       header: 'Date',
                       accessorFn: (row) => localizedDate(row?.date),
+                      meta: {
+                        skipExcelFormatting: true,
+                      },
                     },
                     {
                       header: 'Nature of Transaction',
@@ -173,6 +176,9 @@ export const TTRReport = () => {
                           label={props?.row?.original?.accountNo as string}
                         />
                       ),
+                      meta: {
+                        skipExcelFormatting: true,
+                      },
                     },
                     {
                       header: 'Source of Fund',

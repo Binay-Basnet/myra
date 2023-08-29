@@ -79,6 +79,9 @@ export const MBTransactionsReport = () => {
               {
                 header: 'Initiator Phone Number',
                 accessorFn: (row) => row?.phoneNo,
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'From Account',
@@ -109,6 +112,9 @@ export const MBTransactionsReport = () => {
                 header: 'Transaction Date',
                 accessorFn: (row) => localizedDate(row?.transDate),
                 cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Narration',

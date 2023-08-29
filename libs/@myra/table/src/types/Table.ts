@@ -29,6 +29,7 @@ declare module '@tanstack/table-core' {
           } | null)[]
         | undefined;
     };
+    skipExcelFormatting?: boolean;
   }
 
   interface FilterFns {

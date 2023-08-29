@@ -136,6 +136,9 @@ export const SuspiousTransactionReport = () => {
               {
                 header: 'Transaction Date',
                 accessorFn: (row) => localizedDate(row?.date),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Member Id',

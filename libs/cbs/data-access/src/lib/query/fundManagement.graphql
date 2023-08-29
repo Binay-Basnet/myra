@@ -45,6 +45,7 @@ query profitToFundManagementList($filter: Filter, $pagination: Pagination) {
           }
           staffBonusFund
           incomeTax
+          state
         }
         cursor
       }
@@ -69,6 +70,7 @@ query getFundManagementFormState($id: ID!) {
           accountName
           percent
         }
+        state
       }
     }
   }

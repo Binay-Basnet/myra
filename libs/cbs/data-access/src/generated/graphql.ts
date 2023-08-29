@@ -212,6 +212,16 @@ export const AccountCloseReason = {
 } as const;
 
 export type AccountCloseReason = typeof AccountCloseReason[keyof typeof AccountCloseReason];
+export type AccountCloseSuccessCard = {
+  accCloseDate: Scalars['Localized'];
+  accId: Scalars['ID'];
+  accName?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  charges?: Maybe<Scalars['String']>;
+  interest?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<Scalars['String']>;
+};
+
 export type AccountClosingReport = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
@@ -3575,6 +3585,7 @@ export const CashValue = {
 
 export type CashValue = typeof CashValue[keyof typeof CashValue];
 export type CenterOverview = {
+  address?: Maybe<Address>;
   centerCoordinator?: Maybe<MyraUser>;
   centerId?: Maybe<Scalars['String']>;
   centerName?: Maybe<Scalars['String']>;
@@ -5026,7 +5037,7 @@ export type DepositAccountClose = {
 export type DepositAccountCloseResult = {
   calculatedAmount?: Maybe<Scalars['String']>;
   error?: Maybe<MutationError>;
-  record?: Maybe<Scalars['Any']>;
+  record?: Maybe<AccountCloseSuccessCard>;
   recordId: Scalars['ID'];
 };
 
@@ -8232,13 +8243,17 @@ export const FrequencyTenure = {
 export type FrequencyTenure = typeof FrequencyTenure[keyof typeof FrequencyTenure];
 export type FundManagement = {
   cooperativePromotionFund?: Maybe<Scalars['Float']>;
+  fiscalYear?: Maybe<Scalars['String']>;
   generalReserveFund?: Maybe<Scalars['Float']>;
   grossProfit?: Maybe<Scalars['String']>;
   grossProfitCoa?: Maybe<Scalars['String']>;
   incomeTax?: Maybe<Scalars['Float']>;
+  journalId?: Maybe<Scalars['String']>;
   otherFunds?: Maybe<Array<Maybe<OtherFundDistribution>>>;
   patronageRefundFund?: Maybe<Scalars['Float']>;
   staffBonusFund?: Maybe<Scalars['Float']>;
+  state?: Maybe<FundManagementState>;
+  valueDate?: Maybe<Scalars['Localized']>;
 };
 
 export type FundManagementConnection = {
@@ -8262,6 +8277,7 @@ export type FundManagementInfo = {
   id?: Maybe<Scalars['String']>;
   incomeTax?: Maybe<Scalars['Float']>;
   staffBonusFund?: Maybe<Scalars['Float']>;
+  state?: Maybe<FundManagementState>;
 };
 
 export type FundManagementInput = {
@@ -8274,7 +8290,12 @@ export type FundManagementInput = {
 };
 
 export type FundManagementMutation = {
+  execute?: Maybe<MutationResult>;
   new?: Maybe<FundManagementResult>;
+};
+
+export type FundManagementMutationExecuteArgs = {
+  id: Scalars['ID'];
 };
 
 export type FundManagementMutationNewArgs = {
@@ -8308,6 +8329,12 @@ export type FundManagementResult = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export const FundManagementState = {
+  Completed: 'COMPLETED',
+  Created: 'CREATED',
+} as const;
+
+export type FundManagementState = typeof FundManagementState[keyof typeof FundManagementState];
 export type GlBalanceFilter = {
   amount?: InputMaybe<MinMaxFilter>;
 };
@@ -13994,6 +14021,10 @@ export type LoanCollateralSwitchInput = {
   loanAccountID: Scalars['ID'];
 };
 
+export type LoanDisbursementFilterData = {
+  amountRange?: InputMaybe<MinMaxFilter>;
+};
+
 export type LoanDisbursementInput = {
   accountPayment?: InputMaybe<LoanAccountDisbursement>;
   amount: Scalars['String'];
@@ -14008,6 +14039,29 @@ export const LoanDisbursementMethod = {
 
 export type LoanDisbursementMethod =
   typeof LoanDisbursementMethod[keyof typeof LoanDisbursementMethod];
+export type LoanDisbursementReportData = {
+  disbursedDate?: Maybe<Scalars['Localized']>;
+  interestRate?: Maybe<Scalars['Float']>;
+  loanAccountId?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  nomineeAccount?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
+  totalSactionedLoanAmount?: Maybe<Scalars['String']>;
+};
+
+export type LoanDisbursementReportFilter = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  disbursedDate: Scalars['Localized'];
+  filter?: InputMaybe<LoanDisbursementFilterData>;
+  loanProductId?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type LoanDisbursementReportResult = {
+  data?: Maybe<Array<Maybe<LoanDisbursementReportData>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanDisbursementResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<LoanAccountQuery>;
@@ -14911,6 +14965,7 @@ export type LoanReport = {
   loanBalanceReport: LoanBalanceReportResult;
   loanCallReport?: Maybe<LoanCallReportResult>;
   loanCollateralReport?: Maybe<LoanCollateralReportResult>;
+  loanDisbursementReport?: Maybe<LoanDisbursementReportResult>;
   loanProductBalance?: Maybe<LoanProductBalanceReportResult>;
   loanStatementReport?: Maybe<ReportResult>;
   loanTransactionStatementReport?: Maybe<ReportResult>;
@@ -14944,6 +14999,10 @@ export type LoanReportLoanCallReportArgs = {
 
 export type LoanReportLoanCollateralReportArgs = {
   data?: InputMaybe<LoanCollateralFilter>;
+};
+
+export type LoanReportLoanDisbursementReportArgs = {
+  data: LoanDisbursementReportFilter;
 };
 
 export type LoanReportLoanProductBalanceArgs = {
@@ -15282,6 +15341,7 @@ export type MfCenterEntry = {
 };
 
 export type MfCenterInput = {
+  address?: InputMaybe<KymAddressInput>;
   centerCode: Scalars['String'];
   centerName: Scalars['String'];
   coordinatorId: Scalars['String'];
@@ -15314,6 +15374,7 @@ export type MfDecisions = {
 };
 
 export type MfGroupDetails = {
+  allowableServiceCenters?: Maybe<Array<Maybe<Scalars['String']>>>;
   error?: Maybe<QueryError>;
   groupMembers?: Maybe<Array<Maybe<Member>>>;
   meetings?: Maybe<MpGroupMeetings>;
@@ -19930,6 +19991,7 @@ export type ServiceType = {
 
 export type ServiceTypeData = {
   id: Scalars['String'];
+  isActive?: Maybe<Scalars['Boolean']>;
   name: Scalars['String'];
   slug: Scalars['String'];
 };
@@ -20062,6 +20124,7 @@ export type SetupMutation = {
   eodSeed?: Maybe<Scalars['String']>;
   migration?: Maybe<DataMigration>;
   utilityCashBackLedger?: Maybe<Scalars['Boolean']>;
+  utilityLedgerSetup?: Maybe<Scalars['Boolean']>;
   utilityOrganizationLedger?: Maybe<Scalars['Boolean']>;
   utilityServiceChargeLedger?: Maybe<Scalars['Boolean']>;
 };
@@ -20082,6 +20145,10 @@ export type SetupMutationUtilityCashBackLedgerArgs = {
   value: CashBackLedgerInput;
 };
 
+export type SetupMutationUtilityLedgerSetupArgs = {
+  value: Array<UtilityLedgerSetupInput>;
+};
+
 export type SetupMutationUtilityOrganizationLedgerArgs = {
   value: CashBackLedgerInput;
 };
@@ -20094,6 +20161,7 @@ export type SetupQuery = {
   eodAction?: Maybe<EodAction>;
   eodException?: Maybe<EodException>;
   eodSeed?: Maybe<Scalars['Localized']>;
+  getUtilityLedgerSetup: UtilityLedgerSetupInputResult;
 };
 
 export type ShareBalance = {
@@ -22122,12 +22190,29 @@ export type UtilititesListEdges = {
   node?: Maybe<UtilititesEntry>;
 };
 
-export type UtilityCashBackSetup = {
-  cashBackCoaHead: Scalars['String'];
-  serviceChargeCoaHead: Scalars['String'];
-  utilityCoaHead: Scalars['String'];
+export type UtilityLedgerSetupFormState = {
+  coaHead: Scalars['String'];
+  coaHeadName: Scalars['String'];
+  ledgerType: UtilityLedgerType;
 };
 
+export type UtilityLedgerSetupInput = {
+  coaHead: Scalars['String'];
+  ledgerType: UtilityLedgerType;
+};
+
+export type UtilityLedgerSetupInputResult = {
+  data?: Maybe<Array<UtilityLedgerSetupFormState>>;
+  error?: Maybe<QueryError>;
+};
+
+export const UtilityLedgerType = {
+  CashBack: 'CASH_BACK',
+  ServiceCharge: 'SERVICE_CHARGE',
+  Utility: 'UTILITY',
+} as const;
+
+export type UtilityLedgerType = typeof UtilityLedgerType[keyof typeof UtilityLedgerType];
 export type UtilityMutation = {
   addCashBack: CashBackResult;
   deactivateService: DeactivateServiceResult;
@@ -22139,7 +22224,7 @@ export type UtilityMutationAddCashBackArgs = {
 };
 
 export type UtilityMutationDeactivateServiceArgs = {
-  input: ActivationInput;
+  input: Array<ActivationInput>;
 };
 
 export type UtilityMutationDeleteCashBackArgs = {
@@ -23210,6 +23295,15 @@ export type SetAccountCloseDataMutation = {
     close?: {
       recordId: string;
       calculatedAmount?: string | null;
+      record?: {
+        accId: string;
+        accCloseDate: Record<'local' | 'en' | 'np', string>;
+        accName?: string | null;
+        amount?: string | null;
+        interest?: string | null;
+        charges?: string | null;
+        paymentMode?: string | null;
+      } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -24180,6 +24274,25 @@ export type AddProfitToFundManagementDataMutationVariables = Exact<{
 export type AddProfitToFundManagementDataMutation = {
   profitToFundManagement: {
     new?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type ExecuteProfitFundMangementMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type ExecuteProfitFundMangementMutation = {
+  profitToFundManagement: {
+    execute?: {
       recordId?: string | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -25731,6 +25844,60 @@ export type ActivateServiceMutation = {
         | null;
     } | null;
   } | null;
+};
+
+export type AddUtilityCashBackMutationVariables = Exact<{
+  input: CashBackInput;
+}>;
+
+export type AddUtilityCashBackMutation = {
+  settings: {
+    ebanking?: {
+      utility?: {
+        addCashBack: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type UtilityLedgerSetupMutationVariables = Exact<{
+  value: Array<UtilityLedgerSetupInput> | UtilityLedgerSetupInput;
+}>;
+
+export type UtilityLedgerSetupMutation = {
+  settings: { general?: { setup: { utilityLedgerSetup?: boolean | null } } | null };
+};
+
+export type ChangeUtilityServiceStatusMutationVariables = Exact<{
+  input: Array<ActivationInput> | ActivationInput;
+}>;
+
+export type ChangeUtilityServiceStatusMutation = {
+  settings: {
+    ebanking?: {
+      utility?: {
+        deactivateService: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
 };
 
 export type SetBankListMutationVariables = Exact<{
@@ -31537,6 +31704,7 @@ export type ProfitToFundManagementListQuery = {
           fiscalYear?: string | null;
           staffBonusFund?: number | null;
           incomeTax?: number | null;
+          state?: FundManagementState | null;
           grossProfit?: { amount?: string | null; amountType?: BalanceType | null } | null;
         } | null;
       } | null> | null;
@@ -31558,6 +31726,7 @@ export type GetFundManagementFormStateQuery = {
         generalReserveFund?: number | null;
         patronageRefundFund?: number | null;
         cooperativePromotionFund?: number | null;
+        state?: FundManagementState | null;
         otherFunds?: Array<{
           accountCode?: string | null;
           accountName?: string | null;
@@ -39490,6 +39659,94 @@ export type GetAcFeeCoaQuery = {
   };
 };
 
+export type ListUtilityServiceTypeQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListUtilityServiceTypeQuery = {
+  settings: {
+    ebanking?: {
+      utility?: {
+        listServiceType: {
+          data?: Array<{
+            id: string;
+            name: string;
+            slug: string;
+            isActive?: boolean | null;
+          } | null> | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type ListUtilityCashBackQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type ListUtilityCashBackQuery = {
+  settings: {
+    ebanking?: {
+      utility?: {
+        listCashBack: {
+          totalCount: number;
+          pageInfo?: PaginationFragment | null;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              id: string;
+              minRange: string;
+              maxRange: string;
+              cashBackAmount?: string | null;
+              cashBackPercent?: string | null;
+              serviceCharge?: string | null;
+            } | null;
+          } | null> | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type ListUtilitiesQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type ListUtilitiesQuery = {
+  settings: {
+    ebanking?: {
+      utility?: {
+        listUtilities: {
+          totalCount: number;
+          pageInfo?: PaginationFragment | null;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: { id: string; name: string; slug: string; serviceType: string } | null;
+          } | null> | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetUtilityLedgerSetupQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetUtilityLedgerSetupQuery = {
+  settings: {
+    general?: {
+      setup: {
+        getUtilityLedgerSetup: {
+          data?: Array<{
+            coaHead: string;
+            coaHeadName: string;
+            ledgerType: UtilityLedgerType;
+          }> | null;
+        };
+      };
+    } | null;
+  };
+};
+
 export type GetAuditLogListQueryVariables = Exact<{
   filter?: InputMaybe<AuditLogFilters>;
 }>;
@@ -45196,6 +45453,15 @@ export const SetAccountCloseDataDocument = `
     close(data: $data) {
       recordId
       calculatedAmount
+      record {
+        accId
+        accCloseDate
+        accName
+        amount
+        interest
+        charges
+        paymentMode
+      }
       error {
         ...MutationError
       }
@@ -46625,6 +46891,38 @@ export const useAddProfitToFundManagementDataMutation = <TError = unknown, TCont
     ['addProfitToFundManagementData'],
     useAxios<AddProfitToFundManagementDataMutation, AddProfitToFundManagementDataMutationVariables>(
       AddProfitToFundManagementDataDocument
+    ),
+    options
+  );
+export const ExecuteProfitFundMangementDocument = `
+    mutation executeProfitFundMangement($id: ID!) {
+  profitToFundManagement {
+    execute(id: $id) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useExecuteProfitFundMangementMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ExecuteProfitFundMangementMutation,
+    TError,
+    ExecuteProfitFundMangementMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    ExecuteProfitFundMangementMutation,
+    TError,
+    ExecuteProfitFundMangementMutationVariables,
+    TContext
+  >(
+    ['executeProfitFundMangement'],
+    useAxios<ExecuteProfitFundMangementMutation, ExecuteProfitFundMangementMutationVariables>(
+      ExecuteProfitFundMangementDocument
     ),
     options
   );
@@ -48822,6 +49120,99 @@ export const useActivateServiceMutation = <TError = unknown, TContext = unknown>
   useMutation<ActivateServiceMutation, TError, ActivateServiceMutationVariables, TContext>(
     ['activateService'],
     useAxios<ActivateServiceMutation, ActivateServiceMutationVariables>(ActivateServiceDocument),
+    options
+  );
+export const AddUtilityCashBackDocument = `
+    mutation addUtilityCashBack($input: CashBackInput!) {
+  settings {
+    ebanking {
+      utility {
+        addCashBack(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddUtilityCashBackMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddUtilityCashBackMutation,
+    TError,
+    AddUtilityCashBackMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddUtilityCashBackMutation, TError, AddUtilityCashBackMutationVariables, TContext>(
+    ['addUtilityCashBack'],
+    useAxios<AddUtilityCashBackMutation, AddUtilityCashBackMutationVariables>(
+      AddUtilityCashBackDocument
+    ),
+    options
+  );
+export const UtilityLedgerSetupDocument = `
+    mutation utilityLedgerSetup($value: [UtilityLedgerSetupInput!]!) {
+  settings {
+    general {
+      setup {
+        utilityLedgerSetup(value: $value)
+      }
+    }
+  }
+}
+    `;
+export const useUtilityLedgerSetupMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UtilityLedgerSetupMutation,
+    TError,
+    UtilityLedgerSetupMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UtilityLedgerSetupMutation, TError, UtilityLedgerSetupMutationVariables, TContext>(
+    ['utilityLedgerSetup'],
+    useAxios<UtilityLedgerSetupMutation, UtilityLedgerSetupMutationVariables>(
+      UtilityLedgerSetupDocument
+    ),
+    options
+  );
+export const ChangeUtilityServiceStatusDocument = `
+    mutation changeUtilityServiceStatus($input: [ActivationInput!]!) {
+  settings {
+    ebanking {
+      utility {
+        deactivateService(input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useChangeUtilityServiceStatusMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ChangeUtilityServiceStatusMutation,
+    TError,
+    ChangeUtilityServiceStatusMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    ChangeUtilityServiceStatusMutation,
+    TError,
+    ChangeUtilityServiceStatusMutationVariables,
+    TContext
+  >(
+    ['changeUtilityServiceStatus'],
+    useAxios<ChangeUtilityServiceStatusMutation, ChangeUtilityServiceStatusMutationVariables>(
+      ChangeUtilityServiceStatusDocument
+    ),
     options
   );
 export const SetBankListDocument = `
@@ -56790,6 +57181,7 @@ export const ProfitToFundManagementListDocument = `
           }
           staffBonusFund
           incomeTax
+          state
         }
         cursor
       }
@@ -56831,6 +57223,7 @@ export const GetFundManagementFormStateDocument = `
           accountName
           percent
         }
+        state
       }
     }
   }
@@ -67146,6 +67539,141 @@ export const useGetAcFeeCoaQuery = <TData = GetAcFeeCoaQuery, TError = unknown>(
       null,
       variables
     ),
+    options
+  );
+export const ListUtilityServiceTypeDocument = `
+    query listUtilityServiceType {
+  settings {
+    ebanking {
+      utility {
+        listServiceType {
+          data {
+            id
+            name
+            slug
+            isActive
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListUtilityServiceTypeQuery = <
+  TData = ListUtilityServiceTypeQuery,
+  TError = unknown
+>(
+  variables?: ListUtilityServiceTypeQueryVariables,
+  options?: UseQueryOptions<ListUtilityServiceTypeQuery, TError, TData>
+) =>
+  useQuery<ListUtilityServiceTypeQuery, TError, TData>(
+    variables === undefined ? ['listUtilityServiceType'] : ['listUtilityServiceType', variables],
+    useAxios<ListUtilityServiceTypeQuery, ListUtilityServiceTypeQueryVariables>(
+      ListUtilityServiceTypeDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListUtilityCashBackDocument = `
+    query listUtilityCashBack($pagination: Pagination, $filter: Filter) {
+  settings {
+    ebanking {
+      utility {
+        listCashBack(pagination: $pagination, filter: $filter) {
+          totalCount
+          pageInfo {
+            ...Pagination
+          }
+          edges {
+            cursor
+            node {
+              id
+              minRange
+              maxRange
+              cashBackAmount
+              cashBackPercent
+              serviceCharge
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useListUtilityCashBackQuery = <TData = ListUtilityCashBackQuery, TError = unknown>(
+  variables?: ListUtilityCashBackQueryVariables,
+  options?: UseQueryOptions<ListUtilityCashBackQuery, TError, TData>
+) =>
+  useQuery<ListUtilityCashBackQuery, TError, TData>(
+    variables === undefined ? ['listUtilityCashBack'] : ['listUtilityCashBack', variables],
+    useAxios<ListUtilityCashBackQuery, ListUtilityCashBackQueryVariables>(
+      ListUtilityCashBackDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListUtilitiesDocument = `
+    query listUtilities($pagination: Pagination, $filter: Filter) {
+  settings {
+    ebanking {
+      utility {
+        listUtilities(pagination: $pagination, filter: $filter) {
+          totalCount
+          pageInfo {
+            ...Pagination
+          }
+          edges {
+            cursor
+            node {
+              id
+              name
+              slug
+              serviceType
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useListUtilitiesQuery = <TData = ListUtilitiesQuery, TError = unknown>(
+  variables?: ListUtilitiesQueryVariables,
+  options?: UseQueryOptions<ListUtilitiesQuery, TError, TData>
+) =>
+  useQuery<ListUtilitiesQuery, TError, TData>(
+    variables === undefined ? ['listUtilities'] : ['listUtilities', variables],
+    useAxios<ListUtilitiesQuery, ListUtilitiesQueryVariables>(ListUtilitiesDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetUtilityLedgerSetupDocument = `
+    query getUtilityLedgerSetup {
+  settings {
+    general {
+      setup {
+        getUtilityLedgerSetup {
+          data {
+            coaHead
+            coaHeadName
+            ledgerType
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetUtilityLedgerSetupQuery = <TData = GetUtilityLedgerSetupQuery, TError = unknown>(
+  variables?: GetUtilityLedgerSetupQueryVariables,
+  options?: UseQueryOptions<GetUtilityLedgerSetupQuery, TError, TData>
+) =>
+  useQuery<GetUtilityLedgerSetupQuery, TError, TData>(
+    variables === undefined ? ['getUtilityLedgerSetup'] : ['getUtilityLedgerSetup', variables],
+    useAxios<GetUtilityLedgerSetupQuery, GetUtilityLedgerSetupQueryVariables>(
+      GetUtilityLedgerSetupDocument
+    ).bind(null, variables),
     options
   );
 export const GetAuditLogListDocument = `
