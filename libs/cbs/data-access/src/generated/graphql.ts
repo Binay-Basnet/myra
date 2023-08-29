@@ -6102,14 +6102,6 @@ export type DirectorDetailsFormState = {
   temporaryAddress?: Maybe<KymAddress>;
 };
 
-export const DistributionCondition = {
-  Daily: 'DAILY',
-  Monthly: 'MONTHLY',
-  Quarterly: 'QUARTERLY',
-} as const;
-
-export type DistributionCondition =
-  typeof DistributionCondition[keyof typeof DistributionCondition];
 export type District = {
   id: Scalars['Int'];
   municipalities: Array<Municipality>;
@@ -6143,13 +6135,6 @@ export const DividendTransferTreatment = {
 
 export type DividendTransferTreatment =
   typeof DividendTransferTreatment[keyof typeof DividendTransferTreatment];
-export const DividendTreatment = {
-  AccountTransfer: 'ACCOUNT_TRANSFER',
-  BookPayable: 'BOOK_PAYABLE',
-  ShareAndAccount: 'SHARE_AND_ACCOUNT',
-} as const;
-
-export type DividendTreatment = typeof DividendTreatment[keyof typeof DividendTreatment];
 export type Document = {
   photo?: Maybe<Scalars['String']>;
   signature?: Maybe<Scalars['String']>;
@@ -17010,7 +16995,6 @@ export type Mutation = {
   seed: Scalars['Boolean'];
   settings: SettingsMutation;
   share: ShareMutation;
-  shareDividend: ShareDividendMutation;
   transaction: TransactionMutation;
   user: UserMutation;
   withdrawSlip: WithdrawSlipMutation;
@@ -18027,11 +18011,6 @@ export type PickupMethod = typeof PickupMethod[keyof typeof PickupMethod];
 export type PictureData = {
   identifier?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
-};
-
-export type PostShareDividendResult = {
-  error?: Maybe<MutationError>;
-  record?: Maybe<Scalars['String']>;
 };
 
 export type PredefinedElementFilter = {
@@ -20310,23 +20289,6 @@ export type ShareDetailData = {
 export type ShareDetailResult = {
   data?: Maybe<ShareDetailData>;
   error?: Maybe<QueryError>;
-};
-
-export type ShareDividendInput = {
-  condition: DistributionCondition;
-  payableCOAHead: Scalars['ID'];
-  sourceCOAHead: Scalars['ID'];
-  taxLedgerCOAHead: Scalars['ID'];
-  taxRate: Scalars['Float'];
-  treatment: DividendTreatment;
-};
-
-export type ShareDividendMutation = {
-  postDividend?: Maybe<PostShareDividendResult>;
-};
-
-export type ShareDividendMutationPostDividendArgs = {
-  data: ShareDividendInput;
 };
 
 export type ShareDividendSettingsInput = {
