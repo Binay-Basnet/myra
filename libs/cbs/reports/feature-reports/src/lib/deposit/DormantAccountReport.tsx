@@ -88,6 +88,9 @@ export const DormantAccountsReport = () => {
                     label={props?.row?.original?.memberCode as string}
                   />
                 ),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Member Name',
@@ -102,10 +105,16 @@ export const DormantAccountsReport = () => {
                 header: 'Membership Registration Date',
                 accessorKey: 'memberRegistrationDate',
                 cell: (props) => localizedDate(props?.row?.original?.memberRegistrationDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Mobile No',
                 accessorKey: 'mobileNo',
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Product Name',
@@ -121,11 +130,17 @@ export const DormantAccountsReport = () => {
                     label={props?.row?.original?.accountNo as string}
                   />
                 ),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Account Open Date',
                 accessorKey: 'accountOpenDate',
                 cell: (props) => localizedDate(props?.row?.original?.accountOpenDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Accountt Name',

@@ -157,7 +157,7 @@ export const SavingBalanceReport = () => {
                 },
               },
               {
-                header: 'Member COde',
+                header: 'Member Code',
                 accessorKey: 'memberCode',
                 cell: (props) => (
                   <RouteToDetailsPage
@@ -207,6 +207,7 @@ export const SavingBalanceReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -216,6 +217,7 @@ export const SavingBalanceReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {

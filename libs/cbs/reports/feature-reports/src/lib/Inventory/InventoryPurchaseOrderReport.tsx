@@ -187,11 +187,17 @@ export const InventoryPurchaseOrderReport = () => {
                 header: 'Date',
                 accessorKey: 'date',
                 cell: (props) => localizedDate(props?.row?.original?.date),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Delivery Date',
                 accessorKey: 'deliveryDate',
                 cell: (props) => localizedDate(props?.row?.original?.deliveryDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Pre-Rate',

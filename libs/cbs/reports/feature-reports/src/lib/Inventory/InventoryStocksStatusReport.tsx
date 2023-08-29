@@ -231,6 +231,9 @@ export const InventoryStockStatusReport = () => {
                       props.row?.original?.purchasedDate
                         ? localizedDate(props?.row?.original?.purchasedDate)
                         : '-',
+                    meta: {
+                      skipExcelFormatting: true,
+                    },
                   },
 
                   {
@@ -254,6 +257,9 @@ export const InventoryStockStatusReport = () => {
                       props.row?.original?.soldDate
                         ? localizedDate(props?.row?.original?.soldDate)
                         : '-',
+                    meta: {
+                      skipExcelFormatting: true,
+                    },
                   },
 
                   {
@@ -277,6 +283,9 @@ export const InventoryStockStatusReport = () => {
                       props.row?.original?.transferSentDate
                         ? localizedDate(props?.row?.original?.transferSentDate)
                         : '-',
+                    meta: {
+                      skipExcelFormatting: true,
+                    },
                   },
 
                   {
@@ -300,6 +309,9 @@ export const InventoryStockStatusReport = () => {
                       props.row?.original?.transferAcceptDate
                         ? localizedDate(props?.row?.original?.transferAcceptDate)
                         : '-',
+                    meta: {
+                      skipExcelFormatting: true,
+                    },
                   },
 
                   {

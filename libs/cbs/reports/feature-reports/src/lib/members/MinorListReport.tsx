@@ -130,6 +130,9 @@ export const MinorListReport = () => {
                 header: 'Date of Birth',
                 accessorFn: (row) => row?.dateOfBirth,
                 cell: (props) => localizedDate(props.row.original.dateOfBirth),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
             ]}
             hasSNo

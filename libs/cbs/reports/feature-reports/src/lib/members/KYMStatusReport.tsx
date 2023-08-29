@@ -132,10 +132,16 @@ export const KYMStatusReport = () => {
               {
                 header: 'Contact',
                 accessorFn: (row) => row?.contact,
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Member Registration Date',
                 accessorFn: (row) => localizedDate(row?.regDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Risk Category',
@@ -145,6 +151,9 @@ export const KYMStatusReport = () => {
               {
                 header: 'Last KYM Update',
                 accessorFn: (row) => localizedDate(row?.lastKymUpdatedDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
 
               {

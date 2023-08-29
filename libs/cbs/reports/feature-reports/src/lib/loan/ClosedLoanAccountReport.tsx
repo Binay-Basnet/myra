@@ -76,6 +76,7 @@ export const ClosedLoanStatementReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {

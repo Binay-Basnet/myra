@@ -1,5 +1,6 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
 import { asyncToast, Box, Text } from '@myra-ui';
@@ -28,6 +29,8 @@ type DepositAccountTable = {
 };
 
 export const AddAgentTransaction = () => {
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [totalFine, setTotalFine] = useState(0);
   const router = useRouter();
 
   const methods = useForm();
@@ -111,6 +114,54 @@ export const AddAgentTransaction = () => {
     }
   }, [agentTodayListQueryData]);
 
+  const accounts = watch('accounts');
+
+  useDeepCompareEffect(() => {
+    if (accounts?.length) {
+      let tempAmount = 0;
+      let tempFine = 0;
+      setValue(
+        'accounts',
+        accounts?.map(
+          (record: {
+            id: string;
+            account: string | undefined;
+            member: any;
+            amount: any;
+            fine: any;
+            paid?: boolean;
+          }) => {
+            const account = assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
+              (member) => member?.node?.account?.id === record?.account
+            );
+
+            tempAmount +=
+              Number(record?.amount || 0) ??
+              Number(account?.node?.account?.dues?.totalDue || 0) -
+                Number(account?.node?.account?.dues?.fine || 0);
+
+            tempFine += Number(record?.fine ?? account?.node?.account?.dues?.fine ?? 0);
+
+            return {
+              id: record?.id,
+              member: record?.member,
+              account: record?.account,
+              amount:
+                record?.amount ??
+                Number(account?.node?.account?.dues?.totalDue || 0) -
+                  Number(account?.node?.account?.dues?.fine || 0),
+              fine: record?.fine ?? account?.node?.account?.dues?.fine,
+              paid: record?.paid,
+            };
+          }
+        )
+      );
+
+      setTotalAmount(tempAmount);
+      setTotalFine(tempFine);
+    }
+  }, [accounts, assignedMemberListQueryData]);
+
   const memberListSearchOptions = useMemo(() => {
     const tempMembers: { label: string; value: string }[] = [];
     const tempIds: string[] = [];
@@ -169,8 +220,6 @@ export const AddAgentTransaction = () => {
       onSuccess: () => router.back(),
     });
   };
-
-  const accounts = watch('accounts');
 
   const isMainButtonDisabled = useMemo(
     () => !accounts?.find((account: { paid: boolean }) => account?.paid),
@@ -330,6 +379,39 @@ export const AddAgentTransaction = () => {
                   searchPlaceholder="Search or add member"
                   canDeleteRow={false}
                 />
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  gap="s4"
+                  p="s16"
+                  bg="background.500"
+                  borderRadius="br2"
+                >
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      Total Amount
+                    </Text>
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      {amountConverter(totalAmount)}
+                    </Text>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      Total Fine
+                    </Text>
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      {amountConverter(totalFine)}
+                    </Text>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      Total Collected
+                    </Text>
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      {amountConverter(totalFine + totalAmount)}
+                    </Text>
+                  </Box>
+                </Box>
               </BoxContainer>
             )}
           </Box>

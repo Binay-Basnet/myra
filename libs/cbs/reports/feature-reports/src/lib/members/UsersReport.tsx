@@ -130,6 +130,9 @@ export const UsersReport = () => {
               {
                 header: 'User Created Date',
                 accessorFn: (row) => localizedDate(row?.createdDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'User Created By',

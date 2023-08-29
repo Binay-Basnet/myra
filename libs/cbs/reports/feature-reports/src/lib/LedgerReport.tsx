@@ -80,6 +80,7 @@ export const LedgerReport = () => {
                 meta: {
                   width: '30px',
                   isNumeric: true,
+                  skipExcelFormatting: true,
                 },
               },
               {
@@ -94,6 +95,7 @@ export const LedgerReport = () => {
                 ),
                 meta: {
                   width: '3.125rem',
+                  skipExcelFormatting: true,
                 },
               },
               {

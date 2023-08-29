@@ -108,6 +108,7 @@ export const ShareStatementReport = () => {
                   Footer: {
                     display: 'none',
                   },
+                  skipExcelFormatting: true,
                 },
               },
               {

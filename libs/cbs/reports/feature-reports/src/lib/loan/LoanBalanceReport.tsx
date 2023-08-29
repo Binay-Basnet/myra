@@ -279,6 +279,9 @@ export const LoanBalanceReport = () => {
                 header: 'Loan End Date',
 
                 accessorFn: (row) => localizedDate(row?.loanEndDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Last Payment Date',
@@ -286,6 +289,7 @@ export const LoanBalanceReport = () => {
                 accessorFn: (row) => localizedDate(row?.lastPaymentDate),
                 meta: {
                   isNumeric: true,
+                  skipExcelFormatting: true,
                 },
               },
             ]}

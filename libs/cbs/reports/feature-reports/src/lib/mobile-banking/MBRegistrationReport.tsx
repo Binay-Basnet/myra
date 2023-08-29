@@ -92,10 +92,16 @@ export const MBRegistrationReport = () => {
               {
                 header: 'Registered Date',
                 accessorFn: (row) => localizedDate(row?.regDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Expiry Date',
                 accessorFn: (row) => localizedDate(row?.expDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Status',

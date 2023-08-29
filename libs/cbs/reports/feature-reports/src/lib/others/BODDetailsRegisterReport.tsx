@@ -166,6 +166,9 @@ const CommitteeTable = ({ data, header }: IMemberTableProps) => {
           header: 'Elected Date.',
           accessorKey: 'joinedAt',
           accessorFn: (row) => localizedDate(row?.joinedAt),
+          meta: {
+            skipExcelFormatting: true,
+          },
         },
         {
           header: 'Valid Upto',

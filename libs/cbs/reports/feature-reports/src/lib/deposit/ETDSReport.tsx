@@ -72,6 +72,9 @@ export const ETDSReport = () => {
               {
                 header: 'T Date',
                 accessorFn: (row) => row?.date?.local,
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Date Type',

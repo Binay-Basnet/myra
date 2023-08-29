@@ -173,6 +173,9 @@ export const MemberTransferReport = () => {
                   props?.row?.original?.transferredDate
                     ? localizedDate(props?.row?.original?.transferredDate)
                     : '-',
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Share Balance',
