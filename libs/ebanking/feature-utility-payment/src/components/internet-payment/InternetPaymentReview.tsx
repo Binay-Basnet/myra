@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 import { Box, Button, Grid, Icon, Text } from '@myra-ui';
 
 import { InfoCard } from '@coop/ebanking/cards';
-import { useGetAccountListQuery, Utility } from '@coop/ebanking/data-access';
+import {
+  useGetAccountListQuery,
+  useGetCashBackChargesQuery,
+  Utility,
+} from '@coop/ebanking/data-access';
 import {
   CardBodyContainer,
   CardContainer,
@@ -13,6 +17,7 @@ import {
   CardHeader,
 } from '@coop/ebanking/ui-layout';
 import { FormPasswordInput } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'pending';
 
@@ -33,7 +38,7 @@ export const InternetPaymentReview = ({
 }: InternetPaymentReviewProps) => {
   const [isReviewed, setIsReviewed] = useState(false);
 
-  const { getValues, handleSubmit, setValue } = useFormContext();
+  const { getValues, handleSubmit, setValue, watch } = useFormContext();
 
   const { data } = useGetAccountListQuery({ transactionPagination: { after: '', first: 1 } });
   const accounts = data?.eBanking?.account?.list?.accounts?.map((account) => ({
@@ -42,6 +47,28 @@ export const InternetPaymentReview = ({
   }));
 
   const values = getValues();
+
+  const amount = watch('amount');
+
+  const { data: cashBackData } = useGetCashBackChargesQuery(
+    {
+      input: {
+        slug: schema?.slug,
+        amount,
+      },
+    },
+    {
+      enabled: !!schema?.slug && !!amount,
+    }
+  );
+
+  const { cashBackAmount, serviceChargeAmount } = useMemo(
+    () => ({
+      cashBackAmount: cashBackData?.eBanking?.utility?.getCashBackCharges?.data?.cashBack,
+      serviceChargeAmount: cashBackData?.eBanking?.utility?.getCashBackCharges?.data?.serviceCharge,
+    }),
+    [cashBackData]
+  );
 
   return (
     <>
@@ -94,6 +121,13 @@ export const InternetPaymentReview = ({
                   );
                 }
               )}
+
+              <CardContent title="Cashback" subtitle={amountConverter(cashBackAmount || 0)} />
+
+              <CardContent
+                title="Service Charge"
+                subtitle={amountConverter(serviceChargeAmount || 0)}
+              />
             </Grid>
           </CardBodyContainer>
 

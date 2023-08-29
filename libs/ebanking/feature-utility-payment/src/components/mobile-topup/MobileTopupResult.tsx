@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import { Box, Button, Grid } from '@myra-ui';
 
 import { ResultModal, TransactionHeaderCardWithChip } from '@coop/ebanking/cards';
-import { useGetAccountListQuery } from '@coop/ebanking/data-access';
+import { useGetAccountListQuery, useGetCashBackChargesQuery } from '@coop/ebanking/data-access';
 import {
   CardBodyContainer,
   CardContainer,
   CardContent,
   CardHeader,
 } from '@coop/ebanking/ui-layout';
+import { getMobileServiceProvider } from '@coop/ebanking/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'loading' | 'pending';
@@ -25,6 +26,12 @@ interface MobileTopupResultProps {
   handleMakePayment: () => Promise<void>;
 }
 
+const serviceProviderLabels: Record<string, string> = {
+  ntc: 'Nepal Telecom',
+  ncell: 'Ncell',
+  smartcell: 'SmartCell',
+};
+
 export const MobileTopupResult = ({
   paymentStatus,
   transactionCode,
@@ -35,6 +42,8 @@ export const MobileTopupResult = ({
   const router = useRouter();
   const methods = useFormContext();
 
+  const { watch } = methods;
+
   const { data: accountData } = useGetAccountListQuery({
     transactionPagination: { after: '', first: 1 },
   });
@@ -42,6 +51,32 @@ export const MobileTopupResult = ({
     label: `${account?.name} - ${account?.accountNumber}`,
     value: account?.id as string,
   }));
+
+  const mobileNumber = watch('mobileNumber');
+
+  const serviceProvider = useMemo(() => getMobileServiceProvider(mobileNumber), [mobileNumber]);
+
+  const amount = watch('amount');
+
+  const { data: cashBackData } = useGetCashBackChargesQuery(
+    {
+      input: {
+        slug: serviceProvider as string,
+        amount,
+      },
+    },
+    {
+      enabled: !!serviceProvider && !!amount,
+    }
+  );
+
+  const { cashBackAmount, serviceChargeAmount } = useMemo(
+    () => ({
+      cashBackAmount: cashBackData?.eBanking?.utility?.getCashBackCharges?.data?.cashBack,
+      serviceChargeAmount: cashBackData?.eBanking?.utility?.getCashBackCharges?.data?.serviceCharge,
+    }),
+    [cashBackData]
+  );
 
   return (
     <>
@@ -84,12 +119,24 @@ export const MobileTopupResult = ({
               }
             />
 
-            <Grid templateColumns="repeat(3, 1fr)">
+            <Grid templateColumns="repeat(3, 1fr)" gap="s16">
               <CardContent title="Mobile Number" subtitle={methods?.getValues().mobileNumber} />
+
+              <CardContent
+                title="Service Provider"
+                subtitle={serviceProviderLabels[serviceProvider as string]}
+              />
 
               <CardContent
                 title="Topup Amount"
                 subtitle={amountConverter(methods?.getValues().amount)}
+              />
+
+              <CardContent title="Cashback" subtitle={amountConverter(cashBackAmount || 0)} />
+
+              <CardContent
+                title="Service Charge"
+                subtitle={amountConverter(serviceChargeAmount || 0)}
               />
             </Grid>
           </CardBodyContainer>
