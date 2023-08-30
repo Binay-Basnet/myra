@@ -314,7 +314,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
   defaultData = [],
   canDeleteRow = true,
   onChange,
-  debug = true,
+  debug = false,
   canAddRow = true,
   searchPlaceholder,
   getRowId,
