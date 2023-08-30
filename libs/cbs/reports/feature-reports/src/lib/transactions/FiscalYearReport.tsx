@@ -14,7 +14,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportCustomDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedText, ROUTES } from '@coop/cbs/utils';
+import { localizedText } from '@coop/cbs/utils';
 import { arrayToTree } from '@coop/shared/components';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
 import { amountConverter, useIsCbs } from '@coop/shared/utils';
@@ -179,7 +179,7 @@ export const FiscalYearReport = () => {
               },
             ]}
             data={coaReport as TrialSheetReportDataEntry[]}
-            coaRedirect={false}
+            coaRedirect
           />
         </Report.Content>
         <Report.Filters>
@@ -264,9 +264,14 @@ const FiscalYearCOATable = ({ data, type, total, coaRedirect = true }: ICOATable
                   color="primary.500"
                   onClick={() =>
                     window.open(
-                      `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
+                      `/reports/cbs/others/adjusted-ledger/new?id=${
                         props.row?.original?.ledgerId
-                      }&branch=${JSON.stringify(branchIDs)}&date=${datePeriod?.from?.en}`,
+                      }&branch=${JSON.stringify(branchIDs)}&dateFromen=${
+                        datePeriod?.from?.en
+                      }&dateToen=${datePeriod?.to?.en}&dateFromnp=${
+                        datePeriod?.from?.np
+                      }&dateTonp=${datePeriod?.to?.np}`,
+
                       '_blank'
                     )
                   }

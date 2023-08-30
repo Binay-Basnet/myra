@@ -485,3 +485,29 @@ query getFiscalYearTrialBalance($data: TrialSheetReportFilter!) {
     }
   }
 }
+
+query getAdjustedLedgerReport($data: AdjustedLedgerReportInput!) {
+  report {
+    transactionReport {
+      financial {
+        adjustedLedgerReport(data: $data) {
+          data {
+            branchId
+            branchName
+            ledgerId
+            balance {
+              amount
+              amountType
+            }
+            dr
+            cr
+            adjustedBalance {
+              amount
+              amountType
+            }
+          }
+        }
+      }
+    }
+  }
+}

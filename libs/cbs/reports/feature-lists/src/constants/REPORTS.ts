@@ -155,6 +155,7 @@ export enum Report {
   EXCEPTION_MEMBER_WISE_BALANCE = 'Member Wise Balance Execption Report',
   EXCEPTION_SHARE_BALANCE = 'Share Balance Exception Report',
 
+  OTHERS_ADJUSTED_LEDGER_REPORT = 'Adjusted Ledger Report',
   OTHERS_COMMITTEE_REGISTER = 'Committee Registered Details Report',
   OTHERS_ORGANIZATIONAL_PROFILE = 'Organizational Profile Report',
   OTHERS_SHARE_CERTIFICATE_PRINT_REPORT = 'Share Certificate Report',
@@ -701,6 +702,11 @@ export const REPORTS = {
   ],
 
   [ReportGroup.OTHERS]: [
+    {
+      id: '9',
+      report: Report.OTHERS_ADJUSTED_LEDGER_REPORT,
+      link: 'adjusted-ledger',
+    },
     {
       id: '9',
       report: Report.GENERAL_LEDGER_REPORT,

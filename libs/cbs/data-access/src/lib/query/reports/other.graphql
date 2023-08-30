@@ -17,6 +17,19 @@ query getLedgerReport($data: GeneralLedgerFilter!) {
           openingBalanceType
           closingBalance
           closingBalanceType
+          adjustedClosingBalance {
+            amount
+            amountType
+          }
+        }
+        adjustedEntries {
+          id
+          oldId
+          date
+          account
+          balance
+          credit
+          debit
         }
       }
     }

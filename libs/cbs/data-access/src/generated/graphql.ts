@@ -38463,7 +38463,20 @@ export type GetLedgerReportQuery = {
           openingBalanceType?: BalanceType | null;
           closingBalance?: string | null;
           closingBalanceType?: BalanceType | null;
+          adjustedClosingBalance?: {
+            amount?: string | null;
+            amountType?: BalanceType | null;
+          } | null;
         } | null;
+        adjustedEntries?: Array<{
+          id?: string | null;
+          oldId?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          account?: string | null;
+          balance?: string | null;
+          credit?: string | null;
+          debit?: string | null;
+        } | null> | null;
       };
     };
   };
@@ -39496,6 +39509,30 @@ export type GetFiscalYearTrialBalanceQuery = {
               under?: string | null;
             } | null> | null;
           } | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetAdjustedLedgerReportQueryVariables = Exact<{
+  data: AdjustedLedgerReportInput;
+}>;
+
+export type GetAdjustedLedgerReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        adjustedLedgerReport: {
+          data?: Array<{
+            branchId: string;
+            branchName: string;
+            ledgerId: string;
+            dr?: string | null;
+            cr?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+            adjustedBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          } | null> | null;
         };
       };
     };
@@ -65968,6 +66005,19 @@ export const GetLedgerReportDocument = `
           openingBalanceType
           closingBalance
           closingBalanceType
+          adjustedClosingBalance {
+            amount
+            amountType
+          }
+        }
+        adjustedEntries {
+          id
+          oldId
+          date
+          account
+          balance
+          credit
+          debit
         }
       }
     }
@@ -67288,6 +67338,47 @@ export const useGetFiscalYearTrialBalanceQuery = <
     ['getFiscalYearTrialBalance', variables],
     useAxios<GetFiscalYearTrialBalanceQuery, GetFiscalYearTrialBalanceQueryVariables>(
       GetFiscalYearTrialBalanceDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAdjustedLedgerReportDocument = `
+    query getAdjustedLedgerReport($data: AdjustedLedgerReportInput!) {
+  report {
+    transactionReport {
+      financial {
+        adjustedLedgerReport(data: $data) {
+          data {
+            branchId
+            branchName
+            ledgerId
+            balance {
+              amount
+              amountType
+            }
+            dr
+            cr
+            adjustedBalance {
+              amount
+              amountType
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAdjustedLedgerReportQuery = <
+  TData = GetAdjustedLedgerReportQuery,
+  TError = unknown
+>(
+  variables: GetAdjustedLedgerReportQueryVariables,
+  options?: UseQueryOptions<GetAdjustedLedgerReportQuery, TError, TData>
+) =>
+  useQuery<GetAdjustedLedgerReportQuery, TError, TData>(
+    ['getAdjustedLedgerReport', variables],
+    useAxios<GetAdjustedLedgerReportQuery, GetAdjustedLedgerReportQueryVariables>(
+      GetAdjustedLedgerReportDocument
     ).bind(null, variables),
     options
   );
