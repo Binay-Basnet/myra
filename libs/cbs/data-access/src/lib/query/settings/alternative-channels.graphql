@@ -64,11 +64,11 @@ query getACFeeCOA {
   }
 }
 
-query listUtilityServiceType {
+query listUtilityServiceType($filter: ServiceTypeFilter) {
   settings {
     ebanking {
       utility {
-        listServiceType {
+        listServiceType(filter: $filter) {
           data {
             id
             name

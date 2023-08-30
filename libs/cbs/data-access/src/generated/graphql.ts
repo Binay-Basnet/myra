@@ -7431,6 +7431,7 @@ export type ExtraDetailListed = {
   id?: Maybe<Scalars['ID']>;
   netPay?: Maybe<Scalars['String']>;
   paidDays?: Maybe<Scalars['Int']>;
+  taxes?: Maybe<Scalars['String']>;
 };
 
 export type ExtraDetails = {
@@ -9301,6 +9302,7 @@ export type HrPayrollPayrollRunQuery = {
   ListSalaryAssignmentWithExtraDetails: ExtraDetailsConnection;
   getPayrollRun: EachPayrollRunRecords;
   listPayrollRun: PayrollRunConnection;
+  listSalarySlip: SalarySlipsConnection;
 };
 
 export type HrPayrollPayrollRunQueryListSalaryAssignmentWithExtraDetailsArgs = {
@@ -9313,6 +9315,11 @@ export type HrPayrollPayrollRunQueryGetPayrollRunArgs = {
 };
 
 export type HrPayrollPayrollRunQueryListPayrollRunArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HrPayrollPayrollRunQueryListSalarySlipArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -19245,6 +19252,23 @@ export type SalaryRangeInput = {
   min: Scalars['String'];
 };
 
+export type SalarySlipEdges = {
+  cursor: Scalars['Cursor'];
+  node: SalarySlipListed;
+};
+
+export type SalarySlipListed = {
+  id: Scalars['ID'];
+  payrollPeriod?: Maybe<LocalizedDate>;
+  salarySlipUrl?: Maybe<Scalars['String']>;
+};
+
+export type SalarySlipsConnection = {
+  edges?: Maybe<Array<Maybe<SalarySlipEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
 export type SalaryStructureAssignmentListConnection = {
   edges?: Maybe<Array<Maybe<SalaryStructureAssignmentListEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -20050,6 +20074,10 @@ export type ServiceTypeData = {
   isActive?: Maybe<Scalars['Boolean']>;
   name: Scalars['String'];
   slug: Scalars['String'];
+};
+
+export type ServiceTypeFilter = {
+  isActive?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type ServiceTypeFormState = {
@@ -22281,6 +22309,8 @@ export type UtilityLedgerSetupInputResult = {
 
 export const UtilityLedgerType = {
   CashBack: 'CASH_BACK',
+  ExpenseToNeosys: 'EXPENSE_TO_NEOSYS',
+  IncomeFromNeosys: 'INCOME_FROM_NEOSYS',
   ServiceCharge: 'SERVICE_CHARGE',
   Utility: 'UTILITY',
 } as const;
@@ -22313,6 +22343,10 @@ export type UtilityQuery = {
 export type UtilityQueryListCashBackArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type UtilityQueryListServiceTypeArgs = {
+  filter?: InputMaybe<ServiceTypeFilter>;
 };
 
 export type UtilityQueryListUtilitiesArgs = {
@@ -39751,7 +39785,9 @@ export type GetAcFeeCoaQuery = {
   };
 };
 
-export type ListUtilityServiceTypeQueryVariables = Exact<{ [key: string]: never }>;
+export type ListUtilityServiceTypeQueryVariables = Exact<{
+  filter?: InputMaybe<ServiceTypeFilter>;
+}>;
 
 export type ListUtilityServiceTypeQuery = {
   settings: {
@@ -67661,11 +67697,11 @@ export const useGetAcFeeCoaQuery = <TData = GetAcFeeCoaQuery, TError = unknown>(
     options
   );
 export const ListUtilityServiceTypeDocument = `
-    query listUtilityServiceType {
+    query listUtilityServiceType($filter: ServiceTypeFilter) {
   settings {
     ebanking {
       utility {
-        listServiceType {
+        listServiceType(filter: $filter) {
           data {
             id
             name
