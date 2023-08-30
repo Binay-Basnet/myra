@@ -95,7 +95,7 @@ export const AdjustedLedgersReport = () => {
                     color="primary.500"
                     onClick={() =>
                       window.open(
-                        `/reports/cbs/others/adjusted-ledger/new?id=${props.row?.original?.ledgerId}&branch=${props?.row?.original?.branchId}&dateFromen=${datePeriod?.from?.en}&dateToen=${datePeriod?.to?.en}&dateFromnp=${datePeriod?.from?.np}&dateTonp=${datePeriod?.to?.np}`,
+                        `/reports/cbs/others/ledger/new?id=${props.row?.original?.ledgerId}&branch=${props?.row?.original?.branchId}&dateFromen=${datePeriod?.from?.en}&dateToen=${datePeriod?.to?.en}&dateFromnp=${datePeriod?.from?.np}&dateTonp=${datePeriod?.to?.np}&isAdjusted=true`,
 
                         '_blank'
                       )
@@ -123,7 +123,7 @@ export const AdjustedLedgersReport = () => {
               {
                 header: 'Cr Total Adjusted',
                 accessorKey: 'cr',
-                cell: (props) => amountConverter(props?.row?.original?.dr || 0),
+                cell: (props) => amountConverter(props?.row?.original?.cr || 0),
               },
               {
                 header: 'Adjusted Balance',

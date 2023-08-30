@@ -6124,6 +6124,14 @@ export type DirectorDetailsFormState = {
   temporaryAddress?: Maybe<KymAddress>;
 };
 
+export const DistributionCondition = {
+  Daily: 'DAILY',
+  Monthly: 'MONTHLY',
+  Quarterly: 'QUARTERLY',
+} as const;
+
+export type DistributionCondition =
+  typeof DistributionCondition[keyof typeof DistributionCondition];
 export type District = {
   id: Scalars['Int'];
   municipalities: Array<Municipality>;
@@ -6157,6 +6165,13 @@ export const DividendTransferTreatment = {
 
 export type DividendTransferTreatment =
   typeof DividendTransferTreatment[keyof typeof DividendTransferTreatment];
+export const DividendTreatment = {
+  AccountTransfer: 'ACCOUNT_TRANSFER',
+  BookPayable: 'BOOK_PAYABLE',
+  ShareAndAccount: 'SHARE_AND_ACCOUNT',
+} as const;
+
+export type DividendTreatment = typeof DividendTreatment[keyof typeof DividendTreatment];
 export type Document = {
   photo?: Maybe<Scalars['String']>;
   signature?: Maybe<Scalars['String']>;
@@ -7416,6 +7431,7 @@ export type ExtraDetailListed = {
   id?: Maybe<Scalars['ID']>;
   netPay?: Maybe<Scalars['String']>;
   paidDays?: Maybe<Scalars['Int']>;
+  taxes?: Maybe<Scalars['String']>;
 };
 
 export type ExtraDetails = {
@@ -9286,6 +9302,7 @@ export type HrPayrollPayrollRunQuery = {
   ListSalaryAssignmentWithExtraDetails: ExtraDetailsConnection;
   getPayrollRun: EachPayrollRunRecords;
   listPayrollRun: PayrollRunConnection;
+  listSalarySlip: SalarySlipsConnection;
 };
 
 export type HrPayrollPayrollRunQueryListSalaryAssignmentWithExtraDetailsArgs = {
@@ -9298,6 +9315,11 @@ export type HrPayrollPayrollRunQueryGetPayrollRunArgs = {
 };
 
 export type HrPayrollPayrollRunQueryListPayrollRunArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HrPayrollPayrollRunQueryListSalarySlipArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -17030,6 +17052,7 @@ export type Mutation = {
   seed: Scalars['Boolean'];
   settings: SettingsMutation;
   share: ShareMutation;
+  shareDividend: ShareDividendMutation;
   transaction: TransactionMutation;
   user: UserMutation;
   withdrawSlip: WithdrawSlipMutation;
@@ -18046,6 +18069,11 @@ export type PickupMethod = typeof PickupMethod[keyof typeof PickupMethod];
 export type PictureData = {
   identifier?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
+};
+
+export type PostShareDividendResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Scalars['String']>;
 };
 
 export type PredefinedElementFilter = {
@@ -19224,6 +19252,23 @@ export type SalaryRangeInput = {
   min: Scalars['String'];
 };
 
+export type SalarySlipEdges = {
+  cursor: Scalars['Cursor'];
+  node: SalarySlipListed;
+};
+
+export type SalarySlipListed = {
+  id: Scalars['ID'];
+  payrollPeriod?: Maybe<LocalizedDate>;
+  salarySlipUrl?: Maybe<Scalars['String']>;
+};
+
+export type SalarySlipsConnection = {
+  edges?: Maybe<Array<Maybe<SalarySlipEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
 export type SalaryStructureAssignmentListConnection = {
   edges?: Maybe<Array<Maybe<SalaryStructureAssignmentListEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -20031,6 +20076,10 @@ export type ServiceTypeData = {
   slug: Scalars['String'];
 };
 
+export type ServiceTypeFilter = {
+  isActive?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type ServiceTypeFormState = {
   amount?: Maybe<Scalars['Amount']>;
   ledgerName?: Maybe<Scalars['String']>;
@@ -20324,6 +20373,23 @@ export type ShareDetailData = {
 export type ShareDetailResult = {
   data?: Maybe<ShareDetailData>;
   error?: Maybe<QueryError>;
+};
+
+export type ShareDividendInput = {
+  condition: DistributionCondition;
+  payableCOAHead: Scalars['ID'];
+  sourceCOAHead: Scalars['ID'];
+  taxLedgerCOAHead: Scalars['ID'];
+  taxRate: Scalars['Float'];
+  treatment: DividendTreatment;
+};
+
+export type ShareDividendMutation = {
+  postDividend?: Maybe<PostShareDividendResult>;
+};
+
+export type ShareDividendMutationPostDividendArgs = {
+  data: ShareDividendInput;
 };
 
 export type ShareDividendSettingsInput = {
@@ -22243,6 +22309,8 @@ export type UtilityLedgerSetupInputResult = {
 
 export const UtilityLedgerType = {
   CashBack: 'CASH_BACK',
+  ExpenseToNeosys: 'EXPENSE_TO_NEOSYS',
+  IncomeFromNeosys: 'INCOME_FROM_NEOSYS',
   ServiceCharge: 'SERVICE_CHARGE',
   Utility: 'UTILITY',
 } as const;
@@ -22275,6 +22343,10 @@ export type UtilityQuery = {
 export type UtilityQueryListCashBackArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type UtilityQueryListServiceTypeArgs = {
+  filter?: InputMaybe<ServiceTypeFilter>;
 };
 
 export type UtilityQueryListUtilitiesArgs = {
@@ -38372,7 +38444,20 @@ export type GetLedgerReportQuery = {
           openingBalanceType?: BalanceType | null;
           closingBalance?: string | null;
           closingBalanceType?: BalanceType | null;
+          adjustedClosingBalance?: {
+            amount?: string | null;
+            amountType?: BalanceType | null;
+          } | null;
         } | null;
+        adjustedEntries?: Array<{
+          id?: string | null;
+          oldId?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          account?: string | null;
+          balance?: string | null;
+          credit?: string | null;
+          debit?: string | null;
+        } | null> | null;
       };
     };
   };
@@ -65872,6 +65957,19 @@ export const GetLedgerReportDocument = `
           openingBalanceType
           closingBalance
           closingBalanceType
+          adjustedClosingBalance {
+            amount
+            amountType
+          }
+        }
+        adjustedEntries {
+          id
+          oldId
+          date
+          account
+          balance
+          credit
+          debit
         }
       }
     }
