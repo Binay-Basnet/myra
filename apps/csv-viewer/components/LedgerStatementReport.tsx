@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useQuery } from '@tanstack/react-query';
 
 import { Box, GridItem, Text } from '@myra-ui';
@@ -11,7 +12,7 @@ import { privateAgent } from '@coop/csv-viewer/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { amountConverter, getAPIUrl } from '@coop/shared/utils';
 
-const getLedgerReport = async (filters: GeneralLedgerFilter) => {
+const getLedgerReport = async (ledger_id: string) => {
   const response = await privateAgent.get<{
     report: {
       otherReport: {
@@ -25,9 +26,9 @@ const getLedgerReport = async (filters: GeneralLedgerFilter) => {
     total_pages: number;
   }>(`${getAPIUrl()}/report`, {
     params: {
-      report_type: 'LEDGER_STATEMENT',
-      filter: {
-        ...filters,
+      input: {
+        report_type: 'LEDGER_STATEMENT',
+        id: ledger_id,
       },
     },
   });
@@ -47,14 +48,20 @@ const getMembers = async () => {
   return response?.data;
 };
 
-const getLedger = async () => {
+const getLedger = async (member_id: string) => {
   const response = await privateAgent.get<{
     data: {
       ledger_name: string;
       ledger_code: string;
     }[];
     total_pages: number;
-  }>(`${getAPIUrl()}/ledger`, {});
+  }>(`${getAPIUrl()}/ledger`, {
+    params: {
+      filter: {
+        member_id,
+      },
+    },
+  });
 
   return response?.data;
 };
@@ -64,7 +71,7 @@ export const LedgerStatementReport = () => {
 
   const { data, isFetching } = useQuery(
     ['ledger-report', filters],
-    async () => getLedgerReport(filters),
+    async () => getLedgerReport(filters?.ledgerId),
     {}
   );
 
@@ -198,8 +205,13 @@ export const LedgerStatementReport = () => {
 
 const LedgerReportInputs = () => {
   const { data: memberData } = useQuery(['members'], async () => getMembers(), {});
+  const { watch } = useFormContext();
 
-  const { data: ledgerData } = useQuery(['ledger'], async () => getLedger(), {});
+  const memberIdWatch = watch('member_id');
+
+  const { data: ledgerData } = useQuery(['ledger'], async () => getLedger(memberIdWatch), {
+    enabled: !!memberIdWatch,
+  });
 
   return (
     <Report.Inputs hideDate>
@@ -217,7 +229,7 @@ const LedgerReportInputs = () => {
       <GridItem colSpan={2}>
         <FormSelect
           label="Select Ledger"
-          name="ledger_id"
+          name="ledgerId"
           options={ledgerData?.data?.map((item) => ({
             label: item?.ledger_name,
             value: item?.ledger_code,
