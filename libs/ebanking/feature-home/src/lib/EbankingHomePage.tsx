@@ -12,7 +12,7 @@ import {
   useGetAccountListQuery,
   useGetEbankingLoanAccountsQuery,
   useGetHomeServiceListQuery,
-  useGetUtilityListQuery,
+  useListUtilityServiceTypeQuery,
 } from '@coop/ebanking/data-access';
 import {
   checkEbankingModuleAccess,
@@ -27,7 +27,6 @@ export const EbankingHomePage = () => {
   const { isOpen, onToggle } = useDisclosure();
 
   const { data: servicesList, isLoading } = useGetHomeServiceListQuery();
-  const { data: utilityList } = useGetUtilityListQuery();
   const { data: accountList, isLoading: accountsLoading } = useGetAccountListQuery({
     transactionPagination: { first: 10, after: '' },
   });
@@ -37,7 +36,11 @@ export const EbankingHomePage = () => {
     useGetEbankingLoanAccountsQuery();
   const loanAccounts = loanAccountList?.eBanking?.loanAccount?.list?.accounts;
 
-  const utilityPayments = utilityList?.eBanking?.utilityPayments ?? [];
+  const { data: utilityServicesData } = useListUtilityServiceTypeQuery({
+    filter: { isActive: true },
+  });
+
+  const utilityServices = utilityServicesData?.eBanking?.utility?.listServiceType?.data ?? [];
 
   const transactions = accountList?.eBanking?.account?.list?.recentTransactions?.edges;
 
@@ -97,42 +100,30 @@ export const EbankingHomePage = () => {
 
             <Box bg="white" borderRadius="br2" boxShadow="E0" overflow="hidden">
               <Grid templateColumns="repeat(5, 1fr)" p="s16" rowGap="s16" columnGap="s16">
-                {utilityPayments.slice(0, 10).map((utilityPayment) => (
+                {utilityServices.slice(0, 10).map((utilityPayment) => (
                   <UtilityHomeCard
                     icon={
-                      utilityPayment?.service_id
-                        ? UTILITY_ICON_DICT[utilityPayment?.service_id]
-                        : undefined
+                      utilityPayment?.slug ? UTILITY_ICON_DICT[utilityPayment?.slug] : undefined
                     }
-                    link={
-                      utilityPayment?.service_id
-                        ? UTILITY_LINK_DICT[utilityPayment?.service_id]
-                        : ''
-                    }
+                    link={utilityPayment?.slug ? UTILITY_LINK_DICT[utilityPayment?.slug] : ''}
                     label={utilityPayment?.name ?? 'N/A'}
                   />
                 ))}
               </Grid>
               <Collapse in={isOpen} animateOpacity>
                 <Grid templateColumns="repeat(5, 1fr)" p="s16" rowGap="s16" columnGap="s16">
-                  {utilityPayments.slice(10, utilityPayments.length).map((utilityPayment) => (
+                  {utilityServices.slice(10, utilityServices.length).map((utilityPayment) => (
                     <UtilityHomeCard
                       icon={
-                        utilityPayment?.service_id
-                          ? UTILITY_ICON_DICT[utilityPayment?.service_id]
-                          : undefined
+                        utilityPayment?.slug ? UTILITY_ICON_DICT[utilityPayment?.slug] : undefined
                       }
-                      link={
-                        utilityPayment?.service_id
-                          ? UTILITY_LINK_DICT[utilityPayment?.service_id]
-                          : ''
-                      }
+                      link={utilityPayment?.slug ? UTILITY_LINK_DICT[utilityPayment?.slug] : ''}
                       label={utilityPayment?.name ?? 'N/A'}
                     />
                   ))}
                 </Grid>
               </Collapse>
-              {utilityPayments.length > 10 && (
+              {utilityServices.length > 10 && (
                 <Box
                   h="3.125rem"
                   display="flex"

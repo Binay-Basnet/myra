@@ -23,7 +23,7 @@ export const UtilityDetailPageCard = ({ icon, label, link }: UtilityDetailPageCa
       bg="white"
       borderRadius="br2"
       boxShadow="E0"
-      onClick={() => router.push(link)}
+      onClick={() => router.push(link || '')}
     >
       <Icon as={icon} size="lg" color="primary.500" />
 

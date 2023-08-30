@@ -1968,6 +1968,36 @@ export const useListUtilitiesQuery = <TData = Types.ListUtilitiesQuery, TError =
     ).bind(null, variables),
     options
   );
+export const ListUtilityServiceTypeDocument = `
+    query listUtilityServiceType($filter: ServiceTypeFilter) {
+  eBanking {
+    utility {
+      listServiceType(filter: $filter) {
+        data {
+          id
+          name
+          slug
+          isActive
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListUtilityServiceTypeQuery = <
+  TData = Types.ListUtilityServiceTypeQuery,
+  TError = unknown
+>(
+  variables?: Types.ListUtilityServiceTypeQueryVariables,
+  options?: UseQueryOptions<Types.ListUtilityServiceTypeQuery, TError, TData>
+) =>
+  useQuery<Types.ListUtilityServiceTypeQuery, TError, TData>(
+    variables === undefined ? ['listUtilityServiceType'] : ['listUtilityServiceType', variables],
+    useAxios<Types.ListUtilityServiceTypeQuery, Types.ListUtilityServiceTypeQueryVariables>(
+      ListUtilityServiceTypeDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetCashBackChargesDocument = `
     query getCashBackCharges($input: CheckCashBackInfo) {
   eBanking {
