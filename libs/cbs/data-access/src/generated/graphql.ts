@@ -218,6 +218,7 @@ export type AccountCloseSuccessCard = {
   accName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   charges?: Maybe<Scalars['String']>;
+  closeReason?: Maybe<Scalars['String']>;
   interest?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<Scalars['String']>;
 };
@@ -1057,6 +1058,27 @@ export type AddressInput = {
 export type AddressType = {
   permanent?: Maybe<Address>;
   temporary?: Maybe<Address>;
+};
+
+export type AdjustedLedgerReport = {
+  data?: Maybe<Array<Maybe<AdjustedLedgerReportData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type AdjustedLedgerReportData = {
+  adjustedBalance?: Maybe<BalanceValue>;
+  balance?: Maybe<BalanceValue>;
+  branchId: Scalars['ID'];
+  branchName: Scalars['String'];
+  cr?: Maybe<Scalars['String']>;
+  dr?: Maybe<Scalars['String']>;
+  ledgerId: Scalars['String'];
+};
+
+export type AdjustedLedgerReportInput = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  coaHead?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
 };
 
 export const AdjustmentUnit = {
@@ -7530,6 +7552,7 @@ export type FamilyMemberDetails = {
 
 export type FianancialTransactionReport = {
   abbsTransactionReport?: Maybe<AbbsTransactionReportResult>;
+  adjustedLedgerReport: AdjustedLedgerReport;
   bankGLBalanceReport: BankGlBalanceResult;
   bankGLStatementReport: BankGlStatementResult;
   charKhataReport: TrialSheetReportResult;
@@ -7547,6 +7570,10 @@ export type FianancialTransactionReport = {
 
 export type FianancialTransactionReportAbbsTransactionReportArgs = {
   data?: InputMaybe<AbbsTransactionReportFilter>;
+};
+
+export type FianancialTransactionReportAdjustedLedgerReportArgs = {
+  data: AdjustedLedgerReportInput;
 };
 
 export type FianancialTransactionReportBankGlBalanceReportArgs = {
@@ -8340,6 +8367,7 @@ export type GlBalanceFilter = {
 };
 
 export type GlReportSummary = {
+  adjustedClosingBalance?: Maybe<BalanceValue>;
   closingBalance?: Maybe<Scalars['String']>;
   closingBalanceType?: Maybe<BalanceType>;
   openingBalance?: Maybe<Scalars['String']>;
@@ -8360,6 +8388,7 @@ export const GenderInputType = {
 
 export type GenderInputType = typeof GenderInputType[keyof typeof GenderInputType];
 export type GenderLedgerReportResult = {
+  adjustedEntries?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
   data?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
   error?: Maybe<QueryError>;
   ledgerName?: Maybe<Scalars['String']>;
@@ -8398,6 +8427,7 @@ export type GeneralBranchSettingsQueryListArgs = {
 };
 
 export type GeneralLedgerFilter = {
+  inculdeAdjustment?: InputMaybe<Scalars['Boolean']>;
   ledgerId: Scalars['ID'];
   period: LocalizedDateFilter;
 };
@@ -15552,6 +15582,11 @@ export type MrTransactionReportFilter = {
 export type MrTransactionReportResult = {
   data?: Maybe<Array<Maybe<MrTransactionReport>>>;
   error?: Maybe<QueryError>;
+  summary?: Maybe<MrTransactionReportSummary>;
+};
+
+export type MrTransactionReportSummary = {
+  totalAmount?: Maybe<BalanceValue>;
 };
 
 export type MRmemberInstallmentData = {
@@ -39370,6 +39405,30 @@ export type GetFiscalYearTrialBalanceQuery = {
               under?: string | null;
             } | null> | null;
           } | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetAdjustedLedgerReportQueryVariables = Exact<{
+  data: AdjustedLedgerReportInput;
+}>;
+
+export type GetAdjustedLedgerReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        adjustedLedgerReport: {
+          data?: Array<{
+            branchId: string;
+            branchName: string;
+            ledgerId: string;
+            dr?: string | null;
+            cr?: string | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+            adjustedBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          } | null> | null;
         };
       };
     };
@@ -67133,6 +67192,47 @@ export const useGetFiscalYearTrialBalanceQuery = <
     ['getFiscalYearTrialBalance', variables],
     useAxios<GetFiscalYearTrialBalanceQuery, GetFiscalYearTrialBalanceQueryVariables>(
       GetFiscalYearTrialBalanceDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAdjustedLedgerReportDocument = `
+    query getAdjustedLedgerReport($data: AdjustedLedgerReportInput!) {
+  report {
+    transactionReport {
+      financial {
+        adjustedLedgerReport(data: $data) {
+          data {
+            branchId
+            branchName
+            ledgerId
+            balance {
+              amount
+              amountType
+            }
+            dr
+            cr
+            adjustedBalance {
+              amount
+              amountType
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAdjustedLedgerReportQuery = <
+  TData = GetAdjustedLedgerReportQuery,
+  TError = unknown
+>(
+  variables: GetAdjustedLedgerReportQueryVariables,
+  options?: UseQueryOptions<GetAdjustedLedgerReportQuery, TError, TData>
+) =>
+  useQuery<GetAdjustedLedgerReportQuery, TError, TData>(
+    ['getAdjustedLedgerReport', variables],
+    useAxios<GetAdjustedLedgerReportQuery, GetAdjustedLedgerReportQueryVariables>(
+      GetAdjustedLedgerReportDocument
     ).bind(null, variables),
     options
   );
