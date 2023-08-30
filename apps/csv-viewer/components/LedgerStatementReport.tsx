@@ -26,7 +26,9 @@ const getLedgerReport = async (filters: GeneralLedgerFilter) => {
   }>(`${getAPIUrl()}/report`, {
     params: {
       report_type: 'LEDGER_STATEMENT',
-      ...filters,
+      filter: {
+        ...filters,
+      },
     },
   });
 
