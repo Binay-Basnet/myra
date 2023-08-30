@@ -212,12 +212,29 @@ function editableReducer<T extends RecordWithId & Record<string, EditableValue>>
       };
 
     case EditableTableActionKind.EDIT:
+      // eslint-disable-next-line no-case-declarations
+      const accessorValue = state.columns.reduce((acc, curr) => {
+        if (curr.accessorFn) {
+          acc = {
+            ...acc,
+            [curr.accessor]: curr.accessorFn({
+              ...payload.data,
+              [payload.column.accessor]: payload.column.isNumeric
+                ? payload.newValue || 0
+                : payload.newValue,
+            }),
+          };
+        }
+        return acc;
+      }, {});
+
       return {
         ...state,
         data: state.data.map((item) =>
           item._id === payload?.data?._id
             ? {
                 ...item,
+                ...accessorValue,
                 [payload.column.accessor]: payload.column.isNumeric
                   ? payload.newValue || 0
                   : payload.newValue,
@@ -297,7 +314,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
   defaultData = [],
   canDeleteRow = true,
   onChange,
-  debug = false,
+  debug = true,
   canAddRow = true,
   searchPlaceholder,
   getRowId,
@@ -314,39 +331,19 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
   useDeepCompareEffect(() => {
     if (onChange) {
       // eslint-disable-next-line unused-imports/no-unused-vars
-      onChange(
-        state.data.map(({ _id, ...rest }) => {
-          const keys = Object.keys(rest);
-
-          const newObject = keys.reduce((acc, key) => {
-            const value = rest[key];
-
-            // acc = {
-            //   ...acc,
-            //   [key]:
-            //     value &&
-            //     (typeof value === 'number' || typeof value === 'string'
-            //       ? value
-            //       : 'value' in value
-            //       ? value.value
-            //       : value),
-            // };
-            acc = {
-              ...acc,
-              [key]: value,
-            };
-
-            return acc;
-          }, {});
-
-          return newObject;
-        }) as Omit<T, '_id'>[]
-      );
+      onChange(state.data.map(({ _id, ...rest }) => rest) as Omit<T, '_id'>[]);
     }
   }, [state.data]);
 
-  useDeepCompareEffect(() => {
-    if (defaultData && !columns.some((column) => !!column.searchOptions)) {
+  useEffect(() => {
+    if (
+      defaultData &&
+      !columns.some((column) => !!column.searchOptions) &&
+      !isArrayEqual(
+        defaultData,
+        state.data.map(({ _id, ...rest }) => rest)
+      )
+    ) {
       dispatch({
         type: EditableTableActionKind.REPLACE,
         payload: {
@@ -636,22 +633,11 @@ const EditableTableRow = <T extends RecordWithId & Record<string, EditableValue>
 
         {columns
           .filter((column) => !column.hidden)
-          .map((column) => {
-            if (column.accessorFn) {
-              dispatch({
-                type: EditableTableActionKind.ACCESSOR_FN_EDIT,
-                payload: {
-                  data,
-                  column,
-                },
-              });
-            }
-            return (
-              <Fragment key={column.accessor as string}>
-                <EditableCell column={column} data={data} dispatch={dispatch} index={index} />
-              </Fragment>
-            );
-          })}
+          .map((column) => (
+            <Fragment key={column.accessor as string}>
+              <EditableCell column={column} data={data} dispatch={dispatch} index={index} />
+            </Fragment>
+          ))}
         {canDeleteRow ? (
           <Box
             as="button"
@@ -793,13 +779,18 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
 
   return (
     <Editable
+      position="relative"
       _after={
         column.fieldType === 'percentage'
           ? {
               content: "'%'",
               color: 'primary.500',
+              bg: column?.getDisabled?.(data) ? 'gray.50' : 'white',
               position: 'absolute',
+              height: '100%',
               fontWeight: '500',
+              display: 'flex',
+              alignItems: 'center',
               px: 's8',
             }
           : {}
