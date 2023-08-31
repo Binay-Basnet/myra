@@ -131,3 +131,29 @@ query getSalaryAssignmentListWithExtraDetailsList($filter: Filter, $pagination: 
     }
   }
 }
+
+query getSalarySlipList($filter: Filter, $pagination: Pagination) {
+  hr {
+    payroll {
+      payrollRun {
+        listSalarySlip(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              payrollPeriod {
+                from
+                to
+              }
+              salarySlipUrl
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

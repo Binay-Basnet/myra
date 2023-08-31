@@ -25,7 +25,12 @@ import { FormLayout } from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 
 import { CustomFundManagementInput } from './type';
-import { BasicFundManagement, DistributionTable, OtherFundDistributionTable, ParticularTable } from '../components';
+import {
+  BasicFundManagement,
+  DistributionTable,
+  OtherFundDistributionTable,
+  ParticularTable,
+} from '../components';
 
 export const NewFundManagement = () => {
   const router = useRouter();
