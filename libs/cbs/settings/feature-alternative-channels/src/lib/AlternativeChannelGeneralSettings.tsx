@@ -116,6 +116,12 @@ export const AlternativeChannelGeneralSettings = () => {
                 name={UtilityLedgerType.IncomeFromNeosys}
                 label="Income from Neosys Ledger Mapping"
               />
+
+              <FormLeafCoaHeadSelect
+                name={UtilityLedgerType.IncomeFromNeosysSuspense}
+                label="Income from Neosys Suspense Ledger Mapping"
+              />
+
               <FormLeafCoaHeadSelect
                 name={UtilityLedgerType.ExpenseToNeosys}
                 label="Expense to Neosys Ledger Mapping"
@@ -140,6 +146,7 @@ export const AlternativeChannelGeneralSettings = () => {
                 UtilityLedgerType.CashBack,
                 UtilityLedgerType.ServiceCharge,
                 UtilityLedgerType.IncomeFromNeosys,
+                UtilityLedgerType.IncomeFromNeosysSuspense,
                 UtilityLedgerType.ExpenseToNeosys,
               ]?.map((ut) => ({
                 coaHead:
