@@ -9,9 +9,14 @@ import { useAppSelector, useGetEndOfDayDateDataQuery } from '@coop/cbs/data-acce
 interface IReportDateRange {
   label?: string;
   name?: string;
+  setInitialDate?: boolean;
 }
 
-export const ReportDateRange = ({ label = 'Select Period', name = 'period' }: IReportDateRange) => {
+export const ReportDateRange = ({
+  label = 'Select Period',
+  name = 'period',
+  setInitialDate = true,
+}: IReportDateRange) => {
   const { control, setValue } = useFormContext();
   const { locale } = useRouter();
   const { data } = useGetEndOfDayDateDataQuery();
@@ -20,7 +25,9 @@ export const ReportDateRange = ({ label = 'Select Period', name = 'period' }: IR
   const transactionDate = data?.transaction?.endOfDayDate?.value;
 
   useEffect(() => {
-    setValue(name, { from: transactionDate, to: transactionDate });
+    if (setInitialDate) {
+      setValue(name, { from: transactionDate, to: transactionDate });
+    }
   }, [name, setValue, transactionDate]);
 
   return (

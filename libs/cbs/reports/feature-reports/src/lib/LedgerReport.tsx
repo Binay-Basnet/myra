@@ -336,7 +336,7 @@ const LedgerReportInputs = () => {
           pointerEvents={dateFromen ? 'none' : 'auto'}
           cursor={dateFromen ? 'not-allowed' : 'pointer'}
         >
-          <ReportDateRange />
+          <ReportDateRange setInitialDate={false} />
         </Box>
       </GridItem>
     </Report.Inputs>
