@@ -9439,10 +9439,15 @@ export type HrRecruitmentJobOpeningMutationUpsertJobOpeningArgs = {
 
 export type HrRecruitmentJobOpeningQuery = {
   getJobOpening: EachJobOpeningRecord;
+  getJobOpeningOverview: JobOpeningOverviewWithError;
   listJobOpening: JobOpeningConnection;
 };
 
 export type HrRecruitmentJobOpeningQueryGetJobOpeningArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrRecruitmentJobOpeningQueryGetJobOpeningOverviewArgs = {
   id: Scalars['ID'];
 };
 
@@ -11144,6 +11149,24 @@ export type JobOpeningListed = {
   staffPlan: Scalars['ID'];
   status: IsOpenClosed;
   title: Scalars['String'];
+};
+
+export type JobOpeningOverview = {
+  defaulAmount?: Maybe<Scalars['String']>;
+  department?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  designation?: Maybe<Scalars['String']>;
+  experienceLevel?: Maybe<Scalars['String']>;
+  jobId?: Maybe<Scalars['String']>;
+  jobTitle?: Maybe<Scalars['String']>;
+  maximumAmount?: Maybe<Scalars['String']>;
+  minimumAmount?: Maybe<Scalars['String']>;
+  staffPlan?: Maybe<Scalars['String']>;
+};
+
+export type JobOpeningOverviewWithError = {
+  data?: Maybe<JobOpeningOverview>;
+  error?: Maybe<QueryError>;
 };
 
 export type JobOpeningRecord = {
