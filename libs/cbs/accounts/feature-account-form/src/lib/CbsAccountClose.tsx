@@ -733,6 +733,7 @@ export const CbsAccountClose = () => {
                       </Text>
                     ),
                     'Account Closed Date': localizedDate(result?.accCloseDate),
+                    'Reason For Closing': result?.closeReason,
                     'Account Name': result?.accName,
                     'Total Interest': result?.interest,
                     Charges: result?.charges,

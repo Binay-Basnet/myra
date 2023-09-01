@@ -23411,6 +23411,7 @@ export type SetAccountCloseDataMutation = {
         interest?: string | null;
         charges?: string | null;
         paymentMode?: string | null;
+        closeReason?: string | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -45656,6 +45657,7 @@ export const SetAccountCloseDataDocument = `
         interest
         charges
         paymentMode
+        closeReason
       }
       error {
         ...MutationError
