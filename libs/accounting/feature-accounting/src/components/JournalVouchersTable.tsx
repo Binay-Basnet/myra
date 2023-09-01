@@ -82,7 +82,7 @@ export const JournalVouchersTable = () => {
         label: account?.node?.accountName?.local as string,
         value: account?.node?.accountCode as string,
       })),
-    [accountListData]
+    [isFetching]
   );
 
   const tableSummaryColumns: TableOverviewColumnType[] = [
