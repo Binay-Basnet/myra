@@ -1,8 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { DeepPartial, FormProvider, useForm } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
+import { useRouter } from 'next/router';
+import { omit } from 'lodash';
 
 import { Box } from '@myra-ui';
 
+import { useGetEndOfDayDateDataQuery } from '@coop/cbs/data-access';
 import { ReportOrganization } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 
@@ -63,13 +67,22 @@ const Report = <T extends Record<string, unknown>, Q extends Record<string, unkn
   defaultFilters,
   setFilters,
 }: IReportProps<T, Q>) => {
+  const router = useRouter();
+  const otherParams = omit(router.query, 'action');
   const printRef = useRef<HTMLInputElement | null>(null);
+  const { isFetching } = useGetEndOfDayDateDataQuery();
 
   const methods = useForm({
     defaultValues: (defaultFilters ?? {}) as DeepPartial<Q>,
   });
 
   const [isFilterShown, setIsFilterShown] = useState(false);
+
+  useDeepCompareEffect(() => {
+    if (otherParams && Object.keys(otherParams).length !== 0 && !isFetching) {
+      setFilters(methods.getValues() as Q);
+    }
+  }, [otherParams, defaultFilters, methods.getValues()]);
 
   const memoizedContextValue = React.useMemo<IReportContext<T, Q>>(
     () => ({

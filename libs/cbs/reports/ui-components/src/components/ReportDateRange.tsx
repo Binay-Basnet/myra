@@ -21,7 +21,7 @@ export const ReportDateRange = ({ label = 'Select Period', name = 'period' }: IR
 
   useEffect(() => {
     setValue(name, { from: transactionDate, to: transactionDate });
-  }, []);
+  }, [name, setValue, transactionDate]);
 
   return (
     <Controller
