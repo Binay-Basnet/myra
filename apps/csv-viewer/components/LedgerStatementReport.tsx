@@ -2,27 +2,18 @@ import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useQuery } from '@tanstack/react-query';
 
-import { Box, GridItem, Text } from '@myra-ui';
+import { GridItem } from '@myra-ui';
 
 import { GeneralLedgerFilter, GeneralLedgerReportEntry } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { privateAgent } from '@coop/csv-viewer/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { amountConverter, getAPIUrl } from '@coop/shared/utils';
+import { getAPIUrl } from '@coop/shared/utils';
 
 const getLedgerReport = async (ledger_id: string) => {
   const response = await privateAgent.get<{
-    report: {
-      otherReport: {
-        generalLedgerReport: {
-          data: unknown;
-          ledgerName: unknown;
-          summary: { openingBalance: unknown; closingBalance: unknown };
-        };
-      };
-    };
+    data;
     total_pages: number;
   }>(`${getAPIUrl()}/report`, {
     params: {
@@ -75,10 +66,7 @@ export const LedgerStatementReport = () => {
     {}
   );
 
-  const ledgerReport = data?.report?.otherReport?.generalLedgerReport?.data;
-  const ledgerName = data?.report?.otherReport?.generalLedgerReport?.ledgerName;
-  const openingBalance = data?.report?.otherReport?.generalLedgerReport?.summary?.openingBalance;
-  const closingBalance = data?.report?.otherReport?.generalLedgerReport?.summary?.closingBalance;
+  const ledgerReport = data?.data;
 
   return (
     <Report
@@ -104,14 +92,14 @@ export const LedgerStatementReport = () => {
 
       <Report.Body>
         <Report.Content>
-          <Report.OrganizationHeader />
-          <Report.Organization ledgerName={ledgerName as string} />
-          <Box display="flex" flexDirection="row" justifyContent="flex-end" p="s12">
-            <Box display="flex" flexDirection="column">
-              <Text> Opening Balance: {amountConverter(openingBalance as string)}</Text>
-            </Box>
-          </Box>
-          <Report.Table<GeneralLedgerReportEntry>
+          <Report.Table<{
+            cr_amount: number;
+            dr_amount: number;
+            ledger_code: string;
+            ledger_name: string;
+            narration: string;
+            transaction_id: string;
+          }>
             hasSNo={false}
             columns={[
               {
@@ -123,68 +111,48 @@ export const LedgerStatementReport = () => {
                 },
               },
               {
-                header: 'Date',
-                accessorFn: (row) => localizedDate(row?.date),
+                header: 'Cr Amount',
+                accessorFn: (row) => row?.cr_amount,
                 meta: {
                   width: '30px',
                   isNumeric: true,
                 },
               },
               {
-                header: 'ID ',
-                accessorFn: (row) => row?.id,
-                cell: (props) => (
-                  <RouteToDetailsPage
-                    id={props?.row?.original?.id as string}
-                    type="transactions"
-                    label={props?.row?.original?.id as string}
-                  />
-                ),
-                meta: {
-                  width: '3.125rem',
-                },
-              },
-              {
-                header: 'Old ID',
-                accessorFn: (row) => row?.oldId,
-                meta: {
-                  width: '3.125rem',
-                },
-              },
-              {
-                header: 'Particulars',
-                accessorFn: (row) => row?.account,
-                cell: (props) => (
-                  <Box whiteSpace="pre-line" my="s4" width="200px">
-                    {props?.row?.original?.account}{' '}
-                  </Box>
-                ),
-                meta: {
-                  width: '200px',
-                },
-              },
-              {
-                header: 'Dr.',
-                accessorFn: (row) => row?.debit,
-                cell: (props) => amountConverter(props.getValue() as string) || '-',
+                header: 'Dr Amount',
+                accessorFn: (row) => row?.dr_amount,
                 meta: {
                   width: '30px',
                   isNumeric: true,
                 },
               },
               {
-                header: 'Cr. ',
-                accessorFn: (row) => row?.credit,
-                cell: (props) => amountConverter(props.getValue() as string) || '-',
-
+                header: 'Ledger Code',
+                accessorFn: (row) => row?.ledger_code,
                 meta: {
                   width: '30px',
                   isNumeric: true,
                 },
               },
               {
-                header: 'Balance',
-                accessorFn: (row) => row?.balance,
+                header: 'Ledger Name',
+                accessorFn: (row) => row?.ledger_name,
+                meta: {
+                  width: '30px',
+                  isNumeric: true,
+                },
+              },
+              {
+                header: 'Narration',
+                accessorFn: (row) => row?.narration,
+                meta: {
+                  width: '30px',
+                  isNumeric: true,
+                },
+              },
+              {
+                header: 'Transaction Id',
+                accessorFn: (row) => row?.transaction_id,
                 meta: {
                   width: '30px',
                   isNumeric: true,
@@ -192,11 +160,6 @@ export const LedgerStatementReport = () => {
               },
             ]}
           />
-          <Box display="flex" flexDirection="row" justifyContent="flex-end" p="s12">
-            <Box display="flex" flexDirection="column">
-              <Text> Closing Balance: {amountConverter(closingBalance as string)}</Text>
-            </Box>
-          </Box>
         </Report.Content>
       </Report.Body>
     </Report>
