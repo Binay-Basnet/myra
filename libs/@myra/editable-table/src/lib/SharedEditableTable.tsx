@@ -1,11 +1,10 @@
-import React, { Fragment, Reducer, useEffect, useMemo, useReducer, useState } from 'react';
+import React, { Fragment, Reducer, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { BsChevronRight } from 'react-icons/bs';
 import { IoAdd, IoCloseCircleOutline } from 'react-icons/io5';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 import {
   Box,
-  Collapse,
   Editable,
   EditableInput,
   EditablePreview,
@@ -16,10 +15,16 @@ import {
   Text,
   Textarea,
 } from '@chakra-ui/react';
-import { AsyncSelect, chakraComponents, Select } from 'chakra-react-select';
+import {
+  AsyncSelect,
+  chakraComponents,
+  GroupBase,
+  Select,
+  SelectInstance,
+} from 'chakra-react-select';
 import _, { debounce, uniqueId } from 'lodash';
 
-import { Checkbox, Grid, GridItem, SwitchTabs } from '@myra-ui';
+import { Checkbox, Collapse, Grid, GridItem, SelectOption, SwitchTabs } from '@myra-ui';
 import { DatePicker } from '@myra-ui/date-picker';
 
 import { useAppSelector } from '@coop/cbs/data-access';
@@ -353,7 +358,9 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
     }
   }, [defaultData]);
 
-  const searchColumn = useMemo(() => columns.find((column) => column.searchOptions), [columns]);
+  // useEffect(() => {
+  //   ref?.current?.inputRef.focus();
+  // });
 
   return (
     <>
@@ -443,53 +450,10 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
             borderColor="border.layout"
             borderBottomRadius="br2"
           >
-            <Select
-              components={getComponents(
-                searchColumn?.addItemHandler,
-                searchColumn?.addItemLabel,
-                `Search-Select`
-              )}
-              placeholder={searchPlaceholder ?? 'Search for items'}
-              options={searchColumn?.searchOptions}
-              chakraStyles={getSearchBarStyle(!!searchColumn?.addItemHandler)}
-              value=""
-              data-testid={searchColumn?.accessorFn}
-              filterOption={() => true}
-              isLoading={searchColumn?.searchLoading}
-              // onInputChange={debounce((id) => {
-              //   if (id) {
-              //     columns.find((column) => column.searchCallback)?.searchCallback?.(id);
-              //     // setTrigger(true);
-              //   }
-              // }, 800)}
-              onInputChange={debounce((id) => {
-                if (id) {
-                  columns.find((column) => column.searchCallback)?.searchCallback?.(id);
-                  // setTrigger(true);
-                }
-              }, 800)}
-              onChange={(newValue) => {
-                dispatch({
-                  type: EditableTableActionKind.ADD,
-                  payload: columns.reduce(
-                    (o, key) =>
-                      key.fieldType === 'search'
-                        ? {
-                            ...o,
-                            [key.accessor]: {
-                              value: newValue.value,
-                              label: newValue.label,
-                            },
-                          }
-                        : {
-                            ...o,
-                            [key.accessor]: key.isNumeric ? 0 : '',
-                          },
-                    {}
-                  ) as T,
-                });
-              }}
-              isDisabled={searchColumn?.getDisabled && searchColumn?.getDisabled({} as T)}
+            <EditableSearch
+              columns={columns}
+              dispatch={dispatch}
+              searchPlaceholder={searchPlaceholder}
             />
           </Box>
         ) : (
@@ -554,6 +518,82 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
 };
 
 export default EditableTable;
+
+interface EditableSearchProps<T extends RecordWithId & Record<string, EditableValue>> {
+  columns: Column<T>[];
+  searchPlaceholder?: string;
+  dispatch: React.Dispatch<EditableTableAction<T>>;
+}
+
+const EditableSearch = <T extends RecordWithId & Record<string, EditableValue>>({
+  columns,
+  searchPlaceholder,
+  dispatch,
+}: EditableSearchProps<T>) => {
+  const ref = useRef<SelectInstance<SelectOption, boolean, GroupBase<SelectOption>> | null>(null);
+
+  const searchColumn = useMemo(() => columns.find((column) => column.searchOptions), [columns]);
+
+  useEffect(() => {
+    ref.current?.inputRef?.focus();
+  }, [searchColumn?.searchOptions]);
+
+  return (
+    <Select
+      ref={ref}
+      components={getComponents(
+        searchColumn?.addItemHandler,
+        searchColumn?.addItemLabel,
+        `Search-Select`
+      )}
+      autoFocus
+      placeholder={searchPlaceholder ?? 'Search for items'}
+      options={searchColumn?.searchOptions}
+      chakraStyles={getSearchBarStyle(!!searchColumn?.addItemHandler)}
+      data-testid={searchColumn?.accessorFn}
+      filterOption={() => true}
+      isLoading={searchColumn?.searchLoading}
+      onInputChange={debounce((id) => {
+        if (id) {
+          columns.find((column) => column.searchCallback)?.searchCallback?.(id);
+        }
+      }, 800)}
+      onChange={(newValue) => {
+        dispatch({
+          type: EditableTableActionKind.ADD,
+          payload: columns.reduce(
+            (o, key) =>
+              key.fieldType === 'search'
+                ? {
+                    ...o,
+                    [key.accessor]: {
+                      value: newValue.value,
+                      label: newValue.label,
+                    },
+                  }
+                : {
+                    ...o,
+                    [key.accessor]: key.isNumeric ? 0 : '',
+                  },
+            {}
+          ) as T,
+        });
+      }}
+      isDisabled={searchColumn?.getDisabled && searchColumn?.getDisabled({} as T)}
+    />
+  );
+};
+
+interface IEditableTableRowProps<T extends RecordWithId & Record<string, EditableValue>> {
+  columns: Column<T>[];
+  data: T;
+  canDeleteRow?: boolean;
+  index: number;
+
+  hideSN?: boolean;
+
+  dispatch: React.Dispatch<EditableTableAction<T>>;
+}
 
 interface IEditableTableRowProps<T extends RecordWithId & Record<string, EditableValue>> {
   columns: Column<T>[];
