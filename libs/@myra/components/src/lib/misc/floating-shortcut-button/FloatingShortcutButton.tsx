@@ -30,24 +30,16 @@ interface WhatsNewModalProps {
 const whatsNewData = {
   features: {
     title: 'New Features',
-    data: [
-      'Success card and bill print has been added to the account closed section.',
-      'Total amount in teller approval page added.',
-      'In loan account statement report particular columns are widen.',
-      'Member to member balance transfer section added in the account close while payment mode my account.',
-    ],
+    data: [],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Pagination shift was not working in share balance list.',
-      'Withdraw penalty fixes in recurring product update.',
-      'Mr user inactive due to incorrect pwd fixed.',
-      'Text has been changed in tenure update of loan products.',
-      'Auto Open saving account to be opened without interest rate issue.',
-      'Date parsing in excel export.',
-      'Mr can be able to searched in mr list page (transactions).',
-      'Date filter issue in loan aging report.',
+      'fixed statement particular withdraw cases in account statement reports.',
+      'JV search issue fixed.',
+      'fixed report generate issue from loan/saving detail page and Fiscal Year Adjustment trial balance. ',
+      'fixed adjusted closing balance report on general balance report.',
+      'Mr representative name added in the success card and detail page (withdrawn by).',
     ],
   },
 };
@@ -86,8 +78,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.90</Text>
-          <Text fontSize="s3">August 29, 2023</Text>
+          <Text fontSize="r2">Version 1.0.91</Text>
+          <Text fontSize="s3">September 1, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>
