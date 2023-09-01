@@ -314,7 +314,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
   defaultData = [],
   canDeleteRow = true,
   onChange,
-  debug = false,
+  debug = true,
   canAddRow = true,
   searchPlaceholder,
   getRowId,
@@ -456,6 +456,12 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
               data-testid={searchColumn?.accessorFn}
               filterOption={() => true}
               isLoading={searchColumn?.searchLoading}
+              // onInputChange={debounce((id) => {
+              //   if (id) {
+              //     columns.find((column) => column.searchCallback)?.searchCallback?.(id);
+              //     // setTrigger(true);
+              //   }
+              // }, 800)}
               onInputChange={debounce((id) => {
                 if (id) {
                   columns.find((column) => column.searchCallback)?.searchCallback?.(id);
