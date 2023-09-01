@@ -148,7 +148,12 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         Fine: amountConverter(depositDetailData?.fine || 0),
         Rebate: amountConverter(depositDetailData?.rebate ?? '0'),
         'Payment Mode': depositDetailData?.paymentMode,
-        'Deposited By': depositDetailData?.depositedBy,
+        'Deposited By':
+          depositDetailData?.depositedBy === 'AGENT'
+            ? `Market Representative (${depositDetailData?.txnUserName})`
+            : depositDetailData?.txnUserName
+            ? `${depositDetailData?.depositedBy} (${depositDetailData?.txnUserName})`
+            : depositDetailData?.depositedBy,
       };
       tempDublicate = true;
       tempTotal = depositDetailData?.totalDepositedAmount as string;
@@ -187,7 +192,10 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
             ? withdrawDetailData?.chequeNo?.padStart(10, '0') ?? 'N/A'
             : withdrawDetailData?.chequeNo
         })`,
-        'Withdrawn By': withdrawDetailData?.withdrawnBy,
+        'Withdrawn By':
+          withdrawDetailData?.withdrawnBy === 'AGENT'
+            ? `Market Representative (${withdrawDetailData?.txnUserName})`
+            : withdrawDetailData?.withdrawnBy?.replace(/_/g, ' '),
       };
       tempDublicate = true;
       tempTotal = withdrawDetailData?.totalWithdrawnAmount as string;

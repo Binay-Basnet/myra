@@ -62,6 +62,12 @@ type DepositFormInput = Omit<DepositInput, 'cash'> & {
 
 const REBATE = '0';
 
+const depositedByObj: Record<DepositedBy, string> = {
+  [DepositedBy.Agent]: 'Market Representative',
+  [DepositedBy.Other]: 'Other',
+  [DepositedBy.Self]: 'Self',
+};
+
 export const AddDeposit = () => {
   const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
 
@@ -609,7 +615,6 @@ export const AddDeposit = () => {
                 promise={() => mutateAsync({ data: handleSubmit() })}
                 successCardProps={(response) => {
                   const result = response?.transaction?.deposit?.record;
-                  const isDepositedByOther = result?.depositedBy === 'OTHER';
 
                   const totalTxnAmount = Number(result?.amount || 0) + Number(result?.fine || 0);
 
@@ -634,9 +639,11 @@ export const AddDeposit = () => {
                       'Paid Fine': amountConverter(result?.fine || 0),
                       Rebate: amountConverter(result?.rebate || 0),
                       'Payment Mode': result?.paymentMode,
-                      'Deposited By': !isDepositedByOther
-                        ? result?.depositedBy
-                        : `${result?.depositedBy}-(${result?.depositedOther})`,
+                      'Deposited By': result?.depositedOther
+                        ? `${depositedByObj[result?.depositedBy as DepositedBy]}-(${
+                            result?.depositedOther
+                          })`
+                        : depositedByObj[result?.depositedBy as DepositedBy],
                     },
                     subTitle:
                       'Amount deposited successfully. Details of the transaction is listed below.',

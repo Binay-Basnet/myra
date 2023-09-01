@@ -1,5 +1,6 @@
-import { FormSelect } from '@coop/shared/form';
 import { FormSection, GridItem, Text } from '@myra-ui';
+
+import { FormSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 export const ShareAndAccount = () => {

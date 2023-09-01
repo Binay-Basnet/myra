@@ -1,11 +1,14 @@
-import { FormNumberInput, FormSelect } from '@coop/shared/form';
-import { FormSection, GridItem, Text } from '@myra-ui';
+import { FormSection, Text } from '@myra-ui';
+
+import { FormLeafCoaHeadSelect, FormNumberInput } from '@coop/shared/form';
 
 export const ShareDistribution = () => (
   <FormSection header="Share Distribution">
-    <GridItem colSpan={2}>
-      <FormSelect name="taxRateLedgerMapping" label="Tax Rate Ledger Mapping" />
-    </GridItem>
+    {/* <GridItem colSpan={2}> */}
+    <FormLeafCoaHeadSelect name="sourceCOAHead" label="Source COA Head" />
+
+    <FormLeafCoaHeadSelect name="taxLedgerCOAHead" label="Tax Rate Ledger Mapping" />
+    {/* </GridItem> */}
 
     <FormNumberInput
       name="taxRate"
@@ -16,11 +19,11 @@ export const ShareDistribution = () => (
         </Text>
       }
     />
-
+    {/* 
     <GridItem colSpan={2}>
       <FormSelect name="accountMapping" label="Account Mapping" />
     </GridItem>
 
-    <FormSelect name="whoPaysTax" label="Who Pays the Tax" />
+    <FormSelect name="whoPaysTax" label="Who Pays the Tax" /> */}
   </FormSection>
 );

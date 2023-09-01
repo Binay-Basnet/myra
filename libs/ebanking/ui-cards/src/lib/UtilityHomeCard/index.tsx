@@ -20,7 +20,7 @@ export const UtilityHomeCard = ({ icon, label, link }: UtilityHomeCardProps) => 
       gap="s8"
       py="s8"
       cursor="pointer"
-      onClick={() => router.push(link)}
+      onClick={() => router.push(link || '')}
     >
       <Icon as={icon} size="lg" color="primary.500" />
 

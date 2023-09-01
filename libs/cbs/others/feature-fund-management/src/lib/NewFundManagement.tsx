@@ -43,7 +43,18 @@ export const NewFundManagement = () => {
     onToggle: onConfirmToggle,
   } = useDisclosure();
 
-  const methods = useForm<CustomFundManagementInput>();
+  const methods = useForm<CustomFundManagementInput>({
+    defaultValues: {
+      generalReserveFund: [
+        {
+          particular: '20.1 General Reserve Fund',
+          percent: 0,
+          thisYear: 0,
+          lastYear: 0,
+        },
+      ],
+    },
+  });
 
   const { watch, getValues, reset } = methods;
 
@@ -72,9 +83,9 @@ export const NewFundManagement = () => {
           {
             particular: '20.1 General Reserve Fund',
             percent: Number(formData?.generalReserveFund || 0),
-            // thisYear: 0,
-            // // lastYear: Number(generalReserveFundAmount ?? 0),
-            // lastYear: 0,
+            thisYear: 0,
+            // lastYear: Number(generalReserveFundAmount ?? 0),
+            lastYear: 0,
           },
         ],
         distributionTable: [

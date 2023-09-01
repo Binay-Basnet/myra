@@ -282,7 +282,11 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
 
         {depositedBy === DepositedBy.Agent && (
           <InputGroupContainer>
-            <FormAgentSelect name="agentId" label={t['depositPaymentMarketRepresentative']} />
+            <FormAgentSelect
+              name="agentId"
+              label={t['depositPaymentMarketRepresentative']}
+              currentBranchOnly
+            />
           </InputGroupContainer>
         )}
 

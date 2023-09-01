@@ -19,7 +19,9 @@ export const AlternativeChannelGeneralSettings = () => {
 
   const { getValues, reset } = methods;
 
-  const { data: utilityServicesData } = useListUtilityServiceTypeQuery();
+  const { data: utilityServicesData } = useListUtilityServiceTypeQuery({
+    filter: {},
+  });
 
   const utilityServices = utilityServicesData?.settings?.ebanking?.utility?.listServiceType?.data;
 
@@ -63,6 +65,7 @@ export const AlternativeChannelGeneralSettings = () => {
 
   const { mutateAsync: utilityLedgerSetup, isLoading: isLedgerSetupLoading } =
     useUtilityLedgerSetupMutation();
+
   const { mutateAsync: changeUtilityServiceStatus, isLoading: isStatusSetupLoading } =
     useChangeUtilityServiceStatusMutation();
 
@@ -108,6 +111,21 @@ export const AlternativeChannelGeneralSettings = () => {
                 name={UtilityLedgerType.ServiceCharge}
                 label="Service Charge Ledger Mapping"
               />
+
+              <FormLeafCoaHeadSelect
+                name={UtilityLedgerType.IncomeFromNeosys}
+                label="Income from Neosys Ledger Mapping"
+              />
+
+              <FormLeafCoaHeadSelect
+                name={UtilityLedgerType.IncomeFromNeosysSuspense}
+                label="Income from Neosys Suspense Ledger Mapping"
+              />
+
+              <FormLeafCoaHeadSelect
+                name={UtilityLedgerType.ExpenseToNeosys}
+                label="Expense to Neosys Ledger Mapping"
+              />
             </Grid>
           </SettingsCard>
         </Box>
@@ -124,34 +142,19 @@ export const AlternativeChannelGeneralSettings = () => {
             },
             promise: utilityLedgerSetup({
               value: [
-                {
-                  coaHead:
-                    values &&
-                    typeof values[UtilityLedgerType.Utility] === 'object' &&
-                    'value' in values[UtilityLedgerType.Utility]
-                      ? values?.[UtilityLedgerType.Utility]?.value
-                      : values?.[UtilityLedgerType.Utility],
-                  ledgerType: UtilityLedgerType.Utility,
-                },
-                {
-                  coaHead:
-                    values &&
-                    typeof values[UtilityLedgerType.CashBack] === 'object' &&
-                    'value' in values[UtilityLedgerType.CashBack]
-                      ? values?.[UtilityLedgerType.CashBack]?.value
-                      : values?.[UtilityLedgerType.CashBack],
-                  ledgerType: UtilityLedgerType.CashBack,
-                },
-                {
-                  coaHead:
-                    values &&
-                    typeof values[UtilityLedgerType.ServiceCharge] === 'object' &&
-                    'value' in values[UtilityLedgerType.ServiceCharge]
-                      ? values?.[UtilityLedgerType.ServiceCharge]?.value
-                      : values?.[UtilityLedgerType.ServiceCharge],
-                  ledgerType: UtilityLedgerType.ServiceCharge,
-                },
-              ],
+                UtilityLedgerType.Utility,
+                UtilityLedgerType.CashBack,
+                UtilityLedgerType.ServiceCharge,
+                UtilityLedgerType.IncomeFromNeosys,
+                UtilityLedgerType.IncomeFromNeosysSuspense,
+                UtilityLedgerType.ExpenseToNeosys,
+              ]?.map((ut) => ({
+                coaHead:
+                  values && typeof values[ut] === 'object' && 'value' in values[ut]
+                    ? values?.[ut]?.value
+                    : values?.[ut],
+                ledgerType: ut,
+              })),
             }),
           });
           await asyncToast({

@@ -218,10 +218,17 @@ export const getSearchBarStyle: (hasAddItem?: boolean) => ChakraStylesConfig<any
     noOfLines: 1,
   }),
 
+  inputContainer: (provided) => ({
+    ...provided,
+    display: 'block',
+    w: '100%',
+  }),
+
   input: (provided) => ({
     ...provided,
     p: '0',
     h: 's36',
+    w: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

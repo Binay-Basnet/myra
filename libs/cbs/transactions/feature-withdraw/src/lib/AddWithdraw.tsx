@@ -54,6 +54,12 @@ type WithdrawFormInput = Omit<WithdrawInput, 'cash'> & {
   withdrawBy?: string;
 };
 
+const withdranByObj: Record<WithdrawBy, string> = {
+  [WithdrawBy.Agent]: 'Market Representative',
+  [WithdrawBy.Other]: 'Other',
+  [WithdrawBy.Self]: 'Self',
+};
+
 /* eslint-disable-next-line */
 export interface AddWithdrawProps {}
 
@@ -485,7 +491,6 @@ export const AddWithdraw = () => {
               promise={() => mutateAsync({ data: handleSubmit() })}
               successCardProps={(response) => {
                 const result = response?.transaction?.withdraw?.record;
-                const isWithdrawOther = result?.withdrawnBy === 'OTHER';
 
                 return {
                   type: 'Withdraw',
@@ -509,9 +514,11 @@ export const AddWithdraw = () => {
                         ? result?.slipNo?.padStart(10, '0') ?? 'N/A'
                         : result?.slipNo ?? 'N/A'
                     })`,
-                    'Withdrawn By': !isWithdrawOther
-                      ? result?.withdrawnBy
-                      : `${result?.withdrawnBy}-(${result?.withdrawOther})`,
+                    'Withdrawn By': result?.withdrawOther
+                      ? `${withdranByObj[result?.withdrawnBy as WithdrawBy]}-(${
+                          result?.withdrawOther
+                        })`
+                      : withdranByObj[result?.withdrawnBy as WithdrawBy],
 
                     // ...(isWithdrawOther && { 'Withdrawer Name': result?.withdrawOther }),
                   },

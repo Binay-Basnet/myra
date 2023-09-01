@@ -34,10 +34,10 @@ export const SERVICE_LINK_DICT: Record<string, string> = {
 };
 
 export const UTILITY_ICON_DICT: Record<string, IconType> = {
-  TOPUP: AiOutlineMobile,
-  NEA_PAYMENT: MdLightbulbOutline,
-  INTERNET: IoWifiSharp,
-  TV: MdOutlineLiveTv,
+  topup: AiOutlineMobile,
+  electricity: MdLightbulbOutline,
+  internet: IoWifiSharp,
+  tv: MdOutlineLiveTv,
   KHANEPANI: MdOutlineWaterDrop,
   E_TELLER: MdOutlineCameraFront,
   FLIGHT_BOOK: MdFlightTakeoff,
@@ -47,10 +47,10 @@ export const UTILITY_ICON_DICT: Record<string, IconType> = {
 };
 
 export const UTILITY_LINK_DICT: Record<string, string> = {
-  TOPUP: '/utility-payments/mobile-topup',
-  NEA_PAYMENT: '',
-  INTERNET: '/utility-payments/internet-payment',
-  TV: '',
+  topup: '/utility-payments/mobile-topup',
+  electricity: '',
+  internet: '/utility-payments/internet-payment',
+  tv: '',
   KHANEPANI: '',
   E_TELLER: '',
   FLIGHT_BOOK: '',

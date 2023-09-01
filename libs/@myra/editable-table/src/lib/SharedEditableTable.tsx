@@ -1,11 +1,10 @@
-import React, { Fragment, Reducer, useEffect, useMemo, useReducer, useState } from 'react';
+import React, { Fragment, Reducer, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { BsChevronRight } from 'react-icons/bs';
 import { IoAdd, IoCloseCircleOutline } from 'react-icons/io5';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 import {
   Box,
-  Collapse,
   Editable,
   EditableInput,
   EditablePreview,
@@ -16,10 +15,16 @@ import {
   Text,
   Textarea,
 } from '@chakra-ui/react';
-import { AsyncSelect, chakraComponents, Select } from 'chakra-react-select';
+import {
+  AsyncSelect,
+  chakraComponents,
+  GroupBase,
+  Select,
+  SelectInstance,
+} from 'chakra-react-select';
 import _, { debounce, uniqueId } from 'lodash';
 
-import { Checkbox, Grid, GridItem, SwitchTabs } from '@myra-ui';
+import { Checkbox, Collapse, Grid, GridItem, SelectOption, SwitchTabs } from '@myra-ui';
 import { DatePicker } from '@myra-ui/date-picker';
 
 import { useAppSelector } from '@coop/cbs/data-access';
@@ -212,12 +217,29 @@ function editableReducer<T extends RecordWithId & Record<string, EditableValue>>
       };
 
     case EditableTableActionKind.EDIT:
+      // eslint-disable-next-line no-case-declarations
+      const accessorValue = state.columns.reduce((acc, curr) => {
+        if (curr.accessorFn) {
+          acc = {
+            ...acc,
+            [curr.accessor]: curr.accessorFn({
+              ...payload.data,
+              [payload.column.accessor]: payload.column.isNumeric
+                ? payload.newValue || 0
+                : payload.newValue,
+            }),
+          };
+        }
+        return acc;
+      }, {});
+
       return {
         ...state,
         data: state.data.map((item) =>
           item._id === payload?.data?._id
             ? {
                 ...item,
+                ...accessorValue,
                 [payload.column.accessor]: payload.column.isNumeric
                   ? payload.newValue || 0
                   : payload.newValue,
@@ -297,7 +319,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
   defaultData = [],
   canDeleteRow = true,
   onChange,
-  debug = false,
+  debug = true,
   canAddRow = true,
   searchPlaceholder,
   getRowId,
@@ -314,39 +336,19 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
   useDeepCompareEffect(() => {
     if (onChange) {
       // eslint-disable-next-line unused-imports/no-unused-vars
-      onChange(
-        state.data.map(({ _id, ...rest }) => {
-          const keys = Object.keys(rest);
-
-          const newObject = keys.reduce((acc, key) => {
-            const value = rest[key];
-
-            // acc = {
-            //   ...acc,
-            //   [key]:
-            //     value &&
-            //     (typeof value === 'number' || typeof value === 'string'
-            //       ? value
-            //       : 'value' in value
-            //       ? value.value
-            //       : value),
-            // };
-            acc = {
-              ...acc,
-              [key]: value,
-            };
-
-            return acc;
-          }, {});
-
-          return newObject;
-        }) as Omit<T, '_id'>[]
-      );
+      onChange(state.data.map(({ _id, ...rest }) => rest) as Omit<T, '_id'>[]);
     }
   }, [state.data]);
 
-  useDeepCompareEffect(() => {
-    if (defaultData && !columns.some((column) => !!column.searchOptions)) {
+  useEffect(() => {
+    if (
+      defaultData &&
+      !columns.some((column) => !!column.searchOptions) &&
+      !isArrayEqual(
+        defaultData,
+        state.data.map(({ _id, ...rest }) => rest)
+      )
+    ) {
       dispatch({
         type: EditableTableActionKind.REPLACE,
         payload: {
@@ -356,7 +358,9 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
     }
   }, [defaultData]);
 
-  const searchColumn = useMemo(() => columns.find((column) => column.searchOptions), [columns]);
+  // useEffect(() => {
+  //   ref?.current?.inputRef.focus();
+  // });
 
   return (
     <>
@@ -446,47 +450,10 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
             borderColor="border.layout"
             borderBottomRadius="br2"
           >
-            <Select
-              components={getComponents(
-                searchColumn?.addItemHandler,
-                searchColumn?.addItemLabel,
-                `Search-Select`
-              )}
-              placeholder={searchPlaceholder ?? 'Search for items'}
-              options={searchColumn?.searchOptions}
-              chakraStyles={getSearchBarStyle(!!searchColumn?.addItemHandler)}
-              value=""
-              data-testid={searchColumn?.accessorFn}
-              filterOption={() => true}
-              isLoading={searchColumn?.searchLoading}
-              onInputChange={debounce((id) => {
-                if (id) {
-                  columns.find((column) => column.searchCallback)?.searchCallback?.(id);
-                  // setTrigger(true);
-                }
-              }, 800)}
-              onChange={(newValue) => {
-                dispatch({
-                  type: EditableTableActionKind.ADD,
-                  payload: columns.reduce(
-                    (o, key) =>
-                      key.fieldType === 'search'
-                        ? {
-                            ...o,
-                            [key.accessor]: {
-                              value: newValue.value,
-                              label: newValue.label,
-                            },
-                          }
-                        : {
-                            ...o,
-                            [key.accessor]: key.isNumeric ? 0 : '',
-                          },
-                    {}
-                  ) as T,
-                });
-              }}
-              isDisabled={searchColumn?.getDisabled && searchColumn?.getDisabled({} as T)}
+            <EditableSearch
+              columns={columns}
+              dispatch={dispatch}
+              searchPlaceholder={searchPlaceholder}
             />
           </Box>
         ) : (
@@ -551,6 +518,82 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
 };
 
 export default EditableTable;
+
+interface EditableSearchProps<T extends RecordWithId & Record<string, EditableValue>> {
+  columns: Column<T>[];
+  searchPlaceholder?: string;
+  dispatch: React.Dispatch<EditableTableAction<T>>;
+}
+
+const EditableSearch = <T extends RecordWithId & Record<string, EditableValue>>({
+  columns,
+  searchPlaceholder,
+  dispatch,
+}: EditableSearchProps<T>) => {
+  const ref = useRef<SelectInstance<SelectOption, boolean, GroupBase<SelectOption>> | null>(null);
+
+  const searchColumn = useMemo(() => columns.find((column) => column.searchOptions), [columns]);
+
+  useEffect(() => {
+    ref.current?.inputRef?.focus();
+  }, [searchColumn?.searchOptions]);
+
+  return (
+    <Select
+      ref={ref}
+      components={getComponents(
+        searchColumn?.addItemHandler,
+        searchColumn?.addItemLabel,
+        `Search-Select`
+      )}
+      autoFocus
+      placeholder={searchPlaceholder ?? 'Search for items'}
+      options={searchColumn?.searchOptions}
+      chakraStyles={getSearchBarStyle(!!searchColumn?.addItemHandler)}
+      data-testid={searchColumn?.accessorFn}
+      filterOption={() => true}
+      isLoading={searchColumn?.searchLoading}
+      onInputChange={debounce((id) => {
+        if (id) {
+          columns.find((column) => column.searchCallback)?.searchCallback?.(id);
+        }
+      }, 800)}
+      onChange={(newValue) => {
+        dispatch({
+          type: EditableTableActionKind.ADD,
+          payload: columns.reduce(
+            (o, key) =>
+              key.fieldType === 'search'
+                ? {
+                    ...o,
+                    [key.accessor]: {
+                      value: newValue.value,
+                      label: newValue.label,
+                    },
+                  }
+                : {
+                    ...o,
+                    [key.accessor]: key.isNumeric ? 0 : '',
+                  },
+            {}
+          ) as T,
+        });
+      }}
+      isDisabled={searchColumn?.getDisabled && searchColumn?.getDisabled({} as T)}
+    />
+  );
+};
+
+interface IEditableTableRowProps<T extends RecordWithId & Record<string, EditableValue>> {
+  columns: Column<T>[];
+  data: T;
+  canDeleteRow?: boolean;
+  index: number;
+
+  hideSN?: boolean;
+
+  dispatch: React.Dispatch<EditableTableAction<T>>;
+}
 
 interface IEditableTableRowProps<T extends RecordWithId & Record<string, EditableValue>> {
   columns: Column<T>[];
@@ -636,22 +679,11 @@ const EditableTableRow = <T extends RecordWithId & Record<string, EditableValue>
 
         {columns
           .filter((column) => !column.hidden)
-          .map((column) => {
-            if (column.accessorFn) {
-              dispatch({
-                type: EditableTableActionKind.ACCESSOR_FN_EDIT,
-                payload: {
-                  data,
-                  column,
-                },
-              });
-            }
-            return (
-              <Fragment key={column.accessor as string}>
-                <EditableCell column={column} data={data} dispatch={dispatch} index={index} />
-              </Fragment>
-            );
-          })}
+          .map((column) => (
+            <Fragment key={column.accessor as string}>
+              <EditableCell column={column} data={data} dispatch={dispatch} index={index} />
+            </Fragment>
+          ))}
         {canDeleteRow ? (
           <Box
             as="button"
@@ -793,13 +825,18 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
 
   return (
     <Editable
+      position="relative"
       _after={
         column.fieldType === 'percentage'
           ? {
               content: "'%'",
               color: 'primary.500',
+              bg: column?.getDisabled?.(data) ? 'gray.50' : 'white',
               position: 'absolute',
+              height: '100%',
               fontWeight: '500',
+              display: 'flex',
+              alignItems: 'center',
               px: 's8',
             }
           : {}

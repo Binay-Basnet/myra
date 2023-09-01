@@ -12,7 +12,7 @@ import {
   useGetEndOfDayDateDataQuery,
   useRestrictAccountingTransactionMutation,
 } from '@coop/cbs/data-access';
-import { FormDatePicker, FormSelect } from '@coop/shared/form';
+import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 
 interface ILockTransactionModalProps {
   isOpen: boolean;
@@ -114,6 +114,7 @@ export const LockTransactionModal = ({ isOpen, onClose }: ILockTransactionModalP
       <FormProvider {...methods}>
         <Box display="flex" flexDir="column" gap="s16">
           <FormSelect name="txnType" label="Transaction Type" options={transactionTypeOptions} />
+          <FormInput name="lockReason" label="Reason for Locking" />
 
           <FormDatePicker
             name="effectiveSince"

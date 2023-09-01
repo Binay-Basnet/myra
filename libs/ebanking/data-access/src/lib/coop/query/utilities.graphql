@@ -78,6 +78,21 @@ query listUtilities($pagination: Pagination, $filter: Filter) {
   }
 }
 
+query listUtilityServiceType($filter: ServiceTypeFilter) {
+  eBanking {
+    utility {
+      listServiceType(filter: $filter) {
+        data {
+          id
+          name
+          slug
+          isActive
+        }
+      }
+    }
+  }
+}
+
 query getCashBackCharges($input: CheckCashBackInfo) {
   eBanking {
     utility {

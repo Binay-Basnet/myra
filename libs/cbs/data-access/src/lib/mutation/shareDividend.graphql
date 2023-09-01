@@ -1,0 +1,10 @@
+mutation postShareDividend($data: ShareDividendInput!) {
+  shareDividend {
+    postDividend(data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

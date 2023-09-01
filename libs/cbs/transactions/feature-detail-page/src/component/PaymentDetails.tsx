@@ -79,8 +79,8 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
           <DetailCardContent
             title={t['transDetailWithdrawnBy']}
             subtitle={
-              withdrawDetailData?.txnUserName
-                ? `${withdrawDetailData?.withdrawnBy?.replace(/_/g, ' ')} (${
+              withdrawDetailData?.withdrawnBy === 'AGENT'
+                ? `${agentSlug[withdrawDetailData?.withdrawnBy]} (${
                     withdrawDetailData?.txnUserName
                   })`
                 : withdrawDetailData?.withdrawnBy?.replace(/_/g, ' ')
@@ -103,7 +103,13 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
             />
             <DetailCardContent
               title={t['transDetailWithdrawnBy']}
-              subtitle={withdrawDetailData?.withdrawnBy?.replace(/_/g, ' ')}
+              subtitle={
+                withdrawDetailData?.withdrawnBy === 'AGENT'
+                  ? `${agentSlug[withdrawDetailData?.withdrawnBy]} (${
+                      withdrawDetailData?.txnUserName
+                    })`
+                  : withdrawDetailData?.withdrawnBy?.replace(/_/g, ' ')
+              }
             />
             {withdrawDetailData?.paymentFile && (
               <Box display="flex" flexDirection="column" gap="s4">

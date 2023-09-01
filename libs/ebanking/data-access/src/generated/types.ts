@@ -2345,10 +2345,26 @@ export type ServerError = {
   message: Scalars['String'];
 };
 
+export type ServiceTypeData = {
+  id: Scalars['String'];
+  isActive?: Maybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  slug: Scalars['String'];
+};
+
+export type ServiceTypeFilter = {
+  isActive?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type ServiceTypeFormState = {
   amount?: Maybe<Scalars['Amount']>;
   ledgerName?: Maybe<Scalars['String']>;
   serviceName?: Maybe<Scalars['String']>;
+};
+
+export type ServiceTypeResult = {
+  data?: Maybe<Array<Maybe<ServiceTypeData>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type Services = {
@@ -2557,6 +2573,7 @@ export type UtilityQuery = {
   getCashBackCharges: CashBackInfoResult;
   getUtility: UtilityInfoResult;
   listCashBack: UtilitiesChargesConnection;
+  listServiceType: ServiceTypeResult;
   listUtilities: UtilitiesListConnection;
 };
 
@@ -2571,6 +2588,10 @@ export type UtilityQueryGetUtilityArgs = {
 export type UtilityQueryListCashBackArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type UtilityQueryListServiceTypeArgs = {
+  filter?: InputMaybe<ServiceTypeFilter>;
 };
 
 export type UtilityQueryListUtilitiesArgs = {
@@ -3961,6 +3982,25 @@ export type ListUtilitiesQuery = {
           hasNextPage: boolean;
           hasPreviousPage: boolean;
         } | null;
+      };
+    };
+  };
+};
+
+export type ListUtilityServiceTypeQueryVariables = Exact<{
+  filter?: InputMaybe<ServiceTypeFilter>;
+}>;
+
+export type ListUtilityServiceTypeQuery = {
+  eBanking: {
+    utility: {
+      listServiceType: {
+        data?: Array<{
+          id: string;
+          name: string;
+          slug: string;
+          isActive?: boolean | null;
+        } | null> | null;
       };
     };
   };
