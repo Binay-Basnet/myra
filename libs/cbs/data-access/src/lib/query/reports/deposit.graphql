@@ -390,3 +390,27 @@ query getETDSStatement($data: ETDSReportFilter!) {
     }
   }
 }
+
+query getAccountLockStatusReport($data: AccountLockStatusInput!) {
+  report {
+    depositReport {
+      accountLockStatusReport(data: $data) {
+        data {
+          accountId
+          accountName
+          branchCode
+          branchName
+          memberCode
+          memberId
+          memberName
+          mobileNumber
+          accountLockDateFrom
+          accountLockDateTo
+          isAutoReleaseOnToDate
+          reasonForLock
+          remarks
+        }
+      }
+    }
+  }
+}
