@@ -135,7 +135,7 @@ export const AccountLockStatusReport = () => {
               },
               {
                 header: 'Account Number',
-                accessorKey: 'accountNumber',
+                accessorKey: 'accountId',
                 cell: (props) => (
                   <RouteToDetailsPage
                     id={props?.row?.original?.accountId as string}
