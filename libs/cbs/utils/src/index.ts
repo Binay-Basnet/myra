@@ -11,6 +11,7 @@ export * from './lib/DetailsRouteFromTable';
 export * from './lib/exportVisibleTableToExcel';
 export * from './lib/formatAddress';
 export * from './lib/formatTableAddress';
+export * from './lib/generateExcelFromJSON';
 export * from './lib/getLocalizedTodaysDate';
 export * from './lib/queryError';
 export * from './lib/RedirectButton';

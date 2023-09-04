@@ -25564,10 +25564,11 @@ export type SetValuatorMutation = { settings: { general?: { valuator?: { add?: {
 
 export type PostShareDividendMutationVariables = Exact<{
   data: ShareDividendInput;
+  commit?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
-export type PostShareDividendMutation = { shareDividend: { postDividend?: { record?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type PostShareDividendMutation = { shareDividend: { postDividend?: { record?: string | null, summary?: Array<{ MemberID?: string | null, ShareCount?: number | null, SavingAmount?: string | null, TotalAmount?: string | null, DestinationAccount?: string | null, Error?: string | null } | null> | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
 
 export type AddSharePurchaseMutationVariables = Exact<{
   data: SharePurchaseInput;
@@ -35117,10 +35118,18 @@ export const useSetValuatorMutation = <
       options
     );
 export const PostShareDividendDocument = `
-    mutation postShareDividend($data: ShareDividendInput!) {
+    mutation postShareDividend($data: ShareDividendInput!, $commit: Boolean) {
   shareDividend {
-    postDividend(data: $data) {
+    postDividend(data: $data, commit: $commit) {
       record
+      summary {
+        MemberID
+        ShareCount
+        SavingAmount
+        TotalAmount
+        DestinationAccount
+        Error
+      }
       error {
         ...MutationError
       }
