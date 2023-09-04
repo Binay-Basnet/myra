@@ -6,7 +6,12 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useGetGeneralMemberSettingsDataQuery, useGetMinorListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import {
+  featureCode,
+  getFilterQuery,
+  getPaginationQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { forms, Page } from './MemberLayout';
 
@@ -33,9 +38,7 @@ export const MemberMinorListPage = () => {
   const { data, isFetching, refetch } = useGetMinorListQuery(
     {
       pagination: getPaginationQuery(),
-      filter: {
-        id: searchTerm,
-      },
+      filter: getFilterQuery(),
     },
     {
       staleTime: 0,
