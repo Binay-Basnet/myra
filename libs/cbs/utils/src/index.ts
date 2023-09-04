@@ -12,6 +12,7 @@ export * from './lib/exportVisibleTableToExcel';
 export * from './lib/formatAddress';
 export * from './lib/formatTableAddress';
 export * from './lib/getLocalizedTodaysDate';
+export * from './lib/queryError';
 export * from './lib/RedirectButton';
 export * from './roles/ability';
 export * from './roles/Can';

@@ -12,15 +12,16 @@ import {
 } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Button, FormSection, Text } from '@myra-ui';
+import { Alert, asyncToast, Box, Button, FormSection, Loader, Text } from '@myra-ui';
 
 import {
   FundManagementInput,
   useAddProfitToFundManagementDataMutation,
   useExecuteProfitFundMangementMutation,
+  useGetCurrentFundAmountQuery,
   useGetFundManagementFormStateQuery,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { findQueryError, getQueryError, QueryError, ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 
@@ -30,6 +31,7 @@ import {
   DistributionTable,
   OtherFundDistributionTable,
   ParticularTable,
+  TransferPLtoHO,
 } from '../components';
 
 export const NewFundManagement = () => {
@@ -183,6 +185,22 @@ export const NewFundManagement = () => {
     });
   };
 
+  const { data: branchFundData, isFetching } = useGetCurrentFundAmountQuery({
+    forHeadOffice: false,
+  });
+
+  const branchFundAmount = branchFundData?.profitToFundManagement?.getCurrentFundAmount;
+
+  const currentFundError = useMemo(() => {
+    if (!branchFundAmount) return '';
+
+    const errorKeys = findQueryError(branchFundAmount, 'error');
+
+    return errorKeys
+      ? getQueryError(errorKeys?.length ? errorKeys[0] : (errorKeys as unknown as QueryError))
+      : '';
+  }, [branchFundAmount]);
+
   return (
     <>
       <FormLayout methods={methods}>
@@ -193,15 +211,47 @@ export const NewFundManagement = () => {
 
         <FormLayout.Content>
           <FormLayout.Form>
-            <BasicFundManagement />
+            {isFetching ? (
+              <Loader />
+            ) : currentFundError ? (
+              <Box p="s20">
+                <Alert status="error" title={currentFundError as string} hideCloseIcon />
+              </Box>
+            ) : Number(branchFundAmount?.amount?.amount) !== 0 ? (
+              <TransferPLtoHO />
+            ) : (
+              <>
+                <BasicFundManagement />
 
-            <FormSection header="Appropriation of Profit (Profit Distribution)" divider={false}>
-              <ParticularTable />
+                <FormSection header="Appropriation of Profit (Profit Distribution)" divider={false}>
+                  <ParticularTable />
 
-              <DistributionTable />
+                  <DistributionTable />
 
-              <OtherFundDistributionTable />
-            </FormSection>
+                  <OtherFundDistributionTable />
+                </FormSection>
+              </>
+            )}
+
+            {/* {currentFundError ? (
+              <Box p="s20">
+                <Alert status="error" title={currentFundError as string} hideCloseIcon />
+              </Box>
+            ) : Number(currentFundAmount?.amount?.amount) === 0 ? (
+              <TransferPLtoHO />
+            ) : (
+              <>
+                <BasicFundManagement />
+
+                <FormSection header="Appropriation of Profit (Profit Distribution)" divider={false}>
+                  <ParticularTable />
+
+                  <DistributionTable />
+
+                  <OtherFundDistributionTable />
+                </FormSection>
+              </>
+            )} */}
           </FormLayout.Form>
         </FormLayout.Content>
 
