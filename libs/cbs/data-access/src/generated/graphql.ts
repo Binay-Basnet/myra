@@ -38177,6 +38177,29 @@ export type GetLoanTransactionReportQuery = {
   };
 };
 
+export type GetLoanDisbursmentReportQueryVariables = Exact<{
+  data: LoanDisbursementReportFilter;
+}>;
+
+export type GetLoanDisbursmentReportQuery = {
+  report: {
+    loanReport: {
+      loanDisbursementReport?: {
+        data?: Array<{
+          memberId?: string | null;
+          memberName?: string | null;
+          loanAccountId?: string | null;
+          productName?: string | null;
+          disbursedDate?: Record<'local' | 'en' | 'np', string> | null;
+          totalSactionedLoanAmount?: string | null;
+          interestRate?: number | null;
+          nomineeAccount?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
 export type GetMemberClassificationReportQueryVariables = Exact<{
   data: MemberClassificationFilter;
 }>;
@@ -65655,6 +65678,40 @@ export const useGetLoanTransactionReportQuery = <
     ['getLoanTransactionReport', variables],
     useAxios<GetLoanTransactionReportQuery, GetLoanTransactionReportQueryVariables>(
       GetLoanTransactionReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanDisbursmentReportDocument = `
+    query getLoanDisbursmentReport($data: LoanDisbursementReportFilter!) {
+  report {
+    loanReport {
+      loanDisbursementReport(data: $data) {
+        data {
+          memberId
+          memberName
+          loanAccountId
+          productName
+          disbursedDate
+          totalSactionedLoanAmount
+          interestRate
+          nomineeAccount
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanDisbursmentReportQuery = <
+  TData = GetLoanDisbursmentReportQuery,
+  TError = unknown
+>(
+  variables: GetLoanDisbursmentReportQueryVariables,
+  options?: UseQueryOptions<GetLoanDisbursmentReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanDisbursmentReportQuery, TError, TData>(
+    ['getLoanDisbursmentReport', variables],
+    useAxios<GetLoanDisbursmentReportQuery, GetLoanDisbursmentReportQueryVariables>(
+      GetLoanDisbursmentReportDocument
     ).bind(null, variables),
     options
   );
