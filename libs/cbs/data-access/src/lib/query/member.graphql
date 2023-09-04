@@ -198,7 +198,7 @@ query getMemberFilterMapping {
   }
 }
 
-query getMinorList($filter: MinorFilter, $pagination: Pagination) {
+query getMinorList($filter: Filter, $pagination: Pagination) {
   members {
     listMinor(filter: $filter, pagination: $pagination) {
       totalCount

@@ -547,6 +547,7 @@ const EditableSearch = <T extends RecordWithId & Record<string, EditableValue>>(
         `Search-Select`
       )}
       autoFocus
+      value=""
       placeholder={searchPlaceholder ?? 'Search for items'}
       options={searchColumn?.searchOptions}
       chakraStyles={getSearchBarStyle(!!searchColumn?.addItemHandler)}
