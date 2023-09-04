@@ -1,6 +1,7 @@
 export * from './components/Report/useReport';
 export * from './lib/accounting';
 export * from './lib/deposit/AccountClosingReport';
+export * from './lib/deposit/AccountLockStatusReport';
 export * from './lib/deposit/AccountOpeningReport';
 export * from './lib/deposit/AdjustmentSavingAccountStatementReport';
 export * from './lib/deposit/ClosedSavingAccountStatement';
