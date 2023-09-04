@@ -58,6 +58,7 @@ export enum Report {
   INTEREST_TAX_REPORT = 'Interest Tax Report',
   ACCOUNT_OPENING_REPORT = 'Opened Account Report',
   ACCOUNT_CLOSING_REPORT = 'Closed Account Report',
+  ACCOUNT_LOCKED_STATUS_REPORT = 'Account Locked Status Report',
   SAVINGS_FD_MATURE_REPORT = 'Fixed Deposit Maturity Report',
   SAVING_PRODUCT_BALANCE_REPORT = 'Saving Product Wise Balance Report',
   CLOSED_SAVING_ACCOUNT_STATEMENT = 'Closed Saving Account Statement',
@@ -286,6 +287,11 @@ export const REPORTS = {
     {
       id: '5.2',
       report: Report.DEPOSIT_CONSOLIDATED_REPORT,
+    },
+    {
+      id: '5.2.e',
+      report: Report.ACCOUNT_LOCKED_STATUS_REPORT,
+      link: 'locked-status',
     },
     {
       id: '5.2.e',
