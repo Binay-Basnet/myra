@@ -80,6 +80,7 @@ export enum Report {
   LOAN_PERSONAL_GURANTEE_REPORT = 'Personal Guarantee Report',
   LOAN_TRANSACTION_STATEMENT_REPORT = 'Loan Account Statement Report',
   LOAN_WRITE_OFF_REPORT = 'Loan write off report',
+  LOAN_DISBURSEMENT_REPORT = 'Loan Disbursement Report',
   LOAN_PRE_INFORM_REPORT = 'Loan pre-inform report',
   LOAN_APPROVAL_REPORT_REJECT = 'Loan Approval Report / Reject Report',
   LOAN_FOLLOWUP_REPORT = 'Loan Followup report',
@@ -472,6 +473,11 @@ export const REPORTS = {
       id: '6.16',
       report: Report.CLOSED_LOAN_ACCOUNT_STATEMENT,
       link: 'closed-loan-account-statement',
+    },
+    {
+      id: '6.16',
+      report: Report.LOAN_DISBURSEMENT_REPORT,
+      link: 'disbursement',
     },
     {
       id: '14.2.5.a',

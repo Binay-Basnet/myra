@@ -1,4 +1,7 @@
 export * from './BoxContainer';
+export * from './DetailsKeyValueCard';
+export * from './DetailsKeyValueCards';
+export * from './DetailsPageHeaderBox';
 export * from './DividerContainer';
 export * from './FieldCardComponents';
 export * from './SectionSubHeading';

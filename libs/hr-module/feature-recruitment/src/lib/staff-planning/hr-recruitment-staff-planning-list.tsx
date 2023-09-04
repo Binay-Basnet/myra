@@ -79,6 +79,9 @@ export const HrRecruitmentStaffPlanningList = () => {
           total: data?.hr?.recruitment?.recruitment?.listStaffPlanning?.totalCount as number,
           pageInfo: data?.hr?.recruitment?.recruitment?.listStaffPlanning?.pageInfo,
         }}
+        rowOnClick={(item) =>
+          router.push(`${ROUTES?.HR_RECRUITMENT_STAFF_PLANNING_DETAIL}?id=${item?.node?.id}`)
+        }
       />
     </>
   );

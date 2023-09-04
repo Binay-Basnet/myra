@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
+import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
 import { SubText } from '@coop/shared/components';
-import { FormAmountInput, FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
+import { FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AllowChequeIssue } from './AllowChequeIssue';
@@ -202,7 +202,7 @@ export const Questions = () => {
                       rows={3}
                     />
                   </Box>
-                  {depositNature === NatureOfDepositProduct.Saving && <WithdrawPenalty />}
+                  {/* {depositNature === NatureOfDepositProduct.Saving && <WithdrawPenalty />} */}
                 </Box>
               )}
             </Box>
@@ -225,54 +225,54 @@ export const Questions = () => {
   );
 };
 
-const WithdrawPenalty = () => {
-  const { t } = useTranslation();
+// const WithdrawPenalty = () => {
+//   const { t } = useTranslation();
 
-  // const { data: coa } = useGetCoaListQuery({
-  //   filter: {
-  //     active: true,
-  //   },
-  // });
+//   // const { data: coa } = useGetCoaListQuery({
+//   //   filter: {
+//   //     active: true,
+//   //   },
+//   // });
 
-  // const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
+//   // const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
 
-  // const coaList = coaData?.map((item) => ({
-  //   label: item?.name?.en as string,
-  //   value: item?.id as string,
-  // }));
+//   // const coaList = coaData?.map((item) => ({
+//   //   label: item?.name?.en as string,
+//   //   value: item?.id as string,
+//   // }));
 
-  return (
-    <FormSection header="depositProductWithdrawPenaltySetup">
-      <FormInput
-        isRequired
-        name="withdrawPenalty.penaltyRate"
-        label={t['depositProductPenaltyRate']}
-        textAlign="right"
-        rightElement={
-          <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-            %
-          </Text>
-        }
-        type="number"
-      />
-      <FormAmountInput
-        type="number"
-        name="withdrawPenalty.penaltyAmount"
-        label={t['depositProductPenaltyAmount']}
-      />
+//   return (
+//     <FormSection header="depositProductWithdrawPenaltySetup">
+//       <FormInput
+//         isRequired
+//         name="withdrawPenalty.penaltyRate"
+//         label={t['depositProductPenaltyRate']}
+//         textAlign="right"
+//         rightElement={
+//           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+//             %
+//           </Text>
+//         }
+//         type="number"
+//       />
+//       <FormAmountInput
+//         type="number"
+//         name="withdrawPenalty.penaltyAmount"
+//         label={t['depositProductPenaltyAmount']}
+//       />
 
-      {/* <FormSelect
-        name="withdrawPenalty.penaltyLedgerMapping"
-        label={t['depositProductPenaltyedgerMapping']}
-        options={coaList}
-      /> */}
-      <GridItem colSpan={3}>
-        <Alert status="warning">
-          <Text fontWeight="Medium" fontSize="r1">
-            {t['penaltyAlert']}
-          </Text>
-        </Alert>
-      </GridItem>
-    </FormSection>
-  );
-};
+//       {/* <FormSelect
+//         name="withdrawPenalty.penaltyLedgerMapping"
+//         label={t['depositProductPenaltyedgerMapping']}
+//         options={coaList}
+//       /> */}
+//       <GridItem colSpan={3}>
+//         <Alert status="warning">
+//           <Text fontWeight="Medium" fontSize="r1">
+//             {t['penaltyAlert']}
+//           </Text>
+//         </Alert>
+//       </GridItem>
+//     </FormSection>
+//   );
+// };
