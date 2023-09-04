@@ -158,11 +158,7 @@ export const AccountLockStatusReport = () => {
                   skipExcelFormatting: true,
                 },
               },
-              {
-                header: 'Is Auto Release On to Date ?',
-                accessorKey: 'isAutoReleaseOnToDate',
-                cell: (props) => (props?.row?.original?.isAutoReleaseOnToDate ? 'Yes' : 'No'),
-              },
+
               {
                 header: 'Reason For Locking',
                 accessorKey: 'reasonForLock',
