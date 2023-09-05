@@ -48,7 +48,7 @@ export const Overview = (props: { data: StaffPlanRecord }) => {
           Note
         </Text>
         <Text fontSize="s3" color="gray.700">
-          {data.note}
+          {data?.note}
         </Text>
       </Box>
     </>
