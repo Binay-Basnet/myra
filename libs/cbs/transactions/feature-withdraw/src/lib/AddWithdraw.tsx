@@ -146,7 +146,7 @@ export const AddWithdraw = () => {
       return 0;
     }
 
-    if (!selectedAccount?.product?.withdrawRestricted) {
+    if (selectedAccount?.product?.withdrawRestricted) {
       return 0;
     }
 
@@ -270,6 +270,10 @@ export const AddWithdraw = () => {
 
   const checkIsSubmitButtonDisabled = () => {
     if (mode === 0) {
+      if (selectedAccount?.product?.withdrawRestricted) {
+        return true;
+      }
+
       if (!totalWithdraw) {
         return true;
       }
@@ -339,7 +343,7 @@ export const AddWithdraw = () => {
                   subtitle="Withdraw is restricted for this account."
                 />
               )}
-              {memberId && accountId && (
+              {memberId && accountId && !selectedAccount?.product?.withdrawRestricted && (
                 <>
                   <FormSwitchTab
                     name="withdrawWith"
