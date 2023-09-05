@@ -33125,6 +33125,39 @@ export type GetAppointmentLetterQuery = {
   };
 };
 
+export type GetJobOpeningOverviewQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetJobOpeningOverviewQuery = {
+  hr: {
+    recruitment: {
+      recruitmentJobOpening: {
+        getJobOpeningOverview: {
+          data?: {
+            jobTitle?: string | null;
+            jobId?: string | null;
+            staffPlan?: string | null;
+            department?: string | null;
+            designation?: string | null;
+            experienceLevel?: string | null;
+            description?: string | null;
+            defaulAmount?: string | null;
+            minimumAmount?: string | null;
+            maximumAmount?: string | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetKymOverallFormStatusQueryVariables = Exact<{
   id: Scalars['ID'];
   hasPressedNext?: InputMaybe<Scalars['Boolean']>;
@@ -59157,6 +59190,44 @@ export const useGetAppointmentLetterQuery = <TData = GetAppointmentLetterQuery, 
     ['getAppointmentLetter', variables],
     useAxios<GetAppointmentLetterQuery, GetAppointmentLetterQueryVariables>(
       GetAppointmentLetterDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetJobOpeningOverviewDocument = `
+    query getJobOpeningOverview($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobOpening {
+        getJobOpeningOverview(id: $id) {
+          data {
+            jobTitle
+            jobId
+            staffPlan
+            department
+            designation
+            experienceLevel
+            description
+            defaulAmount
+            minimumAmount
+            maximumAmount
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetJobOpeningOverviewQuery = <TData = GetJobOpeningOverviewQuery, TError = unknown>(
+  variables: GetJobOpeningOverviewQueryVariables,
+  options?: UseQueryOptions<GetJobOpeningOverviewQuery, TError, TData>
+) =>
+  useQuery<GetJobOpeningOverviewQuery, TError, TData>(
+    ['getJobOpeningOverview', variables],
+    useAxios<GetJobOpeningOverviewQuery, GetJobOpeningOverviewQueryVariables>(
+      GetJobOpeningOverviewDocument
     ).bind(null, variables),
     options
   );

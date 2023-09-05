@@ -10,8 +10,11 @@ export const DetailsPageHeaderBox = (props: { title: string }) => {
       fontWeight="medium"
       borderBottom="1px"
       borderColor="border.layout"
+      // position="sticky"
+      // top={0}
+      // zIndex={2}
     >
-      <Text fontSize="1.125rem">{title}</Text>
+      <Text fontSize="r3">{title}</Text>
     </Box>
   );
 };

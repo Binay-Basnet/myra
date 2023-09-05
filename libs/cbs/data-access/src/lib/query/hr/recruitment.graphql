@@ -307,3 +307,29 @@ query getAppointmentLetter($id: ID!) {
     }
   }
 }
+
+query getJobOpeningOverview($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobOpening {
+        getJobOpeningOverview(id: $id) {
+          data {
+            jobTitle
+            jobId
+            staffPlan
+            department
+            designation
+            experienceLevel
+            description
+            defaulAmount
+            minimumAmount
+            maximumAmount
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
