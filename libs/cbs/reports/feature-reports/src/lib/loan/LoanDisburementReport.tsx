@@ -9,9 +9,10 @@ import {
   useGetLoanProductListQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
+import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate } from '@coop/cbs/utils';
-import { FormBranchSelect, FormDatePicker, FormSelect } from '@coop/shared/form';
+import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
+import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type ReportFilter = Omit<LoanDisbursementReportFilter, 'branchId' | 'loanProductId'> & {
@@ -90,7 +91,7 @@ export const LoanDisburesementReport = () => {
         />
 
         <Report.Inputs hideDate>
-          <GridItem colSpan={2}>
+          <GridItem colSpan={1}>
             <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
           </GridItem>
           <FormSelect
@@ -99,8 +100,8 @@ export const LoanDisburesementReport = () => {
             isMulti
             options={productOptions}
           />
-          <GridItem colSpan={1}>
-            <FormDatePicker name="disbursedDate" label="Disbursed Date" />
+          <GridItem colSpan={2}>
+            <ReportDateRange name="Period" />{' '}
           </GridItem>
         </Report.Inputs>
       </Report.Header>
@@ -120,6 +121,13 @@ export const LoanDisburesementReport = () => {
               {
                 header: 'Member No',
                 accessorKey: 'memberId',
+                cell: (props) => (
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.memberId as string}
+                    type="member"
+                    label={props?.row?.original?.memberCode as string}
+                  />
+                ),
               },
               {
                 header: 'Member Name',
@@ -128,6 +136,13 @@ export const LoanDisburesementReport = () => {
               {
                 header: 'Loan Account ID',
                 accessorKey: 'loanAccountId',
+                cell: (props) => (
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.loanAccountId as string}
+                    type="loan"
+                    label={props?.row?.original?.loanAccountId as string}
+                  />
+                ),
               },
               {
                 header: 'Product Name',

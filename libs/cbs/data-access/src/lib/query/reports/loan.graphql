@@ -555,6 +555,7 @@ query getLoanDisbursmentReport($data: LoanDisbursementReportFilter!) {
           totalSactionedLoanAmount
           interestRate
           nomineeAccount
+          memberCode
         }
       }
     }

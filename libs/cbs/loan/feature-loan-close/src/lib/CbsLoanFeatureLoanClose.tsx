@@ -358,6 +358,7 @@ export const LoanCloseForm = () => {
                     'Payment Mode': result?.paymentMode,
                   },
                   subTitle: 'Account closed successfully. Details of the account is listed below.',
+                  dublicate: true,
                 };
               }}
               errorCardProps={{
