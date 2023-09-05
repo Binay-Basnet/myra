@@ -1,5 +1,5 @@
-import { IoChevronDownSharp, IoSearch } from 'react-icons/io5';
-import { Box, Icon, Text } from '@chakra-ui/react';
+import { IoCheckmarkSharp, IoChevronDownSharp, IoSearch } from 'react-icons/io5';
+import { Box, Checkbox, Icon, Text } from '@chakra-ui/react';
 import { chakraComponents, GroupBase, SelectComponentsConfig } from 'chakra-react-select';
 
 import { amountConverter } from '@coop/shared/utils';
@@ -66,38 +66,66 @@ export const components: (
         } as unknown as Record<string, string>
       }
     >
-      <Box display="flex" justifyContent="space-between" width="100%" gap="s16">
-        <Box display="flex" flexDirection="column" gap="s8">
-          <Box display="flex" flexDirection="column" gap="s2">
-            <Box display="flex" flexDirection="column">
-              <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
-                {data.accountInfo.accountName}
-              </Text>
-              <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-50">
-                {data.accountInfo.accountId}
-              </Text>
-            </Box>
-            <Box display="flex" gap="s4">
-              <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-                {data.accountInfo.productName}
-              </Text>
-              <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-50">
-                [{data.accountInfo.accountType}]
-              </Text>
+      <Box display="flex" alignItems="flex-start" gap="s16" width="100%">
+        {props.isMulti ? (
+          <Box
+            display="flex"
+            onClick={(e) => {
+              props.selectOption({ ...data });
+              e.stopPropagation();
+              e.preventDefault();
+            }}
+          >
+            <Checkbox
+              ref={props.innerRef}
+              isDisabled={props.isDisabled}
+              isChecked={props.isSelected}
+            />
+          </Box>
+        ) : props.isSelected ? (
+          <Icon
+            as={IoCheckmarkSharp}
+            w="20px"
+            h="20px"
+            cursor="pointer"
+            color="primary.500"
+            className="multi-select-option"
+          />
+        ) : null}
+
+        <Box display="flex" justifyContent="space-between" width="100%" gap="s16">
+          <Box display="flex" flexDirection="column" gap="s8">
+            <Box display="flex" flexDirection="column" gap="s2">
+              <Box display="flex" flexDirection="column">
+                <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
+                  {data.accountInfo.accountName}
+                </Text>
+                <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-50">
+                  {data.accountInfo.accountId}
+                </Text>
+              </Box>
+              <Box display="flex" gap="s4">
+                <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
+                  {data.accountInfo.productName}
+                </Text>
+                <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-50">
+                  [{data.accountInfo.accountType}]
+                </Text>
+              </Box>
             </Box>
           </Box>
-        </Box>
 
-        <Box display="flex" flexDirection="column" gap="s4" alignItems="flex-end">
-          <Text fontSize="s3" fontWeight={600} color="primary.500">
-            {amountConverter(data.accountInfo.balance)}
-          </Text>
-
-          {data.accountInfo.fine !== '0' && (
-            <Text fontSize="s3" fontWeight={600} color="danger.500">
-              Fine: {amountConverter(data.accountInfo.fine || 0)}
+          <Box display="flex" flexDirection="column" gap="s4" alignItems="flex-end">
+            <Text fontSize="s3" fontWeight={600} color="primary.500">
+              {amountConverter(data.accountInfo.balance)}
             </Text>
-          )}
+
+            {data.accountInfo.fine !== '0' && (
+              <Text fontSize="s3" fontWeight={600} color="danger.500">
+                Fine: {amountConverter(data.accountInfo.fine || 0)}
+              </Text>
+            )}
+          </Box>
         </Box>
       </Box>
     </chakraComponents.Option>

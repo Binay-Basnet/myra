@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Flex } from '@chakra-ui/react';
 import {
   ChakraStylesConfig,
@@ -52,6 +53,8 @@ export const AccountSelect = ({
   const filterOption = (option: any, inputValue: string): boolean =>
     (option.label.toString().match(inputValue) || []).length > 0;
 
+  const components = useMemo(() => customComponents(name), [name]);
+
   return (
     <Flex direction="column" gap="s4">
       <Text variant="formLabel" color="gray.700">
@@ -68,9 +71,7 @@ export const AccountSelect = ({
         isClearable
         chakraStyles={chakraDefaultStyles as ChakraStylesConfig<Option, boolean, GroupBase<Option>>}
         components={
-          customComponents(name) as Partial<
-            SelectComponentsConfig<Option, boolean, GroupBase<Option>>
-          >
+          components as Partial<SelectComponentsConfig<Option, boolean, GroupBase<Option>>>
         }
         filterOption={filterOption}
         {...rest}

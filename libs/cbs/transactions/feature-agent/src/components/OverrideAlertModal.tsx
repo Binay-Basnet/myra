@@ -23,7 +23,8 @@ export const OverrideAlertModal = ({ isOpen, onCancel, onConfirm }: IOverrideAle
       isDanger
     >
       <Text fontSize="r1" fontWeight={400} color="gray.600">
-        {t['agentAssignedMembersHelperText']}
+        Some accounts has already been assigned to an market representative. Do you want to override
+        the market representative?
       </Text>
     </Modal>
   );
