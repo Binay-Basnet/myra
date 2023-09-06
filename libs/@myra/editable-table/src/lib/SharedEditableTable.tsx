@@ -133,6 +133,7 @@ enum EditableTableActionKind {
   ADD_WITH_ID = 'AddWithId',
   ACCESSOR_FN_EDIT = 'Accessor',
   SELECT_ALL = 'SelectAll',
+  COLUMN_UPDATE = 'ColumnUpdate',
 }
 
 type EditableTableAction<TData extends RecordWithId & Record<string, EditableValue>> =
@@ -177,7 +178,8 @@ type EditableTableAction<TData extends RecordWithId & Record<string, EditableVal
   | {
       type: EditableTableActionKind.SELECT_ALL;
       payload: { column: Column<TData>; isChecked: boolean };
-    };
+    }
+  | { type: EditableTableActionKind.COLUMN_UPDATE; payload: { columns: Column<TData>[] } };
 
 interface EditableState<T extends RecordWithId & Record<string, EditableValue>> {
   data: T[];
@@ -299,6 +301,11 @@ function editableReducer<T extends RecordWithId & Record<string, EditableValue>>
         })),
       };
 
+    case EditableTableActionKind.COLUMN_UPDATE:
+      return {
+        ...state,
+        columns: payload.columns,
+      };
     default:
       return state;
   }
@@ -357,6 +364,15 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
       });
     }
   }, [defaultData]);
+
+  useDeepCompareEffect(() => {
+    dispatch({
+      type: EditableTableActionKind.COLUMN_UPDATE,
+      payload: {
+        columns,
+      },
+    });
+  }, [columns]);
 
   // useEffect(() => {
   //   ref?.current?.inputRef.focus();
