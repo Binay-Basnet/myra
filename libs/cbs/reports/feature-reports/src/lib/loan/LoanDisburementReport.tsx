@@ -12,7 +12,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
-import { FormBranchSelect, FormSelect } from '@coop/shared/form';
+import { FormAmountFilter, FormBranchSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type ReportFilter = Omit<LoanDisbursementReportFilter, 'branchId' | 'loanProductId'> & {
@@ -62,11 +62,11 @@ export const LoanDisburesementReport = () => {
     () => loanProducts?.settings?.general?.loanProducts?.list?.edges ?? [],
     [loanProducts]
   );
-
   const productOptions = rowData?.map((item) => ({
     label: item?.node?.productName as string,
     value: item?.node?.id as string,
   }));
+
   return (
     <Report
       data={loanReport as LoanDisbursementReportData[]}
@@ -101,7 +101,7 @@ export const LoanDisburesementReport = () => {
             options={productOptions}
           />
           <GridItem colSpan={2}>
-            <ReportDateRange name="Period" />{' '}
+            <ReportDateRange />{' '}
           </GridItem>
         </Report.Inputs>
       </Report.Header>
@@ -170,6 +170,11 @@ export const LoanDisburesementReport = () => {
             ]}
           />
         </Report.Content>
+        <Report.Filters>
+          <Report.Filter title="Amount Wise">
+            <FormAmountFilter name="filter.amountRange" />
+          </Report.Filter>
+        </Report.Filters>
       </Report.Body>
     </Report>
   );

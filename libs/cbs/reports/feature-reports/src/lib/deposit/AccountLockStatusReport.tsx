@@ -7,11 +7,13 @@ import {
   AccountLockStatusResultData,
   useGetAccountLockStatusReportQuery,
   useGetDepositProductSettingsListQuery,
+  useGetSettingsUserListDataQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
+import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
-import { FormBranchSelect, FormDatePicker, FormSelect } from '@coop/shared/form';
+import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 
 type AccountClosingReportFilters = Omit<AccountLockStatusInput, 'branchId' | 'accountType'> & {
   branchId: {
@@ -64,7 +66,11 @@ export const AccountLockStatusReport = () => {
     label: item?.node?.productName as string,
     value: item?.node?.id as string,
   }));
-
+  const { data: userListData } = useGetSettingsUserListDataQuery({
+    // filter: { role: [Roles.Agent] },
+    paginate: { after: '', first: -1 },
+  });
+  const userList = userListData?.settings?.myraUser?.list?.edges;
   return (
     <Report
       defaultFilters={{}}
@@ -95,7 +101,7 @@ export const AccountLockStatusReport = () => {
           </GridItem>
           <FormSelect name="accountType" label="Product Name" isMulti options={productOptions} />
           <GridItem colSpan={1}>
-            <FormDatePicker name="period" label="Select Date" />
+            <ReportDateRange />{' '}
           </GridItem>
         </Report.Inputs>
       </Report.Header>
@@ -170,6 +176,18 @@ export const AccountLockStatusReport = () => {
             ]}
           />
         </Report.Content>
+        <Report.Filters>
+          <Report.Filter title="User Select">
+            <FormSelect
+              label="Locked By User"
+              options={userList?.map((user) => ({
+                label: user.node?.name as string,
+                value: user.node?.id as string,
+              }))}
+              name="filter.userId"
+            />
+          </Report.Filter>
+        </Report.Filters>
       </Report.Body>
     </Report>
   );

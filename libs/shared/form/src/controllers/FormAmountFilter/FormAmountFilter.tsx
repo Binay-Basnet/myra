@@ -111,7 +111,7 @@ export const AmountFilter = React.forwardRef(
                 textAlign="right"
                 placeholder={placeholder ? `Minimum ${placeholder}` : 'Minimum Amt'}
                 value={value?.max}
-                onChange={(e) => onChange({ max: e.target.value, min: undefined }, '>')}
+                onChange={(e) => onChange({ max: undefined, min: e.target.value }, '>')}
               />
             );
           }
@@ -123,7 +123,7 @@ export const AmountFilter = React.forwardRef(
                 textAlign="right"
                 placeholder={placeholder ? `Maximum ${placeholder}` : 'Maximum Amt'}
                 value={value?.min}
-                onChange={(e) => onChange({ min: e.target.value, max: undefined }, '<')}
+                onChange={(e) => onChange({ max: e.target.value, min: undefined }, '<')}
               />
             );
           }

@@ -88,7 +88,7 @@ export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
                       {
                         ...parsedQuery,
                         [column]: {
-                          value: newValue.min,
+                          value: newValue.max,
                           compare: '<',
                         },
                       },
@@ -99,7 +99,7 @@ export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
                       {
                         ...parsedQuery,
                         [column]: {
-                          value: newValue.max,
+                          value: newValue.min,
                           compare: '>',
                         },
                       },
@@ -164,10 +164,10 @@ const isButtonDisabled = (
   }
 
   if (buttonCondition === '>') {
-    return !buttonMax;
+    return !buttonMin;
   }
 
-  return !buttonMin;
+  return !buttonMax;
 };
 
 export const TableAmountFilterContent = React.forwardRef(
