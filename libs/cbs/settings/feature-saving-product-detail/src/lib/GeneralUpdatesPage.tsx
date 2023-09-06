@@ -69,6 +69,17 @@ export const GeneralUpdatesPage = () => {
       },
     ];
 
+    if (detailData?.nature !== 'CURRENT') {
+      options.push(
+        ...[
+          {
+            title: 'Withdraw Penalty',
+            onClick: onWithdrawPenaltyModalToggle,
+            icon: HiOutlineRefresh,
+          },
+        ]
+      );
+    }
     if (detailData?.nature === 'RECURRING_SAVING' || detailData?.nature === 'TERM_SAVING_OR_FD') {
       options.push(
         ...[
@@ -80,11 +91,6 @@ export const GeneralUpdatesPage = () => {
           {
             title: 'Premature Penalty',
             onClick: onPrematurePenaltyModalToggle,
-            icon: HiOutlineRefresh,
-          },
-          {
-            title: 'Withdraw Penalty',
-            onClick: onWithdrawPenaltyModalToggle,
             icon: HiOutlineRefresh,
           },
         ]
