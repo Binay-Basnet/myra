@@ -43,6 +43,10 @@ export const AddAccountModal = ({ clickedAccount, modalProps }: IAddAccountProps
     }
   }, [isAccountOpenForSelectedBranch]);
 
+  useEffect(() => {
+    methods.setValue('ledgerName', clickedAccount?.name?.local ?? '');
+  }, [clickedAccount]);
+
   return (
     <Modal
       open={isOpen}
