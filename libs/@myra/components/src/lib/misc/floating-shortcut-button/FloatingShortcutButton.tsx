@@ -30,16 +30,21 @@ interface WhatsNewModalProps {
 const whatsNewData = {
   features: {
     title: 'New Features',
-    data: [],
+    data: [
+      'Loan lock reason',
+      'Loan lock status report',
+      'Loan disbursement report',
+      'Two copies in account close print',
+      'Multi account select in MR member assign',
+      'Total collected amount shown in UI',
+    ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'fixed statement particular withdraw cases in account statement reports.',
-      'JV search issue fixed.',
-      'fixed report generate issue from loan/saving detail page and Fiscal Year Adjustment trial balance. ',
-      'fixed adjusted closing balance report on general balance report.',
-      'Mr representative name added in the success card and detail page (withdrawn by).',
+      'Fixed member transfer issue.',
+      'Fixed withdraw restriction issues.',
+      'FIxed JV and IBT ledger amount issue.',
     ],
   },
 };
@@ -78,8 +83,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.91</Text>
-          <Text fontSize="s3">September 4, 2023</Text>
+          <Text fontSize="r2">Version 1.0.92</Text>
+          <Text fontSize="s3">September 6, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>
