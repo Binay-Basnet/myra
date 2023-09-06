@@ -18,7 +18,7 @@ import {
   useMenuLink,
   useMultipleAbility,
 } from '@coop/cbs/utils';
-import { useTranslation } from '@coop/shared/utils';
+import { checkMenuAccess, useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from './Tab/TabsSidebarLayout';
 
@@ -30,6 +30,8 @@ interface ISidebarProps {
     aclKey: AclKey;
     route: RouteValue;
     idType?: Id_Type;
+    prod?: boolean;
+    dev?: boolean;
   }[];
 }
 
@@ -82,26 +84,29 @@ export const AppSidebar = ({ module = 'CBS', menu, forms }: ISidebarProps) => {
           {sidebarForms && isNewButtonAllowed && (
             <>
               <PopOverComponentForButtonList buttonLabel={t['new']}>
-                {sidebarForms.map((item) => (
-                  <Can I="CREATE" a={item.aclKey} key={item?.label}>
-                    <Box>
-                      <AddButtonList
-                        testId={t[item.label] || item?.label}
-                        data-testid={t[item.label] || item?.label}
-                        label={t[item.label] || item?.label}
-                        onClick={() => {
-                          if (item.idType) {
-                            mutateAsync({ idType: item?.idType ?? null }).then((res) =>
-                              router.push(`${item.route}?id=${res?.newId}`)
-                            );
-                          } else {
-                            router.push(item.route);
-                          }
-                        }}
-                      />
-                    </Box>
-                  </Can>
-                ))}
+                {sidebarForms.map(
+                  (item) =>
+                    checkMenuAccess(item) !== false && (
+                      <Can I="CREATE" a={item.aclKey} key={item?.label}>
+                        <Box>
+                          <AddButtonList
+                            testId={t[item.label] || item?.label}
+                            data-testid={t[item.label] || item?.label}
+                            label={t[item.label] || item?.label}
+                            onClick={() => {
+                              if (item.idType) {
+                                mutateAsync({ idType: item?.idType ?? null }).then((res) =>
+                                  router.push(`${item.route}?id=${res?.newId}`)
+                                );
+                              } else {
+                                router.push(item.route);
+                              }
+                            }}
+                          />
+                        </Box>
+                      </Can>
+                    )
+                )}
               </PopOverComponentForButtonList>
 
               <Divider my="s16" />
