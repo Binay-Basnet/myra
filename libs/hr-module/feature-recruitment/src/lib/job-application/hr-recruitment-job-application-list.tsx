@@ -72,6 +72,9 @@ export const HrRecruitmentJobApplicationList = () => {
             ?.totalCount as number,
           pageInfo: data?.hr?.recruitment?.recruitmentJobApplication?.listJobApplication?.pageInfo,
         }}
+        rowOnClick={(item) =>
+          router.push(`${ROUTES?.HR_RECRUITMENT_JOB_APPLICATION_DETAIL}?id=${item?.node?.id}`)
+        }
       />
     </>
   );

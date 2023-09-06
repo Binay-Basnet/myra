@@ -1,12 +1,15 @@
-query getCurrentFundAmount {
+query getCurrentFundAmount($forHeadOffice: Boolean!) {
   profitToFundManagement {
-    getCurrentFundAmount {
+    getCurrentFundAmount(forHeadOffice: $forHeadOffice) {
       amount {
         amount
         amountType
       }
       coaHead
       coaHeadName
+      error {
+        ...QueryError
+      }
     }
   }
 }

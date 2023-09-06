@@ -43,7 +43,6 @@ export const OverviewPage = () => {
   return (
     <>
       <TabHeader heading="Overview" />
-
       {!isClosed && <DetailPageQuickLinks links={links} />}
       {isClosed && (
         <Alert
@@ -56,19 +55,14 @@ export const OverviewPage = () => {
           hideCloseIcon
         />
       )}
-
       <Statistics statsData={isLocAccount ? locAccountSummary : accountSummary} />
-
       <GeneralInfoCard
         title="General Information"
         items={generalInfoCardData}
         productId={productId}
       />
-
       {!isClosed && <UpcomingPayments />}
-
       <RecentTransactions txnList={transactionList} isClosed={isClosed} />
-
       <GeneralInfoCard title="Additional Features" items={additionalFeatures} />
     </>
   );

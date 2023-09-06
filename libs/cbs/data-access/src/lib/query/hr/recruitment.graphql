@@ -307,3 +307,123 @@ query getAppointmentLetter($id: ID!) {
     }
   }
 }
+
+query getJobOpeningOverview($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobOpening {
+        getJobOpeningOverview(id: $id) {
+          data {
+            jobTitle
+            jobId
+            staffPlan
+            department
+            designation
+            experienceLevel
+            description
+            defaulAmount
+            minimumAmount
+            maximumAmount
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getJobApplicationOverview($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobApplication {
+        getJobApplicationOverview(id: $id) {
+          data {
+            phoneNumber
+            emailAddress
+            nameOfApplicant
+            applicationId
+            jobPosting
+            designation
+            department
+            permanentAddress {
+              province
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+            }
+            temporaryAddress {
+              province
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+            }
+            applicationRating
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getJobApplicationJobOffer($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobApplication {
+        getJobApplicationJobOffer(id: $id) {
+          data {
+            nameOfapplicant
+            applicationId
+            offerDate
+            designation
+            department
+            email
+            jobOfferTerms {
+              offerTerm
+              value
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getJobApplicationAppointmentLetter($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobApplication {
+        getJobApplicationAppointmentLetter(id: $id) {
+          data {
+            jobApplicant
+            applicationDate
+            offerDate
+            designation
+            department
+            email
+            body
+            terms {
+              sn
+              title
+              description
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

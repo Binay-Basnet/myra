@@ -13,9 +13,9 @@ export const BasicFundManagement = () => {
 
   const { watch, setValue } = useFormContext();
 
-  const { data: currentFundAmountData } = useGetCurrentFundAmountQuery();
+  const { data: currentFundAmountHOData } = useGetCurrentFundAmountQuery({ forHeadOffice: true });
 
-  const currentFundAmount = currentFundAmountData?.profitToFundManagement?.getCurrentFundAmount;
+  const currentFundAmount = currentFundAmountHOData?.profitToFundManagement?.getCurrentFundAmount;
 
   useEffect(() => {
     if (currentFundAmount) {

@@ -79,6 +79,9 @@ export const HrRecruitmentJobOpeningList = () => {
           total: data?.hr?.recruitment?.recruitmentJobOpening?.listJobOpening?.totalCount as number,
           pageInfo: data?.hr?.recruitment?.recruitmentJobOpening?.listJobOpening?.pageInfo,
         }}
+        rowOnClick={(item) =>
+          router.push(`${ROUTES?.HR_RECRUITMENT_JOB_OPENING_DETAIL}?id=${item?.node?.id}`)
+        }
       />
     </>
   );

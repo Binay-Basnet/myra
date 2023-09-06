@@ -19,3 +19,14 @@ mutation executeProfitFundMangement($id: ID!) {
     }
   }
 }
+
+mutation transferPLtoHO {
+  profitToFundManagement {
+    transferPLtoHO {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

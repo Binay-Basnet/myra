@@ -1,9 +1,7 @@
-mutation setAddMemberToAgentData($agentId: String!, $data: AssignMembersInput, $override: Boolean) {
+mutation setAddMemberToAgentData($agentId: String!, $data: [String!]!, $override: Boolean) {
   agent {
     addMemberToAgent(agentId: $agentId, data: $data, override: $override) {
-      data {
-        id
-      }
+      recordId
       error {
         ...MutationError
       }

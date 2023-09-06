@@ -597,12 +597,14 @@ export const CBS: NavType = {
           route: ROUTES.CBS_OTHERS_FUND_MANAGEMENT_LIST,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_PROFIT_TO_FUND_MANAGEMENT',
           addRoute: ROUTES.CBS_OTHERS_FUND_MANAGEMENT_ADD,
+          prod: false,
         },
         {
           label: 'Share Dividend Posting',
           route: ROUTES.CBS_OTHERS_SHARE_DIVIDEND_POSTING_LIST,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
           addRoute: ROUTES.CBS_OTHERS_SHARE_DIVIDEND_POSTING_ADD,
+          prod: false,
         },
         {
           label: 'Bulk Tansfers',
@@ -627,11 +629,13 @@ export const CBS: NavType = {
           label: 'New Profit to Fund Management',
           route: ROUTES.CBS_OTHERS_FUND_MANAGEMENT_ADD,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_PROFIT_TO_FUND_MANAGEMENT',
+          prod: false,
         },
         {
           label: 'New Share Dividend Posting',
           route: ROUTES.CBS_OTHERS_SHARE_DIVIDEND_POSTING_ADD,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
+          prod: false,
         },
         {
           label: 'New Bulk Transfer',

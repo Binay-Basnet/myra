@@ -1,7 +1,15 @@
-mutation postShareDividend($data: ShareDividendInput!) {
+mutation postShareDividend($data: ShareDividendInput!, $commit: Boolean) {
   shareDividend {
-    postDividend(data: $data) {
+    postDividend(data: $data, commit: $commit) {
       record
+      summary {
+        MemberID
+        ShareCount
+        SavingAmount
+        TotalAmount
+        DestinationAccount
+        Error
+      }
       error {
         ...MutationError
       }

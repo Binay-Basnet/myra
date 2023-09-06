@@ -2234,6 +2234,11 @@
   resolved "https://registry.yarnpkg.com/@chakra-ui/visually-hidden/-/visually-hidden-2.0.13.tgz#6553467d93f206d17716bcbe6e895a84eef87472"
   integrity sha512-sDEeeEjLfID333EC46NdCbhK2HyMXlpl5HzcJjuwWIpyVz4E1gKQ9hlwpq6grijvmzeSywQ5D3tTwUrvZck4KQ==
 
+"@choc-ui/chakra-autocomplete@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@choc-ui/chakra-autocomplete/-/chakra-autocomplete-5.2.5.tgz#e8b75dccf912db3e2a3fef253918bcc2e6ee151f"
+  integrity sha512-DmQiwXxM0UVjG3c6ZPEYpfllKX5oEy3tRGGpPdPdjyo9ecNs6mE7X1bXsE+WXWDak5xv1EIqwssmtYZBChA0pw==
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -18701,6 +18706,11 @@ react-leaflet@^4.0.0:
   dependencies:
     "@react-leaflet/core" "^2.0.1"
 
+react-nanny@^2.15.0:
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/react-nanny/-/react-nanny-2.15.0.tgz#9472984af45761263b92b209f925e773fd761653"
+  integrity sha512-fn6tAnJ+UEdD0pq5YytlZJb5XmjVcvXoxq3i2r1o/BavgipwRWsw7oOXNJ8bJd33iedlkNyAQMXVC6qTl0Hv4A==
+
 react-pdf@^6.0.3:
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/react-pdf/-/react-pdf-6.0.3.tgz#88a0d489f87f29cd7bb3050930a0d64dae30f83b"
@@ -18776,6 +18786,21 @@ react-select@5.7.0:
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/react-select/-/react-select-5.7.0.tgz#82921b38f1fcf1471a0b62304da01f2896cd8ce6"
   integrity sha512-lJGiMxCa3cqnUr2Jjtg9YHsaytiZqeNOKeibv6WF5zbK/fPegZ1hg3y/9P1RZVLhqBTs0PfqQLKuAACednYGhQ==
+  dependencies:
+    "@babel/runtime" "^7.12.0"
+    "@emotion/cache" "^11.4.0"
+    "@emotion/react" "^11.8.1"
+    "@floating-ui/dom" "^1.0.1"
+    "@types/react-transition-group" "^4.4.0"
+    memoize-one "^6.0.0"
+    prop-types "^15.6.0"
+    react-transition-group "^4.3.0"
+    use-isomorphic-layout-effect "^1.1.2"
+
+react-select@^5.7.4:
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/react-select/-/react-select-5.7.4.tgz#d8cad96e7bc9d6c8e2709bdda8f4363c5dd7ea7d"
+  integrity sha512-NhuE56X+p9QDFh4BgeygHFIvJJszO1i1KSkg/JPcIJrbovyRtI+GuOEa4XzFCEpZRAEoEI8u/cAHK+jG/PgUzQ==
   dependencies:
     "@babel/runtime" "^7.12.0"
     "@emotion/cache" "^11.4.0"

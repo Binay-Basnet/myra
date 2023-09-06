@@ -67,6 +67,8 @@ export type Page = {
   aclKey: AclKey;
   route: RouteValue;
   idType?: Id_Type;
+  prod?: boolean;
+  dev?: boolean;
 };
 
 type PageWithAdd = Page & {

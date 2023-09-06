@@ -106,7 +106,6 @@ export const LedgerStatementReport = () => {
                 header: 'S.N',
                 accessorFn: (__, index) => index + 1,
                 meta: {
-                  width: '30px',
                   isNumeric: true,
                 },
               },
@@ -114,7 +113,6 @@ export const LedgerStatementReport = () => {
                 header: 'Cr Amount',
                 accessorFn: (row) => row?.cr_amount,
                 meta: {
-                  width: '30px',
                   isNumeric: true,
                 },
               },
@@ -122,41 +120,24 @@ export const LedgerStatementReport = () => {
                 header: 'Dr Amount',
                 accessorFn: (row) => row?.dr_amount,
                 meta: {
-                  width: '30px',
                   isNumeric: true,
                 },
               },
               {
                 header: 'Ledger Code',
                 accessorFn: (row) => row?.ledger_code,
-                meta: {
-                  width: '30px',
-                  isNumeric: true,
-                },
               },
               {
                 header: 'Ledger Name',
                 accessorFn: (row) => row?.ledger_name,
-                meta: {
-                  width: '30px',
-                  isNumeric: true,
-                },
-              },
-              {
-                header: 'Narration',
-                accessorFn: (row) => row?.narration,
-                meta: {
-                  width: '30px',
-                  isNumeric: true,
-                },
               },
               {
                 header: 'Transaction Id',
                 accessorFn: (row) => row?.transaction_id,
-                meta: {
-                  width: '30px',
-                  isNumeric: true,
-                },
+              },
+              {
+                header: 'Narration',
+                accessorFn: (row) => row?.narration,
               },
             ]}
           />

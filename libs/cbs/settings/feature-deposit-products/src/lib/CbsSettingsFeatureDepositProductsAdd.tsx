@@ -293,6 +293,10 @@ export const SettingsDepositProductsAdd = () => {
         maxAmount: values?.balanceLimit?.maxAmount ?? null,
         minAmount: values?.balanceLimit?.minAmount ?? null,
       },
+      withdrawPenalty: {
+        penaltyAmount: withdrawRestricted ? '0' : values?.withdrawPenalty?.penaltyAmount,
+        penaltyRate: withdrawRestricted ? '0' : values?.withdrawPenalty?.penaltyRate,
+      },
       // isPrematurePenaltyApplicable:
       //   depositNature === NatureOfDepositProduct.RecurringSaving ||
       //   depositNature === NatureOfDepositProduct.TermSavingOrFd
@@ -473,7 +477,8 @@ export const SettingsDepositProductsAdd = () => {
                   depositNature === NatureOfDepositProduct.TermSavingOrFd) && <PrematuredPenalty />}
 
                 {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                  depositNature === NatureOfDepositProduct.TermSavingOrFd) && <WithdrawPenalty />}
+                  depositNature === NatureOfDepositProduct.TermSavingOrFd ||
+                  depositNature === NatureOfDepositProduct?.Saving) && <WithdrawPenalty />}
 
                 {(typesOfMember?.includes(KymMemberTypesEnum.Individual) ||
                   typesOfMember?.includes(KymMemberTypesEnum.Institution) ||

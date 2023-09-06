@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { GridItem } from '@myra-ui';
 
 import {
+  ComparatorType,
   MinorFilter,
   MinorInformation,
   MinorTypeFilter,
@@ -30,7 +31,29 @@ export const MinorListReport = () => {
 
   const { data, isFetching } = useGetMinorListReportQuery(
     {
-      data: { ...filters, branchId: branchIds } as MinorFilter,
+      data: {
+        orConditions:
+          branchIds?.map((b) => ({
+            andConditions: [
+              {
+                column: 'branchId',
+                comparator: ComparatorType.EqualTo,
+                value: b,
+              },
+              {
+                column: 'said',
+                comparator:
+                  filters?.minorType === 'WITH_SAVING_ACCOUNT'
+                    ? ComparatorType.HasValue
+                    : ComparatorType.HasNoValue,
+                value:
+                  filters?.minorType === 'WITH_SAVING_ACCOUNT'
+                    ? ComparatorType.HasValue
+                    : ComparatorType.HasNoValue,
+              },
+            ],
+          })) || [],
+      },
     },
     { enabled: !!filters }
   );

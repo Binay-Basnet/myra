@@ -4,11 +4,7 @@ import { useRouter } from 'next/router';
 
 import { asyncToast, Box, Modal } from '@myra-ui';
 
-import {
-  AssignMembersInput,
-  ObjState,
-  useSetAddMemberToAgentDataMutation,
-} from '@coop/cbs/data-access';
+import { ObjState, useSetAddMemberToAgentDataMutation } from '@coop/cbs/data-access';
 import { FormAccountSelect, FormMemberSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -18,6 +14,11 @@ interface IAddMemberModalProps {
   isOpen: boolean;
   onClose: () => void;
   refetchAssignedMembersList: () => void;
+}
+
+interface AssignMembersInput {
+  memberId: string;
+  accountId: { label: string; value: string }[];
 }
 
 export const AddMemberModal = ({
@@ -42,11 +43,13 @@ export const AddMemberModal = ({
   const { mutateAsync: assignMemberToAgent } = useSetAddMemberToAgentDataMutation();
 
   const handleAssignMember = () => {
+    const values = getValues();
+
     asyncToast({
       id: 'assign-new-member-to-agent',
       promise: assignMemberToAgent({
         agentId: id as string,
-        data: getValues(),
+        data: values?.accountId?.map((acc) => acc?.value),
       }),
       msgs: {
         loading: t['agentAssignedMembersAssigningNewMember'],
@@ -70,11 +73,13 @@ export const AddMemberModal = ({
   };
 
   const handleConfirmOverrideMemberAlert = () => {
+    const values = getValues();
+
     asyncToast({
-      id: 'assign-new-member-to-agent',
+      id: 'assign-new-member-to-agent-override',
       promise: assignMemberToAgent({
         agentId: id as string,
-        data: getValues(),
+        data: values?.accountId?.map((acc) => acc?.value),
         override: true,
       }),
       msgs: {
@@ -90,7 +95,7 @@ export const AddMemberModal = ({
   };
 
   const handleClose = () => {
-    reset({ memberId: '', accountId: '' });
+    reset({ memberId: '', accountId: [] });
     onClose();
   };
 
@@ -117,6 +122,7 @@ export const AddMemberModal = ({
               memberId={memberId}
               filterBy={ObjState.Active}
               menuPosition="fixed"
+              isMulti
             />
           </Box>
         </FormProvider>

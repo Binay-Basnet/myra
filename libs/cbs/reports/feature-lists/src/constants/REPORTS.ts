@@ -58,6 +58,7 @@ export enum Report {
   INTEREST_TAX_REPORT = 'Interest Tax Report',
   ACCOUNT_OPENING_REPORT = 'Opened Account Report',
   ACCOUNT_CLOSING_REPORT = 'Closed Account Report',
+  ACCOUNT_LOCKED_STATUS_REPORT = 'Account Locked Status Report',
   SAVINGS_FD_MATURE_REPORT = 'Fixed Deposit Maturity Report',
   SAVING_PRODUCT_BALANCE_REPORT = 'Saving Product Wise Balance Report',
   CLOSED_SAVING_ACCOUNT_STATEMENT = 'Closed Saving Account Statement',
@@ -79,6 +80,7 @@ export enum Report {
   LOAN_PERSONAL_GURANTEE_REPORT = 'Personal Guarantee Report',
   LOAN_TRANSACTION_STATEMENT_REPORT = 'Loan Account Statement Report',
   LOAN_WRITE_OFF_REPORT = 'Loan write off report',
+  LOAN_DISBURSEMENT_REPORT = 'Loan Disbursement Report',
   LOAN_PRE_INFORM_REPORT = 'Loan pre-inform report',
   LOAN_APPROVAL_REPORT_REJECT = 'Loan Approval Report / Reject Report',
   LOAN_FOLLOWUP_REPORT = 'Loan Followup report',
@@ -289,6 +291,11 @@ export const REPORTS = {
     },
     {
       id: '5.2.e',
+      report: Report.ACCOUNT_LOCKED_STATUS_REPORT,
+      link: 'locked-status',
+    },
+    {
+      id: '5.2.e',
       report: Report.ACCOUNT_CLOSING_REPORT,
       link: 'account-closing',
     },
@@ -466,6 +473,11 @@ export const REPORTS = {
       id: '6.16',
       report: Report.CLOSED_LOAN_ACCOUNT_STATEMENT,
       link: 'closed-loan-account-statement',
+    },
+    {
+      id: '6.16',
+      report: Report.LOAN_DISBURSEMENT_REPORT,
+      link: 'disbursement',
     },
     {
       id: '14.2.5.a',

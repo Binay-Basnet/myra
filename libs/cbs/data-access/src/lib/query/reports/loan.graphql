@@ -541,3 +541,23 @@ query getLoanTransactionReport($data: LoanStatementReportSettings!) {
     }
   }
 }
+
+query getLoanDisbursmentReport($data: LoanDisbursementReportFilter!) {
+  report {
+    loanReport {
+      loanDisbursementReport(data: $data) {
+        data {
+          memberId
+          memberName
+          loanAccountId
+          productName
+          disbursedDate
+          totalSactionedLoanAmount
+          interestRate
+          nomineeAccount
+          memberCode
+        }
+      }
+    }
+  }
+}

@@ -45,7 +45,7 @@ export const JournalVouchersTable = () => {
   const { data: accountList, isFetching } = useGetLedgerForJvPostingQuery({
     pagination: {
       after: '',
-      first: 10,
+      first: 50,
     },
     filter: {
       name: searchTerm,
