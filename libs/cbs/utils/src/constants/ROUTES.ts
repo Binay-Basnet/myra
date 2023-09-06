@@ -501,7 +501,7 @@ export const ROUTES = {
 
   HR_RECRUITMENT_STAFF_PLANNING_DETAIL: '/hr/recruitment/staff-planning/detail',
   HR_RECRUITMENT_JOB_OPENING_DETAIL: '/hr/recruitment/job-opening/detail',
-
+  HR_RECRUITMENT_JOB_APPLICATION_DETAIL: '/hr/recruitment/job-application/detail',
 
   HR_RECRUITMENT_STAFF_PLANNING_EDIT: '/hr/recruitment/staff-planning/edit',
   HR_RECRUITMENT_JOB_OPENING_EDIT: '/hr/recruitment/job-opening/edit',

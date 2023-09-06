@@ -6723,6 +6723,24 @@ export type EmployeeExits = {
   node: EmployeeExitListed;
 };
 
+export type EmployeeFeedbackConnection = {
+  edges?: Maybe<Array<Maybe<EmployeeFeedbackEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type EmployeeFeedbackEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<EmployeeFeedbackListed>;
+};
+
+export type EmployeeFeedbackListed = {
+  employee?: Maybe<Scalars['String']>;
+  feedbackType?: Maybe<HrEmployeeFeedbackType>;
+  id?: Maybe<Scalars['ID']>;
+  submittedOn?: Maybe<Scalars['Localized']>;
+};
+
 export type EmployeeHealthInsurance = {
   healthInsuranceNumber: Scalars['String'];
   healthInsuranceProvider: Scalars['String'];
@@ -6950,6 +6968,20 @@ export type EmployeeResultResponseType = {
 export type EmployeeReturnResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type EmployeeSeparationDetails = {
+  designation?: Maybe<Scalars['String']>;
+  documents?: Maybe<Array<Maybe<UploadedDocument>>>;
+  employeeName?: Maybe<Scalars['String']>;
+  joiningDate?: Maybe<Scalars['Localized']>;
+  resignationLetterDate?: Maybe<Scalars['Localized']>;
+  separationType?: Maybe<SeparationTypeEnum>;
+};
+
+export type EmployeeSeparationDetailsWithError = {
+  data?: Maybe<EmployeeSeparationDetails>;
+  error?: Maybe<QueryError>;
 };
 
 export type EmployeeSeparationInput = {
@@ -7569,6 +7601,17 @@ export type FamilyMemberDetails = {
   dob?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
   relationship?: Maybe<Scalars['String']>;
+};
+
+export type FeedbackDetails = {
+  employee?: Maybe<Scalars['String']>;
+  feedbackType?: Maybe<HrEmployeeFeedbackType>;
+  message?: Maybe<Scalars['String']>;
+};
+
+export type FeedbackDetailsWithError = {
+  data?: Maybe<FeedbackDetails>;
+  error?: Maybe<QueryError>;
 };
 
 export type FianancialTransactionReport = {
@@ -9032,6 +9075,20 @@ export type HrEmployeeAttendanceQueryListDetailsOfDayArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type HrEmployeeFeedbackQuery = {
+  getFeedbackDetails: FeedbackDetailsWithError;
+  listEmployeeFeedbacks: EmployeeFeedbackConnection;
+};
+
+export type HrEmployeeFeedbackQueryGetFeedbackDetailsArgs = {
+  feedbackId?: InputMaybe<Scalars['ID']>;
+};
+
+export type HrEmployeeFeedbackQueryListEmployeeFeedbacksArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type HrEmployeeKyeMutation = {
   upsertEmployee: EmployeeReturnResult;
 };
@@ -9117,8 +9174,15 @@ export type HrEmployeeLeaveQueryListLeaveArgs = {
 };
 
 export type HrEmployeeLifecycleEmployeeOnboardingMutation = {
+  updateEmployeeOnboardingStatusFromJobApplication: UpdatedOrNotWithError;
   upsertEmployeeOnboarding: ReturnEmployeeOnboarding;
 };
+
+export type HrEmployeeLifecycleEmployeeOnboardingMutationUpdateEmployeeOnboardingStatusFromJobApplicationArgs =
+  {
+    jobApplicationId?: InputMaybe<Scalars['ID']>;
+    status?: InputMaybe<OnboardingStatus>;
+  };
 
 export type HrEmployeeLifecycleEmployeeOnboardingMutationUpsertEmployeeOnboardingArgs = {
   id?: InputMaybe<Scalars['ID']>;
@@ -9127,12 +9191,18 @@ export type HrEmployeeLifecycleEmployeeOnboardingMutationUpsertEmployeeOnboardin
 
 export type HrEmployeeLifecycleEmployeeOnboardingQuery = {
   getEmployeeOnboarding: EachEmployeeOnboardingRecord;
+  getOnboardingActivityDetailsFromJobApplication: OnboardingActivityDetailsWithError;
   listEmployeeOnboarding: EmployeeOnboardingConnection;
 };
 
 export type HrEmployeeLifecycleEmployeeOnboardingQueryGetEmployeeOnboardingArgs = {
   id: Scalars['ID'];
 };
+
+export type HrEmployeeLifecycleEmployeeOnboardingQueryGetOnboardingActivityDetailsFromJobApplicationArgs =
+  {
+    jobApplicationId: Scalars['ID'];
+  };
 
 export type HrEmployeeLifecycleEmployeeOnboardingQueryListEmployeeOnboardingArgs = {
   filter?: InputMaybe<Filter>;
@@ -9148,8 +9218,13 @@ export type HrEmployeeLifecycleEmployeeTransferMutationInsertEmployeeTransferArg
 };
 
 export type HrEmployeeLifecycleEmployeeTransferQuery = {
+  getTransferDetails?: Maybe<TransferDetailsWithError>;
   listEmployeeTransfer: EmployeeTransferConnection;
   queryEmployeeTransfer?: Maybe<EachTransferRecord>;
+};
+
+export type HrEmployeeLifecycleEmployeeTransferQueryGetTransferDetailsArgs = {
+  transferId: Scalars['ID'];
 };
 
 export type HrEmployeeLifecycleEmployeeTransferQueryListEmployeeTransferArgs = {
@@ -9226,7 +9301,12 @@ export type HrEmployeeLifecycleSeparationMutationAddEmployeeSeparationArgs = {
 };
 
 export type HrEmployeeLifecycleSeparationQuery = {
+  getEmployeeSeparationDetails: EmployeeSeparationDetailsWithError;
   listEmployeeSeparation: HrEmployeeSeparationConnection;
+};
+
+export type HrEmployeeLifecycleSeparationQueryGetEmployeeSeparationDetailsArgs = {
+  employeeSeparationId: Scalars['ID'];
 };
 
 export type HrEmployeeLifecycleSeparationQueryListEmployeeSeparationArgs = {
@@ -9266,6 +9346,7 @@ export type HrEmployeePromotionEdges = {
 export type HrEmployeeQuery = {
   employee: HrEmployeeKyeQuery;
   hrEmployeeAttendanceQuery: HrEmployeeAttendanceQuery;
+  hrEmployeeFeedbackQuery: HrEmployeeFeedbackQuery;
   leave: HrEmployeeLeaveQuery;
   leaveAllocation: HrEmployeeLeaveAllocationQuery;
 };
@@ -9610,6 +9691,13 @@ export type HrEmployeeEducationDetailType = {
   specialization?: Maybe<Scalars['String']>;
 };
 
+export const HrEmployeeFeedbackType = {
+  Complaint: 'COMPLAINT',
+  Feedback: 'FEEDBACK',
+} as const;
+
+export type HrEmployeeFeedbackType =
+  typeof HrEmployeeFeedbackType[keyof typeof HrEmployeeFeedbackType];
 export type HrEmployeeLeaveAllocationMutation = {
   upsertLeaveAllocation: LeaveAllocationReturn;
 };
@@ -17559,6 +17647,11 @@ export const OfficialUseRiskCategory = {
 
 export type OfficialUseRiskCategory =
   typeof OfficialUseRiskCategory[keyof typeof OfficialUseRiskCategory];
+export type OnboardingActivityDetailsWithError = {
+  data?: Maybe<Array<Maybe<Activity>>>;
+  error?: Maybe<QueryError>;
+};
+
 export const OnboardingStatus = {
   Completed: 'COMPLETED',
   Draft: 'DRAFT',
@@ -22044,6 +22137,22 @@ export type TransferDetailViewResult = {
   error?: Maybe<QueryError>;
 };
 
+export type TransferDetails = {
+  designation?: Maybe<Scalars['String']>;
+  employee?: Maybe<Scalars['String']>;
+  joiningDate?: Maybe<Scalars['Localized']>;
+  newType?: Maybe<Scalars['String']>;
+  previousType?: Maybe<Scalars['String']>;
+  transferDate?: Maybe<Scalars['Localized']>;
+  transferType?: Maybe<EmployeeTransferType>;
+  transferedBy?: Maybe<Scalars['String']>;
+};
+
+export type TransferDetailsWithError = {
+  data?: Maybe<TransferDetails>;
+  error?: Maybe<QueryError>;
+};
+
 export type TransferFilterMapping = {
   type: Array<LabelValueArray>;
 };
@@ -22194,6 +22303,11 @@ export type UpdateDormancyInput = {
 export type UpdateLedgerResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['ID']>;
+};
+
+export type UpdatedOrNotWithError = {
+  error?: Maybe<MutationError>;
+  updatedOrNot?: Maybe<Scalars['Boolean']>;
 };
 
 export type UploadedDocument = {
@@ -23073,12 +23187,14 @@ export const ApplicantStatus = {
 
 export type ApplicantStatus = typeof ApplicantStatus[keyof typeof ApplicantStatus];
 export type BranchTransferDetails = {
+  id?: Maybe<Scalars['ID']>;
   transferDate?: Maybe<Scalars['Localized']>;
   transferredFrom?: Maybe<Scalars['String']>;
   transferredTo?: Maybe<Scalars['String']>;
 };
 
 export type DepartTransferDetails = {
+  id?: Maybe<Scalars['ID']>;
   transferredDate?: Maybe<Scalars['Localized']>;
   transferredFrom?: Maybe<Scalars['String']>;
   transferredTo?: Maybe<Scalars['String']>;
@@ -33145,6 +33261,114 @@ export type GetJobOpeningOverviewQuery = {
             defaulAmount?: string | null;
             minimumAmount?: string | null;
             maximumAmount?: string | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetJobApplicationOverviewQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetJobApplicationOverviewQuery = {
+  hr: {
+    recruitment: {
+      recruitmentJobApplication: {
+        getJobApplicationOverview: {
+          data?: {
+            phoneNumber?: string | null;
+            emailAddress?: string | null;
+            nameOfApplicant?: string | null;
+            applicationId?: string | null;
+            jobPosting?: string | null;
+            designation?: string | null;
+            department?: string | null;
+            applicationRating?: number | null;
+            permanentAddress?: {
+              province?: string | null;
+              district?: string | null;
+              localGovernment?: string | null;
+              wardNo?: string | null;
+              locality?: string | null;
+              houseNo?: string | null;
+            } | null;
+            temporaryAddress?: {
+              province?: string | null;
+              district?: string | null;
+              localGovernment?: string | null;
+              wardNo?: string | null;
+              locality?: string | null;
+              houseNo?: string | null;
+            } | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetJobApplicationJobOfferQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetJobApplicationJobOfferQuery = {
+  hr: {
+    recruitment: {
+      recruitmentJobApplication: {
+        getJobApplicationJobOffer: {
+          data?: {
+            nameOfapplicant?: string | null;
+            applicationId?: string | null;
+            offerDate?: Record<'local' | 'en' | 'np', string> | null;
+            designation?: string | null;
+            department?: string | null;
+            email?: string | null;
+            jobOfferTerms?: Array<{ offerTerm: string; value: string } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetJobApplicationAppointmentLetterQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetJobApplicationAppointmentLetterQuery = {
+  hr: {
+    recruitment: {
+      recruitmentJobApplication: {
+        getJobApplicationAppointmentLetter: {
+          data?: {
+            jobApplicant?: string | null;
+            applicationDate?: Record<'local' | 'en' | 'np', string> | null;
+            offerDate?: Record<'local' | 'en' | 'np', string> | null;
+            designation?: string | null;
+            department?: string | null;
+            email?: string | null;
+            body?: string | null;
+            terms?: Array<{ sn: string; title: string; description: string } | null> | null;
           } | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -59227,6 +59451,146 @@ export const useGetJobOpeningOverviewQuery = <TData = GetJobOpeningOverviewQuery
     useAxios<GetJobOpeningOverviewQuery, GetJobOpeningOverviewQueryVariables>(
       GetJobOpeningOverviewDocument
     ).bind(null, variables),
+    options
+  );
+export const GetJobApplicationOverviewDocument = `
+    query getJobApplicationOverview($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobApplication {
+        getJobApplicationOverview(id: $id) {
+          data {
+            phoneNumber
+            emailAddress
+            nameOfApplicant
+            applicationId
+            jobPosting
+            designation
+            department
+            permanentAddress {
+              province
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+            }
+            temporaryAddress {
+              province
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+            }
+            applicationRating
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetJobApplicationOverviewQuery = <
+  TData = GetJobApplicationOverviewQuery,
+  TError = unknown
+>(
+  variables: GetJobApplicationOverviewQueryVariables,
+  options?: UseQueryOptions<GetJobApplicationOverviewQuery, TError, TData>
+) =>
+  useQuery<GetJobApplicationOverviewQuery, TError, TData>(
+    ['getJobApplicationOverview', variables],
+    useAxios<GetJobApplicationOverviewQuery, GetJobApplicationOverviewQueryVariables>(
+      GetJobApplicationOverviewDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetJobApplicationJobOfferDocument = `
+    query getJobApplicationJobOffer($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobApplication {
+        getJobApplicationJobOffer(id: $id) {
+          data {
+            nameOfapplicant
+            applicationId
+            offerDate
+            designation
+            department
+            email
+            jobOfferTerms {
+              offerTerm
+              value
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetJobApplicationJobOfferQuery = <
+  TData = GetJobApplicationJobOfferQuery,
+  TError = unknown
+>(
+  variables: GetJobApplicationJobOfferQueryVariables,
+  options?: UseQueryOptions<GetJobApplicationJobOfferQuery, TError, TData>
+) =>
+  useQuery<GetJobApplicationJobOfferQuery, TError, TData>(
+    ['getJobApplicationJobOffer', variables],
+    useAxios<GetJobApplicationJobOfferQuery, GetJobApplicationJobOfferQueryVariables>(
+      GetJobApplicationJobOfferDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetJobApplicationAppointmentLetterDocument = `
+    query getJobApplicationAppointmentLetter($id: ID!) {
+  hr {
+    recruitment {
+      recruitmentJobApplication {
+        getJobApplicationAppointmentLetter(id: $id) {
+          data {
+            jobApplicant
+            applicationDate
+            offerDate
+            designation
+            department
+            email
+            body
+            terms {
+              sn
+              title
+              description
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetJobApplicationAppointmentLetterQuery = <
+  TData = GetJobApplicationAppointmentLetterQuery,
+  TError = unknown
+>(
+  variables: GetJobApplicationAppointmentLetterQueryVariables,
+  options?: UseQueryOptions<GetJobApplicationAppointmentLetterQuery, TError, TData>
+) =>
+  useQuery<GetJobApplicationAppointmentLetterQuery, TError, TData>(
+    ['getJobApplicationAppointmentLetter', variables],
+    useAxios<
+      GetJobApplicationAppointmentLetterQuery,
+      GetJobApplicationAppointmentLetterQueryVariables
+    >(GetJobApplicationAppointmentLetterDocument).bind(null, variables),
     options
   );
 export const GetKymOverallFormStatusDocument = `

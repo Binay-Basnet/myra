@@ -2,6 +2,7 @@ export * from './lib/appointment-letter/hr-recruitment-appointment-letter-add';
 export * from './lib/appointment-letter/hr-recruitment-appointment-letter-list';
 export * from './lib/job-application/hr-recruitment-job-application-add';
 export * from './lib/job-application/hr-recruitment-job-application-list';
+export * from './lib/job-application/JobApplicationDetails';
 export * from './lib/job-offer/hr-recruitment-job-offer-add';
 export * from './lib/job-offer/hr-recruitment-job-offer-list';
 export * from './lib/job-opening/hr-recruitment-job-opening-add';
