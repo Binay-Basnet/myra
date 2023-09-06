@@ -1,4 +1,5 @@
-import React, { Fragment, Reducer, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { Fragment, Reducer, useEffect, useMemo, useReducer, useState } from 'react';
 import { BsChevronRight } from 'react-icons/bs';
 import { IoAdd, IoCloseCircleOutline } from 'react-icons/io5';
 import { useDeepCompareEffect } from 'react-use';
@@ -16,21 +17,20 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 import {
-  AsyncSelect,
-  chakraComponents,
-  GroupBase,
-  Select,
-  SelectInstance,
-} from 'chakra-react-select';
+  AutoComplete,
+  AutoCompleteInput,
+  AutoCompleteItem,
+  AutoCompleteList,
+} from '@choc-ui/chakra-autocomplete';
+import { AsyncSelect, chakraComponents, Select } from 'chakra-react-select';
 import _, { debounce, uniqueId } from 'lodash';
 
-import { Checkbox, Collapse, Grid, GridItem, SelectOption, SwitchTabs } from '@myra-ui';
+import { Checkbox, Collapse, Grid, GridItem, SwitchTabs } from '@myra-ui';
 import { DatePicker } from '@myra-ui/date-picker';
 
 import { useAppSelector } from '@coop/cbs/data-access';
 
-import { chakraDefaultStyles, getSearchBarStyle } from '../utils/ChakraSelectTheme';
-import { getComponents } from '../utils/SelectComponents';
+import { chakraDefaultStyles } from '../utils/ChakraSelectTheme';
 
 export const isArrayEqual = <T,>(x: T[], y: T[]) => _(x).xorWith(y, _.isEqual).isEmpty();
 
@@ -530,36 +530,22 @@ const EditableSearch = <T extends RecordWithId & Record<string, EditableValue>>(
   searchPlaceholder,
   dispatch,
 }: EditableSearchProps<T>) => {
-  const ref = useRef<SelectInstance<SelectOption, boolean, GroupBase<SelectOption>> | null>(null);
+  const [searchValue, setSearchValue] = useState('');
 
   const searchColumn = useMemo(() => columns.find((column) => column.searchOptions), [columns]);
 
-  useEffect(() => {
-    ref.current?.inputRef?.focus();
-  }, [searchColumn?.searchOptions]);
+  const debouncedSearch = debounce((e) => {
+    columns.find((column) => column.searchCallback)?.searchCallback?.(e.target.value);
+  }, 800);
 
   return (
-    <Select
-      ref={ref}
-      components={getComponents(
-        searchColumn?.addItemHandler,
-        searchColumn?.addItemLabel,
-        `Search-Select`
-      )}
-      autoFocus
-      value=""
-      placeholder={searchPlaceholder ?? 'Search for items'}
-      options={searchColumn?.searchOptions}
-      chakraStyles={getSearchBarStyle(!!searchColumn?.addItemHandler)}
-      data-testid={searchColumn?.accessorFn}
-      filterOption={() => true}
+    <AutoComplete
+      openOnFocus
+      disableFilter
+      isOpen
+      emptyState={false}
       isLoading={searchColumn?.searchLoading}
-      onInputChange={debounce((id) => {
-        if (id) {
-          columns.find((column) => column.searchCallback)?.searchCallback?.(id);
-        }
-      }, 800)}
-      onChange={(newValue) => {
+      onSelectOption={({ item: newValue }: any) => {
         dispatch({
           type: EditableTableActionKind.ADD,
           payload: columns.reduce(
@@ -568,8 +554,8 @@ const EditableSearch = <T extends RecordWithId & Record<string, EditableValue>>(
                 ? {
                     ...o,
                     [key.accessor]: {
-                      value: newValue.value,
                       label: newValue.label,
+                      value: newValue.value,
                     },
                   }
                 : {
@@ -580,8 +566,56 @@ const EditableSearch = <T extends RecordWithId & Record<string, EditableValue>>(
           ) as T,
         });
       }}
-      isDisabled={searchColumn?.getDisabled && searchColumn?.getDisabled({} as T)}
-    />
+    >
+      <AutoCompleteInput
+        bg="white"
+        loadingIcon={null}
+        _hover={{ bg: 'gray.50' }}
+        _focus={{ bg: 'gray.50' }}
+        borderTopRadius={0}
+        height="36px"
+        placeholder={searchPlaceholder || 'Search'}
+        value={searchValue}
+        onChange={(e: any) => {
+          setSearchValue(e.target.value);
+          debouncedSearch(e);
+        }}
+        variant="filled"
+      />
+
+      <AutoCompleteList
+        border="1px"
+        borderColor="border.layout"
+        mt="-6px"
+        boxShadow="none"
+        fontSize="r1"
+        fontStyle="unset"
+        fontWeight={500}
+      >
+        {(!searchColumn?.searchOptions || searchColumn?.searchOptions?.length === 0) && (
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            py="s24"
+            fontSize="r1"
+            color="gray.400"
+          >
+            No Options Found !!!
+          </Box>
+        )}
+        {searchColumn?.searchOptions?.map((option) => (
+          <AutoCompleteItem
+            key={option.value}
+            label={option.label}
+            value={option.value}
+            textTransform="capitalize"
+          >
+            {option.label}
+          </AutoCompleteItem>
+        ))}
+      </AutoCompleteList>
+    </AutoComplete>
   );
 };
 

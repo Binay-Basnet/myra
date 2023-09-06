@@ -1,13 +1,7 @@
-import { useEffect, useRef } from 'react';
 import { IoSearch } from 'react-icons/io5';
 import { AddIcon } from '@chakra-ui/icons';
 import { Box, Icon, Text } from '@chakra-ui/react';
-import {
-  chakraComponents,
-  GroupBase,
-  InputProps,
-  SelectComponentsConfig,
-} from 'chakra-react-select';
+import { chakraComponents, GroupBase, SelectComponentsConfig } from 'chakra-react-select';
 
 export interface Option {
   label: string | number;
