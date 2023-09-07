@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-import { Box, PageHeader } from '@myra-ui';
+import { Box, PageHeader, Scrollable } from '@myra-ui';
 
 import { ReportsInnerSidebar } from '../components/ReportsInnerSidebar';
 
@@ -51,14 +51,15 @@ export const ReportsAccountingLayout = ({ children }: ReportsCbsLayoutProps) => 
           </Box>
         </Box>
       )}
-
-      <Box
-        ml={router.query['objState'] !== 'table-view' ? '250px' : '0'}
-        bg="white"
-        minH="calc(100vh-110px)"
-      >
-        {children}
-      </Box>
+      <Scrollable detailPage>
+        <Box
+          ml={router.query['objState'] !== 'table-view' ? '250px' : '0'}
+          bg="white"
+          minH="calc(100vh-110px)"
+        >
+          {children}
+        </Box>
+      </Scrollable>
     </>
   );
 };
