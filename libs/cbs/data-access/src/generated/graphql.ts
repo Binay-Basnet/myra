@@ -39954,6 +39954,9 @@ export type GetMrTransactionReportQuery = {
             typeOfTransaction?: MrTransactionFilter | null;
             amount?: string | null;
           } | null> | null;
+          summary?: {
+            totalAmount?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          } | null;
           error?:
             | QueryError_AuthorizationError_Fragment
             | QueryError_BadRequestError_Fragment
@@ -68084,6 +68087,12 @@ export const GetMrTransactionReportDocument = `
             accountName
             typeOfTransaction
             amount
+          }
+          summary {
+            totalAmount {
+              amount
+              amountType
+            }
           }
           error {
             ...QueryError
