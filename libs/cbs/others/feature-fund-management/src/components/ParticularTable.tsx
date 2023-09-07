@@ -39,7 +39,7 @@ export const ParticularTable = () => {
       accessor: 'thisYear',
       header: 'This Year',
       isNumeric: true,
-      getDisabled: () => true,
+      // getDisabled: () => true,
       accessorFn: (row) => ((Number(row.percent) / 100) * Number(netProfit) || 0).toFixed(2),
     },
     {

@@ -25,6 +25,9 @@ export type CustomFundManagementInput = Omit<
   FundManagementInput,
   'generalReserveFund' | 'otherFunds'
 > & {
+  grossProfit: number;
+  grossProfitCoa: string;
+  grossProfitDr: string;
   generalReserveFund: ParticularTableType[];
   distributionTable: DistributionTableType[];
   otherFunds: OtherFundDistributionTableType[];

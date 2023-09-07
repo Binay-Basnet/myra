@@ -23,7 +23,7 @@ import {
 } from '@coop/cbs/data-access';
 import { findQueryError, getQueryError, QueryError, ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
-import { featureCode } from '@coop/shared/utils';
+import { debitCreditConverter, featureCode } from '@coop/shared/utils';
 
 import { CustomFundManagementInput } from './type';
 import {
@@ -69,23 +69,65 @@ export const NewFundManagement = () => {
     { enabled: !!id }
   );
 
+  const { data: currentFundAmountHOData } = useGetCurrentFundAmountQuery({ forHeadOffice: true });
+
+  const currentFundAmount = currentFundAmountHOData?.profitToFundManagement?.getCurrentFundAmount;
+
   useEffect(() => {
     if (editData?.profitToFundManagement?.get?.record) {
       const formData = editData?.profitToFundManagement?.get?.record;
 
-      // const profitBeforeTax = (grossProfit - (staffBonusFund / 100) * grossProfit || 0).toFixed(2);
+      const grossProfit = Number(currentFundAmount?.amount?.amount || 0);
 
-      // const netProfit = (formData?. profitBeforeTax - (incomeTax / 100) * profitBeforeTax || 0).toFixed(2);
+      const staffBonusFund = Number(formData?.staffBonusFund);
+
+      const profitBeforeTax = Number(
+        (grossProfit - (staffBonusFund / 100) * grossProfit || 0).toFixed(2)
+      );
+
+      const incomeTax = Number(formData?.incomeTax || 0);
+
+      const netProfit = Number(
+        (profitBeforeTax - (incomeTax / 100) * profitBeforeTax || 0).toFixed(2)
+      );
+
+      const generalReserveFundPercent = Number(formData?.generalReserveFund || 0);
+
+      const generalReserveFund = Number(
+        ((generalReserveFundPercent / 100) * Number(netProfit) || 0).toFixed(2)
+      );
+
+      const remainingProfit = netProfit && generalReserveFund ? netProfit - generalReserveFund : 0;
+
+      const patronageRefundFundPercent = Number(formData?.patronageRefundFund || 0);
+
+      const patronageRefundFund = Number(
+        ((patronageRefundFundPercent / 100) * remainingProfit).toFixed(2)
+      );
+
+      const cooperativePromotionFundPercent = Number(formData?.cooperativePromotionFund || 0);
+
+      const cooperativePromotionFund = Number(
+        ((cooperativePromotionFundPercent / 100) * remainingProfit).toFixed(2)
+      );
+
+      const finalRemainingProfit = remainingProfit - patronageRefundFund - cooperativePromotionFund;
 
       reset({
         ...methods.getValues(),
+        grossProfit,
+        grossProfitCoa: `${currentFundAmount?.coaHead} - ${currentFundAmount?.coaHeadName}`,
+        grossProfitDr: debitCreditConverter(
+          currentFundAmount?.amount?.amount as string,
+          currentFundAmount?.amount?.amountType as string
+        ),
         staffBonusFund: formData?.staffBonusFund,
         incomeTax: formData?.incomeTax,
         generalReserveFund: [
           {
             particular: '20.1 General Reserve Fund',
             percent: Number(formData?.generalReserveFund || 0),
-            thisYear: 0,
+            thisYear: generalReserveFund,
             // lastYear: Number(generalReserveFundAmount ?? 0),
             lastYear: 0,
           },
@@ -94,14 +136,14 @@ export const NewFundManagement = () => {
           {
             distribution: '20.2 Patronage Refund Fund',
             percent: Number(formData?.patronageRefundFund || 0),
-            // thisYear: 0,
+            thisYear: patronageRefundFund,
             // lastYear: Number(patronageRefundFundAmount ?? 0),
             lastYear: 0,
           },
           {
             distribution: '20.3 Cooperative Promotion Fund',
             percent: Number(formData?.cooperativePromotionFund || 0),
-            // thisYear: 0,
+            thisYear: cooperativePromotionFund,
             // lastYear: Number(cooperativePromotionFundAmount ?? 0),
             lastYear: 0,
           },
@@ -113,10 +155,11 @@ export const NewFundManagement = () => {
           } as unknown as string,
           // accountCode: other?.accountCode,
           percent: other?.percent as number,
+          thisYear: Number(((Number(other?.percent || 0) / 100) * finalRemainingProfit).toFixed(2)),
         })),
       });
     }
-  }, [editData]);
+  }, [editData, currentFundAmount]);
 
   const isSubmitDisabled = useMemo(() => {
     if (
@@ -201,6 +244,8 @@ export const NewFundManagement = () => {
       : '';
   }, [branchFundAmount]);
 
+  const netProfitField = watch('netProfit');
+
   return (
     <>
       <FormLayout methods={methods}>
@@ -217,19 +262,24 @@ export const NewFundManagement = () => {
               <Box p="s20">
                 <Alert status="error" title={currentFundError as string} hideCloseIcon />
               </Box>
-            ) : Number(branchFundAmount?.amount?.amount) !== 0 ? (
+            ) : Number(branchFundAmount?.amount?.amount) === 0 ? (
               <TransferPLtoHO />
             ) : (
               <>
                 <BasicFundManagement />
 
-                <FormSection header="Appropriation of Profit (Profit Distribution)" divider={false}>
-                  <ParticularTable />
+                {Number(netProfitField) ? (
+                  <FormSection
+                    header="Appropriation of Profit (Profit Distribution)"
+                    divider={false}
+                  >
+                    <ParticularTable />
 
-                  <DistributionTable />
+                    <DistributionTable />
 
-                  <OtherFundDistributionTable />
-                </FormSection>
+                    <OtherFundDistributionTable />
+                  </FormSection>
+                ) : null}
               </>
             )}
 
