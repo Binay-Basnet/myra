@@ -28,7 +28,11 @@ export const LedgerTab = () => {
           Add New Ledger
         </Button>
 
-        <AddAccountModal clickedAccount={leafNodeData as CoaTree} modalProps={modalProps} />
+        <AddAccountModal
+          clickedAccount={leafNodeData as CoaTree}
+          modalProps={modalProps}
+          clickedAccountName={leafNodeData?.accountName?.local as string}
+        />
       </Box>
 
       <LedgerTabList />

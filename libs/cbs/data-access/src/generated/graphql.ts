@@ -4779,7 +4779,6 @@ export type DataMigration = {
   allLoanSchedule?: Maybe<Scalars['String']>;
   dumpAccountInterest?: Maybe<Scalars['String']>;
   dumpProductCharges?: Maybe<Scalars['String']>;
-  loanPennySweep?: Maybe<MutationResult>;
   reseedRepayment?: Maybe<MutationResult>;
   updateSavingEndDate?: Maybe<Scalars['String']>;
 };
@@ -20463,7 +20462,6 @@ export type SetupQuery = {
   eodAction?: Maybe<EodAction>;
   eodException?: Maybe<EodException>;
   eodSeed?: Maybe<Scalars['Localized']>;
-  getSweepableLedgers: UtilityLedgerSetupInputResult;
   getUtilityLedgerSetup: UtilityLedgerSetupInputResult;
 };
 
@@ -21371,11 +21369,6 @@ export const SuspiciousTransactionTopology = {
 
 export type SuspiciousTransactionTopology =
   typeof SuspiciousTransactionTopology[keyof typeof SuspiciousTransactionTopology];
-export type SweepableLedgers = {
-  balance?: Maybe<BalanceValue>;
-  ledgerID?: Maybe<Scalars['String']>;
-};
-
 export type SwitchGuaranteeInput = {
   accountID: Scalars['ID'];
   guaranteeAmount: Scalars['String'];

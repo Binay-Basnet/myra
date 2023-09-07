@@ -18,10 +18,15 @@ import { CoaTree } from '../../types';
 
 interface IAddAccountProps {
   clickedAccount: CoaTree | null;
+  clickedAccountName: string;
   modalProps: UseDisclosureReturn;
 }
 
-export const AddAccountModal = ({ clickedAccount, modalProps }: IAddAccountProps) => {
+export const AddAccountModal = ({
+  clickedAccount,
+  clickedAccountName,
+  modalProps,
+}: IAddAccountProps) => {
   const methods = useForm<{
     accountSetup: CoaAccountSetup;
     parentAccountCode: string;
@@ -44,8 +49,8 @@ export const AddAccountModal = ({ clickedAccount, modalProps }: IAddAccountProps
   }, [isAccountOpenForSelectedBranch]);
 
   useEffect(() => {
-    methods.setValue('ledgerName', clickedAccount?.name?.local ?? '');
-  }, [clickedAccount]);
+    methods.setValue('ledgerName', clickedAccountName ?? '');
+  }, [clickedAccountName]);
 
   return (
     <Modal
