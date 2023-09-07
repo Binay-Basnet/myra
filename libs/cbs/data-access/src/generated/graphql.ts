@@ -10272,6 +10272,7 @@ export type InterestTaxReportEntry = {
   closingBalance?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   interest?: Maybe<Scalars['String']>;
+  journalId?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['Localized']>;
@@ -20615,7 +20616,9 @@ export type ShareDividendSettingsResult = {
 export type ShareDividendSummary = {
   DestinationAccount?: Maybe<Scalars['String']>;
   Error?: Maybe<Scalars['String']>;
+  MemberCode?: Maybe<Scalars['String']>;
   MemberID?: Maybe<Scalars['String']>;
+  MemberName?: Maybe<Scalars['String']>;
   SavingAmount?: Maybe<Scalars['String']>;
   ShareCount?: Maybe<Scalars['Int']>;
   TotalAmount?: Maybe<Scalars['String']>;
