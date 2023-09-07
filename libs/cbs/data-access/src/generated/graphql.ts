@@ -221,6 +221,7 @@ export type AccountCloseSuccessCard = {
   closeReason?: Maybe<Scalars['String']>;
   interest?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<Scalars['String']>;
+  tax?: Maybe<Scalars['String']>;
 };
 
 export type AccountClosingReport = {
@@ -23664,6 +23665,7 @@ export type SetAccountCloseDataMutation = {
         charges?: string | null;
         paymentMode?: string | null;
         closeReason?: string | null;
+        tax?: string | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -46138,6 +46140,7 @@ export const SetAccountCloseDataDocument = `
         charges
         paymentMode
         closeReason
+        tax
       }
       error {
         ...MutationError

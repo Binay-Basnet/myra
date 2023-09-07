@@ -720,6 +720,11 @@ export const CbsAccountClose = () => {
               promise={() => mutateAsync({ data: handleSubmit() })}
               successCardProps={(response) => {
                 const result = response?.account?.close?.record;
+                const principal =
+                  Number(result?.amount || 0) +
+                  Number(result?.charges || 0) +
+                  Number(result?.tax || 0) -
+                  Number(result?.interest);
 
                 return {
                   type: 'Saving Account Close',
@@ -735,7 +740,10 @@ export const CbsAccountClose = () => {
                     'Account Closed Date': localizedDate(result?.accCloseDate),
                     'Reason For Closing': result?.closeReason,
                     'Account Name': result?.accName,
+                    Principal: amountConverter(principal),
                     'Total Interest': result?.interest,
+
+                    Tax: amountConverter(result?.tax || '0'),
                     Charges: result?.charges,
 
                     'Payment Mode': result?.paymentMode,
