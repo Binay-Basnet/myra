@@ -4779,6 +4779,7 @@ export type DataMigration = {
   allLoanSchedule?: Maybe<Scalars['String']>;
   dumpAccountInterest?: Maybe<Scalars['String']>;
   dumpProductCharges?: Maybe<Scalars['String']>;
+  loanPennySweep?: Maybe<MutationResult>;
   reseedRepayment?: Maybe<MutationResult>;
   updateSavingEndDate?: Maybe<Scalars['String']>;
 };
@@ -9474,7 +9475,19 @@ export type HrRecruitmentAppointmentLetterQueryListAppointmentLetterArgs = {
 };
 
 export type HrRecruitmentJobApplicationMutation = {
+  updateJobApplicationStatus: UpdatedOrNotWithError;
+  updateJobOfferStatusFromJobApplication: UpdatedOrNotWithError;
   upsertJobApplication: ReturnJobApplication;
+};
+
+export type HrRecruitmentJobApplicationMutationUpdateJobApplicationStatusArgs = {
+  input?: InputMaybe<ApplicantStatus>;
+  jobApplicationId?: InputMaybe<Scalars['ID']>;
+};
+
+export type HrRecruitmentJobApplicationMutationUpdateJobOfferStatusFromJobApplicationArgs = {
+  input?: InputMaybe<JobStatus>;
+  jobApplicationId: Scalars['ID'];
 };
 
 export type HrRecruitmentJobApplicationMutationUpsertJobApplicationArgs = {
@@ -11183,6 +11196,7 @@ export type JobApplicationJobOffer = {
   department?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  jobOfferStatus?: Maybe<JobStatus>;
   jobOfferTerms?: Maybe<Array<Maybe<JobOfferTerm>>>;
   nameOfapplicant?: Maybe<Scalars['String']>;
   offerDate?: Maybe<Scalars['Localized']>;
@@ -11203,8 +11217,10 @@ export type JobApplicationListed = {
 export type JobApplicationOverview = {
   applicationId?: Maybe<Scalars['String']>;
   applicationRating?: Maybe<Scalars['Float']>;
+  applicationStatus?: Maybe<ApplicantStatus>;
   department?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
+  educationalDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
   emailAddress?: Maybe<Scalars['String']>;
   jobPosting?: Maybe<Scalars['String']>;
   nameOfApplicant?: Maybe<Scalars['String']>;
@@ -20447,6 +20463,7 @@ export type SetupQuery = {
   eodAction?: Maybe<EodAction>;
   eodException?: Maybe<EodException>;
   eodSeed?: Maybe<Scalars['Localized']>;
+  getSweepableLedgers: UtilityLedgerSetupInputResult;
   getUtilityLedgerSetup: UtilityLedgerSetupInputResult;
 };
 
@@ -21354,6 +21371,11 @@ export const SuspiciousTransactionTopology = {
 
 export type SuspiciousTransactionTopology =
   typeof SuspiciousTransactionTopology[keyof typeof SuspiciousTransactionTopology];
+export type SweepableLedgers = {
+  balance?: Maybe<BalanceValue>;
+  ledgerID?: Maybe<Scalars['String']>;
+};
+
 export type SwitchGuaranteeInput = {
   accountID: Scalars['ID'];
   guaranteeAmount: Scalars['String'];
@@ -28516,6 +28538,7 @@ export type PostShareDividendMutation = {
       record?: string | null;
       summary?: Array<{
         MemberID?: string | null;
+        MemberName?: string | null;
         ShareCount?: number | null;
         SavingAmount?: string | null;
         TotalAmount?: string | null;
@@ -53180,6 +53203,7 @@ export const PostShareDividendDocument = `
       record
       summary {
         MemberID
+        MemberName
         ShareCount
         SavingAmount
         TotalAmount

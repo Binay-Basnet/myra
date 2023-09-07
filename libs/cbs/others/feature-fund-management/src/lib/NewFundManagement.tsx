@@ -262,7 +262,7 @@ export const NewFundManagement = () => {
               <Box p="s20">
                 <Alert status="error" title={currentFundError as string} hideCloseIcon />
               </Box>
-            ) : Number(branchFundAmount?.amount?.amount) === 0 ? (
+            ) : Number(branchFundAmount?.amount?.amount) !== 0 ? (
               <TransferPLtoHO />
             ) : (
               <>
