@@ -1,13 +1,15 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { PageHeader } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { EmployeeTransferType, useGetHrTransferListQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const HrLifecycleTransferList = () => {
+  const router = useRouter();
   const { data: onBoardingData, isLoading } = useGetHrTransferListQuery({
     pagination: getPaginationQuery(),
   });
@@ -60,6 +62,11 @@ export const HrLifecycleTransferList = () => {
           pageInfo:
             onBoardingData?.hr?.employeelifecycle?.employeeTransfer?.listEmployeeTransfer?.pageInfo,
         }}
+        rowOnClick={(row) =>
+          router?.push(
+            `${ROUTES?.HRMODULE_EMPLOYEES_DETAIL}?id=${row?.node?.employeeId}&tab=lifecycle&subTab=transfer`
+          )
+        }
       />
     </>
   );

@@ -448,6 +448,7 @@ export const ROUTES = {
   HRMODULE_LEAVE_ADD: '/hr/employee/leave/add',
   HRMODULE_LEAVE_ALLOCATION_ADD: '/hr/employee/leave-allocation/add',
 
+  HRMODULE_EMPLOYEES_DETAIL: '/hr/employee/employee/detail',
   HRMODULE_ATTENDENCE_DETAILS: '/hr/employee/attendence/details',
 
   HRMODULE_EMPLOYEES_EDIT: '/hr/employee/employee/edit',
@@ -478,6 +479,8 @@ export const ROUTES = {
   HR_LIFECYCLE_EMPLOYEE_SEPERATION_ADD: '/hr/lifecycle/seperation/add',
   HR_LIFECYCLE_EMPLOYEE_PROMOTION_ADD: '/hr/lifecycle/promotion/add',
   HR_LIFECYCLE_EMPLOYEE_EXIT_ADD: '/hr/lifecycle/exit/add',
+
+  HR_LIFECYCLE_EMPLOYEE_TRANSFER_DETAIL: '/hr/lifecycle/transfer/detail',
 
   HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_EDIT: '/hr/lifecycle/employee-onboarding/edit',
   HR_LIFECYCLE_EMPLOYEE_TRANSFER_EDIT: '/hr/lifecycle/transfer/edit',

@@ -28,9 +28,9 @@ import {
   SalaryDetails,
   SidebarEmployeeAddForm,
   WorkExperienceTable,
-} from '../components';
-import { getEmployeeSection } from '../utils/getSectionEmployee';
-import { EducationalDetails } from '../components/EducationalDetails';
+} from '../../components';
+import { EducationalDetails } from '../../components/EducationalDetails';
+import { getEmployeeSection } from '../../utils/getSectionEmployee';
 
 const documentMap = ['passport', 'signature', 'citizenship', 'fingerprint'];
 

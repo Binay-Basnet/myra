@@ -55,11 +55,13 @@ query getHREmployeeTransferHistory($employeeId: ID!) {
       employeeTransfer {
         queryEmployeeTransfer(employeeId: $employeeId) {
           branchArray {
+            id
             transferredFrom
             transferredTo
             transferDate
           }
           departArray {
+            id
             transferredFrom
             transferredTo
             transferredDate
@@ -220,6 +222,30 @@ query getHrLifecycleEmployeeView($id: String!) {
             id
             joiningDate
             name
+          }
+        }
+      }
+    }
+  }
+}
+
+query getEmployeeTransferDetails($transferId: ID!) {
+  hr {
+    employeelifecycle {
+      employeeTransfer {
+        getTransferDetails(transferId: $transferId) {
+          data {
+            employee
+            designation
+            joiningDate
+            transferType
+            newType
+            previousType
+            transferDate
+            transferedBy
+          }
+          error {
+            ...MutationError
           }
         }
       }

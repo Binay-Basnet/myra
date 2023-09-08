@@ -80,6 +80,9 @@ export const EmployeeList = () => {
           total: data?.hr?.employee?.employee?.listEmployee?.totalCount as number,
           pageInfo: data?.hr?.employee?.employee?.listEmployee?.pageInfo,
         }}
+        rowOnClick={(row) =>
+          router.push(`${ROUTES?.HRMODULE_EMPLOYEES_DETAIL}?id=${row?.node?.id}`)
+        }
       />
     </>
   );

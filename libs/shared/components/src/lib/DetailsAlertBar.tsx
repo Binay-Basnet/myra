@@ -12,7 +12,8 @@ export const DetailsAlertBar = (props: {
     <Box
       display="flex"
       justifyContent="space-between"
-      p="s16"
+      px="s16"
+      py="s12"
       bg="warning.0"
       fontWeight="medium"
       borderBottom="1px"

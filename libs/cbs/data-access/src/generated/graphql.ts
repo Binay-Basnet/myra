@@ -32637,11 +32637,13 @@ export type GetHrEmployeeTransferHistoryQuery = {
       employeeTransfer: {
         queryEmployeeTransfer?: {
           branchArray?: Array<{
+            id?: string | null;
             transferredFrom?: string | null;
             transferredTo?: string | null;
             transferDate?: Record<'local' | 'en' | 'np', string> | null;
           } | null> | null;
           departArray?: Array<{
+            id?: string | null;
             transferredFrom?: string | null;
             transferredTo?: string | null;
             transferredDate?: Record<'local' | 'en' | 'np', string> | null;
@@ -32821,6 +32823,37 @@ export type GetHrLifecycleEmployeeViewQuery = {
             name?: string | null;
           } | null;
         };
+      };
+    };
+  };
+};
+
+export type GetEmployeeTransferDetailsQueryVariables = Exact<{
+  transferId: Scalars['ID'];
+}>;
+
+export type GetEmployeeTransferDetailsQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeTransfer: {
+        getTransferDetails?: {
+          data?: {
+            employee?: string | null;
+            designation?: string | null;
+            joiningDate?: Record<'local' | 'en' | 'np', string> | null;
+            transferType?: EmployeeTransferType | null;
+            newType?: string | null;
+            previousType?: string | null;
+            transferDate?: Record<'local' | 'en' | 'np', string> | null;
+            transferedBy?: string | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        } | null;
       };
     };
   };
@@ -58591,11 +58624,13 @@ export const GetHrEmployeeTransferHistoryDocument = `
       employeeTransfer {
         queryEmployeeTransfer(employeeId: $employeeId) {
           branchArray {
+            id
             transferredFrom
             transferredTo
             transferDate
           }
           departArray {
+            id
             transferredFrom
             transferredTo
             transferredDate
@@ -58849,6 +58884,45 @@ export const useGetHrLifecycleEmployeeViewQuery = <
     ['getHrLifecycleEmployeeView', variables],
     useAxios<GetHrLifecycleEmployeeViewQuery, GetHrLifecycleEmployeeViewQueryVariables>(
       GetHrLifecycleEmployeeViewDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeTransferDetailsDocument = `
+    query getEmployeeTransferDetails($transferId: ID!) {
+  hr {
+    employeelifecycle {
+      employeeTransfer {
+        getTransferDetails(transferId: $transferId) {
+          data {
+            employee
+            designation
+            joiningDate
+            transferType
+            newType
+            previousType
+            transferDate
+            transferedBy
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEmployeeTransferDetailsQuery = <
+  TData = GetEmployeeTransferDetailsQuery,
+  TError = unknown
+>(
+  variables: GetEmployeeTransferDetailsQueryVariables,
+  options?: UseQueryOptions<GetEmployeeTransferDetailsQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeTransferDetailsQuery, TError, TData>(
+    ['getEmployeeTransferDetails', variables],
+    useAxios<GetEmployeeTransferDetailsQuery, GetEmployeeTransferDetailsQueryVariables>(
+      GetEmployeeTransferDetailsDocument
     ).bind(null, variables),
     options
   );
