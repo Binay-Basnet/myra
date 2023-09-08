@@ -350,7 +350,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
   useEffect(() => {
     if (
       defaultData &&
-      !columns.some((column) => !!column.searchOptions) &&
+      // !columns.some((column) => !!column.searchOptions) &&
       !isArrayEqual(
         defaultData,
         state.data.map(({ _id, ...rest }) => rest)

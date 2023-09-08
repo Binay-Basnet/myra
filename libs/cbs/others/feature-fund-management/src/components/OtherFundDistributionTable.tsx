@@ -19,8 +19,6 @@ export const OtherFundDistributionTable = () => {
 
   const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
-  // const { data: previousYearData } = useGetPreviousYearFundManagementQuery();
-
   const netProfit = Number(watch('netProfit') ?? 0);
 
   const generalReserveFund = watch('generalReserveFund');
@@ -43,7 +41,7 @@ export const OtherFundDistributionTable = () => {
         Number(distributionTable?.[0]?.thisYear) + Number(distributionTable?.[1]?.thisYear);
     }
 
-    return tempRemProfit;
+    return Number(tempRemProfit.toFixed(2));
   }, [netProfit, generalReserveFund, distributionTable]);
 
   const { data: leafCoaHeadsListData, isFetching } = useListLeafCoaHeadsQuery({
@@ -87,42 +85,22 @@ export const OtherFundDistributionTable = () => {
       accessor: 'percent',
       header: 'Percent(%)',
       isNumeric: true,
-      // fieldType: 'percentage',
       getDisabled: () => router?.asPath?.includes('/view'),
     },
     {
       accessor: 'thisYear',
       header: 'This Year',
       isNumeric: true,
-      // getDisabled: () => true,
       accessorFn: (row) => ((Number(row.percent) / 100) * remainingProfit).toFixed(2),
     },
     {
       accessor: 'lastYear',
       header: 'Last Year',
       isNumeric: true,
-      // accessorFn: (row) =>
-      //   previousYearData?.profitToFundManagement?.previousYear?.find(
-      //     (account) => account?.accountCode === row.accountCode
-      //   )?.amount ?? 0,
     },
   ];
 
   const otherFunds = watch('otherFunds');
-
-  // useDeepCompareEffect(() => {
-  //   if (otherFunds?.length) {
-  //     setValue(
-  //       'otherFunds',
-  //       otherFunds?.map((fund) => ({
-  //         accountCode: fund?.accountCode,
-  //         percent: fund?.percent,
-  //         thisYear: Number(((Number(fund?.percent) / 100) * remainingProfit || 0).toFixed(2)),
-  //         lastYear: 0,
-  //       }))
-  //     );
-  //   }
-  // }, [otherFunds, remainingProfit]);
 
   const otherFundsSummary: TableOverviewColumnType[] = useMemo(
     () => [

@@ -55,6 +55,20 @@ export const NewFundManagement = () => {
           lastYear: 0,
         },
       ],
+      distributionTable: [
+        {
+          distribution: '20.2 Patronage Refund Fund',
+          percent: 0,
+          thisYear: 0,
+          lastYear: 0,
+        },
+        {
+          distribution: '20.3 Cooperative Promotion Fund',
+          percent: 0,
+          thisYear: 0,
+          lastYear: 0,
+        },
+      ],
     },
   });
 
@@ -114,7 +128,7 @@ export const NewFundManagement = () => {
       const finalRemainingProfit = remainingProfit - patronageRefundFund - cooperativePromotionFund;
 
       reset({
-        ...methods.getValues(),
+        // ...methods.getValues(),
         grossProfit,
         grossProfitCoa: `${currentFundAmount?.coaHead} - ${currentFundAmount?.coaHeadName}`,
         grossProfitDr: debitCreditConverter(
@@ -128,7 +142,6 @@ export const NewFundManagement = () => {
             particular: '20.1 General Reserve Fund',
             percent: Number(formData?.generalReserveFund || 0),
             thisYear: generalReserveFund,
-            // lastYear: Number(generalReserveFundAmount ?? 0),
             lastYear: 0,
           },
         ],
@@ -137,14 +150,12 @@ export const NewFundManagement = () => {
             distribution: '20.2 Patronage Refund Fund',
             percent: Number(formData?.patronageRefundFund || 0),
             thisYear: patronageRefundFund,
-            // lastYear: Number(patronageRefundFundAmount ?? 0),
             lastYear: 0,
           },
           {
             distribution: '20.3 Cooperative Promotion Fund',
             percent: Number(formData?.cooperativePromotionFund || 0),
             thisYear: cooperativePromotionFund,
-            // lastYear: Number(cooperativePromotionFundAmount ?? 0),
             lastYear: 0,
           },
         ],
@@ -153,7 +164,6 @@ export const NewFundManagement = () => {
             label: other?.accountName,
             value: other?.accountCode,
           } as unknown as string,
-          // accountCode: other?.accountCode,
           percent: other?.percent as number,
           thisYear: Number(((Number(other?.percent || 0) / 100) * finalRemainingProfit).toFixed(2)),
         })),

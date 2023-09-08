@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
 import { GridItem } from '@myra-ui';
@@ -12,13 +13,9 @@ import { TableOverview, TableOverviewColumnType } from './TableOverview';
 import { CustomFundManagementInput, ParticularTableType } from '../lib/type';
 
 export const ParticularTable = () => {
-  const { watch } = useFormContext<CustomFundManagementInput>();
+  const { watch, getValues, setValue } = useFormContext<CustomFundManagementInput>();
 
   const router = useRouter();
-
-  // const { data: previousYearData } = useGetPreviousYearFundManagementQuery();
-
-  // const { data } = useGetCurrentFundAmountQuery();
 
   const netProfit = watch('netProfit');
 
@@ -39,35 +36,54 @@ export const ParticularTable = () => {
       accessor: 'thisYear',
       header: 'This Year',
       isNumeric: true,
-      // getDisabled: () => true,
       accessorFn: (row) => ((Number(row.percent) / 100) * Number(netProfit) || 0).toFixed(2),
     },
     {
       accessor: 'lastYear',
       header: 'Last Year',
       isNumeric: true,
-      // accessorFn: () =>
-      //   previousYearData?.profitToFundManagement?.previousYear?.find(
-      //     (account) => account?.accountCode === '20.1'
-      //   )?.amount ?? 0,
     },
   ];
 
   const generalReserveFund = watch('generalReserveFund');
 
-  // useDeepCompareEffect(() => {
-  //   if (generalReserveFund?.length) {
-  //     setValue(
-  //       'generalReserveFund',
-  //       generalReserveFund?.map((fund) => ({
-  //         particular: fund?.particular,
-  //         percent: fund?.percent,
-  //         thisYear: Number(((Number(fund?.percent) / 100) * Number(netProfit) || 0).toFixed(2)),
-  //         lastYear: 0,
-  //       }))
-  //     );
-  //   }
-  // }, [generalReserveFund, netProfit]);
+  useDeepCompareEffect(() => {
+    if (generalReserveFund) {
+      const values = getValues();
+
+      const generalReserveFundAmount = Number(generalReserveFund[0]?.thisYear);
+
+      const remainingProfit =
+        netProfit && generalReserveFund ? netProfit - generalReserveFundAmount : 0;
+
+      const patronageRefundFundPercent = Number(values?.distributionTable?.[0]?.percent || 0);
+
+      const patronageRefundFund = Number(
+        ((patronageRefundFundPercent / 100) * remainingProfit).toFixed(2)
+      );
+
+      const cooperativePromotionFundPercent = Number(values?.distributionTable?.[0]?.percent || 0);
+
+      const cooperativePromotionFund = Number(
+        ((cooperativePromotionFundPercent / 100) * remainingProfit).toFixed(2)
+      );
+
+      setValue('distributionTable', [
+        {
+          distribution: '20.2 Patronage Refund Fund',
+          percent: patronageRefundFundPercent,
+          thisYear: patronageRefundFund,
+          lastYear: 0,
+        },
+        {
+          distribution: '20.3 Cooperative Promotion Fund',
+          percent: cooperativePromotionFundPercent,
+          thisYear: cooperativePromotionFund,
+          lastYear: 0,
+        },
+      ]);
+    }
+  }, [generalReserveFund]);
 
   const generalReserveFundSummary: TableOverviewColumnType[] = useMemo(
     () => [

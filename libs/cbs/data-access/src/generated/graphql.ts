@@ -221,6 +221,7 @@ export type AccountCloseSuccessCard = {
   closeReason?: Maybe<Scalars['String']>;
   interest?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<Scalars['String']>;
+  tax?: Maybe<Scalars['String']>;
 };
 
 export type AccountClosingReport = {
@@ -422,6 +423,30 @@ export type AccountTransferViewResult = {
   error?: Maybe<QueryError>;
 };
 
+export const AccountType = {
+  Air: 'AIR',
+  DepositAccount: 'DepositAccount',
+  InterestAccured: 'InterestAccured',
+  InterestExpense: 'InterestExpense',
+  InterestIncome: 'InterestIncome',
+  InterestSuspense: 'InterestSuspense',
+  LineOfCredit: 'LineOfCredit',
+  LineOfCreditDisburse: 'LineOfCreditDisburse',
+  LineOfCreditDisburseContra: 'LineOfCreditDisburseContra',
+  LineOfCreditSaving: 'LineOfCreditSaving',
+  LineOfCreditSavingContra: 'LineOfCreditSavingContra',
+  LoanAccount: 'LoanAccount',
+  MemberShareDividend: 'MemberShareDividend',
+  PaidUpShareCapital: 'PaidUpShareCapital',
+  SavingSuspense: 'SavingSuspense',
+  TdsPayable: 'TDSPayable',
+  TellerAccount: 'TellerAccount',
+  UtilityIncome: 'UtilityIncome',
+  VaultAccount: 'VaultAccount',
+  YearEnd: 'YearEnd',
+} as const;
+
+export type AccountType = typeof AccountType[keyof typeof AccountType];
 export type AccountTypeDetailsUnion = BankChartsOfAccount | JournalChartsOfAccount;
 
 export const AccountTypeFilter = {
@@ -1417,6 +1442,7 @@ export const AllTransactionType = {
   Membership: 'MEMBERSHIP',
   MemberTransfer: 'MEMBER_TRANSFER',
   Migration: 'MIGRATION',
+  MigrationPennySweep: 'MIGRATION_PENNY_SWEEP',
   OpeningBalance: 'OPENING_BALANCE',
   SharePurchase: 'SHARE_PURCHASE',
   ShareReturn: 'SHARE_RETURN',
@@ -2831,6 +2857,11 @@ export const BloodGroup = {
 } as const;
 
 export type BloodGroup = typeof BloodGroup[keyof typeof BloodGroup];
+export type BothTypePromotions = {
+  designationPromotions?: Maybe<Array<Maybe<EmployeePromotionHistory>>>;
+  levelPromotions?: Maybe<Array<Maybe<EmployeePromotionHistory>>>;
+};
+
 export type Branch = {
   abbsTransaction?: Maybe<AbbsTransaction>;
   address?: Maybe<Address>;
@@ -4779,8 +4810,13 @@ export type DataMigration = {
   allLoanSchedule?: Maybe<Scalars['String']>;
   dumpAccountInterest?: Maybe<Scalars['String']>;
   dumpProductCharges?: Maybe<Scalars['String']>;
+  pennySweep?: Maybe<MutationResult>;
   reseedRepayment?: Maybe<MutationResult>;
   updateSavingEndDate?: Maybe<Scalars['String']>;
+};
+
+export type DataMigrationPennySweepArgs = {
+  accountType: AccountType;
 };
 
 export type DataMigrationReseedRepaymentArgs = {
@@ -6891,6 +6927,23 @@ export type EmployeeOnboardingRecord = {
 export type EmployeeOnboardings = {
   cursor: Scalars['Cursor'];
   node: EmployeeOnboardingListed;
+};
+
+export type EmployeePromotionDetailsWithError = {
+  error?: Maybe<QueryError>;
+  promotionDetails?: Maybe<PromotionDetails>;
+};
+
+export type EmployeePromotionHistory = {
+  currentType?: Maybe<Scalars['String']>;
+  dateOfPromotion?: Maybe<Scalars['Localized']>;
+  employeePromotionId?: Maybe<Scalars['ID']>;
+  newType?: Maybe<Scalars['String']>;
+};
+
+export type EmployeePromotionHistoryWithError = {
+  data?: Maybe<BothTypePromotions>;
+  error?: Maybe<QueryError>;
 };
 
 export type EmployeePromotionInput = {
@@ -9276,7 +9329,17 @@ export type HrEmployeeLifecyclePromotionMutationAddEmployeePromotionArgs = {
 };
 
 export type HrEmployeeLifecyclePromotionQuery = {
+  GetAPromotionDetail: EmployeePromotionDetailsWithError;
+  getEmployeePromotions: EmployeePromotionHistoryWithError;
   listEmployeePromotion: HrEmployeePromotionConnection;
+};
+
+export type HrEmployeeLifecyclePromotionQueryGetAPromotionDetailArgs = {
+  promotionId: Scalars['ID'];
+};
+
+export type HrEmployeeLifecyclePromotionQueryGetEmployeePromotionsArgs = {
+  employeeId?: InputMaybe<Scalars['ID']>;
 };
 
 export type HrEmployeeLifecyclePromotionQueryListEmployeePromotionArgs = {
@@ -18495,6 +18558,16 @@ export type ProductPenaltyQueryResult = {
   error?: Maybe<QueryError>;
 };
 
+export type PromotionDetails = {
+  designation?: Maybe<Scalars['String']>;
+  employeeName?: Maybe<Scalars['String']>;
+  joiningDate?: Maybe<Scalars['Localized']>;
+  newPromotionType?: Maybe<Scalars['String']>;
+  oldPromotionType?: Maybe<Scalars['String']>;
+  promotionDate?: Maybe<Scalars['Localized']>;
+  promotionType?: Maybe<Scalars['String']>;
+};
+
 export const PromotionType = {
   Designation: 'DESIGNATION',
   EmployeeLevel: 'EMPLOYEE_LEVEL',
@@ -20462,7 +20535,12 @@ export type SetupQuery = {
   eodAction?: Maybe<EodAction>;
   eodException?: Maybe<EodException>;
   eodSeed?: Maybe<Scalars['Localized']>;
+  getSweepableLedgers: SweepableLedgerQueryResult;
   getUtilityLedgerSetup: UtilityLedgerSetupInputResult;
+};
+
+export type SetupQueryGetSweepableLedgersArgs = {
+  accountType: AccountType;
 };
 
 export type ShareBalance = {
@@ -21369,6 +21447,18 @@ export const SuspiciousTransactionTopology = {
 
 export type SuspiciousTransactionTopology =
   typeof SuspiciousTransactionTopology[keyof typeof SuspiciousTransactionTopology];
+export type SweepableLedgerQueryResult = {
+  data?: Maybe<Array<Maybe<SweepableLedgers>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type SweepableLedgers = {
+  accountID: Scalars['String'];
+  balance: BalanceValue;
+  ledgerID: Scalars['String'];
+  penny: Scalars['Int'];
+};
+
 export type SwitchGuaranteeInput = {
   accountID: Scalars['ID'];
   guaranteeAmount: Scalars['String'];
