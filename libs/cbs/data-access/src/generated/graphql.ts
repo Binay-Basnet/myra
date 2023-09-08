@@ -23754,6 +23754,7 @@ export type SetAccountCloseDataMutation = {
         charges?: string | null;
         paymentMode?: string | null;
         closeReason?: string | null;
+        tax?: string | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -33401,6 +33402,7 @@ export type GetJobApplicationOverviewQuery = {
             designation?: string | null;
             department?: string | null;
             applicationRating?: number | null;
+            applicationStatus?: ApplicantStatus | null;
             permanentAddress?: {
               province?: string | null;
               district?: string | null;
@@ -33417,6 +33419,12 @@ export type GetJobApplicationOverviewQuery = {
               locality?: string | null;
               houseNo?: string | null;
             } | null;
+            educationalDetails?: Array<{
+              instituteName?: string | null;
+              degree_diploma?: string | null;
+              specialization?: string | null;
+              dateOfCompletion?: Record<'local' | 'en' | 'np', string> | null;
+            } | null> | null;
           } | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -33446,6 +33454,7 @@ export type GetJobApplicationJobOfferQuery = {
             designation?: string | null;
             department?: string | null;
             email?: string | null;
+            jobOfferStatus?: JobStatus | null;
             jobOfferTerms?: Array<{ offerTerm: string; value: string } | null> | null;
           } | null;
           error?:
@@ -40042,6 +40051,9 @@ export type GetMrTransactionReportQuery = {
             typeOfTransaction?: MrTransactionFilter | null;
             amount?: string | null;
           } | null> | null;
+          summary?: {
+            totalAmount?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          } | null;
           error?:
             | QueryError_AuthorizationError_Fragment
             | QueryError_BadRequestError_Fragment
@@ -46228,6 +46240,7 @@ export const SetAccountCloseDataDocument = `
         charges
         paymentMode
         closeReason
+        tax
       }
       error {
         ...MutationError
@@ -59594,6 +59607,13 @@ export const GetJobApplicationOverviewDocument = `
               houseNo
             }
             applicationRating
+            applicationStatus
+            educationalDetails {
+              instituteName
+              degree_diploma
+              specialization
+              dateOfCompletion
+            }
           }
           error {
             ...MutationError
@@ -59635,6 +59655,7 @@ export const GetJobApplicationJobOfferDocument = `
               offerTerm
               value
             }
+            jobOfferStatus
           }
           error {
             ...MutationError
@@ -68171,6 +68192,12 @@ export const GetMrTransactionReportDocument = `
             accountName
             typeOfTransaction
             amount
+          }
+          summary {
+            totalAmount {
+              amount
+              amountType
+            }
           }
           error {
             ...QueryError
