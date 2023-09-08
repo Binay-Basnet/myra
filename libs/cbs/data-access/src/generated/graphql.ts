@@ -33402,6 +33402,7 @@ export type GetJobApplicationOverviewQuery = {
             designation?: string | null;
             department?: string | null;
             applicationRating?: number | null;
+            applicationStatus?: ApplicantStatus | null;
             permanentAddress?: {
               province?: string | null;
               district?: string | null;
@@ -33418,6 +33419,12 @@ export type GetJobApplicationOverviewQuery = {
               locality?: string | null;
               houseNo?: string | null;
             } | null;
+            educationalDetails?: Array<{
+              instituteName?: string | null;
+              degree_diploma?: string | null;
+              specialization?: string | null;
+              dateOfCompletion?: Record<'local' | 'en' | 'np', string> | null;
+            } | null> | null;
           } | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -33447,6 +33454,7 @@ export type GetJobApplicationJobOfferQuery = {
             designation?: string | null;
             department?: string | null;
             email?: string | null;
+            jobOfferStatus?: JobStatus | null;
             jobOfferTerms?: Array<{ offerTerm: string; value: string } | null> | null;
           } | null;
           error?:
@@ -59599,6 +59607,13 @@ export const GetJobApplicationOverviewDocument = `
               houseNo
             }
             applicationRating
+            applicationStatus
+            educationalDetails {
+              instituteName
+              degree_diploma
+              specialization
+              dateOfCompletion
+            }
           }
           error {
             ...MutationError
@@ -59640,6 +59655,7 @@ export const GetJobApplicationJobOfferDocument = `
               offerTerm
               value
             }
+            jobOfferStatus
           }
           error {
             ...MutationError

@@ -364,6 +364,13 @@ query getJobApplicationOverview($id: ID!) {
               houseNo
             }
             applicationRating
+            applicationStatus
+            educationalDetails {
+              instituteName
+              degree_diploma
+              specialization
+              dateOfCompletion
+            }
           }
           error {
             ...MutationError
@@ -390,6 +397,7 @@ query getJobApplicationJobOffer($id: ID!) {
               offerTerm
               value
             }
+            jobOfferStatus
           }
           error {
             ...MutationError

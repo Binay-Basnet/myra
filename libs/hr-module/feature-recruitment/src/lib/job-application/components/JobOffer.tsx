@@ -3,8 +3,13 @@ import { useRouter } from 'next/router';
 
 import { Box, Column, Table, Text } from '@myra-ui';
 
-import { useGetJobApplicationJobOfferQuery } from '@coop/cbs/data-access';
-import { DetailsKeyValueCard, DetailsPageHeaderBox } from '@coop/shared/components';
+import { ApplicantStatus, useGetJobApplicationJobOfferQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
+import {
+  DetailsAlertBar,
+  DetailsKeyValueCard,
+  DetailsPageHeaderBox,
+} from '@coop/shared/components';
 
 export const JobOffer = () => {
   const router = useRouter();
@@ -43,6 +48,15 @@ export const JobOffer = () => {
   );
   return (
     <>
+      {jobApplicationJobOfferData?.jobOfferStatus === ApplicantStatus?.Accepted && (
+        <Box mb="-s16">
+          <DetailsAlertBar
+            title="Application accepted. Send Job Offer Next."
+            buttonText="Send Job Offer"
+            alertButtonHandler={() => router.push(ROUTES?.HR_RECRUITMENT_JOB_OFFER_ADD)}
+          />
+        </Box>
+      )}
       <DetailsPageHeaderBox title="Job Offer" />
       <DetailsKeyValueCard
         title="Basic Information"

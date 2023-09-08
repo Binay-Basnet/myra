@@ -1,21 +1,14 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
 import { Box, Column, Table, Text } from '@myra-ui';
 
-import { useGetJobApplicationQuery } from '@coop/cbs/data-access';
+import { JobApplicationOverview } from '@coop/cbs/data-access';
 import { DetailsPageHeaderBox } from '@coop/shared/components';
 
-export const Education = () => {
-  const router = useRouter();
-  const { data } = useGetJobApplicationQuery({ id: router?.query?.['id'] as string });
+export const Education = (props: { data: JobApplicationOverview }) => {
+  const { data } = props;
 
-  const rowData = useMemo(
-    () =>
-      data?.hr?.recruitment?.recruitmentJobApplication?.getJobApplication?.data
-        ?.educationalDetails ?? [],
-    [data]
-  );
+  const rowData = useMemo(() => data?.educationalDetails ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
