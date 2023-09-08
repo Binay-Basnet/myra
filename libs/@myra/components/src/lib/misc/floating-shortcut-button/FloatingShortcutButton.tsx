@@ -45,6 +45,11 @@ const whatsNewData = {
       'Fixed member transfer issue.',
       'Fixed withdraw restriction issues.',
       'FIxed JV and IBT ledger amount issue.',
+      'Withdraw penalty restriction issue in product account.',
+      'Remaining amount charges, principal, interest tax are added in the success and print page of closed account.',
+      'MR total added in the mr transaction report.',
+      'Minor search issue fixed.',
+      'Loan repayment schedule reseed.',
     ],
   },
 };
@@ -84,7 +89,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
           <Text fontSize="r2">Version 1.0.92</Text>
-          <Text fontSize="s3">September 6, 2023</Text>
+          <Text fontSize="s3">September 8, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>

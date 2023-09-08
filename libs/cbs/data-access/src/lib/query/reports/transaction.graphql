@@ -417,6 +417,12 @@ query getMrTransactionReport($data: MRTransactionReportFilter!) {
             typeOfTransaction
             amount
           }
+          summary {
+            totalAmount {
+              amount
+              amountType
+            }
+          }
           error {
             ...QueryError
           }

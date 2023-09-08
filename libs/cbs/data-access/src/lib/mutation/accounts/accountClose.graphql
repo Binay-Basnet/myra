@@ -12,6 +12,7 @@ mutation setAccountCloseData($data: DepositAccountClose) {
         charges
         paymentMode
         closeReason
+        tax
       }
 
       error {

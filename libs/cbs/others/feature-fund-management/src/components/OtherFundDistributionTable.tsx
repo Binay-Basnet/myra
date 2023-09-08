@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
 import { GridItem } from '@myra-ui';
@@ -16,7 +15,7 @@ import { CustomFundManagementInput, OtherFundDistributionTableType } from '../li
 export const OtherFundDistributionTable = () => {
   const router = useRouter();
 
-  const { watch, setValue } = useFormContext<CustomFundManagementInput>();
+  const { watch } = useFormContext<CustomFundManagementInput>();
 
   const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
@@ -95,8 +94,8 @@ export const OtherFundDistributionTable = () => {
       accessor: 'thisYear',
       header: 'This Year',
       isNumeric: true,
-      getDisabled: () => true,
-      // accessorFn: (row) => ((Number(row.percent) / 100) * remainingProfit).toFixed(2),
+      // getDisabled: () => true,
+      accessorFn: (row) => ((Number(row.percent) / 100) * remainingProfit).toFixed(2),
     },
     {
       accessor: 'lastYear',
@@ -111,19 +110,19 @@ export const OtherFundDistributionTable = () => {
 
   const otherFunds = watch('otherFunds');
 
-  useDeepCompareEffect(() => {
-    if (otherFunds?.length) {
-      setValue(
-        'otherFunds',
-        otherFunds?.map((fund) => ({
-          accountCode: fund?.accountCode,
-          percent: fund?.percent,
-          thisYear: Number(((Number(fund?.percent) / 100) * remainingProfit || 0).toFixed(2)),
-          lastYear: 0,
-        }))
-      );
-    }
-  }, [otherFunds, remainingProfit]);
+  // useDeepCompareEffect(() => {
+  //   if (otherFunds?.length) {
+  //     setValue(
+  //       'otherFunds',
+  //       otherFunds?.map((fund) => ({
+  //         accountCode: fund?.accountCode,
+  //         percent: fund?.percent,
+  //         thisYear: Number(((Number(fund?.percent) / 100) * remainingProfit || 0).toFixed(2)),
+  //         lastYear: 0,
+  //       }))
+  //     );
+  //   }
+  // }, [otherFunds, remainingProfit]);
 
   const otherFundsSummary: TableOverviewColumnType[] = useMemo(
     () => [

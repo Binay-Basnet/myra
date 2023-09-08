@@ -4,6 +4,7 @@ mutation postShareDividend($data: ShareDividendInput!, $commit: Boolean) {
       record
       summary {
         MemberID
+        MemberName
         ShareCount
         SavingAmount
         TotalAmount

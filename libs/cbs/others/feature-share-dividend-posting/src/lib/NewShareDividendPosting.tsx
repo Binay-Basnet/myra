@@ -132,13 +132,24 @@ export const NewShareDividendPosting = () => {
             mode === 0 ? 'Proceed' : summaryErrors?.length ? 'Ignore and Submit' : 'Submit'
           }
           mainButtonHandler={mode === 0 ? handleProcess : handleSubmit}
+          draftButton={
+            summaryErrors?.length ? (
+              <Button variant="outline" onClick={handleProcess}>
+                Reinitiate
+              </Button>
+            ) : null
+          }
         />
       </FormLayout>
 
       <DividendPostingErrorModal
         isOpen={isErrorModalOpen}
         onClose={onErrorModalClose}
-        errors={summaryErrors?.slice(0, 10)?.map((s) => `${s.MemberID} - ${s.Error}`) as string[]}
+        errors={
+          summaryErrors
+            ?.slice(0, 10)
+            ?.map((s) => `${s.MemberName} [${s.MemberID}] - ${s.Error}`) as string[]
+        }
       />
     </>
   );

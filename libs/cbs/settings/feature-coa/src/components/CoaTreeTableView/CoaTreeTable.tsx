@@ -172,7 +172,11 @@ export const CoaTreeTable = ({ data, type }: ICoaTreeTableProps) => {
 
       <AddGroupModal modalProps={groupModalProps} clickedAccount={clickedAccount} />
       <ConfigureGroupModal modalProps={configureModalProps} clickedAccount={clickedAccount} />
-      <AddAccountModal modalProps={addAccountModalProps} clickedAccount={clickedAccount} />
+      <AddAccountModal
+        modalProps={addAccountModalProps}
+        clickedAccount={clickedAccount}
+        clickedAccountName={clickedAccount?.name?.local as string}
+      />
     </>
   );
 };
