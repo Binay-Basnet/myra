@@ -252,3 +252,31 @@ query getEmployeeTransferDetails($transferId: ID!) {
     }
   }
 }
+
+query getEmployeeSeparationDetails($employeeSeparationId: ID!) {
+  hr {
+    employeelifecycle {
+      employeeSeparation {
+        getEmployeeSeparationDetails(employeeSeparationId: $employeeSeparationId) {
+          data {
+            employeeName
+            designation
+            joiningDate
+            separationType
+            resignationLetterDate
+            documents {
+              fieldId
+              docData {
+                identifier
+                url
+              }
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

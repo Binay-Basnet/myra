@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
+import { GridKeyValuePair } from '@hr/common';
 
 import { Box, Column, Drawer, Grid, Table, Text } from '@myra-ui';
 
@@ -7,20 +8,6 @@ import {
   useGetEmployeeTransferDetailsQuery,
   useGetHrEmployeeTransferHistoryQuery,
 } from '@coop/cbs/data-access';
-
-const GridKeyValuePair = (props: { itemKey: string; itemValue: string; colorOfValue?: string }) => {
-  const { itemKey, itemValue, colorOfValue = 'gray.800' } = props;
-  return (
-    <Box>
-      <Text fontSize="r1" color="gray.600">
-        {itemKey}
-      </Text>
-      <Text fontSize="r1" fontWeight="semibold" color={colorOfValue}>
-        {itemValue}
-      </Text>
-    </Box>
-  );
-};
 
 export const Transfer = () => {
   const router = useRouter();

@@ -9300,11 +9300,16 @@ export type HrEmployeeLifecycleExitMutationUpsertEmployeeExitArgs = {
 
 export type HrEmployeeLifecycleExitQuery = {
   getEmployeeExit: EachEmployeeExitRecords;
+  getEmployeeExitDetailsFromEmployeeId: EachEmployeeExitRecords;
   listEmployeeExit: EmployeeExitConnection;
 };
 
 export type HrEmployeeLifecycleExitQueryGetEmployeeExitArgs = {
   id: Scalars['ID'];
+};
+
+export type HrEmployeeLifecycleExitQueryGetEmployeeExitDetailsFromEmployeeIdArgs = {
+  employeeId: Scalars['ID'];
 };
 
 export type HrEmployeeLifecycleExitQueryListEmployeeExitArgs = {
@@ -32854,6 +32859,38 @@ export type GetEmployeeTransferDetailsQuery = {
             | MutationError_ServerError_Fragment
             | null;
         } | null;
+      };
+    };
+  };
+};
+
+export type GetEmployeeSeparationDetailsQueryVariables = Exact<{
+  employeeSeparationId: Scalars['ID'];
+}>;
+
+export type GetEmployeeSeparationDetailsQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeSeparation: {
+        getEmployeeSeparationDetails: {
+          data?: {
+            employeeName?: string | null;
+            designation?: string | null;
+            joiningDate?: Record<'local' | 'en' | 'np', string> | null;
+            separationType?: SeparationTypeEnum | null;
+            resignationLetterDate?: Record<'local' | 'en' | 'np', string> | null;
+            documents?: Array<{
+              fieldId?: string | null;
+              docData: Array<{ identifier: string; url: string } | null>;
+            } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
       };
     };
   };
@@ -58923,6 +58960,49 @@ export const useGetEmployeeTransferDetailsQuery = <
     ['getEmployeeTransferDetails', variables],
     useAxios<GetEmployeeTransferDetailsQuery, GetEmployeeTransferDetailsQueryVariables>(
       GetEmployeeTransferDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeSeparationDetailsDocument = `
+    query getEmployeeSeparationDetails($employeeSeparationId: ID!) {
+  hr {
+    employeelifecycle {
+      employeeSeparation {
+        getEmployeeSeparationDetails(employeeSeparationId: $employeeSeparationId) {
+          data {
+            employeeName
+            designation
+            joiningDate
+            separationType
+            resignationLetterDate
+            documents {
+              fieldId
+              docData {
+                identifier
+                url
+              }
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEmployeeSeparationDetailsQuery = <
+  TData = GetEmployeeSeparationDetailsQuery,
+  TError = unknown
+>(
+  variables: GetEmployeeSeparationDetailsQueryVariables,
+  options?: UseQueryOptions<GetEmployeeSeparationDetailsQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeSeparationDetailsQuery, TError, TData>(
+    ['getEmployeeSeparationDetails', variables],
+    useAxios<GetEmployeeSeparationDetailsQuery, GetEmployeeSeparationDetailsQueryVariables>(
+      GetEmployeeSeparationDetailsDocument
     ).bind(null, variables),
     options
   );
