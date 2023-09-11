@@ -6,7 +6,7 @@ import { Box, Scrollable, WIPState } from '@myra-ui';
 
 import { AccountDetailsPathBar } from '@coop/cbs/accounts/ui-components';
 import { AccountDetailsSidebar } from '@coop/cbs/accounts/ui-layouts';
-import { useAccountDetails, useIssueFdCertificateMutation } from '@coop/cbs/data-access';
+import { ObjState, useAccountDetails, useIssueFdCertificateMutation } from '@coop/cbs/data-access';
 
 import {
   GeneralUpdates,
@@ -41,17 +41,18 @@ export const AccountDetails = () => {
   const { accountDetails } = useAccountDetails();
 
   const { mutateAsync } = useIssueFdCertificateMutation();
+  const isClosed = accountDetails?.objState === ObjState?.Inactive;
 
   const accountOptions = useMemo(() => {
-    const temp = [
-      {
+    const temp = [];
+    if (!isClosed) {
+      temp.push({
         label: accountDetails?.transactionConstraints?.blockId
           ? 'Update Transaction Lock'
           : 'Lock Transaction',
         handler: () => onLockModalToggle(),
-      },
-    ];
-
+      });
+    }
     if (accountDetails?.accountType === 'TERM_SAVING_OR_FD') {
       temp.push({
         label: 'Issue FD Certificate',
@@ -74,7 +75,10 @@ export const AccountDetails = () => {
 
   return (
     <>
-      <AccountDetailsPathBar title="Savings Account List" options={accountOptions} />
+      <AccountDetailsPathBar
+        title="Savings Account List"
+        options={!isClosed ? accountOptions : undefined}
+      />
       <Box display="flex">
         <Box
           w="320px"

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { Alert, Box, Text } from '@myra-ui';
 
-import { InterestAuthority, useGetCurrentOrganizationRateQuery } from '@coop/cbs/data-access';
+import { InterestAuthority, useGetLoanCurrentOrganizationRateQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput, FormInput, FormRadioGroup } from '@coop/shared/form';
 
@@ -34,7 +34,7 @@ export const Interest = () => {
   const loanApplicationId = router.query['id'] as string;
   const { watch, setValue, clearErrors } = useFormContext();
 
-  const { data: orgRateData } = useGetCurrentOrganizationRateQuery();
+  const { data: loanCurrentOrgRateData } = useGetLoanCurrentOrganizationRateQuery();
 
   const { product } = useLoanProductContext();
 
@@ -164,9 +164,9 @@ export const Interest = () => {
                   <Text fontWeight="400" fontSize="r1">
                     Organization Rate:{' '}
                     <b>
-                      {typeof orgRateData?.settings?.general?.deposit
+                      {typeof loanCurrentOrgRateData?.settings?.general?.loan
                         ?.getCurrentOrganizationRate === 'number'
-                        ? `${orgRateData?.settings?.general?.deposit?.getCurrentOrganizationRate} %`
+                        ? `${loanCurrentOrgRateData?.settings?.general?.loan?.getCurrentOrganizationRate} %`
                         : 'N/A'}
                     </b>
                   </Text>
@@ -179,7 +179,8 @@ export const Interest = () => {
                         Number(interestRate || 0) +
                         Number(product?.productPremiumInterest || 0) +
                         Number(
-                          orgRateData?.settings?.general?.deposit?.getCurrentOrganizationRate || 0
+                          loanCurrentOrgRateData?.settings?.general?.loan
+                            ?.getCurrentOrganizationRate || 0
                         )
                       } %`}
                     </b>

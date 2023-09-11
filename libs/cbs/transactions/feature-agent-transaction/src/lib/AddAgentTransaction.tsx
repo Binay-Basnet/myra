@@ -143,7 +143,12 @@ export const AddAgentTransaction = () => {
                   Number(account?.node?.account?.dues?.fine || 0)
                 : 0;
 
-            tempFine += Number(record?.fine ?? account?.node?.account?.dues?.fine ?? 0);
+            tempFine +=
+              Number(record?.fine || 0) && record?.paid
+                ? Number(record?.fine || 0)
+                : record?.paid
+                ? Number(account?.node?.account?.dues?.fine)
+                : 0;
 
             return {
               id: record?.id,
