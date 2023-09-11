@@ -32961,6 +32961,39 @@ export type GetPromotionDetailQuery = {
   };
 };
 
+export type GetEmployeeExitDetailsQueryVariables = Exact<{
+  employeeId: Scalars['ID'];
+}>;
+
+export type GetEmployeeExitDetailsQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeExit: {
+        getEmployeeExitDetailsFromEmployeeId: {
+          data: {
+            separationId?: string | null;
+            exitStatus?: ExitStatus | null;
+            interviewer?: string | null;
+            exitDate?: Record<'local' | 'en' | 'np', string> | null;
+            futureIntentions?: string | null;
+            overallExp?: string | null;
+            suggestions?: string | null;
+            others?: string | null;
+            checklists?: Array<{
+              done?: boolean | null;
+              activityName?: string | null;
+              user?: string | null;
+              role?: string | null;
+              beginsOn?: Record<'local' | 'en' | 'np', string> | null;
+              duration?: string | null;
+            } | null> | null;
+          };
+        };
+      };
+    };
+  };
+};
+
 export type GetSalaryStructureAssignmentListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -59148,6 +59181,50 @@ export const useGetPromotionDetailQuery = <TData = GetPromotionDetailQuery, TErr
     ['getPromotionDetail', variables],
     useAxios<GetPromotionDetailQuery, GetPromotionDetailQueryVariables>(
       GetPromotionDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeExitDetailsDocument = `
+    query getEmployeeExitDetails($employeeId: ID!) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        getEmployeeExitDetailsFromEmployeeId(employeeId: $employeeId) {
+          data {
+            separationId
+            exitStatus
+            interviewer
+            exitDate
+            futureIntentions
+            overallExp
+            suggestions
+            others
+            checklists {
+              done
+              activityName
+              user
+              role
+              beginsOn
+              duration
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetEmployeeExitDetailsQuery = <
+  TData = GetEmployeeExitDetailsQuery,
+  TError = unknown
+>(
+  variables: GetEmployeeExitDetailsQueryVariables,
+  options?: UseQueryOptions<GetEmployeeExitDetailsQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeExitDetailsQuery, TError, TData>(
+    ['getEmployeeExitDetails', variables],
+    useAxios<GetEmployeeExitDetailsQuery, GetEmployeeExitDetailsQueryVariables>(
+      GetEmployeeExitDetailsDocument
     ).bind(null, variables),
     options
   );

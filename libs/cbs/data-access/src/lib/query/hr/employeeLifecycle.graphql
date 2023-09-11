@@ -331,3 +331,32 @@ query getPromotionDetail($promotionId: ID!) {
     }
   }
 }
+
+query getEmployeeExitDetails($employeeId: ID!) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        getEmployeeExitDetailsFromEmployeeId(employeeId: $employeeId) {
+          data {
+            separationId
+            exitStatus
+            interviewer
+            exitDate
+            futureIntentions
+            overallExp
+            suggestions
+            others
+            checklists {
+              done
+              activityName
+              user
+              role
+              beginsOn
+              duration
+            }
+          }
+        }
+      }
+    }
+  }
+}
