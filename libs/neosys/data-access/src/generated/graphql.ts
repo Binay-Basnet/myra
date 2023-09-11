@@ -205,8 +205,13 @@ export type CloneEnvironmentFromDevInput = {
 };
 
 export const ComparatorType = {
+  Between: 'BETWEEN',
+  Contains: 'CONTAINS',
   EqualTo: 'EqualTo',
   GreaterThan: 'GreaterThan',
+  HasNoValue: 'HasNoValue',
+  HasValue: 'HasValue',
+  In: 'IN',
   LessThan: 'LessThan',
 } as const;
 
