@@ -892,11 +892,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
             }
           : {}
       }
-      isDisabled={
-        column.getDisabled
-          ? column.getDisabled(data)
-          : column.fieldType === 'search' || !!column?.accessorFn
-      }
+      isDisabled={column.getDisabled ? column.getDisabled(data) : column.fieldType === 'search'}
       isPreviewFocusable
       selectAllOnFocus={false}
       w="100%"
@@ -921,10 +917,6 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
           ? typeof dataValue === 'object' && 'label' in dataValue
             ? dataValue.label
             : String(dataValue)
-          : column.accessorFn
-          ? column.accessorFn(data)
-            ? String(column.accessorFn(data))
-            : ''
           : data[column.accessor]
           ? (data[column.accessor] as string)
           : ''
@@ -972,7 +964,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
         <EditablePreview
           width="100%"
           mr={column.fieldType === 'percentage' ? 's24' : '0'}
-          cursor={column.fieldType === 'search' || !!column?.accessorFn ? 'not-allowed' : 'text'}
+          cursor={column.fieldType === 'search' ? 'not-allowed' : 'text'}
           height="100%"
           px="s8"
           display="flex"
