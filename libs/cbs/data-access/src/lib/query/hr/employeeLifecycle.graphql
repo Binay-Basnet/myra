@@ -280,3 +280,54 @@ query getEmployeeSeparationDetails($employeeSeparationId: ID!) {
     }
   }
 }
+
+query getEmployeePromotionHistory($employeeId: ID) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        getEmployeePromotions(employeeId: $employeeId) {
+          data {
+            designationPromotions {
+              employeePromotionId
+              newType
+              currentType
+              dateOfPromotion
+            }
+            levelPromotions {
+              employeePromotionId
+              newType
+              currentType
+              dateOfPromotion
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getPromotionDetail($promotionId: ID!) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        GetAPromotionDetail(promotionId: $promotionId) {
+          promotionDetails {
+            employeeName
+            designation
+            joiningDate
+            promotionType
+            oldPromotionType
+            newPromotionType
+            promotionDate
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

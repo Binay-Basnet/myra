@@ -1,13 +1,15 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { PageHeader } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useGetHrPromotionListQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const HrLifecyclePromotionList = () => {
+  const router = useRouter();
   const { data: onBoardingData, isLoading } = useGetHrPromotionListQuery({
     pagination: getPaginationQuery(),
   });
@@ -64,6 +66,11 @@ export const HrLifecyclePromotionList = () => {
             onBoardingData?.hr?.employeelifecycle?.employeePromotion?.listEmployeePromotion
               ?.PageInfo,
         }}
+        rowOnClick={(row) =>
+          router?.push(
+            `${ROUTES?.HRMODULE_EMPLOYEES_DETAIL}?id=${row?.node?.employeeId}&tab=lifecycle&subTab=promotion`
+          )
+        }
       />
     </>
   );

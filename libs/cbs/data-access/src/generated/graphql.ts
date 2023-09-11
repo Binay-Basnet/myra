@@ -32896,6 +32896,71 @@ export type GetEmployeeSeparationDetailsQuery = {
   };
 };
 
+export type GetEmployeePromotionHistoryQueryVariables = Exact<{
+  employeeId?: InputMaybe<Scalars['ID']>;
+}>;
+
+export type GetEmployeePromotionHistoryQuery = {
+  hr: {
+    employeelifecycle: {
+      employeePromotion: {
+        getEmployeePromotions: {
+          data?: {
+            designationPromotions?: Array<{
+              employeePromotionId?: string | null;
+              newType?: string | null;
+              currentType?: string | null;
+              dateOfPromotion?: Record<'local' | 'en' | 'np', string> | null;
+            } | null> | null;
+            levelPromotions?: Array<{
+              employeePromotionId?: string | null;
+              newType?: string | null;
+              currentType?: string | null;
+              dateOfPromotion?: Record<'local' | 'en' | 'np', string> | null;
+            } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetPromotionDetailQueryVariables = Exact<{
+  promotionId: Scalars['ID'];
+}>;
+
+export type GetPromotionDetailQuery = {
+  hr: {
+    employeelifecycle: {
+      employeePromotion: {
+        GetAPromotionDetail: {
+          promotionDetails?: {
+            employeeName?: string | null;
+            designation?: string | null;
+            joiningDate?: Record<'local' | 'en' | 'np', string> | null;
+            promotionType?: string | null;
+            oldPromotionType?: string | null;
+            newPromotionType?: string | null;
+            promotionDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetSalaryStructureAssignmentListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -59003,6 +59068,86 @@ export const useGetEmployeeSeparationDetailsQuery = <
     ['getEmployeeSeparationDetails', variables],
     useAxios<GetEmployeeSeparationDetailsQuery, GetEmployeeSeparationDetailsQueryVariables>(
       GetEmployeeSeparationDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeePromotionHistoryDocument = `
+    query getEmployeePromotionHistory($employeeId: ID) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        getEmployeePromotions(employeeId: $employeeId) {
+          data {
+            designationPromotions {
+              employeePromotionId
+              newType
+              currentType
+              dateOfPromotion
+            }
+            levelPromotions {
+              employeePromotionId
+              newType
+              currentType
+              dateOfPromotion
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEmployeePromotionHistoryQuery = <
+  TData = GetEmployeePromotionHistoryQuery,
+  TError = unknown
+>(
+  variables?: GetEmployeePromotionHistoryQueryVariables,
+  options?: UseQueryOptions<GetEmployeePromotionHistoryQuery, TError, TData>
+) =>
+  useQuery<GetEmployeePromotionHistoryQuery, TError, TData>(
+    variables === undefined
+      ? ['getEmployeePromotionHistory']
+      : ['getEmployeePromotionHistory', variables],
+    useAxios<GetEmployeePromotionHistoryQuery, GetEmployeePromotionHistoryQueryVariables>(
+      GetEmployeePromotionHistoryDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetPromotionDetailDocument = `
+    query getPromotionDetail($promotionId: ID!) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        GetAPromotionDetail(promotionId: $promotionId) {
+          promotionDetails {
+            employeeName
+            designation
+            joiningDate
+            promotionType
+            oldPromotionType
+            newPromotionType
+            promotionDate
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetPromotionDetailQuery = <TData = GetPromotionDetailQuery, TError = unknown>(
+  variables: GetPromotionDetailQueryVariables,
+  options?: UseQueryOptions<GetPromotionDetailQuery, TError, TData>
+) =>
+  useQuery<GetPromotionDetailQuery, TError, TData>(
+    ['getPromotionDetail', variables],
+    useAxios<GetPromotionDetailQuery, GetPromotionDetailQueryVariables>(
+      GetPromotionDetailDocument
     ).bind(null, variables),
     options
   );
