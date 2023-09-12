@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { FormSection, GridItem } from '@myra-ui';
 
@@ -8,6 +9,8 @@ import { FormInput } from '@coop/shared/form';
 import { debitCreditConverter } from '@coop/shared/utils';
 
 export const BasicFundManagement = () => {
+  const router = useRouter();
+
   const { setValue } = useFormContext();
 
   const { data: currentFundAmountHOData } = useGetCurrentFundAmountQuery({ forHeadOffice: true });
@@ -15,7 +18,7 @@ export const BasicFundManagement = () => {
   const currentFundAmount = currentFundAmountHOData?.profitToFundManagement?.getCurrentFundAmount;
 
   useEffect(() => {
-    if (currentFundAmount) {
+    if (currentFundAmount && !router?.asPath?.includes('/view')) {
       setValue(
         'grossProfitCoa',
         `${currentFundAmount?.coaHead} - ${currentFundAmount?.coaHeadName}`
@@ -30,7 +33,7 @@ export const BasicFundManagement = () => {
         )
       );
     }
-  }, [currentFundAmount]);
+  }, [currentFundAmount, router?.asPath]);
 
   return (
     <FormSection>

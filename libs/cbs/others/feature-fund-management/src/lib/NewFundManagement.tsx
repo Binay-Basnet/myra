@@ -68,7 +68,10 @@ export const NewFundManagement = () => {
     if (editData?.profitToFundManagement?.get?.record) {
       const formData = editData?.profitToFundManagement?.get?.record;
 
-      const grossProfit = Number(currentFundAmount?.amount?.amount || 0);
+      const grossProfit =
+        formData?.state === 'COMPLETED'
+          ? Number(formData?.grossProfit || 0)
+          : Number(currentFundAmount?.amount?.amount || 0);
 
       const staffBonusAmount = Number(formData?.staffBonus?.amount || 0);
 
@@ -88,11 +91,17 @@ export const NewFundManagement = () => {
       reset({
         // ...methods.getValues(),
         grossProfit,
-        grossProfitCoa: `${currentFundAmount?.coaHead} - ${currentFundAmount?.coaHeadName}`,
-        grossProfitDr: debitCreditConverter(
-          currentFundAmount?.amount?.amount as string,
-          currentFundAmount?.amount?.amountType as string
-        ),
+        grossProfitCoa:
+          formData?.state === 'COMPLETED'
+            ? (formData?.grossProfitCoa as string)
+            : `${currentFundAmount?.coaHead} - ${currentFundAmount?.coaHeadName}`,
+        grossProfitDr:
+          formData?.state === 'COMPLETED'
+            ? debitCreditConverter(grossProfit, 'CR')
+            : debitCreditConverter(
+                currentFundAmount?.amount?.amount as string,
+                currentFundAmount?.amount?.amountType as string
+              ),
         staffBonus: {
           coaHead: {
             label: formData?.staffBonus?.accountName,
