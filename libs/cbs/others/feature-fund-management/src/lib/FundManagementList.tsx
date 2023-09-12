@@ -29,9 +29,9 @@ export const FundManagementList = () => {
       {
         header: 'Fiscal Year',
         accessorFn: (row) => row?.node?.fiscalYear,
-        meta: {
-          width: 'auto',
-        },
+        // meta: {
+        //   width: 'auto',
+        // },
       },
       {
         header: 'Gross Profit',
@@ -39,6 +39,22 @@ export const FundManagementList = () => {
           debitCreditConverter(
             row?.node?.grossProfit?.amount as string,
             row?.node?.grossProfit?.amountType as string
+          ),
+      },
+      {
+        header: 'Profit Before Tax',
+        accessorFn: (row) =>
+          debitCreditConverter(
+            row?.node?.profitBeforeTax?.amount as string,
+            row?.node?.profitBeforeTax?.amountType as string
+          ),
+      },
+      {
+        header: 'Net Profit',
+        accessorFn: (row) =>
+          debitCreditConverter(
+            row?.node?.netProfit?.amount as string,
+            row?.node?.netProfit?.amountType as string
           ),
       },
       {
