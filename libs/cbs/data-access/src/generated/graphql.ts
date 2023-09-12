@@ -32993,7 +32993,7 @@ export type GetEmployeeExitDetailsQuery = {
     employeelifecycle: {
       employeeExit: {
         getEmployeeExitDetailsFromEmployeeId: {
-          data: {
+          data?: {
             separationId?: string | null;
             exitStatus?: ExitStatus | null;
             interviewer?: string | null;
@@ -33010,7 +33010,7 @@ export type GetEmployeeExitDetailsQuery = {
               beginsOn?: Record<'local' | 'en' | 'np', string> | null;
               duration?: string | null;
             } | null> | null;
-          };
+          } | null;
         };
       };
     };

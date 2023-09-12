@@ -131,7 +131,7 @@ export const NewFundManagement = () => {
 
   const isSubmitDisabled = useMemo(() => {
     if (
-      router?.asPath?.includes('/view') ||
+      router?.asPath?.includes('/view') &&
       editData?.profitToFundManagement?.get?.record?.state === 'COMPLETED'
     ) {
       return true;
