@@ -68,7 +68,7 @@ const Report = <T extends Record<string, unknown>, Q extends Record<string, unkn
   setFilters,
 }: IReportProps<T, Q>) => {
   const router = useRouter();
-  const otherParams = omit(router.query, 'action');
+  const otherParams = omit(router.query, ['action', 'report', 'report-group']);
   const printRef = useRef<HTMLInputElement | null>(null);
   const { isFetching } = useGetEndOfDayDateDataQuery();
 

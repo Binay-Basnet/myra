@@ -60,8 +60,11 @@ export const SavingStatementReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Saving Reports', link: '/reports/cbs/savings' },
-            { label: 'Saving Account Statement', link: '/reports/cbs/savings/statement/new' },
+            { label: 'Saving Reports', link: '/cbs/reports/cbs-reports/savings' },
+            {
+              label: 'Saving Account Statement',
+              link: '/cbs/reports/cbs-reports/savings/statement/new',
+            },
           ]}
         />
         <Report.Inputs>

@@ -49,10 +49,10 @@ export const ClosedSavingAccountStatement = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Saving Reports', link: '/reports/cbs/savings' },
+            { label: 'Saving Reports', link: '/cbs/reports/cbs-reports/savings' },
             {
               label: 'Closed Saving Account Statement',
-              link: '/reports/cbs/savings/closed-account-statement/new',
+              link: '/cbs/reports/cbs-reports/savings/closed-account-statement/new',
             },
           ]}
         />

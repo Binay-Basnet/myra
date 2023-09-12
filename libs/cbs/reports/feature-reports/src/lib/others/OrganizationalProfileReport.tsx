@@ -42,10 +42,10 @@ export const OrganizationalProfileReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Other Report', link: '/reports/cbs/others' },
+            { label: 'Other Report', link: '/cbs/reports/cbs-reports/others' },
             {
               label: 'Organization Profile Report',
-              link: '/reports/cbs/others/organizational-profile/new',
+              link: '/cbs/reports/cbs-reports/others/organizational-profile/new',
             },
           ]}
         />

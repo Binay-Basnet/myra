@@ -77,10 +77,10 @@ export const ServiceCenterListReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Service Center Reports', link: '/reports/cbs/service-center' },
+            { label: 'Service Center Reports', link: '/cbs/reports/cbs-reports/service-center' },
             {
               label: 'Service Center List Report',
-              link: '/reports/cbs/service-center/list-report/new',
+              link: '/cbs/reports/cbs-reports/service-center/list-report/new',
             },
           ]}
         />

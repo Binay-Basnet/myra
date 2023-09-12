@@ -139,12 +139,14 @@ export const CharKhataReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/transactions'
+                : '/accounting/reports/transactions',
             },
             {
               label: 'CharKhata Ledger Report',
               link: isCbs
-                ? '/reports/cbs/transactions/charkhata/new'
+                ? '/cbs/reports/cbs-reports/transactions/charkhata/new'
                 : '/accounting/reports/transactions/charkhata/new',
             },
           ]}

@@ -69,8 +69,11 @@ export const LoanCallSheetReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Loan Reports', link: '/reports/cbs/loan' },
-            { label: 'Loan Call Sheet Report', link: '/reports/cbs/loan/call-sheet/new' },
+            { label: 'Loan Reports', link: '/cbs/reports/cbs-reports/loan' },
+            {
+              label: 'Loan Call Sheet Report',
+              link: '/cbs/reports/cbs-reports/loan/call-sheet/new',
+            },
           ]}
         />
         <Report.Inputs>

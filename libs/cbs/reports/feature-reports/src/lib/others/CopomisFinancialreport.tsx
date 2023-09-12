@@ -40,10 +40,10 @@ export const CopomisFinancialReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Other Report', link: '/reports/cbs/others' },
+            { label: 'Other Report', link: '/cbs/reports/cbs-reports/others' },
             {
               label: 'Copomis Financial Report',
-              link: '/reports/cbs/others/copomis-financial/new',
+              link: '/cbs/reports/cbs-reports/others/copomis-financial/new',
             },
           ]}
         />

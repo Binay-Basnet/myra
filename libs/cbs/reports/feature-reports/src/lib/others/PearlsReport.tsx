@@ -38,8 +38,8 @@ export const PearlsReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Others Reports', link: '/reports/cbs/others' },
-            { label: 'Pearls Report', link: '/reports/cbs/others/pearls-report/new' },
+            { label: 'Others Reports', link: '/cbs/reports/cbs-reports/others' },
+            { label: 'Pearls Report', link: '/cbs/reports/cbs-reports/others/pearls-report/new' },
           ]}
         />
         <Report.Inputs>

@@ -19,10 +19,10 @@ export const BranchReadinessReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Service Center Reports', link: '/reports/cbs/service-center' },
+            { label: 'Service Center Reports', link: '/cbs/reports/cbs-reports/service-center' },
             {
               label: 'Branch Readiness Report',
-              link: '/reports/cbs/service-center/branch-readiness/new',
+              link: '/cbs/reports/cbs-reports/service-center/branch-readiness/new',
             },
           ]}
         />

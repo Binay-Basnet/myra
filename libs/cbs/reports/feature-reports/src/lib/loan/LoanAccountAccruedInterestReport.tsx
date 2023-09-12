@@ -39,10 +39,10 @@ export const LoanAccountAccruedInterestReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Loan Reports', link: '/reports/cbs/loan' },
+            { label: 'Loan Reports', link: '/cbs/reports/cbs-reports/loan' },
             {
               label: 'Loan Account Accrued Interest Report',
-              link: '/reports/cbs/loan/loan-account-accrued-interest/new',
+              link: '/cbs/reports/cbs-reports/loan/loan-account-accrued-interest/new',
             },
           ]}
         />

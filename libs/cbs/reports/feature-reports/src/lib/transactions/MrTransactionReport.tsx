@@ -77,11 +77,11 @@ export const MarketRepresentativeTransactionReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: '/reports/cbs/transactions',
+              link: '/cbs/reports/cbs-reports/transactions',
             },
             {
               label: 'Market Representative Transaction Report',
-              link: '/reports/cbs/transactions/mr-transaction/new',
+              link: '/cbs/reports/cbs-reports/transactions/mr-transaction/new',
             },
           ]}
         />

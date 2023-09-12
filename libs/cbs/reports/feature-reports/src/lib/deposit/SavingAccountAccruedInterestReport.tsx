@@ -41,10 +41,10 @@ export const SavingAccountAccruedInterestReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Saving Reports', link: '/reports/cbs/savings' },
+            { label: 'Saving Reports', link: '/cbs/reports/cbs-reports/savings' },
             {
               label: 'Saving Account Accrued Interest Report',
-              link: '/reports/cbs/savings/saving-account-accrued-interest/new',
+              link: '/cbs/reports/cbs-reports/savings/saving-account-accrued-interest/new',
             },
           ]}
         />
