@@ -245,6 +245,7 @@ export const BulkDepositAccountsTable = ({ memberId }: IBulkDepositAccountsTable
                 )?.totalFine as string
               ),
             })?.total,
+          getDisabled: (row) => row?.noOfInstallments !== 'N/A',
         },
         {
           accessor: 'fine',
@@ -254,24 +255,27 @@ export const BulkDepositAccountsTable = ({ memberId }: IBulkDepositAccountsTable
             (bulkInstallmentsListData?.account?.getBulkInstallments?.find(
               (installment) => installment?.accountId === row?.accountId
             )?.totalFine as string) ?? 'N/A',
+          getDisabled: (row) => row?.noOfInstallments === 'N/A',
         },
         {
           accessor: 'rebate',
           header: 'Rebate',
           isNumeric: true,
           accessorFn: (row) =>
-            getInstallmentSummary({
-              noOfInstallments: Number(row?.noOfInstallments ?? 0),
-              installmentList: bulkInstallmentsListData?.account?.getBulkInstallments?.find(
-                (installment) => installment?.accountId === row?.accountId
-              )?.value?.data as Installment[],
-              installmentAmount: Number(row?.installmentAmount ?? 0),
-              totalFine: Number(
-                bulkInstallmentsListData?.account?.getBulkInstallments?.find(
+            String(
+              getInstallmentSummary({
+                noOfInstallments: Number(row?.noOfInstallments ?? 0),
+                installmentList: bulkInstallmentsListData?.account?.getBulkInstallments?.find(
                   (installment) => installment?.accountId === row?.accountId
-                )?.totalFine as string
-              ),
-            })?.rebate,
+                )?.value?.data as Installment[],
+                installmentAmount: Number(row?.installmentAmount ?? 0),
+                totalFine: Number(
+                  bulkInstallmentsListData?.account?.getBulkInstallments?.find(
+                    (installment) => installment?.accountId === row?.accountId
+                  )?.totalFine as string
+                ),
+              })?.rebate
+            ) ?? '0',
           getDisabled: () => true,
         },
       ]}

@@ -122,11 +122,12 @@ export const AddBulkDeposit = () => {
         disableDenomination: Boolean(values.cash?.disableDenomination),
         total: String(totalCashPaid),
         returned_amount: String(returnAmount),
-        denominations:
-          values.cash?.denominations?.map(({ value, quantity }) => ({
-            value: cashOptions[value as string],
-            quantity,
-          })) ?? [],
+        denominations: !disableDenomination
+          ? values?.cash?.denominations?.map(({ value, quantity }) => ({
+              value: cashOptions[value as string],
+              quantity,
+            })) ?? []
+          : [],
       };
     }
 
