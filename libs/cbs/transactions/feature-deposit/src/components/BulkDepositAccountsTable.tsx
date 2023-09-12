@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 
@@ -44,12 +44,14 @@ interface IGetInstallmentSummaryArgs {
   noOfInstallments: number;
   installmentList: Installment[] | undefined | null;
   installmentAmount: number;
+  totalFine: number | undefined | null;
 }
 
 const getInstallmentSummary = ({
   noOfInstallments,
   installmentList,
   installmentAmount,
+  totalFine,
 }: IGetInstallmentSummaryArgs) => {
   if (!installmentList?.length || !noOfInstallments) {
     return { total: 0, rebate: 0, fine: 0 };
@@ -66,10 +68,7 @@ const getInstallmentSummary = ({
     filteredInstallments.length + Number(noOfInstallments)
   );
 
-  const tempFine = pendingInstallments.reduce(
-    (accumulator, curr) => accumulator + Number(curr?.fine),
-    0
-  );
+  const tempFine = totalFine;
   const tempRebate = pendingInstallments.reduce(
     (accumulator, curr) => accumulator + Number(curr?.rebate),
     0
@@ -86,22 +85,14 @@ const getInstallmentSummary = ({
 
 interface IBulkDepositAccountsTableProps {
   memberId: string;
-  setTotalDepositAmount: Dispatch<SetStateAction<number>>;
-  setTotalRebate: Dispatch<SetStateAction<number>>;
 }
 
-export const BulkDepositAccountsTable = ({
-  memberId,
-  setTotalDepositAmount,
-  setTotalRebate,
-}: IBulkDepositAccountsTableProps) => {
+export const BulkDepositAccountsTable = ({ memberId }: IBulkDepositAccountsTableProps) => {
   const { t } = useTranslation();
 
-  const { setValue, watch, getValues } = useFormContext<CustomBulkDepositInput>();
+  const { setValue } = useFormContext<CustomBulkDepositInput>();
 
   const [installmentAccountIds, setInstallmentAccountIds] = useState<string[]>([]);
-
-  const [noOfInstallmentsArr, setNoOfInstallmentsArr] = useState<(number | string)[]>([]);
 
   const accountTypes = {
     [NatureOfDepositProduct.Saving]: t['addDepositSaving'],
@@ -174,13 +165,17 @@ export const BulkDepositAccountsTable = ({
           noOfInstallments: hasInstallment ? 'Enter Installment' : 'N/A',
           amount: '',
           rebate: hasInstallment ? '' : 'N/A',
-          fine: hasInstallment ? '' : 'N/A',
+          fine: hasInstallment
+            ? (bulkInstallmentsListData?.account?.getBulkInstallments?.find(
+                (installment) => installment?.accountId === account?.node?.id
+              )?.totalFine as string)
+            : 'N/A',
           installmentAmount: Number(account?.node?.installmentAmount) ?? 0,
           hasInstallment: Boolean(hasInstallment),
         };
       }) ?? []
     );
-  }, [accountListData]);
+  }, [accountListData, bulkInstallmentsListData]);
 
   const accountListSearchOptions = useMemo(
     () =>
@@ -190,110 +185,6 @@ export const BulkDepositAccountsTable = ({
       })) ?? [],
     [accountListData]
   );
-
-  const accounts = watch('accounts');
-
-  useDeepCompareEffect(() => {
-    if (accounts?.length) {
-      const temp: (number | string)[] = [];
-
-      let tempTotal = 0;
-
-      accounts?.forEach((account) => {
-        tempTotal += Number(account?.amount) ?? 0;
-        temp.push(account?.noOfInstallments);
-      });
-
-      setNoOfInstallmentsArr(temp);
-      setTotalDepositAmount(tempTotal);
-    }
-  }, [accounts]);
-
-  // console.log({ accounts });
-
-  useEffect(() => {
-    const { accounts: accountsArr } = getValues();
-
-    if (accountsArr?.length) {
-      let sum = 0;
-      let rebateSum = 0;
-
-      setValue(
-        'accounts',
-        accountsArr?.map((record) => {
-          const { total, rebate, fine } = record?.hasInstallment
-            ? getInstallmentSummary({
-                noOfInstallments: Number(record?.noOfInstallments ?? 0),
-                installmentList: bulkInstallmentsListData?.account?.getBulkInstallments?.find(
-                  (installment) => installment?.accountId === record?.accountId
-                )?.value?.data as Installment[],
-                installmentAmount: Number(record?.installmentAmount ?? 0),
-              })
-            : { total: record?.amount ?? 0, rebate: 0, fine: 0 };
-
-          sum += Number(total) + (Number(fine) ?? 0) || Number(record?.amount);
-
-          rebateSum += Number(rebate);
-
-          return (
-            record && {
-              accountId: record?.accountId,
-              noOfInstallments: record?.noOfInstallments,
-              amount: String(total || record?.amount),
-              rebate: record.hasInstallment ? String(rebate) : record?.rebate,
-              fine: record.hasInstallment ? String(fine) : record?.fine,
-              installmentAmount: record?.installmentAmount,
-              hasInstallment: record?.hasInstallment,
-            }
-          );
-        })
-      );
-
-      setTotalDepositAmount(sum);
-      setTotalRebate(rebateSum);
-    }
-  }, [JSON.stringify(noOfInstallmentsArr)]);
-
-  // useDeepCompareEffect(() => {
-  //   if (accounts?.length) {
-  //     let sum = 0;
-  //     let rebateSum = 0;
-
-  //     setValue(
-  //       'accounts',
-  //       accounts?.map((record) => {
-  //         const { total, rebate, fine } = record?.hasInstallment
-  //           ? getInstallmentSummary({
-  //               noOfInstallments: Number(record?.noOfInstallments ?? 0),
-  //               installmentList: bulkInstallmentsListData?.account?.getBulkInstallments?.find(
-  //                 (installment) => installment?.accountId === record?.accountId
-  //               )?.value?.data as Installment[],
-  //               installmentAmount: Number(record?.installmentAmount ?? 0),
-  //             })
-  //           : { total: 0, rebate: 0, fine: 0 };
-
-  //         sum += total + (Number(fine) ?? 0) || Number(record?.amount);
-
-  //         rebateSum += Number(rebate);
-
-  //         return (
-  //           record && {
-  //             accountId: record?.accountId,
-  //             noOfInstallments: record?.noOfInstallments,
-  //             amount: String(total || record?.amount),
-  //             rebate: record.hasInstallment ? String(rebate) : record?.rebate,
-  //             fine: record.hasInstallment ? String(fine) : record?.fine,
-  //             installmentAmount: record?.installmentAmount,
-  //             hasInstallment: record?.hasInstallment,
-  //           }
-  //         );
-  //       })
-  //     );
-
-  //     setTotalDepositAmount(sum);
-  //     setTotalRebate(rebateSum);
-  //   }
-  // }, [accounts]);
 
   return (
     <FormEditableTable<DepositAccountTable>
@@ -341,22 +232,47 @@ export const BulkDepositAccountsTable = ({
           accessor: 'amount',
           header: 'Amount',
           isNumeric: true,
-          // accessorFn: (row) =>
-          //   row.quantity
-          //     ? Number(row.value) * Number(row.quantity)
-          //     : '0',
+          accessorFn: (row) =>
+            getInstallmentSummary({
+              noOfInstallments: Number(row?.noOfInstallments ?? 0),
+              installmentList: bulkInstallmentsListData?.account?.getBulkInstallments?.find(
+                (installment) => installment?.accountId === row?.accountId
+              )?.value?.data as Installment[],
+              installmentAmount: Number(row?.installmentAmount ?? 0),
+              totalFine: Number(
+                bulkInstallmentsListData?.account?.getBulkInstallments?.find(
+                  (installment) => installment?.accountId === row?.accountId
+                )?.totalFine as string
+              ),
+            })?.total,
         },
         {
           accessor: 'fine',
           header: 'Fine',
           isNumeric: true,
-          accessorFn: (row) => row.fine ?? 'N/A',
+          accessorFn: (row) =>
+            (bulkInstallmentsListData?.account?.getBulkInstallments?.find(
+              (installment) => installment?.accountId === row?.accountId
+            )?.totalFine as string) ?? 'N/A',
         },
         {
           accessor: 'rebate',
           header: 'Rebate',
           isNumeric: true,
-          accessorFn: (row) => row.rebate ?? 'N/A',
+          accessorFn: (row) =>
+            getInstallmentSummary({
+              noOfInstallments: Number(row?.noOfInstallments ?? 0),
+              installmentList: bulkInstallmentsListData?.account?.getBulkInstallments?.find(
+                (installment) => installment?.accountId === row?.accountId
+              )?.value?.data as Installment[],
+              installmentAmount: Number(row?.installmentAmount ?? 0),
+              totalFine: Number(
+                bulkInstallmentsListData?.account?.getBulkInstallments?.find(
+                  (installment) => installment?.accountId === row?.accountId
+                )?.totalFine as string
+              ),
+            })?.rebate,
+          getDisabled: () => true,
         },
       ]}
       // defaultData={accountListDefaultData}

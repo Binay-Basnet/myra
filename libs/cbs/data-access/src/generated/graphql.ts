@@ -3070,14 +3070,31 @@ export type BulkDepositInstanceInput = {
   rebate?: InputMaybe<Scalars['String']>;
 };
 
+export type BulkDepositOutput = {
+  amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Localized']>;
+  date?: Maybe<Scalars['Localized']>;
+  depositedBy?: Maybe<DepositedBy>;
+  depositedOther?: Maybe<Scalars['String']>;
+  discount?: Maybe<Scalars['String']>;
+  fine?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<DepositPaymentType>;
+  rebate?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+};
+
 export type BulkDepositResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
+  record?: Maybe<BulkDepositOutput>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
 export type BulkInstallmentResult = {
   accountId?: Maybe<Scalars['String']>;
+  totalFine?: Maybe<Scalars['String']>;
   value?: Maybe<InstallmentResult>;
 };
 
@@ -29624,6 +29641,7 @@ export type GetBulkInstallmentsDataQueryVariables = Exact<{
 export type GetBulkInstallmentsDataQuery = {
   account: {
     getBulkInstallments?: Array<{
+      totalFine?: string | null;
       accountId?: string | null;
       value?: {
         data?: Array<{
@@ -54776,6 +54794,7 @@ export const GetBulkInstallmentsDataDocument = `
     query getBulkInstallmentsData($ids: [ID]!) {
   account {
     getBulkInstallments(ids: $ids) {
+      totalFine
       accountId
       value {
         data {
