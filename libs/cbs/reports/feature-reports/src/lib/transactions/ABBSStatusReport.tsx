@@ -62,11 +62,11 @@ export const ABBSStatusReport = () => {
           paths={[
             {
               label: 'Service Center Reports',
-              link: '/reports/cbs/service-center',
+              link: '/cbs/reports/cbs-reports/service-center',
             },
             {
               label: 'ABBS Report',
-              link: '/reports/cbs/service-center/abbs-status/new',
+              link: '/cbs/reports/cbs-reports/service-center/abbs-status/new',
             },
           ]}
         />

@@ -7,51 +7,51 @@ import { Box, SidebarTabs } from '@myra-ui';
 const REPORTS_INNER_TAB_LINKS = [
   // {
   //   title: 'Organization Profile / Report',
-  //   to: '/reports/cbs/organizations',
+  //   to: '/cbs/reports/cbs-reports/organizations',
   // },
   {
     title: 'Share Report',
-    to: '/reports/cbs/share',
+    to: '/cbs/reports/cbs-reports/share',
   },
   {
     title: 'Member Report',
-    to: '/reports/cbs/members',
+    to: '/cbs/reports/cbs-reports/members',
   },
   {
     title: 'Savings Report',
-    to: '/reports/cbs/savings',
+    to: '/cbs/reports/cbs-reports/savings',
   },
   {
     title: 'Loan Report',
-    to: '/reports/cbs/loan',
+    to: '/cbs/reports/cbs-reports/loan',
   },
   {
     title: 'Transaction Report',
-    to: '/reports/cbs/transactions',
+    to: '/cbs/reports/cbs-reports/transactions',
   },
   {
     title: 'Mobile Banking Reports',
-    to: '/reports/cbs/mobile-banking',
+    to: '/cbs/reports/cbs-reports/mobile-banking',
   },
   {
     title: 'Service Center Report',
-    to: '/reports/cbs/service-center',
+    to: '/cbs/reports/cbs-reports/service-center',
   },
   {
     title: 'Exception Reports',
-    to: '/reports/cbs/exceptions',
+    to: '/cbs/reports/cbs-reports/exceptions',
   },
   {
     title: 'Inventory Reports',
-    to: '/reports/cbs/inventory',
+    to: '/cbs/reports/cbs-reports/inventory',
   },
   {
     title: 'Accounting Reports',
-    to: '/reports/cbs/accounting',
+    to: '/cbs/reports/cbs-reports/accounting',
   },
   {
     title: 'Others Report',
-    to: '/reports/cbs/others',
+    to: '/cbs/reports/cbs-reports/others',
   },
 ];
 

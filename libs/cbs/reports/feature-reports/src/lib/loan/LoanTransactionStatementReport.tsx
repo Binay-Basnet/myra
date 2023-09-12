@@ -53,10 +53,10 @@ export const LoanTransactionStatementReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Loan Reports', link: '/reports/cbs/loan' },
+            { label: 'Loan Reports', link: '/cbs/reports/cbs-reports/loan' },
             {
               label: ReportEnum.LOAN_TRANSACTION_STATEMENT_REPORT,
-              link: '/reports/cbs/loan/statement/new',
+              link: '/cbs/reports/cbs-reports/loan/statement/new',
             },
           ]}
         />

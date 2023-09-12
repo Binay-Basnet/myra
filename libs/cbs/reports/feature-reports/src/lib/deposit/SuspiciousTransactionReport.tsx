@@ -90,10 +90,10 @@ export const SuspiousTransactionReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Saving Reports', link: '/reports/cbs/savings' },
+            { label: 'Saving Reports', link: '/cbs/reports/cbs-reports/savings' },
             {
               label: 'Suspicious Transaction Report',
-              link: '/reports/cbs/savings/suspicious-transactions/new',
+              link: '/cbs/reports/cbs-reports/savings/suspicious-transactions/new',
             },
           ]}
         />
@@ -125,7 +125,7 @@ export const SuspiousTransactionReport = () => {
                     variant="link"
                     onClick={() =>
                       router.push(
-                        `/reports/cbs/savings/suspicious-transactions/details?id=${props?.row?.original?.id}`
+                        `/cbs/reports/cbs-reports/savings/suspicious-transactions/details?id=${props?.row?.original?.id}`
                       )
                     }
                   >

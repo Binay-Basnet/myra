@@ -44,10 +44,10 @@ export const CopomisImportMemberReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Other Report', link: '/reports/cbs/others' },
+            { label: 'Other Report', link: '/cbs/reports/cbs-reports/others' },
             {
               label: 'Copomis Import Member Report',
-              link: '/reports/cbs/others/copomis-import-member/new',
+              link: '/cbs/reports/cbs-reports/others/copomis-import-member/new',
             },
           ]}
         />

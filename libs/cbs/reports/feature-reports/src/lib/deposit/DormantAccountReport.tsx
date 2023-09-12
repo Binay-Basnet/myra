@@ -46,10 +46,10 @@ export const DormantAccountsReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Saving Reports', link: '/reports/cbs/savings' },
+            { label: 'Saving Reports', link: '/cbs/reports/cbs-reports/savings' },
             {
               label: 'Dormant Account List Report',
-              link: '/reports/cbs/savings/dormant-account/new',
+              link: '/cbs/reports/cbs-reports/savings/dormant-account/new',
             },
           ]}
         />

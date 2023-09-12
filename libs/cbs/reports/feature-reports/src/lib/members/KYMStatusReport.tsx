@@ -63,10 +63,10 @@ export const KYMStatusReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Members Reports', link: '/reports/cbs/members' },
+            { label: 'Members Reports', link: '/cbs/reports/cbs-reports/members' },
             {
               label: 'KYM Status Report',
-              link: '/reports/cbs/members/kym-status/new',
+              link: '/cbs/reports/cbs-reports/members/kym-status/new',
             },
           ]}
         />

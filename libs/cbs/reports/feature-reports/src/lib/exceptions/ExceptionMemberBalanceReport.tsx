@@ -63,10 +63,10 @@ export const ExceptionMemberBalanceReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Exception Reports', link: '/reports/cbs/exceptions' },
+            { label: 'Exception Reports', link: '/cbs/reports/cbs-reports/exceptions' },
             {
               label: 'Member Wise Balance Execption Report',
-              link: '/reports/cbs/exceptions/member-wise-balance/new',
+              link: '/cbs/reports/cbs-reports/exceptions/member-wise-balance/new',
             },
           ]}
         />

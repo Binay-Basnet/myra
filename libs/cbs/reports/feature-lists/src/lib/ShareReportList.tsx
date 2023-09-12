@@ -6,24 +6,30 @@ import { Table } from '@myra-ui/table';
 
 import { PopoverComponent } from '@coop/myra/components';
 
-import { ReportGroup, REPORTS } from '../constants/REPORTS';
+import { REPORTS } from '../constants/REPORTS';
 
-export const ShareReportList = () => (
-  <Box display="flex" flexDir="column" p="s16" gap="s16">
-    <Text fontSize="r3" color="gray.800" fontWeight="600" py="s16">
-      Share Report
-    </Text>
-    {REPORTS[ReportGroup.SHARE].map((report) => (
-      <ReportLinkText
-        key={report.id}
-        link={report.link ? `/reports/cbs/share/${report.link}/new` : undefined}
-      >
-        {/* {report.id} -  */}
-        {report.report}
-      </ReportLinkText>
-    ))}
-  </Box>
-);
+export const ShareReportList = () => {
+  const router = useRouter();
+  const listName = router.query['report-group'] as keyof typeof REPORTS;
+  return (
+    <Box display="flex" flexDir="column" p="s16" gap="s16">
+      <Text fontSize="r3" color="gray.800" fontWeight="600" py="s16">
+        Share Report
+      </Text>
+      {REPORTS[listName].map((report) => (
+        <ReportLinkText
+          key={report.id}
+          link={
+            'link' in report ? `/cbs/reports/cbs-reports/${listName}/${report.link}/new` : undefined
+          }
+        >
+          {/* {report.id} -  */}
+          {report.report}
+        </ReportLinkText>
+      ))}
+    </Box>
+  );
+};
 
 export const ShareReportTable = () => (
   <Table

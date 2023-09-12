@@ -56,10 +56,10 @@ export const BODDetailsRegisterReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Other Report', link: '/reports/cbs/others' },
+            { label: 'Other Report', link: '/cbs/reports/cbs-reports/others' },
             {
               label: 'Committee Registered Details Report',
-              link: '/reports/cbs/others/committee-register/new',
+              link: '/cbs/reports/cbs-reports/others/committee-register/new',
             },
           ]}
         />

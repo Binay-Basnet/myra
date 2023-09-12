@@ -109,12 +109,14 @@ export const DayBookReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/transactions'
+                : '/accounting/reports/transactions',
             },
             {
               label: 'Day Book Report',
               link: isCbs
-                ? '/reports/cbs/transactions/day-book/new'
+                ? '/cbs/reports/cbs-reports/transactions/day-book/new'
                 : '/accounting/reports/transactions/day-book/new',
             },
           ]}

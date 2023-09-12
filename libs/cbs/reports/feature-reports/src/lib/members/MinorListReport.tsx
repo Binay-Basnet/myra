@@ -71,10 +71,10 @@ export const MinorListReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Members Reports', link: '/reports/cbs/members' },
+            { label: 'Members Reports', link: '/cbs/reports/cbs-reports/members' },
             {
               label: 'Minor List Report',
-              link: '/reports/cbs/members/minor-list/new',
+              link: '/cbs/reports/cbs-reports/members/minor-list/new',
             },
           ]}
         />
