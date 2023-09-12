@@ -227,6 +227,7 @@ export const BulkDepositAccountsTable = ({ memberId }: IBulkDepositAccountsTable
           accessor: 'noOfInstallments',
           header: 'No of Installments',
           isNumeric: true,
+          getDisabled: (row) => !row?.hasInstallment,
         },
         {
           accessor: 'amount',
