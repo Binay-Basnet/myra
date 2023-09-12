@@ -62,10 +62,6 @@ export const AddBulkDeposit = () => {
 
   const queryClient = useQueryClient();
 
-  const [totalDepositAmount, setTotalDepositAmount] = useState<number>(0);
-
-  const [totalRebate, setTotalRebate] = useState<number>(0);
-
   const methods = useForm<CustomBulkDepositInput>({
     defaultValues: {
       payment_type: DepositPaymentType.Cash,
@@ -102,8 +98,6 @@ export const AddBulkDeposit = () => {
 
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
-  const returnAmount = Number(totalCashPaid) - totalDepositAmount;
-
   const handleSubmit = () => {
     const values = getValues();
     let filteredValues = {
@@ -128,11 +122,12 @@ export const AddBulkDeposit = () => {
         disableDenomination: Boolean(values.cash?.disableDenomination),
         total: String(totalCashPaid),
         returned_amount: String(returnAmount),
-        denominations:
-          values.cash?.denominations?.map(({ value, quantity }) => ({
-            value: cashOptions[value as string],
-            quantity,
-          })) ?? [],
+        denominations: !disableDenomination
+          ? values?.cash?.denominations?.map(({ value, quantity }) => ({
+              value: cashOptions[value as string],
+              quantity,
+            })) ?? []
+          : [],
       };
     }
 
@@ -159,6 +154,15 @@ export const AddBulkDeposit = () => {
   };
 
   const accounts = watch('accounts');
+  const totalReb = accounts?.reduce(
+    (accumulator, curr) => accumulator + Number(curr?.rebate !== 'N/A' ? curr?.rebate : 0),
+    0
+  );
+  const totalDep = accounts?.reduce(
+    (accumulator, curr) => accumulator + Number(curr?.amount || 0),
+    0
+  );
+  const returnAmount = Number(totalCashPaid) - Number(totalDep || 0);
 
   return (
     <>
@@ -196,7 +200,7 @@ export const AddBulkDeposit = () => {
                         memberID: memberDetailData?.id,
                         gender: memberDetailData?.gender,
                         age: memberDetailData?.age,
-                        maritalStatus: memberDetailData?.maritalStatus,
+                        maritalStatus: memberDetailData?.maritalStatus as string,
                         dateJoined: memberDetailData?.dateJoined,
                         // branch: 'Basantapur',
                         phoneNo: memberDetailData?.contact,
@@ -204,31 +208,19 @@ export const AddBulkDeposit = () => {
                         address: memberDetailData?.address,
                       }}
                       // notice="KYM needs to be updated"
-                      signaturePath={memberSignatureUrl}
-                      citizenshipPath={memberCitizenshipUrl}
+                      signaturePath={memberSignatureUrl as string}
+                      citizenshipPath={memberCitizenshipUrl as string}
                       cardBg="neutralColorLight.Gray-10"
                     />
                   )}
 
-                  {memberId && (
-                    <BulkDepositAccountsTable
-                      memberId={memberId}
-                      setTotalDepositAmount={setTotalDepositAmount}
-                      setTotalRebate={setTotalRebate}
-                    />
-                  )}
+                  {memberId && <BulkDepositAccountsTable memberId={memberId} />}
 
-                  {accounts?.length && (
-                    <BulkDepositAccountsSummary
-                      memberId={memberId}
-                      totalDepositAmount={totalDepositAmount}
-                      totalRebate={totalRebate}
-                    />
-                  )}
+                  {accounts?.length && <BulkDepositAccountsSummary memberId={memberId} />}
                 </Box>
               </Box>
 
-              <Payment mode={mode} totalDeposit={totalDepositAmount} />
+              <Payment mode={mode} totalDeposit={Number(totalDep || 0)} />
             </form>
           </FormProvider>
         </Box>
@@ -245,7 +237,7 @@ export const AddBulkDeposit = () => {
                       Total Deposit Amount
                     </Text>
                     <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
-                      {totalDepositAmount + totalRebate ?? '---'}
+                      {Number(totalDep || '0') + Number(totalReb || '0')}
                     </Text>
                   </Box>
                 ) : (

@@ -10,15 +10,9 @@ import {
 
 interface IBulkDepositAccountsSummaryProps {
   memberId: string;
-  totalDepositAmount: number;
-  totalRebate: number;
 }
 
-export const BulkDepositAccountsSummary = ({
-  memberId,
-  totalDepositAmount,
-  totalRebate,
-}: IBulkDepositAccountsSummaryProps) => {
+export const BulkDepositAccountsSummary = ({ memberId }: IBulkDepositAccountsSummaryProps) => {
   const { watch } = useFormContext<BulkDepositInput>();
 
   const accounts = watch('accounts');
@@ -49,6 +43,14 @@ export const BulkDepositAccountsSummary = ({
       enabled: !!memberId,
     }
   );
+  const totalReb = accounts?.reduce(
+    (accumulator, curr) => accumulator + Number(curr?.rebate !== 'N/A' ? curr?.rebate : 0),
+    0
+  );
+  const totalDep = accounts?.reduce(
+    (accumulator, curr) => accumulator + Number(curr?.amount || 0),
+    0
+  );
 
   return (
     <Box bg="background.500" p="s16" display="flex" flexDirection="column" gap="s10">
@@ -70,11 +72,11 @@ export const BulkDepositAccountsSummary = ({
 
             {!!Number(accountInfo?.fine) && (
               <Box display="flex" justifyContent="space-between">
-                <Text fontSize="s3" fontWeight={500} color="gray.600">
+                <Text fontSize="s3" fontWeight={500} color="danger.500">
                   Fine
                 </Text>
                 <Text fontSize="s3" fontWeight={500} color="danger.500">
-                  {`+ ${accountInfo?.fine}`}
+                  {`+ ${+(accountInfo?.fine || 0)}`}
                 </Text>
               </Box>
             )}
@@ -94,11 +96,11 @@ export const BulkDepositAccountsSummary = ({
       })}
 
       <Box display="flex" justifyContent="space-between">
-        <Text fontSize="s3" fontWeight={500} color="gray.600">
+        <Text fontSize="s3" fontWeight={500} color="primary.600">
           Total Deposit
         </Text>
-        <Text fontSize="s3" fontWeight={500} color="gray.800">
-          {totalDepositAmount + totalRebate}
+        <Text fontSize="s3" fontWeight={500} color="primary.800">
+          {Number(totalDep || '0') + Number(totalReb || '0')}
         </Text>
       </Box>
     </Box>

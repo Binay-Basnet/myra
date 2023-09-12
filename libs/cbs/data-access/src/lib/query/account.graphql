@@ -476,6 +476,8 @@ query getInstallmentsListData($id: ID!, $from: String, $to: String, $fromN: Int,
 query getBulkInstallmentsData($ids: [ID]!) {
   account {
     getBulkInstallments(ids: $ids) {
+      totalFine
+
       accountId
       value {
         data {
