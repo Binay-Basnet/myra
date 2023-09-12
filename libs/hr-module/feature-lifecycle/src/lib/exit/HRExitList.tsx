@@ -83,6 +83,11 @@ export const HrLifecycleExitList = () => {
             'Many',
           pageInfo: onBoardingData?.hr?.employeelifecycle?.employeeExit?.listEmployeeExit?.pageInfo,
         }}
+        rowOnClick={(row) =>
+          router?.push(
+            `${ROUTES?.HRMODULE_EMPLOYEES_DETAIL}?id=${row?.node?.employeeId}&tab=lifecycle&subTab=exit`
+          )
+        }
       />
     </>
   );
