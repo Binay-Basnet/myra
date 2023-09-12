@@ -33,12 +33,15 @@ export const OtherFundDistributionTable = () => {
     let tempRemProfit = Number(netProfit);
 
     if (generalReserveFund) {
-      tempRemProfit -= Number(generalReserveFund?.[0]?.thisYear);
+      generalReserveFund?.forEach((row) => {
+        tempRemProfit -= Number(row?.amount || 0);
+      });
     }
 
     if (distributionTable) {
-      tempRemProfit -=
-        Number(distributionTable?.[0]?.thisYear) + Number(distributionTable?.[1]?.thisYear);
+      distributionTable?.forEach((row) => {
+        tempRemProfit -= Number(row?.amount || 0);
+      });
     }
 
     return Number(tempRemProfit.toFixed(2));
@@ -71,7 +74,7 @@ export const OtherFundDistributionTable = () => {
 
   const columns: Column<OtherFundDistributionTableType>[] = [
     {
-      accessor: 'accountCode',
+      accessor: 'coaHead',
       header: 'Other Fund Distribution',
       fieldType: 'search',
       searchOptions: accountSearchOptions,
@@ -88,15 +91,11 @@ export const OtherFundDistributionTable = () => {
       getDisabled: () => router?.asPath?.includes('/view'),
     },
     {
-      accessor: 'thisYear',
-      header: 'This Year',
+      accessor: 'amount',
+      header: 'Amount',
       isNumeric: true,
       accessorFn: (row) => ((Number(row.percent) / 100) * remainingProfit).toFixed(2),
-    },
-    {
-      accessor: 'lastYear',
-      header: 'Last Year',
-      isNumeric: true,
+      getDisabled: () => router?.asPath?.includes('/view'),
     },
   ];
 
@@ -114,14 +113,14 @@ export const OtherFundDistributionTable = () => {
       {
         label:
           // eslint-disable-next-line no-return-assign
-          otherFunds?.reduce((sum, fund) => (sum += Number(fund.thisYear)), 0).toFixed(2) ?? '',
+          otherFunds?.reduce((sum, fund) => (sum += Number(fund.amount)), 0).toFixed(2) ?? '',
         width: 'auto',
         isNumeric: true,
       },
       {
         label:
           // eslint-disable-next-line no-return-assign
-          otherFunds?.reduce((sum, fund) => (sum += Number(fund.lastYear)), 0).toFixed(2) ?? '',
+          otherFunds?.reduce((sum, fund) => (sum += Number(fund.amount)), 0).toFixed(2) ?? '',
         width: 'auto',
         isNumeric: true,
       },

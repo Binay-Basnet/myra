@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
@@ -6,8 +6,9 @@ import { useRouter } from 'next/router';
 import { GridItem } from '@myra-ui';
 import { Column } from '@myra-ui/editable-table';
 
+import { useListLeafCoaHeadsQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 import { TableOverview, TableOverviewColumnType } from './TableOverview';
 import { CustomFundManagementInput, DistributionTableType } from '../lib/type';
@@ -23,13 +24,46 @@ export const DistributionTable = () => {
 
   const remainingProfit =
     netProfit && generalReserveFund
-      ? Number((Number(netProfit ?? 0) - Number(generalReserveFund?.[0]?.thisYear)).toFixed(2))
+      ? Number((Number(netProfit ?? 0) - Number(generalReserveFund?.[0]?.amount)).toFixed(2))
       : 0;
+
+  const [searchTerm, setSearchTerm] = useState<string | null>(null);
+
+  const { data: leafCoaHeadsListData, isFetching } = useListLeafCoaHeadsQuery({
+    pagination: {
+      ...getPaginationQuery(),
+      // first: -1,
+      order: {
+        arrange: 'ASC',
+        column: 'accountCode',
+      },
+    },
+    filter: {
+      query: searchTerm,
+    },
+  });
+
+  const leafCoaHeadsList = leafCoaHeadsListData?.settings?.chartsOfAccount?.listLeafCoaHeads?.edges;
+
+  const accountSearchOptions = useMemo(
+    () =>
+      leafCoaHeadsList?.map((head) => ({
+        label: `${head?.node?.accountCode} - ${head?.node?.Name}`,
+        value: head?.node?.accountCode as string,
+      })),
+    [leafCoaHeadsList]
+  );
 
   const columns: Column<DistributionTableType>[] = [
     {
-      accessor: 'distribution',
-      header: 'Distribution',
+      accessor: 'coaHead',
+      header: 'COA Head',
+      fieldType: 'search',
+      searchOptions: accountSearchOptions,
+      searchLoading: isFetching,
+      searchCallback: (newSearch) => {
+        setSearchTerm(newSearch);
+      },
       getDisabled: () => router?.asPath?.includes('/view'),
     },
     {
@@ -39,15 +73,11 @@ export const DistributionTable = () => {
       getDisabled: () => router?.asPath?.includes('/view'),
     },
     {
-      accessor: 'thisYear',
-      header: 'This Year',
+      accessor: 'amount',
+      header: 'Amount',
       isNumeric: true,
       accessorFn: (row) => ((Number(row.percent) / 100) * remainingProfit).toFixed(2),
-    },
-    {
-      accessor: 'lastYear',
-      header: 'Last Year',
-      isNumeric: true,
+      getDisabled: () => router?.asPath?.includes('/view'),
     },
   ];
 
@@ -61,8 +91,9 @@ export const DistributionTable = () => {
     let tempRemProfit = Number(remainingProfit);
 
     if (distributionTable) {
-      tempRemProfit -=
-        Number(distributionTable?.[0]?.thisYear) + Number(distributionTable?.[1]?.thisYear);
+      distributionTable?.forEach((row) => {
+        tempRemProfit -= Number(row?.amount || 0);
+      });
     }
 
     return Number(tempRemProfit.toFixed(2));
@@ -74,15 +105,18 @@ export const DistributionTable = () => {
     setValue(
       'otherFunds',
       values?.otherFunds?.map((other) => ({
-        accountCode: other?.accountCode,
+        coaHead: other?.coaHead,
         percent: other?.percent as number,
-        thisYear: Number(
-          ((Number(other?.percent || 0) / 100) * profitAfterDistribution).toFixed(2)
-        ),
-        lastYear: 0,
+        amount: ((Number(other?.percent || 0) / 100) * profitAfterDistribution).toFixed(2),
       }))
     );
   }, [distributionTable]);
+
+  const distributionTableTotal =
+    distributionTable?.reduce(
+      (accumulator: number, curr) => accumulator + Number(curr.amount),
+      0 as number
+    ) ?? 0;
 
   const distributionTableSummary: TableOverviewColumnType[] = useMemo(
     () => [
@@ -91,41 +125,29 @@ export const DistributionTable = () => {
       {
         label:
           remainingProfit && distributionTable?.length
-            ? amountConverter(
-                (
-                  remainingProfit -
-                  Number(distributionTable[0].thisYear) -
-                  Number(distributionTable[1].thisYear)
-                ).toFixed(2)
-              )
+            ? amountConverter((remainingProfit - distributionTableTotal).toFixed(2))
             : 0,
         width: 'auto',
         isNumeric: true,
       },
-      {
-        label: distributionTable?.length
-          ? amountConverter(
-              (
-                Number(distributionTable[0].lastYear) + Number(distributionTable[1].lastYear)
-              ).toFixed(2)
-            )
-          : 0,
-        width: 'auto',
-        isNumeric: true,
-      },
+      // {
+      //   label: distributionTable?.length
+      //     ? amountConverter(
+      //         (
+      //           Number(distributionTable[0].lastYear) + Number(distributionTable[1].lastYear)
+      //         ).toFixed(2)
+      //       )
+      //     : 0,
+      //   width: 'auto',
+      //   isNumeric: true,
+      // },
     ],
     [distributionTable, remainingProfit]
   );
 
   return (
     <GridItem colSpan={3} display="flex" flexDirection="column" gap="s4">
-      <FormEditableTable<DistributionTableType>
-        name="distributionTable"
-        columns={columns}
-        canAddRow={false}
-        canDeleteRow={false}
-        hideSN
-      />
+      <FormEditableTable<DistributionTableType> name="distributionTable" columns={columns} hideSN />
 
       <TableOverview columns={distributionTableSummary} />
     </GridItem>

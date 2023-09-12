@@ -29,8 +29,10 @@ import { CustomFundManagementInput } from './type';
 import {
   BasicFundManagement,
   DistributionTable,
+  IncomeTax,
   OtherFundDistributionTable,
   ParticularTable,
+  StaffBonusFund,
   TransferPLtoHO,
 } from '../components';
 
@@ -45,32 +47,7 @@ export const NewFundManagement = () => {
     onToggle: onConfirmToggle,
   } = useDisclosure();
 
-  const methods = useForm<CustomFundManagementInput>({
-    defaultValues: {
-      generalReserveFund: [
-        {
-          particular: '20.1 General Reserve Fund',
-          percent: 0,
-          thisYear: 0,
-          lastYear: 0,
-        },
-      ],
-      distributionTable: [
-        {
-          distribution: '20.2 Patronage Refund Fund',
-          percent: 0,
-          thisYear: 0,
-          lastYear: 0,
-        },
-        {
-          distribution: '20.3 Cooperative Promotion Fund',
-          percent: 0,
-          thisYear: 0,
-          lastYear: 0,
-        },
-      ],
-    },
-  });
+  const methods = useForm<CustomFundManagementInput>();
 
   const { watch, getValues, reset } = methods;
 
@@ -93,39 +70,20 @@ export const NewFundManagement = () => {
 
       const grossProfit = Number(currentFundAmount?.amount?.amount || 0);
 
-      const staffBonusFund = Number(formData?.staffBonusFund);
+      const staffBonusAmount = Number(formData?.staffBonus?.amount || 0);
 
-      const profitBeforeTax = Number(
-        (grossProfit - (staffBonusFund / 100) * grossProfit || 0).toFixed(2)
-      );
+      const incomeTaxAmount = Number(formData?.incometax?.amount || 0);
 
-      const incomeTax = Number(formData?.incomeTax || 0);
+      const netProfit = (grossProfit - staffBonusAmount - incomeTaxAmount).toFixed(2);
 
-      const netProfit = Number(
-        (profitBeforeTax - (incomeTax / 100) * profitBeforeTax || 0).toFixed(2)
-      );
+      const generalReserveFund =
+        formData?.fundDistribution?.filter((fund) => fund?.tableIndex === 0) ?? [];
 
-      const generalReserveFundPercent = Number(formData?.generalReserveFund || 0);
+      const distributionFund =
+        formData?.fundDistribution?.filter((fund) => fund?.tableIndex === 1) ?? [];
 
-      const generalReserveFund = Number(
-        ((generalReserveFundPercent / 100) * Number(netProfit) || 0).toFixed(2)
-      );
-
-      const remainingProfit = netProfit && generalReserveFund ? netProfit - generalReserveFund : 0;
-
-      const patronageRefundFundPercent = Number(formData?.patronageRefundFund || 0);
-
-      const patronageRefundFund = Number(
-        ((patronageRefundFundPercent / 100) * remainingProfit).toFixed(2)
-      );
-
-      const cooperativePromotionFundPercent = Number(formData?.cooperativePromotionFund || 0);
-
-      const cooperativePromotionFund = Number(
-        ((cooperativePromotionFundPercent / 100) * remainingProfit).toFixed(2)
-      );
-
-      const finalRemainingProfit = remainingProfit - patronageRefundFund - cooperativePromotionFund;
+      const otherFundsTable =
+        formData?.fundDistribution?.filter((fund) => fund?.tableIndex === 2) ?? [];
 
       reset({
         // ...methods.getValues(),
@@ -135,45 +93,45 @@ export const NewFundManagement = () => {
           currentFundAmount?.amount?.amount as string,
           currentFundAmount?.amount?.amountType as string
         ),
-        staffBonusFund: formData?.staffBonusFund,
-        incomeTax: formData?.incomeTax,
-        generalReserveFund: [
-          {
-            particular: '20.1 General Reserve Fund',
-            percent: Number(formData?.generalReserveFund || 0),
-            thisYear: generalReserveFund,
-            lastYear: 0,
-          },
-        ],
-        distributionTable: [
-          {
-            distribution: '20.2 Patronage Refund Fund',
-            percent: Number(formData?.patronageRefundFund || 0),
-            thisYear: patronageRefundFund,
-            lastYear: 0,
-          },
-          {
-            distribution: '20.3 Cooperative Promotion Fund',
-            percent: Number(formData?.cooperativePromotionFund || 0),
-            thisYear: cooperativePromotionFund,
-            lastYear: 0,
-          },
-        ],
-        otherFunds: formData?.otherFunds?.map((other) => ({
-          accountCode: {
-            label: other?.accountName,
-            value: other?.accountCode,
+        staffBonus: {
+          coaHead: {
+            label: formData?.staffBonus?.accountName,
+            value: formData?.staffBonus?.accountCode,
           } as unknown as string,
-          percent: other?.percent as number,
-          thisYear: Number(((Number(other?.percent || 0) / 100) * finalRemainingProfit).toFixed(2)),
+          percent: formData?.staffBonus?.percent,
+          amount: formData?.staffBonus?.amount as string,
+        },
+        incomeTax: {
+          coaHead: {
+            label: formData?.incometax?.accountName,
+            value: formData?.incometax?.accountCode,
+          } as unknown as string,
+          percent: formData?.incometax?.percent,
+          amount: formData?.incometax?.amount as string,
+        },
+        generalReserveFund: generalReserveFund?.map((g) => ({
+          coaHead: { label: g?.accountName, value: g?.accountCode } as unknown as string,
+          percent: String(g?.percent),
+          amount: g?.amount as string,
         })),
+        distributionTable: distributionFund?.map((g) => ({
+          coaHead: { label: g?.accountName, value: g?.accountCode } as unknown as string,
+          percent: String(g?.percent),
+          amount: g?.amount as string,
+        })),
+        otherFunds: otherFundsTable?.map((g) => ({
+          coaHead: { label: g?.accountName, value: g?.accountCode } as unknown as string,
+          percent: String(g?.percent),
+          amount: g?.amount as string,
+        })),
+        netProfit,
       });
     }
   }, [editData, currentFundAmount]);
 
   const isSubmitDisabled = useMemo(() => {
     if (
-      router?.asPath?.includes('/view') &&
+      router?.asPath?.includes('/view') ||
       editData?.profitToFundManagement?.get?.record?.state === 'COMPLETED'
     ) {
       return true;
@@ -196,30 +154,65 @@ export const NewFundManagement = () => {
   const handleSubmit = () => {
     const values = getValues();
 
+    const staffBonusCoaHead = values?.['staffBonus']?.coaHead as unknown;
+    const incomeTaxCoaHead = values?.['incomeTax']?.coaHead as unknown;
+
     const filteredValues = {
-      staffBonusFund: values['staffBonusFund'],
-      incomeTax: values['incomeTax'],
-      generalReserveFund: values['generalReserveFund'][0].percent,
-      patronageRefundFund: values['distributionTable'][0].percent,
-      cooperativePromotionFund: values['distributionTable'][1].percent,
-      otherFunds: values?.otherFunds?.map(({ accountCode, percent }) => ({
-        accountCode: (accountCode as unknown as { value: string })?.value,
-        percent,
-      })),
+      staffBonus: {
+        coaHead:
+          staffBonusCoaHead && typeof staffBonusCoaHead === 'object' && 'value' in staffBonusCoaHead
+            ? staffBonusCoaHead?.['value']
+            : staffBonusCoaHead,
+        percent: values['staffBonus']?.percent,
+        amount: values['staffBonus']?.amount,
+      },
+      incomeTax: {
+        coaHead:
+          incomeTaxCoaHead && typeof incomeTaxCoaHead === 'object' && 'value' in incomeTaxCoaHead
+            ? incomeTaxCoaHead?.['value']
+            : incomeTaxCoaHead,
+        percent: values['incomeTax']?.percent,
+        amount: values['incomeTax']?.amount,
+      },
+
+      others: [
+        ...(values?.generalReserveFund?.map((gen) => ({
+          coaHead: (gen?.coaHead as unknown as { value: string })?.value,
+          amount: gen?.amount,
+          percent: gen?.percent,
+          tableIndex: 0,
+        })) ?? []),
+        ...(values?.distributionTable?.map((dis) => ({
+          coaHead: (dis?.coaHead as unknown as { value: string })?.value,
+          amount: dis?.amount,
+          percent: dis?.percent,
+          tableIndex: 1,
+        })) ?? []),
+        ...(values?.otherFunds?.map((oth) => ({
+          coaHead: (oth?.coaHead as unknown as { value: string })?.value,
+          amount: oth?.amount,
+          percent: oth?.percent,
+          tableIndex: 2,
+        })) ?? []),
+      ],
     };
 
     asyncToast({
       id: 'add-profit-to-fund-management',
       msgs: {
-        loading: 'Adding profit to fund management data',
-        success: 'Added profit to fund management',
+        loading: router?.asPath?.includes('edit')
+          ? 'Updating profit to fund management data'
+          : 'Adding profit to fund management data',
+        success: router?.asPath?.includes('edit')
+          ? 'Updated profit to fund management'
+          : 'Added profit to fund management',
       },
       promise: id
         ? addProfitToFundManagement({
             id: id as string,
-            data: filteredValues as FundManagementInput,
+            data: filteredValues as unknown as FundManagementInput,
           })
-        : addProfitToFundManagement({ data: filteredValues as FundManagementInput }),
+        : addProfitToFundManagement({ data: filteredValues as unknown as FundManagementInput }),
       onSuccess: () => router.back(),
     });
   };
@@ -277,6 +270,10 @@ export const NewFundManagement = () => {
             ) : (
               <>
                 <BasicFundManagement />
+
+                <StaffBonusFund />
+
+                <IncomeTax />
 
                 {Number(netProfitField) ? (
                   <FormSection

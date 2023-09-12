@@ -9,9 +9,10 @@ interface FormAmountInputProps<T> extends InputProps {
   name: Path<T>;
   control?: Control<T>;
   rules?: UseControllerProps['rules'];
+  onChangeAction?: (val: string) => void;
 }
 
-export const FormAmountInput = <T,>({ name, ...rest }: FormAmountInputProps<T>) => {
+export const FormAmountInput = <T,>({ name, onChangeAction, ...rest }: FormAmountInputProps<T>) => {
   const methods = useFormContext();
 
   const {
@@ -28,7 +29,10 @@ export const FormAmountInput = <T,>({ name, ...rest }: FormAmountInputProps<T>) 
       render={({ field: { onChange, value, ...fieldProps } }) => (
         <AmountInput
           id={name}
-          onChange={onChange}
+          onChange={(e) => {
+            onChange(e?.target?.value);
+            onChangeAction && onChangeAction(e?.target?.value);
+          }}
           value={value}
           errorText={get(errors, name)?.message as string}
           {...fieldProps}

@@ -7,9 +7,14 @@ interface IFormNumberInputProps<T> extends InputProps {
   name: Path<T>;
   control?: Control<T>;
   rules?: UseControllerProps['rules'];
+  onChangeAction?: (val: string) => void;
 }
 
-export const FormNumberInput = <T,>({ name, ...rest }: IFormNumberInputProps<T>) => {
+export const FormNumberInput = <T,>({
+  name,
+  onChangeAction,
+  ...rest
+}: IFormNumberInputProps<T>) => {
   const methods = useFormContext<T>();
 
   const {
@@ -29,7 +34,10 @@ export const FormNumberInput = <T,>({ name, ...rest }: IFormNumberInputProps<T>)
           errorText={errors[name]?.message as string}
           type="number"
           value={value as number}
-          onChange={onChange}
+          onChange={(e) => {
+            onChange(e?.target?.value);
+            onChangeAction && onChangeAction(e?.target?.value);
+          }}
           {...fieldProps}
           {...rest}
         />

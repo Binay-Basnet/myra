@@ -1108,6 +1108,7 @@ export type AdjustedLedgerReportData = {
   cr?: Maybe<Scalars['String']>;
   dr?: Maybe<Scalars['String']>;
   ledgerId: Scalars['String'];
+  ledgerName: Scalars['String'];
 };
 
 export type AdjustedLedgerReportInput = {
@@ -6532,8 +6533,8 @@ export type EachEarningComponentRecords = {
 };
 
 export type EachEmployeeExitRecords = {
-  data: EmployeeExitRecord;
-  error: QueryError;
+  data?: Maybe<EmployeeExitRecord>;
+  error?: Maybe<QueryError>;
 };
 
 export type EachEmployeeOnboardingRecord = {
@@ -8385,17 +8386,29 @@ export const FrequencyTenure = {
 } as const;
 
 export type FrequencyTenure = typeof FrequencyTenure[keyof typeof FrequencyTenure];
+export type FundDistributionEntry = {
+  accountCode?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  percent?: Maybe<Scalars['Float']>;
+  tableIndex?: Maybe<Scalars['Int']>;
+};
+
+export type FundDistributionEntryInput = {
+  amount: Scalars['String'];
+  coaHead: Scalars['String'];
+  percent?: InputMaybe<Scalars['Float']>;
+  tableIndex?: InputMaybe<Scalars['Int']>;
+};
+
 export type FundManagement = {
-  cooperativePromotionFund?: Maybe<Scalars['Float']>;
   fiscalYear?: Maybe<Scalars['String']>;
-  generalReserveFund?: Maybe<Scalars['Float']>;
+  fundDistribution?: Maybe<Array<Maybe<FundDistributionEntry>>>;
   grossProfit?: Maybe<Scalars['String']>;
   grossProfitCoa?: Maybe<Scalars['String']>;
-  incomeTax?: Maybe<Scalars['Float']>;
+  incometax: FundDistributionEntry;
   journalId?: Maybe<Scalars['String']>;
-  otherFunds?: Maybe<Array<Maybe<OtherFundDistribution>>>;
-  patronageRefundFund?: Maybe<Scalars['Float']>;
-  staffBonusFund?: Maybe<Scalars['Float']>;
+  staffBonus: FundDistributionEntry;
   state?: Maybe<FundManagementState>;
   valueDate?: Maybe<Scalars['Localized']>;
 };
@@ -8419,18 +8432,15 @@ export type FundManagementInfo = {
   fiscalYear?: Maybe<Scalars['String']>;
   grossProfit?: Maybe<BalanceValue>;
   id?: Maybe<Scalars['String']>;
-  incomeTax?: Maybe<Scalars['Float']>;
-  staffBonusFund?: Maybe<Scalars['Float']>;
+  netProfit?: Maybe<BalanceValue>;
+  profitBeforeTax?: Maybe<BalanceValue>;
   state?: Maybe<FundManagementState>;
 };
 
 export type FundManagementInput = {
-  cooperativePromotionFund?: InputMaybe<Scalars['Float']>;
-  generalReserveFund?: InputMaybe<Scalars['Float']>;
-  incomeTax?: InputMaybe<Scalars['Float']>;
-  otherFunds?: InputMaybe<Array<InputMaybe<OtherFundDistributionInput>>>;
-  patronageRefundFund?: InputMaybe<Scalars['Float']>;
-  staffBonusFund?: InputMaybe<Scalars['Float']>;
+  incomeTax: FundDistributionEntryInput;
+  others: Array<FundDistributionEntryInput>;
+  staffBonus: FundDistributionEntryInput;
 };
 
 export type FundManagementMutation = {
@@ -17957,17 +17967,6 @@ export type OrganizationStatisticsInput = {
   totalMembers: Scalars['Int'];
 };
 
-export type OtherFundDistribution = {
-  accountCode?: Maybe<Scalars['String']>;
-  accountName?: Maybe<Scalars['String']>;
-  percent?: Maybe<Scalars['Float']>;
-};
-
-export type OtherFundDistributionInput = {
-  accountCode?: InputMaybe<Scalars['String']>;
-  percent?: InputMaybe<Scalars['Float']>;
-};
-
 export type OtherReport = {
   generalLedgerReport: GenderLedgerReportResult;
   savingsBalanceReport: SavingsBalanceReportResult;
@@ -21327,6 +21326,7 @@ export type StaffPlanRecord = {
 
 export type StaffPlanTypes = {
   designation: Scalars['String'];
+  designationName: Scalars['String'];
   estimated_cost: Scalars['String'];
   estimated_cost_per_employee: Scalars['String'];
   vacancies: Scalars['Int'];
@@ -32188,12 +32188,24 @@ export type GetFundManagementQuery = {
       record?: {
         grossProfit?: string | null;
         grossProfitCoa?: string | null;
-        staffBonusFund?: number | null;
-        incomeTax?: number | null;
-        generalReserveFund?: number | null;
-        patronageRefundFund?: number | null;
-        cooperativePromotionFund?: number | null;
-        otherFunds?: Array<{ accountCode?: string | null; percent?: number | null } | null> | null;
+        staffBonus: {
+          accountCode?: string | null;
+          accountName?: string | null;
+          percent?: number | null;
+          amount?: string | null;
+        };
+        incometax: {
+          accountCode?: string | null;
+          accountName?: string | null;
+          percent?: number | null;
+          amount?: string | null;
+        };
+        fundDistribution?: Array<{
+          accountCode?: string | null;
+          accountName?: string | null;
+          percent?: number | null;
+          amount?: string | null;
+        } | null> | null;
       } | null;
     } | null;
   };
@@ -32213,10 +32225,10 @@ export type ProfitToFundManagementListQuery = {
         node?: {
           id?: string | null;
           fiscalYear?: string | null;
-          staffBonusFund?: number | null;
-          incomeTax?: number | null;
           state?: FundManagementState | null;
           grossProfit?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          profitBeforeTax?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          netProfit?: { amount?: string | null; amountType?: BalanceType | null } | null;
         } | null;
       } | null> | null;
       pageInfo?: PaginationFragment | null;
@@ -32232,16 +32244,27 @@ export type GetFundManagementFormStateQuery = {
   profitToFundManagement: {
     get?: {
       record?: {
-        staffBonusFund?: number | null;
-        incomeTax?: number | null;
-        generalReserveFund?: number | null;
-        patronageRefundFund?: number | null;
-        cooperativePromotionFund?: number | null;
+        grossProfit?: string | null;
+        grossProfitCoa?: string | null;
         state?: FundManagementState | null;
-        otherFunds?: Array<{
+        staffBonus: {
           accountCode?: string | null;
           accountName?: string | null;
           percent?: number | null;
+          amount?: string | null;
+        };
+        incometax: {
+          accountCode?: string | null;
+          accountName?: string | null;
+          percent?: number | null;
+          amount?: string | null;
+        };
+        fundDistribution?: Array<{
+          accountCode?: string | null;
+          accountName?: string | null;
+          percent?: number | null;
+          amount?: string | null;
+          tableIndex?: number | null;
         } | null> | null;
       } | null;
     } | null;
@@ -32781,7 +32804,7 @@ export type GetHrExistFormStateQuery = {
     employeelifecycle: {
       employeeExit: {
         getEmployeeExit: {
-          data: {
+          data?: {
             exitDate?: Record<'local' | 'en' | 'np', string> | null;
             exitStatus?: ExitStatus | null;
             futureIntentions?: string | null;
@@ -32798,7 +32821,7 @@ export type GetHrExistFormStateQuery = {
               role?: string | null;
               user?: string | null;
             } | null> | null;
-          };
+          } | null;
         };
       };
     };
@@ -58151,14 +58174,23 @@ export const GetFundManagementDocument = `
       record {
         grossProfit
         grossProfitCoa
-        staffBonusFund
-        incomeTax
-        generalReserveFund
-        patronageRefundFund
-        cooperativePromotionFund
-        otherFunds {
+        staffBonus {
           accountCode
+          accountName
           percent
+          amount
+        }
+        incometax {
+          accountCode
+          accountName
+          percent
+          amount
+        }
+        fundDistribution {
+          accountCode
+          accountName
+          percent
+          amount
         }
       }
     }
@@ -58189,8 +58221,14 @@ export const ProfitToFundManagementListDocument = `
             amount
             amountType
           }
-          staffBonusFund
-          incomeTax
+          profitBeforeTax {
+            amount
+            amountType
+          }
+          netProfit {
+            amount
+            amountType
+          }
           state
         }
         cursor
@@ -58223,15 +58261,26 @@ export const GetFundManagementFormStateDocument = `
   profitToFundManagement {
     get(id: $id) {
       record {
-        staffBonusFund
-        incomeTax
-        generalReserveFund
-        patronageRefundFund
-        cooperativePromotionFund
-        otherFunds {
+        grossProfit
+        grossProfitCoa
+        staffBonus {
           accountCode
           accountName
           percent
+          amount
+        }
+        incometax {
+          accountCode
+          accountName
+          percent
+          amount
+        }
+        fundDistribution {
+          accountCode
+          accountName
+          percent
+          amount
+          tableIndex
         }
         state
       }
