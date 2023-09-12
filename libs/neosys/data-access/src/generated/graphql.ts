@@ -262,6 +262,16 @@ export type District = {
   nameNp: Scalars['String'];
 };
 
+export type DocumentInfo = {
+  id: Scalars['String'];
+  url: Scalars['String'];
+};
+
+export type DocumentInsertInput = {
+  fieldId: Scalars['String'];
+  identifiers: Array<Scalars['String']>;
+};
+
 export type EnvSeedResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['ID']>;
@@ -346,6 +356,131 @@ export type Identity = {
   name: Scalars['String'];
   userType: UserType;
   username: Scalars['String'];
+};
+
+export type KymAddressInput = {
+  coordinates?: InputMaybe<CoordinateInput>;
+  districtId?: InputMaybe<Scalars['Int']>;
+  houseNo?: InputMaybe<Scalars['String']>;
+  localGovernmentId?: InputMaybe<Scalars['Int']>;
+  locality?: InputMaybe<Scalars['String']>;
+  provinceId?: InputMaybe<Scalars['Int']>;
+  wardNo?: InputMaybe<Scalars['Int']>;
+};
+
+export type KymIndFamilyMemberInput = {
+  additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  dateOfBirth?: InputMaybe<Scalars['Localized']>;
+  documents?: InputMaybe<Array<InputMaybe<DocumentInsertInput>>>;
+  familyMemberId?: InputMaybe<Scalars['String']>;
+  fullName?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  relationshipId?: InputMaybe<Scalars['String']>;
+};
+
+export type KymIndIdentificationInput = {
+  additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  date?: InputMaybe<Scalars['Localized']>;
+  id?: InputMaybe<Scalars['String']>;
+  idType: Scalars['String'];
+  identificationNo?: InputMaybe<Scalars['String']>;
+  place?: InputMaybe<Scalars['String']>;
+};
+
+export type KymIndIncomeSourceInput = {
+  additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  amount?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  incomeSource?: InputMaybe<Scalars['String']>;
+};
+
+export type KymIndOccupationInput = {
+  additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  address?: InputMaybe<Scalars['String']>;
+  contact?: InputMaybe<Scalars['String']>;
+  establishedDate?: InputMaybe<Scalars['Localized']>;
+  estimatedAnnualIncome?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  isOwner?: InputMaybe<Scalars['Boolean']>;
+  occupationId?: InputMaybe<Scalars['String']>;
+  orgName?: InputMaybe<Scalars['String']>;
+  panVatNo?: InputMaybe<Scalars['String']>;
+  registrationNo?: InputMaybe<Scalars['String']>;
+};
+
+export type KymAdditionalFields = {
+  fieldId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
+export type KymIncomeSourceDetails = {
+  additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  amount?: InputMaybe<Scalars['Float']>;
+  source?: InputMaybe<Scalars['String']>;
+};
+
+export type KymIndMemberInput = {
+  annualIncomeSourceId?: InputMaybe<Scalars['String']>;
+  beneficialFullName?: InputMaybe<Scalars['String']>;
+  beneficialRelationshipId?: InputMaybe<Scalars['String']>;
+  convictedDetails?: InputMaybe<Scalars['String']>;
+  dateOfBirth?: InputMaybe<Scalars['Localized']>;
+  declarationAgreement?: InputMaybe<Scalars['Boolean']>;
+  documents?: InputMaybe<Array<InputMaybe<DocumentInsertInput>>>;
+  educationQualificationId?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  estimatedAnnualDepositAmount?: InputMaybe<Scalars['String']>;
+  estimatedAnnualLoanAmount?: InputMaybe<Scalars['String']>;
+  estimatedAnnualTransactionAmount?: InputMaybe<Scalars['String']>;
+  estimatedAnnualTransactionFrequencyId?: InputMaybe<Scalars['String']>;
+  ethnicityId?: InputMaybe<Scalars['String']>;
+  familyCoopMembers?: InputMaybe<Array<InputMaybe<KymIndFamilyMemberInput>>>;
+  familyMembers?: InputMaybe<Array<InputMaybe<KymIndFamilyMemberInput>>>;
+  firstIntroducerId?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']>;
+  foreignEmpCountryId?: InputMaybe<Scalars['String']>;
+  foreignEstimatedAnnualIncome?: InputMaybe<Scalars['String']>;
+  foreignResidentialPermitTypeId?: InputMaybe<Scalars['String']>;
+  genderId?: InputMaybe<Scalars['String']>;
+  hasBeneficialOwner?: InputMaybe<Scalars['Boolean']>;
+  hasForeignResidentialPermit?: InputMaybe<Scalars['Boolean']>;
+  identification?: InputMaybe<Array<InputMaybe<KymIndIdentificationInput>>>;
+  identificationSelection?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  incomeSource?: InputMaybe<Array<InputMaybe<KymIndIncomeSourceInput>>>;
+  initialLoan?: InputMaybe<Scalars['String']>;
+  initialSaving?: InputMaybe<Scalars['String']>;
+  initialShare?: InputMaybe<Scalars['Int']>;
+  isConvicted?: InputMaybe<Scalars['Boolean']>;
+  isFamilyAMember?: InputMaybe<Scalars['Boolean']>;
+  isForeignEmployment?: InputMaybe<Scalars['Boolean']>;
+  isMemberOfAnotherCooperative?: InputMaybe<Scalars['Boolean']>;
+  isPoliticallyExposed?: InputMaybe<Scalars['Boolean']>;
+  landlordContact?: InputMaybe<Scalars['String']>;
+  landlordName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  mainOccupation?: InputMaybe<KymIndOccupationInput>;
+  maritalStatusId?: InputMaybe<Scalars['String']>;
+  middleName?: InputMaybe<Scalars['String']>;
+  mobileNumber?: InputMaybe<Scalars['String']>;
+  nationalityId?: InputMaybe<Scalars['String']>;
+  otherCoopBranchId?: InputMaybe<Scalars['String']>;
+  otherCoopMemberId?: InputMaybe<Scalars['String']>;
+  otherCoopName?: InputMaybe<Scalars['String']>;
+  otherFinancialAmount?: InputMaybe<Scalars['String']>;
+  otherProfession?: InputMaybe<Scalars['String']>;
+  panNo?: InputMaybe<Scalars['String']>;
+  permanentAddress?: InputMaybe<KymAddressInput>;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+  politicallyExposedDetails?: InputMaybe<Scalars['String']>;
+  professionId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  purposeId?: InputMaybe<Scalars['String']>;
+  religionId?: InputMaybe<Scalars['String']>;
+  sameTempAsPermanentAddress?: InputMaybe<Scalars['Boolean']>;
+  secondIntroducerId?: InputMaybe<Scalars['String']>;
+  spouseOccupation?: InputMaybe<KymIndOccupationInput>;
+  temporaryAddress?: InputMaybe<KymAddressInput>;
+  typeOfVisaId?: InputMaybe<Scalars['String']>;
 };
 
 export type Municipality = {
@@ -492,8 +627,15 @@ export type NeosysQuery = {
   auth?: Maybe<NeosysAuthQuery>;
   client?: Maybe<NeosysClientQuery>;
   tasks?: Maybe<Array<Maybe<Task>>>;
+  thread?: Maybe<NeosysThreadQuery>;
   user?: Maybe<NeosysUserQuery>;
   versions?: Maybe<Array<Maybe<ApplicationVersion>>>;
+};
+
+export type NeosysThreadQuery = {
+  accessLogCounter?: Maybe<ThreadAccessLogCounterQuery>;
+  closingDay?: Maybe<ThreadClosingDayQuery>;
+  databaseSize?: Maybe<ThreadDatabaseSizeQuery>;
 };
 
 export type NeosysUser = Base & {
@@ -869,6 +1011,113 @@ export const TextFormat = {
 } as const;
 
 export type TextFormat = typeof TextFormat[keyof typeof TextFormat];
+export type ThreadAccessLogCounterListConnection = {
+  edges?: Maybe<Array<ThreadAccessLogCounterListEdges>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadAccessLogCounterListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadAccessLogCounterNode;
+};
+
+export type ThreadAccessLogCounterNode = {
+  createdAt?: Maybe<Scalars['Time']>;
+  id?: Maybe<Scalars['Int']>;
+  mutationFailed?: Maybe<Scalars['String']>;
+  mutationSuccess?: Maybe<Scalars['String']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryFailed?: Maybe<Scalars['String']>;
+  queryID?: Maybe<Scalars['Int']>;
+  querySuccess?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type ThreadAccessLogCounterQuery = {
+  listAccessLogCounter?: Maybe<ThreadAccessLogCounterListConnection>;
+};
+
+export type ThreadAccessLogCounterQueryListAccessLogCounterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadClosingDayListConnection = {
+  edges?: Maybe<Array<ThreadClosingDayListEdges>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadClosingDayListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadClosingDayNode;
+};
+
+export type ThreadClosingDayNode = {
+  createdAt?: Maybe<Scalars['Time']>;
+  id?: Maybe<Scalars['Int']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryID?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
+};
+
+export type ThreadClosingDayQuery = {
+  listClosingDay?: Maybe<ThreadClosingDayListConnection>;
+};
+
+export type ThreadClosingDayQueryListClosingDayArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadClosingDaySearchFilter = {
+  id?: InputMaybe<Scalars['String']>;
+  queryDate?: InputMaybe<Scalars['Time']>;
+  slug?: InputMaybe<Scalars['String']>;
+  transactionDate?: InputMaybe<Scalars['Time']>;
+};
+
+export type ThreadDatabaseSizeQuery = {
+  listDBSize?: Maybe<ThreadDbSizeListConnection>;
+};
+
+export type ThreadDatabaseSizeQueryListDbSizeArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadDbSizeListConnection = {
+  edges?: Maybe<Array<ThreadDbSizeListEdges>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadDbSizeListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadDbSizeNode;
+};
+
+export type ThreadDbSizeNode = {
+  createdAt?: Maybe<Scalars['Time']>;
+  databaseSize?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryID?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type UploadedDocument = {
+  docData: Array<Maybe<UploadedDocumentData>>;
+  fieldId?: Maybe<Scalars['String']>;
+};
+
+export type UploadedDocumentData = {
+  identifier: Scalars['String'];
+  url: Scalars['String'];
+};
+
 export const UserType = {
   Human: 'HUMAN',
   System: 'SYSTEM',
@@ -1224,6 +1473,96 @@ export type GetAllLocalGovernmentQueryVariables = Exact<{ [key: string]: never }
 
 export type GetAllLocalGovernmentQuery = {
   administration: { municipalities: Array<{ id: number; name: string }> };
+};
+
+export type GetClosingDayListQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetClosingDayListQuery = {
+  neosys: {
+    thread?: {
+      closingDay?: {
+        listClosingDay?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              transactionDate?: Record<'local' | 'en' | 'np', string> | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          }> | null;
+          pageInfo: PaginationFragment;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDatabaseSizeListQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetDatabaseSizeListQuery = {
+  neosys: {
+    thread?: {
+      databaseSize?: {
+        listDBSize?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              databaseSize?: string | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          }> | null;
+          pageInfo: PaginationFragment;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAccessLogCounterListQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetAccessLogCounterListQuery = {
+  neosys: {
+    thread?: {
+      accessLogCounter?: {
+        listAccessLogCounter?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              querySuccess?: string | null;
+              queryFailed?: string | null;
+              mutationSuccess?: string | null;
+              mutationFailed?: string | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          }> | null;
+          pageInfo: PaginationFragment;
+        } | null;
+      } | null;
+    } | null;
+  };
 };
 
 export type GetMeQueryVariables = Exact<{ [key: string]: never }>;
@@ -1976,6 +2315,126 @@ export const useGetAllLocalGovernmentQuery = <TData = GetAllLocalGovernmentQuery
     variables === undefined ? ['getAllLocalGovernment'] : ['getAllLocalGovernment', variables],
     useAxios<GetAllLocalGovernmentQuery, GetAllLocalGovernmentQueryVariables>(
       GetAllLocalGovernmentDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetClosingDayListDocument = `
+    query getClosingDayList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      closingDay {
+        listClosingDay(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              transactionDate
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetClosingDayListQuery = <TData = GetClosingDayListQuery, TError = unknown>(
+  variables?: GetClosingDayListQueryVariables,
+  options?: UseQueryOptions<GetClosingDayListQuery, TError, TData>
+) =>
+  useQuery<GetClosingDayListQuery, TError, TData>(
+    variables === undefined ? ['getClosingDayList'] : ['getClosingDayList', variables],
+    useAxios<GetClosingDayListQuery, GetClosingDayListQueryVariables>(
+      GetClosingDayListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDatabaseSizeListDocument = `
+    query getDatabaseSizeList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      databaseSize {
+        listDBSize(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              databaseSize
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetDatabaseSizeListQuery = <TData = GetDatabaseSizeListQuery, TError = unknown>(
+  variables?: GetDatabaseSizeListQueryVariables,
+  options?: UseQueryOptions<GetDatabaseSizeListQuery, TError, TData>
+) =>
+  useQuery<GetDatabaseSizeListQuery, TError, TData>(
+    variables === undefined ? ['getDatabaseSizeList'] : ['getDatabaseSizeList', variables],
+    useAxios<GetDatabaseSizeListQuery, GetDatabaseSizeListQueryVariables>(
+      GetDatabaseSizeListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccessLogCounterListDocument = `
+    query getAccessLogCounterList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      accessLogCounter {
+        listAccessLogCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              querySuccess
+              queryFailed
+              mutationSuccess
+              mutationFailed
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetAccessLogCounterListQuery = <
+  TData = GetAccessLogCounterListQuery,
+  TError = unknown
+>(
+  variables?: GetAccessLogCounterListQueryVariables,
+  options?: UseQueryOptions<GetAccessLogCounterListQuery, TError, TData>
+) =>
+  useQuery<GetAccessLogCounterListQuery, TError, TData>(
+    variables === undefined ? ['getAccessLogCounterList'] : ['getAccessLogCounterList', variables],
+    useAxios<GetAccessLogCounterListQuery, GetAccessLogCounterListQueryVariables>(
+      GetAccessLogCounterListDocument
     ).bind(null, variables),
     options
   );

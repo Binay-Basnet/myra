@@ -1,0 +1,80 @@
+query getClosingDayList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      closingDay {
+        listClosingDay(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              transactionDate
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getDatabaseSizeList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      databaseSize {
+        listDBSize(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              databaseSize
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAccessLogCounterList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      accessLogCounter {
+        listAccessLogCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              querySuccess
+              queryFailed
+              mutationSuccess
+              mutationFailed
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
