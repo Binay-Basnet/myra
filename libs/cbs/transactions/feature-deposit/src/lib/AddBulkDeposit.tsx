@@ -154,12 +154,14 @@ export const AddBulkDeposit = () => {
   };
 
   const accounts = watch('accounts');
-  const totalReb = accounts?.reduce(
-    (accumulator, curr) => accumulator + Number(curr?.rebate !== 'N/A' ? curr?.rebate : 0),
-    0
-  );
+
   const totalDep = accounts?.reduce(
     (accumulator, curr) => accumulator + Number(curr?.amount || 0),
+    0
+  );
+
+  const totalFine = accounts?.reduce(
+    (accumulator, curr) => accumulator + Number(curr?.fine !== 'N/A' ? curr?.fine : 0),
     0
   );
   const returnAmount = Number(totalCashPaid) - Number(totalDep || 0);
@@ -220,7 +222,7 @@ export const AddBulkDeposit = () => {
                 </Box>
               </Box>
 
-              <Payment mode={mode} totalDeposit={Number(totalDep || 0)} />
+              <Payment mode={mode} totalDeposit={Number(totalDep || 0) + Number(totalFine || 0)} />
             </form>
           </FormProvider>
         </Box>
@@ -234,10 +236,10 @@ export const AddBulkDeposit = () => {
                 mode === 0 ? (
                   <Box display="flex" gap="s32">
                     <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
-                      Total Deposit Amount
+                      Total Payable Amount
                     </Text>
                     <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
-                      {Number(totalDep || '0') + Number(totalReb || '0')}
+                      {Number(totalDep || '0') + Number(totalFine || '0')}
                     </Text>
                   </Box>
                 ) : (
