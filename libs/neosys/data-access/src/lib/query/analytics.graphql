@@ -211,3 +211,57 @@ query getSavingAccountCounter($pagination: Pagination, $filter: Filter) {
     }
   }
 }
+
+query getTransactionCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      transactionCounter {
+        listTransactionCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              txnCount
+              txnTypeCount
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getUserCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      userCounter {
+        listUserCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              approvedUser
+              inactiveUser
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

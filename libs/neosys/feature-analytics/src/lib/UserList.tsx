@@ -2,16 +2,16 @@ import { useMemo } from 'react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetSavingAccountCounterQuery } from '@coop/neosys-admin/data-access';
+import { useGetUserCounterQuery } from '@coop/neosys-admin/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
 
-export const SavingAccountList = () => {
-  const { data, isFetching } = useGetSavingAccountCounterQuery({
+export const UserList = () => {
+  const { data, isFetching } = useGetUserCounterQuery({
     pagination: { ...getPaginationQuery(), order: null },
   });
 
   const rowData = useMemo(
-    () => data?.neosys?.thread?.savingAccountCounter?.listSavingAccountCounter?.edges ?? [],
+    () => data?.neosys?.thread?.userCounter?.listUserCounter?.edges ?? [],
     [data]
   );
 
@@ -26,14 +26,13 @@ export const SavingAccountList = () => {
         accessorFn: (row) => row?.node?.createdAt,
       },
       {
-        header: 'Active Account',
-        accessorFn: (row) => row?.node?.activeAccount,
+        header: 'Approved User',
+        accessorFn: (row) => row?.node?.approvedUser,
       },
       {
-        header: 'Inactive Account',
-        accessorFn: (row) => row?.node?.inactiveAccount,
+        header: 'Inactive User',
+        accessorFn: (row) => row?.node?.inactiveUser,
       },
-
       {
         header: 'Slug',
         accessorFn: (row) => row?.node?.slug,
@@ -52,19 +51,18 @@ export const SavingAccountList = () => {
 
   return (
     <>
-      <PageHeader heading="Saving Accounts" />
+      <PageHeader heading="Users" />
       <Table
         data={rowData}
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.neosys?.thread?.savingAccountCounter?.listSavingAccountCounter
-            ?.totalCount as number,
-          pageInfo: data?.neosys?.thread?.savingAccountCounter?.listSavingAccountCounter?.pageInfo,
+          total: data?.neosys?.thread?.userCounter?.listUserCounter?.totalCount as number,
+          pageInfo: data?.neosys?.thread?.userCounter?.listUserCounter?.pageInfo,
         }}
       />
     </>
   );
 };
 
-export default SavingAccountList;
+export default UserList;

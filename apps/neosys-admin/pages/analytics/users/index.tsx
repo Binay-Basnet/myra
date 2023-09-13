@@ -1,15 +1,16 @@
 import { ReactElement } from 'react';
+import { UserList } from '@neosys/feature-analytics';
 
 import { AnalyticsSiderbar, MainLayout } from '@coop/neosys-admin/layout';
 // import { MainLayout } from '@coop/shared/ui';
 
-const UsersList = () => <>Member ledger counter list</>;
+const UsersListPage = () => <UserList />;
 
-UsersList.getLayout = function getLayout(page: ReactElement) {
+UsersListPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
       <AnalyticsSiderbar>{page}</AnalyticsSiderbar>
     </MainLayout>
   );
 };
-export default UsersList;
+export default UsersListPage;

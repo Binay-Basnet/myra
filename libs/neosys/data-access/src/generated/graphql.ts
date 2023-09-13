@@ -641,6 +641,8 @@ export type NeosysThreadQuery = {
   memberCounter?: Maybe<ThreadMemberCounterQuery>;
   moneyLedgerCounter?: Maybe<ThreadMoneyLedgerCounterQuery>;
   savingAccountCounter?: Maybe<ThreadSavingAccountCounterQuery>;
+  transactionCounter?: Maybe<ThreadTransactionCounterQuery>;
+  userCounter?: Maybe<ThreadUserCounterQuery>;
 };
 
 export type NeosysUser = Base & {
@@ -1261,6 +1263,66 @@ export type ThreadSavingAccountCounterQueryListSavingAccountCounterArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type ThreadTransactionCounterListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadTransactionCounterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadTransactionCounterListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadTransactionCounterNode;
+};
+
+export type ThreadTransactionCounterNode = {
+  createdAt?: Maybe<Scalars['Time']>;
+  id?: Maybe<Scalars['Int']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryID?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+  txnCount?: Maybe<Scalars['Int']>;
+  txnTypeCount?: Maybe<Scalars['Any']>;
+};
+
+export type ThreadTransactionCounterQuery = {
+  listTransactionCounter?: Maybe<ThreadTransactionCounterListConnection>;
+};
+
+export type ThreadTransactionCounterQueryListTransactionCounterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadUserCounterListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadUserCounterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadUserCounterListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadUserCounterNode;
+};
+
+export type ThreadUserCounterNode = {
+  approvedUser?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Time']>;
+  id?: Maybe<Scalars['Int']>;
+  inactiveUser?: Maybe<Scalars['Int']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryID?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type ThreadUserCounterQuery = {
+  listUserCounter?: Maybe<ThreadUserCounterListConnection>;
+};
+
+export type ThreadUserCounterQueryListUserCounterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type UploadedDocument = {
   docData: Array<Maybe<UploadedDocumentData>>;
   fieldId?: Maybe<Scalars['String']>;
@@ -1854,6 +1916,66 @@ export type GetSavingAccountCounterQuery = {
               createdAt?: string | null;
               activeAccount?: number | null;
               inactiveAccount?: number | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetTransactionCounterQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetTransactionCounterQuery = {
+  neosys: {
+    thread?: {
+      transactionCounter?: {
+        listTransactionCounter?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              txnCount?: number | null;
+              txnTypeCount?: unknown | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetUserCounterQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetUserCounterQuery = {
+  neosys: {
+    thread?: {
+      userCounter?: {
+        listUserCounter?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              approvedUser?: number | null;
+              inactiveUser?: number | null;
               slug?: string | null;
               queryID?: number | null;
               queryDate?: Record<'local' | 'en' | 'np', string> | null;
@@ -2935,6 +3057,85 @@ export const useGetSavingAccountCounterQuery = <
     useAxios<GetSavingAccountCounterQuery, GetSavingAccountCounterQueryVariables>(
       GetSavingAccountCounterDocument
     ).bind(null, variables),
+    options
+  );
+export const GetTransactionCounterDocument = `
+    query getTransactionCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      transactionCounter {
+        listTransactionCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              txnCount
+              txnTypeCount
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetTransactionCounterQuery = <TData = GetTransactionCounterQuery, TError = unknown>(
+  variables?: GetTransactionCounterQueryVariables,
+  options?: UseQueryOptions<GetTransactionCounterQuery, TError, TData>
+) =>
+  useQuery<GetTransactionCounterQuery, TError, TData>(
+    variables === undefined ? ['getTransactionCounter'] : ['getTransactionCounter', variables],
+    useAxios<GetTransactionCounterQuery, GetTransactionCounterQueryVariables>(
+      GetTransactionCounterDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetUserCounterDocument = `
+    query getUserCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      userCounter {
+        listUserCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              approvedUser
+              inactiveUser
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetUserCounterQuery = <TData = GetUserCounterQuery, TError = unknown>(
+  variables?: GetUserCounterQueryVariables,
+  options?: UseQueryOptions<GetUserCounterQuery, TError, TData>
+) =>
+  useQuery<GetUserCounterQuery, TError, TData>(
+    variables === undefined ? ['getUserCounter'] : ['getUserCounter', variables],
+    useAxios<GetUserCounterQuery, GetUserCounterQueryVariables>(GetUserCounterDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetMeDocument = `

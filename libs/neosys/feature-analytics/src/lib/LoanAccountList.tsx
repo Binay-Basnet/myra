@@ -46,8 +46,8 @@ export const LoanAccountList = () => {
         accessorFn: (row) => row?.node?.queryID,
       },
       {
-        header: 'Created at',
-        accessorFn: (row) => row?.node?.createdAt,
+        header: 'Query Date',
+        accessorFn: (row) => row?.node?.queryDate?.local,
       },
     ],
     []

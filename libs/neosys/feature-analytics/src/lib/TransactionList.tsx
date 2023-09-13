@@ -2,16 +2,16 @@ import { useMemo } from 'react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetSavingAccountCounterQuery } from '@coop/neosys-admin/data-access';
+import { useGetTransactionCounterQuery } from '@coop/neosys-admin/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
 
-export const SavingAccountList = () => {
-  const { data, isFetching } = useGetSavingAccountCounterQuery({
+export const TransactionList = () => {
+  const { data, isFetching } = useGetTransactionCounterQuery({
     pagination: { ...getPaginationQuery(), order: null },
   });
 
   const rowData = useMemo(
-    () => data?.neosys?.thread?.savingAccountCounter?.listSavingAccountCounter?.edges ?? [],
+    () => data?.neosys?.thread?.transactionCounter?.listTransactionCounter?.edges ?? [],
     [data]
   );
 
@@ -26,12 +26,8 @@ export const SavingAccountList = () => {
         accessorFn: (row) => row?.node?.createdAt,
       },
       {
-        header: 'Active Account',
-        accessorFn: (row) => row?.node?.activeAccount,
-      },
-      {
-        header: 'Inactive Account',
-        accessorFn: (row) => row?.node?.inactiveAccount,
+        header: 'Txn Count',
+        accessorFn: (row) => row?.node?.txnCount,
       },
 
       {
@@ -52,19 +48,19 @@ export const SavingAccountList = () => {
 
   return (
     <>
-      <PageHeader heading="Saving Accounts" />
+      <PageHeader heading="Transactions" />
       <Table
         data={rowData}
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.neosys?.thread?.savingAccountCounter?.listSavingAccountCounter
+          total: data?.neosys?.thread?.transactionCounter?.listTransactionCounter
             ?.totalCount as number,
-          pageInfo: data?.neosys?.thread?.savingAccountCounter?.listSavingAccountCounter?.pageInfo,
+          pageInfo: data?.neosys?.thread?.transactionCounter?.listTransactionCounter?.pageInfo,
         }}
       />
     </>
   );
 };
 
-export default SavingAccountList;
+export default TransactionList;
