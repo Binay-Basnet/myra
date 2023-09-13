@@ -48,6 +48,7 @@ const ERROR: Record<number, { title: string; message: string; subTitle: string; 
 
 export const Error = ({ isPage, isCentered, errorCode, message }: ErrorProps) => {
   const router = useRouter();
+
   return (
     <Box
       {...(isPage

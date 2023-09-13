@@ -29,6 +29,9 @@ export const CbsFeatureDashboard = () => (
       <Button
         shade="danger"
         onClick={() => {
+          const a = {};
+
+          console.log(a.b.c);
           throw new Error('hahah you have been pranked');
         }}
       >
