@@ -7694,7 +7694,6 @@ export type FianancialTransactionReport = {
   dailyBalanceReport: DailyBalanceReportResult;
   dayBookReport: DayBookReportResult;
   fiscalTrialSheetReport: TrialSheetReportResult;
-  ledgerBalanceReport: LedgerBalanceReport;
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
   serviceCenterBalanceReport: SericeCenterStatementResult;
   tagKhataReport: TagKhataReportResult;
@@ -7734,10 +7733,6 @@ export type FianancialTransactionReportDayBookReportArgs = {
 
 export type FianancialTransactionReportFiscalTrialSheetReportArgs = {
   data: TrialSheetReportFilter;
-};
-
-export type FianancialTransactionReportLedgerBalanceReportArgs = {
-  data: LedgerBalanceReportInput;
 };
 
 export type FianancialTransactionReportMrTransactionReportArgs = {
@@ -13326,31 +13321,6 @@ export type LedgerBalanceListConnection = {
 export type LedgerBalanceListEdges = {
   cursor?: Maybe<Scalars['Cursor']>;
   node?: Maybe<LedgerBalanceEntry>;
-};
-
-export type LedgerBalanceReport = {
-  data?: Maybe<Array<Maybe<LedgerBalanceReportData>>>;
-  error?: Maybe<QueryError>;
-};
-
-export type LedgerBalanceReportData = {
-  adjustedCr?: Maybe<Scalars['String']>;
-  adjustedDr?: Maybe<Scalars['String']>;
-  balance?: Maybe<BalanceValue>;
-  branchId: Scalars['ID'];
-  branchName: Scalars['String'];
-  cr?: Maybe<Scalars['String']>;
-  dr?: Maybe<Scalars['String']>;
-  ledgerId: Scalars['String'];
-  ledgerName: Scalars['String'];
-  openingBalance?: Maybe<BalanceValue>;
-  settledBalance?: Maybe<BalanceValue>;
-};
-
-export type LedgerBalanceReportInput = {
-  branchId?: InputMaybe<Array<Scalars['String']>>;
-  coaHead?: InputMaybe<Array<Scalars['String']>>;
-  period: LocalizedDateFilter;
 };
 
 export type LedgerBalanceSum = {
@@ -22385,6 +22355,7 @@ export type TranslateQueryResult = {
 
 export type TrialSheetFilter = {
   includeFiscalReversal?: InputMaybe<Scalars['Boolean']>;
+  includeParent?: InputMaybe<Scalars['Boolean']>;
   includeZero?: InputMaybe<Scalars['Boolean']>;
   inculdeAdjustment?: InputMaybe<Scalars['Boolean']>;
 };
@@ -40380,6 +40351,7 @@ export type GetAdjustedLedgerReportQuery = {
             branchId: string;
             branchName: string;
             ledgerId: string;
+            ledgerName: string;
             dr?: string | null;
             cr?: string | null;
             balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
@@ -68779,6 +68751,7 @@ export const GetAdjustedLedgerReportDocument = `
             branchId
             branchName
             ledgerId
+            ledgerName
             balance {
               amount
               amountType
