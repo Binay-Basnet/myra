@@ -40351,6 +40351,7 @@ export type GetAdjustedLedgerReportQuery = {
             branchId: string;
             branchName: string;
             ledgerId: string;
+            ledgerName: string;
             dr?: string | null;
             cr?: string | null;
             balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
@@ -68750,6 +68751,7 @@ export const GetAdjustedLedgerReportDocument = `
             branchId
             branchName
             ledgerId
+            ledgerName
             balance {
               amount
               amountType
