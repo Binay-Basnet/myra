@@ -1,6 +1,4 @@
-import * as process from 'process';
-
-import { Box, Button } from '@myra-ui';
+import { Box } from '@myra-ui';
 
 import {
   DashboardCharts,
@@ -25,20 +23,6 @@ export const CbsFeatureDashboard = () => (
     p="0"
     pb="55px"
   >
-    {process.env['NX_APP_ENV'] === 'dev' ? (
-      <Button
-        shade="danger"
-        onClick={() => {
-          const a = {};
-
-          console.log(a.b.c);
-          throw new Error('hahah you have been pranked');
-        }}
-      >
-        {' '}
-        CRASH UI{' '}
-      </Button>
-    ) : null}
     <QuickLinksComponent />
     <Box display="flex" flexDir="column" gap="s16">
       <MyDay />
