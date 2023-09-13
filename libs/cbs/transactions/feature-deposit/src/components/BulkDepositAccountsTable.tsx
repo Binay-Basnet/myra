@@ -150,11 +150,13 @@ export const BulkDepositAccountsTable = ({ memberId }: IBulkDepositAccountsTable
 
     setInstallmentAccountIds(temp);
   }, [accountListData]);
-
+  const filteredAccountValues = accountListData?.account?.list?.edges?.filter(
+    (d) => d?.node?.product?.nature !== NatureOfDepositProduct?.TermSavingOrFd
+  );
   useDeepCompareEffect(() => {
     setValue(
       'accounts',
-      accountListData?.account?.list?.edges?.map((account) => {
+      filteredAccountValues?.map((account) => {
         const hasInstallment =
           account?.node?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
           (account?.node?.product?.nature === NatureOfDepositProduct.Saving &&
@@ -189,6 +191,7 @@ export const BulkDepositAccountsTable = ({ memberId }: IBulkDepositAccountsTable
   return (
     <FormEditableTable<DepositAccountTable>
       name="accounts"
+      canAddRow={false}
       columns={[
         {
           accessor: 'accountId',
