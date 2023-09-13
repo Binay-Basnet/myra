@@ -10,6 +10,7 @@ export interface ErrorProps {
   isCentered?: boolean;
   errorCode: number;
 
+  message?: string;
   // errorTitle: string;
   // errorMessage: string;
   // errorMessageSubTitle: string;
@@ -45,8 +46,9 @@ const ERROR: Record<number, { title: string; message: string; subTitle: string; 
   },
 };
 
-export const Error = ({ isPage, isCentered, errorCode }: ErrorProps) => {
+export const Error = ({ isPage, isCentered, errorCode, message }: ErrorProps) => {
   const router = useRouter();
+
   return (
     <Box
       {...(isPage
@@ -88,7 +90,7 @@ export const Error = ({ isPage, isCentered, errorCode }: ErrorProps) => {
               color="gray.600"
               textAlign={isCentered ? 'center' : 'left'}
             >
-              {ERROR[errorCode]?.message}
+              {message || ERROR[errorCode]?.message}
               <br />
               <Box display="inline"> {ERROR[errorCode]?.subTitle}</Box>
             </Text>
