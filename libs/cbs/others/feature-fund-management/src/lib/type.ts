@@ -1,24 +1,21 @@
 import { FundManagementInput } from '@coop/cbs/data-access';
 
 export type ParticularTableType = {
-  particular: string;
+  coaHead: string;
   percent: number | string;
-  thisYear: number;
-  lastYear: number;
+  amount: string;
 };
 
 export type DistributionTableType = {
-  distribution: string;
-  percent: number;
-  thisYear: number;
-  lastYear: number;
+  coaHead: string;
+  percent: number | string;
+  amount: string;
 };
 
 export type OtherFundDistributionTableType = {
-  accountCode: string;
-  percent: number;
-  thisYear: number;
-  lastYear: number;
+  coaHead: string;
+  percent: number | string;
+  amount: string;
 };
 
 export type CustomFundManagementInput = Omit<
@@ -31,5 +28,5 @@ export type CustomFundManagementInput = Omit<
   generalReserveFund: ParticularTableType[];
   distributionTable: DistributionTableType[];
   otherFunds: OtherFundDistributionTableType[];
-  netProfit: number;
+  netProfit: number | string;
 };

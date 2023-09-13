@@ -3,7 +3,16 @@ import { BsTelephone } from 'react-icons/bs';
 import { IoCopyOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, DetailPageHeader, DetailPageTabs, Divider, Icon, Scrollable, Text } from '@myra-ui';
+import {
+  Box,
+  Chips,
+  DetailPageHeader,
+  DetailPageTabs,
+  Divider,
+  Icon,
+  Scrollable,
+  Text,
+} from '@myra-ui';
 
 import { JobApplicationOverview, useGetJobApplicationOverviewQuery } from '@coop/cbs/data-access';
 
@@ -48,9 +57,18 @@ export const JobApplicationDetails = () => {
           borderRightColor="border.layout"
         >
           <Box p="s16">
-            <Text fontSize="r1" fontWeight="medium">
-              {jobApplicationData?.nameOfApplicant}
-            </Text>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Text fontSize="r1" fontWeight="medium">
+                {jobApplicationData?.nameOfApplicant}
+              </Text>
+              <Chips
+                variant="solid"
+                theme="success"
+                size="md"
+                type="label"
+                label={jobApplicationData?.applicationStatus}
+              />
+            </Box>
             <Box display="flex" alignItems="center" gap="s4">
               <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-50">
                 {jobApplicationData?.applicationId}
@@ -97,7 +115,9 @@ export const JobApplicationDetails = () => {
             {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && (
               <Overview data={jobApplicationData as JobApplicationOverview} />
             )}
-            {tabQuery === 'education' && <Education />}
+            {tabQuery === 'education' && (
+              <Education data={jobApplicationData as JobApplicationOverview} />
+            )}
             {tabQuery === 'experience' && <Experience />}
             {tabQuery === 'job offer' && <JobOffer />}
             {tabQuery === 'appointment letter' && <AppointmentLetter />}

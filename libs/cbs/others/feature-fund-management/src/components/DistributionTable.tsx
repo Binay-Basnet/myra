@@ -1,55 +1,22 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
 import { GridItem } from '@myra-ui';
 import { Column } from '@myra-ui/editable-table';
 
+import { useListLeafCoaHeadsQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 import { TableOverview, TableOverviewColumnType } from './TableOverview';
 import { CustomFundManagementInput, DistributionTableType } from '../lib/type';
 
 export const DistributionTable = () => {
-  const { watch, setValue } = useFormContext<CustomFundManagementInput>();
+  const { watch, setValue, getValues } = useFormContext<CustomFundManagementInput>();
 
   const router = useRouter();
-
-  // const { data: previousYearData } = useGetPreviousYearFundManagementQuery();
-
-  useEffect(() => {
-    // if (previousYearData) {
-    // const patronageRefundFundAmount =
-    //   previousYearData?.profitToFundManagement?.previousYear?.find(
-    //     (fund) => fund?.accountCode === '20.2'
-    //   )?.amount;
-
-    // const cooperativePromotionFundAmount =
-    //   previousYearData?.profitToFundManagement?.previousYear?.find(
-    //     (fund) => fund?.accountCode === '20.3'
-    //   )?.amount;
-
-    if (!router?.asPath?.includes('/edit')) {
-      setValue('distributionTable', [
-        {
-          distribution: '20.2 Patronage Refund Fund',
-          percent: 0,
-          thisYear: 0,
-          // lastYear: Number(patronageRefundFundAmount ?? 0),
-          lastYear: 0,
-        },
-        {
-          distribution: '20.3 Cooperative Promotion Fund',
-          percent: 0,
-          thisYear: 0,
-          // lastYear: Number(cooperativePromotionFundAmount ?? 0),
-          lastYear: 0,
-        },
-      ]);
-    }
-    // }
-  }, [router?.asPath]);
 
   const netProfit = watch('netProfit');
 
@@ -57,13 +24,46 @@ export const DistributionTable = () => {
 
   const remainingProfit =
     netProfit && generalReserveFund
-      ? Number(netProfit ?? 0) - Number(generalReserveFund?.[0]?.thisYear)
+      ? Number((Number(netProfit ?? 0) - Number(generalReserveFund?.[0]?.amount)).toFixed(2))
       : 0;
+
+  const [searchTerm, setSearchTerm] = useState<string | null>(null);
+
+  const { data: leafCoaHeadsListData, isFetching } = useListLeafCoaHeadsQuery({
+    pagination: {
+      ...getPaginationQuery(),
+      // first: -1,
+      order: {
+        arrange: 'ASC',
+        column: 'accountCode',
+      },
+    },
+    filter: {
+      query: searchTerm,
+    },
+  });
+
+  const leafCoaHeadsList = leafCoaHeadsListData?.settings?.chartsOfAccount?.listLeafCoaHeads?.edges;
+
+  const accountSearchOptions = useMemo(
+    () =>
+      leafCoaHeadsList?.map((head) => ({
+        label: `${head?.node?.accountCode} - ${head?.node?.Name}`,
+        value: head?.node?.accountCode as string,
+      })),
+    [leafCoaHeadsList]
+  );
 
   const columns: Column<DistributionTableType>[] = [
     {
-      accessor: 'distribution',
-      header: 'Distribution',
+      accessor: 'coaHead',
+      header: 'COA Head',
+      fieldType: 'search',
+      searchOptions: accountSearchOptions,
+      searchLoading: isFetching,
+      searchCallback: (newSearch) => {
+        setSearchTerm(newSearch);
+      },
       getDisabled: () => router?.asPath?.includes('/view'),
     },
     {
@@ -71,42 +71,52 @@ export const DistributionTable = () => {
       header: 'Percent(%)',
       isNumeric: true,
       getDisabled: () => router?.asPath?.includes('/view'),
-      // fieldType: 'percentage',
     },
     {
-      accessor: 'thisYear',
-      header: 'This Year',
+      accessor: 'amount',
+      header: 'Amount',
       isNumeric: true,
-      // getDisabled: () => true,
       accessorFn: (row) => ((Number(row.percent) / 100) * remainingProfit).toFixed(2),
-      // cell: (props) => ((Number(props.percent) / 100) * remainingProfit).toFixed(2),
-    },
-    {
-      accessor: 'lastYear',
-      header: 'Last Year',
-      isNumeric: true,
-      // accessorFn: (row) =>
-      //   previousYearData?.profitToFundManagement?.previousYear?.find(
-      //     (account) => account?.accountCode === row.distribution?.split(' ')[0]
-      //   )?.amount ?? 0,
+      getDisabled: () => router?.asPath?.includes('/view'),
     },
   ];
 
   const distributionTable = watch('distributionTable');
 
-  // useDeepCompareEffect(() => {
-  //   if (distributionTable?.length) {
-  //     setValue(
-  //       'distributionTable',
-  //       distributionTable?.map((fund) => ({
-  //         distribution: fund?.distribution,
-  //         percent: fund?.percent,
-  //         thisYear: Number(((Number(fund?.percent) / 100) * remainingProfit || 0).toFixed(2)),
-  //         lastYear: 0,
-  //       }))
-  //     );
-  //   }
-  // }, [distributionTable, remainingProfit]);
+  const profitAfterDistribution = useMemo(() => {
+    if (!remainingProfit) {
+      return 0;
+    }
+
+    let tempRemProfit = Number(remainingProfit);
+
+    if (distributionTable) {
+      distributionTable?.forEach((row) => {
+        tempRemProfit -= Number(row?.amount || 0);
+      });
+    }
+
+    return Number(tempRemProfit.toFixed(2));
+  }, [remainingProfit, distributionTable]);
+
+  useDeepCompareEffect(() => {
+    const values = getValues();
+
+    setValue(
+      'otherFunds',
+      values?.otherFunds?.map((other) => ({
+        coaHead: other?.coaHead,
+        percent: other?.percent as number,
+        amount: ((Number(other?.percent || 0) / 100) * profitAfterDistribution).toFixed(2),
+      }))
+    );
+  }, [distributionTable]);
+
+  const distributionTableTotal =
+    distributionTable?.reduce(
+      (accumulator: number, curr) => accumulator + Number(curr.amount),
+      0 as number
+    ) ?? 0;
 
   const distributionTableSummary: TableOverviewColumnType[] = useMemo(
     () => [
@@ -115,41 +125,29 @@ export const DistributionTable = () => {
       {
         label:
           remainingProfit && distributionTable?.length
-            ? amountConverter(
-                (
-                  remainingProfit -
-                  Number(distributionTable[0].thisYear) -
-                  Number(distributionTable[1].thisYear)
-                ).toFixed(2)
-              )
+            ? amountConverter((remainingProfit - distributionTableTotal).toFixed(2))
             : 0,
         width: 'auto',
         isNumeric: true,
       },
-      {
-        label: distributionTable?.length
-          ? amountConverter(
-              (
-                Number(distributionTable[0].lastYear) + Number(distributionTable[1].lastYear)
-              ).toFixed(2)
-            )
-          : 0,
-        width: 'auto',
-        isNumeric: true,
-      },
+      // {
+      //   label: distributionTable?.length
+      //     ? amountConverter(
+      //         (
+      //           Number(distributionTable[0].lastYear) + Number(distributionTable[1].lastYear)
+      //         ).toFixed(2)
+      //       )
+      //     : 0,
+      //   width: 'auto',
+      //   isNumeric: true,
+      // },
     ],
     [distributionTable, remainingProfit]
   );
 
   return (
     <GridItem colSpan={3} display="flex" flexDirection="column" gap="s4">
-      <FormEditableTable<DistributionTableType>
-        name="distributionTable"
-        columns={columns}
-        canAddRow={false}
-        canDeleteRow={false}
-        hideSN
-      />
+      <FormEditableTable<DistributionTableType> name="distributionTable" columns={columns} hideSN />
 
       <TableOverview columns={distributionTableSummary} />
     </GridItem>

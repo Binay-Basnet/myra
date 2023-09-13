@@ -20,15 +20,31 @@ query getFundManagement($id: ID!) {
       record {
         grossProfit
         grossProfitCoa
-        staffBonusFund
-        incomeTax
-        generalReserveFund
-        patronageRefundFund
-        cooperativePromotionFund
-        otherFunds {
+        staffBonus {
           accountCode
+          accountName
           percent
+          amount
         }
+        incometax {
+          accountCode
+          accountName
+          percent
+          amount
+        }
+        fundDistribution {
+          accountCode
+          accountName
+          percent
+          amount
+        }
+        #generalReserveFund
+        #patronageRefundFund
+        #cooperativePromotionFund
+        #otherFunds {
+        # accountCode
+        # percent
+        #}
       }
     }
   }
@@ -46,8 +62,14 @@ query profitToFundManagementList($filter: Filter, $pagination: Pagination) {
             amount
             amountType
           }
-          staffBonusFund
-          incomeTax
+          profitBeforeTax {
+            amount
+            amountType
+          }
+          netProfit {
+            amount
+            amountType
+          }
           state
         }
         cursor
@@ -63,15 +85,26 @@ query getFundManagementFormState($id: ID!) {
   profitToFundManagement {
     get(id: $id) {
       record {
-        staffBonusFund
-        incomeTax
-        generalReserveFund
-        patronageRefundFund
-        cooperativePromotionFund
-        otherFunds {
+        grossProfit
+        grossProfitCoa
+        staffBonus {
           accountCode
           accountName
           percent
+          amount
+        }
+        incometax {
+          accountCode
+          accountName
+          percent
+          amount
+        }
+        fundDistribution {
+          accountCode
+          accountName
+          percent
+          amount
+          tableIndex
         }
         state
       }

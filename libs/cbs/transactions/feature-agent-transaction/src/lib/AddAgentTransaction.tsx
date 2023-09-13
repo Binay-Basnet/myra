@@ -29,6 +29,9 @@ type DepositAccountTable = {
 };
 
 export const AddAgentTransaction = () => {
+  const [totalCollectedAmount, setTotalCollectedAmount] = useState(0);
+  const [totalCollectedFine, setTotalCollectedFine] = useState(0);
+
   const [totalAmount, setTotalAmount] = useState(0);
   const [totalFine, setTotalFine] = useState(0);
   const router = useRouter();
@@ -120,6 +123,8 @@ export const AddAgentTransaction = () => {
     if (accounts?.length) {
       let tempAmount = 0;
       let tempFine = 0;
+      let tempTotalAmount = 0;
+      let tempTotalFine = 0;
       setValue(
         'accounts',
         accounts?.map(
@@ -143,8 +148,19 @@ export const AddAgentTransaction = () => {
                   Number(account?.node?.account?.dues?.fine || 0)
                 : 0;
 
-            tempFine += Number(record?.fine ?? account?.node?.account?.dues?.fine ?? 0);
+            tempFine +=
+              Number(record?.fine || 0) && record?.paid
+                ? Number(record?.fine || 0)
+                : record?.paid
+                ? Number(account?.node?.account?.dues?.fine)
+                : 0;
 
+            tempTotalAmount +=
+              Number(record?.amount || 0) ??
+              Number(account?.node?.account?.dues?.totalDue || 0) -
+                Number(account?.node?.account?.dues?.fine || 0);
+
+            tempTotalFine += Number(record?.fine ?? account?.node?.account?.dues?.fine ?? 0);
             return {
               id: record?.id,
               member: record?.member,
@@ -160,8 +176,10 @@ export const AddAgentTransaction = () => {
         )
       );
 
-      setTotalAmount(tempAmount);
-      setTotalFine(tempFine);
+      setTotalCollectedAmount(tempAmount);
+      setTotalCollectedFine(tempFine);
+      setTotalAmount(tempTotalAmount);
+      setTotalFine(tempTotalFine);
     }
   }, [accounts, assignedMemberListQueryData]);
 
@@ -408,10 +426,43 @@ export const AddAgentTransaction = () => {
                   </Box>
                   <Box display="flex" justifyContent="space-between">
                     <Text fontSize="r1" fontWeight={500} color="gray.700">
-                      Total Collected
+                      Total
                     </Text>
                     <Text fontSize="r1" fontWeight={500} color="gray.700">
-                      {amountConverter(totalFine + totalAmount)}
+                      {amountConverter(totalAmount + totalFine)}
+                    </Text>
+                  </Box>
+                </Box>
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  gap="s4"
+                  p="s16"
+                  bg="background.500"
+                  borderRadius="br2"
+                >
+                  <Box display="flex" justifyContent="space-between" pt="s8">
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      Amount Collected
+                    </Text>
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      {amountConverter(totalCollectedAmount)}
+                    </Text>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      Fine Collected
+                    </Text>
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      {amountConverter(totalCollectedFine)}
+                    </Text>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      Total Collection
+                    </Text>
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      {amountConverter(totalCollectedFine + totalCollectedAmount)}
                     </Text>
                   </Box>
                 </Box>

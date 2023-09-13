@@ -61,6 +61,7 @@ const FormControl = <T extends Record<string, unknown>>({
   const foundValue = options?.find((option) => option.value === value) ?? value;
 
   const methods = useFormContext();
+
   const { clearErrors } = methods;
 
   // const filteredValue = rest.isMulti

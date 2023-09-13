@@ -1,0 +1,213 @@
+query getClosingDayList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      closingDay {
+        listClosingDay(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              transactionDate
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getDatabaseSizeList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      databaseSize {
+        listDBSize(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              databaseSize
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAccessLogCounterList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      accessLogCounter {
+        listAccessLogCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              querySuccess
+              queryFailed
+              mutationSuccess
+              mutationFailed
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query geterrorLogList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      errorLog {
+        listErrorLog(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              saccosName
+              logMessage
+              queryID
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLoanAccountCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      loanAccountCounter {
+        listLoanAccountCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              approvedAccount
+              disbursedAccount
+              canceledAccount
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getMemberCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      memberCounter {
+        listMemberCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              approvedMember
+              inactiveMember
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getMoneyLedgerCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      moneyLedgerCounter {
+        listMoneyLedgerCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              moneyLedgerCount
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSavingAccountCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      savingAccountCounter {
+        listSavingAccountCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              activeAccount
+              inactiveAccount
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

@@ -1108,6 +1108,7 @@ export type AdjustedLedgerReportData = {
   cr?: Maybe<Scalars['String']>;
   dr?: Maybe<Scalars['String']>;
   ledgerId: Scalars['String'];
+  ledgerName: Scalars['String'];
 };
 
 export type AdjustedLedgerReportInput = {
@@ -3070,14 +3071,31 @@ export type BulkDepositInstanceInput = {
   rebate?: InputMaybe<Scalars['String']>;
 };
 
+export type BulkDepositOutput = {
+  amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Localized']>;
+  date?: Maybe<Scalars['Localized']>;
+  depositedBy?: Maybe<DepositedBy>;
+  depositedOther?: Maybe<Scalars['String']>;
+  discount?: Maybe<Scalars['String']>;
+  fine?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<DepositPaymentType>;
+  rebate?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+};
+
 export type BulkDepositResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
+  record?: Maybe<BulkDepositOutput>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
 export type BulkInstallmentResult = {
   accountId?: Maybe<Scalars['String']>;
+  totalFine?: Maybe<Scalars['String']>;
   value?: Maybe<InstallmentResult>;
 };
 
@@ -6532,8 +6550,8 @@ export type EachEarningComponentRecords = {
 };
 
 export type EachEmployeeExitRecords = {
-  data: EmployeeExitRecord;
-  error: QueryError;
+  data?: Maybe<EmployeeExitRecord>;
+  error?: Maybe<QueryError>;
 };
 
 export type EachEmployeeOnboardingRecord = {
@@ -8385,17 +8403,29 @@ export const FrequencyTenure = {
 } as const;
 
 export type FrequencyTenure = typeof FrequencyTenure[keyof typeof FrequencyTenure];
+export type FundDistributionEntry = {
+  accountCode?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  percent?: Maybe<Scalars['Float']>;
+  tableIndex?: Maybe<Scalars['Int']>;
+};
+
+export type FundDistributionEntryInput = {
+  amount: Scalars['String'];
+  coaHead: Scalars['String'];
+  percent?: InputMaybe<Scalars['Float']>;
+  tableIndex?: InputMaybe<Scalars['Int']>;
+};
+
 export type FundManagement = {
-  cooperativePromotionFund?: Maybe<Scalars['Float']>;
   fiscalYear?: Maybe<Scalars['String']>;
-  generalReserveFund?: Maybe<Scalars['Float']>;
+  fundDistribution?: Maybe<Array<Maybe<FundDistributionEntry>>>;
   grossProfit?: Maybe<Scalars['String']>;
   grossProfitCoa?: Maybe<Scalars['String']>;
-  incomeTax?: Maybe<Scalars['Float']>;
+  incometax: FundDistributionEntry;
   journalId?: Maybe<Scalars['String']>;
-  otherFunds?: Maybe<Array<Maybe<OtherFundDistribution>>>;
-  patronageRefundFund?: Maybe<Scalars['Float']>;
-  staffBonusFund?: Maybe<Scalars['Float']>;
+  staffBonus: FundDistributionEntry;
   state?: Maybe<FundManagementState>;
   valueDate?: Maybe<Scalars['Localized']>;
 };
@@ -8419,18 +8449,15 @@ export type FundManagementInfo = {
   fiscalYear?: Maybe<Scalars['String']>;
   grossProfit?: Maybe<BalanceValue>;
   id?: Maybe<Scalars['String']>;
-  incomeTax?: Maybe<Scalars['Float']>;
-  staffBonusFund?: Maybe<Scalars['Float']>;
+  netProfit?: Maybe<BalanceValue>;
+  profitBeforeTax?: Maybe<BalanceValue>;
   state?: Maybe<FundManagementState>;
 };
 
 export type FundManagementInput = {
-  cooperativePromotionFund?: InputMaybe<Scalars['Float']>;
-  generalReserveFund?: InputMaybe<Scalars['Float']>;
-  incomeTax?: InputMaybe<Scalars['Float']>;
-  otherFunds?: InputMaybe<Array<InputMaybe<OtherFundDistributionInput>>>;
-  patronageRefundFund?: InputMaybe<Scalars['Float']>;
-  staffBonusFund?: InputMaybe<Scalars['Float']>;
+  incomeTax: FundDistributionEntryInput;
+  others: Array<FundDistributionEntryInput>;
+  staffBonus: FundDistributionEntryInput;
 };
 
 export type FundManagementMutation = {
@@ -9300,11 +9327,16 @@ export type HrEmployeeLifecycleExitMutationUpsertEmployeeExitArgs = {
 
 export type HrEmployeeLifecycleExitQuery = {
   getEmployeeExit: EachEmployeeExitRecords;
+  getEmployeeExitDetailsFromEmployeeId: EachEmployeeExitRecords;
   listEmployeeExit: EmployeeExitConnection;
 };
 
 export type HrEmployeeLifecycleExitQueryGetEmployeeExitArgs = {
   id: Scalars['ID'];
+};
+
+export type HrEmployeeLifecycleExitQueryGetEmployeeExitDetailsFromEmployeeIdArgs = {
+  employeeId: Scalars['ID'];
 };
 
 export type HrEmployeeLifecycleExitQueryListEmployeeExitArgs = {
@@ -17952,17 +17984,6 @@ export type OrganizationStatisticsInput = {
   totalMembers: Scalars['Int'];
 };
 
-export type OtherFundDistribution = {
-  accountCode?: Maybe<Scalars['String']>;
-  accountName?: Maybe<Scalars['String']>;
-  percent?: Maybe<Scalars['Float']>;
-};
-
-export type OtherFundDistributionInput = {
-  accountCode?: InputMaybe<Scalars['String']>;
-  percent?: InputMaybe<Scalars['Float']>;
-};
-
 export type OtherReport = {
   generalLedgerReport: GenderLedgerReportResult;
   savingsBalanceReport: SavingsBalanceReportResult;
@@ -21322,6 +21343,7 @@ export type StaffPlanRecord = {
 
 export type StaffPlanTypes = {
   designation: Scalars['String'];
+  designationName: Scalars['String'];
   estimated_cost: Scalars['String'];
   estimated_cost_per_employee: Scalars['String'];
   vacancies: Scalars['Int'];
@@ -22333,6 +22355,7 @@ export type TranslateQueryResult = {
 
 export type TrialSheetFilter = {
   includeFiscalReversal?: InputMaybe<Scalars['Boolean']>;
+  includeParent?: InputMaybe<Scalars['Boolean']>;
   includeZero?: InputMaybe<Scalars['Boolean']>;
   inculdeAdjustment?: InputMaybe<Scalars['Boolean']>;
 };
@@ -29619,6 +29642,7 @@ export type GetBulkInstallmentsDataQueryVariables = Exact<{
 export type GetBulkInstallmentsDataQuery = {
   account: {
     getBulkInstallments?: Array<{
+      totalFine?: string | null;
       accountId?: string | null;
       value?: {
         data?: Array<{
@@ -32183,12 +32207,24 @@ export type GetFundManagementQuery = {
       record?: {
         grossProfit?: string | null;
         grossProfitCoa?: string | null;
-        staffBonusFund?: number | null;
-        incomeTax?: number | null;
-        generalReserveFund?: number | null;
-        patronageRefundFund?: number | null;
-        cooperativePromotionFund?: number | null;
-        otherFunds?: Array<{ accountCode?: string | null; percent?: number | null } | null> | null;
+        staffBonus: {
+          accountCode?: string | null;
+          accountName?: string | null;
+          percent?: number | null;
+          amount?: string | null;
+        };
+        incometax: {
+          accountCode?: string | null;
+          accountName?: string | null;
+          percent?: number | null;
+          amount?: string | null;
+        };
+        fundDistribution?: Array<{
+          accountCode?: string | null;
+          accountName?: string | null;
+          percent?: number | null;
+          amount?: string | null;
+        } | null> | null;
       } | null;
     } | null;
   };
@@ -32208,10 +32244,10 @@ export type ProfitToFundManagementListQuery = {
         node?: {
           id?: string | null;
           fiscalYear?: string | null;
-          staffBonusFund?: number | null;
-          incomeTax?: number | null;
           state?: FundManagementState | null;
           grossProfit?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          profitBeforeTax?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          netProfit?: { amount?: string | null; amountType?: BalanceType | null } | null;
         } | null;
       } | null> | null;
       pageInfo?: PaginationFragment | null;
@@ -32227,16 +32263,27 @@ export type GetFundManagementFormStateQuery = {
   profitToFundManagement: {
     get?: {
       record?: {
-        staffBonusFund?: number | null;
-        incomeTax?: number | null;
-        generalReserveFund?: number | null;
-        patronageRefundFund?: number | null;
-        cooperativePromotionFund?: number | null;
+        grossProfit?: string | null;
+        grossProfitCoa?: string | null;
         state?: FundManagementState | null;
-        otherFunds?: Array<{
+        staffBonus: {
           accountCode?: string | null;
           accountName?: string | null;
           percent?: number | null;
+          amount?: string | null;
+        };
+        incometax: {
+          accountCode?: string | null;
+          accountName?: string | null;
+          percent?: number | null;
+          amount?: string | null;
+        };
+        fundDistribution?: Array<{
+          accountCode?: string | null;
+          accountName?: string | null;
+          percent?: number | null;
+          amount?: string | null;
+          tableIndex?: number | null;
         } | null> | null;
       } | null;
     } | null;
@@ -32637,11 +32684,13 @@ export type GetHrEmployeeTransferHistoryQuery = {
       employeeTransfer: {
         queryEmployeeTransfer?: {
           branchArray?: Array<{
+            id?: string | null;
             transferredFrom?: string | null;
             transferredTo?: string | null;
             transferDate?: Record<'local' | 'en' | 'np', string> | null;
           } | null> | null;
           departArray?: Array<{
+            id?: string | null;
             transferredFrom?: string | null;
             transferredTo?: string | null;
             transferredDate?: Record<'local' | 'en' | 'np', string> | null;
@@ -32774,7 +32823,7 @@ export type GetHrExistFormStateQuery = {
     employeelifecycle: {
       employeeExit: {
         getEmployeeExit: {
-          data: {
+          data?: {
             exitDate?: Record<'local' | 'en' | 'np', string> | null;
             exitStatus?: ExitStatus | null;
             futureIntentions?: string | null;
@@ -32791,7 +32840,7 @@ export type GetHrExistFormStateQuery = {
               role?: string | null;
               user?: string | null;
             } | null> | null;
-          };
+          } | null;
         };
       };
     };
@@ -32819,6 +32868,167 @@ export type GetHrLifecycleEmployeeViewQuery = {
             id?: string | null;
             joiningDate?: Record<'local' | 'en' | 'np', string> | null;
             name?: string | null;
+          } | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetEmployeeTransferDetailsQueryVariables = Exact<{
+  transferId: Scalars['ID'];
+}>;
+
+export type GetEmployeeTransferDetailsQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeTransfer: {
+        getTransferDetails?: {
+          data?: {
+            employee?: string | null;
+            designation?: string | null;
+            joiningDate?: Record<'local' | 'en' | 'np', string> | null;
+            transferType?: EmployeeTransferType | null;
+            newType?: string | null;
+            previousType?: string | null;
+            transferDate?: Record<'local' | 'en' | 'np', string> | null;
+            transferedBy?: string | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetEmployeeSeparationDetailsQueryVariables = Exact<{
+  employeeSeparationId: Scalars['ID'];
+}>;
+
+export type GetEmployeeSeparationDetailsQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeSeparation: {
+        getEmployeeSeparationDetails: {
+          data?: {
+            employeeName?: string | null;
+            designation?: string | null;
+            joiningDate?: Record<'local' | 'en' | 'np', string> | null;
+            separationType?: SeparationTypeEnum | null;
+            resignationLetterDate?: Record<'local' | 'en' | 'np', string> | null;
+            documents?: Array<{
+              fieldId?: string | null;
+              docData: Array<{ identifier: string; url: string } | null>;
+            } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetEmployeePromotionHistoryQueryVariables = Exact<{
+  employeeId?: InputMaybe<Scalars['ID']>;
+}>;
+
+export type GetEmployeePromotionHistoryQuery = {
+  hr: {
+    employeelifecycle: {
+      employeePromotion: {
+        getEmployeePromotions: {
+          data?: {
+            designationPromotions?: Array<{
+              employeePromotionId?: string | null;
+              newType?: string | null;
+              currentType?: string | null;
+              dateOfPromotion?: Record<'local' | 'en' | 'np', string> | null;
+            } | null> | null;
+            levelPromotions?: Array<{
+              employeePromotionId?: string | null;
+              newType?: string | null;
+              currentType?: string | null;
+              dateOfPromotion?: Record<'local' | 'en' | 'np', string> | null;
+            } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetPromotionDetailQueryVariables = Exact<{
+  promotionId: Scalars['ID'];
+}>;
+
+export type GetPromotionDetailQuery = {
+  hr: {
+    employeelifecycle: {
+      employeePromotion: {
+        GetAPromotionDetail: {
+          promotionDetails?: {
+            employeeName?: string | null;
+            designation?: string | null;
+            joiningDate?: Record<'local' | 'en' | 'np', string> | null;
+            promotionType?: string | null;
+            oldPromotionType?: string | null;
+            newPromotionType?: string | null;
+            promotionDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetEmployeeExitDetailsQueryVariables = Exact<{
+  employeeId: Scalars['ID'];
+}>;
+
+export type GetEmployeeExitDetailsQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeExit: {
+        getEmployeeExitDetailsFromEmployeeId: {
+          data?: {
+            separationId?: string | null;
+            exitStatus?: ExitStatus | null;
+            interviewer?: string | null;
+            exitDate?: Record<'local' | 'en' | 'np', string> | null;
+            futureIntentions?: string | null;
+            overallExp?: string | null;
+            suggestions?: string | null;
+            others?: string | null;
+            checklists?: Array<{
+              done?: boolean | null;
+              activityName?: string | null;
+              user?: string | null;
+              role?: string | null;
+              beginsOn?: Record<'local' | 'en' | 'np', string> | null;
+              duration?: string | null;
+            } | null> | null;
           } | null;
         };
       };
@@ -33402,6 +33612,7 @@ export type GetJobApplicationOverviewQuery = {
             designation?: string | null;
             department?: string | null;
             applicationRating?: number | null;
+            applicationStatus?: ApplicantStatus | null;
             permanentAddress?: {
               province?: string | null;
               district?: string | null;
@@ -33418,6 +33629,12 @@ export type GetJobApplicationOverviewQuery = {
               locality?: string | null;
               houseNo?: string | null;
             } | null;
+            educationalDetails?: Array<{
+              instituteName?: string | null;
+              degree_diploma?: string | null;
+              specialization?: string | null;
+              dateOfCompletion?: Record<'local' | 'en' | 'np', string> | null;
+            } | null> | null;
           } | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -33447,6 +33664,7 @@ export type GetJobApplicationJobOfferQuery = {
             designation?: string | null;
             department?: string | null;
             email?: string | null;
+            jobOfferStatus?: JobStatus | null;
             jobOfferTerms?: Array<{ offerTerm: string; value: string } | null> | null;
           } | null;
           error?:
@@ -40133,6 +40351,7 @@ export type GetAdjustedLedgerReportQuery = {
             branchId: string;
             branchName: string;
             ledgerId: string;
+            ledgerName: string;
             dr?: string | null;
             cr?: string | null;
             balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
@@ -54633,6 +54852,7 @@ export const GetBulkInstallmentsDataDocument = `
     query getBulkInstallmentsData($ids: [ID]!) {
   account {
     getBulkInstallments(ids: $ids) {
+      totalFine
       accountId
       value {
         data {
@@ -57975,14 +58195,23 @@ export const GetFundManagementDocument = `
       record {
         grossProfit
         grossProfitCoa
-        staffBonusFund
-        incomeTax
-        generalReserveFund
-        patronageRefundFund
-        cooperativePromotionFund
-        otherFunds {
+        staffBonus {
           accountCode
+          accountName
           percent
+          amount
+        }
+        incometax {
+          accountCode
+          accountName
+          percent
+          amount
+        }
+        fundDistribution {
+          accountCode
+          accountName
+          percent
+          amount
         }
       }
     }
@@ -58013,8 +58242,14 @@ export const ProfitToFundManagementListDocument = `
             amount
             amountType
           }
-          staffBonusFund
-          incomeTax
+          profitBeforeTax {
+            amount
+            amountType
+          }
+          netProfit {
+            amount
+            amountType
+          }
           state
         }
         cursor
@@ -58047,15 +58282,26 @@ export const GetFundManagementFormStateDocument = `
   profitToFundManagement {
     get(id: $id) {
       record {
-        staffBonusFund
-        incomeTax
-        generalReserveFund
-        patronageRefundFund
-        cooperativePromotionFund
-        otherFunds {
+        grossProfit
+        grossProfitCoa
+        staffBonus {
           accountCode
           accountName
           percent
+          amount
+        }
+        incometax {
+          accountCode
+          accountName
+          percent
+          amount
+        }
+        fundDistribution {
+          accountCode
+          accountName
+          percent
+          amount
+          tableIndex
         }
         state
       }
@@ -58583,11 +58829,13 @@ export const GetHrEmployeeTransferHistoryDocument = `
       employeeTransfer {
         queryEmployeeTransfer(employeeId: $employeeId) {
           branchArray {
+            id
             transferredFrom
             transferredTo
             transferDate
           }
           departArray {
+            id
             transferredFrom
             transferredTo
             transferredDate
@@ -58841,6 +59089,212 @@ export const useGetHrLifecycleEmployeeViewQuery = <
     ['getHrLifecycleEmployeeView', variables],
     useAxios<GetHrLifecycleEmployeeViewQuery, GetHrLifecycleEmployeeViewQueryVariables>(
       GetHrLifecycleEmployeeViewDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeTransferDetailsDocument = `
+    query getEmployeeTransferDetails($transferId: ID!) {
+  hr {
+    employeelifecycle {
+      employeeTransfer {
+        getTransferDetails(transferId: $transferId) {
+          data {
+            employee
+            designation
+            joiningDate
+            transferType
+            newType
+            previousType
+            transferDate
+            transferedBy
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEmployeeTransferDetailsQuery = <
+  TData = GetEmployeeTransferDetailsQuery,
+  TError = unknown
+>(
+  variables: GetEmployeeTransferDetailsQueryVariables,
+  options?: UseQueryOptions<GetEmployeeTransferDetailsQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeTransferDetailsQuery, TError, TData>(
+    ['getEmployeeTransferDetails', variables],
+    useAxios<GetEmployeeTransferDetailsQuery, GetEmployeeTransferDetailsQueryVariables>(
+      GetEmployeeTransferDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeSeparationDetailsDocument = `
+    query getEmployeeSeparationDetails($employeeSeparationId: ID!) {
+  hr {
+    employeelifecycle {
+      employeeSeparation {
+        getEmployeeSeparationDetails(employeeSeparationId: $employeeSeparationId) {
+          data {
+            employeeName
+            designation
+            joiningDate
+            separationType
+            resignationLetterDate
+            documents {
+              fieldId
+              docData {
+                identifier
+                url
+              }
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEmployeeSeparationDetailsQuery = <
+  TData = GetEmployeeSeparationDetailsQuery,
+  TError = unknown
+>(
+  variables: GetEmployeeSeparationDetailsQueryVariables,
+  options?: UseQueryOptions<GetEmployeeSeparationDetailsQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeSeparationDetailsQuery, TError, TData>(
+    ['getEmployeeSeparationDetails', variables],
+    useAxios<GetEmployeeSeparationDetailsQuery, GetEmployeeSeparationDetailsQueryVariables>(
+      GetEmployeeSeparationDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeePromotionHistoryDocument = `
+    query getEmployeePromotionHistory($employeeId: ID) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        getEmployeePromotions(employeeId: $employeeId) {
+          data {
+            designationPromotions {
+              employeePromotionId
+              newType
+              currentType
+              dateOfPromotion
+            }
+            levelPromotions {
+              employeePromotionId
+              newType
+              currentType
+              dateOfPromotion
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetEmployeePromotionHistoryQuery = <
+  TData = GetEmployeePromotionHistoryQuery,
+  TError = unknown
+>(
+  variables?: GetEmployeePromotionHistoryQueryVariables,
+  options?: UseQueryOptions<GetEmployeePromotionHistoryQuery, TError, TData>
+) =>
+  useQuery<GetEmployeePromotionHistoryQuery, TError, TData>(
+    variables === undefined
+      ? ['getEmployeePromotionHistory']
+      : ['getEmployeePromotionHistory', variables],
+    useAxios<GetEmployeePromotionHistoryQuery, GetEmployeePromotionHistoryQueryVariables>(
+      GetEmployeePromotionHistoryDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetPromotionDetailDocument = `
+    query getPromotionDetail($promotionId: ID!) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        GetAPromotionDetail(promotionId: $promotionId) {
+          promotionDetails {
+            employeeName
+            designation
+            joiningDate
+            promotionType
+            oldPromotionType
+            newPromotionType
+            promotionDate
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetPromotionDetailQuery = <TData = GetPromotionDetailQuery, TError = unknown>(
+  variables: GetPromotionDetailQueryVariables,
+  options?: UseQueryOptions<GetPromotionDetailQuery, TError, TData>
+) =>
+  useQuery<GetPromotionDetailQuery, TError, TData>(
+    ['getPromotionDetail', variables],
+    useAxios<GetPromotionDetailQuery, GetPromotionDetailQueryVariables>(
+      GetPromotionDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeExitDetailsDocument = `
+    query getEmployeeExitDetails($employeeId: ID!) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        getEmployeeExitDetailsFromEmployeeId(employeeId: $employeeId) {
+          data {
+            separationId
+            exitStatus
+            interviewer
+            exitDate
+            futureIntentions
+            overallExp
+            suggestions
+            others
+            checklists {
+              done
+              activityName
+              user
+              role
+              beginsOn
+              duration
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetEmployeeExitDetailsQuery = <
+  TData = GetEmployeeExitDetailsQuery,
+  TError = unknown
+>(
+  variables: GetEmployeeExitDetailsQueryVariables,
+  options?: UseQueryOptions<GetEmployeeExitDetailsQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeExitDetailsQuery, TError, TData>(
+    ['getEmployeeExitDetails', variables],
+    useAxios<GetEmployeeExitDetailsQuery, GetEmployeeExitDetailsQueryVariables>(
+      GetEmployeeExitDetailsDocument
     ).bind(null, variables),
     options
   );
@@ -59599,6 +60053,13 @@ export const GetJobApplicationOverviewDocument = `
               houseNo
             }
             applicationRating
+            applicationStatus
+            educationalDetails {
+              instituteName
+              degree_diploma
+              specialization
+              dateOfCompletion
+            }
           }
           error {
             ...MutationError
@@ -59640,6 +60101,7 @@ export const GetJobApplicationJobOfferDocument = `
               offerTerm
               value
             }
+            jobOfferStatus
           }
           error {
             ...MutationError
@@ -68289,6 +68751,7 @@ export const GetAdjustedLedgerReportDocument = `
             branchId
             branchName
             ledgerId
+            ledgerName
             balance {
               amount
               amountType

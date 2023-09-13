@@ -205,8 +205,13 @@ export type CloneEnvironmentFromDevInput = {
 };
 
 export const ComparatorType = {
+  Between: 'BETWEEN',
+  Contains: 'CONTAINS',
   EqualTo: 'EqualTo',
   GreaterThan: 'GreaterThan',
+  HasNoValue: 'HasNoValue',
+  HasValue: 'HasValue',
+  In: 'IN',
   LessThan: 'LessThan',
 } as const;
 
@@ -255,6 +260,16 @@ export type District = {
   municipalities: Array<Municipality>;
   name: Scalars['String'];
   nameNp: Scalars['String'];
+};
+
+export type DocumentInfo = {
+  id: Scalars['String'];
+  url: Scalars['String'];
+};
+
+export type DocumentInsertInput = {
+  fieldId: Scalars['String'];
+  identifiers: Array<Scalars['String']>;
 };
 
 export type EnvSeedResult = {
@@ -341,6 +356,131 @@ export type Identity = {
   name: Scalars['String'];
   userType: UserType;
   username: Scalars['String'];
+};
+
+export type KymAddressInput = {
+  coordinates?: InputMaybe<CoordinateInput>;
+  districtId?: InputMaybe<Scalars['Int']>;
+  houseNo?: InputMaybe<Scalars['String']>;
+  localGovernmentId?: InputMaybe<Scalars['Int']>;
+  locality?: InputMaybe<Scalars['String']>;
+  provinceId?: InputMaybe<Scalars['Int']>;
+  wardNo?: InputMaybe<Scalars['Int']>;
+};
+
+export type KymIndFamilyMemberInput = {
+  additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  dateOfBirth?: InputMaybe<Scalars['Localized']>;
+  documents?: InputMaybe<Array<InputMaybe<DocumentInsertInput>>>;
+  familyMemberId?: InputMaybe<Scalars['String']>;
+  fullName?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  relationshipId?: InputMaybe<Scalars['String']>;
+};
+
+export type KymIndIdentificationInput = {
+  additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  date?: InputMaybe<Scalars['Localized']>;
+  id?: InputMaybe<Scalars['String']>;
+  idType: Scalars['String'];
+  identificationNo?: InputMaybe<Scalars['String']>;
+  place?: InputMaybe<Scalars['String']>;
+};
+
+export type KymIndIncomeSourceInput = {
+  additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  amount?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  incomeSource?: InputMaybe<Scalars['String']>;
+};
+
+export type KymIndOccupationInput = {
+  additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  address?: InputMaybe<Scalars['String']>;
+  contact?: InputMaybe<Scalars['String']>;
+  establishedDate?: InputMaybe<Scalars['Localized']>;
+  estimatedAnnualIncome?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  isOwner?: InputMaybe<Scalars['Boolean']>;
+  occupationId?: InputMaybe<Scalars['String']>;
+  orgName?: InputMaybe<Scalars['String']>;
+  panVatNo?: InputMaybe<Scalars['String']>;
+  registrationNo?: InputMaybe<Scalars['String']>;
+};
+
+export type KymAdditionalFields = {
+  fieldId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
+export type KymIncomeSourceDetails = {
+  additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  amount?: InputMaybe<Scalars['Float']>;
+  source?: InputMaybe<Scalars['String']>;
+};
+
+export type KymIndMemberInput = {
+  annualIncomeSourceId?: InputMaybe<Scalars['String']>;
+  beneficialFullName?: InputMaybe<Scalars['String']>;
+  beneficialRelationshipId?: InputMaybe<Scalars['String']>;
+  convictedDetails?: InputMaybe<Scalars['String']>;
+  dateOfBirth?: InputMaybe<Scalars['Localized']>;
+  declarationAgreement?: InputMaybe<Scalars['Boolean']>;
+  documents?: InputMaybe<Array<InputMaybe<DocumentInsertInput>>>;
+  educationQualificationId?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  estimatedAnnualDepositAmount?: InputMaybe<Scalars['String']>;
+  estimatedAnnualLoanAmount?: InputMaybe<Scalars['String']>;
+  estimatedAnnualTransactionAmount?: InputMaybe<Scalars['String']>;
+  estimatedAnnualTransactionFrequencyId?: InputMaybe<Scalars['String']>;
+  ethnicityId?: InputMaybe<Scalars['String']>;
+  familyCoopMembers?: InputMaybe<Array<InputMaybe<KymIndFamilyMemberInput>>>;
+  familyMembers?: InputMaybe<Array<InputMaybe<KymIndFamilyMemberInput>>>;
+  firstIntroducerId?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']>;
+  foreignEmpCountryId?: InputMaybe<Scalars['String']>;
+  foreignEstimatedAnnualIncome?: InputMaybe<Scalars['String']>;
+  foreignResidentialPermitTypeId?: InputMaybe<Scalars['String']>;
+  genderId?: InputMaybe<Scalars['String']>;
+  hasBeneficialOwner?: InputMaybe<Scalars['Boolean']>;
+  hasForeignResidentialPermit?: InputMaybe<Scalars['Boolean']>;
+  identification?: InputMaybe<Array<InputMaybe<KymIndIdentificationInput>>>;
+  identificationSelection?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  incomeSource?: InputMaybe<Array<InputMaybe<KymIndIncomeSourceInput>>>;
+  initialLoan?: InputMaybe<Scalars['String']>;
+  initialSaving?: InputMaybe<Scalars['String']>;
+  initialShare?: InputMaybe<Scalars['Int']>;
+  isConvicted?: InputMaybe<Scalars['Boolean']>;
+  isFamilyAMember?: InputMaybe<Scalars['Boolean']>;
+  isForeignEmployment?: InputMaybe<Scalars['Boolean']>;
+  isMemberOfAnotherCooperative?: InputMaybe<Scalars['Boolean']>;
+  isPoliticallyExposed?: InputMaybe<Scalars['Boolean']>;
+  landlordContact?: InputMaybe<Scalars['String']>;
+  landlordName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  mainOccupation?: InputMaybe<KymIndOccupationInput>;
+  maritalStatusId?: InputMaybe<Scalars['String']>;
+  middleName?: InputMaybe<Scalars['String']>;
+  mobileNumber?: InputMaybe<Scalars['String']>;
+  nationalityId?: InputMaybe<Scalars['String']>;
+  otherCoopBranchId?: InputMaybe<Scalars['String']>;
+  otherCoopMemberId?: InputMaybe<Scalars['String']>;
+  otherCoopName?: InputMaybe<Scalars['String']>;
+  otherFinancialAmount?: InputMaybe<Scalars['String']>;
+  otherProfession?: InputMaybe<Scalars['String']>;
+  panNo?: InputMaybe<Scalars['String']>;
+  permanentAddress?: InputMaybe<KymAddressInput>;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+  politicallyExposedDetails?: InputMaybe<Scalars['String']>;
+  professionId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  purposeId?: InputMaybe<Scalars['String']>;
+  religionId?: InputMaybe<Scalars['String']>;
+  sameTempAsPermanentAddress?: InputMaybe<Scalars['Boolean']>;
+  secondIntroducerId?: InputMaybe<Scalars['String']>;
+  spouseOccupation?: InputMaybe<KymIndOccupationInput>;
+  temporaryAddress?: InputMaybe<KymAddressInput>;
+  typeOfVisaId?: InputMaybe<Scalars['String']>;
 };
 
 export type Municipality = {
@@ -487,8 +627,20 @@ export type NeosysQuery = {
   auth?: Maybe<NeosysAuthQuery>;
   client?: Maybe<NeosysClientQuery>;
   tasks?: Maybe<Array<Maybe<Task>>>;
+  thread?: Maybe<NeosysThreadQuery>;
   user?: Maybe<NeosysUserQuery>;
   versions?: Maybe<Array<Maybe<ApplicationVersion>>>;
+};
+
+export type NeosysThreadQuery = {
+  accessLogCounter?: Maybe<ThreadAccessLogCounterQuery>;
+  closingDay?: Maybe<ThreadClosingDayQuery>;
+  databaseSize?: Maybe<ThreadDatabaseSizeQuery>;
+  errorLog?: Maybe<ThreadErrorLogQuery>;
+  loanAccountCounter?: Maybe<ThreadLoanAccountCounterQuery>;
+  memberCounter?: Maybe<ThreadMemberCounterQuery>;
+  moneyLedgerCounter?: Maybe<ThreadMoneyLedgerCounterQuery>;
+  savingAccountCounter?: Maybe<ThreadSavingAccountCounterQuery>;
 };
 
 export type NeosysUser = Base & {
@@ -864,6 +1016,261 @@ export const TextFormat = {
 } as const;
 
 export type TextFormat = typeof TextFormat[keyof typeof TextFormat];
+export type ThreadAccessLogCounterListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadAccessLogCounterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadAccessLogCounterListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadAccessLogCounterNode;
+};
+
+export type ThreadAccessLogCounterNode = {
+  createdAt?: Maybe<Scalars['Time']>;
+  id?: Maybe<Scalars['Int']>;
+  mutationFailed?: Maybe<Scalars['String']>;
+  mutationSuccess?: Maybe<Scalars['String']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryFailed?: Maybe<Scalars['String']>;
+  queryID?: Maybe<Scalars['Int']>;
+  querySuccess?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type ThreadAccessLogCounterQuery = {
+  listAccessLogCounter?: Maybe<ThreadAccessLogCounterListConnection>;
+};
+
+export type ThreadAccessLogCounterQueryListAccessLogCounterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadClosingDayListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadClosingDayListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadClosingDayListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadClosingDayNode;
+};
+
+export type ThreadClosingDayNode = {
+  createdAt?: Maybe<Scalars['Time']>;
+  id?: Maybe<Scalars['Int']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryID?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
+};
+
+export type ThreadClosingDayQuery = {
+  listClosingDay?: Maybe<ThreadClosingDayListConnection>;
+};
+
+export type ThreadClosingDayQueryListClosingDayArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadClosingDaySearchFilter = {
+  id?: InputMaybe<Scalars['String']>;
+  queryDate?: InputMaybe<Scalars['Time']>;
+  slug?: InputMaybe<Scalars['String']>;
+  transactionDate?: InputMaybe<Scalars['Time']>;
+};
+
+export type ThreadDatabaseSizeQuery = {
+  listDBSize?: Maybe<ThreadDbSizeListConnection>;
+};
+
+export type ThreadDatabaseSizeQueryListDbSizeArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadDbSizeListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadDbSizeListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadDbSizeListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadDbSizeNode;
+};
+
+export type ThreadDbSizeNode = {
+  createdAt?: Maybe<Scalars['Time']>;
+  databaseSize?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryID?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type ThreadErrorLogListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadErrorLogListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadErrorLogListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadErrorLogNode;
+};
+
+export type ThreadErrorLogNode = {
+  createdAt?: Maybe<Scalars['Time']>;
+  id?: Maybe<Scalars['Int']>;
+  logMessage?: Maybe<Scalars['String']>;
+  queryID?: Maybe<Scalars['Int']>;
+  saccosName?: Maybe<Scalars['String']>;
+};
+
+export type ThreadErrorLogQuery = {
+  listErrorLog?: Maybe<ThreadErrorLogListConnection>;
+};
+
+export type ThreadErrorLogQueryListErrorLogArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadLoanAccountCounterListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadLoanAccountCounterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadLoanAccountCounterListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadLoanAccountCounterNode;
+};
+
+export type ThreadLoanAccountCounterNode = {
+  approvedAccount?: Maybe<Scalars['Int']>;
+  canceledAccount?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Time']>;
+  disbursedAccount?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryID?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type ThreadLoanAccountCounterQuery = {
+  listLoanAccountCounter?: Maybe<ThreadLoanAccountCounterListConnection>;
+};
+
+export type ThreadLoanAccountCounterQueryListLoanAccountCounterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadMemberCounterListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadMemberCounterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadMemberCounterListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadMemberCounterNode;
+};
+
+export type ThreadMemberCounterNode = {
+  approvedMember?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Time']>;
+  id?: Maybe<Scalars['Int']>;
+  inactiveMember?: Maybe<Scalars['Int']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryID?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type ThreadMemberCounterQuery = {
+  listMemberCounter?: Maybe<ThreadMemberCounterListConnection>;
+};
+
+export type ThreadMemberCounterQueryListMemberCounterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadMoneyLedgerCounterListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadMoneyLedgerCounterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadMoneyLedgerCounterListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadMoneyLedgerCounterNode;
+};
+
+export type ThreadMoneyLedgerCounterNode = {
+  createdAt?: Maybe<Scalars['Time']>;
+  id?: Maybe<Scalars['Int']>;
+  moneyLedgerCount?: Maybe<Scalars['Int']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryID?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type ThreadMoneyLedgerCounterQuery = {
+  listMoneyLedgerCounter?: Maybe<ThreadMoneyLedgerCounterListConnection>;
+};
+
+export type ThreadMoneyLedgerCounterQueryListMoneyLedgerCounterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadSavingAccountCounterListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadSavingAccountCounterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadSavingAccountCounterListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadSavingAccountCounterNode;
+};
+
+export type ThreadSavingAccountCounterNode = {
+  activeAccount?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Time']>;
+  id?: Maybe<Scalars['Int']>;
+  inactiveAccount?: Maybe<Scalars['Int']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryID?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type ThreadSavingAccountCounterQuery = {
+  listSavingAccountCounter?: Maybe<ThreadSavingAccountCounterListConnection>;
+};
+
+export type ThreadSavingAccountCounterQueryListSavingAccountCounterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type UploadedDocument = {
+  docData: Array<Maybe<UploadedDocumentData>>;
+  fieldId?: Maybe<Scalars['String']>;
+};
+
+export type UploadedDocumentData = {
+  identifier: Scalars['String'];
+  url: Scalars['String'];
+};
+
 export const UserType = {
   Human: 'HUMAN',
   System: 'SYSTEM',
@@ -1219,6 +1626,244 @@ export type GetAllLocalGovernmentQueryVariables = Exact<{ [key: string]: never }
 
 export type GetAllLocalGovernmentQuery = {
   administration: { municipalities: Array<{ id: number; name: string }> };
+};
+
+export type GetClosingDayListQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetClosingDayListQuery = {
+  neosys: {
+    thread?: {
+      closingDay?: {
+        listClosingDay?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              transactionDate?: Record<'local' | 'en' | 'np', string> | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDatabaseSizeListQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetDatabaseSizeListQuery = {
+  neosys: {
+    thread?: {
+      databaseSize?: {
+        listDBSize?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              databaseSize?: string | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAccessLogCounterListQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetAccessLogCounterListQuery = {
+  neosys: {
+    thread?: {
+      accessLogCounter?: {
+        listAccessLogCounter?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              querySuccess?: string | null;
+              queryFailed?: string | null;
+              mutationSuccess?: string | null;
+              mutationFailed?: string | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GeterrorLogListQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GeterrorLogListQuery = {
+  neosys: {
+    thread?: {
+      errorLog?: {
+        listErrorLog?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              saccosName?: string | null;
+              logMessage?: string | null;
+              queryID?: number | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanAccountCounterQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetLoanAccountCounterQuery = {
+  neosys: {
+    thread?: {
+      loanAccountCounter?: {
+        listLoanAccountCounter?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              approvedAccount?: number | null;
+              disbursedAccount?: number | null;
+              canceledAccount?: number | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetMemberCounterQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetMemberCounterQuery = {
+  neosys: {
+    thread?: {
+      memberCounter?: {
+        listMemberCounter?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              approvedMember?: number | null;
+              inactiveMember?: number | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetMoneyLedgerCounterQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetMoneyLedgerCounterQuery = {
+  neosys: {
+    thread?: {
+      moneyLedgerCounter?: {
+        listMoneyLedgerCounter?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              moneyLedgerCount?: number | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSavingAccountCounterQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetSavingAccountCounterQuery = {
+  neosys: {
+    thread?: {
+      savingAccountCounter?: {
+        listSavingAccountCounter?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              activeAccount?: number | null;
+              inactiveAccount?: number | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
 };
 
 export type GetMeQueryVariables = Exact<{ [key: string]: never }>;
@@ -1971,6 +2616,324 @@ export const useGetAllLocalGovernmentQuery = <TData = GetAllLocalGovernmentQuery
     variables === undefined ? ['getAllLocalGovernment'] : ['getAllLocalGovernment', variables],
     useAxios<GetAllLocalGovernmentQuery, GetAllLocalGovernmentQueryVariables>(
       GetAllLocalGovernmentDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetClosingDayListDocument = `
+    query getClosingDayList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      closingDay {
+        listClosingDay(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              transactionDate
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetClosingDayListQuery = <TData = GetClosingDayListQuery, TError = unknown>(
+  variables?: GetClosingDayListQueryVariables,
+  options?: UseQueryOptions<GetClosingDayListQuery, TError, TData>
+) =>
+  useQuery<GetClosingDayListQuery, TError, TData>(
+    variables === undefined ? ['getClosingDayList'] : ['getClosingDayList', variables],
+    useAxios<GetClosingDayListQuery, GetClosingDayListQueryVariables>(
+      GetClosingDayListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDatabaseSizeListDocument = `
+    query getDatabaseSizeList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      databaseSize {
+        listDBSize(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              databaseSize
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetDatabaseSizeListQuery = <TData = GetDatabaseSizeListQuery, TError = unknown>(
+  variables?: GetDatabaseSizeListQueryVariables,
+  options?: UseQueryOptions<GetDatabaseSizeListQuery, TError, TData>
+) =>
+  useQuery<GetDatabaseSizeListQuery, TError, TData>(
+    variables === undefined ? ['getDatabaseSizeList'] : ['getDatabaseSizeList', variables],
+    useAxios<GetDatabaseSizeListQuery, GetDatabaseSizeListQueryVariables>(
+      GetDatabaseSizeListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccessLogCounterListDocument = `
+    query getAccessLogCounterList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      accessLogCounter {
+        listAccessLogCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              querySuccess
+              queryFailed
+              mutationSuccess
+              mutationFailed
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetAccessLogCounterListQuery = <
+  TData = GetAccessLogCounterListQuery,
+  TError = unknown
+>(
+  variables?: GetAccessLogCounterListQueryVariables,
+  options?: UseQueryOptions<GetAccessLogCounterListQuery, TError, TData>
+) =>
+  useQuery<GetAccessLogCounterListQuery, TError, TData>(
+    variables === undefined ? ['getAccessLogCounterList'] : ['getAccessLogCounterList', variables],
+    useAxios<GetAccessLogCounterListQuery, GetAccessLogCounterListQueryVariables>(
+      GetAccessLogCounterListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GeterrorLogListDocument = `
+    query geterrorLogList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      errorLog {
+        listErrorLog(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              saccosName
+              logMessage
+              queryID
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGeterrorLogListQuery = <TData = GeterrorLogListQuery, TError = unknown>(
+  variables?: GeterrorLogListQueryVariables,
+  options?: UseQueryOptions<GeterrorLogListQuery, TError, TData>
+) =>
+  useQuery<GeterrorLogListQuery, TError, TData>(
+    variables === undefined ? ['geterrorLogList'] : ['geterrorLogList', variables],
+    useAxios<GeterrorLogListQuery, GeterrorLogListQueryVariables>(GeterrorLogListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetLoanAccountCounterDocument = `
+    query getLoanAccountCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      loanAccountCounter {
+        listLoanAccountCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              approvedAccount
+              disbursedAccount
+              canceledAccount
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetLoanAccountCounterQuery = <TData = GetLoanAccountCounterQuery, TError = unknown>(
+  variables?: GetLoanAccountCounterQueryVariables,
+  options?: UseQueryOptions<GetLoanAccountCounterQuery, TError, TData>
+) =>
+  useQuery<GetLoanAccountCounterQuery, TError, TData>(
+    variables === undefined ? ['getLoanAccountCounter'] : ['getLoanAccountCounter', variables],
+    useAxios<GetLoanAccountCounterQuery, GetLoanAccountCounterQueryVariables>(
+      GetLoanAccountCounterDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberCounterDocument = `
+    query getMemberCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      memberCounter {
+        listMemberCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              approvedMember
+              inactiveMember
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetMemberCounterQuery = <TData = GetMemberCounterQuery, TError = unknown>(
+  variables?: GetMemberCounterQueryVariables,
+  options?: UseQueryOptions<GetMemberCounterQuery, TError, TData>
+) =>
+  useQuery<GetMemberCounterQuery, TError, TData>(
+    variables === undefined ? ['getMemberCounter'] : ['getMemberCounter', variables],
+    useAxios<GetMemberCounterQuery, GetMemberCounterQueryVariables>(GetMemberCounterDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetMoneyLedgerCounterDocument = `
+    query getMoneyLedgerCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      moneyLedgerCounter {
+        listMoneyLedgerCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              moneyLedgerCount
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetMoneyLedgerCounterQuery = <TData = GetMoneyLedgerCounterQuery, TError = unknown>(
+  variables?: GetMoneyLedgerCounterQueryVariables,
+  options?: UseQueryOptions<GetMoneyLedgerCounterQuery, TError, TData>
+) =>
+  useQuery<GetMoneyLedgerCounterQuery, TError, TData>(
+    variables === undefined ? ['getMoneyLedgerCounter'] : ['getMoneyLedgerCounter', variables],
+    useAxios<GetMoneyLedgerCounterQuery, GetMoneyLedgerCounterQueryVariables>(
+      GetMoneyLedgerCounterDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSavingAccountCounterDocument = `
+    query getSavingAccountCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      savingAccountCounter {
+        listSavingAccountCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              activeAccount
+              inactiveAccount
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSavingAccountCounterQuery = <
+  TData = GetSavingAccountCounterQuery,
+  TError = unknown
+>(
+  variables?: GetSavingAccountCounterQueryVariables,
+  options?: UseQueryOptions<GetSavingAccountCounterQuery, TError, TData>
+) =>
+  useQuery<GetSavingAccountCounterQuery, TError, TData>(
+    variables === undefined ? ['getSavingAccountCounter'] : ['getSavingAccountCounter', variables],
+    useAxios<GetSavingAccountCounterQuery, GetSavingAccountCounterQueryVariables>(
+      GetSavingAccountCounterDocument
     ).bind(null, variables),
     options
   );

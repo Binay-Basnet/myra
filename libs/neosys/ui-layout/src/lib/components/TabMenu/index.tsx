@@ -1,4 +1,5 @@
 import { IconType } from 'react-icons';
+import { IoMdAnalytics } from 'react-icons/io';
 import { IoCubeOutline, IoRoseOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -6,17 +7,21 @@ import { Tab, TabList, Tabs } from '@chakra-ui/react';
 
 import { Box, Icon, Text } from '@myra-ui';
 
-import { useTranslation } from '@coop/shared/utils';
+import { getUrl, useTranslation } from '@coop/shared/utils';
+
+const getIndex = (pathname: string) => {
+  switch (getUrl(pathname, 1)) {
+    case 'clients':
+      return 0;
+    case 'users':
+      return 1;
+    default:
+      return 2;
+  }
+};
 
 /* eslint-disable-next-line */
 export interface TabMenuProps {}
-
-const NAVBAR_TAB_OBJECT: Record<string, number> = {
-  // '/': 0,
-  '/clients': 0,
-  '/users': 1,
-  '/settings': 2,
-};
 
 export const TabMenu = () => {
   const router = useRouter();
@@ -39,28 +44,20 @@ export const TabMenu = () => {
       icon: IoCubeOutline,
       link: '/users',
     },
-    // {
-    //   title: t['neoClientSettings'],
-    //   icon: ImStack,
-    //   link: '/settings',
-    // },
-  ];
 
-  const currentIndex =
-    NAVBAR_TAB_OBJECT[
-      Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
-        string.length === 1 ? router?.pathname === string : router?.pathname.includes(string)
-      ) ?? '/'
-    ];
+    {
+      title: 'Analytics',
+      icon: IoMdAnalytics,
+      link: '/analytics/members',
+    },
+  ];
 
   return (
     <Box height="3.125rem" px="s16" py="s4" alignItems="center" display="flex">
-      <Tabs index={currentIndex} size="md" height="100%" variant="enclosed">
+      <Tabs index={getIndex(router.pathname)} size="md" height="100%" variant="enclosed">
         <TabList border="none" height="100%">
           {demotabs.map(({ title, icon, link }) => {
-            const isActive =
-              link.length === 1 ? router?.pathname === link : router?.pathname.includes(link);
-
+            const isActive = getIndex(router?.pathname) === getIndex(link);
             return (
               <Link href={link} key={link}>
                 <Tab

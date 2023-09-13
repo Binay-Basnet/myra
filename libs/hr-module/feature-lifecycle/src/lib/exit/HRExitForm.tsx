@@ -3,10 +3,10 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import { asyncToast } from '@myra-ui';
-import { ad2bs } from '@myra-ui/date-picker';
 
 import {
   EmployeeExitInput,
+  FieldsInput,
   useGetHrExistFormStateQuery,
   useGetHrSeperationListQuery,
   useSetEmployeeExitUpsertMutation,
@@ -44,7 +44,7 @@ export const HrExitUpsert = () => {
         activityName: item?.activityName,
         user: item?.user,
         role: item?.role,
-        beginsOn: convertDate(item?.beginsOn as unknown as string),
+        beginsOn: item?.beginsOn as unknown as string,
         duration: item?.duration,
       })) || [];
     asyncToast({
@@ -58,7 +58,7 @@ export const HrExitUpsert = () => {
         id: id ? (id as string) : null,
         input: {
           ...data,
-          checklists: activityDetails,
+          checklists: activityDetails as unknown as FieldsInput[],
         } as EmployeeExitInput,
       }),
       onSuccess: () => {
@@ -122,20 +122,4 @@ export const HrExitUpsert = () => {
       <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={submitForm} />
     </FormLayout>
   );
-};
-const convertDate = (dateString: string) => {
-  const date = new Date(dateString);
-
-  const convertedDate = {
-    year: date.getFullYear(),
-    month: date.getMonth() + 1,
-    day: date.getDate(),
-  };
-  const bsDate = ad2bs(convertedDate.year, Number(convertedDate.month), Number(convertedDate.day));
-  const nepaliDate = `${bsDate?.year}-${bsDate?.month.toString().padStart(2, '0')}-${bsDate?.day
-    .toString()
-    .padStart(2, '0')}`;
-
-  const dateObj = { np: nepaliDate, en: dateString, local: '' };
-  return dateObj;
 };

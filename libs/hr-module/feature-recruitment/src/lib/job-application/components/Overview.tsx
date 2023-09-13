@@ -1,15 +1,32 @@
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 
 import { Box, Icon, Text } from '@myra-ui';
 
-import { JobApplicationOverview } from '@coop/cbs/data-access';
-import { DetailsKeyValueCard, DetailsPageHeaderBox } from '@coop/shared/components';
+import { ApplicantStatus, JobApplicationOverview } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
+import {
+  DetailsAlertBar,
+  DetailsKeyValueCard,
+  DetailsPageHeaderBox,
+} from '@coop/shared/components';
 
 export const Overview = (props: { data: JobApplicationOverview }) => {
+  const router = useRouter();
   const { data } = props;
   return (
     <>
+      {data?.applicationStatus === ApplicantStatus?.Accepted && (
+        <Box mb="-s16">
+          <DetailsAlertBar
+            title="Application accepted. Send Job Offer Next."
+            buttonText="Send Job Offer"
+            alertButtonHandler={() => router.push(ROUTES?.HR_RECRUITMENT_JOB_OFFER_ADD)}
+          />
+        </Box>
+      )}
       <DetailsPageHeaderBox title="Overview" />
+
       <DetailsKeyValueCard
         title="Basic Information"
         keyValueList={[

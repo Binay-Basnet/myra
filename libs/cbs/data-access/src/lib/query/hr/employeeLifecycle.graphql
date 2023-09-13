@@ -55,11 +55,13 @@ query getHREmployeeTransferHistory($employeeId: ID!) {
       employeeTransfer {
         queryEmployeeTransfer(employeeId: $employeeId) {
           branchArray {
+            id
             transferredFrom
             transferredTo
             transferDate
           }
           departArray {
+            id
             transferredFrom
             transferredTo
             transferredDate
@@ -220,6 +222,138 @@ query getHrLifecycleEmployeeView($id: String!) {
             id
             joiningDate
             name
+          }
+        }
+      }
+    }
+  }
+}
+
+query getEmployeeTransferDetails($transferId: ID!) {
+  hr {
+    employeelifecycle {
+      employeeTransfer {
+        getTransferDetails(transferId: $transferId) {
+          data {
+            employee
+            designation
+            joiningDate
+            transferType
+            newType
+            previousType
+            transferDate
+            transferedBy
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getEmployeeSeparationDetails($employeeSeparationId: ID!) {
+  hr {
+    employeelifecycle {
+      employeeSeparation {
+        getEmployeeSeparationDetails(employeeSeparationId: $employeeSeparationId) {
+          data {
+            employeeName
+            designation
+            joiningDate
+            separationType
+            resignationLetterDate
+            documents {
+              fieldId
+              docData {
+                identifier
+                url
+              }
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getEmployeePromotionHistory($employeeId: ID) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        getEmployeePromotions(employeeId: $employeeId) {
+          data {
+            designationPromotions {
+              employeePromotionId
+              newType
+              currentType
+              dateOfPromotion
+            }
+            levelPromotions {
+              employeePromotionId
+              newType
+              currentType
+              dateOfPromotion
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getPromotionDetail($promotionId: ID!) {
+  hr {
+    employeelifecycle {
+      employeePromotion {
+        GetAPromotionDetail(promotionId: $promotionId) {
+          promotionDetails {
+            employeeName
+            designation
+            joiningDate
+            promotionType
+            oldPromotionType
+            newPromotionType
+            promotionDate
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getEmployeeExitDetails($employeeId: ID!) {
+  hr {
+    employeelifecycle {
+      employeeExit {
+        getEmployeeExitDetailsFromEmployeeId(employeeId: $employeeId) {
+          data {
+            separationId
+            exitStatus
+            interviewer
+            exitDate
+            futureIntentions
+            overallExp
+            suggestions
+            others
+            checklists {
+              done
+              activityName
+              user
+              role
+              beginsOn
+              duration
+            }
           }
         }
       }

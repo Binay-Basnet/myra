@@ -501,6 +501,7 @@ query getAdjustedLedgerReport($data: AdjustedLedgerReportInput!) {
             branchId
             branchName
             ledgerId
+            ledgerName
             balance {
               amount
               amountType

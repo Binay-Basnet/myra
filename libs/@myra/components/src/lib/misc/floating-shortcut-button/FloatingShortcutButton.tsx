@@ -31,25 +31,20 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Loan lock reason',
-      'Loan lock status report',
-      'Loan disbursement report',
-      'Two copies in account close print',
-      'Multi account select in MR member assign',
-      'Total collected amount shown in UI',
+      'Trial Balance and Adjusted Trial Balance report Branch seperation.',
+      'Charkhata report COA head filter.',
+      'Bulk Deposit implementation',
+      'Added ledger name in Adjusted ledger report',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Fixed member transfer issue.',
-      'Fixed withdraw restriction issues.',
-      'FIxed JV and IBT ledger amount issue.',
-      'Withdraw penalty restriction issue in product account.',
-      'Remaining amount charges, principal, interest tax are added in the success and print page of closed account.',
-      'MR total added in the mr transaction report.',
-      'Minor search issue fixed.',
-      'Loan repayment schedule reseed.',
+      'Alternative Channel charges view for teller and head teller',
+      'Amount display in Mr transaction page fixed.',
+      'Loan application incorrect interest rate.',
+      'Removed lock transaction from closed accounts.',
+      'Added Adjusted Trial Balance exclude zero filter on Adjustment Trial Balance',
     ],
   },
 };
@@ -88,8 +83,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.92</Text>
-          <Text fontSize="s3">September 8, 2023</Text>
+          <Text fontSize="r2">Version 1.0.93</Text>
+          <Text fontSize="s3">September 13, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>
