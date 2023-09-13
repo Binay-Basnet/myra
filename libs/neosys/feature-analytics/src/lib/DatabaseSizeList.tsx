@@ -7,7 +7,7 @@ import { getPaginationQuery } from '@coop/shared/utils';
 
 export const DatabaseSizeList = () => {
   const { data, isFetching } = useGetDatabaseSizeListQuery({
-    pagination: getPaginationQuery(),
+    pagination: { ...getPaginationQuery(), order: null },
   });
 
   const rowData = useMemo(
@@ -48,7 +48,15 @@ export const DatabaseSizeList = () => {
   return (
     <>
       <PageHeader heading="Database size list" />
-      <Table data={rowData} isLoading={isFetching} columns={columns} />
+      <Table
+        data={rowData}
+        isLoading={isFetching}
+        columns={columns}
+        pagination={{
+          total: data?.neosys?.thread?.databaseSize?.listDBSize?.totalCount as number,
+          pageInfo: data?.neosys?.thread?.databaseSize?.listDBSize?.pageInfo,
+        }}
+      />
     </>
   );
 };

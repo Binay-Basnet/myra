@@ -38,6 +38,7 @@ export const AnalyticsSiderbar = ({ children }: { children: React.ReactNode }) =
     { title: 'Users', to: `/analytics/users` },
     { title: 'Database size', to: `/analytics/database-size` },
     { title: 'Access Log', to: `/analytics/access-log` },
+    { title: 'Error Log', to: `/analytics/error-log` },
   ];
 
   const currentIndex = useMemo(
@@ -68,6 +69,7 @@ export const AnalyticsSiderbar = ({ children }: { children: React.ReactNode }) =
       <Box
         width="calc(100% - 275px)"
         left="275px"
+        overflowY="hidden"
         overflowX="hidden"
         position="relative"
         minHeight="calc(100vh - 110px)"

@@ -2,16 +2,16 @@ import { useMemo } from 'react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetAccessLogCounterListQuery } from '@coop/neosys-admin/data-access';
+import { useGetMoneyLedgerCounterQuery } from '@coop/neosys-admin/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
 
-export const AccessLogList = () => {
-  const { data, isFetching } = useGetAccessLogCounterListQuery({
+export const MoneyLedgerList = () => {
+  const { data, isFetching } = useGetMoneyLedgerCounterQuery({
     pagination: { ...getPaginationQuery(), order: null },
   });
 
   const rowData = useMemo(
-    () => data?.neosys?.thread?.accessLogCounter?.listAccessLogCounter?.edges ?? [],
+    () => data?.neosys?.thread?.moneyLedgerCounter?.listMoneyLedgerCounter?.edges ?? [],
     [data]
   );
 
@@ -26,20 +26,8 @@ export const AccessLogList = () => {
         accessorFn: (row) => row?.node?.createdAt,
       },
       {
-        header: 'Query Success',
-        accessorFn: (row) => row?.node?.querySuccess,
-      },
-      {
-        header: 'Query Failed',
-        accessorFn: (row) => row?.node?.queryFailed,
-      },
-      {
-        header: 'Mutation Success',
-        accessorFn: (row) => row?.node?.mutationSuccess,
-      },
-      {
-        header: 'Mutation Failed',
-        accessorFn: (row) => row?.node?.mutationFailed,
+        header: 'Money Ledger Count',
+        accessorFn: (row) => row?.node?.moneyLedgerCount,
       },
       {
         header: 'Slug',
@@ -59,18 +47,19 @@ export const AccessLogList = () => {
 
   return (
     <>
-      <PageHeader heading="Access Log list" />
+      <PageHeader heading="Money Ledgers" />
       <Table
         data={rowData}
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.neosys?.thread?.accessLogCounter?.listAccessLogCounter?.totalCount as number,
-          pageInfo: data?.neosys?.thread?.accessLogCounter?.listAccessLogCounter?.pageInfo,
+          total: data?.neosys?.thread?.moneyLedgerCounter?.listMoneyLedgerCounter
+            ?.totalCount as number,
+          pageInfo: data?.neosys?.thread?.moneyLedgerCounter?.listMoneyLedgerCounter?.pageInfo,
         }}
       />
     </>
   );
 };
 
-export default AccessLogList;
+export default MoneyLedgerList;

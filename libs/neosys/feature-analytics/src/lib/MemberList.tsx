@@ -2,16 +2,16 @@ import { useMemo } from 'react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetClosingDayListQuery } from '@coop/neosys-admin/data-access';
+import { useGetMemberCounterQuery } from '@coop/neosys-admin/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
 
-export const ClosingDayList = () => {
-  const { data, isFetching } = useGetClosingDayListQuery({
+export const MemberList = () => {
+  const { data, isFetching } = useGetMemberCounterQuery({
     pagination: { ...getPaginationQuery(), order: null },
   });
 
   const rowData = useMemo(
-    () => data?.neosys?.thread?.closingDay?.listClosingDay?.edges ?? [],
+    () => data?.neosys?.thread?.memberCounter?.listMemberCounter?.edges ?? [],
     [data]
   );
 
@@ -26,9 +26,14 @@ export const ClosingDayList = () => {
         accessorFn: (row) => row?.node?.createdAt,
       },
       {
-        header: 'Transaction Date',
-        accessorFn: (row) => row?.node?.transactionDate?.local,
+        header: 'Approved Member',
+        accessorFn: (row) => row?.node?.approvedMember,
       },
+      {
+        header: 'Inactive Member',
+        accessorFn: (row) => row?.node?.inactiveMember,
+      },
+
       {
         header: 'Slug',
         accessorFn: (row) => row?.node?.slug,
@@ -38,8 +43,8 @@ export const ClosingDayList = () => {
         accessorFn: (row) => row?.node?.queryID,
       },
       {
-        header: 'Query Date',
-        accessorFn: (row) => row?.node?.queryDate?.local,
+        header: 'Created at',
+        accessorFn: (row) => row?.node?.createdAt,
       },
     ],
     []
@@ -47,18 +52,18 @@ export const ClosingDayList = () => {
 
   return (
     <>
-      <PageHeader heading="Closing day list" />
+      <PageHeader heading="Members" />
       <Table
         data={rowData}
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.neosys?.thread?.closingDay?.listClosingDay?.totalCount as number,
-          pageInfo: data?.neosys?.thread?.closingDay?.listClosingDay?.pageInfo,
+          total: data?.neosys?.thread?.memberCounter?.listMemberCounter?.totalCount as number,
+          pageInfo: data?.neosys?.thread?.memberCounter?.listMemberCounter?.pageInfo,
         }}
       />
     </>
   );
 };
 
-export default ClosingDayList;
+export default MemberList;

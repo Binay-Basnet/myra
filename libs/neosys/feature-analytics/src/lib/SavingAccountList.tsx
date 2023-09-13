@@ -2,16 +2,16 @@ import { useMemo } from 'react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetClosingDayListQuery } from '@coop/neosys-admin/data-access';
+import { useGetSavingAccountCounterQuery } from '@coop/neosys-admin/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
 
-export const ClosingDayList = () => {
-  const { data, isFetching } = useGetClosingDayListQuery({
+export const SavingAccountList = () => {
+  const { data, isFetching } = useGetSavingAccountCounterQuery({
     pagination: { ...getPaginationQuery(), order: null },
   });
 
   const rowData = useMemo(
-    () => data?.neosys?.thread?.closingDay?.listClosingDay?.edges ?? [],
+    () => data?.neosys?.thread?.savingAccountCounter?.listSavingAccountCounter?.edges ?? [],
     [data]
   );
 
@@ -26,9 +26,14 @@ export const ClosingDayList = () => {
         accessorFn: (row) => row?.node?.createdAt,
       },
       {
-        header: 'Transaction Date',
-        accessorFn: (row) => row?.node?.transactionDate?.local,
+        header: 'Active Account',
+        accessorFn: (row) => row?.node?.activeAccount,
       },
+      {
+        header: 'Inactive Account',
+        accessorFn: (row) => row?.node?.inactiveAccount,
+      },
+
       {
         header: 'Slug',
         accessorFn: (row) => row?.node?.slug,
@@ -38,8 +43,8 @@ export const ClosingDayList = () => {
         accessorFn: (row) => row?.node?.queryID,
       },
       {
-        header: 'Query Date',
-        accessorFn: (row) => row?.node?.queryDate?.local,
+        header: 'Created at',
+        accessorFn: (row) => row?.node?.createdAt,
       },
     ],
     []
@@ -47,18 +52,19 @@ export const ClosingDayList = () => {
 
   return (
     <>
-      <PageHeader heading="Closing day list" />
+      <PageHeader heading="Saving Accounts" />
       <Table
         data={rowData}
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.neosys?.thread?.closingDay?.listClosingDay?.totalCount as number,
-          pageInfo: data?.neosys?.thread?.closingDay?.listClosingDay?.pageInfo,
+          total: data?.neosys?.thread?.savingAccountCounter?.listSavingAccountCounter
+            ?.totalCount as number,
+          pageInfo: data?.neosys?.thread?.savingAccountCounter?.listSavingAccountCounter?.pageInfo,
         }}
       />
     </>
   );
 };
 
-export default ClosingDayList;
+export default SavingAccountList;

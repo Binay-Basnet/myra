@@ -636,6 +636,11 @@ export type NeosysThreadQuery = {
   accessLogCounter?: Maybe<ThreadAccessLogCounterQuery>;
   closingDay?: Maybe<ThreadClosingDayQuery>;
   databaseSize?: Maybe<ThreadDatabaseSizeQuery>;
+  errorLog?: Maybe<ThreadErrorLogQuery>;
+  loanAccountCounter?: Maybe<ThreadLoanAccountCounterQuery>;
+  memberCounter?: Maybe<ThreadMemberCounterQuery>;
+  moneyLedgerCounter?: Maybe<ThreadMoneyLedgerCounterQuery>;
+  savingAccountCounter?: Maybe<ThreadSavingAccountCounterQuery>;
 };
 
 export type NeosysUser = Base & {
@@ -1012,8 +1017,8 @@ export const TextFormat = {
 
 export type TextFormat = typeof TextFormat[keyof typeof TextFormat];
 export type ThreadAccessLogCounterListConnection = {
-  edges?: Maybe<Array<ThreadAccessLogCounterListEdges>>;
-  pageInfo: PageInfo;
+  edges?: Maybe<Array<Maybe<ThreadAccessLogCounterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -1044,8 +1049,8 @@ export type ThreadAccessLogCounterQueryListAccessLogCounterArgs = {
 };
 
 export type ThreadClosingDayListConnection = {
-  edges?: Maybe<Array<ThreadClosingDayListEdges>>;
-  pageInfo: PageInfo;
+  edges?: Maybe<Array<Maybe<ThreadClosingDayListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -1089,8 +1094,8 @@ export type ThreadDatabaseSizeQueryListDbSizeArgs = {
 };
 
 export type ThreadDbSizeListConnection = {
-  edges?: Maybe<Array<ThreadDbSizeListEdges>>;
-  pageInfo: PageInfo;
+  edges?: Maybe<Array<Maybe<ThreadDbSizeListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -1106,6 +1111,154 @@ export type ThreadDbSizeNode = {
   queryDate?: Maybe<Scalars['Localized']>;
   queryID?: Maybe<Scalars['Int']>;
   slug?: Maybe<Scalars['String']>;
+};
+
+export type ThreadErrorLogListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadErrorLogListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadErrorLogListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadErrorLogNode;
+};
+
+export type ThreadErrorLogNode = {
+  createdAt?: Maybe<Scalars['Time']>;
+  id?: Maybe<Scalars['Int']>;
+  logMessage?: Maybe<Scalars['String']>;
+  queryID?: Maybe<Scalars['Int']>;
+  saccosName?: Maybe<Scalars['String']>;
+};
+
+export type ThreadErrorLogQuery = {
+  listErrorLog?: Maybe<ThreadErrorLogListConnection>;
+};
+
+export type ThreadErrorLogQueryListErrorLogArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadLoanAccountCounterListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadLoanAccountCounterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadLoanAccountCounterListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadLoanAccountCounterNode;
+};
+
+export type ThreadLoanAccountCounterNode = {
+  approvedAccount?: Maybe<Scalars['Int']>;
+  canceledAccount?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Time']>;
+  disbursedAccount?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryID?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type ThreadLoanAccountCounterQuery = {
+  listLoanAccountCounter?: Maybe<ThreadLoanAccountCounterListConnection>;
+};
+
+export type ThreadLoanAccountCounterQueryListLoanAccountCounterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadMemberCounterListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadMemberCounterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadMemberCounterListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadMemberCounterNode;
+};
+
+export type ThreadMemberCounterNode = {
+  approvedMember?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Time']>;
+  id?: Maybe<Scalars['Int']>;
+  inactiveMember?: Maybe<Scalars['Int']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryID?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type ThreadMemberCounterQuery = {
+  listMemberCounter?: Maybe<ThreadMemberCounterListConnection>;
+};
+
+export type ThreadMemberCounterQueryListMemberCounterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadMoneyLedgerCounterListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadMoneyLedgerCounterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadMoneyLedgerCounterListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadMoneyLedgerCounterNode;
+};
+
+export type ThreadMoneyLedgerCounterNode = {
+  createdAt?: Maybe<Scalars['Time']>;
+  id?: Maybe<Scalars['Int']>;
+  moneyLedgerCount?: Maybe<Scalars['Int']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryID?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type ThreadMoneyLedgerCounterQuery = {
+  listMoneyLedgerCounter?: Maybe<ThreadMoneyLedgerCounterListConnection>;
+};
+
+export type ThreadMoneyLedgerCounterQueryListMoneyLedgerCounterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ThreadSavingAccountCounterListConnection = {
+  edges?: Maybe<Array<Maybe<ThreadSavingAccountCounterListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ThreadSavingAccountCounterListEdges = {
+  cursor: Scalars['Cursor'];
+  node: ThreadSavingAccountCounterNode;
+};
+
+export type ThreadSavingAccountCounterNode = {
+  activeAccount?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Time']>;
+  id?: Maybe<Scalars['Int']>;
+  inactiveAccount?: Maybe<Scalars['Int']>;
+  queryDate?: Maybe<Scalars['Localized']>;
+  queryID?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type ThreadSavingAccountCounterQuery = {
+  listSavingAccountCounter?: Maybe<ThreadSavingAccountCounterListConnection>;
+};
+
+export type ThreadSavingAccountCounterQueryListSavingAccountCounterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type UploadedDocument = {
@@ -1496,8 +1649,8 @@ export type GetClosingDayListQuery = {
               queryID?: number | null;
               queryDate?: Record<'local' | 'en' | 'np', string> | null;
             };
-          }> | null;
-          pageInfo: PaginationFragment;
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
         } | null;
       } | null;
     } | null;
@@ -1525,8 +1678,8 @@ export type GetDatabaseSizeListQuery = {
               queryID?: number | null;
               queryDate?: Record<'local' | 'en' | 'np', string> | null;
             };
-          }> | null;
-          pageInfo: PaginationFragment;
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
         } | null;
       } | null;
     } | null;
@@ -1557,8 +1710,156 @@ export type GetAccessLogCounterListQuery = {
               queryID?: number | null;
               queryDate?: Record<'local' | 'en' | 'np', string> | null;
             };
-          }> | null;
-          pageInfo: PaginationFragment;
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GeterrorLogListQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GeterrorLogListQuery = {
+  neosys: {
+    thread?: {
+      errorLog?: {
+        listErrorLog?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              saccosName?: string | null;
+              logMessage?: string | null;
+              queryID?: number | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanAccountCounterQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetLoanAccountCounterQuery = {
+  neosys: {
+    thread?: {
+      loanAccountCounter?: {
+        listLoanAccountCounter?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              approvedAccount?: number | null;
+              disbursedAccount?: number | null;
+              canceledAccount?: number | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetMemberCounterQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetMemberCounterQuery = {
+  neosys: {
+    thread?: {
+      memberCounter?: {
+        listMemberCounter?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              approvedMember?: number | null;
+              inactiveMember?: number | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetMoneyLedgerCounterQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetMoneyLedgerCounterQuery = {
+  neosys: {
+    thread?: {
+      moneyLedgerCounter?: {
+        listMoneyLedgerCounter?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              moneyLedgerCount?: number | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSavingAccountCounterQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetSavingAccountCounterQuery = {
+  neosys: {
+    thread?: {
+      savingAccountCounter?: {
+        listSavingAccountCounter?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: number | null;
+              createdAt?: string | null;
+              activeAccount?: number | null;
+              inactiveAccount?: number | null;
+              slug?: string | null;
+              queryID?: number | null;
+              queryDate?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
         } | null;
       } | null;
     } | null;
@@ -2435,6 +2736,204 @@ export const useGetAccessLogCounterListQuery = <
     variables === undefined ? ['getAccessLogCounterList'] : ['getAccessLogCounterList', variables],
     useAxios<GetAccessLogCounterListQuery, GetAccessLogCounterListQueryVariables>(
       GetAccessLogCounterListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GeterrorLogListDocument = `
+    query geterrorLogList($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      errorLog {
+        listErrorLog(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              saccosName
+              logMessage
+              queryID
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGeterrorLogListQuery = <TData = GeterrorLogListQuery, TError = unknown>(
+  variables?: GeterrorLogListQueryVariables,
+  options?: UseQueryOptions<GeterrorLogListQuery, TError, TData>
+) =>
+  useQuery<GeterrorLogListQuery, TError, TData>(
+    variables === undefined ? ['geterrorLogList'] : ['geterrorLogList', variables],
+    useAxios<GeterrorLogListQuery, GeterrorLogListQueryVariables>(GeterrorLogListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetLoanAccountCounterDocument = `
+    query getLoanAccountCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      loanAccountCounter {
+        listLoanAccountCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              approvedAccount
+              disbursedAccount
+              canceledAccount
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetLoanAccountCounterQuery = <TData = GetLoanAccountCounterQuery, TError = unknown>(
+  variables?: GetLoanAccountCounterQueryVariables,
+  options?: UseQueryOptions<GetLoanAccountCounterQuery, TError, TData>
+) =>
+  useQuery<GetLoanAccountCounterQuery, TError, TData>(
+    variables === undefined ? ['getLoanAccountCounter'] : ['getLoanAccountCounter', variables],
+    useAxios<GetLoanAccountCounterQuery, GetLoanAccountCounterQueryVariables>(
+      GetLoanAccountCounterDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberCounterDocument = `
+    query getMemberCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      memberCounter {
+        listMemberCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              approvedMember
+              inactiveMember
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetMemberCounterQuery = <TData = GetMemberCounterQuery, TError = unknown>(
+  variables?: GetMemberCounterQueryVariables,
+  options?: UseQueryOptions<GetMemberCounterQuery, TError, TData>
+) =>
+  useQuery<GetMemberCounterQuery, TError, TData>(
+    variables === undefined ? ['getMemberCounter'] : ['getMemberCounter', variables],
+    useAxios<GetMemberCounterQuery, GetMemberCounterQueryVariables>(GetMemberCounterDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetMoneyLedgerCounterDocument = `
+    query getMoneyLedgerCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      moneyLedgerCounter {
+        listMoneyLedgerCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              moneyLedgerCount
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetMoneyLedgerCounterQuery = <TData = GetMoneyLedgerCounterQuery, TError = unknown>(
+  variables?: GetMoneyLedgerCounterQueryVariables,
+  options?: UseQueryOptions<GetMoneyLedgerCounterQuery, TError, TData>
+) =>
+  useQuery<GetMoneyLedgerCounterQuery, TError, TData>(
+    variables === undefined ? ['getMoneyLedgerCounter'] : ['getMoneyLedgerCounter', variables],
+    useAxios<GetMoneyLedgerCounterQuery, GetMoneyLedgerCounterQueryVariables>(
+      GetMoneyLedgerCounterDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSavingAccountCounterDocument = `
+    query getSavingAccountCounter($pagination: Pagination, $filter: Filter) {
+  neosys {
+    thread {
+      savingAccountCounter {
+        listSavingAccountCounter(pagination: $pagination, filter: $filter) {
+          totalCount
+          edges {
+            node {
+              id
+              createdAt
+              activeAccount
+              inactiveAccount
+              slug
+              queryID
+              queryDate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSavingAccountCounterQuery = <
+  TData = GetSavingAccountCounterQuery,
+  TError = unknown
+>(
+  variables?: GetSavingAccountCounterQueryVariables,
+  options?: UseQueryOptions<GetSavingAccountCounterQuery, TError, TData>
+) =>
+  useQuery<GetSavingAccountCounterQuery, TError, TData>(
+    variables === undefined ? ['getSavingAccountCounter'] : ['getSavingAccountCounter', variables],
+    useAxios<GetSavingAccountCounterQuery, GetSavingAccountCounterQueryVariables>(
+      GetSavingAccountCounterDocument
     ).bind(null, variables),
     options
   );
