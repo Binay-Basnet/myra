@@ -71,16 +71,18 @@ query getSingleEmployeeDetails($id: String!) {
             age
             gender
             maritalStatus
+            ethnicity
+            Handicapped
             bloodGroup
             workPhoneNumber
             workEmailAddress
             personalPhoneNumber
-            personalEmailAddress
             educationDetails {
               instituteName
               degree_diploma
-              specialization
+              durationInYrs
               dateOfCompletion
+              grade
             }
             permanentAddress {
               provinceId
@@ -107,6 +109,23 @@ query getSingleEmployeeDetails($id: String!) {
                 latitude
               }
             }
+            familyDetails {
+              fullName
+              relation
+              occupation
+            }
+            citizenshipGiven
+            drivingLicenseGiven
+            citizenship {
+              id
+              placeOfIssue
+              issuedDate
+            }
+            drivingLicense {
+              id
+              placeOfIssue
+              issuedDate
+            }
             employeeLevelId
             departmentId
             designationId
@@ -114,25 +133,62 @@ query getSingleEmployeeDetails($id: String!) {
             employmentType
             employeeStatus
             sourceOfHire
+            employeeClass
+            referralBy
             workExperience {
               companyName
               designation
-              salary
+              durationInYrs
               address
             }
-            salaryPaymentMode
+            trainingDetailsGiven
+            researchAndPublicationsGiven
+            awardsCashCertificatesGiven
+            internationalTourGiven
+            joiningDate
+            trainingDetails {
+              trainingName
+              duration
+              subject
+              organizer
+            }
+            researchAndPublications {
+              name
+              publishedDate
+              language
+              curriculum
+            }
+            awardsCashAndCertificates {
+              description
+              receivedDate
+              cashOrPrizeName
+              organization
+              verifiedBy
+            }
+            internationalTour {
+              tourCountry
+              objective
+              duration
+            }
+            payGroup
             panNumber
-            providentFundAccount
             salaryStructureId
-            jobApplicationId
-            jobOffer
-            appointmentLetter
-            dateOfJoining
-            reportsToId
-            leaveApproverId
-            expenseApproverId
-            healthInsuranceProviderId
-            healthInsuranceNumberId
+            salaryPaymentMode
+            account
+            bank
+            accountName
+            accountNumber
+            pf
+            ssf
+            cit
+            providentNumber
+            nominee
+            relationWithNominee
+            ssfNumber
+            citNumber
+            citCode
+            noCitDeduction
+            supervisor
             documents {
               fieldId
               identifiers: docData {

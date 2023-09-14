@@ -254,8 +254,9 @@ query getJobApplication($id: ID!) {
             educationalDetails {
               instituteName
               degree_diploma
-              specialization
+              durationInYrs
               dateOfCompletion
+              grade
             }
             experienceDetails {
               occupationName
@@ -368,8 +369,9 @@ query getJobApplicationOverview($id: ID!) {
             educationalDetails {
               instituteName
               degree_diploma
-              specialization
+              durationInYrs
               dateOfCompletion
+              grade
             }
           }
           error {
