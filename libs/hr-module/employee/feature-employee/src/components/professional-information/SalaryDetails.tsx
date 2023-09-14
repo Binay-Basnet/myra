@@ -8,7 +8,8 @@ import { FormInput, FormSelect } from '@coop/shared/form';
 export const SalaryDetails = () => {
   const paymentModeOptions = [
     { label: 'Cash', value: PaymentMode?.Cash },
-    { label: 'Bank', value: PaymentMode?.Bank },
+    { label: 'Bank', value: PaymentMode?.BankTransfer },
+    { label: 'Bank', value: PaymentMode?.Account },
   ];
   const { salaryStructureOptions } = useGetSalaryStructureOptions();
 

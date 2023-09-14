@@ -28,8 +28,12 @@ export const Education = (props: { data: JobApplicationOverview }) => {
         accessorFn: (row) => row?.degree_diploma,
       },
       {
-        header: 'Field/Study',
-        accessorFn: (row) => row?.specialization,
+        header: 'Duration in years',
+        accessorFn: (row) => row?.durationInYrs,
+      },
+      {
+        header: 'Grade',
+        accessorFn: (row) => row?.grade,
       },
       {
         header: 'Date of Completion',
