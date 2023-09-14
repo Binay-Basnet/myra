@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Column, PageHeader, Table } from '@myra-ui';
+import { Box, Column, HoverCard, PageHeader, Table, Text } from '@myra-ui';
 
 import { useGetTransactionCounterQuery } from '@coop/neosys-admin/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
@@ -41,6 +41,42 @@ export const TransactionList = () => {
       {
         header: 'Query Date',
         accessorFn: (row) => row?.node?.queryDate?.local,
+      },
+      {
+        id: '_actions',
+        header: '',
+        accessorKey: 'actions',
+        cell: (props) => (
+          <HoverCard>
+            <HoverCard.Trigger>View Summary</HoverCard.Trigger>
+            <HoverCard.Content>
+              <HoverCard.Header>
+                <Box p="s16">
+                  <Text>Transaction Summary</Text>
+                </Box>
+              </HoverCard.Header>
+              <HoverCard.Body>
+                <Box
+                  p="s16"
+                  display="flex"
+                  flexDirection="column"
+                  gap="s4"
+                  maxH="300px"
+                  overflowY="auto"
+                >
+                  {Object.keys(props?.row?.original?.node?.txnTypeCount ?? {})?.map((t) => (
+                    <Box display="flex" gap="s4">
+                      <Text>{t}:</Text>
+                      <Text>
+                        {(props?.row?.original?.node?.txnTypeCount as Record<string, string>)?.[t]}
+                      </Text>
+                    </Box>
+                  ))}
+                </Box>
+              </HoverCard.Body>
+            </HoverCard.Content>
+          </HoverCard>
+        ),
       },
     ],
     []
