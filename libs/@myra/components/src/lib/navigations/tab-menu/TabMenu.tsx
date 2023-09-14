@@ -100,7 +100,7 @@ const cbsTabs: {
     title: 'reports',
     icon: FiFileText,
     link: ROUTES.CBS_REPORT_LIST,
-    match: ['cbs'],
+    match: ['reports'],
     aclKey: 'CBS_REPORTS',
     navMenu: 'REPORTS',
   },
