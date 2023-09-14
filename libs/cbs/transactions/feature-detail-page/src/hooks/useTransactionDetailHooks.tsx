@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import {
+  AllTransactionType,
   useAgentTransactionDetailQuery,
   useGetAgentDetailQuery,
   useGetAllTransactionsDetailQuery,
@@ -19,14 +20,26 @@ export const useTransactionDetailHooks = () => {
   // deposit
   const { data: deposit } = useTransactionDepositDetailQuery(
     { transactionId: id as string },
-    { staleTime: 0, enabled: !!id && router?.asPath?.includes('/deposit/') }
+    {
+      staleTime: 0,
+      enabled:
+        !!id &&
+        (router?.asPath?.includes('/deposit/') ||
+          router?.asPath?.includes(AllTransactionType?.Deposit)),
+    }
   );
 
   const depositDetailData = deposit?.transaction?.viewDeposit?.data;
   // withdraw
   const { data: withdraw } = useTransactionWithdrawDetailQuery(
     { transactionId: id as string },
-    { staleTime: 0, enabled: !!id && router?.asPath?.includes('/withdraw/') }
+    {
+      staleTime: 0,
+      enabled:
+        !!id &&
+        (router?.asPath?.includes('/withdraw/') ||
+          router?.asPath?.includes(AllTransactionType?.Withdraw)),
+    }
   );
 
   const withdrawDetailData = withdraw?.transaction?.viewWithdraw?.data;
@@ -34,7 +47,13 @@ export const useTransactionDetailHooks = () => {
   // account transfer
   const { data: accountTransfer } = useTransactionAccountTransferDetailQuery(
     { transactionId: id as string },
-    { staleTime: 0, enabled: !!id && router?.asPath?.includes('/account-transfer/') }
+    {
+      staleTime: 0,
+      enabled:
+        !!id &&
+        (router?.asPath?.includes('/account-transfer/') ||
+          router?.asPath?.includes(AllTransactionType?.Transfer)),
+    }
   );
 
   const accountTransferDetailData = accountTransfer?.transaction?.viewAccountTransfer?.data;
@@ -71,7 +90,9 @@ export const useTransactionDetailHooks = () => {
       staleTime: 0,
       enabled:
         !!id &&
-        (router?.asPath?.includes('/loan-payment/') || router?.asPath?.includes('/repayments/')),
+        (router?.asPath?.includes('/loan-payment/') ||
+          router?.asPath?.includes('/repayments/') ||
+          router?.asPath?.includes(AllTransactionType?.LoanRepayment)),
     }
   );
 

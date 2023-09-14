@@ -1,108 +1,48 @@
-import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
-import { FieldValues, FormProvider, useForm, UseFormReturn } from 'react-hook-form';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
-import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  useDisclosure,
-} from '@chakra-ui/react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useTransactionDetailHooks } from 'libs/cbs/transactions/feature-detail-page/src/hooks/useTransactionDetailHooks';
+
+import { Box, DetailPageHeader, SuccessPrint, SuccessPrintJornalVoucher, Text } from '@myra-ui';
 
 import {
-  asyncToast,
-  Box,
-  Button,
-  DetailPageHeader,
-  MainLayout,
-  Modal,
-  SuccessPrint,
-  SuccessPrintJornalVoucher,
-  Text,
-} from '@myra-ui';
-import { checkDateInFiscalYear } from '@myra-ui/date-picker';
-
-import {
-  AllTransactionType,
   PrintType,
-  useGetAllTransactionsDetailQuery,
+  TransferType,
   useGetJournalVoucherDetailQuery,
   useGetPrintCountQuery,
-  useRevertTransactionMutation,
-  useSwitchTransactionYearEndFlagMutation,
   WithdrawWith,
 } from '@coop/cbs/data-access';
-import {
-  AllTransactionDetailPage,
-  useTransactionDetailHooks,
-} from '@coop/cbs/transactions/feature-detail-page';
-import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
-import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { FormCheckbox } from '@coop/shared/form';
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter, amountToWordsConverter } from '@coop/shared/utils';
 
-const ROUTESOBJTRANS: Partial<Record<AllTransactionType, string>> = {
-  [AllTransactionType.Deposit]: 'DEPOSIT',
-  [AllTransactionType.Withdraw]: 'WITHDRAW',
-  [AllTransactionType.Transfer]: 'ACCOUNT-TRANSFER',
-  [AllTransactionType.LoanRepayment]: 'REPAYMENTS',
-  [AllTransactionType.JournalVoucher]: 'JOURNAL_VOUCHER',
+export interface PathBarProps {
+  title: string;
+  closeLink?: string;
+}
+
+const transferTypeObj = {
+  [TransferType.Self]: 'Self Transfer',
+  [TransferType.Member]: 'Member to Member',
 };
 
-const objKeys = Object.keys(ROUTESOBJTRANS);
-const DepositDetailsPage = () => {
-  const [isVoucherPrintable, setIsVoucherPrintable] = useState(false);
+const getTransactionType = (route: string) => {
+  if (route.includes('/deposit/')) return 'Deposit';
+
+  if (route.includes('/withdraw/')) return 'Withdraw';
+
+  if (route.includes('/account-transfer/')) return 'Account Transfer';
+
+  if (route.includes('/repayments/') || route.includes('/loan-payment/')) return 'Loan Repayment';
+
+  if (route.includes('/journal-vouchers/')) return 'Journal Voucher';
+
+  return '';
+};
+
+export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => {
   const router = useRouter();
-  const txnTypefromRouter = router.query['txnType'];
 
-  const { id } = router.query;
-
-  const queryClient = useQueryClient();
-  const { isOpen, onClose, onToggle } = useDisclosure();
-  const yearEndMethods = useForm();
-  const { data: allTransactionsDetails } = useGetAllTransactionsDetailQuery(
-    { id: id as string },
-    {
-      staleTime: 0,
-      enabled:
-        !!id &&
-        (router?.asPath?.includes('/all-transactions/') ||
-          router?.asPath?.includes('/ledger-balance-transfer/')),
-    }
-  );
-
-  const allTransactionsData = allTransactionsDetails?.transaction?.viewTransactionDetail?.data;
-
-  const isCurrentFiscalYear = checkDateInFiscalYear({
-    date: new Date(allTransactionsData?.transactionDate.en),
-  });
-
-  const { mutateAsync: switchTransactionYearEnd } = useSwitchTransactionYearEndFlagMutation();
-
-  const [isRevertTransactionModalOpen, setIsRevertTransactionModalOpen] = useState(false);
-  const handleRevertTransactionModalClose = () => {
-    setIsRevertTransactionModalOpen(false);
-  };
-  const { mutateAsync } = useRevertTransactionMutation();
-
-  const printRef = useRef<HTMLInputElement | null>(null);
-
-  const handlePrintVoucher = useReactToPrint({
-    content: () => printRef.current,
-    documentTitle: `${allTransactionsData?.txnType}-${id}.pdf`,
-  });
-
-  useEffect(() => {
-    if (objKeys?.includes(txnTypefromRouter as string)) {
-      setIsVoucherPrintable(true);
-    }
-  }, [txnTypefromRouter]);
-
-  // setup for print
+  const id = router?.query?.['id'];
 
   const {
     memberDetail,
@@ -114,7 +54,7 @@ const DepositDetailsPage = () => {
 
   const { data } = useGetJournalVoucherDetailQuery(
     { entryId: id as string },
-    { enabled: !!id && router?.asPath?.includes(AllTransactionType?.JournalVoucher) }
+    { enabled: !!id && router?.asPath?.includes('journal-vouchers') }
   );
 
   const voucherData = data?.accounting?.journalVoucher?.viewJournalVoucherDetail?.data;
@@ -157,7 +97,7 @@ const DepositDetailsPage = () => {
         handlePrint();
       }
       if (printType === 'OFFICE_VOUCHER') {
-        handlePrintVoucherForDetails();
+        handlePrintVoucher();
       }
     }
   }, [printCount, printType]);
@@ -192,7 +132,7 @@ const DepositDetailsPage = () => {
 
     let tempGlTotal;
 
-    if (router?.asPath?.includes(AllTransactionType?.Deposit)) {
+    if (router?.asPath?.includes('/deposit/')) {
       tempAccountName = depositDetailData?.accountName as string;
 
       tempAccountId = depositDetailData?.accountId as string;
@@ -232,7 +172,7 @@ const DepositDetailsPage = () => {
       };
     }
 
-    if (router?.asPath?.includes(AllTransactionType?.Withdraw)) {
+    if (router?.asPath?.includes('/withdraw/')) {
       tempAccountName = depositDetailData?.accountName as string;
 
       tempAccountId = depositDetailData?.accountId as string;
@@ -280,7 +220,7 @@ const DepositDetailsPage = () => {
       };
     }
 
-    if (router?.asPath?.includes(AllTransactionType?.Transfer)) {
+    if (router?.asPath?.includes('/account-transfer/')) {
       tempAccountName = accountTransferDetailData?.sourceAccount?.accountName as string;
 
       tempAccountId = accountTransferDetailData?.sourceAccount?.id as string;
@@ -300,7 +240,9 @@ const DepositDetailsPage = () => {
             ? accountTransferDetailData?.withdrawnSlipNo?.padStart(10, '0') ?? 'N/A'
             : accountTransferDetailData?.withdrawnSlipNo
         })`,
-        'Transfer Type': accountTransferDetailData?.transferType ? txnTypefromRouter : '',
+        'Transfer Type': accountTransferDetailData?.transferType
+          ? transferTypeObj[accountTransferDetailData?.transferType]
+          : '',
         'Transfer Amount': amountConverter(accountTransferDetailData?.transferAmount || 0),
         'Receiver Member': accountTransferDetailData?.recipientMember?.name?.local ?? 'N/A',
         'Receivers Account name':
@@ -319,7 +261,9 @@ const DepositDetailsPage = () => {
             ? accountTransferDetailData?.withdrawnSlipNo?.padStart(10, '0') ?? 'N/A'
             : accountTransferDetailData?.withdrawnSlipNo
         })`,
-        'Transfer Type': accountTransferDetailData?.transferType ? txnTypefromRouter : '',
+        'Transfer Type': accountTransferDetailData?.transferType
+          ? transferTypeObj[accountTransferDetailData?.transferType]
+          : '',
         'Transfer Amount': amountConverter(accountTransferDetailData?.transferAmount || 0),
       };
       tempDublicate = true;
@@ -330,10 +274,7 @@ const DepositDetailsPage = () => {
       tempGlTotal = accountTransferDetailData?.totalDebit;
     }
 
-    if (
-      router?.asPath?.includes(AllTransactionType?.LoanRepayment) ||
-      router?.asPath?.includes('/loan-payment/')
-    ) {
+    if (router?.asPath?.includes('/repayments/') || router?.asPath?.includes('/loan-payment/')) {
       tempAccountName = loanRepaymentDetailData?.loanAccountName as string;
 
       tempAccountId = loanRepaymentDetailData?.loanAccountId as string;
@@ -378,7 +319,7 @@ const DepositDetailsPage = () => {
       tempDublicate = true;
     }
 
-    if (router?.asPath?.includes(AllTransactionType?.JournalVoucher)) {
+    if (router?.asPath?.includes('/journal-vouchers/')) {
       tempTotal = voucherData?.amount as string;
 
       tempShowSignatures = true;
@@ -417,125 +358,45 @@ const DepositDetailsPage = () => {
   const handlePrint = useReactToPrint({
     content: () => printComponentRef.current,
     onAfterPrint: () => setPrintType(null),
-    documentTitle: `${txnTypefromRouter}-${memberDetail?.code ?? ''}-${id}.pdf`,
+    documentTitle: `${getTransactionType(router?.asPath)}-${memberDetail?.code ?? ''}-${id}.pdf`,
   });
 
-  const handlePrintVoucherForDetails = useReactToPrint({
+  const handlePrintVoucher = useReactToPrint({
     content: () => voucherPrintRef.current,
     onAfterPrint: () => setPrintType(null),
-    documentTitle: `${txnTypefromRouter}-${memberDetail?.code ?? ''}-${id}.pdf`,
+    documentTitle: `${getTransactionType(router?.asPath)}-${memberDetail?.code ?? ''}-${id}.pdf`,
   });
 
-  const options =
-    isCurrentFiscalYear && !allTransactionsData?.isYearEndAdjustment && isVoucherPrintable
+  const pageHeaderOptions =
+    router?.asPath?.includes('DEPOSIT') ||
+    router?.asPath?.includes('WITHDRAW') ||
+    router?.asPath?.includes('ACCOUNT-TRANSFER') ||
+    router?.asPath?.includes('REPAYMENTS') ||
+    router?.asPath?.includes('LOANPAYMENT') ||
+    router?.asPath?.includes('JOURNAL_VOUCHER')
       ? [
+          { label: 'Print', handler: handleCustomerPrint },
           {
-            label: allTransactionsData?.isYearEndAdjustment
-              ? 'Remove Year End Adjustment'
-              : 'Year End Adjustment',
-            handler: () => onToggle(),
+            label: 'Print Voucher',
+            handler: handleOfficeVoucherPrint,
           },
-          {
-            label: 'Revert Transaction',
-            handler: () => setIsRevertTransactionModalOpen(true),
-          },
-
-          { label: 'Print ', handler: handleCustomerPrint },
-          { label: 'Print Voucher', handler: handleOfficeVoucherPrint },
         ]
-      : isVoucherPrintable
-      ? [
-          {
-            label: 'Revert Transaction',
-            handler: () => setIsRevertTransactionModalOpen(true),
-          },
-
-          { label: 'Print ', handler: handleCustomerPrint },
-          { label: 'Print Voucher', handler: handleOfficeVoucherPrint },
-        ]
-      : isCurrentFiscalYear && !allTransactionsData?.isYearEndAdjustment
-      ? [
-          {
-            label: allTransactionsData?.isYearEndAdjustment
-              ? 'Remove Year End Adjustment'
-              : 'Year End Adjustment',
-            handler: () => onToggle(),
-          },
-          {
-            label: 'Revert Transaction',
-            handler: () => setIsRevertTransactionModalOpen(true),
-          },
-
-          { label: 'Print', handler: handlePrintVoucher },
-        ]
-      : [
-          {
-            label: 'Revert Transaction',
-            handler: () => setIsRevertTransactionModalOpen(true),
-          },
-
-          { label: 'Print', handler: handlePrintVoucher },
-        ];
+      : [];
 
   return (
     <>
-      <DetailPageHeader title="Transaction List" options={options} />
-      <AllTransactionDetailPage printRef={printRef} />
-      <YearEndAdjustmentConfirmationDialog
-        isAdjusted={!!allTransactionsData?.isYearEndAdjustment}
-        isOpen={isOpen}
-        handleConfirm={async () => {
-          await asyncToast({
-            id: 'switch-transaction',
-            msgs: {
-              loading: 'Flagging Year End Adjustment',
-              success: 'Year End Adjustment Flagged',
-            },
-            onSuccess: () => queryClient.invalidateQueries(['getAllTransactionsDetail']),
-            promise: switchTransactionYearEnd({
-              journalId: String(router.query['id']),
-              yearEndSettlement: yearEndMethods?.getValues()?.['yearEndSettlement'],
-            }),
-          });
-        }}
-        onClose={onClose}
-        onToggle={onToggle}
-        methods={yearEndMethods}
-      />
-      <Modal
-        open={isRevertTransactionModalOpen}
-        onClose={handleRevertTransactionModalClose}
-        isCentered
-        title="Revert Transaction"
-        width="3xl"
-      >
-        <Box display="flex" flexDir="column">
-          <Text fontSize="r1">Are you sure you want to reverse this transaction?</Text>
-          <Box display="flex" justifyContent="flex-end" gap={2}>
-            <Button onClick={() => handleRevertTransactionModalClose()}>Cancel</Button>
-            <Button
-              onClick={() =>
-                asyncToast({
-                  id: 'all-transaction-revert',
-                  msgs: {
-                    loading: 'Reverting transaction',
-                    success: 'Transaction reverted successfully!!!',
-                  },
-                  promise: mutateAsync({ journalId: router?.query?.['id'] as string }),
-                  onSuccess: () => {
-                    router.push(ROUTES?.CBS_TRANS_ALL_TRANSACTION_LIST);
-                    handleRevertTransactionModalClose();
-                  },
-                })
-              }
-            >
-              Ok
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
+      <Box position="sticky" top="0" zIndex={10}>
+        <DetailPageHeader
+          title={title}
+          member={{
+            name: memberDetail?.name ?? '',
+          }}
+          options={pageHeaderOptions}
+          closeLink={closeLink}
+        />
+      </Box>
 
-      {!router?.asPath?.includes(AllTransactionType?.JournalVoucher) ? (
+      {!router?.asPath?.includes('JOURNAL_VOUCHER') ? (
         <Box>
           <SuccessPrint
             meta={{
@@ -563,7 +424,7 @@ const DepositDetailsPage = () => {
         />
       )}
 
-      {!router?.asPath?.includes(AllTransactionType?.JournalVoucher) ? (
+      {!router?.asPath?.includes('JOURNAL_VOUCHER') ? (
         <SuccessPrint
           meta={{
             memberId: memberDetail?.code,
@@ -592,89 +453,3 @@ const DepositDetailsPage = () => {
     </>
   );
 };
-
-type YearEndAdjustmentConfirmationDialogProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  onToggle: () => void;
-
-  handleConfirm: () => void;
-  isAdjusted: boolean;
-  methods: UseFormReturn<FieldValues, any>;
-};
-
-const YearEndAdjustmentConfirmationDialog = ({
-  isOpen,
-  onClose,
-  onToggle,
-  isAdjusted,
-  handleConfirm,
-  methods,
-}: YearEndAdjustmentConfirmationDialogProps) => {
-  const confirmCancelRef = useRef<HTMLButtonElement | null>(null);
-
-  return (
-    <AlertDialog
-      isOpen={isOpen}
-      leastDestructiveRef={confirmCancelRef}
-      onClose={onClose}
-      isCentered
-    >
-      <AlertDialogOverlay>
-        <AlertDialogContent>
-          <AlertDialogHeader
-            fontSize="lg"
-            fontWeight="bold"
-            borderBottom="1px"
-            borderColor="border.layout"
-          >
-            <Text fontWeight="SemiBold" fontSize="r2" color="gray.800" lineHeight="150%">
-              Year End Adjustment Confirmation
-            </Text>
-          </AlertDialogHeader>
-
-          <AlertDialogBody borderBottom="1px solid" borderBottomColor="border.layout" p="s16">
-            <Box display="flex" flexDirection="column" gap="s16">
-              <Text fontSize="s3" fontWeight={400} color="gray.800">
-                {!isAdjusted
-                  ? 'This will make the transaction as previous fiscal year end adjustment'
-                  : 'This will remove the adjustment from previous fiscal year and make it as current fiscal year'}
-              </Text>
-
-              {!isAdjusted && (
-                <FormProvider {...methods}>
-                  <FormCheckbox name="yearEndSettlement" label="Flag this as year end settlement" />
-                </FormProvider>
-              )}
-            </Box>
-          </AlertDialogBody>
-
-          <AlertDialogFooter>
-            <Button ref={confirmCancelRef} variant="outline" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button
-              ml={3}
-              onClick={() => {
-                onToggle();
-                handleConfirm();
-              }}
-            >
-              Confirm
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialogOverlay>
-    </AlertDialog>
-  );
-};
-
-DepositDetailsPage.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <MainLayout>
-      <TransactionsSidebarLayout>{page}</TransactionsSidebarLayout>
-    </MainLayout>
-  );
-};
-
-export default DepositDetailsPage;
