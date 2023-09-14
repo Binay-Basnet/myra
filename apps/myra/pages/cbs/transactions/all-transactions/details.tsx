@@ -1,4 +1,4 @@
-import { ReactElement, useRef, useState } from 'react';
+import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { FieldValues, FormProvider, useForm, UseFormReturn } from 'react-hook-form';
 import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
@@ -13,29 +13,57 @@ import {
 } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Button, DetailPageHeader, MainLayout, Modal, Text } from '@myra-ui';
+import {
+  asyncToast,
+  Box,
+  Button,
+  DetailPageHeader,
+  MainLayout,
+  Modal,
+  SuccessPrint,
+  SuccessPrintJornalVoucher,
+  Text,
+} from '@myra-ui';
 import { checkDateInFiscalYear } from '@myra-ui/date-picker';
 
 import {
+  AllTransactionType,
+  PrintType,
   useGetAllTransactionsDetailQuery,
+  useGetJournalVoucherDetailQuery,
+  useGetPrintCountQuery,
   useRevertTransactionMutation,
   useSwitchTransactionYearEndFlagMutation,
+  WithdrawWith,
 } from '@coop/cbs/data-access';
-import { AllTransactionDetailPage } from '@coop/cbs/transactions/feature-detail-page';
+import {
+  AllTransactionDetailPage,
+  useTransactionDetailHooks,
+} from '@coop/cbs/transactions/feature-detail-page';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { FormCheckbox } from '@coop/shared/form';
+import { amountConverter, amountToWordsConverter } from '@coop/shared/utils';
 
+const ROUTESOBJTRANS: Partial<Record<AllTransactionType, string>> = {
+  [AllTransactionType.Deposit]: 'DEPOSIT',
+  [AllTransactionType.Withdraw]: 'WITHDRAW',
+  [AllTransactionType.Transfer]: 'ACCOUNT-TRANSFER',
+  [AllTransactionType.LoanRepayment]: 'REPAYMENTS',
+  [AllTransactionType.JournalVoucher]: 'JOURNAL_VOUCHER',
+};
+
+const objKeys = Object.keys(ROUTESOBJTRANS);
 const DepositDetailsPage = () => {
+  const [isVoucherPrintable, setIsVoucherPrintable] = useState(false);
   const router = useRouter();
+  const txnTypefromRouter = router.query['txnType'];
 
   const { id } = router.query;
 
   const queryClient = useQueryClient();
   const { isOpen, onClose, onToggle } = useDisclosure();
-
   const yearEndMethods = useForm();
-
   const { data: allTransactionsDetails } = useGetAllTransactionsDetailQuery(
     { id: id as string },
     {
@@ -68,36 +96,390 @@ const DepositDetailsPage = () => {
     documentTitle: `${allTransactionsData?.txnType}-${id}.pdf`,
   });
 
+  useEffect(() => {
+    if (objKeys?.includes(txnTypefromRouter as string)) {
+      setIsVoucherPrintable(true);
+    }
+  }, [txnTypefromRouter]);
+
+  // setup for print
+
+  const {
+    memberDetail,
+    depositDetailData,
+    withdrawDetailData,
+    accountTransferDetailData,
+    loanRepaymentDetailData,
+  } = useTransactionDetailHooks();
+
+  const { data } = useGetJournalVoucherDetailQuery(
+    { entryId: id as string },
+    { enabled: !!id && router?.asPath?.includes(AllTransactionType?.JournalVoucher) }
+  );
+
+  const voucherData = data?.accounting?.journalVoucher?.viewJournalVoucherDetail?.data;
+
+  const printComponentRef = useRef<HTMLInputElement | null>(null);
+
+  const voucherPrintRef = useRef<HTMLInputElement | null>(null);
+
+  const [printType, setPrintType] = useState<PrintType | null>();
+
+  const [printCount, setPrintCount] = useState<number>();
+
+  const { data: printCountData } = useGetPrintCountQuery(
+    {
+      objectId: id as string,
+      type: printType as PrintType,
+    },
+    {
+      enabled: !!printType,
+    }
+  );
+
+  const handleCustomerPrint = () => {
+    setPrintType('CUSTOMER_COPY');
+  };
+
+  const handleOfficeVoucherPrint = () => {
+    setPrintType('OFFICE_VOUCHER');
+  };
+
+  useEffect(() => {
+    if (printCountData) {
+      setPrintCount(printCountData?.settings?.getPrintCount);
+    }
+  }, [printCountData]);
+
+  useEffect(() => {
+    if (printCount) {
+      if (printType === 'CUSTOMER_COPY') {
+        handlePrint();
+      }
+      if (printType === 'OFFICE_VOUCHER') {
+        handlePrintVoucherForDetails();
+      }
+    }
+  }, [printCount, printType]);
+
+  const {
+    accountId,
+    accountName,
+    total,
+    details,
+    dublicate,
+    voucherDetails,
+    showSignatures,
+    jvDetails,
+    glTransactions,
+    glTotal,
+  } = useMemo(() => {
+    let tempAccountName = '';
+    let tempAccountId = '';
+
+    let tempDetails = {};
+
+    let tempVoucherDetails = {};
+
+    let tempTotal = '';
+
+    let tempShowSignatures = false;
+    let tempDublicate = false;
+
+    let tempJVDetails;
+
+    let tempGLTransactions;
+
+    let tempGlTotal;
+
+    if (router?.asPath?.includes(AllTransactionType?.Deposit)) {
+      tempAccountName = depositDetailData?.accountName as string;
+
+      tempAccountId = depositDetailData?.accountId as string;
+
+      tempDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {depositDetailData?.transactionCode}
+          </Text>
+        ),
+        Date: localizedDate(depositDetailData?.transactionDate),
+        'Deposit Amount': amountConverter(depositDetailData?.amount || 0),
+        Fine: amountConverter(depositDetailData?.fine || 0),
+        Rebate: amountConverter(depositDetailData?.rebate ?? '0'),
+        'Payment Mode': depositDetailData?.paymentMode,
+        'Deposited By':
+          depositDetailData?.depositedBy === 'AGENT'
+            ? `Market Representative (${depositDetailData?.txnUserName})`
+            : depositDetailData?.txnUserName
+            ? `${depositDetailData?.depositedBy} (${depositDetailData?.txnUserName})`
+            : depositDetailData?.depositedBy,
+      };
+      tempDublicate = true;
+      tempTotal = depositDetailData?.totalDepositedAmount as string;
+
+      tempGLTransactions = depositDetailData?.glTransaction;
+
+      tempGlTotal = depositDetailData?.totalDebit;
+
+      tempVoucherDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {depositDetailData?.transactionCode}
+          </Text>
+        ),
+        Date: localizedDate(depositDetailData?.transactionDate),
+      };
+    }
+
+    if (router?.asPath?.includes(AllTransactionType?.Withdraw)) {
+      tempAccountName = depositDetailData?.accountName as string;
+
+      tempAccountId = depositDetailData?.accountId as string;
+
+      tempDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {withdrawDetailData?.transactionCode}
+          </Text>
+        ),
+        Date: localizedDate(withdrawDetailData?.transactionDate),
+        'Withdraw Amount': amountConverter(withdrawDetailData?.withdrawAmount || 0),
+        Fine: amountConverter(withdrawDetailData?.fine || 0),
+        'Payment Mode': withdrawDetailData?.paymentMode,
+        'Withdraw By': `${withdrawDetailData?.withdrawWith} (${
+          withdrawDetailData?.withdrawWith === WithdrawWith.WithdrawSlip
+            ? withdrawDetailData?.chequeNo?.padStart(10, '0') ?? 'N/A'
+            : withdrawDetailData?.chequeNo
+        })`,
+        'Withdrawn By':
+          withdrawDetailData?.withdrawnBy === 'AGENT'
+            ? `Market Representative (${withdrawDetailData?.txnUserName})`
+            : withdrawDetailData?.withdrawnBy?.replace(/_/g, ' '),
+      };
+      tempDublicate = true;
+      tempTotal = withdrawDetailData?.totalWithdrawnAmount as string;
+
+      tempGLTransactions = withdrawDetailData?.glTransaction;
+
+      tempGlTotal = withdrawDetailData?.totalDebit;
+
+      tempVoucherDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="SemiBold">
+            {withdrawDetailData?.transactionCode}
+          </Text>
+        ),
+        'Transaction Date': localizedDate(withdrawDetailData?.transactionDate),
+        'Withdraw By': `${withdrawDetailData?.withdrawWith} (${
+          withdrawDetailData?.withdrawWith === WithdrawWith.WithdrawSlip
+            ? withdrawDetailData?.chequeNo?.padStart(10, '0') ?? 'N/A'
+            : withdrawDetailData?.chequeNo
+        })`,
+        'Transfer Amount': withdrawDetailData?.totalWithdrawnAmount,
+      };
+    }
+
+    if (router?.asPath?.includes(AllTransactionType?.Transfer)) {
+      tempAccountName = accountTransferDetailData?.sourceAccount?.accountName as string;
+
+      tempAccountId = accountTransferDetailData?.sourceAccount?.id as string;
+
+      tempDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {accountTransferDetailData?.transactionCode}
+          </Text>
+        ),
+        Date: localizedDate(accountTransferDetailData?.transactionDate),
+        // 'Withdraw By': `${accountTransferDetailData?.withdrawnBy} (${
+        //   accountTransferDetailData?.withdrawnSlipNo?.padStart(10, '0') ?? 'N/A'
+        // })`,
+        'Withdraw By': `${accountTransferDetailData?.withdrawnBy} (${
+          accountTransferDetailData?.withdrawnBy === WithdrawWith.WithdrawSlip
+            ? accountTransferDetailData?.withdrawnSlipNo?.padStart(10, '0') ?? 'N/A'
+            : accountTransferDetailData?.withdrawnSlipNo
+        })`,
+        'Transfer Type': accountTransferDetailData?.transferType ? txnTypefromRouter : '',
+        'Transfer Amount': amountConverter(accountTransferDetailData?.transferAmount || 0),
+        'Receiver Member': accountTransferDetailData?.recipientMember?.name?.local ?? 'N/A',
+        'Receivers Account name':
+          accountTransferDetailData?.destinationAccount?.accountName ?? 'N/A',
+      };
+
+      tempVoucherDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {accountTransferDetailData?.transactionCode}
+          </Text>
+        ),
+        Date: localizedDate(accountTransferDetailData?.transactionDate),
+        'Withdraw By': `${accountTransferDetailData?.withdrawnBy} (${
+          accountTransferDetailData?.withdrawnBy === WithdrawWith.WithdrawSlip
+            ? accountTransferDetailData?.withdrawnSlipNo?.padStart(10, '0') ?? 'N/A'
+            : accountTransferDetailData?.withdrawnSlipNo
+        })`,
+        'Transfer Type': accountTransferDetailData?.transferType ? txnTypefromRouter : '',
+        'Transfer Amount': amountConverter(accountTransferDetailData?.transferAmount || 0),
+      };
+      tempDublicate = true;
+      tempTotal = accountTransferDetailData?.transferAmount as string;
+
+      tempGLTransactions = accountTransferDetailData?.glTransaction;
+
+      tempGlTotal = accountTransferDetailData?.totalDebit;
+    }
+
+    if (
+      router?.asPath?.includes(AllTransactionType?.LoanRepayment) ||
+      router?.asPath?.includes('/loan-payment/')
+    ) {
+      tempAccountName = loanRepaymentDetailData?.loanAccountName as string;
+
+      tempAccountId = loanRepaymentDetailData?.loanAccountId as string;
+
+      const totalInterestAmount = loanRepaymentDetailData?.installmentDetails?.reduce(
+        (sum, installment) => sum + Number(installment?.interestAmount ?? 0),
+        0
+      );
+
+      const totalPrincipalAmount = loanRepaymentDetailData?.installmentDetails?.reduce(
+        (sum, installment) => sum + Number(installment?.principalAmount ?? 0),
+        0
+      );
+
+      tempDetails = {
+        'Loan Repayment Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {loanRepaymentDetailData?.transactionCode}
+          </Text>
+        ),
+        Date: localizedDate(loanRepaymentDetailData?.repaymentDate),
+        'Installment No': loanRepaymentDetailData?.installmentNo,
+        'Principal Amount': amountConverter(totalPrincipalAmount || 0),
+        'Interest Amount': amountConverter(totalInterestAmount || 0),
+        // 'Actual Fine': amountConverter(
+        //   Number(loanRepaymentDetailData?.fine || 0) +
+        //     Number(loanRepaymentDetailData?.discount || 0)
+        // ),
+        'Paid Fine': amountConverter(loanRepaymentDetailData?.fine || 0),
+        // 'Discount Amount': amountConverter(loanRepaymentDetailData?.discount || 0),
+        'Rebate Amount': amountConverter(loanRepaymentDetailData?.rebate || 0),
+
+        'Payment Mode': loanRepaymentDetailData?.paymentMode,
+      };
+
+      tempTotal = Number(loanRepaymentDetailData?.totalRepaymentAmount).toFixed(2);
+
+      tempGLTransactions = loanRepaymentDetailData?.glTransaction;
+
+      tempGlTotal = loanRepaymentDetailData?.totalDebit;
+
+      tempDublicate = true;
+    }
+
+    if (router?.asPath?.includes(AllTransactionType?.JournalVoucher)) {
+      tempTotal = voucherData?.amount as string;
+
+      tempShowSignatures = true;
+
+      tempJVDetails = {
+        glTransactions: voucherData?.glTransaction,
+        date: voucherData?.date?.local,
+        note: voucherData?.note,
+        refrence: voucherData?.reference,
+        totalDebit: voucherData?.amount,
+        transactionId: voucherData?.transactionCode,
+      };
+    }
+
+    return {
+      accountId: tempAccountId,
+      accountName: tempAccountName,
+      total: tempTotal,
+      details: tempDetails,
+      voucherDetails: tempVoucherDetails,
+      showSignatures: tempShowSignatures,
+      jvDetails: tempJVDetails,
+      glTransactions: tempGLTransactions,
+      dublicate: tempDublicate,
+      glTotal: tempGlTotal,
+    };
+  }, [
+    depositDetailData,
+    withdrawDetailData,
+    accountTransferDetailData,
+    loanRepaymentDetailData,
+    voucherData,
+    router?.asPath,
+  ]);
+
+  const handlePrint = useReactToPrint({
+    content: () => printComponentRef.current,
+    onAfterPrint: () => setPrintType(null),
+    documentTitle: `${txnTypefromRouter}-${memberDetail?.code ?? ''}-${id}.pdf`,
+  });
+
+  const handlePrintVoucherForDetails = useReactToPrint({
+    content: () => voucherPrintRef.current,
+    onAfterPrint: () => setPrintType(null),
+    documentTitle: `${txnTypefromRouter}-${memberDetail?.code ?? ''}-${id}.pdf`,
+  });
+
+  const options =
+    isCurrentFiscalYear && !allTransactionsData?.isYearEndAdjustment && isVoucherPrintable
+      ? [
+          {
+            label: allTransactionsData?.isYearEndAdjustment
+              ? 'Remove Year End Adjustment'
+              : 'Year End Adjustment',
+            handler: () => onToggle(),
+          },
+          {
+            label: 'Revert Transaction',
+            handler: () => setIsRevertTransactionModalOpen(true),
+          },
+
+          { label: 'Print Voucher', handler: handleOfficeVoucherPrint },
+          { label: 'Print ', handler: handleCustomerPrint },
+        ]
+      : isVoucherPrintable
+      ? [
+          {
+            label: 'Revert Transaction',
+            handler: () => setIsRevertTransactionModalOpen(true),
+          },
+
+          { label: 'Print Voucher', handler: handleOfficeVoucherPrint },
+          { label: 'Print ', handler: handleCustomerPrint },
+        ]
+      : isCurrentFiscalYear && !allTransactionsData?.isYearEndAdjustment
+      ? [
+          {
+            label: allTransactionsData?.isYearEndAdjustment
+              ? 'Remove Year End Adjustment'
+              : 'Year End Adjustment',
+            handler: () => onToggle(),
+          },
+          {
+            label: 'Revert Transaction',
+            handler: () => setIsRevertTransactionModalOpen(true),
+          },
+
+          { label: 'Print', handler: handlePrintVoucher },
+        ]
+      : [
+          {
+            label: 'Revert Transaction',
+            handler: () => setIsRevertTransactionModalOpen(true),
+          },
+
+          { label: 'Print', handler: handlePrintVoucher },
+        ];
+
   return (
     <>
-      <DetailPageHeader
-        title="Transaction List"
-        options={
-          isCurrentFiscalYear && !allTransactionsData?.isYearEndAdjustment
-            ? [
-                {
-                  label: allTransactionsData?.isYearEndAdjustment
-                    ? 'Remove Year End Adjustment'
-                    : 'Year End Adjustment',
-                  handler: () => onToggle(),
-                },
-                {
-                  label: 'Revert Transaction',
-                  handler: () => setIsRevertTransactionModalOpen(true),
-                },
-
-                { label: 'Print', handler: handlePrintVoucher },
-              ]
-            : [
-                {
-                  label: 'Revert Transaction',
-                  handler: () => setIsRevertTransactionModalOpen(true),
-                },
-
-                { label: 'Print', handler: handlePrintVoucher },
-              ]
-        }
-      />
+      <DetailPageHeader title="Transaction List" options={options} />
       <AllTransactionDetailPage printRef={printRef} />
       <YearEndAdjustmentConfirmationDialog
         isAdjusted={!!allTransactionsData?.isYearEndAdjustment}
@@ -152,6 +534,61 @@ const DepositDetailsPage = () => {
           </Box>
         </Box>
       </Modal>
+
+      {!router?.asPath?.includes(AllTransactionType?.JournalVoucher) ? (
+        <Box>
+          <SuccessPrint
+            meta={{
+              memberId: memberDetail?.code,
+              accountId,
+              accountName,
+              member: memberDetail?.name,
+            }}
+            total={amountConverter(total)}
+            totalWords={amountToWordsConverter(Number(total || '0'))}
+            details={details}
+            dublicate={dublicate}
+            showSignatures={showSignatures}
+            count={printCount}
+            ref={printComponentRef}
+          />
+        </Box>
+      ) : (
+        <SuccessPrintJornalVoucher
+          jVPrint={jvDetails}
+          showSignatures={showSignatures}
+          count={printCount}
+          totalWords={amountToWordsConverter(Number(total || '0'))}
+          ref={printComponentRef}
+        />
+      )}
+
+      {!router?.asPath?.includes(AllTransactionType?.JournalVoucher) ? (
+        <SuccessPrint
+          meta={{
+            memberId: memberDetail?.code,
+            accountId,
+            accountName,
+            member: memberDetail?.name,
+          }}
+          total={amountConverter(total)}
+          totalWords={amountToWordsConverter(total)}
+          details={voucherDetails}
+          showSignatures={showSignatures}
+          glTransactions={glTransactions}
+          glTransactionsTotal={glTotal as string}
+          count={printCount}
+          ref={voucherPrintRef}
+        />
+      ) : (
+        <SuccessPrintJornalVoucher
+          jVPrint={jvDetails}
+          showSignatures={showSignatures}
+          count={printCount}
+          totalWords={amountToWordsConverter(Number(total || '0'))}
+          ref={voucherPrintRef}
+        />
+      )}
     </>
   );
 };

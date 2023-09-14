@@ -37,6 +37,7 @@ export const TableContainer = <T,>({ children, variant, data }: TableContainerPr
             '@media print': {
               w: '100%',
               h: '100%',
+              color: '#000',
               display: 'block',
               maxH: 'none',
               overflow: 'visible',
