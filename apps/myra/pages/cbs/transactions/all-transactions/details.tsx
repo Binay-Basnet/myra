@@ -440,8 +440,8 @@ const DepositDetailsPage = () => {
             handler: () => setIsRevertTransactionModalOpen(true),
           },
 
-          { label: 'Print Voucher', handler: handleOfficeVoucherPrint },
           { label: 'Print ', handler: handleCustomerPrint },
+          { label: 'Print Voucher', handler: handleOfficeVoucherPrint },
         ]
       : isVoucherPrintable
       ? [
@@ -450,8 +450,8 @@ const DepositDetailsPage = () => {
             handler: () => setIsRevertTransactionModalOpen(true),
           },
 
-          { label: 'Print Voucher', handler: handleOfficeVoucherPrint },
           { label: 'Print ', handler: handleCustomerPrint },
+          { label: 'Print Voucher', handler: handleOfficeVoucherPrint },
         ]
       : isCurrentFiscalYear && !allTransactionsData?.isYearEndAdjustment
       ? [
