@@ -78,7 +78,7 @@ export const FundManagementTable = ({ name, remainingProfit }: IFundManagementTa
                 border="none"
                 onWheel={(e) => e.currentTarget.blur()}
                 borderRadius="0"
-                isDisabled={router?.asPath?.includes('/view')}
+                isDisabled
               />
             </Box>
 
@@ -111,8 +111,7 @@ export const FundManagementTable = ({ name, remainingProfit }: IFundManagementTa
                 w="100%"
                 px="s8"
                 minH="inherit"
-                bg="primary.100"
-                _focus={{ boxShadow: 'none' }}
+                _focus={{ boxShadow: 'none', bg: 'primary.100' }}
                 _focusWithin={{ boxShadow: 'none' }}
                 border="none"
                 onWheel={(e) => e.currentTarget.blur()}
@@ -145,8 +144,7 @@ export const FundManagementTable = ({ name, remainingProfit }: IFundManagementTa
                 w="100%"
                 px="s8"
                 minH="inherit"
-                bg="primary.100"
-                _focus={{ boxShadow: 'none' }}
+                _focus={{ boxShadow: 'none', bg: 'primary.100' }}
                 _focusWithin={{ boxShadow: 'none' }}
                 border="none"
                 onWheel={(e) => e.currentTarget.blur()}

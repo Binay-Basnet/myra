@@ -7,6 +7,7 @@ import {
   useGetCurrentFundAmountQuery,
   useGetFundManagementFormStateQuery,
 } from '@coop/cbs/data-access';
+import { debitCreditConverter } from '@coop/shared/utils';
 
 import { CustomFundManagementInput } from '../lib/type';
 
@@ -155,6 +156,82 @@ export const useFundManagement = ({ methods }: IFundMangementProps) => {
     () => Number((remainingProfitAfterDistribution - otherFundsTotal).toFixed(2)),
     [remainingProfitAfterDistribution, otherFundsTotal]
   );
+
+  // for edit and view
+  useEffect(() => {
+    if (formData) {
+      const grossProfit =
+        formData?.state === 'COMPLETED'
+          ? Number(formData?.grossProfit || 0)
+          : Number(currentFund?.amount?.amount || 0);
+
+      const staffBonusAmount = Number(formData?.staffBonus?.amount || 0);
+
+      const incometTaxAmountForm = Number(formData?.incometax?.amount || 0);
+
+      const netProfit = (grossProfit - staffBonusAmount - incometTaxAmountForm).toFixed(2);
+
+      const generalReserveFundForm =
+        formData?.fundDistribution?.filter((fund) => fund?.tableIndex === 0) ?? [];
+
+      const distributionFund =
+        formData?.fundDistribution?.filter((fund) => fund?.tableIndex === 1) ?? [];
+
+      const otherFundsTable =
+        formData?.fundDistribution?.filter((fund) => fund?.tableIndex === 2) ?? [];
+
+      reset({
+        // ...methods.getValues(),
+        grossProfit,
+        grossProfitCoa:
+          formData?.state === 'COMPLETED'
+            ? (formData?.grossProfitCoa as string)
+            : `${currentFund?.coaHead} - ${currentFund?.coaHeadName}`,
+        grossProfitDr:
+          formData?.state === 'COMPLETED'
+            ? debitCreditConverter(grossProfit, 'CR')
+            : debitCreditConverter(
+                currentFund?.amount?.amount as string,
+                currentFund?.amount?.amountType as string
+              ),
+        staffBonus: {
+          coaHead: {
+            label: formData?.staffBonus?.accountName,
+            value: formData?.staffBonus?.accountCode,
+          } as unknown as string,
+          percent: formData?.staffBonus?.percent,
+          amount: formData?.staffBonus?.amount as string,
+        },
+        incomeTax: {
+          coaHead: {
+            label: formData?.incometax?.accountName,
+            value: formData?.incometax?.accountCode,
+          } as unknown as string,
+          percent: formData?.incometax?.percent,
+          amount: formData?.incometax?.amount as string,
+        },
+        generalReserveFund: generalReserveFundForm?.map((g) => ({
+          coaHead: g?.accountCode as string,
+          coaHeadName: g?.accountName as string,
+          percent: String(g?.percent),
+          amount: g?.amount as string,
+        })),
+        distributionTable: distributionFund?.map((g) => ({
+          coaHead: g?.accountCode as string,
+          coaHeadName: g?.accountName as string,
+          percent: String(g?.percent),
+          amount: g?.amount as string,
+        })),
+        otherFunds: otherFundsTable?.map((g) => ({
+          coaHead: g?.accountCode as string,
+          coaHeadName: g?.accountName as string,
+          percent: String(g?.percent),
+          amount: g?.amount as string,
+        })),
+        netProfit,
+      });
+    }
+  }, [formData, currentFund]);
 
   return {
     currentFund,
