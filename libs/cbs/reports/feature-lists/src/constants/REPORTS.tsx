@@ -556,7 +556,7 @@ export const REPORTS: ReportType = {
       report: Report.TRANSACTION_TELLER_REPORT,
       link: 'teller',
       component: <Reports.TellerReport />,
-      acl: 'REPORTS_TXN_VAULT_BALANCE',
+      acl: 'REPORTS_TXN_TELLER_REPORT',
     },
 
     {

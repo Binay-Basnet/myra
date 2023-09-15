@@ -10,7 +10,7 @@ const ShareReport = () => {
   const router = useRouter();
 
   if (router.query['objState'] !== 'table-view') {
-    return <ShareReportList />;
+    return <ShareReportList module="CBS" />;
   }
 
   return <ShareReportTable />;

@@ -1898,6 +1898,22 @@ export type AutoOpenDetails = {
   status?: Maybe<ObjState>;
 };
 
+export type AwardsCashAndCertificatesDetailsInput = {
+  cashOrPrizeName?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  organization?: InputMaybe<Scalars['String']>;
+  receivedDate?: InputMaybe<Scalars['Localized']>;
+  verifiedBy?: InputMaybe<Scalars['String']>;
+};
+
+export type AwardsCashAndCertificatesDetailsType = {
+  cashOrPrizeName?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  organization?: Maybe<Scalars['String']>;
+  receivedDate?: Maybe<Scalars['Localized']>;
+  verifiedBy?: Maybe<Scalars['String']>;
+};
+
 export type BpmAnnouncements = {
   description?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
@@ -3708,7 +3724,8 @@ export type CertificatePrintReportResult = {
 
 export type CharKhataReportFilter = {
   branchId: Array<InputMaybe<Scalars['String']>>;
-  coaHead: Array<Scalars['String']>;
+  coaHead?: InputMaybe<Array<Scalars['String']>>;
+  coaType?: InputMaybe<Array<CoaAccountClass>>;
   filter?: InputMaybe<TrialSheetFilter>;
   period: LocalizedDateFilter;
 };
@@ -6734,6 +6751,13 @@ export type EbankingTransactionFilter = {
   transactionDirection?: InputMaybe<EbankingTransactionCrOrDr>;
 };
 
+export const EmployeeClass = {
+  Class_1: 'CLASS_1',
+  Class_2: 'CLASS_2',
+  Class_3: 'CLASS_3',
+} as const;
+
+export type EmployeeClass = typeof EmployeeClass[keyof typeof EmployeeClass];
 export type EmployeeExitConnection = {
   edges?: Maybe<Array<Maybe<EmployeeExits>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -6807,41 +6831,70 @@ export type EmployeeHealthInsuranceResult = {
 };
 
 export type EmployeeInput = {
+  Handicapped?: InputMaybe<Scalars['Boolean']>;
+  account?: InputMaybe<Scalars['String']>;
+  accountName?: InputMaybe<Scalars['String']>;
+  accountNumber?: InputMaybe<Scalars['String']>;
   age?: InputMaybe<Scalars['Int']>;
-  appointmentLetter?: InputMaybe<Scalars['ID']>;
+  awardsCashAndCertificates?: InputMaybe<Array<InputMaybe<AwardsCashAndCertificatesDetailsInput>>>;
+  awardsCashCertificatesGiven?: InputMaybe<Scalars['Boolean']>;
+  bank?: InputMaybe<Scalars['String']>;
   bloodGroup?: InputMaybe<BloodGroup>;
+  cit?: InputMaybe<Scalars['Boolean']>;
+  citCode?: InputMaybe<Scalars['String']>;
+  citNumber?: InputMaybe<Scalars['String']>;
+  citizenship?: InputMaybe<IdentificationDetailsInput>;
+  citizenshipGiven?: InputMaybe<Scalars['Boolean']>;
+  coopMemberId?: InputMaybe<Scalars['String']>;
   dateOfBirth?: InputMaybe<Scalars['Localized']>;
-  dateOfJoining?: InputMaybe<Scalars['Localized']>;
   departmentId?: InputMaybe<Scalars['String']>;
   designationId?: InputMaybe<Scalars['String']>;
   documents?: InputMaybe<Array<InputMaybe<DocumentInsertInput>>>;
+  drivingLicense?: InputMaybe<IdentificationDetailsInput>;
+  drivingLicenseGiven?: InputMaybe<Scalars['Boolean']>;
   educationDetails?: InputMaybe<Array<InputMaybe<HrEmployeeEducationDetail>>>;
+  employeeClass?: InputMaybe<EmployeeClass>;
   employeeLevelId?: InputMaybe<Scalars['String']>;
   employeeStatus?: InputMaybe<EmployeeStatus>;
   employmentType?: InputMaybe<EmployeeTypeEnum>;
-  expenseApproverId?: InputMaybe<Scalars['String']>;
+  ethnicity?: InputMaybe<Scalars['String']>;
+  familyDetails?: InputMaybe<Array<InputMaybe<FamilyDetailsInput>>>;
   firstName?: InputMaybe<Scalars['String']>;
   gender?: InputMaybe<Scalars['ID']>;
-  healthInsuranceNumberId?: InputMaybe<Scalars['String']>;
-  healthInsuranceProviderId?: InputMaybe<Scalars['String']>;
+  internationalTour?: InputMaybe<Array<InputMaybe<InternationalTourDetailsInput>>>;
+  internationalTourGiven?: InputMaybe<Scalars['Boolean']>;
+  isCoopMember?: InputMaybe<Scalars['Boolean']>;
+  isJobApplication?: InputMaybe<Scalars['Boolean']>;
+  isMyraErpUser?: InputMaybe<Scalars['Boolean']>;
   isTemporarySameAsPermanent?: InputMaybe<Scalars['Boolean']>;
-  jobApplicationId?: InputMaybe<Scalars['ID']>;
-  jobOffer?: InputMaybe<Scalars['ID']>;
+  jobApplicationId?: InputMaybe<Scalars['String']>;
+  joiningDate?: InputMaybe<Scalars['Localized']>;
   lastName?: InputMaybe<Scalars['String']>;
-  leaveApproverId?: InputMaybe<Scalars['String']>;
   maritalStatus?: InputMaybe<Scalars['ID']>;
   middleName?: InputMaybe<Scalars['String']>;
+  myraErpUserId?: InputMaybe<Scalars['String']>;
+  noCitDeduction?: InputMaybe<Scalars['Boolean']>;
+  nominee?: InputMaybe<Scalars['String']>;
   panNumber?: InputMaybe<Scalars['String']>;
+  payGroup?: InputMaybe<Scalars['String']>;
   permanentAddress?: InputMaybe<KymAddressInput>;
-  personalEmailAddress?: InputMaybe<Scalars['String']>;
   personalPhoneNumber?: InputMaybe<Scalars['String']>;
-  providentFundAccount?: InputMaybe<Scalars['String']>;
-  reportsToId?: InputMaybe<Scalars['String']>;
+  pf?: InputMaybe<Scalars['Boolean']>;
+  providentNumber?: InputMaybe<Scalars['String']>;
+  referralBy?: InputMaybe<Scalars['String']>;
+  relationWithNominee?: InputMaybe<Scalars['String']>;
+  researchAndPublications?: InputMaybe<Array<InputMaybe<ResearchAndPublicationDetailsInput>>>;
+  researchAndPublicationsGiven?: InputMaybe<Scalars['Boolean']>;
   salaryPaymentMode?: InputMaybe<PaymentMode>;
   salaryStructureId?: InputMaybe<Scalars['String']>;
   serviceCenter?: InputMaybe<Scalars['String']>;
   sourceOfHire?: InputMaybe<SourceOfHire>;
+  ssf?: InputMaybe<Scalars['Boolean']>;
+  ssfNumber?: InputMaybe<Scalars['String']>;
+  supervisor?: InputMaybe<Scalars['String']>;
   temporaryAddress?: InputMaybe<KymAddressInput>;
+  trainingDetails?: InputMaybe<Array<InputMaybe<TrainingDetailsInput>>>;
+  trainingDetailsGiven?: InputMaybe<Scalars['Boolean']>;
   workEmailAddress?: InputMaybe<Scalars['String']>;
   workExperience?: InputMaybe<Array<InputMaybe<HrEmployeeWorkExperience>>>;
   workPhoneNumber?: InputMaybe<Scalars['String']>;
@@ -6995,42 +7048,71 @@ export type EmployeeReportUserReportArgs = {
 };
 
 export type EmployeeResultResponseType = {
+  Handicapped?: Maybe<Scalars['Boolean']>;
+  account?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
   age?: Maybe<Scalars['Int']>;
-  appointmentLetter?: Maybe<Scalars['ID']>;
+  awardsCashAndCertificates?: Maybe<Array<Maybe<AwardsCashAndCertificatesDetailsType>>>;
+  awardsCashCertificatesGiven?: Maybe<Scalars['Boolean']>;
+  bank?: Maybe<Scalars['String']>;
   bloodGroup?: Maybe<BloodGroup>;
+  cit?: Maybe<Scalars['Boolean']>;
+  citCode?: Maybe<Scalars['String']>;
+  citNumber?: Maybe<Scalars['String']>;
+  citizenship?: Maybe<IdentificationDetailsType>;
+  citizenshipGiven?: Maybe<Scalars['Boolean']>;
+  coopMemberId?: Maybe<Scalars['String']>;
   dateOfBirth?: Maybe<Scalars['Localized']>;
-  dateOfJoining?: Maybe<Scalars['Localized']>;
   departmentId?: Maybe<Scalars['String']>;
   designationId?: Maybe<Scalars['String']>;
   documents?: Maybe<Array<Maybe<UploadedDocument>>>;
+  drivingLicense?: Maybe<IdentificationDetailsType>;
+  drivingLicenseGiven?: Maybe<Scalars['Boolean']>;
   educationDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
+  employeeClass?: Maybe<EmployeeClass>;
   employeeLevelId?: Maybe<Scalars['String']>;
   employeeStatus?: Maybe<EmployeeStatus>;
   employmentType?: Maybe<EmployeeTypeEnum>;
-  expenseApproverId?: Maybe<Scalars['String']>;
+  ethnicity?: Maybe<Scalars['String']>;
+  familyDetails?: Maybe<Array<Maybe<FamilyDetailsType>>>;
   firstName?: Maybe<Scalars['String']>;
   gender?: Maybe<Scalars['ID']>;
-  healthInsuranceNumberId?: Maybe<Scalars['String']>;
-  healthInsuranceProviderId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  internationalTour?: Maybe<Array<Maybe<InternationalTourDetailsType>>>;
+  internationalTourGiven?: Maybe<Scalars['Boolean']>;
+  isCoopMember?: Maybe<Scalars['Boolean']>;
+  isJobApplication?: Maybe<Scalars['Boolean']>;
+  isMyraErpUser?: Maybe<Scalars['Boolean']>;
   isTemporarySameAsPermanent?: Maybe<Scalars['Boolean']>;
-  jobApplicationId?: Maybe<Scalars['ID']>;
-  jobOffer?: Maybe<Scalars['ID']>;
+  jobApplicationId?: Maybe<Scalars['String']>;
+  joiningDate?: Maybe<Scalars['Localized']>;
   lastName?: Maybe<Scalars['String']>;
-  leaveApproverId?: Maybe<Scalars['String']>;
   maritalStatus?: Maybe<Scalars['ID']>;
   middleName?: Maybe<Scalars['String']>;
+  myraErpUserId?: Maybe<Scalars['String']>;
+  noCitDeduction?: Maybe<Scalars['Boolean']>;
+  nominee?: Maybe<Scalars['String']>;
   panNumber?: Maybe<Scalars['String']>;
+  payGroup?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<KymAddress>;
-  personalEmailAddress?: Maybe<Scalars['String']>;
   personalPhoneNumber?: Maybe<Scalars['String']>;
-  providentFundAccount?: Maybe<Scalars['String']>;
-  reportsToId?: Maybe<Scalars['String']>;
+  pf?: Maybe<Scalars['Boolean']>;
+  providentNumber?: Maybe<Scalars['String']>;
+  referralBy?: Maybe<Scalars['String']>;
+  relationWithNominee?: Maybe<Scalars['String']>;
+  researchAndPublications?: Maybe<Array<Maybe<ResearchAndPublicationDetailsType>>>;
+  researchAndPublicationsGiven?: Maybe<Scalars['Boolean']>;
   salaryPaymentMode?: Maybe<PaymentMode>;
   salaryStructureId?: Maybe<Scalars['String']>;
   serviceCenter?: Maybe<Scalars['String']>;
   sourceOfHire?: Maybe<SourceOfHire>;
+  ssf?: Maybe<Scalars['Boolean']>;
+  ssfNumber?: Maybe<Scalars['String']>;
+  supervisor?: Maybe<Scalars['String']>;
   temporaryAddress?: Maybe<KymAddress>;
+  trainingDetails?: Maybe<Array<Maybe<TrainingDetailsType>>>;
+  trainingDetailsGiven?: Maybe<Scalars['Boolean']>;
   workEmailAddress?: Maybe<Scalars['String']>;
   workExperience?: Maybe<Array<Maybe<HrEmployeeWorkExperienceType>>>;
   workPhoneNumber?: Maybe<Scalars['String']>;
@@ -7668,6 +7750,18 @@ export type FamilyDetailsInNepali = {
   spouseName?: Maybe<Scalars['String']>;
 };
 
+export type FamilyDetailsInput = {
+  fullName?: InputMaybe<Scalars['String']>;
+  occupation?: InputMaybe<Scalars['String']>;
+  relation?: InputMaybe<Scalars['String']>;
+};
+
+export type FamilyDetailsType = {
+  fullName?: Maybe<Scalars['String']>;
+  occupation?: Maybe<Scalars['String']>;
+  relation?: Maybe<Scalars['String']>;
+};
+
 export type FamilyMemberDetails = {
   dob?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -7694,6 +7788,7 @@ export type FianancialTransactionReport = {
   dailyBalanceReport: DailyBalanceReportResult;
   dayBookReport: DayBookReportResult;
   fiscalTrialSheetReport: TrialSheetReportResult;
+  ledgerBalanceReport: LedgerBalanceReport;
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
   serviceCenterBalanceReport: SericeCenterStatementResult;
   tagKhataReport: TagKhataReportResult;
@@ -7733,6 +7828,10 @@ export type FianancialTransactionReportDayBookReportArgs = {
 
 export type FianancialTransactionReportFiscalTrialSheetReportArgs = {
   data: TrialSheetReportFilter;
+};
+
+export type FianancialTransactionReportLedgerBalanceReportArgs = {
+  data: LedgerBalanceReportInput;
 };
 
 export type FianancialTransactionReportMrTransactionReportArgs = {
@@ -8826,6 +8925,14 @@ export const GracePeriod = {
 } as const;
 
 export type GracePeriod = typeof GracePeriod[keyof typeof GracePeriod];
+export const GradeLevels = {
+  Distinction: 'DISTINCTION',
+  FirstDivision: 'FIRST_DIVISION',
+  SecondDivision: 'SECOND_DIVISION',
+  ThirdDivision: 'THIRD_DIVISION',
+} as const;
+
+export type GradeLevels = typeof GradeLevels[keyof typeof GradeLevels];
 export type GraphData = {
   amount?: Maybe<Scalars['String']>;
   time?: Maybe<Scalars['Int']>;
@@ -9116,9 +9223,32 @@ export type HcmPayrollEarningComponentQueryListEarningComponentArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type HcmPayrollGeneralMutation = {
+  updatePayrollGeneralSettingsDisableRoundedTotal: UpdatedOrNot;
+  updatePayrollGeneralSettingsEmailSalarySlipToEmployee: UpdatedOrNot;
+  updatePayrollGeneralSettingsIncludeHolidays: UpdatedOrNot;
+};
+
+export type HcmPayrollGeneralMutationUpdatePayrollGeneralSettingsDisableRoundedTotalArgs = {
+  input?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type HcmPayrollGeneralMutationUpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeArgs = {
+  input?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type HcmPayrollGeneralMutationUpdatePayrollGeneralSettingsIncludeHolidaysArgs = {
+  input?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type HcmPayrollGeneralQuery = {
+  getPayrollGeneral: PayrollGeneralSettingsWithError;
+};
+
 export type HcmPayrollMutation = {
   deductionComponent: HcmPayrollDeductionComponentMutation;
   earningComponent: HcmPayrollEarningComponentMutation;
+  general: HcmPayrollGeneralMutation;
   salaryStructure: HcmPayrollSalaryStructureMutation;
   taxSlab: HcmPayrollTaxSlabMutation;
 };
@@ -9126,6 +9256,7 @@ export type HcmPayrollMutation = {
 export type HcmPayrollQuery = {
   deductionComponent: HcmPayrollDeductionComponentQuery;
   earningComponent: HcmPayrollEarningComponentQuery;
+  general: HcmPayrollGeneralQuery;
   salaryStructure: HcmPayrollSalaryStructureQuery;
   taxSlab: HcmPayrollTaxSlabQuery;
 };
@@ -9787,15 +9918,17 @@ export type HrEmployeeAttendanceMutationUpsertAttendanceArgs = {
 export type HrEmployeeEducationDetail = {
   dateOfCompletion?: InputMaybe<Scalars['Localized']>;
   degree_diploma?: InputMaybe<Scalars['String']>;
+  durationInYrs?: InputMaybe<Scalars['Int']>;
+  grade?: InputMaybe<GradeLevels>;
   instituteName?: InputMaybe<Scalars['String']>;
-  specialization?: InputMaybe<Scalars['String']>;
 };
 
 export type HrEmployeeEducationDetailType = {
   dateOfCompletion?: Maybe<Scalars['Localized']>;
   degree_diploma?: Maybe<Scalars['String']>;
+  durationInYrs?: Maybe<Scalars['Int']>;
+  grade?: Maybe<GradeLevels>;
   instituteName?: Maybe<Scalars['String']>;
-  specialization?: Maybe<Scalars['String']>;
 };
 
 export const HrEmployeeFeedbackType = {
@@ -9832,14 +9965,14 @@ export type HrEmployeeWorkExperience = {
   address?: InputMaybe<Scalars['String']>;
   companyName?: InputMaybe<Scalars['String']>;
   designation?: InputMaybe<Scalars['String']>;
-  salary?: InputMaybe<Scalars['Int']>;
+  durationInYrs?: InputMaybe<Scalars['Int']>;
 };
 
 export type HrEmployeeWorkExperienceType = {
   address?: Maybe<Scalars['String']>;
   companyName?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
-  salary?: Maybe<Scalars['Int']>;
+  durationInYrs?: Maybe<Scalars['Int']>;
 };
 
 export type HumanizeAuditLog = {
@@ -9911,6 +10044,18 @@ export const Id_Type = {
 } as const;
 
 export type Id_Type = typeof Id_Type[keyof typeof Id_Type];
+export type IdentificationDetailsInput = {
+  id?: InputMaybe<Scalars['ID']>;
+  issuedDate?: InputMaybe<Scalars['Localized']>;
+  placeOfIssue?: InputMaybe<Scalars['String']>;
+};
+
+export type IdentificationDetailsType = {
+  id?: Maybe<Scalars['ID']>;
+  issuedDate?: Maybe<Scalars['Localized']>;
+  placeOfIssue?: Maybe<Scalars['String']>;
+};
+
 export type Identity = {
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -10399,6 +10544,18 @@ export type InterestTaxReportFilter = {
 export type InterestTaxReportResult = {
   data?: Maybe<Array<Maybe<InterestTaxReportEntry>>>;
   error?: Maybe<QueryError>;
+};
+
+export type InternationalTourDetailsInput = {
+  duration?: InputMaybe<Scalars['String']>;
+  objective?: InputMaybe<Scalars['String']>;
+  tourCountry?: InputMaybe<Scalars['String']>;
+};
+
+export type InternationalTourDetailsType = {
+  duration?: Maybe<Scalars['String']>;
+  objective?: Maybe<Scalars['String']>;
+  tourCountry?: Maybe<Scalars['String']>;
 };
 
 export type InvAddSupplierResult = {
@@ -13321,6 +13478,31 @@ export type LedgerBalanceListConnection = {
 export type LedgerBalanceListEdges = {
   cursor?: Maybe<Scalars['Cursor']>;
   node?: Maybe<LedgerBalanceEntry>;
+};
+
+export type LedgerBalanceReport = {
+  data?: Maybe<Array<Maybe<LedgerBalanceReportData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type LedgerBalanceReportData = {
+  adjustedCr?: Maybe<Scalars['String']>;
+  adjustedDr?: Maybe<Scalars['String']>;
+  balance?: Maybe<BalanceValue>;
+  branchId: Scalars['ID'];
+  branchName: Scalars['String'];
+  cr?: Maybe<Scalars['String']>;
+  dr?: Maybe<Scalars['String']>;
+  ledgerId: Scalars['String'];
+  ledgerName: Scalars['String'];
+  openingBalance?: Maybe<BalanceValue>;
+  settledBalance?: Maybe<BalanceValue>;
+};
+
+export type LedgerBalanceReportInput = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  coaHead?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
 };
 
 export type LedgerBalanceSum = {
@@ -18112,7 +18294,8 @@ export type PaymentDetail = {
 };
 
 export const PaymentMode = {
-  Bank: 'BANK',
+  Account: 'ACCOUNT',
+  BankTransfer: 'BANK_TRANSFER',
   Cash: 'CASH',
 } as const;
 
@@ -18137,6 +18320,17 @@ export const PayrollFrequencyEnum = {
 } as const;
 
 export type PayrollFrequencyEnum = typeof PayrollFrequencyEnum[keyof typeof PayrollFrequencyEnum];
+export type PayrollGeneralSettings = {
+  disableRoundedTotal?: Maybe<Scalars['Boolean']>;
+  emailSalarySlipToEmployee?: Maybe<Scalars['Boolean']>;
+  includeHolidaysInTotalNumberOfWorkingDays?: Maybe<Scalars['Boolean']>;
+};
+
+export type PayrollGeneralSettingsWithError = {
+  data?: Maybe<PayrollGeneralSettings>;
+  error?: Maybe<QueryError>;
+};
+
 export type PayrollRunConnection = {
   edges?: Maybe<Array<Maybe<PayrollRuns>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -18852,12 +19046,12 @@ export const Resource = {
     'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_TODAY_COLLECTION_SHEET',
   CbsOthers: 'CBS_OTHERS',
   CbsReports: 'CBS_REPORTS',
-  CbsReportsAccounting: 'CBS_REPORTS_ACCOUNTING',
-  CbsReportsException: 'CBS_REPORTS_EXCEPTION',
-  CbsReportsInventory: 'CBS_REPORTS_INVENTORY',
+  CbsReportsAtm: 'CBS_REPORTS_ATM',
+  CbsReportsBranchlessBanking: 'CBS_REPORTS_BRANCHLESS_BANKING',
   CbsReportsLoan: 'CBS_REPORTS_LOAN',
   CbsReportsMember: 'CBS_REPORTS_MEMBER',
   CbsReportsMobileBanking: 'CBS_REPORTS_MOBILE_BANKING',
+  CbsReportsOrganization: 'CBS_REPORTS_ORGANIZATION',
   CbsReportsOther: 'CBS_REPORTS_OTHER',
   CbsReportsSavings: 'CBS_REPORTS_SAVINGS',
   CbsReportsServiceCenter: 'CBS_REPORTS_SERVICE_CENTER',
@@ -18935,94 +19129,6 @@ export const Resource = {
   HcmTraining: 'HCM_TRAINING',
   HcmTrainingCourses: 'HCM_TRAINING_COURSES',
   HcmTrainingStudents: 'HCM_TRAINING_STUDENTS',
-  ReportsAccountingExternalLoan: 'REPORTS_ACCOUNTING_EXTERNAL_LOAN',
-  ReportsAccountingExternalLoanStatement: 'REPORTS_ACCOUNTING_EXTERNAL_LOAN_STATEMENT',
-  ReportsAccountingFdInvestment: 'REPORTS_ACCOUNTING_FD_INVESTMENT',
-  ReportsAccountingFdInvestmentStatement: 'REPORTS_ACCOUNTING_FD_INVESTMENT_STATEMENT',
-  ReportsExceptionLoanBalanceException: 'REPORTS_EXCEPTION_LOAN_BALANCE_EXCEPTION',
-  ReportsExceptionSavingBalanceException: 'REPORTS_EXCEPTION_SAVING_BALANCE_EXCEPTION',
-  ReportsExceptionShareBalanceException: 'REPORTS_EXCEPTION_SHARE_BALANCE_EXCEPTION',
-  ReportsInventoryInventoryItemSales: 'REPORTS_INVENTORY_INVENTORY_ITEM_SALES',
-  ReportsInventoryInventoryPurchaseOrder: 'REPORTS_INVENTORY_INVENTORY_PURCHASE_ORDER',
-  ReportsInventoryInventoryRegister: 'REPORTS_INVENTORY_INVENTORY_REGISTER',
-  ReportsInventoryInventoryStockStatus: 'REPORTS_INVENTORY_INVENTORY_STOCK_STATUS',
-  ReportsLoanClosedLoanAccountStatement: 'REPORTS_LOAN_CLOSED_LOAN_ACCOUNT_STATEMENT',
-  ReportsLoanDoasriLoan: 'REPORTS_LOAN_DOASRI_LOAN',
-  ReportsLoanLoanAccountAccruedInterest: 'REPORTS_LOAN_LOAN_ACCOUNT_ACCRUED_INTEREST',
-  ReportsLoanLoanAccountStatement: 'REPORTS_LOAN_LOAN_ACCOUNT_STATEMENT',
-  ReportsLoanLoanAccountTransaction: 'REPORTS_LOAN_LOAN_ACCOUNT_TRANSACTION',
-  ReportsLoanLoanAging: 'REPORTS_LOAN_LOAN_AGING',
-  ReportsLoanLoanBalance: 'REPORTS_LOAN_LOAN_BALANCE',
-  ReportsLoanLoanCallSheet: 'REPORTS_LOAN_LOAN_CALL_SHEET',
-  ReportsLoanLoanCollateral: 'REPORTS_LOAN_LOAN_COLLATERAL',
-  ReportsLoanLoanDisbursement: 'REPORTS_LOAN_LOAN_DISBURSEMENT',
-  ReportsLoanLoanProductWiseBalance: 'REPORTS_LOAN_LOAN_PRODUCT_WISE_BALANCE',
-  ReportsLoanLoanWriteOff: 'REPORTS_LOAN_LOAN_WRITE_OFF',
-  ReportsLoanPersonalGuarantee: 'REPORTS_LOAN_PERSONAL_GUARANTEE',
-  ReportsMbMobileBankingChannelExpiry: 'REPORTS_MB_MOBILE_BANKING_CHANNEL_EXPIRY',
-  ReportsMbMobileBankingChannelRegistration: 'REPORTS_MB_MOBILE_BANKING_CHANNEL_REGISTRATION',
-  ReportsMbMobileBankingChannelTxn: 'REPORTS_MB_MOBILE_BANKING_CHANNEL_TXN',
-  ReportsMemberActiveInactive: 'REPORTS_MEMBER_ACTIVE_INACTIVE',
-  ReportsMemberDosariMember: 'REPORTS_MEMBER_DOSARI_MEMBER',
-  ReportsMemberIndividualMemberProfile: 'REPORTS_MEMBER_INDIVIDUAL_MEMBER_PROFILE',
-  ReportsMemberKymStatus: 'REPORTS_MEMBER_KYM_STATUS',
-  ReportsMemberMemberClassification: 'REPORTS_MEMBER_MEMBER_CLASSIFICATION',
-  ReportsMemberMemberRegister: 'REPORTS_MEMBER_MEMBER_REGISTER',
-  ReportsMemberMemberTransfer: 'REPORTS_MEMBER_MEMBER_TRANSFER',
-  ReportsMemberMemberWiseBalance: 'REPORTS_MEMBER_MEMBER_WISE_BALANCE',
-  ReportsMemberMinorList: 'REPORTS_MEMBER_MINOR_LIST',
-  ReportsOthersAdjustedLedger: 'REPORTS_OTHERS_ADJUSTED_LEDGER',
-  ReportsOthersCommitteeRegisteredDetails: 'REPORTS_OTHERS_COMMITTEE_REGISTERED_DETAILS',
-  ReportsOthersCopomisFinancial: 'REPORTS_OTHERS_COPOMIS_FINANCIAL',
-  ReportsOthersCopomisImportMember: 'REPORTS_OTHERS_COPOMIS_IMPORT_MEMBER',
-  ReportsOthersFdCertificate: 'REPORTS_OTHERS_FD_CERTIFICATE',
-  ReportsOthersGeneralLedger: 'REPORTS_OTHERS_GENERAL_LEDGER',
-  ReportsOthersOrganizationalPrrofile: 'REPORTS_OTHERS_ORGANIZATIONAL_PRROFILE',
-  ReportsOthersPearlsReport: 'REPORTS_OTHERS_PEARLS_REPORT',
-  ReportsOthersShareCertificate: 'REPORTS_OTHERS_SHARE_CERTIFICATE',
-  ReportsOthersUserList: 'REPORTS_OTHERS_USER_LIST',
-  ReportsSavingsAccountLockedStatus: 'REPORTS_SAVINGS_ACCOUNT_LOCKED_STATUS',
-  ReportsSavingsClosedAccount: 'REPORTS_SAVINGS_CLOSED_ACCOUNT',
-  ReportsSavingsClosedSavingAccount: 'REPORTS_SAVINGS_CLOSED_SAVING_ACCOUNT',
-  ReportsSavingsDormantAc: 'REPORTS_SAVINGS_DORMANT_AC',
-  ReportsSavingsETds: 'REPORTS_SAVINGS_E_TDS',
-  ReportsSavingsFixedDepositMaturity: 'REPORTS_SAVINGS_FIXED_DEPOSIT_MATURITY',
-  ReportsSavingsInterestReport: 'REPORTS_SAVINGS_INTEREST_REPORT',
-  ReportsSavingsInterestTax: 'REPORTS_SAVINGS_INTEREST_TAX',
-  ReportsSavingsMinorSavingBalance: 'REPORTS_SAVINGS_MINOR_SAVING_BALANCE',
-  ReportsSavingsOpenedAccount: 'REPORTS_SAVINGS_OPENED_ACCOUNT',
-  ReportsSavingsSavingAccountAccruedInterest: 'REPORTS_SAVINGS_SAVING_ACCOUNT_ACCRUED_INTEREST',
-  ReportsSavingsSavingAccountStatement: 'REPORTS_SAVINGS_SAVING_ACCOUNT_STATEMENT',
-  ReportsSavingsSavingBalanceInd: 'REPORTS_SAVINGS_SAVING_BALANCE_IND',
-  ReportsSavingsSavingProductWiseBalance: 'REPORTS_SAVINGS_SAVING_PRODUCT_WISE_BALANCE',
-  ReportsSavingsSuspiciousTransaction: 'REPORTS_SAVINGS_SUSPICIOUS_TRANSACTION',
-  ReportsSavingsThresholdTransaction: 'REPORTS_SAVINGS_THRESHOLD_TRANSACTION',
-  ReportsScAbbsReport: 'REPORTS_SC_ABBS_REPORT',
-  ReportsScBranchReadinessReport: 'REPORTS_SC_BRANCH_READINESS_REPORT',
-  ReportsScServiceCenterBalance: 'REPORTS_SC_SERVICE_CENTER_BALANCE',
-  ReportsScServiceCenterCoaHeadWiseBalance: 'REPORTS_SC_SERVICE_CENTER_COA_HEAD_WISE_BALANCE',
-  ReportsScServiceCenterList: 'REPORTS_SC_SERVICE_CENTER_LIST',
-  ReportsShareShareBalance: 'REPORTS_SHARE_SHARE_BALANCE',
-  ReportsShareShareRegister: 'REPORTS_SHARE_SHARE_REGISTER',
-  ReportsShareShareStatement: 'REPORTS_SHARE_SHARE_STATEMENT',
-  ReportsShareShareTransaction: 'REPORTS_SHARE_SHARE_TRANSACTION',
-  ReportsTxnAbbsTransaction: 'REPORTS_TXN_ABBS_TRANSACTION',
-  ReportsTxnBalanceSheetReport: 'REPORTS_TXN_BALANCE_SHEET_REPORT',
-  ReportsTxnBankGlBalance: 'REPORTS_TXN_BANK_GL_BALANCE',
-  ReportsTxnBankGlStatement: 'REPORTS_TXN_BANK_GL_STATEMENT',
-  ReportsTxnCashLedger: 'REPORTS_TXN_CASH_LEDGER',
-  ReportsTxnCharkhataLedgerReport: 'REPORTS_TXN_CHARKHATA_LEDGER_REPORT',
-  ReportsTxnDailyBalance: 'REPORTS_TXN_DAILY_BALANCE',
-  ReportsTxnDaybook: 'REPORTS_TXN_DAYBOOK',
-  ReportsTxnFiscalYearEndAdjustmentTrialBalance:
-    'REPORTS_TXN_FISCAL_YEAR_END_ADJUSTMENT_TRIAL_BALANCE',
-  ReportsTxnLedgerGroup: 'REPORTS_TXN_LEDGER_GROUP',
-  ReportsTxnMarketRepresentativeTxn: 'REPORTS_TXN_MARKET_REPRESENTATIVE_TXN',
-  ReportsTxnProfitAndLoss: 'REPORTS_TXN_PROFIT_AND_LOSS',
-  ReportsTxnTellerDaybook: 'REPORTS_TXN_TELLER_DAYBOOK',
-  ReportsTxnTellerReport: 'REPORTS_TXN_TELLER_REPORT',
-  ReportsTxnTrialBalance: 'REPORTS_TXN_TRIAL_BALANCE',
-  ReportsTxnVaultBalance: 'REPORTS_TXN_VAULT_BALANCE',
   SettingsAlternativeChannels: 'SETTINGS_ALTERNATIVE_CHANNELS',
   SettingsAuditLog: 'SETTINGS_AUDIT_LOG',
   SettingsBank: 'SETTINGS_BANK',
@@ -19311,6 +19417,20 @@ export type RequestsMutationRequestApproveOrDeclineArgs = {
 
 export type RequestsQuery = {
   list?: Maybe<RequestsList>;
+};
+
+export type ResearchAndPublicationDetailsInput = {
+  curriculum?: InputMaybe<Scalars['String']>;
+  language?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  publishedDate?: InputMaybe<Scalars['Localized']>;
+};
+
+export type ResearchAndPublicationDetailsType = {
+  curriculum?: Maybe<Scalars['String']>;
+  language?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  publishedDate?: Maybe<Scalars['Localized']>;
 };
 
 export type ResetPasswordData = {
@@ -22014,6 +22134,20 @@ export type TotalReport = {
   totalShares?: Maybe<Scalars['Int']>;
 };
 
+export type TrainingDetailsInput = {
+  duration?: InputMaybe<Scalars['String']>;
+  organizer?: InputMaybe<Scalars['String']>;
+  subject?: InputMaybe<Scalars['String']>;
+  trainingName?: InputMaybe<Scalars['String']>;
+};
+
+export type TrainingDetailsType = {
+  duration?: Maybe<Scalars['String']>;
+  organizer?: Maybe<Scalars['String']>;
+  subject?: Maybe<Scalars['String']>;
+  trainingName?: Maybe<Scalars['String']>;
+};
+
 export type TransactionConstraintList = {
   edges?: Maybe<Array<Maybe<TransactionConstraintListEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -22522,6 +22656,11 @@ export type UpdateDormancyInput = {
 export type UpdateLedgerResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['ID']>;
+};
+
+export type UpdatedOrNot = {
+  error?: Maybe<MutationError>;
+  isUpdated?: Maybe<Scalars['Boolean']>;
 };
 
 export type UpdatedOrNotWithError = {
@@ -32459,12 +32598,15 @@ export type GetSingleEmployeeDetailsQuery = {
             age?: number | null;
             gender?: string | null;
             maritalStatus?: string | null;
+            ethnicity?: string | null;
+            Handicapped?: boolean | null;
             bloodGroup?: BloodGroup | null;
             workPhoneNumber?: string | null;
             workEmailAddress?: string | null;
             personalPhoneNumber?: string | null;
-            personalEmailAddress?: string | null;
             isTemporarySameAsPermanent?: boolean | null;
+            citizenshipGiven?: boolean | null;
+            drivingLicenseGiven?: boolean | null;
             employeeLevelId?: string | null;
             departmentId?: string | null;
             designationId?: string | null;
@@ -32472,24 +32614,38 @@ export type GetSingleEmployeeDetailsQuery = {
             employmentType?: EmployeeTypeEnum | null;
             employeeStatus?: EmployeeStatus | null;
             sourceOfHire?: SourceOfHire | null;
-            salaryPaymentMode?: PaymentMode | null;
+            employeeClass?: EmployeeClass | null;
+            referralBy?: string | null;
+            trainingDetailsGiven?: boolean | null;
+            researchAndPublicationsGiven?: boolean | null;
+            awardsCashCertificatesGiven?: boolean | null;
+            internationalTourGiven?: boolean | null;
+            joiningDate?: Record<'local' | 'en' | 'np', string> | null;
+            payGroup?: string | null;
             panNumber?: string | null;
-            providentFundAccount?: string | null;
             salaryStructureId?: string | null;
-            jobApplicationId?: string | null;
-            jobOffer?: string | null;
-            appointmentLetter?: string | null;
-            dateOfJoining?: Record<'local' | 'en' | 'np', string> | null;
-            reportsToId?: string | null;
-            leaveApproverId?: string | null;
-            expenseApproverId?: string | null;
-            healthInsuranceProviderId?: string | null;
-            healthInsuranceNumberId?: string | null;
+            salaryPaymentMode?: PaymentMode | null;
+            account?: string | null;
+            bank?: string | null;
+            accountName?: string | null;
+            accountNumber?: string | null;
+            pf?: boolean | null;
+            ssf?: boolean | null;
+            cit?: boolean | null;
+            providentNumber?: string | null;
+            nominee?: string | null;
+            relationWithNominee?: string | null;
+            ssfNumber?: string | null;
+            citNumber?: string | null;
+            citCode?: string | null;
+            noCitDeduction?: boolean | null;
+            supervisor?: string | null;
             educationDetails?: Array<{
               instituteName?: string | null;
               degree_diploma?: string | null;
-              specialization?: string | null;
+              durationInYrs?: number | null;
               dateOfCompletion?: Record<'local' | 'en' | 'np', string> | null;
+              grade?: GradeLevels | null;
             } | null> | null;
             permanentAddress?: {
               provinceId?: number | null;
@@ -32509,11 +32665,50 @@ export type GetSingleEmployeeDetailsQuery = {
               houseNo?: string | null;
               coordinates?: { longitude?: number | null; latitude?: number | null } | null;
             } | null;
+            familyDetails?: Array<{
+              fullName?: string | null;
+              relation?: string | null;
+              occupation?: string | null;
+            } | null> | null;
+            citizenship?: {
+              id?: string | null;
+              placeOfIssue?: string | null;
+              issuedDate?: Record<'local' | 'en' | 'np', string> | null;
+            } | null;
+            drivingLicense?: {
+              id?: string | null;
+              placeOfIssue?: string | null;
+              issuedDate?: Record<'local' | 'en' | 'np', string> | null;
+            } | null;
             workExperience?: Array<{
               companyName?: string | null;
               designation?: string | null;
-              salary?: number | null;
+              durationInYrs?: number | null;
               address?: string | null;
+            } | null> | null;
+            trainingDetails?: Array<{
+              trainingName?: string | null;
+              duration?: string | null;
+              subject?: string | null;
+              organizer?: string | null;
+            } | null> | null;
+            researchAndPublications?: Array<{
+              name?: string | null;
+              publishedDate?: Record<'local' | 'en' | 'np', string> | null;
+              language?: string | null;
+              curriculum?: string | null;
+            } | null> | null;
+            awardsCashAndCertificates?: Array<{
+              description?: string | null;
+              receivedDate?: Record<'local' | 'en' | 'np', string> | null;
+              cashOrPrizeName?: string | null;
+              organization?: string | null;
+              verifiedBy?: string | null;
+            } | null> | null;
+            internationalTour?: Array<{
+              tourCountry?: string | null;
+              objective?: string | null;
+              duration?: string | null;
             } | null> | null;
             documents?: Array<{
               fieldId?: string | null;
@@ -33593,8 +33788,9 @@ export type GetJobApplicationQuery = {
             educationalDetails?: Array<{
               instituteName?: string | null;
               degree_diploma?: string | null;
-              specialization?: string | null;
+              durationInYrs?: number | null;
               dateOfCompletion?: Record<'local' | 'en' | 'np', string> | null;
+              grade?: GradeLevels | null;
             } | null> | null;
             experienceDetails?: Array<{
               occupationName?: string | null;
@@ -33720,8 +33916,9 @@ export type GetJobApplicationOverviewQuery = {
             educationalDetails?: Array<{
               instituteName?: string | null;
               degree_diploma?: string | null;
-              specialization?: string | null;
+              durationInYrs?: number | null;
               dateOfCompletion?: Record<'local' | 'en' | 'np', string> | null;
+              grade?: GradeLevels | null;
             } | null> | null;
           } | null;
           error?:
@@ -40439,10 +40636,39 @@ export type GetAdjustedLedgerReportQuery = {
             branchId: string;
             branchName: string;
             ledgerId: string;
+            ledgerName: string;
             dr?: string | null;
             cr?: string | null;
             balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
             adjustedBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          } | null> | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetLedgerBalanceReportQueryVariables = Exact<{
+  data: LedgerBalanceReportInput;
+}>;
+
+export type GetLedgerBalanceReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        ledgerBalanceReport: {
+          data?: Array<{
+            branchId: string;
+            branchName: string;
+            ledgerId: string;
+            ledgerName: string;
+            dr?: string | null;
+            cr?: string | null;
+            adjustedDr?: string | null;
+            adjustedCr?: string | null;
+            openingBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+            settledBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
           } | null> | null;
         };
       };
@@ -58511,16 +58737,18 @@ export const GetSingleEmployeeDetailsDocument = `
             age
             gender
             maritalStatus
+            ethnicity
+            Handicapped
             bloodGroup
             workPhoneNumber
             workEmailAddress
             personalPhoneNumber
-            personalEmailAddress
             educationDetails {
               instituteName
               degree_diploma
-              specialization
+              durationInYrs
               dateOfCompletion
+              grade
             }
             permanentAddress {
               provinceId
@@ -58547,6 +58775,23 @@ export const GetSingleEmployeeDetailsDocument = `
                 latitude
               }
             }
+            familyDetails {
+              fullName
+              relation
+              occupation
+            }
+            citizenshipGiven
+            drivingLicenseGiven
+            citizenship {
+              id
+              placeOfIssue
+              issuedDate
+            }
+            drivingLicense {
+              id
+              placeOfIssue
+              issuedDate
+            }
             employeeLevelId
             departmentId
             designationId
@@ -58554,25 +58799,62 @@ export const GetSingleEmployeeDetailsDocument = `
             employmentType
             employeeStatus
             sourceOfHire
+            employeeClass
+            referralBy
             workExperience {
               companyName
               designation
-              salary
+              durationInYrs
               address
             }
-            salaryPaymentMode
+            trainingDetailsGiven
+            researchAndPublicationsGiven
+            awardsCashCertificatesGiven
+            internationalTourGiven
+            joiningDate
+            trainingDetails {
+              trainingName
+              duration
+              subject
+              organizer
+            }
+            researchAndPublications {
+              name
+              publishedDate
+              language
+              curriculum
+            }
+            awardsCashAndCertificates {
+              description
+              receivedDate
+              cashOrPrizeName
+              organization
+              verifiedBy
+            }
+            internationalTour {
+              tourCountry
+              objective
+              duration
+            }
+            payGroup
             panNumber
-            providentFundAccount
             salaryStructureId
-            jobApplicationId
-            jobOffer
-            appointmentLetter
-            dateOfJoining
-            reportsToId
-            leaveApproverId
-            expenseApproverId
-            healthInsuranceProviderId
-            healthInsuranceNumberId
+            salaryPaymentMode
+            account
+            bank
+            accountName
+            accountNumber
+            pf
+            ssf
+            cit
+            providentNumber
+            nominee
+            relationWithNominee
+            ssfNumber
+            citNumber
+            citCode
+            noCitDeduction
+            supervisor
             documents {
               fieldId
               identifiers: docData {
@@ -59994,8 +60276,9 @@ export const GetJobApplicationDocument = `
             educationalDetails {
               instituteName
               degree_diploma
-              specialization
+              durationInYrs
               dateOfCompletion
+              grade
             }
             experienceDetails {
               occupationName
@@ -60144,8 +60427,9 @@ export const GetJobApplicationOverviewDocument = `
             educationalDetails {
               instituteName
               degree_diploma
-              specialization
+              durationInYrs
               dateOfCompletion
+              grade
             }
           }
           error {
@@ -68838,6 +69122,7 @@ export const GetAdjustedLedgerReportDocument = `
             branchId
             branchName
             ledgerId
+            ledgerName
             balance {
               amount
               amountType
@@ -68866,6 +69151,54 @@ export const useGetAdjustedLedgerReportQuery = <
     ['getAdjustedLedgerReport', variables],
     useAxios<GetAdjustedLedgerReportQuery, GetAdjustedLedgerReportQueryVariables>(
       GetAdjustedLedgerReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLedgerBalanceReportDocument = `
+    query getLedgerBalanceReport($data: LedgerBalanceReportInput!) {
+  report {
+    transactionReport {
+      financial {
+        ledgerBalanceReport(data: $data) {
+          data {
+            branchId
+            branchName
+            ledgerId
+            ledgerName
+            openingBalance {
+              amount
+              amountType
+            }
+            dr
+            cr
+            adjustedDr
+            adjustedCr
+            balance {
+              amount
+              amountType
+            }
+            settledBalance {
+              amount
+              amountType
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLedgerBalanceReportQuery = <
+  TData = GetLedgerBalanceReportQuery,
+  TError = unknown
+>(
+  variables: GetLedgerBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetLedgerBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetLedgerBalanceReportQuery, TError, TData>(
+    ['getLedgerBalanceReport', variables],
+    useAxios<GetLedgerBalanceReportQuery, GetLedgerBalanceReportQueryVariables>(
+      GetLedgerBalanceReportDocument
     ).bind(null, variables),
     options
   );

@@ -34,17 +34,17 @@ export const CBS: NavType = {
       reportPages: [
         {
           label: 'memberLayoutMemberClassification',
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_MEMBER_MEMBER_CLASSIFICATION',
           route: ROUTES.CBS_REPORTS_MEMBER_CLASSIFICATION,
         },
         {
           label: 'memberLayoutActiveInactiveMemberReport',
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_MEMBER_ACTIVE_INACTIVE',
           route: ROUTES.CBS_REPORTS_MEMBER_ACTIVE_INACTIVE,
         },
         {
           label: 'memberLayoutKymStatusReport',
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_MEMBER_KYM_STATUS',
           route: ROUTES.CBS_REPORTS_KYM_STATUS,
         },
       ],
@@ -89,17 +89,17 @@ export const CBS: NavType = {
       reportPages: [
         {
           label: 'shareLayoutRegisterReport',
-          aclKey: 'CBS_REPORTS',
           route: ROUTES.CBS_REPORTS_SHARE_REGISTER,
+          aclKey: 'REPORTS_SHARE_SHARE_REGISTER',
         },
         {
           label: 'shareLayoutStateReport',
-          aclKey: 'CBS_REPORTS',
           route: ROUTES.CBS_REPORTS_SHARE_STATEMENT,
+          aclKey: 'REPORTS_SHARE_SHARE_STATEMENT',
         },
         {
           label: 'shareLayoutTransactionReport',
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_SHARE_SHARE_TRANSACTION',
           route: ROUTES.CBS_REPORTS_SHARE_TRANSACTION,
         },
       ],
@@ -172,17 +172,17 @@ export const CBS: NavType = {
       reportPages: [
         {
           label: 'savingsDepositStatementReport',
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_SAVINGS_SAVING_ACCOUNT_STATEMENT',
           route: ROUTES.CBS_REPORTS_SAVING_STATEMENT,
         },
         {
           label: 'savingsIntrestTaxReport',
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_SAVINGS_INTEREST_TAX',
           route: ROUTES.CBS_REPORTS_INTEREST_TAX_REPORT,
         },
         {
           label: 'savingsIntrestStatement',
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_SAVINGS_INTEREST_REPORT',
           route: ROUTES.CBS_REPORTS_INTEREST_STATEMENT,
         },
       ],
@@ -276,12 +276,12 @@ export const CBS: NavType = {
         {
           label: 'Loan Account Statement Report',
           route: ROUTES.CBS_REPORTS_LOAN_ACCOUNT_STATEMENT_REPORT,
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_LOAN_LOAN_ACCOUNT_STATEMENT',
         },
         {
           label: 'loanLayoutAgeingReport',
           route: ROUTES.CBS_REPORTS_LOAN_AGEING_REPORT,
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_LOAN_LOAN_AGING',
         },
       ],
     },
@@ -395,17 +395,17 @@ export const CBS: NavType = {
         {
           label: 'transactionLayoutBalanceSheet',
           route: ROUTES.CBS_REPORTS_TRANS_TRIAL_SHEET,
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_TXN_TRIAL_BALANCE',
         },
         {
           label: 'transactionLayoutCashFlowStament',
           route: ROUTES.CBS_REPORTS_TRANS_CASH_LEDGER,
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_TXN_CASH_LEDGER',
         },
         {
           label: 'transactionLayoutBankGLStatement',
           route: ROUTES.CBS_REPORTS_TRANS_BANK_GL_STATEMENT,
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_TXN_BANK_GL_BALANCE',
         },
       ],
     },
@@ -476,22 +476,22 @@ export const CBS: NavType = {
         {
           label: 'transferVaultBalanceReport',
           route: ROUTES.CBS_REPORTS_VAULT_BALANCE,
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_TXN_VAULT_BALANCE',
         },
         {
           label: 'transferTellerReport',
           route: ROUTES.CBS_REPORTS_TELLER_REPORT,
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_TXN_TELLER_REPORT',
         },
         {
           label: 'Cash Ledger Report',
           route: ROUTES.CBS_REPORTS_TRANS_CASH_LEDGER,
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_TXN_CASH_LEDGER',
         },
         {
           label: 'Day Book Report',
           route: ROUTES.CBS_REPORTS_DAY_BOOK_REPORT,
-          aclKey: 'CBS_REPORTS',
+          aclKey: 'REPORTS_TXN_DAYBOOK',
         },
       ],
     },

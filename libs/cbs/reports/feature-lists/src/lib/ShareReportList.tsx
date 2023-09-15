@@ -9,7 +9,14 @@ import { PopoverComponent } from '@coop/myra/components';
 
 import { REPORTS } from '../constants/REPORTS';
 
-export const ShareReportList = () => {
+const moduleObj = {
+  CBS: 'cbs-reports',
+  ACCOUNTING: 'accounting-reports',
+};
+type ModulesType = {
+  module: keyof typeof moduleObj;
+};
+export const ShareReportList = ({ module }: ModulesType) => {
   const router = useRouter();
   const listName = router.query['report-group'] as keyof typeof REPORTS;
   return (
@@ -23,7 +30,9 @@ export const ShareReportList = () => {
             key={report.id}
             link={
               'link' in report
-                ? `/cbs/reports/cbs-reports/${listName}/${report.link}/new`
+                ? `/${module?.toLocaleLowerCase()}/reports/${moduleObj[module]}/${listName}/${
+                    report.link
+                  }/new`
                 : undefined
             }
           >
