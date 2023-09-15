@@ -3724,7 +3724,8 @@ export type CertificatePrintReportResult = {
 
 export type CharKhataReportFilter = {
   branchId: Array<InputMaybe<Scalars['String']>>;
-  coaHead: Array<Scalars['String']>;
+  coaHead?: InputMaybe<Array<Scalars['String']>>;
+  coaType?: InputMaybe<Array<CoaAccountClass>>;
   filter?: InputMaybe<TrialSheetFilter>;
   period: LocalizedDateFilter;
 };
@@ -9222,9 +9223,32 @@ export type HcmPayrollEarningComponentQueryListEarningComponentArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type HcmPayrollGeneralMutation = {
+  updatePayrollGeneralSettingsDisableRoundedTotal: UpdatedOrNot;
+  updatePayrollGeneralSettingsEmailSalarySlipToEmployee: UpdatedOrNot;
+  updatePayrollGeneralSettingsIncludeHolidays: UpdatedOrNot;
+};
+
+export type HcmPayrollGeneralMutationUpdatePayrollGeneralSettingsDisableRoundedTotalArgs = {
+  input?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type HcmPayrollGeneralMutationUpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeArgs = {
+  input?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type HcmPayrollGeneralMutationUpdatePayrollGeneralSettingsIncludeHolidaysArgs = {
+  input?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type HcmPayrollGeneralQuery = {
+  getPayrollGeneral: PayrollGeneralSettingsWithError;
+};
+
 export type HcmPayrollMutation = {
   deductionComponent: HcmPayrollDeductionComponentMutation;
   earningComponent: HcmPayrollEarningComponentMutation;
+  general: HcmPayrollGeneralMutation;
   salaryStructure: HcmPayrollSalaryStructureMutation;
   taxSlab: HcmPayrollTaxSlabMutation;
 };
@@ -9232,6 +9256,7 @@ export type HcmPayrollMutation = {
 export type HcmPayrollQuery = {
   deductionComponent: HcmPayrollDeductionComponentQuery;
   earningComponent: HcmPayrollEarningComponentQuery;
+  general: HcmPayrollGeneralQuery;
   salaryStructure: HcmPayrollSalaryStructureQuery;
   taxSlab: HcmPayrollTaxSlabQuery;
 };
@@ -18295,6 +18320,17 @@ export const PayrollFrequencyEnum = {
 } as const;
 
 export type PayrollFrequencyEnum = typeof PayrollFrequencyEnum[keyof typeof PayrollFrequencyEnum];
+export type PayrollGeneralSettings = {
+  disableRoundedTotal?: Maybe<Scalars['Boolean']>;
+  emailSalarySlipToEmployee?: Maybe<Scalars['Boolean']>;
+  includeHolidaysInTotalNumberOfWorkingDays?: Maybe<Scalars['Boolean']>;
+};
+
+export type PayrollGeneralSettingsWithError = {
+  data?: Maybe<PayrollGeneralSettings>;
+  error?: Maybe<QueryError>;
+};
+
 export type PayrollRunConnection = {
   edges?: Maybe<Array<Maybe<PayrollRuns>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -22622,6 +22658,11 @@ export type UpdateLedgerResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type UpdatedOrNot = {
+  error?: Maybe<MutationError>;
+  isUpdated?: Maybe<Scalars['Boolean']>;
+};
+
 export type UpdatedOrNotWithError = {
   error?: Maybe<MutationError>;
   updatedOrNot?: Maybe<Scalars['Boolean']>;
@@ -22858,11 +22899,9 @@ export type UtilityLedgerSetupInputResult = {
 
 export const UtilityLedgerType = {
   CashBack: 'CASH_BACK',
-  ExpenseToNeosys: 'EXPENSE_TO_NEOSYS',
-  IncomeFromNeosys: 'INCOME_FROM_NEOSYS',
-  IncomeFromNeosysSuspense: 'INCOME_FROM_NEOSYS_SUSPENSE',
   ServiceCharge: 'SERVICE_CHARGE',
-  Utility: 'UTILITY',
+  UtilityLimit: 'UTILITY_LIMIT',
+  UtilityLimitContra: 'UTILITY_LIMIT_CONTRA',
 } as const;
 
 export type UtilityLedgerType = typeof UtilityLedgerType[keyof typeof UtilityLedgerType];
