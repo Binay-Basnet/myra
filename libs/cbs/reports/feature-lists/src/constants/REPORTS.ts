@@ -162,6 +162,7 @@ export enum Report {
   OTHERS_ORGANIZATIONAL_PROFILE = 'Organizational Profile Report',
   OTHERS_SHARE_CERTIFICATE_PRINT_REPORT = 'Share Certificate Report',
   OTHERS_FD_CERTIFICATE_PRINT_REPORT = 'FD-Certificate Report',
+  OTHERS_LEDGER_BALANCE_REPORT = 'Ledger Balance Report',
 
   INVENTORY_REGISTER_REPORT = 'Inventory Register Report',
   INVENTORY_SALES_REPORT = 'Inventory Item Sales Report',
@@ -752,6 +753,7 @@ export const REPORTS = {
     { id: '14', report: Report.OTHERS_ORGANIZATIONAL_PROFILE, link: 'organizational-profile' },
     { id: '15', report: Report.OTHERS_SHARE_CERTIFICATE_PRINT_REPORT, link: 'share-issue-print' },
     { id: '15', report: Report.OTHERS_FD_CERTIFICATE_PRINT_REPORT, link: 'fd-print' },
+    { id: '15', report: Report.OTHERS_LEDGER_BALANCE_REPORT, link: 'ledger-balance' },
   ],
   [ReportGroup.EXCEPTION]: [
     {

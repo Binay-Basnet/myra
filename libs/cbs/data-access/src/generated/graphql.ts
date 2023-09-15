@@ -40607,6 +40607,34 @@ export type GetAdjustedLedgerReportQuery = {
   };
 };
 
+export type GetLedgerBalanceReportQueryVariables = Exact<{
+  data: LedgerBalanceReportInput;
+}>;
+
+export type GetLedgerBalanceReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        ledgerBalanceReport: {
+          data?: Array<{
+            branchId: string;
+            branchName: string;
+            ledgerId: string;
+            ledgerName: string;
+            dr?: string | null;
+            cr?: string | null;
+            adjustedDr?: string | null;
+            adjustedCr?: string | null;
+            openingBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+            settledBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          } | null> | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetChequeBookRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
@@ -69082,6 +69110,54 @@ export const useGetAdjustedLedgerReportQuery = <
     ['getAdjustedLedgerReport', variables],
     useAxios<GetAdjustedLedgerReportQuery, GetAdjustedLedgerReportQueryVariables>(
       GetAdjustedLedgerReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLedgerBalanceReportDocument = `
+    query getLedgerBalanceReport($data: LedgerBalanceReportInput!) {
+  report {
+    transactionReport {
+      financial {
+        ledgerBalanceReport(data: $data) {
+          data {
+            branchId
+            branchName
+            ledgerId
+            ledgerName
+            openingBalance {
+              amount
+              amountType
+            }
+            dr
+            cr
+            adjustedDr
+            adjustedCr
+            balance {
+              amount
+              amountType
+            }
+            settledBalance {
+              amount
+              amountType
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLedgerBalanceReportQuery = <
+  TData = GetLedgerBalanceReportQuery,
+  TError = unknown
+>(
+  variables: GetLedgerBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetLedgerBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetLedgerBalanceReportQuery, TError, TData>(
+    ['getLedgerBalanceReport', variables],
+    useAxios<GetLedgerBalanceReportQuery, GetLedgerBalanceReportQueryVariables>(
+      GetLedgerBalanceReportDocument
     ).bind(null, variables),
     options
   );
