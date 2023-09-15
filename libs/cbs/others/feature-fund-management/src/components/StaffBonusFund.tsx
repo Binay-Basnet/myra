@@ -3,35 +3,17 @@ import { useRouter } from 'next/router';
 
 import { FormSection, GridItem, Text } from '@myra-ui';
 
-import {
-  useGetCurrentFundAmountQuery,
-  useGetFundManagementFormStateQuery,
-} from '@coop/cbs/data-access';
 import { FormAmountInput, FormLeafCoaHeadSelect, FormNumberInput } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
+import { useFundManagement } from '../hooks';
+
 export const StaffBonusFund = () => {
+  const { currentFundAmount } = useFundManagement({});
+
   const router = useRouter();
 
   const { setValue, watch } = useFormContext();
-
-  const id = router?.query?.['id'];
-
-  const { data: editData } = useGetFundManagementFormStateQuery(
-    { id: id as string },
-    { enabled: !!id }
-  );
-
-  const formData = editData?.profitToFundManagement?.get?.record;
-
-  const { data: currentFundAmountHOData } = useGetCurrentFundAmountQuery({ forHeadOffice: true });
-
-  const currentFundAmount =
-    formData?.state === 'COMPLETED'
-      ? Number(formData?.grossProfit || 0)
-      : Number(
-          currentFundAmountHOData?.profitToFundManagement?.getCurrentFundAmount?.amount?.amount || 0
-        );
 
   const staffBonusFundAmount = Number(watch('staffBonus.amount') || 0);
 
@@ -66,7 +48,7 @@ export const StaffBonusFund = () => {
         onChangeAction={(newVal) => {
           setValue(
             'staffBonus.percent',
-            ((Number(newVal || 0) / currentFundAmount) * 100).toFixed(2)
+            ((Number(newVal || 0) / currentFundAmount) * 100).toFixed(4)
           );
         }}
         isDisabled={router?.asPath?.includes('/view')}
