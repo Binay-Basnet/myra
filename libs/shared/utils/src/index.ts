@@ -28,3 +28,4 @@ export * from './utilFunctions/getSchemaPath';
 export * from './utilFunctions/getUrl';
 export * from './utilFunctions/isDeepEmpty';
 export * from './utilFunctions/quantityConverter';
+export * from './utilFunctions/truncateDecimal';

@@ -9,7 +9,6 @@ import {
   Scalars,
   TrialSheetReportFilter,
   useAppSelector,
-  useGetBranchListQuery,
   useGetTrialSheetReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
@@ -390,21 +389,16 @@ export const CoaTotalTable = ({ total }: ICoaTotalTableProps) => {
   const { getValues } = useFormContext<TrialSheetReportFilters>();
   const branchIDs = getValues()?.branchId?.map((a) => a.value);
 
-  const { data: branchListQueryData } = useGetBranchListQuery({
-    paginate: {
-      after: '',
-      first: -1,
-    },
-  });
+  const auth = useAppSelector((state) => state?.auth);
 
-  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
+  const branchList = auth?.availableBranches;
+
   const headers =
     branchIDs?.length === branchList?.length
       ? ['Total']
       : [
-          ...((branchList
-            ?.filter((a) => branchIDs?.includes(a?.node?.id || ''))
-            ?.map((a) => a.node?.id) || []) as string[]),
+          ...((branchList?.filter((a) => branchIDs?.includes(a?.id || ''))?.map((a) => a?.id) ||
+            []) as string[]),
           branchIDs?.length === 1 ? undefined : 'Total',
         ]?.filter(Boolean);
 
@@ -433,7 +427,7 @@ export const CoaTotalTable = ({ total }: ICoaTotalTableProps) => {
     ...headers.map(
       (header) =>
         ({
-          header: branchList?.find((b) => b?.node?.id === header)?.node?.name || 'Total',
+          header: branchList?.find((b) => b?.id === header)?.name || 'Total',
           columns: [
             {
               header: 'Debit (Dr.)',

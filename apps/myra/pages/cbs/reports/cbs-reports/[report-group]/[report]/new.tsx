@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { MainLayout, Scrollable } from '@myra-ui';
 
 import { REPORTS } from '@coop/cbs/reports/list';
+import { Can } from '@coop/cbs/utils';
 
 const NewShareBalanceReport = () => {
   const router = useRouter();
@@ -12,7 +13,11 @@ const NewShareBalanceReport = () => {
 
   const report = REPORTS?.[reportGroup]?.find((d) => d?.link === reportLink);
 
-  return 'component' in report ? report.component : 'sammer noob';
+  return (
+    <Can I="VIEW" a={report.acl} isErrorCentered showError>
+      {'component' in report ? report.component : 'sammer noob'}
+    </Can>
+  );
 };
 
 export default NewShareBalanceReport;

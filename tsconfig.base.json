@@ -224,7 +224,8 @@
       "@myra-ui/table": ["libs/@myra/table/src/index.ts"],
       "@myra-ui/templates": ["libs/@myra/templates/src/index.ts"],
       "@myra-ui/theme": ["libs/@myra/theme/src/index.ts"],
-      "@myra/dump": ["libs/@myra/dump/src/index.ts"]
+      "@myra/dump": ["libs/@myra/dump/src/index.ts"],
+      "@neosys/feature-analytics": ["libs/neosys/feature-analytics/src/index.ts"]
     },
     "jsx": "react"
   },

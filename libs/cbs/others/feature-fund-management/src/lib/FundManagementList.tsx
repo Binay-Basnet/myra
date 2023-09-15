@@ -82,6 +82,12 @@ export const FundManagementList = () => {
                     ]
                   : [
                       {
+                        title: 'Edit',
+                        onClick: (row) => {
+                          router.push(`${ROUTES.CBS_OTHERS_FUND_MANAGEMENT_EDIT}?id=${row?.id}`);
+                        },
+                      },
+                      {
                         title: 'View Detail',
                         onClick: (row) => {
                           router.push(`${ROUTES.CBS_OTHERS_FUND_MANAGEMENT_VIEW}?id=${row?.id}`);

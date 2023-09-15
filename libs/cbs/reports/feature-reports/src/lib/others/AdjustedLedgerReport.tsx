@@ -101,7 +101,7 @@ export const AdjustedLedgersReport = () => {
                       )
                     }
                   >
-                    {props.row.original.ledgerId}
+                    {props?.row?.original?.ledgerName}
                   </Button>
                 ),
               },

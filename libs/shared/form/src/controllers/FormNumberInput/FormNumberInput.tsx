@@ -4,7 +4,7 @@ import { UseControllerProps } from 'react-hook-form/dist/types/controller';
 import { Input, InputProps } from '@myra-ui';
 
 interface IFormNumberInputProps<T> extends InputProps {
-  name: Path<T>;
+  name: string;
   control?: Control<T>;
   rules?: UseControllerProps['rules'];
   onChangeAction?: (val: string) => void;
@@ -24,14 +24,14 @@ export const FormNumberInput = <T,>({
 
   return (
     <Controller
-      name={name}
+      name={name as Path<T>}
       rules={rest.rules}
       control={control}
       render={({ field: { onChange, value, ...fieldProps } }) => (
         <Input
           id={name}
           textAlign="right"
-          errorText={errors[name]?.message as string}
+          errorText={(errors as Record<string, any>)[name]?.message as string}
           type="number"
           value={value as number}
           onChange={(e) => {

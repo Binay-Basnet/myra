@@ -51,6 +51,7 @@ export * from './lib/others/AdjustedLedgerReport';
 export * from './lib/others/BODDetailsRegisterReport';
 export * from './lib/others/CopomisImportMemberReport';
 export * from './lib/others/FDCertificatePrintReport';
+export * from './lib/others/LedgerBalanceReport';
 export * from './lib/others/OrganizationalProfileReport';
 export * from './lib/others/PearlsReport';
 export * from './lib/others/SavingsBalanceReport';

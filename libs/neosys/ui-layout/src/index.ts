@@ -1,4 +1,5 @@
 export * from './containers';
+export * from './lib/AnalyticsSidebar';
 export * from './lib/ClientDetailLayout';
 export * from './lib/ClientsSiderbar';
 export * from './lib/GlobalAppSettingsLayout';

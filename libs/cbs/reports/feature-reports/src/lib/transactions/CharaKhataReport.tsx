@@ -24,6 +24,7 @@ type TrialSheetReportFilters = Omit<CharKhataReportFilter, 'filter' | 'branchId'
   coaHead: { label: string; value: CoaHead }[];
   filter: {
     includeZero: 'include' | 'exclude';
+    includeParent: 'yes' | 'no';
   };
   coaType: { label: string; value: string }[];
 };
@@ -73,6 +74,7 @@ export const CharKhataReport = () => {
         coaHead: coaHeads,
         filter: {
           includeZero: filters?.filter?.includeZero === 'include',
+          includeParent: filters?.filter?.includeParent === 'no',
         },
       },
     },
@@ -123,6 +125,7 @@ export const CharKhataReport = () => {
       defaultFilters={{
         filter: {
           includeZero: 'include',
+          includeParent: 'no',
         },
       }}
       data={dataCheck as TrialSheetReportDataEntry[]}
@@ -262,6 +265,16 @@ export const CharKhataReport = () => {
               options={[
                 { label: 'Include', value: 'include' },
                 { label: 'Exclude', value: 'exclude' },
+              ]}
+              direction="column"
+            />
+          </Report.Filter>
+          <Report.Filter title="Show COA Head Only">
+            <FormRadioGroup
+              name="filter.includeParent"
+              options={[
+                { label: 'Yes', value: 'yes' },
+                { label: 'No', value: 'no' },
               ]}
               direction="column"
             />

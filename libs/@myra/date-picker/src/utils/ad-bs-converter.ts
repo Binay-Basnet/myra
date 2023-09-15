@@ -66,7 +66,7 @@ export const ad2bs = (years: number, months: number, date: number) => {
   const cumulativeData = cache.getCumulativeTotal();
 
   if (!cumulativeData) {
-    throw new Error("The date doesn't fall within 1975/01/01 - 2092/12/30");
+    throw new Error("The date doesn't fall within 1970/01/01 - 2099/12/30");
   }
 
   const values = Object.values(cumulativeData);
@@ -102,13 +102,19 @@ export const bs2ad = (year: number, month: number, day: number) => {
   const cumulativeData = cache.getCumulativeTotal();
 
   if (!cumulativeData) {
-    throw new Error("The date doesn't fall within 1975/01/01 - 2092/12/30");
+    throw new Error("The date doesn't fall within 1970/01/01 - 2099/12/30");
   }
 
   let prevMonthCumulativeTotal = 0;
   const prevYearCumulativeTotal = cumulativeData[+year - 1] || 0;
 
   for (let i = 0; i < +month - 1; i += 1) {
+    const currentTotal = BS_YEAR_MONTH_DAYS[+year as EachBSYear]?.[i];
+
+    if (!currentTotal) {
+      throw new Error("The date doesn't fall within 1970/01/01 - 2099/12/30");
+    }
+
     prevMonthCumulativeTotal += BS_YEAR_MONTH_DAYS[+year as EachBSYear][i];
   }
 
@@ -139,7 +145,7 @@ export const getStartingDayOfBsMonth = (year: number, month: number) => {
   const cumulativeData = cache.getCumulativeTotal();
 
   if (!cumulativeData) {
-    throw new Error("The date doesn't fall within 1975/01/01 - 2092/12/30");
+    throw new Error("The date doesn't fall within 1970/01/01 - 2099/12/30");
   }
 
   const prevYearTotal = cumulativeData[year - 1] || 0;
