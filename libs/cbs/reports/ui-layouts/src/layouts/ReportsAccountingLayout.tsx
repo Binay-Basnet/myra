@@ -40,11 +40,13 @@ export const ReportsAccountingLayout = ({ children }: ReportsCbsLayoutProps) => 
               tabs={[
                 {
                   title: 'Transaction Report',
-                  to: '/accounting/reports/transactions',
+                  to: '/accounting/reports/accounting-reports/transactions',
+                  acl: 'ACCOUNTING_PURCHASE',
                 },
                 {
                   title: 'Inventory Report',
-                  to: '/accounting/reports/inventory',
+                  to: '/accounting/reports/accounting-reports/inventory',
+                  acl: 'ACCOUNTING_PURCHASE',
                 },
               ]}
             />

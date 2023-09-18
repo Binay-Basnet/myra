@@ -82,12 +82,14 @@ export const CashLedgersReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/transactions'
+                : '/accounting/reports/transactions',
             },
             {
               label: 'Cash Ledger',
               link: isCbs
-                ? '/reports/cbs/transactions/cash-ledger/new'
+                ? '/cbs/reports/cbs-reports/transactions/cash-ledger/new'
                 : '/accounting/reports/transactions/cash-ledger/new',
             },
           ]}

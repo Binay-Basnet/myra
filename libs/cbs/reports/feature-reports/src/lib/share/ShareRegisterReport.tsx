@@ -55,8 +55,8 @@ export const ShareRegisterReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Share Reports', link: '/reports/cbs/share' },
-            { label: 'Share Register', link: '/reports/cbs/share/register/new' },
+            { label: 'Share Reports', link: '/cbs/reports/cbs-reports/share' },
+            { label: 'Share Register', link: '/cbs/reports/cbs-reports/share/register/new' },
           ]}
         />
         <Report.Inputs>

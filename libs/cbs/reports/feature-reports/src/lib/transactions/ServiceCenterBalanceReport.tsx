@@ -50,11 +50,11 @@ export const ServviceCenterBalanceReport = () => {
           paths={[
             {
               label: 'Service Center Reports',
-              link: '/reports/cbs/service-center',
+              link: '/cbs/reports/cbs-reports/service-center',
             },
             {
               label: 'Service Center Wise Cash Bank Balance Report',
-              link: '/reports/cbs/service-center/service-center-balance/new',
+              link: '/cbs/reports/cbs-reports/service-center/service-center-balance/new',
             },
           ]}
         />

@@ -101,8 +101,11 @@ export const MemberTransferReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Member Reports', link: '/reports/cbs/members' },
-            { label: 'Member Transfer Report', link: '/reports/cbs/members/transfer/new' },
+            { label: 'Member Reports', link: '/cbs/reports/cbs-reports/members' },
+            {
+              label: 'Member Transfer Report',
+              link: '/cbs/reports/cbs-reports/members/transfer/new',
+            },
           ]}
         />
 

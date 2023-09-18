@@ -80,10 +80,10 @@ export const SavingProductBalanceReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Saving Reports', link: '/reports/cbs/savings' },
+            { label: 'Saving Reports', link: '/cbs/reports/cbs-reports/savings' },
             {
               label: 'Saving Product Balance Report',
-              link: '/reports/cbs/savings/saving-product-balance/new',
+              link: '/cbs/reports/cbs-reports/savings/saving-product-balance/new',
             },
           ]}
         />

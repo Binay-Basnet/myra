@@ -53,10 +53,10 @@ export const FDCertificatePrintReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Others Reports', link: '/reports/cbs/others' },
+            { label: 'Others Reports', link: '/cbs/reports/cbs-reports/others' },
             {
               label: 'FD-Certificate Report',
-              link: '/reports/cbs/others/fd-print/new',
+              link: '/cbs/reports/cbs-reports/others/fd-print/new',
             },
           ]}
         />

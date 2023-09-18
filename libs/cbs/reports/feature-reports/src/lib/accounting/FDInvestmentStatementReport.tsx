@@ -54,10 +54,10 @@ export const FDInvestmentStatementReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Accounting Reports', link: '/reports/cbs/accounting' },
+            { label: 'Accounting Reports', link: '/cbs/reports/cbs-reports/accounting' },
             {
               label: ReportEnum.ACCOUNTING_FD_INVESTMENT_STATEMENT_REPORT,
-              link: '/reports/cbs/accounting/fd-investment-statement/new',
+              link: '/cbs/reports/cbs-reports/accounting/fd-investment-statement/new',
             },
           ]}
         />

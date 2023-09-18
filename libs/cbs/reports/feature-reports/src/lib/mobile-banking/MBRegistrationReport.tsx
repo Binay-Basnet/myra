@@ -36,10 +36,10 @@ export const MBRegistrationReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Mobile Banking Reports', link: '/reports/cbs/mobile-banking' },
+            { label: 'Mobile Banking Reports', link: '/cbs/reports/cbs-reports/mobile-banking' },
             {
               label: 'Mobile Banking Registration Report',
-              link: '/reports/cbs/mobile-banking/registration/new',
+              link: '/cbs/reports/cbs-reports/mobile-banking/registration/new',
             },
           ]}
         />
