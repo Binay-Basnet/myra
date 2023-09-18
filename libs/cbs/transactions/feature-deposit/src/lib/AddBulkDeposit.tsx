@@ -65,7 +65,7 @@ export const AddBulkDeposit = () => {
   const methods = useForm<CustomBulkDepositInput>({
     defaultValues: {
       payment_type: DepositPaymentType.Cash,
-      cash: { disableDenomination: false },
+      cash: { disableDenomination: true },
       depositedBy: DepositedBy.Self,
     },
   });
@@ -166,6 +166,27 @@ export const AddBulkDeposit = () => {
   );
   const returnAmount = Number(totalCashPaid) - Number(totalDep || 0);
 
+  const bankSelected = watch('bankVoucher.bankId');
+  const bankVoucherDateSelected = watch('bankVoucher.depositedAt');
+
+  const disableSubmitButtonFxn = (paymentMode: DepositPaymentType) => {
+    if (paymentMode === DepositPaymentType.Cash && !disableDenomination) {
+      return (
+        !(Number(returnAmount) >= 0) ||
+        !(Number(cashPaid) >= Number(totalDep || 0) + Number(totalFine || 0))
+      );
+    }
+    if (
+      (paymentMode === DepositPaymentType.BankVoucher && bankSelected === undefined) ||
+      (paymentMode === DepositPaymentType.BankVoucher && bankVoucherDateSelected === undefined)
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+  const paymentModes = watch('payment_type');
+
   return (
     <>
       <Container minW="container.xl" height="fit-content">
@@ -250,6 +271,7 @@ export const AddBulkDeposit = () => {
               }
               mainButtonLabel={mode === 0 ? 'Proceed Transaction' : 'Submit'}
               mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
+              isMainButtonDisabled={disableSubmitButtonFxn(paymentModes) && mode === 1}
             />
           </Container>
         </Box>

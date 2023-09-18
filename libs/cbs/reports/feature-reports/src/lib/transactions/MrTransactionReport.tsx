@@ -10,9 +10,10 @@ import {
   useGetMrTransactionReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
+import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { RouteToDetailsPage } from '@coop/cbs/utils';
-import { FormDatePicker, FormRadioGroup, FormSelect } from '@coop/shared/form';
+import { FormRadioGroup, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type MRReportFilters = Omit<MrTransactionReportFilter, 'userId'> & {
@@ -52,10 +53,6 @@ export const MarketRepresentativeTransactionReport = () => {
       data: {
         ...filters,
         userId: userIds,
-        period: {
-          from: filters?.period?.from,
-          to: filters?.period?.from,
-        },
       } as MrTransactionReportFilter,
     },
     { enabled: !!filters }
@@ -95,7 +92,7 @@ export const MarketRepresentativeTransactionReport = () => {
             />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Select Date" />
+            <ReportDateRange />
           </GridItem>{' '}
         </Report.Inputs>
       </Report.Header>
