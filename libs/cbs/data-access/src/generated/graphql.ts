@@ -3179,7 +3179,7 @@ export type CbsCodeManagementList = {
 };
 
 export type CbsCodeManagementListData = {
-  share?: Maybe<Array<Maybe<CbsCodeManagement>>>;
+  certificates?: Maybe<Array<Maybe<CbsCodeManagement>>>;
   transfers?: Maybe<Array<Maybe<CbsCodeManagement>>>;
   withdrawSlip?: Maybe<Array<Maybe<CbsCodeManagement>>>;
 };
@@ -3211,6 +3211,7 @@ export type CbsCodeMangementResult = {
 export const CbsCodeType = {
   BranchTransfer: 'BRANCH_TRANSFER',
   CashInTransit: 'CASH_IN_TRANSIT',
+  FdCertificate: 'FD_CERTIFICATE',
   ShareCertificate: 'SHARE_CERTIFICATE',
   TellerTransfer: 'TELLER_TRANSFER',
   VaultTransfer: 'VAULT_TRANSFER',
@@ -41631,16 +41632,16 @@ export type ListLeafCoaHeadsQuery = {
   };
 };
 
-export type ListCbsShareCodesQueryVariables = Exact<{ [key: string]: never }>;
+export type ListCbsCertificatesCodesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type ListCbsShareCodesQuery = {
+export type ListCbsCertificatesCodesQuery = {
   settings: {
     general?: {
       codes?: {
         cbs?: {
           allCbsCodes?: {
             data?: {
-              share?: Array<{
+              certificates?: Array<{
                 id?: string | null;
                 codeType?: CbsCodeType | null;
                 prefix?: string | null;
@@ -70487,15 +70488,15 @@ export const useListLeafCoaHeadsQuery = <TData = ListLeafCoaHeadsQuery, TError =
     ),
     options
   );
-export const ListCbsShareCodesDocument = `
-    query listCBSShareCodes {
+export const ListCbsCertificatesCodesDocument = `
+    query listCBSCertificatesCodes {
   settings {
     general {
       codes {
         cbs {
           allCbsCodes {
             data {
-              share {
+              certificates {
                 id
                 codeType
                 prefix
@@ -70510,14 +70511,19 @@ export const ListCbsShareCodesDocument = `
   }
 }
     `;
-export const useListCbsShareCodesQuery = <TData = ListCbsShareCodesQuery, TError = unknown>(
-  variables?: ListCbsShareCodesQueryVariables,
-  options?: UseQueryOptions<ListCbsShareCodesQuery, TError, TData>
+export const useListCbsCertificatesCodesQuery = <
+  TData = ListCbsCertificatesCodesQuery,
+  TError = unknown
+>(
+  variables?: ListCbsCertificatesCodesQueryVariables,
+  options?: UseQueryOptions<ListCbsCertificatesCodesQuery, TError, TData>
 ) =>
-  useQuery<ListCbsShareCodesQuery, TError, TData>(
-    variables === undefined ? ['listCBSShareCodes'] : ['listCBSShareCodes', variables],
-    useAxios<ListCbsShareCodesQuery, ListCbsShareCodesQueryVariables>(
-      ListCbsShareCodesDocument
+  useQuery<ListCbsCertificatesCodesQuery, TError, TData>(
+    variables === undefined
+      ? ['listCBSCertificatesCodes']
+      : ['listCBSCertificatesCodes', variables],
+    useAxios<ListCbsCertificatesCodesQuery, ListCbsCertificatesCodesQueryVariables>(
+      ListCbsCertificatesCodesDocument
     ).bind(null, variables),
     options
   );

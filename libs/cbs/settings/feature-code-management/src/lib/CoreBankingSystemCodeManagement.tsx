@@ -7,7 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 import {
   CbsCodeManagement,
   CbsCodeType,
-  useListCbsShareCodesQuery,
+  useListCbsCertificatesCodesQuery,
   useListCbsTransfersCodesQuery,
   useListCbsWithdrawSlipCodesQuery,
 } from '@coop/cbs/data-access';
@@ -20,7 +20,7 @@ export const CoreBankingSystemCodeManagement = () => {
 
   const { onClose, isOpen, onToggle } = useDisclosure();
 
-  const { data: cbsShareCodesListQueryData } = useListCbsShareCodesQuery();
+  const { data: cbsCertificatesCodesListQueryData } = useListCbsCertificatesCodesQuery();
 
   const { data: cbsTransfersCodesListQueryData } = useListCbsTransfersCodesQuery();
 
@@ -69,14 +69,14 @@ export const CoreBankingSystemCodeManagement = () => {
   return (
     <>
       <Box display="flex" flexDirection="column" gap="s16">
-        <SettingsCard title="Share" subtitle="Change how share code are generated">
+        <SettingsCard title="Certificates" subtitle="Change how certificates code are generated">
           <Table
             isStatic
             data={
-              cbsShareCodesListQueryData?.settings?.general?.codes?.cbs?.allCbsCodes?.data?.share ??
-              []
+              cbsCertificatesCodesListQueryData?.settings?.general?.codes?.cbs?.allCbsCodes?.data
+                ?.certificates ?? []
             }
-            columns={getColumns('listCBSShareCodes')}
+            columns={getColumns('listCBSCertificatesCodes') as Column<CbsCodeManagement | null>[]}
           />
         </SettingsCard>
 
@@ -87,7 +87,7 @@ export const CoreBankingSystemCodeManagement = () => {
               cbsTransfersCodesListQueryData?.settings?.general?.codes?.cbs?.allCbsCodes?.data
                 ?.transfers ?? []
             }
-            columns={getColumns('listCBSTransfersCodes')}
+            columns={getColumns('listCBSTransfersCodes') as Column<CbsCodeManagement | null>[]}
           />
         </SettingsCard>
 
@@ -98,7 +98,7 @@ export const CoreBankingSystemCodeManagement = () => {
               cbsWithdrawSlipCodesListQueryData?.settings?.general?.codes?.cbs?.allCbsCodes?.data
                 ?.withdrawSlip ?? []
             }
-            columns={getColumns('listCBSWithdrawSlipCodes')}
+            columns={getColumns('listCBSWithdrawSlipCodes') as Column<CbsCodeManagement | null>[]}
           />
         </SettingsCard>
       </Box>

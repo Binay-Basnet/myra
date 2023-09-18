@@ -1,11 +1,11 @@
-query listCBSShareCodes {
+query listCBSCertificatesCodes {
   settings {
     general {
       codes {
         cbs {
           allCbsCodes {
             data {
-              share {
+              certificates {
                 id
                 codeType
                 prefix
