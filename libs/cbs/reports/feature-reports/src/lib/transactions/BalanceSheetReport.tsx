@@ -79,12 +79,14 @@ export const BalanceSheetReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/transactions'
+                : '/accounting/reports/transactions',
             },
             {
               label: 'Balance Sheet',
               link: isCbs
-                ? '/reports/cbs/transactions/balance-sheet/new'
+                ? '/cbs/reports/cbs-reports/transactions/balance-sheet/new'
                 : '/accounting/reports/transactions/balance-sheet/new',
             },
           ]}

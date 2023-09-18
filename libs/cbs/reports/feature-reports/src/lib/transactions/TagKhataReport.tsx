@@ -97,11 +97,11 @@ export const TagKhataReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: '/reports/cbs/transactions',
+              link: '/cbs/reports/cbs-reports/transactions',
             },
             {
               label: 'Ledger Report',
-              link: '/reports/cbs/transactions/tag-khata/new',
+              link: '/cbs/reports/cbs-reports/transactions/tag-khata/new',
             },
           ]}
         />

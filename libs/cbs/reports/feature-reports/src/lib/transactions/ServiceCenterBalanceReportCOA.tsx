@@ -83,11 +83,11 @@ export const ServiceCenterCOAWiseBalanceReport = () => {
           paths={[
             {
               label: 'Service Center Reports',
-              link: '/reports/cbs/service-center',
+              link: '/cbs/reports/cbs-reports/service-center',
             },
             {
               label: 'Service Center COA Wise Balance Report',
-              link: '/reports/cbs/service-center/service-center-coa-wise-balance/new',
+              link: '/cbs/reports/cbs-reports/service-center/service-center-coa-wise-balance/new',
             },
           ]}
         />

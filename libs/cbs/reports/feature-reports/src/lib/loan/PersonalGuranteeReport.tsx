@@ -77,11 +77,11 @@ export const LoanPersonalGuranteeReport = () => {
           paths={[
             {
               label: 'Loan Reports',
-              link: '/reports/cbs/loan',
+              link: '/cbs/reports/cbs-reports/loan',
             },
             {
               label: 'Loan Personal Gurantee Report',
-              link: '/reports/cbs/loan/personal-gurantee/new',
+              link: '/cbs/reports/cbs-reports/loan/personal-gurantee/new',
             },
           ]}
         />

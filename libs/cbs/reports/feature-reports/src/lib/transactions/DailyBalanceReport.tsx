@@ -71,11 +71,11 @@ export const DailyBalanceReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: '/reports/cbs/transactions',
+              link: '/cbs/reports/cbs-reports/transactions',
             },
             {
               label: 'Daily Balance Report',
-              link: '/reports/cbs/transactions/daily-balance/new',
+              link: '/cbs/reports/cbs-reports/transactions/daily-balance/new',
             },
           ]}
         />

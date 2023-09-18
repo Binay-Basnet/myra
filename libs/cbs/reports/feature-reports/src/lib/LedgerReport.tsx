@@ -54,10 +54,10 @@ export const LedgerReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Other Reports', link: '/reports/cbs/others' },
+            { label: 'Other Reports', link: '/cbs/reports/cbs-reports/others' },
             {
               label: 'Ledger Report',
-              link: '/reports/cbs/others/ledger/new',
+              link: '/cbs/reports/cbs-reports/others/ledger/new',
             },
           ]}
         />

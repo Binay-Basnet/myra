@@ -36,10 +36,10 @@ export const MBExpiryReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Mobile Banking Reports', link: '/reports/cbs/mobile-banking' },
+            { label: 'Mobile Banking Reports', link: '/cbs/reports/cbs-reports/mobile-banking' },
             {
               label: 'Mobile Banking Expiry Report',
-              link: '/reports/cbs/mobile-banking/expiry/new',
+              link: '/cbs/reports/cbs-reports/mobile-banking/expiry/new',
             },
           ]}
         />

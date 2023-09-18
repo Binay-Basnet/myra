@@ -137,8 +137,11 @@ export const ShareTransactionsReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Share Reports', link: '/reports/cbs/share' },
-            { label: 'Share Transaction Report', link: '/reports/cbs/share/transaction/new' },
+            { label: 'Share Reports', link: '/cbs/reports/cbs-reports/share' },
+            {
+              label: 'Share Transaction Report',
+              link: '/cbs/reports/cbs-reports/share/transaction/new',
+            },
           ]}
         />
         <Report.Inputs>
