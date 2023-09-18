@@ -156,6 +156,7 @@ export const WithdrawSlipBookPrint = () => {
       slipNumber: String(from),
       productName: withdrawSlipData?.account?.productName as string,
     },
+    numberOfSlips: Number(count || 0),
   };
 
   return (

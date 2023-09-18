@@ -1,5 +1,4 @@
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
 
 import { Box, Text } from '@myra-ui';
 
@@ -28,6 +27,10 @@ interface IWithdrawSlipBookPrintPreviewCardProps {
     productName: string;
   };
   number?: number;
+}
+
+interface IWithdrawSlipBookPrintProps extends IWithdrawSlipBookPrintPreviewCardProps {
+  numberOfSlips?: number;
 }
 
 export const WithdrawSlipBookPrintPreviewCard = ({
@@ -103,28 +106,25 @@ export const WithdrawSlipBookPrintPreviewCard = ({
   </Box>
 );
 
-export const WithdrawPrintCard = React.forwardRef<
-  HTMLInputElement,
-  IWithdrawSlipBookPrintPreviewCardProps
->((props, ref) => {
-  const methods = useFormContext();
+export const WithdrawPrintCard = React.forwardRef<HTMLInputElement, IWithdrawSlipBookPrintProps>(
+  (props, ref) => {
+    const { numberOfSlips } = props;
 
-  const numberOfSlips = methods.watch('count');
+    const slipNumberArray = Array.from(Array(numberOfSlips).keys())?.map((n) => n + 1);
 
-  const slipNumberArray = Array.from(Array(numberOfSlips).keys())?.map((n) => n + 1);
-
-  return (
-    <Box ref={ref} display="flex" flexDir="column">
-      {slipNumberArray?.map((number) => (
-        <WithdrawSlipBookPrintPreviewCard
-          {...props}
-          number={number}
-          details={{
-            ...props.details,
-            slipNumber: String(Number(props.details.slipNumber) + number - 1).padStart(10, '0'),
-          }}
-        />
-      ))}
-    </Box>
-  );
-});
+    return (
+      <Box ref={ref} display="flex" flexDir="column">
+        {slipNumberArray?.map((number) => (
+          <WithdrawSlipBookPrintPreviewCard
+            {...props}
+            number={number}
+            details={{
+              ...props.details,
+              slipNumber: String(Number(props.details.slipNumber) + number - 1).padStart(10, '0'),
+            }}
+          />
+        ))}
+      </Box>
+    );
+  }
+);
