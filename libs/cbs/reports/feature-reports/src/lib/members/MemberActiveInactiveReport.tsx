@@ -68,8 +68,11 @@ export const MemberActiveInactiveReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Member Reports', link: '/reports/cbs/members' },
-            { label: 'Active/Inactive Member', link: '/reports/cbs/members/activations/new' },
+            { label: 'Member Reports', link: '/cbs/reports/cbs-reports/members' },
+            {
+              label: 'Active/Inactive Member',
+              link: '/cbs/reports/cbs-reports/members/activations/new',
+            },
           ]}
         />
         <Report.Inputs>

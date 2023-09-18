@@ -38,10 +38,10 @@ export const ETDSReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Saving Reports', link: '/reports/cbs/savings' },
+            { label: 'Saving Reports', link: '/cbs/reports/cbs-reports/savings' },
             {
               label: 'e-TDS Report',
-              link: '/reports/cbs/savings/e-tds/new',
+              link: '/cbs/reports/cbs-reports/savings/e-tds/new',
             },
           ]}
         />

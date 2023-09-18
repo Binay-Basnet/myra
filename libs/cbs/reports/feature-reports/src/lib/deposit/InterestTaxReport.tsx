@@ -54,10 +54,10 @@ export const InterestTaxReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Saving Reports', link: '/reports/cbs/savings' },
+            { label: 'Saving Reports', link: '/cbs/reports/cbs-reports/savings' },
             {
               label: 'Interest Tax Report',
-              link: '/reports/cbs/savings/interest-tax/new',
+              link: '/cbs/reports/cbs-reports/savings/interest-tax/new',
             },
           ]}
         />

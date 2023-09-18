@@ -82,8 +82,11 @@ export const DosariMemberReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Member Reports', link: '/reports/cbs/members' },
-            { label: 'Dosari Member Report ', link: '/reports/cbs/members/dosari-members/new' },
+            { label: 'Member Reports', link: '/cbs/reports/cbs-reports/members' },
+            {
+              label: 'Dosari Member Report ',
+              link: '/cbs/reports/cbs-reports/members/dosari-members/new',
+            },
           ]}
         />
         <Report.Inputs hideDate>

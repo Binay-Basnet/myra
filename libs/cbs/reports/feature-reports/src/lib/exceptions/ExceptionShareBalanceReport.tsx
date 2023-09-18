@@ -55,10 +55,10 @@ export const ExceptionShareBalanceReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Exception Reports', link: '/reports/cbs/exceptions' },
+            { label: 'Exception Reports', link: '/cbs/reports/cbs-reports/exceptions' },
             {
               label: 'Share Balance Exception Report',
-              link: '/reports/cbs/exceptions/share-balance/new',
+              link: '/cbs/reports/cbs-reports/exceptions/share-balance/new',
             },
           ]}
         />

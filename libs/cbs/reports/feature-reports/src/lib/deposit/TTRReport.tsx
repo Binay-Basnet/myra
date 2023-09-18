@@ -94,8 +94,8 @@ export const TTRReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Saving Reports', link: '/reports/cbs/savings' },
-            { label: 'TTR Report', link: '/reports/cbs/savings/ttr/new' },
+            { label: 'Saving Reports', link: '/cbs/reports/cbs-reports/savings' },
+            { label: 'TTR Report', link: '/cbs/reports/cbs-reports/savings/ttr/new' },
           ]}
         />
         <Report.Inputs>

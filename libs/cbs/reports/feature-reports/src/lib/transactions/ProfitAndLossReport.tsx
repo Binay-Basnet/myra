@@ -79,12 +79,14 @@ export const ProfitAndLossReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/transactions'
+                : '/accounting/reports/transactions',
             },
             {
               label: 'Profit and Loss',
               link: isCbs
-                ? '/reports/cbs/transactions/profile-and-loss/new'
+                ? '/cbs/reports/cbs-reports/transactions/profile-and-loss/new'
                 : '/accounting/reports/transactions/profit-and-loss/new',
             },
           ]}

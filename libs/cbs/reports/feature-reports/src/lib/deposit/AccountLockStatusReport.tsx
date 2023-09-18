@@ -83,10 +83,10 @@ export const AccountLockStatusReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Saving Reports', link: '/reports/cbs/savings' },
+            { label: 'Saving Reports', link: '/cbs/reports/cbs-reports/savings' },
             {
               label: 'Account Locked Status Report',
-              link: '/reports/cbs/savings/locked-status/new',
+              link: '/cbs/reports/cbs-reports/savings/locked-status/new',
             },
           ]}
         />

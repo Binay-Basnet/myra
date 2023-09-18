@@ -66,8 +66,8 @@ export const UsersReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Others Reports', link: '/reports/cbs/others' },
-            { label: 'User List Report', link: '/reports/cbs/others/users/new' },
+            { label: 'Others Reports', link: '/cbs/reports/cbs-reports/others' },
+            { label: 'User List Report', link: '/cbs/reports/cbs-reports/others/users/new' },
           ]}
         />
         <Report.Inputs>

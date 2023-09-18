@@ -21,10 +21,8 @@ import {
   EmployeeAddress,
   EmployeeContactDetails,
   EmployeeWorkInformation,
-  JoiningDetails,
   OtherDetails,
   PersonalInformation,
-  SalaryDetails,
   SidebarEmployeeAddForm,
   WorkExperienceTable,
 } from '../../components';
@@ -140,13 +138,13 @@ export const EmployeeAddForm = () => {
           input: omit(
             {
               ...values,
-              pf: otherSchemes?.indcludes('pf'),
+              pf: otherSchemes?.includes('pf'),
               ssf: otherSchemes?.includes('ssf'),
               cit: otherSchemes?.includes('cit'),
               citizenshipGiven: identificationSelection?.includes('citizenship'),
-              drivingGiven: identificationSelection?.includes('drivingLicense'),
+              drivingLicenseGiven: identificationSelection?.includes('drivingLicense'),
               trainingDetailsGiven: otherDetails?.includes('trainingDetails'),
-              researchAndPublicationGiven: otherDetails?.includes('researchAndPublications'),
+              researchAndPublicationsGiven: otherDetails?.includes('researchAndPublications'),
               awardsCashCertificatesGiven: otherDetails?.includes('awardsCashCertificates'),
               internationalTourGiven: otherDetails?.includes('internationalTour'),
               documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
@@ -180,12 +178,28 @@ export const EmployeeAddForm = () => {
           input: omit(
             {
               ...values,
+              pf: otherSchemes?.includes('pf'),
+              ssf: otherSchemes?.includes('ssf'),
+              cit: otherSchemes?.includes('cit'),
+              citizenshipGiven: identificationSelection?.includes('citizenship'),
+              drivingLicenseGiven: identificationSelection?.includes('drivingLicense'),
+              trainingDetailsGiven: otherDetails?.includes('trainingDetails'),
+              researchAndPublicationsGiven: otherDetails?.includes('researchAndPublications'),
+              awardsCashCertificatesGiven: otherDetails?.includes('awardsCashCertificates'),
+              internationalTourGiven: otherDetails?.includes('internationalTour'),
               documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
                 fieldId: documentMap[index],
                 identifiers: item?.identifiers || [],
               })),
             },
-            ['isCoopMember', 'memberId']
+            [
+              'isCoopMember',
+              'memberId',
+              'id',
+              'otherSchemes',
+              'identificationSelection',
+              'otherDetails',
+            ]
           ) as EmployeeInput,
         }),
         onError: (error) => {
@@ -251,8 +265,8 @@ export const EmployeeAddForm = () => {
               <EmployeeWorkInformation />
               <WorkExperienceTable />
               <OtherDetails />
-              <JoiningDetails />
-              <SalaryDetails />
+              {/* <JoiningDetails /> */}
+              {/* <SalaryDetails /> */}
             </SectionContainer>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">

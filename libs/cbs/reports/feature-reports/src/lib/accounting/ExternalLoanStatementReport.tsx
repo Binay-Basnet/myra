@@ -56,10 +56,10 @@ export const ExternalLoanStatementReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Accounting Reports', link: '/reports/cbs/accounting' },
+            { label: 'Accounting Reports', link: '/cbs/reports/cbs-reports/accounting' },
             {
               label: ReportEnum.ACCOUNTING_EXTERNAL_LOAN_STATEMENT_REPORT,
-              link: '/reports/cbs/accounting/external-loan-statement/new',
+              link: '/cbs/reports/cbs-reports/accounting/external-loan-statement/new',
             },
           ]}
         />

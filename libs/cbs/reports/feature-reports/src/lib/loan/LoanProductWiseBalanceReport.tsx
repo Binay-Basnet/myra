@@ -54,10 +54,10 @@ export const LoanProductWiseBalanceReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Loan Reports', link: '/reports/cbs/loan' },
+            { label: 'Loan Reports', link: '/cbs/reports/cbs-reports/loan' },
             {
               label: 'Loan Product Balance Report',
-              link: '/reports/cbs/loan/loan-product-balance/new',
+              link: '/cbs/reports/cbs-reports/loan/loan-product-balance/new',
             },
           ]}
         />

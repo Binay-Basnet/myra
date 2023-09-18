@@ -50,8 +50,11 @@ export const FixedDepositsReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Saving Reports', link: '/reports/cbs/savings' },
-            { label: 'Fixed Deposit Maturity Report', link: '/reports/cbs/savings/fd-mature/new' },
+            { label: 'Saving Reports', link: '/cbs/reports/cbs-reports/savings' },
+            {
+              label: 'Fixed Deposit Maturity Report',
+              link: '/cbs/reports/cbs-reports/savings/fd-mature/new',
+            },
           ]}
         />
         <Report.Inputs>
