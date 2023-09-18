@@ -8,7 +8,7 @@ import { ReportDateRange } from '../components';
 
 type TrialSheetReportFiltersCharkhata = Omit<
   CharKhataReportFilter,
-  'filter' | 'branchId' | 'coaHead'
+  'filter' | 'branchId' | 'coaHead' | 'coaType'
 > & {
   branchId: { label: string; value: string }[];
   coaHead: { label: string; value: CoaHead }[];
@@ -29,10 +29,10 @@ export const CharkhataReportInputs = () => {
   const methods = useFormContext<TrialSheetReportFiltersCharkhata>();
 
   const { watch, setValue } = methods;
-  const coaTypeSelected = watch('coaType');
+  const coaTypeSelected = watch('coaType') as { label: string; value: string }[];
 
   const selectedCoaClasses = useMemo(
-    () => coaTypeSelected?.map((t) => t.value) ?? [],
+    () => coaTypeSelected?.map((t) => t?.value) ?? [],
     [coaTypeSelected]
   );
 

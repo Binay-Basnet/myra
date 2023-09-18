@@ -322,6 +322,7 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
         sx={{
           '@media print': {
             display: 'flex',
+            color: '#000 !important',
           },
           '@page': {
             size: 'A4 portrait',

@@ -7,6 +7,7 @@ import { Box, Button, FormSection, Grid, GridItem, Icon, IconButton } from '@myr
 import {
   FormFieldSearchTerm,
   GetIndividualKymOptionsQuery,
+  GradeLevels,
   useGetIndividualKymOptionsQuery,
 } from '@coop/cbs/data-access';
 import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
@@ -35,6 +36,13 @@ const AddEducationalDetails = ({ index, removeEducationalDetails }: IAddEducatio
   const { data: educationFields, isLoading: educationLoading } = useGetIndividualKymOptionsQuery({
     searchTerm: FormFieldSearchTerm.EducationQualification,
   });
+  const gradeOptions = [
+    { label: 'Distinction', value: GradeLevels?.Distinction },
+    { label: 'First Division', value: GradeLevels?.Distinction },
+    { label: 'Second Division', value: GradeLevels?.Distinction },
+    { label: 'Third Division', value: GradeLevels?.Distinction },
+  ];
+
   return (
     <Box bg="highlight.500" p="s20" display="flex" flexDirection="column">
       <IconButton
@@ -61,15 +69,11 @@ const AddEducationalDetails = ({ index, removeEducationalDetails }: IAddEducatio
           isLoading={educationLoading}
           options={getFieldOption(educationFields)}
         />
-        <FormInput
-          type="text"
-          bg="white"
-          name={`educationDetails.${index}.specialization`}
-          label="Specialization"
-        />
+        <FormInput name={`educationDetails.${index}.durationInYrs`} label="Duration in years" />
+        <FormSelect name={`educationDetails.${index}.grade`} label="Grade" options={gradeOptions} />
         <FormDatePicker
           name={`educationDetails.${index}.dateOfCompletion`}
-          label="Date of Completion"
+          label="Date of completion"
         />
       </Grid>
     </Box>

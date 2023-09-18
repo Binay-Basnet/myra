@@ -1,71 +1,30 @@
+import {
+  useGetDepartmentOptions,
+  useGetDesignationOptions,
+  useGetEployeeLevelOptions,
+} from '@hr/common';
+
 import { FormSection } from '@myra-ui';
 
 import {
+  EmployeeClass,
   EmployeeStatus,
   EmployeeTypeEnum,
   SourceOfHire,
-  useGetDepartmentListQuery,
-  useGetDesignationListQuery,
-  useGetEmployeeLevelListQuery,
 } from '@coop/cbs/data-access';
-import { FormBranchSelect, FormSelect } from '@coop/shared/form';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { FormBranchSelect, FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 
 export const EmployeeWorkInformation = () => {
-  const { data: departmentData } = useGetDepartmentListQuery({
-    pagination: {
-      ...getPaginationQuery(),
-      first: -1,
-      order: {
-        arrange: 'ASC',
-        column: 'ID',
-      },
-    },
-  });
-  const { data: designationData } = useGetDesignationListQuery({
-    pagination: {
-      ...getPaginationQuery(),
-      first: -1,
-      order: {
-        arrange: 'ASC',
-        column: 'ID',
-      },
-    },
-  });
-  const { data: employeeLevelData } = useGetEmployeeLevelListQuery({
-    pagination: {
-      ...getPaginationQuery(),
-      first: -1,
-      order: {
-        arrange: 'ASC',
-        column: 'ID',
-      },
-    },
-  });
+  const { departmentOptions } = useGetDepartmentOptions();
+  const { designationOptions } = useGetDesignationOptions();
+  const { employeeLevelOptions } = useGetEployeeLevelOptions();
 
-  const employeeLevelOptions =
-    employeeLevelData?.settings?.general?.HCM?.employee?.employee?.listEmployeeLevel?.edges?.map(
-      (item) => ({
-        label: item?.node?.name as string,
-        value: item?.node?.id as string,
-      })
-    );
+  const employeeClassOptions = [
+    { label: EmployeeClass?.Class_1, value: EmployeeClass?.Class_1 },
+    { label: EmployeeClass?.Class_2, value: EmployeeClass?.Class_2 },
+    { label: EmployeeClass?.Class_3, value: EmployeeClass?.Class_3 },
+  ];
 
-  const departmentOptions =
-    departmentData?.settings?.general?.HCM?.employee?.employee?.listDepartment?.edges?.map(
-      (item) => ({
-        label: item?.node?.name as string,
-        value: item?.node?.id as string,
-      })
-    );
-
-  const designationOptions =
-    designationData?.settings?.general?.HCM?.employee?.employee?.listDesignation?.edges?.map(
-      (item) => ({
-        label: item?.node?.name as string,
-        value: item?.node?.id as string,
-      })
-    );
   const employeeTypeOptions = [
     { label: 'Permanent', value: EmployeeTypeEnum?.Permanent },
     { label: 'Contract', value: EmployeeTypeEnum?.Contract },
@@ -90,13 +49,16 @@ export const EmployeeWorkInformation = () => {
 
   return (
     <FormSection id="Work Information" header="Work Information">
-      <FormSelect name="employeeLevelId" label="Employee Level" options={employeeLevelOptions} />
+      <FormBranchSelect name="serviceCenter" label="Service Center" />
       <FormSelect name="departmentId" label="Department" options={departmentOptions} />
       <FormSelect name="designationId" label="Designation" options={designationOptions} />
-      <FormBranchSelect name="serviceCenter" label="Service Center" />
+      <FormSelect name="employeeClass" label="Employee Class" options={employeeClassOptions} />
+      <FormSelect name="employeeLevelId" label="Employee Level" options={employeeLevelOptions} />
       <FormSelect name="employmentType" label="Employment Type" options={employeeTypeOptions} />
       <FormSelect name="employeeStatus" label="Employment Status" options={employeeStatusOptions} />
       <FormSelect name="sourceOfHire" label="Source of Hire" options={sourceOfHireOptions} />
+      <FormInput name="refferalBy" label="Refferal By" />
+      <FormDatePicker name="joiningDate" label="Joining Date" />
     </FormSection>
   );
 };

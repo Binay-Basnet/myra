@@ -4,11 +4,16 @@ mutation postShareDividend($data: ShareDividendInput!, $commit: Boolean) {
       record
       summary {
         MemberID
+        MemberCode
         MemberName
+        AverageShareCount
         ShareCount
         SavingAmount
         TotalAmount
+        PayableAmount
+        TDSAmount
         DestinationAccount
+        DestinationProduct
         Error
       }
       error {

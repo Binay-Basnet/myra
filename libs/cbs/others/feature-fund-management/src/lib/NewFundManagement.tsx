@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import {
@@ -23,7 +23,7 @@ import {
 } from '@coop/cbs/data-access';
 import { findQueryError, getQueryError, QueryError, ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
-import { debitCreditConverter, featureCode } from '@coop/shared/utils';
+import { featureCode } from '@coop/shared/utils';
 
 import { CustomFundManagementInput } from './type';
 import {
@@ -50,7 +50,7 @@ export const NewFundManagement = () => {
 
   const methods = useForm<CustomFundManagementInput>();
 
-  const { watch, getValues, reset } = methods;
+  const { watch, getValues } = methods;
 
   const { remainingProfitAfterTax, remainingProfitAfterOther } = useFundManagement({ methods });
 
@@ -62,87 +62,6 @@ export const NewFundManagement = () => {
     { id: id as string },
     { enabled: !!id }
   );
-
-  const { data: currentFundAmountHOData } = useGetCurrentFundAmountQuery({ forHeadOffice: true });
-
-  const currentFundAmount = currentFundAmountHOData?.profitToFundManagement?.getCurrentFundAmount;
-
-  useEffect(() => {
-    if (editData?.profitToFundManagement?.get?.record) {
-      const formData = editData?.profitToFundManagement?.get?.record;
-
-      const grossProfit =
-        formData?.state === 'COMPLETED'
-          ? Number(formData?.grossProfit || 0)
-          : Number(currentFundAmount?.amount?.amount || 0);
-
-      const staffBonusAmount = Number(formData?.staffBonus?.amount || 0);
-
-      const incomeTaxAmount = Number(formData?.incometax?.amount || 0);
-
-      const netProfit = (grossProfit - staffBonusAmount - incomeTaxAmount).toFixed(2);
-
-      const generalReserveFund =
-        formData?.fundDistribution?.filter((fund) => fund?.tableIndex === 0) ?? [];
-
-      const distributionFund =
-        formData?.fundDistribution?.filter((fund) => fund?.tableIndex === 1) ?? [];
-
-      const otherFundsTable =
-        formData?.fundDistribution?.filter((fund) => fund?.tableIndex === 2) ?? [];
-
-      reset({
-        // ...methods.getValues(),
-        grossProfit,
-        grossProfitCoa:
-          formData?.state === 'COMPLETED'
-            ? (formData?.grossProfitCoa as string)
-            : `${currentFundAmount?.coaHead} - ${currentFundAmount?.coaHeadName}`,
-        grossProfitDr:
-          formData?.state === 'COMPLETED'
-            ? debitCreditConverter(grossProfit, 'CR')
-            : debitCreditConverter(
-                currentFundAmount?.amount?.amount as string,
-                currentFundAmount?.amount?.amountType as string
-              ),
-        staffBonus: {
-          coaHead: {
-            label: formData?.staffBonus?.accountName,
-            value: formData?.staffBonus?.accountCode,
-          } as unknown as string,
-          percent: formData?.staffBonus?.percent,
-          amount: formData?.staffBonus?.amount as string,
-        },
-        incomeTax: {
-          coaHead: {
-            label: formData?.incometax?.accountName,
-            value: formData?.incometax?.accountCode,
-          } as unknown as string,
-          percent: formData?.incometax?.percent,
-          amount: formData?.incometax?.amount as string,
-        },
-        generalReserveFund: generalReserveFund?.map((g) => ({
-          coaHead: g?.accountCode as string,
-          coaHeadName: g?.accountName as string,
-          percent: String(g?.percent),
-          amount: g?.amount as string,
-        })),
-        distributionTable: distributionFund?.map((g) => ({
-          coaHead: g?.accountCode as string,
-          coaHeadName: g?.accountName as string,
-          percent: String(g?.percent),
-          amount: g?.amount as string,
-        })),
-        otherFunds: otherFundsTable?.map((g) => ({
-          coaHead: g?.accountCode as string,
-          coaHeadName: g?.accountName as string,
-          percent: String(g?.percent),
-          amount: g?.amount as string,
-        })),
-        netProfit,
-      });
-    }
-  }, [editData, currentFundAmount]);
 
   const { mutateAsync: addProfitToFundManagement } = useAddProfitToFundManagementDataMutation();
 
