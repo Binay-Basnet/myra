@@ -98,7 +98,7 @@ export const AlternativeChannelGeneralSettings = () => {
           <SettingsCard title="Ledger Mapping" subtitle="Select Ledgers to map">
             <Grid templateColumns="repeat(3, 1fr)" gap="s16">
               <FormLeafCoaHeadSelect
-                name={UtilityLedgerType.Utility}
+                name={UtilityLedgerType.UtilityLimit}
                 label="Utility Payment Ledger Mapping"
               />
 
@@ -113,19 +113,19 @@ export const AlternativeChannelGeneralSettings = () => {
               />
 
               <FormLeafCoaHeadSelect
-                name={UtilityLedgerType.IncomeFromNeosys}
+                name={UtilityLedgerType.UtilityLimitContra}
                 label="Income from Neosys Ledger Mapping"
               />
 
-              <FormLeafCoaHeadSelect
+              {/* <FormLeafCoaHeadSelect
                 name={UtilityLedgerType.IncomeFromNeosysSuspense}
                 label="Income from Neosys Suspense Ledger Mapping"
               />
 
               <FormLeafCoaHeadSelect
                 name={UtilityLedgerType.ExpenseToNeosys}
-                label="Expense to Neosys Ledger Mapping"
-              />
+                label="Expense to Neosys Ledger Mapping" */}
+              {/* /> */}
             </Grid>
           </SettingsCard>
         </Box>
@@ -142,12 +142,12 @@ export const AlternativeChannelGeneralSettings = () => {
             },
             promise: utilityLedgerSetup({
               value: [
-                UtilityLedgerType.Utility,
+                // UtilityLedgerType.Utility,
                 UtilityLedgerType.CashBack,
                 UtilityLedgerType.ServiceCharge,
-                UtilityLedgerType.IncomeFromNeosys,
-                UtilityLedgerType.IncomeFromNeosysSuspense,
-                UtilityLedgerType.ExpenseToNeosys,
+                // UtilityLedgerType.IncomeFromNeosys,
+                // UtilityLedgerType.IncomeFromNeosysSuspense,
+                // UtilityLedgerType.ExpenseToNeosys,
               ]?.map((ut) => ({
                 coaHead:
                   values && typeof values[ut] === 'object' && 'value' in values[ut]

@@ -31,10 +31,7 @@ export const CharkhataReportInputs = () => {
   const { watch, setValue } = methods;
   const coaTypeSelected = watch('coaType');
 
-  const selectedCoaClasses = useMemo(
-    () => coaTypeSelected?.map((t) => t.value) ?? [],
-    [coaTypeSelected]
-  );
+  const selectedCoaClasses = useMemo(() => coaTypeSelected?.map((t) => t) ?? [], [coaTypeSelected]);
 
   return (
     <>
