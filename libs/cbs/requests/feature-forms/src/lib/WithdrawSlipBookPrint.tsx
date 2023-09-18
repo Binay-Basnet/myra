@@ -14,7 +14,12 @@ import {
   WithdrawSlipIssueInput,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormAccountSelect, FormLayout, FormMemberSelect, FormSelect } from '@coop/shared/form';
+import {
+  FormAccountSelect,
+  FormLayout,
+  FormMemberSelect,
+  FormNumberInput,
+} from '@coop/shared/form';
 
 import { WithdrawPrintCard, WithdrawSlipBookPrintPreviewCard } from '../component';
 
@@ -23,24 +28,24 @@ interface CustomWithdrawSlipIssueInput extends WithdrawSlipIssueInput {
   printSize: '7*3.5' | '9*3' | '7.5*3.5';
 }
 
-const totalNumberOptions = [
-  {
-    label: '5',
-    value: 5,
-  },
-  {
-    label: '10',
-    value: 10,
-  },
-  {
-    label: '25',
-    value: 25,
-  },
-  {
-    label: '50',
-    value: 50,
-  },
-];
+// const totalNumberOptions = [
+//   {
+//     label: '5',
+//     value: 5,
+//   },
+//   {
+//     label: '10',
+//     value: 10,
+//   },
+//   {
+//     label: '25',
+//     value: 25,
+//   },
+//   {
+//     label: '50',
+//     value: 50,
+//   },
+// ];
 
 export const WithdrawSlipBookPrint = () => {
   const router = useRouter();
@@ -190,11 +195,11 @@ export const WithdrawSlipBookPrint = () => {
               isDisabled
             />
 
-            <FormSelect
+            <FormNumberInput
               isRequired
               name="count"
               label="Total no of withdraw slip"
-              options={totalNumberOptions}
+              // options={totalNumberOptions}
               isDisabled
             />
 
