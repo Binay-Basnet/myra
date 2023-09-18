@@ -360,9 +360,10 @@ export const ROUTES = {
   ACCOUNTING_LEDGER_BALANCE_TRANSFER_DETAILS:
     '/accounting/accounting/ledger-balance-transfer/details',
 
-  ACCOUNTING_CHAR_KHATA_REPORT: '/accounting/reports/transactions/charkhata/new',
-  ACCOUNTING_DAY_BOOK_REPORT: '/accounting/reports/transactions/day-book/new',
-  ACCOUNTING_TRAIL_BALANCE_REPORT: '/accounting/reports/transactions/trial-sheet/new',
+  ACCOUNTING_CHAR_KHATA_REPORT: '/accounting/reports/accounting-reports/transactions/charkhata/new',
+  ACCOUNTING_DAY_BOOK_REPORT: '/accounting/reports/accounting-reports/transactions/day-book/new',
+  ACCOUNTING_TRAIL_BALANCE_REPORT:
+    '/accounting/reports/accounting-reports/transactions/trial-sheet/new',
 
   ACCOUNTING_EXTERNAL_LOAN_LIST: '/accounting/loan/external-loan/list',
   ACCOUNTING_EXTERNAL_LOAN_ADD: '/accounting/loan/external-loan/add',
@@ -375,7 +376,7 @@ export const ROUTES = {
   ACCOUNTING_INVESTMENT_ACCOUNT_TRANSACTIONS_ADD:
     '/accounting/investment/investment-transaction/add',
 
-  ACCOUNTING_REPORTS: '/accounting/reports/accounting-reports/transactions',
+  ACCOUNTING_REPORTS: '/accounting/reports/accounting-reports/accounting-reports/transactions',
 
   INVENTORY_REGISTER: '/inventory/inventory/register/list',
   INVENTORY_INVENTORY_ADJUSTMENT: '/inventory/inventory/adjustments/list',
