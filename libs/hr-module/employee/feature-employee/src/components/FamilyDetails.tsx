@@ -30,7 +30,7 @@ export const FamilyDetails = () => {
             },
             {
               accessor: 'relation',
-              header: 'Realtion',
+              header: 'Relation',
               fieldType: 'select',
               selectOptions: getFieldOption(relationshipFields),
               searchLoading: relationshipLoading,

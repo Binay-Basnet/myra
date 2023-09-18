@@ -17,8 +17,8 @@ export const WorkExperienceTable = () => (
           header: 'Designation',
         },
         {
-          accessor: 'salary',
-          header: 'Salary',
+          accessor: 'durationInYrs',
+          header: 'Duration in years',
           isNumeric: true,
         },
         {

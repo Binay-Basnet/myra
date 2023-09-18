@@ -57,7 +57,7 @@ export const EmployeeWorkInformation = () => {
       <FormSelect name="employmentType" label="Employment Type" options={employeeTypeOptions} />
       <FormSelect name="employeeStatus" label="Employment Status" options={employeeStatusOptions} />
       <FormSelect name="sourceOfHire" label="Source of Hire" options={sourceOfHireOptions} />
-      <FormInput name="refferalBy" label="Refferal By" />
+      <FormInput name="referralBy" label="Referral By" />
       <FormDatePicker name="joiningDate" label="Joining Date" />
     </FormSection>
   );
