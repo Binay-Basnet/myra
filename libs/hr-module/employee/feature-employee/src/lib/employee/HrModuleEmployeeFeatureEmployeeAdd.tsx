@@ -17,13 +17,12 @@ import {
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 import {
-  Approvers,
   Declarations,
   EmployeeAddress,
   EmployeeContactDetails,
-  EmployeeHealthInsurance,
   EmployeeWorkInformation,
   JoiningDetails,
+  OtherDetails,
   PersonalInformation,
   SalaryDetails,
   SidebarEmployeeAddForm,
@@ -31,6 +30,10 @@ import {
 } from '../../components';
 import { EducationalDetails } from '../../components/EducationalDetails';
 import { getEmployeeSection } from '../../utils/getSectionEmployee';
+import FamilyDetails from '../../components/FamilyDetails';
+import IdentificationDetails from '../../components/IdentificationDetails';
+import PayrollSetup from '../../components/setups/PayrollSetup';
+import OtherSchemes from '../../components/setups/OtherSchemes';
 
 const documentMap = ['passport', 'signature', 'citizenship', 'fingerprint'];
 
@@ -99,7 +102,7 @@ export const EmployeeAddForm = () => {
         gender: basicInfo?.genderId,
         dateOfBirth: basicInfo?.dateOfBirth,
         personalPhoneNumber: basicInfo?.mobileNumber,
-        personalEmailAddress: basicInfo?.email,
+        // personalEmailAddress: basicInfo?.email,
         maritalStatus: basicInfo?.maritalStatusId,
         permanentAddress: {
           ...basicInfo?.permanentAddress,
@@ -112,11 +115,15 @@ export const EmployeeAddForm = () => {
         },
       });
       setValue('isCoopMember', true);
+      setValue('memberId', memberIdWatch);
     }
   }, [JSON.stringify(basicInfo)]);
 
   const onSave = () => {
     const values = getValues();
+    const otherSchemes = values?.otherSchemes;
+    const identificationSelection = values?.identificationSelection;
+    const otherDetails = values?.otherDetails;
 
     if (router?.query?.['id']) {
       asyncToast({
@@ -133,12 +140,28 @@ export const EmployeeAddForm = () => {
           input: omit(
             {
               ...values,
+              pf: otherSchemes?.indcludes('pf'),
+              ssf: otherSchemes?.includes('ssf'),
+              cit: otherSchemes?.includes('cit'),
+              citizenshipGiven: identificationSelection?.includes('citizenship'),
+              drivingGiven: identificationSelection?.includes('drivingLicense'),
+              trainingDetailsGiven: otherDetails?.includes('trainingDetails'),
+              researchAndPublicationGiven: otherDetails?.includes('researchAndPublications'),
+              awardsCashCertificatesGiven: otherDetails?.includes('awardsCashCertificates'),
+              internationalTourGiven: otherDetails?.includes('internationalTour'),
               documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
                 fieldId: documentMap[index],
                 identifiers: item?.identifiers || [],
               })),
             },
-            ['isCoopMember', 'memberId', 'id']
+            [
+              'isCoopMember',
+              'memberId',
+              'id',
+              'otherSchemes',
+              'identificationSelection',
+              'otherDetails',
+            ]
           ) as EmployeeInput,
         }),
       });
@@ -212,28 +235,33 @@ export const EmployeeAddForm = () => {
             </FormSection>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                Basic Information{' '}
+                1. Basic Information{' '}
               </Text>
               <PersonalInformation />
-              <EducationalDetails />
               <EmployeeContactDetails />
               <EmployeeAddress />
+              <FamilyDetails />
+              <EducationalDetails />
+              <IdentificationDetails />
             </SectionContainer>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                Professional Information
+                2. Professional Information
               </Text>
               <EmployeeWorkInformation />
               <WorkExperienceTable />
+              <OtherDetails />
               <JoiningDetails />
               <SalaryDetails />
             </SectionContainer>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                Configurations
+                3. Setups
               </Text>
-              <Approvers />
-              <EmployeeHealthInsurance />
+              <PayrollSetup />
+              <OtherSchemes />
+              {/* <Approvers />
+              <EmployeeHealthInsurance /> */}
             </SectionContainer>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
