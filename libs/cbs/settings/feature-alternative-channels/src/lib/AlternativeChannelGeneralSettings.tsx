@@ -98,23 +98,27 @@ export const AlternativeChannelGeneralSettings = () => {
           <SettingsCard title="Ledger Mapping" subtitle="Select Ledgers to map">
             <Grid templateColumns="repeat(3, 1fr)" gap="s16">
               <FormLeafCoaHeadSelect
-                name={UtilityLedgerType.UtilityLimit}
-                label="Utility Payment Ledger Mapping"
-              />
-
-              <FormLeafCoaHeadSelect
                 name={UtilityLedgerType.CashBack}
                 label="Cashback Ledger Mapping"
+                // coaClass={[CoaAccountClass.Assets]}
               />
 
               <FormLeafCoaHeadSelect
                 name={UtilityLedgerType.ServiceCharge}
                 label="Service Charge Ledger Mapping"
+                // coaClass={[CoaAccountClass.Assets]}
               />
 
               <FormLeafCoaHeadSelect
                 name={UtilityLedgerType.UtilityLimitContra}
-                label="Income from Neosys Ledger Mapping"
+                label="Utility Limit Contra Ledger Mapping"
+                // coaClass={[CoaAccountClass.Assets]}
+              />
+
+              <FormLeafCoaHeadSelect
+                name={UtilityLedgerType.UtilityLimit}
+                label="Utility Limit Ledger Mapping"
+                // coaClass={[CoaAccountClass.Assets]}
               />
 
               {/* <FormLeafCoaHeadSelect
@@ -145,6 +149,8 @@ export const AlternativeChannelGeneralSettings = () => {
                 // UtilityLedgerType.Utility,
                 UtilityLedgerType.CashBack,
                 UtilityLedgerType.ServiceCharge,
+                UtilityLedgerType.UtilityLimit,
+                UtilityLedgerType.UtilityLimitContra,
                 // UtilityLedgerType.IncomeFromNeosys,
                 // UtilityLedgerType.IncomeFromNeosysSuspense,
                 // UtilityLedgerType.ExpenseToNeosys,
