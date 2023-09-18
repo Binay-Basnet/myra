@@ -5,6 +5,7 @@ import { Box, Button, Column, Text } from '@myra-ui';
 
 import {
   CharKhataReportFilter,
+  CoaAccountClass,
   CoaHead,
   LocalizedDateFilter,
   Maybe,
@@ -19,7 +20,10 @@ import { localizedText, ROUTES } from '@coop/cbs/utils';
 import { FormRadioGroup } from '@coop/shared/form';
 import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
-type TrialSheetReportFilters = Omit<CharKhataReportFilter, 'filter' | 'branchId' | 'coaHead'> & {
+type TrialSheetReportFilters = Omit<
+  CharKhataReportFilter,
+  'filter' | 'branchId' | 'coaHead' | 'coaType'
+> & {
   branchId: { label: string; value: string }[];
   coaHead: { label: string; value: CoaHead }[];
   filter: {
@@ -62,7 +66,10 @@ export const CharKhataReport = () => {
 
   const coaHeads =
     filters?.coaHead && filters?.coaHead.length !== 0 ? filters?.coaHead?.map((t) => t.value) : [];
-
+  const coaTypes =
+    filters?.coaHead && filters?.coaType?.length !== 0
+      ? filters?.coaType?.map((t) => t?.value)
+      : [];
   const { data, isFetching } = useGetCharKhataReportQuery(
     {
       data: {
@@ -71,6 +78,7 @@ export const CharKhataReport = () => {
           from: filters?.period?.from,
           to: filters?.period?.to,
         } as LocalizedDateFilter,
+        coaType: coaTypes as CoaAccountClass[],
         coaHead: coaHeads,
         filter: {
           includeZero: filters?.filter?.includeZero === 'include',
