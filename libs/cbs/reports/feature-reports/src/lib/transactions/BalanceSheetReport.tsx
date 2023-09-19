@@ -59,6 +59,11 @@ export const BalanceSheetReport = () => {
       type: 'ASSETS',
       total: coaReportData?.assetsTotal || {},
     }),
+    ...generateAndSortCOATreeArray({
+      array: (coaReportData?.offBalance || []) as TrialSheetReportDataEntry[],
+      type: 'OFF_BALANCE',
+      total: coaReportData?.offBalanceTotal || {},
+    }),
   ];
 
   return (
@@ -87,7 +92,7 @@ export const BalanceSheetReport = () => {
               label: 'Balance Sheet',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions/balance-sheet/new'
-                : '/accounting/reports/transactions/balance-sheet/new',
+                : '/accountingrt/repos/transactions/balance-sheet/new',
             },
           ]}
         />

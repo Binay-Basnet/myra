@@ -39,7 +39,7 @@ const defaultFormValue = {
   isTaxApplicable: false,
   roundToNearestInteger: false,
   makeThisActive: false,
-  deductionFrequenct: DeductionFrequencyEnum?.Fixed,
+  deductionFrequenct: DeductionFrequencyEnum?.Monthly,
 };
 
 export const DeductionComponentTable = () => {
@@ -133,8 +133,8 @@ export const DeductionComponentTable = () => {
   );
 
   const deductionFrequencyOptions = [
-    { label: 'Fixed', value: DeductionFrequencyEnum?.Fixed },
-    { label: 'Recurring', value: DeductionFrequencyEnum?.Recurring },
+    { label: 'Monthly', value: DeductionFrequencyEnum?.Monthly },
+    { label: 'Yearly', value: DeductionFrequencyEnum?.Yearly },
   ];
 
   const handleAddModalClose = () => {
