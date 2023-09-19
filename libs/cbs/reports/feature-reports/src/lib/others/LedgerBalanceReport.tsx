@@ -114,22 +114,11 @@ export const LedgerBalanceReport = () => {
                 accessorKey: 'adjustedDr',
                 cell: (props) => amountConverter(props?.row?.original?.adjustedDr || 0),
               },
-              {
-                header: 'Dr Total Adjusted',
-                accessorKey: 'dr',
-                cell: (props) => amountConverter(props?.row?.original?.adjustedCr || 0),
-              },
-
-              {
-                header: 'Cr Total Adjusted',
-                accessorKey: 'cr',
-                cell: (props) => amountConverter(props?.row?.original?.cr || 0),
-              },
 
               {
                 header: 'Cr Total Adjusted',
                 accessorKey: 'adjustedCr',
-                cell: (props) => amountConverter(props?.row?.original?.cr || 0),
+                cell: (props) => amountConverter(props?.row?.original?.adjustedCr || 0),
               },
               {
                 header: 'Balance',

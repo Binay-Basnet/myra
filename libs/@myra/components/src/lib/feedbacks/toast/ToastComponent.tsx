@@ -61,7 +61,7 @@ export const Toaster = () => (
       inset: '48px',
     }}
     toastOptions={{
-      duration: 2000,
+      duration: 5000,
     }}
   />
 );
