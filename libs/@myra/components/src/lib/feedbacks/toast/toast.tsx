@@ -72,7 +72,7 @@ export function findError(obj: Record<string, unknown> | null, key: string): Mut
 export function toast({ options, id, ...props }: ToastProps) {
   return rhToast.custom(<Toast {...props} />, {
     id,
-    duration: props.state === 'loading' ? Infinity : 2000,
+    duration: props.state === 'loading' ? Infinity : 5000,
     ...options,
   });
 }
