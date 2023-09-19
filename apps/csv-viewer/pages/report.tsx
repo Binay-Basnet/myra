@@ -10,7 +10,6 @@ import { getAPIUrl } from '@coop/shared/utils';
 
 import { Resizer, Tab, TableSvg } from '.';
 import { AppBar } from '../components/AppBar';
-import LedgerStatementReport from '../components/LedgerStatementReport';
 import LoanStatementReport from '../components/LoanStatementReport';
 
 const getReportTypes = async () => {
@@ -218,7 +217,7 @@ export const Report = () => {
             ))}
             <Box flex={1} h="40px" borderBottom="1px" borderBottomColor="border.layout" />
           </Box>
-          {selectedTab?.value === 'LEDGER_STATEMENT' && <LedgerStatementReport />}
+          {/* {selectedTab?.value === 'LEDGER_STATEMENT' && <LedgerStatementReport />} */}
           {selectedTab?.value === 'LOAN_STATEMENT' && <LoanStatementReport />}
         </Box>
       </Box>
