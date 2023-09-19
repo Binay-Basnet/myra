@@ -248,19 +248,19 @@ query getAccountTableList($paginate: Pagination, $filter: Filter) {
           objState
           createdAt
           accountName
-          createdBy {
-            id
-            # name
-            # username
-            # userType
-          }
+          # createdBy {
+          #   id
+          #   # name
+          #   # username
+          #   # userType
+          # }
           modifiedAt
-          modifiedBy {
-            id
-            # name
-            # username
-            # userType
-          }
+          # modifiedBy {
+          #   id
+          #   # name
+          #   # username
+          #   # userType
+          # }
           installmentAmount
           balance
           availableBalance
