@@ -1,6 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { Alert, asyncToast, Box, Button, DetailPageContentCard, Text } from '@myra-ui';
 
@@ -13,6 +15,8 @@ import { AssignedMembersCard } from '@coop/cbs/transactions/ui-components';
 import { localizedText } from '@coop/cbs/utils';
 import { FormEditableTable } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
+
+import { TodaysListPrint } from '../components';
 
 /* eslint-disable-next-line */
 export interface AgentDetailOverviewProps {}
@@ -28,9 +32,13 @@ type DepositAccountTable = {
 export const AgentDetailOverview = () => {
   const { t } = useTranslation();
 
+  const componentRef = useRef<HTMLInputElement | null>(null);
+
   const router = useRouter();
 
   const id = router?.query?.['id'];
+
+  const queryClient = useQueryClient();
 
   const methods = useForm();
 
@@ -142,13 +150,6 @@ export const AgentDetailOverview = () => {
 
   const { mutateAsync: setAgentTodayList } = useSetAgentTodayListDataMutation();
 
-  const { refetch } = useGetAgentTodayListDataQuery(
-    {
-      id: id as string,
-    },
-    { staleTime: 0, enabled: !!id }
-  );
-
   const handleSaveTodayList = () => {
     asyncToast({
       id: 'set-agent-today-list',
@@ -182,7 +183,7 @@ export const AgentDetailOverview = () => {
         loading: t['agentOverviewAddingTodaysList'],
         success: t['agentOverviewAddedTodaysList'],
       },
-      onSuccess: () => refetch(),
+      onSuccess: () => queryClient.invalidateQueries(['getAgentTodayListData']),
     });
   };
 
@@ -199,6 +200,10 @@ export const AgentDetailOverview = () => {
       setShowMemberTable(false);
     }
   };
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">
@@ -227,6 +232,8 @@ export const AgentDetailOverview = () => {
               <Button onClick={handleSaveTodayList}>{t['agentOverviewSaveChanges']}</Button>
             </>
           }
+          headerButtonLabel="Print Saved List"
+          headerButtonHandler={handlePrint}
         >
           <Box p="s16">
             <FormProvider {...methods}>
@@ -321,6 +328,8 @@ export const AgentDetailOverview = () => {
           </Box>
         </DetailPageContentCard>
       )}
+
+      <TodaysListPrint ref={componentRef} />
     </Box>
   );
 };

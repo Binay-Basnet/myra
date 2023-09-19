@@ -3436,12 +3436,6 @@ export type CoaView = {
   under?: Maybe<Scalars['ID']>;
 };
 
-export const CalculationTypeEnum = {
-  Amount: 'AMOUNT',
-  Percentage: 'PERCENTAGE',
-} as const;
-
-export type CalculationTypeEnum = typeof CalculationTypeEnum[keyof typeof CalculationTypeEnum];
 export type CashBack = {
   cashBackAmount?: InputMaybe<Scalars['String']>;
   cashBackPercent?: InputMaybe<Scalars['String']>;
@@ -5016,12 +5010,13 @@ export type DeductionComponentNode = {
   makeThisActive?: Maybe<Scalars['Boolean']>;
   multiplier?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
+  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
   status?: Maybe<DeductionStatusEnum>;
 };
 
 export const DeductionFrequencyEnum = {
-  Fixed: 'FIXED',
-  Recurring: 'RECURRING',
+  Monthly: 'MONTHLY',
+  Yearly: 'YEARLY',
 } as const;
 
 export type DeductionFrequencyEnum =
@@ -5032,12 +5027,6 @@ export const DeductionStatusEnum = {
 } as const;
 
 export type DeductionStatusEnum = typeof DeductionStatusEnum[keyof typeof DeductionStatusEnum];
-export const DeductionType = {
-  PostTaxDeduction: 'POST_TAX_DEDUCTION',
-  PreTaxDeduction: 'PRE_TAX_DEDUCTION',
-} as const;
-
-export type DeductionType = typeof DeductionType[keyof typeof DeductionType];
 export const DefaultAccountType = {
   Current: 'CURRENT',
   Saving: 'SAVING',
@@ -6633,16 +6622,12 @@ export type EachTransferRecord = {
 export type EarningComponentInput = {
   abbr?: InputMaybe<Scalars['String']>;
   baseMultiple?: InputMaybe<Scalars['String']>;
-  calculationType?: InputMaybe<CalculationTypeEnum>;
   description?: InputMaybe<Scalars['String']>;
-  earningFrequency?: InputMaybe<EarningFrequencyEnum>;
-  ledgerHead?: InputMaybe<Scalars['String']>;
+  isTaxApplicable?: InputMaybe<Scalars['Boolean']>;
   makeThisActive?: InputMaybe<Scalars['Boolean']>;
-  maximumAmountLimitPerYear?: InputMaybe<Scalars['String']>;
   multiplier?: InputMaybe<Scalars['Float']>;
   name?: InputMaybe<Scalars['String']>;
-  requiredProof?: InputMaybe<Scalars['Boolean']>;
-  taxExempted?: InputMaybe<Scalars['Boolean']>;
+  roundToNearestInteger?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type EarningComponentListConnection = {
@@ -6661,27 +6646,24 @@ export type EarningComponentNode = {
   baseMultiple?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
+  isTaxApplicable?: Maybe<Scalars['Boolean']>;
   makeThisActive?: Maybe<Scalars['Boolean']>;
   multiplier?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
+  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
   status?: Maybe<EarningComponentStatus>;
-  taxExempted?: Maybe<Scalars['Boolean']>;
 };
 
 export type EarningComponentRecord = {
   abbr?: Maybe<Scalars['String']>;
   baseMultiple?: Maybe<Scalars['String']>;
-  calculationType?: Maybe<CalculationTypeEnum>;
   description?: Maybe<Scalars['String']>;
-  earningFrequency?: Maybe<EarningFrequencyEnum>;
   id?: Maybe<Scalars['ID']>;
-  ledgerHead?: Maybe<Scalars['String']>;
+  isTaxApplicable?: Maybe<Scalars['Boolean']>;
   makeThisActive?: Maybe<Scalars['Boolean']>;
-  maximumAmountLimitPerYear?: Maybe<Scalars['String']>;
   multiplier?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
-  requiredProof?: Maybe<Scalars['Boolean']>;
-  taxExempted?: Maybe<Scalars['Boolean']>;
+  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
 };
 
 export const EarningComponentStatus = {
@@ -6691,12 +6673,6 @@ export const EarningComponentStatus = {
 
 export type EarningComponentStatus =
   typeof EarningComponentStatus[keyof typeof EarningComponentStatus];
-export const EarningFrequencyEnum = {
-  Fixed: 'FIXED',
-  Recurring: 'RECURRING',
-} as const;
-
-export type EarningFrequencyEnum = typeof EarningFrequencyEnum[keyof typeof EarningFrequencyEnum];
 export type EbankingRegistrationReportResult = {
   data?: Maybe<Array<Maybe<EbankingReportResult>>>;
   error?: Maybe<QueryError>;
@@ -8779,16 +8755,13 @@ export type GeneralSettingsQuery = {
 export type GetDeductionComponentSchema = {
   abbr: Scalars['String'];
   baseMultiple?: Maybe<Scalars['String']>;
-  calculationType?: Maybe<CalculationTypeEnum>;
   deductionFrequency?: Maybe<DeductionFrequencyEnum>;
-  deductionType?: Maybe<DeductionType>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
-  ledgerHead?: Maybe<Scalars['String']>;
   makeThisActive?: Maybe<Scalars['Boolean']>;
-  maximumAmountLimitPerYear?: Maybe<Scalars['String']>;
   multiplier?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
+  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
 };
 
 export type GetDeductionComponentSchemaWithError = {
@@ -8830,13 +8803,6 @@ export type GetInventoryItemResponse = {
   error?: Maybe<QueryError>;
 };
 
-export type GetPayGroupData = {
-  employees?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  id?: Maybe<Scalars['ID']>;
-  name?: Maybe<Scalars['String']>;
-  paycycle?: Maybe<PaycycleEnum>;
-};
-
 export type GetSalaryStructureAssignment = {
   baseSalary?: Maybe<Scalars['String']>;
   deduction?: Maybe<Array<Maybe<SalaryAmountType>>>;
@@ -8857,10 +8823,12 @@ export type GetSalaryStructureSchema = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   makeThisActive?: Maybe<Scalars['Boolean']>;
+  modeOfPayment?: Maybe<PaymentModeEnum>;
   name?: Maybe<Scalars['String']>;
-  paygroup?: Maybe<Scalars['String']>;
+  payrollFrequency?: Maybe<PayrollFrequencyEnum>;
   salaryDeduction?: Maybe<Array<Maybe<SalaryStructureDeductionDetailsType>>>;
   salaryEarnings?: Maybe<Array<Maybe<SalaryStructureEarningDetailsType>>>;
+  salaryPaymentLedger?: Maybe<LedgerPaymentEnum>;
 };
 
 export type GetSalaryStructureSchemaWithError = {
@@ -9282,7 +9250,6 @@ export type HcmPayrollMutation = {
   deductionComponent: HcmPayrollDeductionComponentMutation;
   earningComponent: HcmPayrollEarningComponentMutation;
   general: HcmPayrollGeneralMutation;
-  paygroup: HcmPayrollSettingsPaygroupMutation;
   salaryStructure: HcmPayrollSalaryStructureMutation;
   taxSlab: HcmPayrollTaxSlabMutation;
 };
@@ -9291,37 +9258,8 @@ export type HcmPayrollQuery = {
   deductionComponent: HcmPayrollDeductionComponentQuery;
   earningComponent: HcmPayrollEarningComponentQuery;
   general: HcmPayrollGeneralQuery;
-  paygroup: HcmPayrollSettingPaygroupQuery;
   salaryStructure: HcmPayrollSalaryStructureQuery;
   taxSlab: HcmPayrollTaxSlabQuery;
-};
-
-export type HcmPayrollSettingPaygroupQuery = {
-  getPayGroup: PaygroupWithError;
-  listPayGroup: PaygroupConnection;
-};
-
-export type HcmPayrollSettingPaygroupQueryGetPayGroupArgs = {
-  id?: InputMaybe<Scalars['ID']>;
-};
-
-export type HcmPayrollSettingPaygroupQueryListPayGroupArgs = {
-  filter?: InputMaybe<Filter>;
-  pagination?: InputMaybe<Pagination>;
-};
-
-export type HcmPayrollSettingsPaygroupMutation = {
-  deletePaygroup: PaygroupDeletedWithError;
-  upsertPaygroup: PaygroupMutationWithError;
-};
-
-export type HcmPayrollSettingsPaygroupMutationDeletePaygroupArgs = {
-  id?: InputMaybe<Scalars['ID']>;
-};
-
-export type HcmPayrollSettingsPaygroupMutationUpsertPaygroupArgs = {
-  id?: InputMaybe<Scalars['ID']>;
-  input?: InputMaybe<PaygroupInput>;
 };
 
 export type HcmSettingsMutation = {
@@ -10251,24 +10189,23 @@ export type IndividualRequiredDocument =
 export type InputDeductionComponent = {
   abbr: Scalars['String'];
   baseMultiple?: InputMaybe<Scalars['String']>;
-  calculationType?: InputMaybe<CalculationTypeEnum>;
   deductionFrequency?: InputMaybe<DeductionFrequencyEnum>;
-  deductionType?: InputMaybe<DeductionType>;
   description?: InputMaybe<Scalars['String']>;
-  ledgerHead?: InputMaybe<Scalars['String']>;
   makeThisActive?: InputMaybe<Scalars['Boolean']>;
-  maximumAmountLimitPerYear?: InputMaybe<Scalars['String']>;
   multiplier?: InputMaybe<Scalars['Float']>;
   name?: InputMaybe<Scalars['String']>;
+  roundToNearestInteger?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type InputSalaryStructure = {
   description?: InputMaybe<Scalars['String']>;
   makeThisActive?: InputMaybe<Scalars['Boolean']>;
+  modeOfPayment?: InputMaybe<PaymentModeEnum>;
   name?: InputMaybe<Scalars['String']>;
-  paygroup?: InputMaybe<Scalars['String']>;
+  payrollFrequency?: InputMaybe<PayrollFrequencyEnum>;
   salaryDeduction?: InputMaybe<Array<InputMaybe<SalaryStructureDeductionDetails>>>;
   salaryEarnings?: InputMaybe<Array<InputMaybe<SalaryStructureEarningDetails>>>;
+  salaryPaymentLedger?: InputMaybe<LedgerPaymentEnum>;
 };
 
 export type InputSalaryStructureAssignment = {
@@ -18326,57 +18263,6 @@ export type PasswordRecoveryResult = {
   recordID?: Maybe<Scalars['ID']>;
 };
 
-export const PaycycleEnum = {
-  BiMonthly: 'BI_MONTHLY',
-  OneMonth: 'ONE_MONTH',
-  OneYear: 'ONE_YEAR',
-  SixMonth: 'SIX_MONTH',
-  ThreeMonth: 'THREE_MONTH',
-  TwoMonth: 'TWO_MONTH',
-  Weekly: 'WEEKLY',
-} as const;
-
-export type PaycycleEnum = typeof PaycycleEnum[keyof typeof PaycycleEnum];
-export type PaygroupConnection = {
-  edges?: Maybe<Array<Maybe<PaygroupEdges>>>;
-  pageInfo?: Maybe<PageInfo>;
-  totalCount: Scalars['Int'];
-};
-
-export type PaygroupDeletedWithError = {
-  error?: Maybe<MutationError>;
-  isPaygroupDeleted?: Maybe<Scalars['Boolean']>;
-};
-
-export type PaygroupEdges = {
-  cursor?: Maybe<Scalars['Cursor']>;
-  node?: Maybe<PaygroupNode>;
-};
-
-export type PaygroupInput = {
-  employees?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  name?: InputMaybe<Scalars['String']>;
-  paycycle?: InputMaybe<PaycycleEnum>;
-};
-
-export type PaygroupMutationWithError = {
-  error?: Maybe<QueryError>;
-  id?: Maybe<Scalars['ID']>;
-};
-
-export type PaygroupNode = {
-  employee?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['ID']>;
-  lastPayrollRun?: Maybe<Scalars['Localized']>;
-  name?: Maybe<Scalars['String']>;
-  paycycle?: Maybe<PaycycleEnum>;
-};
-
-export type PaygroupWithError = {
-  data?: Maybe<GetPayGroupData>;
-  error?: Maybe<QueryError>;
-};
-
 export type PaymentAllocation = {
   amount: Scalars['String'];
   date: Scalars['Localized'];
@@ -22036,7 +21922,7 @@ export type TaxSlabConnection = {
 export type TaxSlabInput = {
   effectiveFrom?: InputMaybe<Scalars['Localized']>;
   fiscalYear?: InputMaybe<LocalizedDateFilter>;
-  makeItCurrentTaxSlab?: InputMaybe<Scalars['Boolean']>;
+  makeThisActive?: InputMaybe<Scalars['Boolean']>;
   marriedTaxableSalarySlab?: InputMaybe<Array<InputMaybe<SlabInput>>>;
   name?: InputMaybe<Scalars['String']>;
   unmarriedTaxableSalarySlab?: InputMaybe<Array<InputMaybe<SlabInput>>>;
@@ -22053,7 +21939,7 @@ export type TaxSlabRecord = {
   effectiveFrom?: Maybe<Scalars['Localized']>;
   fiscalYear?: Maybe<LocalizedDate>;
   id?: Maybe<Scalars['ID']>;
-  makeThisCurrentTaxSlab?: Maybe<Scalars['Boolean']>;
+  makeThisActive?: Maybe<Scalars['Boolean']>;
   marriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
   name?: Maybe<Scalars['String']>;
   unmarriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
@@ -42298,6 +42184,8 @@ export type GetEarningComponentQuery = {
                 description?: string | null;
                 baseMultiple?: string | null;
                 multiplier?: number | null;
+                isTaxApplicable?: boolean | null;
+                roundToNearestInteger?: boolean | null;
                 makeThisActive?: boolean | null;
               } | null;
               error?:
@@ -42367,6 +42255,7 @@ export type GetDeductionComponentQuery = {
                 deductionFrequency?: DeductionFrequencyEnum | null;
                 baseMultiple?: string | null;
                 multiplier?: number | null;
+                roundToNearestInteger?: boolean | null;
                 makeThisActive?: boolean | null;
               } | null;
               error?:
@@ -42431,7 +42320,10 @@ export type GetSalaryStructureQuery = {
               record?: {
                 id?: string | null;
                 name?: string | null;
+                payrollFrequency?: PayrollFrequencyEnum | null;
                 description?: string | null;
+                modeOfPayment?: PaymentModeEnum | null;
+                salaryPaymentLedger?: LedgerPaymentEnum | null;
                 makeThisActive?: boolean | null;
                 salaryEarnings?: Array<{
                   id?: string | null;
@@ -42502,6 +42394,7 @@ export type GetTaxSlabQuery = {
                 id?: string | null;
                 name?: string | null;
                 effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
+                makeThisActive?: boolean | null;
                 fiscalYear?: {
                   from: Record<'local' | 'en' | 'np', string>;
                   to: Record<'local' | 'en' | 'np', string>;
@@ -71384,6 +71277,8 @@ export const GetEarningComponentDocument = `
                 description
                 baseMultiple
                 multiplier
+                isTaxApplicable
+                roundToNearestInteger
                 makeThisActive
               }
               error {
@@ -71470,6 +71365,7 @@ export const GetDeductionComponentDocument = `
                 deductionFrequency
                 baseMultiple
                 multiplier
+                roundToNearestInteger
                 makeThisActive
               }
               error {
@@ -71553,6 +71449,7 @@ export const GetSalaryStructureDocument = `
               record {
                 id
                 name
+                payrollFrequency
                 description
                 salaryEarnings {
                   id
@@ -71562,6 +71459,8 @@ export const GetSalaryStructureDocument = `
                   id
                   amount
                 }
+                modeOfPayment
+                salaryPaymentLedger
                 makeThisActive
               }
               error {
@@ -71655,6 +71554,7 @@ export const GetTaxSlabDocument = `
                   percentageDeduction
                 }
                 effectiveFrom
+                makeThisActive
               }
               error {
                 ...MutationError
