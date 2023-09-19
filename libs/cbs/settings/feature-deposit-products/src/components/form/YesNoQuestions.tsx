@@ -116,18 +116,19 @@ export const Questions = () => {
       )}
 
       {(depositNature === NatureOfDepositProduct.Current ||
-        depositNature === NatureOfDepositProduct.Saving) && (
-        <FormSection>
-          <GridItem colSpan={3}>
-            <Box display="flex" flexDirection="row" justifyContent="space-between">
-              <SubHeadingText>{t['depositProductChequeIssue']}</SubHeadingText>
-              <FormSwitchTab name="chequeIssue" options={editYesNo} />
-            </Box>
+        depositNature === NatureOfDepositProduct.Saving) &&
+        !router?.asPath?.includes('/edit') && (
+          <FormSection>
+            <GridItem colSpan={3}>
+              <Box display="flex" flexDirection="row" justifyContent="space-between">
+                <SubHeadingText>{t['depositProductChequeIssue']}</SubHeadingText>
+                <FormSwitchTab name="chequeIssue" options={editYesNo} />
+              </Box>
 
-            {chequeIssue && <AllowChequeIssue />}
-          </GridItem>
-        </FormSection>
-      )}
+              {chequeIssue && <AllowChequeIssue />}
+            </GridItem>
+          </FormSection>
+        )}
 
       {depositNature !== NatureOfDepositProduct.Current && (
         <FormSection>
