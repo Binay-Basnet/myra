@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Box } from '@myra-ui';
+import { Box, getError, MutationError } from '@myra-ui';
 
 import { EbankingPathBar, LoaderOverlay } from '@coop/ebanking/components';
 import { useAppSelector, useMakePaymentMutation, UtilityInput } from '@coop/ebanking/data-access';
@@ -78,8 +78,7 @@ export const UtilityMobileTopup = () => {
     } else {
       const error = response?.eBanking?.utility?.makePayment?.error;
       const errMsg =
-        (error?.__typename === 'BadRequestError' && error?.badRequestErrorMessage) ||
-        response?.eBanking?.utility?.makePayment?.data?.message;
+        response?.eBanking?.utility?.makePayment?.data?.message || getError(error as MutationError);
 
       setMutationMsg(errMsg as string);
       setPaymentStatus('failure');
