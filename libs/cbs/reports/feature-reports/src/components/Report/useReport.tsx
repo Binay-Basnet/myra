@@ -70,16 +70,15 @@ const Report = <T extends Record<string, unknown>, Q extends Record<string, unkn
   const router = useRouter();
   const otherParams = omit(router.query, ['action', 'report', 'report-group']);
   const printRef = useRef<HTMLInputElement | null>(null);
-  const { isFetching } = useGetEndOfDayDateDataQuery();
+  const { isLoading: isDayEndFetching } = useGetEndOfDayDateDataQuery();
 
   const methods = useForm({
     defaultValues: (defaultFilters ?? {}) as DeepPartial<Q>,
   });
 
   const [isFilterShown, setIsFilterShown] = useState(false);
-
   useDeepCompareEffect(() => {
-    if (otherParams && Object.keys(otherParams).length !== 0 && !isFetching) {
+    if (otherParams && Object.keys(otherParams)?.length !== 0 && !isDayEndFetching) {
       setFilters(methods.getValues() as Q);
     }
   }, [otherParams, defaultFilters, methods.getValues()]);
