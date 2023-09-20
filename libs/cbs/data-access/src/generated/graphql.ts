@@ -24289,6 +24289,10 @@ export type SetAccountCloseDataMutation = {
         paymentMode?: string | null;
         closeReason?: string | null;
         tax?: string | null;
+        destAccName?: string | null;
+        destAccId?: string | null;
+        bankName?: string | null;
+        bankChequeNo?: string | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -47049,6 +47053,10 @@ export const SetAccountCloseDataDocument = `
         paymentMode
         closeReason
         tax
+        destAccName
+        destAccId
+        bankName
+        bankChequeNo
       }
       error {
         ...MutationError

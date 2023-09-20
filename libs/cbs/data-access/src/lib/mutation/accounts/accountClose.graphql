@@ -13,6 +13,10 @@ mutation setAccountCloseData($data: DepositAccountClose) {
         paymentMode
         closeReason
         tax
+        destAccName
+        destAccId
+        bankName
+        bankChequeNo
       }
 
       error {

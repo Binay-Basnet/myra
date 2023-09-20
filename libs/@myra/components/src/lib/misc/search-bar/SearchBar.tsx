@@ -30,7 +30,7 @@ import { Icon } from '@myra-ui/foundations';
 import { Filter_Mode, useGetGlobalSearchQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { useDebounce } from '@coop/shared/utils';
 
-import { getAppName, getPageUrl, getSubtitle } from './generateUrl';
+import { getAppName, getSubtitle } from './generateUrl';
 import { useSearchNavigate } from './useSearchNavigate';
 import Loader from '../loader/Loader';
 
@@ -154,8 +154,8 @@ export const SearchBar = () => {
     if (searchAction === 'SIMPLE') {
       return globalSearch?.map((s) => ({
         link: s?.node?.id
-          ? s?.node?.url || `${getPageUrl(s?.node?.fullCode || '')}?id=${s?.node?.id}`
-          : s?.node?.url || getPageUrl(s?.node?.fullCode || ''),
+          ? s?.node?.url || `${s?.node?.url || ''}?id=${s?.node?.id}`
+          : s?.node?.url || `${s?.node?.fullCode || ''}`,
         hasParam: Boolean(s?.node?.hasParam),
       }));
     }
@@ -183,9 +183,7 @@ export const SearchBar = () => {
           if (formSearch) {
             const response = formSearch?.node?.hasParam ? await getNewId({}) : null;
 
-            const url = `${getPageUrl(formSearch?.node?.fullCode || '')}${
-              response ? `/${response?.newId}` : ''
-            }`;
+            const url = `${formSearch?.node?.url || ''}${response ? `/${response?.newId}` : ''}`;
 
             router.push(url).then(() => {
               const currentSearch = {
@@ -380,8 +378,8 @@ export const SearchBar = () => {
                         app={getAppName(basic?.node?.fullCode as string)}
                         link={
                           basic?.node?.id
-                            ? `${getPageUrl(basic?.node?.fullCode || '')}?id=${basic?.node?.id}`
-                            : (getPageUrl(basic?.node?.fullCode || '') as string)
+                            ? `${basic?.node?.url || ''}?id=${basic?.node?.id}`
+                            : `${basic?.node?.url || ''}`
                         }
                         title={basic?.node?.page as string}
                         isSelected={focusState === index}
@@ -391,8 +389,8 @@ export const SearchBar = () => {
                           const response = basic?.node?.hasParam ? await getNewId({}) : null;
 
                           const url = basic?.node?.id
-                            ? `${getPageUrl(basic?.node?.fullCode || '')}?id=${basic?.node?.id}`
-                            : getPageUrl(basic?.node?.fullCode || '');
+                            ? `${basic?.node?.url || ''}?id=${basic?.node?.id}`
+                            : `${basic?.node?.url}`;
                           router
                             .push(`${url}${response ? `/${response?.newId}` : ''}` as string)
                             .then(() => {
