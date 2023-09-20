@@ -41,6 +41,7 @@ export const LedgerReport = () => {
   const closingBalance = data?.report?.otherReport?.generalLedgerReport?.summary?.closingBalance;
   const closingAdjustedBalance =
     data?.report?.otherReport?.generalLedgerReport?.summary?.adjustedClosingBalance;
+  const closingDate = filters?.period?.to;
 
   return (
     <Report
@@ -180,8 +181,10 @@ export const LedgerReport = () => {
                     },
                   },
                   {
+                    id: 'Closing Date From Fiscal Year',
                     header: 'Date',
-                    accessorFn: (row) => localizedDate(row?.date),
+                    // accessorFn: (row) => localizedDate(row?.date),
+                    cell: () => localizedDate(closingDate),
                     meta: {
                       width: '30px',
                       isNumeric: true,
