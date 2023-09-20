@@ -39867,8 +39867,18 @@ export type GetLedgerReportQuery = {
             amount?: string | null;
             amountType?: BalanceType | null;
           } | null;
+          yearEndBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
         } | null;
         adjustedEntries?: Array<{
+          id?: string | null;
+          oldId?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          account?: string | null;
+          balance?: string | null;
+          credit?: string | null;
+          debit?: string | null;
+        } | null> | null;
+        yearEnd?: Array<{
           id?: string | null;
           oldId?: string | null;
           date?: Record<'local' | 'en' | 'np', string> | null;
@@ -68069,8 +68079,21 @@ export const GetLedgerReportDocument = `
             amount
             amountType
           }
+          yearEndBalance {
+            amount
+            amountType
+          }
         }
         adjustedEntries {
+          id
+          oldId
+          date
+          account
+          balance
+          credit
+          debit
+        }
+        yearEnd {
           id
           oldId
           date
