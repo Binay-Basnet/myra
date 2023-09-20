@@ -35446,6 +35446,8 @@ export type GetKymIndividualFormDataQuery = {
           declarationAgreement?: boolean | null;
           sameTempAsPermanentAddress?: boolean | null;
           identificationSelection?: Array<string | null> | null;
+          bankId?: string | null;
+          bankAccountId?: string | null;
           mainOccupation?: {
             registrationNo?: string | null;
             address?: string | null;
@@ -37560,6 +37562,8 @@ export type GetMemberKymDetailsBioQuery = {
               permanentAddress?: Record<'local' | 'en' | 'np', string> | null;
               maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
               panNo?: string | null;
+              bankName?: string | null;
+              bankAccountId?: string | null;
               familyMembers?: Array<{
                 relationship?: string | null;
                 fullName?: string | null;
@@ -62492,6 +62496,8 @@ export const GetKymIndividualFormDataDocument = `
             id
             relationshipId
           }
+          bankId
+          bankAccountId
           documents {
             identifiers: docData {
               identifier
@@ -64769,6 +64775,8 @@ export const GetMemberKymDetailsBioDocument = `
               value
             }
             panNo
+            bankName
+            bankAccountId
           }
           ... on InstitutionBio {
             basicInfo {

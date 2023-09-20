@@ -348,6 +348,8 @@ query getMemberKYMDetailsBio($id: ID!) {
               value
             }
             panNo
+            bankName
+            bankAccountId
           }
           ... on InstitutionBio {
             basicInfo {

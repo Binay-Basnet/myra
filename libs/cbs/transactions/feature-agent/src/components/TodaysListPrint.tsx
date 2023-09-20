@@ -73,7 +73,14 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
 
         return (
           <Box display="flex" flexDirection="column" py="s4">
-            <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
+            <Text
+              fontSize="r1"
+              fontWeight={500}
+              color="neutralColorLight.Gray-80"
+              maxW="32ch"
+              wordBreak="break-all"
+              whiteSpace="normal"
+            >
               {localizedText(selectedMember?.name)}
             </Text>
             <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
@@ -101,8 +108,8 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
               fontWeight={500}
               color="neutralColorLight.Gray-80"
               maxW="32ch"
-              textOverflow="ellipsis"
-              overflow="hidden"
+              wordBreak="break-all"
+              whiteSpace="normal"
             >
               {selectedMember?.accountName}
             </Text>
@@ -164,12 +171,12 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
           display: 'flex',
         },
         '@page': {
-          size: 'A4 landscape',
+          size: 'A4 potrait',
         },
       }}
       ref={ref}
     >
-      <Box display="flex" flexDirection="column" gap="s16" width="100%">
+      <Box display="flex" flexDirection="column" gap="s16">
         <Box display="flex" justifyContent="space-between">
           <Box display="flex" gap="s4" fontSize="r1" fontWeight={500}>
             <Text>Market Representative: </Text>
