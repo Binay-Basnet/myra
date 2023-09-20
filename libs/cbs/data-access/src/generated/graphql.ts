@@ -32836,6 +32836,8 @@ export type GetSingleEmployeeDetailsQuery = {
         getEmployee: {
           record?: {
             id?: string | null;
+            isCoopMember?: boolean | null;
+            coopMemberId?: string | null;
             firstName?: string | null;
             middleName?: string | null;
             lastName?: string | null;
@@ -58967,6 +58969,8 @@ export const GetSingleEmployeeDetailsDocument = `
         getEmployee(id: $id) {
           record {
             id
+            isCoopMember
+            coopMemberId
             firstName
             middleName
             lastName

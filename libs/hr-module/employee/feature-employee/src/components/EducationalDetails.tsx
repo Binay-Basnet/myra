@@ -88,7 +88,7 @@ export const EducationalDetails = () => {
   } = useFieldArray({ name: 'educationDetails' });
 
   return (
-    <FormSection header="Education Information" flexLayout id="Education Information">
+    <FormSection header="Educational Information" flexLayout id="Educational Information">
       {educationalFields.map((item, index) => (
         <Box key={item.id} py="s4">
           <AddEducationalDetails

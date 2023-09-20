@@ -64,6 +64,8 @@ query getSingleEmployeeDetails($id: String!) {
         getEmployee(id: $id) {
           record {
             id
+            isCoopMember
+            coopMemberId
             firstName
             middleName
             lastName

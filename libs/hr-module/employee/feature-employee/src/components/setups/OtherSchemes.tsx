@@ -46,7 +46,7 @@ export const OtherSchemes = () => {
           <FormCheckbox name="noCitDeduction" label="No CIT Deduction" />
         </FormSection>
       )}
-      <FormSection id="Configuration" header="Configuration">
+      <FormSection id="Configurations" header="Configurations">
         <FormSelect name="supervisor" label="Supervisor" options={employeeOptions} />
       </FormSection>
     </>
