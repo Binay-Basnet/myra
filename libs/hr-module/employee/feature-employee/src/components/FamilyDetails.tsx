@@ -19,7 +19,7 @@ export const FamilyDetails = () => {
   });
 
   return (
-    <FormSection header="Family Information" flexLayout id="Family Information">
+    <FormSection header="Family Details" flexLayout id="Family Details">
       <GridItem colSpan={3}>
         <FormEditableTable<FamilyDetailsType>
           name="familyDetails"

@@ -5,7 +5,7 @@ import { FormEditableTable } from '@coop/shared/form';
 export const InternationalTour = () => (
   <FormSection id="International Tour" header="International Tour" flexLayout>
     <FormEditableTable
-      name="ineternationalTour"
+      name="internationalTour"
       columns={[
         {
           accessor: 'tourCountry',

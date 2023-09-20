@@ -1,16 +1,14 @@
 /* eslint-disable-next-line */
 import { featureCode, useTranslation } from '@coop/shared/utils';
-import { Box, FormHeader, FormSection, GridItem, Text, asyncToast } from '@myra-ui';
+import { Box, FormHeader, Text, asyncToast } from '@myra-ui';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormCheckbox, FormLayout, FormMemberSelect } from '@coop/shared/form';
+import { FormLayout } from '@coop/shared/form';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   DocumentInsertInput,
   EmployeeInput,
-  MemberType,
-  useGetKymIndividualFormDataQuery,
   useGetSingleEmployeeDetailsQuery,
   useSetNewEmployeeMutation,
 } from '@coop/cbs/data-access';
@@ -32,6 +30,7 @@ import FamilyDetails from '../../components/FamilyDetails';
 import IdentificationDetails from '../../components/IdentificationDetails';
 import PayrollSetup from '../../components/setups/PayrollSetup';
 import OtherSchemes from '../../components/setups/OtherSchemes';
+import IsMemberComponent from '../../components/IsMemberComponent';
 
 const documentMap = ['passport', 'signature', 'citizenship', 'fingerprint'];
 
@@ -44,18 +43,8 @@ export const EmployeeAddForm = () => {
 
   const methods = useForm();
 
-  const { getValues, watch, reset, setValue } = methods;
+  const { getValues, reset } = methods;
   const { mutateAsync } = useSetNewEmployeeMutation();
-
-  const isCoopMemberWatch = watch('isCoopMember');
-  const memberIdWatch = watch('memberId');
-
-  const { data: editValues } = useGetKymIndividualFormDataQuery(
-    {
-      id: String(memberIdWatch),
-    },
-    { enabled: !!memberIdWatch }
-  );
 
   const { data: employeeEditData } = useGetSingleEmployeeDetailsQuery(
     {
@@ -88,34 +77,6 @@ export const EmployeeAddForm = () => {
       });
     }
   }, [JSON.stringify(employeeDetailData)]);
-
-  const basicInfo = editValues?.members?.individual?.formState?.data;
-
-  useEffect(() => {
-    if (basicInfo) {
-      reset({
-        firstName: basicInfo?.firstName?.local,
-        middleName: basicInfo?.middleName?.local,
-        lastName: basicInfo?.lastName?.local,
-        gender: basicInfo?.genderId,
-        dateOfBirth: basicInfo?.dateOfBirth,
-        personalPhoneNumber: basicInfo?.mobileNumber,
-        // personalEmailAddress: basicInfo?.email,
-        maritalStatus: basicInfo?.maritalStatusId,
-        permanentAddress: {
-          ...basicInfo?.permanentAddress,
-          locality: basicInfo?.permanentAddress?.locality?.local,
-        },
-        isTemporarySameAsPermanent: basicInfo?.sameTempAsPermanentAddress,
-        temporaryAddress: {
-          ...basicInfo?.temporaryAddress,
-          locality: basicInfo?.temporaryAddress?.locality?.local,
-        },
-      });
-      setValue('isCoopMember', true);
-      setValue('memberId', memberIdWatch);
-    }
-  }, [JSON.stringify(basicInfo)]);
 
   const onSave = () => {
     const values = getValues();
@@ -152,14 +113,7 @@ export const EmployeeAddForm = () => {
                 identifiers: item?.identifiers || [],
               })),
             },
-            [
-              'isCoopMember',
-              'memberId',
-              'id',
-              'otherSchemes',
-              'identificationSelection',
-              'otherDetails',
-            ]
+            ['id', 'otherSchemes', 'identificationSelection', 'otherDetails']
           ) as EmployeeInput,
         }),
       });
@@ -192,14 +146,7 @@ export const EmployeeAddForm = () => {
                 identifiers: item?.identifiers || [],
               })),
             },
-            [
-              'isCoopMember',
-              'memberId',
-              'id',
-              'otherSchemes',
-              'identificationSelection',
-              'otherDetails',
-            ]
+            ['id', 'otherSchemes', 'identificationSelection', 'otherDetails']
           ) as EmployeeInput,
         }),
         onError: (error) => {
@@ -233,20 +180,7 @@ export const EmployeeAddForm = () => {
               setCurrentSection(employeeSection);
             }}
           >
-            <FormSection>
-              <GridItem colSpan={3}>
-                <FormCheckbox label="Is Member" name="isCoopMember" />
-              </GridItem>
-              {isCoopMemberWatch && (
-                <GridItem colSpan={3}>
-                  <FormMemberSelect
-                    label="Member"
-                    name="memberId"
-                    memberType={MemberType?.Individual}
-                  />
-                </GridItem>
-              )}
-            </FormSection>
+            <IsMemberComponent />
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 1. Basic Information{' '}

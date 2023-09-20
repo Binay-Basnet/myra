@@ -21,7 +21,11 @@ export const OtherDetails = () => {
 
   return (
     <>
-      <FormSection header="Other Details" subHeader="Check to enable and add details accordingly">
+      <FormSection
+        header="Other Details"
+        subHeader="Check to enable and add details accordingly"
+        id="Other Details"
+      >
         <GridItem colSpan={3} mt="none">
           <Box display="flex">
             <FormCheckboxGroup name="otherDetails" showOther={false} list={otherDetailsOptions} />

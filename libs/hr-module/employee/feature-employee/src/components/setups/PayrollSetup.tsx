@@ -10,7 +10,7 @@ export const PayrollSetup = () => {
   const { salaryStructureOptions } = useGetSalaryStructureOptions();
   const { watch } = useFormContext();
 
-  const memberIdWatch = watch('memberId');
+  const coopMemberIdWatch = watch('coopMemberId');
   const { data: bankList } = useGetBankListQuery();
   const bankListData = bankList?.bank?.bank?.list;
 
@@ -53,7 +53,7 @@ export const PayrollSetup = () => {
         salaryPaymentModeWatch === PaymentMode?.BankTransfer) && (
         <GridItem colSpan={3}>
           <Box w="-webkit-fit-content">
-            <FormAccountSelect name="account" label="Select Account" memberId={memberIdWatch} />
+            <FormAccountSelect name="account" label="Select Account" memberId={coopMemberIdWatch} />
           </Box>
         </GridItem>
       )}
