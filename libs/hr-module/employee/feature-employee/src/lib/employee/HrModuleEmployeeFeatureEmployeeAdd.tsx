@@ -57,8 +57,29 @@ export const EmployeeAddForm = () => {
 
   useEffect(() => {
     if (employeeDetailData) {
+      const identificationSelection: string[] = [];
+      const otherSchemes: string[] = [];
+      const otherDetails: string[] = [];
+
+      employeeDetailData?.citizenshipGiven && identificationSelection?.push('citizenship');
+      employeeDetailData?.drivingLicenseGiven && identificationSelection?.push('drivingLicense');
+
+      employeeDetailData?.pf && otherSchemes?.push('pf');
+      employeeDetailData?.ssf && otherSchemes?.push('ssf');
+      employeeDetailData?.cit && otherSchemes?.push('cit');
+
+      employeeDetailData?.trainingDetailsGiven && otherDetails?.push('trainingDetails');
+      employeeDetailData?.awardsCashCertificatesGiven &&
+        otherDetails?.push('awardsCashCertificates');
+      employeeDetailData?.researchAndPublicationsGiven &&
+        otherDetails?.push('researchAndPublications');
+      employeeDetailData?.internationalTourGiven && otherDetails?.push('internationalTour');
+
       reset({
         ...employeeDetailData,
+        identificationSelection,
+        otherSchemes,
+        otherDetails,
         permanentAddress: {
           ...employeeDetailData?.permanentAddress,
           locality: employeeDetailData?.permanentAddress?.locality?.local,
