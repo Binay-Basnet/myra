@@ -217,8 +217,12 @@ export type AccountCloseSuccessCard = {
   accId: Scalars['ID'];
   accName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
+  bankChequeNo?: Maybe<Scalars['String']>;
+  bankName?: Maybe<Scalars['String']>;
   charges?: Maybe<Scalars['String']>;
   closeReason?: Maybe<Scalars['String']>;
+  destAccId?: Maybe<Scalars['String']>;
+  destAccName?: Maybe<Scalars['String']>;
   interest?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<Scalars['String']>;
   tax?: Maybe<Scalars['String']>;
@@ -1403,6 +1407,7 @@ export type AllTransactionResult = {
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
   isYearEndAdjustment?: Maybe<Scalars['String']>;
+  loanDisbursementData?: Maybe<LoanDisbursementMinimal>;
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
   oldId?: Maybe<Scalars['String']>;
@@ -8645,6 +8650,7 @@ export type GlReportSummary = {
   closingBalanceType?: Maybe<BalanceType>;
   openingBalance?: Maybe<Scalars['String']>;
   openingBalanceType?: Maybe<BalanceType>;
+  yearEndBalance?: Maybe<BalanceValue>;
 };
 
 export type GlStatementFilter = {
@@ -8666,6 +8672,7 @@ export type GenderLedgerReportResult = {
   error?: Maybe<QueryError>;
   ledgerName?: Maybe<Scalars['String']>;
   summary?: Maybe<GlReportSummary>;
+  yearEnd?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
 };
 
 export const GenderType = {
@@ -10190,6 +10197,8 @@ export type IndividualBasicMinInfo = {
 };
 
 export type IndividualBio = {
+  bankAccountId?: Maybe<Scalars['String']>;
+  bankName?: Maybe<Scalars['String']>;
   currentAddress?: Maybe<Scalars['Localized']>;
   dob?: Maybe<Scalars['Localized']>;
   docs?: Maybe<Array<Maybe<MemberDocumentDetails>>>;
@@ -10240,6 +10249,7 @@ export type IndividualMemberReport = {
 export type IndividualMemberReportData = {
   closedAccountDetail?: Maybe<Array<Maybe<MemberClosedAccounts>>>;
   header?: Maybe<IndividualMemberReport>;
+  kymStatusForMember?: Maybe<MemberKymStatus>;
   loanDetail?: Maybe<Array<Maybe<MemberLoanDetail>>>;
   recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactions>>>;
   savingDetail?: Maybe<Array<Maybe<MemberSavingDetail>>>;
@@ -10250,6 +10260,7 @@ export type IndividualMemberReportData = {
   totalSavingBalance?: Maybe<Scalars['String']>;
   totalShareBalance?: Maybe<Scalars['String']>;
   totalTransactionAmount?: Maybe<Scalars['String']>;
+  withDrawSlipIssueStatus?: Maybe<Array<Maybe<MemberWithDrawSlipIssueStatus>>>;
 };
 
 export const IndividualRequiredDocument = {
@@ -12728,6 +12739,8 @@ export type KymIndDeclarations = {
 export type KymIndFormData = {
   age?: Maybe<Scalars['Int']>;
   annualIncomeSourceId?: Maybe<Scalars['String']>;
+  bankAccountId?: Maybe<Scalars['String']>;
+  bankId?: Maybe<Scalars['String']>;
   beneficialFullName?: Maybe<Scalars['String']>;
   beneficialRelationshipId?: Maybe<Scalars['String']>;
   convictedDetails?: Maybe<Scalars['String']>;
@@ -12797,6 +12810,8 @@ export type KymIndFormStateQuery = {
 
 export type KymIndMemberInput = {
   annualIncomeSourceId?: InputMaybe<Scalars['String']>;
+  bankAccountId?: InputMaybe<Scalars['String']>;
+  bankId?: InputMaybe<Scalars['String']>;
   beneficialFullName?: InputMaybe<Scalars['String']>;
   beneficialRelationshipId?: InputMaybe<Scalars['String']>;
   convictedDetails?: InputMaybe<Scalars['String']>;
@@ -14652,6 +14667,19 @@ export const LoanDisbursementMethod = {
 
 export type LoanDisbursementMethod =
   typeof LoanDisbursementMethod[keyof typeof LoanDisbursementMethod];
+export type LoanDisbursementMinimal = {
+  bankChequeNo?: Maybe<Scalars['String']>;
+  bankName?: Maybe<Scalars['String']>;
+  destAccId?: Maybe<Scalars['String']>;
+  destAccName?: Maybe<Scalars['String']>;
+  disbursedAmount?: Maybe<Scalars['String']>;
+  disbursedDate?: Maybe<Scalars['Localized']>;
+  loanAccountId?: Maybe<Scalars['String']>;
+  loanAccountName?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<Scalars['String']>;
+  processingCharge?: Maybe<Scalars['String']>;
+};
+
 export type LoanDisbursementReportData = {
   disbursedDate?: Maybe<Scalars['Localized']>;
   interestRate?: Maybe<Scalars['Float']>;
@@ -16641,13 +16669,19 @@ export type MemberIndividualData = {
   shareInfo?: Maybe<ShareInformation>;
 };
 
+export type MemberKymStatus = {
+  ExpiryDays?: Maybe<Scalars['String']>;
+  Status?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  lastUpdatedDate?: Maybe<Scalars['Localized']>;
+  riskCategory?: Maybe<Scalars['String']>;
+};
+
 export type MemberLoanDetail = {
   approvedAmount?: Maybe<Scalars['String']>;
   issuedDate?: Maybe<Scalars['Localized']>;
-  lastPaymentDate?: Maybe<Scalars['Localized']>;
   loanAccountName?: Maybe<Scalars['String']>;
   loanAccountNo?: Maybe<Scalars['String']>;
-  remainingAmount?: Maybe<Scalars['String']>;
 };
 
 export type MemberLoanInformation = {
@@ -17280,6 +17314,14 @@ export type MemberType = typeof MemberType[keyof typeof MemberType];
 export type MemberTypeResult = {
   data?: Maybe<Array<Maybe<KymMemberTypes>>>;
   error?: Maybe<QueryError>;
+};
+
+export type MemberWithDrawSlipIssueStatus = {
+  accNum?: Maybe<Scalars['String']>;
+  accountType?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  id?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 export type MembershipFeeQueryResult = {
@@ -35400,6 +35442,8 @@ export type GetKymIndividualFormDataQuery = {
           declarationAgreement?: boolean | null;
           sameTempAsPermanentAddress?: boolean | null;
           identificationSelection?: Array<string | null> | null;
+          bankId?: string | null;
+          bankAccountId?: string | null;
           mainOccupation?: {
             registrationNo?: string | null;
             address?: string | null;
@@ -37514,6 +37558,8 @@ export type GetMemberKymDetailsBioQuery = {
               permanentAddress?: Record<'local' | 'en' | 'np', string> | null;
               maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
               panNo?: string | null;
+              bankName?: string | null;
+              bankAccountId?: string | null;
               familyMembers?: Array<{
                 relationship?: string | null;
                 fullName?: string | null;
@@ -39633,8 +39679,6 @@ export type GetIndividualMemberReportQuery = {
             loanAccountName?: string | null;
             issuedDate?: Record<'local' | 'en' | 'np', string> | null;
             approvedAmount?: string | null;
-            remainingAmount?: string | null;
-            lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
           } | null> | null;
           recentTransactions?: Array<{
             transactionId?: string | null;
@@ -62444,6 +62488,8 @@ export const GetKymIndividualFormDataDocument = `
             id
             relationshipId
           }
+          bankId
+          bankAccountId
           documents {
             identifiers: docData {
               identifier
@@ -64721,6 +64767,8 @@ export const GetMemberKymDetailsBioDocument = `
               value
             }
             panNo
+            bankName
+            bankAccountId
           }
           ... on InstitutionBio {
             basicInfo {
@@ -67743,8 +67791,6 @@ export const GetIndividualMemberReportDocument = `
             loanAccountName
             issuedDate
             approvedAmount
-            remainingAmount
-            lastPaymentDate
           }
           recentTransactions {
             transactionId

@@ -13,6 +13,7 @@ import {
 import { ROUTES } from '@coop/cbs/utils';
 
 import {
+  BankDetails,
   BioCoop,
   BioCoopUnion,
   BioInstitution,
@@ -115,6 +116,7 @@ export const Bio = () => {
               <MemberBasicInfo />
               <MemberContactInfo />
               <MemberAddressInfo />
+              <BankDetails />
               <MemberFamilyInfo />
               <MemberFamilyRelationsInfo />
               <DocumentInd />

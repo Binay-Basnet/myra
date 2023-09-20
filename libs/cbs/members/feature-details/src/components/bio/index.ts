@@ -1,4 +1,5 @@
 export * from './Address';
+export * from './BankDetails';
 export * from './BasicInfo';
 export * from './ContactDetails';
 export * from './coop/CoopDetails';
