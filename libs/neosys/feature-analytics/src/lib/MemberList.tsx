@@ -2,49 +2,33 @@ import { useMemo } from 'react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetMemberCounterQuery } from '@coop/neosys-admin/data-access';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { useGetAllMemberCounterQuery } from '@coop/neosys-admin/data-access';
 
 export const MemberList = () => {
-  const { data, isFetching } = useGetMemberCounterQuery({
-    pagination: { ...getPaginationQuery(), order: null },
-  });
+  const { data, isFetching } = useGetAllMemberCounterQuery();
 
   const rowData = useMemo(
-    () => data?.neosys?.thread?.memberCounter?.listMemberCounter?.edges ?? [],
+    () => data?.neosys?.thread?.memberCounter?.fetchMemberCounter?.records ?? [],
     [data]
   );
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Id',
-        accessorFn: (row) => row?.node?.id,
+        header: 'Query Date',
+        accessorFn: (row) => row?.queryDate?.local,
       },
       {
-        header: 'Created at',
-        accessorFn: (row) => row?.node?.createdAt,
+        header: 'Slug',
+        accessorFn: (row) => row?.slug,
       },
       {
         header: 'Approved Member',
-        accessorFn: (row) => row?.node?.approvedMember,
+        accessorFn: (row) => row?.approvedMember,
       },
       {
         header: 'Inactive Member',
-        accessorFn: (row) => row?.node?.inactiveMember,
-      },
-
-      {
-        header: 'Slug',
-        accessorFn: (row) => row?.node?.slug,
-      },
-      {
-        header: 'Query Id',
-        accessorFn: (row) => row?.node?.queryID,
-      },
-      {
-        header: 'Created at',
-        accessorFn: (row) => row?.node?.createdAt,
+        accessorFn: (row) => row?.inactiveMember,
       },
     ],
     []
@@ -53,15 +37,7 @@ export const MemberList = () => {
   return (
     <>
       <PageHeader heading="Members" />
-      <Table
-        data={rowData}
-        isLoading={isFetching}
-        columns={columns}
-        pagination={{
-          total: data?.neosys?.thread?.memberCounter?.listMemberCounter?.totalCount as number,
-          pageInfo: data?.neosys?.thread?.memberCounter?.listMemberCounter?.pageInfo,
-        }}
-      />
+      <Table data={rowData} isLoading={isFetching} columns={columns} />
     </>
   );
 };

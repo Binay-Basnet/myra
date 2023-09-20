@@ -2,37 +2,29 @@ import { useMemo } from 'react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGeterrorLogListQuery } from '@coop/neosys-admin/data-access';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { useGetAllErrorLogListQuery } from '@coop/neosys-admin/data-access';
 
 export const ErrorLogList = () => {
-  const { data, isFetching } = useGeterrorLogListQuery({
-    pagination: { ...getPaginationQuery(), order: null },
-  });
+  const { data, isFetching } = useGetAllErrorLogListQuery();
 
-  const rowData = useMemo(() => data?.neosys?.thread?.errorLog?.listErrorLog?.edges ?? [], [data]);
+  const rowData = useMemo(
+    () => data?.neosys?.thread?.errorLog?.fetchErrorLog?.records ?? [],
+    [data]
+  );
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Id',
-        accessorFn: (row) => row?.node?.id,
+        header: 'Query Date',
+        accessorFn: (row) => row?.queryDate?.local,
       },
       {
-        header: 'Created at',
-        accessorFn: (row) => row?.node?.createdAt,
-      },
-      {
-        header: 'Saccos Name',
-        accessorFn: (row) => row?.node?.saccosName,
+        header: 'Slug',
+        accessorFn: (row) => row?.saccosName,
       },
       {
         header: 'Log Message',
-        accessorFn: (row) => row?.node?.logMessage,
-      },
-      {
-        header: 'Query Id',
-        accessorFn: (row) => row?.node?.queryID,
+        accessorFn: (row) => row?.logMessage,
       },
     ],
     []
@@ -41,15 +33,7 @@ export const ErrorLogList = () => {
   return (
     <>
       <PageHeader heading="Error Log list" />
-      <Table
-        data={rowData}
-        isLoading={isFetching}
-        columns={columns}
-        pagination={{
-          total: data?.neosys?.thread?.errorLog?.listErrorLog?.totalCount as number,
-          pageInfo: data?.neosys?.thread?.errorLog?.listErrorLog?.pageInfo,
-        }}
-      />
+      <Table data={rowData} isLoading={isFetching} columns={columns} />
     </>
   );
 };

@@ -422,6 +422,8 @@ export type KymIncomeSourceDetails = {
 
 export type KymIndMemberInput = {
   annualIncomeSourceId?: InputMaybe<Scalars['String']>;
+  bankAccountId?: InputMaybe<Scalars['String']>;
+  bankId?: InputMaybe<Scalars['String']>;
   beneficialFullName?: InputMaybe<Scalars['String']>;
   beneficialRelationshipId?: InputMaybe<Scalars['String']>;
   convictedDetails?: InputMaybe<Scalars['String']>;
@@ -1034,6 +1036,8 @@ export type ThreadAccessLogCounterNode = {
   id?: Maybe<Scalars['Int']>;
   mutationFailed?: Maybe<Scalars['String']>;
   mutationSuccess?: Maybe<Scalars['String']>;
+  otherFailed?: Maybe<Scalars['String']>;
+  otherSuccess?: Maybe<Scalars['String']>;
   queryDate?: Maybe<Scalars['Localized']>;
   queryFailed?: Maybe<Scalars['String']>;
   queryID?: Maybe<Scalars['Int']>;
@@ -1041,7 +1045,12 @@ export type ThreadAccessLogCounterNode = {
   slug?: Maybe<Scalars['String']>;
 };
 
+export type ThreadAccessLogCounterNodeAll = {
+  records?: Maybe<Array<Maybe<ThreadAccessLogCounterNode>>>;
+};
+
 export type ThreadAccessLogCounterQuery = {
+  fetchAccessLogCounter?: Maybe<ThreadAccessLogCounterNodeAll>;
   listAccessLogCounter?: Maybe<ThreadAccessLogCounterListConnection>;
 };
 
@@ -1070,7 +1079,12 @@ export type ThreadClosingDayNode = {
   transactionDate?: Maybe<Scalars['Localized']>;
 };
 
+export type ThreadClosingDayNodeAll = {
+  records?: Maybe<Array<Maybe<ThreadClosingDayNode>>>;
+};
+
 export type ThreadClosingDayQuery = {
+  fetchClosingDay?: Maybe<ThreadClosingDayNodeAll>;
   listClosingDay?: Maybe<ThreadClosingDayListConnection>;
 };
 
@@ -1086,7 +1100,12 @@ export type ThreadClosingDaySearchFilter = {
   transactionDate?: InputMaybe<Scalars['Time']>;
 };
 
+export type ThreadDatabaseSizeNodeAll = {
+  records?: Maybe<Array<Maybe<ThreadDbSizeNode>>>;
+};
+
 export type ThreadDatabaseSizeQuery = {
+  fetchDatabaseSize?: Maybe<ThreadDatabaseSizeNodeAll>;
   listDBSize?: Maybe<ThreadDbSizeListConnection>;
 };
 
@@ -1130,11 +1149,17 @@ export type ThreadErrorLogNode = {
   createdAt?: Maybe<Scalars['Time']>;
   id?: Maybe<Scalars['Int']>;
   logMessage?: Maybe<Scalars['String']>;
+  queryDate?: Maybe<Scalars['Localized']>;
   queryID?: Maybe<Scalars['Int']>;
   saccosName?: Maybe<Scalars['String']>;
 };
 
+export type ThreadErrorLogNodeAll = {
+  records?: Maybe<Array<Maybe<ThreadErrorLogNode>>>;
+};
+
 export type ThreadErrorLogQuery = {
+  fetchErrorLog?: Maybe<ThreadErrorLogNodeAll>;
   listErrorLog?: Maybe<ThreadErrorLogListConnection>;
 };
 
@@ -1165,7 +1190,12 @@ export type ThreadLoanAccountCounterNode = {
   slug?: Maybe<Scalars['String']>;
 };
 
+export type ThreadLoanAccountCounterNodeAll = {
+  records?: Maybe<Array<Maybe<ThreadLoanAccountCounterNode>>>;
+};
+
 export type ThreadLoanAccountCounterQuery = {
+  fetchLoanAccountCounter?: Maybe<ThreadLoanAccountCounterNodeAll>;
   listLoanAccountCounter?: Maybe<ThreadLoanAccountCounterListConnection>;
 };
 
@@ -1195,7 +1225,12 @@ export type ThreadMemberCounterNode = {
   slug?: Maybe<Scalars['String']>;
 };
 
+export type ThreadMemberCounterNodeAll = {
+  records?: Maybe<Array<Maybe<ThreadMemberCounterNode>>>;
+};
+
 export type ThreadMemberCounterQuery = {
+  fetchMemberCounter?: Maybe<ThreadMemberCounterNodeAll>;
   listMemberCounter?: Maybe<ThreadMemberCounterListConnection>;
 };
 
@@ -1224,7 +1259,12 @@ export type ThreadMoneyLedgerCounterNode = {
   slug?: Maybe<Scalars['String']>;
 };
 
+export type ThreadMoneyLedgerCounterNodeAll = {
+  records?: Maybe<Array<Maybe<ThreadMoneyLedgerCounterNode>>>;
+};
+
 export type ThreadMoneyLedgerCounterQuery = {
+  fetchMoneyLedgerCounter?: Maybe<ThreadMoneyLedgerCounterNodeAll>;
   listMoneyLedgerCounter?: Maybe<ThreadMoneyLedgerCounterListConnection>;
 };
 
@@ -1254,7 +1294,12 @@ export type ThreadSavingAccountCounterNode = {
   slug?: Maybe<Scalars['String']>;
 };
 
+export type ThreadSavingAccountCounterNodeAll = {
+  records?: Maybe<Array<Maybe<ThreadSavingAccountCounterNode>>>;
+};
+
 export type ThreadSavingAccountCounterQuery = {
+  fetchSavingAccountCounter?: Maybe<ThreadSavingAccountCounterNodeAll>;
   listSavingAccountCounter?: Maybe<ThreadSavingAccountCounterListConnection>;
 };
 
@@ -1284,7 +1329,12 @@ export type ThreadTransactionCounterNode = {
   txnTypeCount?: Maybe<Scalars['Any']>;
 };
 
+export type ThreadTransactionCounterNodeAll = {
+  records?: Maybe<Array<Maybe<ThreadTransactionCounterNode>>>;
+};
+
 export type ThreadTransactionCounterQuery = {
+  fetchTransactionCounter?: Maybe<ThreadTransactionCounterNodeAll>;
   listTransactionCounter?: Maybe<ThreadTransactionCounterListConnection>;
 };
 
@@ -1314,7 +1364,12 @@ export type ThreadUserCounterNode = {
   slug?: Maybe<Scalars['String']>;
 };
 
+export type ThreadUserCounterNodeAll = {
+  records?: Maybe<Array<Maybe<ThreadUserCounterNode>>>;
+};
+
 export type ThreadUserCounterQuery = {
+  fetchUserCounter?: Maybe<ThreadUserCounterNodeAll>;
   listUserCounter?: Maybe<ThreadUserCounterListConnection>;
 };
 
@@ -1982,6 +2037,227 @@ export type GetUserCounterQuery = {
             };
           } | null> | null;
           pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAllClosingDayListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllClosingDayListQuery = {
+  neosys: {
+    thread?: {
+      closingDay?: {
+        fetchClosingDay?: {
+          records?: Array<{
+            id?: number | null;
+            createdAt?: string | null;
+            transactionDate?: Record<'local' | 'en' | 'np', string> | null;
+            slug?: string | null;
+            queryID?: number | null;
+            queryDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAllMemberCounterQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllMemberCounterQuery = {
+  neosys: {
+    thread?: {
+      memberCounter?: {
+        fetchMemberCounter?: {
+          records?: Array<{
+            id?: number | null;
+            createdAt?: string | null;
+            approvedMember?: number | null;
+            inactiveMember?: number | null;
+            slug?: string | null;
+            queryID?: number | null;
+            queryDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAllMoneyLedgerCounterQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllMoneyLedgerCounterQuery = {
+  neosys: {
+    thread?: {
+      moneyLedgerCounter?: {
+        fetchMoneyLedgerCounter?: {
+          records?: Array<{
+            id?: number | null;
+            createdAt?: string | null;
+            moneyLedgerCount?: number | null;
+            slug?: string | null;
+            queryID?: number | null;
+            queryDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAllLoanAccountCounterQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllLoanAccountCounterQuery = {
+  neosys: {
+    thread?: {
+      loanAccountCounter?: {
+        fetchLoanAccountCounter?: {
+          records?: Array<{
+            id?: number | null;
+            createdAt?: string | null;
+            approvedAccount?: number | null;
+            disbursedAccount?: number | null;
+            canceledAccount?: number | null;
+            slug?: string | null;
+            queryID?: number | null;
+            queryDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAllSavingAccountCounterQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllSavingAccountCounterQuery = {
+  neosys: {
+    thread?: {
+      savingAccountCounter?: {
+        fetchSavingAccountCounter?: {
+          records?: Array<{
+            id?: number | null;
+            createdAt?: string | null;
+            activeAccount?: number | null;
+            inactiveAccount?: number | null;
+            slug?: string | null;
+            queryID?: number | null;
+            queryDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAllDatabaseSizeListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllDatabaseSizeListQuery = {
+  neosys: {
+    thread?: {
+      databaseSize?: {
+        fetchDatabaseSize?: {
+          records?: Array<{
+            id?: number | null;
+            createdAt?: string | null;
+            databaseSize?: string | null;
+            slug?: string | null;
+            queryID?: number | null;
+            queryDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAllAccessLogCounterListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllAccessLogCounterListQuery = {
+  neosys: {
+    thread?: {
+      accessLogCounter?: {
+        fetchAccessLogCounter?: {
+          records?: Array<{
+            id?: number | null;
+            createdAt?: string | null;
+            querySuccess?: string | null;
+            queryFailed?: string | null;
+            mutationSuccess?: string | null;
+            mutationFailed?: string | null;
+            otherSuccess?: string | null;
+            otherFailed?: string | null;
+            slug?: string | null;
+            queryID?: number | null;
+            queryDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAllErrorLogListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllErrorLogListQuery = {
+  neosys: {
+    thread?: {
+      errorLog?: {
+        fetchErrorLog?: {
+          records?: Array<{
+            id?: number | null;
+            createdAt?: string | null;
+            saccosName?: string | null;
+            logMessage?: string | null;
+            queryID?: number | null;
+            queryDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAllTransactionCounterQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllTransactionCounterQuery = {
+  neosys: {
+    thread?: {
+      transactionCounter?: {
+        fetchTransactionCounter?: {
+          records?: Array<{
+            id?: number | null;
+            createdAt?: string | null;
+            txnCount?: number | null;
+            txnTypeCount?: unknown | null;
+            slug?: string | null;
+            queryID?: number | null;
+            queryDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAllUserCounterQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllUserCounterQuery = {
+  neosys: {
+    thread?: {
+      userCounter?: {
+        fetchUserCounter?: {
+          records?: Array<{
+            id?: number | null;
+            createdAt?: string | null;
+            approvedUser?: number | null;
+            inactiveUser?: number | null;
+            slug?: string | null;
+            queryID?: number | null;
+            queryDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null> | null;
         } | null;
       } | null;
     } | null;
@@ -3136,6 +3412,355 @@ export const useGetUserCounterQuery = <TData = GetUserCounterQuery, TError = unk
       null,
       variables
     ),
+    options
+  );
+export const GetAllClosingDayListDocument = `
+    query getAllClosingDayList {
+  neosys {
+    thread {
+      closingDay {
+        fetchClosingDay {
+          records {
+            id
+            createdAt
+            transactionDate
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAllClosingDayListQuery = <TData = GetAllClosingDayListQuery, TError = unknown>(
+  variables?: GetAllClosingDayListQueryVariables,
+  options?: UseQueryOptions<GetAllClosingDayListQuery, TError, TData>
+) =>
+  useQuery<GetAllClosingDayListQuery, TError, TData>(
+    variables === undefined ? ['getAllClosingDayList'] : ['getAllClosingDayList', variables],
+    useAxios<GetAllClosingDayListQuery, GetAllClosingDayListQueryVariables>(
+      GetAllClosingDayListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAllMemberCounterDocument = `
+    query getAllMemberCounter {
+  neosys {
+    thread {
+      memberCounter {
+        fetchMemberCounter {
+          records {
+            id
+            createdAt
+            approvedMember
+            inactiveMember
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAllMemberCounterQuery = <TData = GetAllMemberCounterQuery, TError = unknown>(
+  variables?: GetAllMemberCounterQueryVariables,
+  options?: UseQueryOptions<GetAllMemberCounterQuery, TError, TData>
+) =>
+  useQuery<GetAllMemberCounterQuery, TError, TData>(
+    variables === undefined ? ['getAllMemberCounter'] : ['getAllMemberCounter', variables],
+    useAxios<GetAllMemberCounterQuery, GetAllMemberCounterQueryVariables>(
+      GetAllMemberCounterDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAllMoneyLedgerCounterDocument = `
+    query getAllMoneyLedgerCounter {
+  neosys {
+    thread {
+      moneyLedgerCounter {
+        fetchMoneyLedgerCounter {
+          records {
+            id
+            createdAt
+            moneyLedgerCount
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAllMoneyLedgerCounterQuery = <
+  TData = GetAllMoneyLedgerCounterQuery,
+  TError = unknown
+>(
+  variables?: GetAllMoneyLedgerCounterQueryVariables,
+  options?: UseQueryOptions<GetAllMoneyLedgerCounterQuery, TError, TData>
+) =>
+  useQuery<GetAllMoneyLedgerCounterQuery, TError, TData>(
+    variables === undefined
+      ? ['getAllMoneyLedgerCounter']
+      : ['getAllMoneyLedgerCounter', variables],
+    useAxios<GetAllMoneyLedgerCounterQuery, GetAllMoneyLedgerCounterQueryVariables>(
+      GetAllMoneyLedgerCounterDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAllLoanAccountCounterDocument = `
+    query getAllLoanAccountCounter {
+  neosys {
+    thread {
+      loanAccountCounter {
+        fetchLoanAccountCounter {
+          records {
+            id
+            createdAt
+            approvedAccount
+            disbursedAccount
+            canceledAccount
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAllLoanAccountCounterQuery = <
+  TData = GetAllLoanAccountCounterQuery,
+  TError = unknown
+>(
+  variables?: GetAllLoanAccountCounterQueryVariables,
+  options?: UseQueryOptions<GetAllLoanAccountCounterQuery, TError, TData>
+) =>
+  useQuery<GetAllLoanAccountCounterQuery, TError, TData>(
+    variables === undefined
+      ? ['getAllLoanAccountCounter']
+      : ['getAllLoanAccountCounter', variables],
+    useAxios<GetAllLoanAccountCounterQuery, GetAllLoanAccountCounterQueryVariables>(
+      GetAllLoanAccountCounterDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAllSavingAccountCounterDocument = `
+    query getAllSavingAccountCounter {
+  neosys {
+    thread {
+      savingAccountCounter {
+        fetchSavingAccountCounter {
+          records {
+            id
+            createdAt
+            activeAccount
+            inactiveAccount
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAllSavingAccountCounterQuery = <
+  TData = GetAllSavingAccountCounterQuery,
+  TError = unknown
+>(
+  variables?: GetAllSavingAccountCounterQueryVariables,
+  options?: UseQueryOptions<GetAllSavingAccountCounterQuery, TError, TData>
+) =>
+  useQuery<GetAllSavingAccountCounterQuery, TError, TData>(
+    variables === undefined
+      ? ['getAllSavingAccountCounter']
+      : ['getAllSavingAccountCounter', variables],
+    useAxios<GetAllSavingAccountCounterQuery, GetAllSavingAccountCounterQueryVariables>(
+      GetAllSavingAccountCounterDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAllDatabaseSizeListDocument = `
+    query getAllDatabaseSizeList {
+  neosys {
+    thread {
+      databaseSize {
+        fetchDatabaseSize {
+          records {
+            id
+            createdAt
+            databaseSize
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAllDatabaseSizeListQuery = <
+  TData = GetAllDatabaseSizeListQuery,
+  TError = unknown
+>(
+  variables?: GetAllDatabaseSizeListQueryVariables,
+  options?: UseQueryOptions<GetAllDatabaseSizeListQuery, TError, TData>
+) =>
+  useQuery<GetAllDatabaseSizeListQuery, TError, TData>(
+    variables === undefined ? ['getAllDatabaseSizeList'] : ['getAllDatabaseSizeList', variables],
+    useAxios<GetAllDatabaseSizeListQuery, GetAllDatabaseSizeListQueryVariables>(
+      GetAllDatabaseSizeListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAllAccessLogCounterListDocument = `
+    query getAllAccessLogCounterList {
+  neosys {
+    thread {
+      accessLogCounter {
+        fetchAccessLogCounter {
+          records {
+            id
+            createdAt
+            querySuccess
+            queryFailed
+            mutationSuccess
+            mutationFailed
+            otherSuccess
+            otherFailed
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAllAccessLogCounterListQuery = <
+  TData = GetAllAccessLogCounterListQuery,
+  TError = unknown
+>(
+  variables?: GetAllAccessLogCounterListQueryVariables,
+  options?: UseQueryOptions<GetAllAccessLogCounterListQuery, TError, TData>
+) =>
+  useQuery<GetAllAccessLogCounterListQuery, TError, TData>(
+    variables === undefined
+      ? ['getAllAccessLogCounterList']
+      : ['getAllAccessLogCounterList', variables],
+    useAxios<GetAllAccessLogCounterListQuery, GetAllAccessLogCounterListQueryVariables>(
+      GetAllAccessLogCounterListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAllErrorLogListDocument = `
+    query getAllErrorLogList {
+  neosys {
+    thread {
+      errorLog {
+        fetchErrorLog {
+          records {
+            id
+            createdAt
+            saccosName
+            logMessage
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAllErrorLogListQuery = <TData = GetAllErrorLogListQuery, TError = unknown>(
+  variables?: GetAllErrorLogListQueryVariables,
+  options?: UseQueryOptions<GetAllErrorLogListQuery, TError, TData>
+) =>
+  useQuery<GetAllErrorLogListQuery, TError, TData>(
+    variables === undefined ? ['getAllErrorLogList'] : ['getAllErrorLogList', variables],
+    useAxios<GetAllErrorLogListQuery, GetAllErrorLogListQueryVariables>(
+      GetAllErrorLogListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAllTransactionCounterDocument = `
+    query getAllTransactionCounter {
+  neosys {
+    thread {
+      transactionCounter {
+        fetchTransactionCounter {
+          records {
+            id
+            createdAt
+            txnCount
+            txnTypeCount
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAllTransactionCounterQuery = <
+  TData = GetAllTransactionCounterQuery,
+  TError = unknown
+>(
+  variables?: GetAllTransactionCounterQueryVariables,
+  options?: UseQueryOptions<GetAllTransactionCounterQuery, TError, TData>
+) =>
+  useQuery<GetAllTransactionCounterQuery, TError, TData>(
+    variables === undefined
+      ? ['getAllTransactionCounter']
+      : ['getAllTransactionCounter', variables],
+    useAxios<GetAllTransactionCounterQuery, GetAllTransactionCounterQueryVariables>(
+      GetAllTransactionCounterDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAllUserCounterDocument = `
+    query getAllUserCounter {
+  neosys {
+    thread {
+      userCounter {
+        fetchUserCounter {
+          records {
+            id
+            createdAt
+            approvedUser
+            inactiveUser
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAllUserCounterQuery = <TData = GetAllUserCounterQuery, TError = unknown>(
+  variables?: GetAllUserCounterQueryVariables,
+  options?: UseQueryOptions<GetAllUserCounterQuery, TError, TData>
+) =>
+  useQuery<GetAllUserCounterQuery, TError, TData>(
+    variables === undefined ? ['getAllUserCounter'] : ['getAllUserCounter', variables],
+    useAxios<GetAllUserCounterQuery, GetAllUserCounterQueryVariables>(
+      GetAllUserCounterDocument
+    ).bind(null, variables),
     options
   );
 export const GetMeDocument = `

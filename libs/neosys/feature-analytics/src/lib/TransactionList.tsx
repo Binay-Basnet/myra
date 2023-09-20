@@ -2,45 +2,29 @@ import { useMemo } from 'react';
 
 import { Box, Column, HoverCard, PageHeader, Table, Text } from '@myra-ui';
 
-import { useGetTransactionCounterQuery } from '@coop/neosys-admin/data-access';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { useGetAllTransactionCounterQuery } from '@coop/neosys-admin/data-access';
 
 export const TransactionList = () => {
-  const { data, isFetching } = useGetTransactionCounterQuery({
-    pagination: { ...getPaginationQuery(), order: null },
-  });
+  const { data, isFetching } = useGetAllTransactionCounterQuery();
 
   const rowData = useMemo(
-    () => data?.neosys?.thread?.transactionCounter?.listTransactionCounter?.edges ?? [],
+    () => data?.neosys?.thread?.transactionCounter?.fetchTransactionCounter?.records ?? [],
     [data]
   );
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Id',
-        accessorFn: (row) => row?.node?.id,
+        header: 'Query Date',
+        accessorFn: (row) => row?.queryDate?.local,
       },
       {
-        header: 'Created at',
-        accessorFn: (row) => row?.node?.createdAt,
+        header: 'Slug',
+        accessorFn: (row) => row?.slug,
       },
       {
         header: 'Txn Count',
-        accessorFn: (row) => row?.node?.txnCount,
-      },
-
-      {
-        header: 'Slug',
-        accessorFn: (row) => row?.node?.slug,
-      },
-      {
-        header: 'Query Id',
-        accessorFn: (row) => row?.node?.queryID,
-      },
-      {
-        header: 'Query Date',
-        accessorFn: (row) => row?.node?.queryDate?.local,
+        accessorFn: (row) => row?.txnCount,
       },
       {
         id: '_actions',
@@ -64,11 +48,11 @@ export const TransactionList = () => {
                   maxH="300px"
                   overflowY="auto"
                 >
-                  {Object.keys(props?.row?.original?.node?.txnTypeCount ?? {})?.map((t) => (
+                  {Object.keys(props?.row?.original?.txnTypeCount ?? {})?.map((t) => (
                     <Box display="flex" gap="s4">
                       <Text>{t}:</Text>
                       <Text>
-                        {(props?.row?.original?.node?.txnTypeCount as Record<string, string>)?.[t]}
+                        {(props?.row?.original?.txnTypeCount as Record<string, string>)?.[t]}
                       </Text>
                     </Box>
                   ))}
@@ -85,16 +69,7 @@ export const TransactionList = () => {
   return (
     <>
       <PageHeader heading="Transactions" />
-      <Table
-        data={rowData}
-        isLoading={isFetching}
-        columns={columns}
-        pagination={{
-          total: data?.neosys?.thread?.transactionCounter?.listTransactionCounter
-            ?.totalCount as number,
-          pageInfo: data?.neosys?.thread?.transactionCounter?.listTransactionCounter?.pageInfo,
-        }}
-      />
+      <Table data={rowData} isLoading={isFetching} columns={columns} />
     </>
   );
 };

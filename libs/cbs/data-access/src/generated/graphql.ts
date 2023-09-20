@@ -42390,8 +42390,14 @@ export type GetEarningComponentQuery = {
                 name?: string | null;
                 abbr?: string | null;
                 description?: string | null;
+                ledgerHead?: string | null;
+                earningFrequency?: EarningFrequencyEnum | null;
+                calculationType?: CalculationTypeEnum | null;
                 baseMultiple?: string | null;
                 multiplier?: number | null;
+                maximumAmountLimitPerYear?: string | null;
+                taxExempted?: boolean | null;
+                requiredProof?: boolean | null;
                 makeThisActive?: boolean | null;
               } | null;
               error?:
@@ -42458,9 +42464,13 @@ export type GetDeductionComponentQuery = {
                 name?: string | null;
                 abbr: string;
                 description?: string | null;
+                ledgerHead?: string | null;
+                deductionType?: DeductionType | null;
                 deductionFrequency?: DeductionFrequencyEnum | null;
+                calculationType?: CalculationTypeEnum | null;
                 baseMultiple?: string | null;
                 multiplier?: number | null;
+                maximumAmountLimitPerYear?: string | null;
                 makeThisActive?: boolean | null;
               } | null;
               error?:
@@ -42525,6 +42535,7 @@ export type GetSalaryStructureQuery = {
               record?: {
                 id?: string | null;
                 name?: string | null;
+                paygroup?: string | null;
                 description?: string | null;
                 makeThisActive?: boolean | null;
                 salaryEarnings?: Array<{
@@ -42596,6 +42607,7 @@ export type GetTaxSlabQuery = {
                 id?: string | null;
                 name?: string | null;
                 effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
+                makeThisCurrentTaxSlab?: boolean | null;
                 fiscalYear?: {
                   from: Record<'local' | 'en' | 'np', string>;
                   to: Record<'local' | 'en' | 'np', string>;
@@ -71497,8 +71509,14 @@ export const GetEarningComponentDocument = `
                 name
                 abbr
                 description
+                ledgerHead
+                earningFrequency
+                calculationType
                 baseMultiple
                 multiplier
+                maximumAmountLimitPerYear
+                taxExempted
+                requiredProof
                 makeThisActive
               }
               error {
@@ -71582,9 +71600,13 @@ export const GetDeductionComponentDocument = `
                 name
                 abbr
                 description
+                ledgerHead
+                deductionType
                 deductionFrequency
+                calculationType
                 baseMultiple
                 multiplier
+                maximumAmountLimitPerYear
                 makeThisActive
               }
               error {
@@ -71668,6 +71690,7 @@ export const GetSalaryStructureDocument = `
               record {
                 id
                 name
+                paygroup
                 description
                 salaryEarnings {
                   id
@@ -71770,6 +71793,7 @@ export const GetTaxSlabDocument = `
                   percentageDeduction
                 }
                 effectiveFrom
+                makeThisCurrentTaxSlab
               }
               error {
                 ...MutationError

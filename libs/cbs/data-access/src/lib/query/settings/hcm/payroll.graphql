@@ -10,9 +10,14 @@ query getEarningComponent($id: ID!) {
                 name
                 abbr
                 description
+                ledgerHead
+                earningFrequency
+                calculationType
                 baseMultiple
                 multiplier
-
+                maximumAmountLimitPerYear
+                taxExempted
+                requiredProof
                 makeThisActive
               }
               error {
@@ -69,9 +74,13 @@ query getDeductionComponent($id: String!) {
                 name
                 abbr
                 description
+                ledgerHead
+                deductionType
                 deductionFrequency
+                calculationType
                 baseMultiple
                 multiplier
+                maximumAmountLimitPerYear
                 makeThisActive
               }
               error {
@@ -126,6 +135,7 @@ query getSalaryStructure($id: ID!) {
               record {
                 id
                 name
+                paygroup
                 description
                 salaryEarnings {
                   id
@@ -201,6 +211,7 @@ query getTaxSlab($id: ID!) {
                   percentageDeduction
                 }
                 effectiveFrom
+                makeThisCurrentTaxSlab
               }
               error {
                 ...MutationError

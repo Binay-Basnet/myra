@@ -49,8 +49,7 @@ export const PayrollSetup = () => {
           ]}
         />
       </GridItem>
-      {(salaryPaymentModeWatch === PaymentMode?.Account ||
-        salaryPaymentModeWatch === PaymentMode?.BankTransfer) && (
+      {salaryPaymentModeWatch === PaymentMode?.Account && (
         <GridItem colSpan={3}>
           <Box w="-webkit-fit-content">
             <FormAccountSelect name="account" label="Select Account" memberId={coopMemberIdWatch} />

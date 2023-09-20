@@ -265,3 +265,204 @@ query getUserCounter($pagination: Pagination, $filter: Filter) {
     }
   }
 }
+
+query getAllClosingDayList {
+  neosys {
+    thread {
+      closingDay {
+        fetchClosingDay {
+          records {
+            id
+            createdAt
+            transactionDate
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAllMemberCounter {
+  neosys {
+    thread {
+      memberCounter {
+        fetchMemberCounter {
+          records {
+            id
+            createdAt
+            approvedMember
+            inactiveMember
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAllMoneyLedgerCounter {
+  neosys {
+    thread {
+      moneyLedgerCounter {
+        fetchMoneyLedgerCounter {
+          records {
+            id
+            createdAt
+            moneyLedgerCount
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAllLoanAccountCounter {
+  neosys {
+    thread {
+      loanAccountCounter {
+        fetchLoanAccountCounter {
+          records {
+            id
+            createdAt
+            approvedAccount
+            disbursedAccount
+            canceledAccount
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAllSavingAccountCounter {
+  neosys {
+    thread {
+      savingAccountCounter {
+        fetchSavingAccountCounter {
+          records {
+            id
+            createdAt
+            activeAccount
+            inactiveAccount
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAllDatabaseSizeList {
+  neosys {
+    thread {
+      databaseSize {
+        fetchDatabaseSize {
+          records {
+            id
+            createdAt
+            databaseSize
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAllAccessLogCounterList {
+  neosys {
+    thread {
+      accessLogCounter {
+        fetchAccessLogCounter {
+          records {
+            id
+            createdAt
+            querySuccess
+            queryFailed
+            mutationSuccess
+            mutationFailed
+            otherSuccess
+            otherFailed
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAllErrorLogList {
+  neosys {
+    thread {
+      errorLog {
+        fetchErrorLog {
+          records {
+            id
+            createdAt
+            saccosName
+            logMessage
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAllTransactionCounter {
+  neosys {
+    thread {
+      transactionCounter {
+        fetchTransactionCounter {
+          records {
+            id
+            createdAt
+            txnCount
+            txnTypeCount
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAllUserCounter {
+  neosys {
+    thread {
+      userCounter {
+        fetchUserCounter {
+          records {
+            id
+            createdAt
+            approvedUser
+            inactiveUser
+            slug
+            queryID
+            queryDate
+          }
+        }
+      }
+    }
+  }
+}

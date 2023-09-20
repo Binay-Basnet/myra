@@ -124,6 +124,7 @@ export const IsMemberComponent = () => {
             label="Member"
             name="coopMemberId"
             memberType={MemberType?.Individual}
+            forceEnableAll
           />
         )}
       </Box>
@@ -134,6 +135,7 @@ export const IsMemberComponent = () => {
             label="Member"
             name="myraErpUserId"
             memberType={MemberType?.Individual}
+            forceEnableAll
           />
         )}
       </Box>
