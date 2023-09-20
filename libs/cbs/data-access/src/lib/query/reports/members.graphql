@@ -249,8 +249,8 @@ query getIndividualMemberReport($memberId: ID!) {
             loanAccountName
             issuedDate
             approvedAmount
-            remainingAmount
-            lastPaymentDate
+            #remainingAmount
+            #lastPaymentDate
           }
 
           recentTransactions {

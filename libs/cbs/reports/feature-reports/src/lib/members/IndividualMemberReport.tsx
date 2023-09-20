@@ -387,18 +387,18 @@ export const IndividualMemberReport = () => {
                       isNumeric: true,
                     },
                   },
-                  {
-                    header: 'Remaining Amount',
-                    accessorKey: 'remainingAmount',
-                    footer: () =>
-                      amountConverter(individualMemberReportData?.totalRemainingAmount || 0),
+                  // {
+                  //   header: 'Remaining Amount',
+                  //   accessorKey: 'remainingAmount',
+                  //   footer: () =>
+                  //     amountConverter(individualMemberReportData?.totalRemainingAmount || 0),
 
-                    cell: (props) => amountConverter(props.getValue() as string),
-                    meta: {
-                      width: '15px',
-                      isNumeric: true,
-                    },
-                  },
+                  //   cell: (props) => amountConverter(props.getValue() as string),
+                  //   meta: {
+                  //     width: '15px',
+                  //     isNumeric: true,
+                  //   },
+                  // },
                   {
                     header: 'Last Payment Date',
                     accessorFn: (row) => localizedDate(row?.issuedDate),
