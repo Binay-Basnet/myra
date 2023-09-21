@@ -83,13 +83,13 @@ export const BankGLStatementReport = () => {
               label: 'Transaction Reports',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions'
-                : '/accounting/reports/transactions',
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'Bank GL Statement',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions/bank-gl-statement/new'
-                : '/accounting/reports/transactions/bank-gl-statement/new',
+                : '/accounting/reports/accounting-reports/transactions/bank-gl-statement/new',
             },
           ]}
         />

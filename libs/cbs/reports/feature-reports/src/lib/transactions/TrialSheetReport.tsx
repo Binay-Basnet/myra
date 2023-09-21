@@ -150,13 +150,13 @@ export const TrialSheetReport = () => {
               label: 'Transaction Reports',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions'
-                : '/accounting/reports/transactions',
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'Trial Balance',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions/trial-sheet/new'
-                : '/accounting/reports/transactions/trial-sheet/new',
+                : '/accounting/reports/accounting-reports/transactions/trial-sheet/new',
             },
           ]}
         />

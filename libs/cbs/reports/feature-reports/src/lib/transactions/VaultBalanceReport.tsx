@@ -109,13 +109,13 @@ export const VaultBalanceReport = () => {
               label: 'Transaction Reports',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions'
-                : '/accounting/reports/transactions',
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'Vault Balance Report',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions/vault-balance/new'
-                : '/accounting/reports/transactions/vault-balance/new',
+                : '/accounting/reports/accounting-reports/transactions/vault-balance/new',
             },
           ]}
         />

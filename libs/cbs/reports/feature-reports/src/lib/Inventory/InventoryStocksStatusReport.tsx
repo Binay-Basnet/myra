@@ -120,13 +120,15 @@ export const InventoryStockStatusReport = () => {
           paths={[
             {
               label: 'Inventory Reports',
-              link: isCbs ? '/cbs/reports/cbs-reports/inventory' : '/accounting/reports/inventory',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/inventory'
+                : '/accounting/reports/accounting-reports/inventory',
             },
             {
               label: ReportEnum.INVENTORY_STOCK_STATUS_REPORT,
               link: isCbs
                 ? '/cbs/reports/cbs-reports/inventory/stock-status/new'
-                : '/accounting/reports/inventory/stock-status/new',
+                : '/accounting/reports/accounting-reports/inventory/stock-status/new',
             },
           ]}
         />

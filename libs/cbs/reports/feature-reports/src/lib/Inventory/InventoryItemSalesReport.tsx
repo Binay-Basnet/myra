@@ -100,13 +100,15 @@ export const InventoryItemSalesReport = () => {
           paths={[
             {
               label: 'Inventory Reports',
-              link: isCbs ? '/cbs/reports/cbs-reports/inventory' : '/accounting/reports/inventory',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/inventory'
+                : '/accounting/reports/accounting-reports/inventory',
             },
             {
               label: 'Inventory Item Sales Report',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/inventory/item-sales/new'
-                : '/accounting/reports/inventory/item-sales/new',
+                : '/accounting/reports/accounting-reports/inventory/item-sales/new',
             },
           ]}
         />

@@ -76,13 +76,15 @@ export const InventoryRegisterReport = () => {
           paths={[
             {
               label: 'Inventory Reports',
-              link: isCbs ? '/cbs/reports/cbs-reports/inventory' : '/accounting/reports/inventory',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/inventory'
+                : '/accounting/reports/accounting-reports/inventory',
             },
             {
               label: 'Inventory Register Report',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/inventory/register/new'
-                : '/accounting/reports/inventory/register/new',
+                : '/accounting/reports/accounting-reports/inventory/register/new',
             },
           ]}
         />

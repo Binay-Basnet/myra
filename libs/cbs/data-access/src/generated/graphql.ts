@@ -45597,6 +45597,33 @@ export type GetAllTransactionsDetailQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           profilePicUrl?: string | null;
         } | null;
+        loanDisbursementData?: {
+          loanAccountId?: string | null;
+          loanAccountName?: string | null;
+          disbursedDate?: Record<'local' | 'en' | 'np', string> | null;
+          disbursedAmount?: string | null;
+          paymentMode?: string | null;
+          destAccId?: string | null;
+          destAccName?: string | null;
+          bankName?: string | null;
+          bankChequeNo?: string | null;
+          processingCharge?: string | null;
+        } | null;
+        accountCloseData?: {
+          accId: string;
+          accCloseDate: Record<'local' | 'en' | 'np', string>;
+          accName?: string | null;
+          amount?: string | null;
+          interest?: string | null;
+          charges?: string | null;
+          paymentMode?: string | null;
+          closeReason?: string | null;
+          tax?: string | null;
+          destAccId?: string | null;
+          destAccName?: string | null;
+          bankName?: string | null;
+          bankChequeNo?: string | null;
+        } | null;
         glTransaction?: Array<{
           account: string;
           serviceCenter?: string | null;
@@ -75874,6 +75901,33 @@ export const GetAllTransactionsDetailDocument = `
         isYearEndAdjustment
         note
         status
+        loanDisbursementData {
+          loanAccountId
+          loanAccountName
+          disbursedDate
+          disbursedAmount
+          paymentMode
+          destAccId
+          destAccName
+          bankName
+          bankChequeNo
+          processingCharge
+        }
+        accountCloseData {
+          accId
+          accCloseDate
+          accName
+          amount
+          interest
+          charges
+          paymentMode
+          closeReason
+          tax
+          destAccId
+          destAccName
+          bankName
+          bankChequeNo
+        }
         glTransaction {
           account
           serviceCenter

@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 
 import {
-  AllTransactionType,
   useAgentTransactionDetailQuery,
   useGetAgentDetailQuery,
   useGetAllTransactionsDetailQuery,
@@ -24,8 +23,7 @@ export const useTransactionDetailHooks = () => {
       staleTime: 0,
       enabled:
         !!id &&
-        (router?.asPath?.includes('/deposit/') ||
-          router?.asPath?.includes(AllTransactionType?.Deposit)),
+        (router?.asPath?.includes('/deposit/') || router?.asPath?.includes('/all-transactions/')),
     }
   );
 
@@ -37,8 +35,7 @@ export const useTransactionDetailHooks = () => {
       staleTime: 0,
       enabled:
         !!id &&
-        (router?.asPath?.includes('/withdraw/') ||
-          router?.asPath?.includes(AllTransactionType?.Withdraw)),
+        (router?.asPath?.includes('/withdraw/') || router?.asPath?.includes('/all-transactions/')),
     }
   );
 
@@ -52,7 +49,7 @@ export const useTransactionDetailHooks = () => {
       enabled:
         !!id &&
         (router?.asPath?.includes('/account-transfer/') ||
-          router?.asPath?.includes(AllTransactionType?.Transfer)),
+          router?.asPath?.includes('/all-transactions/')),
     }
   );
 
@@ -92,7 +89,7 @@ export const useTransactionDetailHooks = () => {
         !!id &&
         (router?.asPath?.includes('/loan-payment/') ||
           router?.asPath?.includes('/repayments/') ||
-          router?.asPath?.includes(AllTransactionType?.LoanRepayment)),
+          router?.asPath?.includes('/all-transactions/')),
     }
   );
 
