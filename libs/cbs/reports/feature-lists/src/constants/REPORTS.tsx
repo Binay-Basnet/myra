@@ -394,7 +394,7 @@ export const REPORTS: ReportType = {
       id: '6.16',
       report: Report.CLOSED_LOAN_ACCOUNT_STATEMENT,
       link: 'closed-loan-account-statement',
-      component: <Reports.LoanProductWiseBalanceReport />,
+      component: <Reports.ClosedLoanStatementReport />,
       acl: 'REPORTS_LOAN_CLOSED_LOAN_ACCOUNT_STATEMENT',
     },
     {
@@ -563,7 +563,7 @@ export const REPORTS: ReportType = {
       id: '7.7',
       report: Report.TRANSACTION_BANK_GL_REPORT,
       link: 'bank-gl-statement',
-      component: <Reports.BankGLBalanceReport />,
+      component: <Reports.BankGLStatementReport />,
       acl: 'REPORTS_TXN_BANK_GL_BALANCE',
     },
     {
@@ -774,14 +774,14 @@ export const REPORTS: ReportType = {
       report: Report.ACCOUNTING_EXTERNAL_LOAN_STATEMENT_REPORT,
       link: 'external-loan-statement',
       acl: 'REPORTS_ACCOUNTING_EXTERNAL_LOAN',
-      component: <Reports.ExternalLoanReport />,
+      component: <Reports.ExternalLoanStatementReport />,
     },
     {
       id: '2',
       report: Report.ACCOUNTING_EXTERNAL_LOAN_REPORT,
       link: 'external-loan',
       acl: 'REPORTS_ACCOUNTING_EXTERNAL_LOAN_STATEMENT',
-      component: <Reports.ExternalLoanStatementReport />,
+      component: <Reports.ExternalLoanReport />,
     },
     {
       id: '3',

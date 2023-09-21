@@ -65,7 +65,7 @@ export const LedgerBalanceReport = () => {
             { label: 'Other Report', link: '/reports/cbs/others' },
             {
               label: 'Ledger Balance Report',
-              link: '/reports/cbs/others/ledger-balance/new',
+              link: '/cbs/reports/cbs-reports/others/ledger-balance/new',
             },
           ]}
         />
