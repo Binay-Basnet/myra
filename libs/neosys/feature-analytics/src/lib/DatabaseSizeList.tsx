@@ -2,44 +2,29 @@ import { useMemo } from 'react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetDatabaseSizeListQuery } from '@coop/neosys-admin/data-access';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { useGetAllDatabaseSizeListQuery } from '@coop/neosys-admin/data-access';
 
 export const DatabaseSizeList = () => {
-  const { data, isFetching } = useGetDatabaseSizeListQuery({
-    pagination: { ...getPaginationQuery(), order: null },
-  });
+  const { data, isFetching } = useGetAllDatabaseSizeListQuery();
 
   const rowData = useMemo(
-    () => data?.neosys?.thread?.databaseSize?.listDBSize?.edges ?? [],
+    () => data?.neosys?.thread?.databaseSize?.fetchDatabaseSize?.records ?? [],
     [data]
   );
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Id',
-        accessorFn: (row) => row?.node?.id,
-      },
-      {
-        header: 'Created at',
-        accessorFn: (row) => row?.node?.createdAt,
-      },
-      {
-        header: 'Database Size',
-        accessorFn: (row) => row?.node?.databaseSize,
+        header: 'Query Date',
+        accessorFn: (row) => row?.queryDate?.local,
       },
       {
         header: 'Slug',
-        accessorFn: (row) => row?.node?.slug,
+        accessorFn: (row) => row?.slug,
       },
       {
-        header: 'Query Id',
-        accessorFn: (row) => row?.node?.queryID,
-      },
-      {
-        header: 'Query Date',
-        accessorFn: (row) => row?.node?.queryDate?.local,
+        header: 'Database Size',
+        accessorFn: (row) => row?.databaseSize,
       },
     ],
     []
@@ -48,15 +33,7 @@ export const DatabaseSizeList = () => {
   return (
     <>
       <PageHeader heading="Database size list" />
-      <Table
-        data={rowData}
-        isLoading={isFetching}
-        columns={columns}
-        pagination={{
-          total: data?.neosys?.thread?.databaseSize?.listDBSize?.totalCount as number,
-          pageInfo: data?.neosys?.thread?.databaseSize?.listDBSize?.pageInfo,
-        }}
-      />
+      <Table data={rowData} isLoading={isFetching} columns={columns} />
     </>
   );
 };

@@ -6,6 +6,7 @@ import React from 'react';
 export interface SidebarTabsProps {
   title: React.ReactNode;
   to: string;
+  isSelected?: boolean;
 }
 
 const TabCol = chakra(Tab, {
@@ -33,9 +34,9 @@ const TabCol = chakra(Tab, {
   },
 });
 
-export const SidebarTabs = ({ title, to }: SidebarTabsProps) => (
+export const SidebarTabs = ({ title, to, isSelected }: SidebarTabsProps) => (
   <Link href={to}>
-    <TabCol>
+    <TabCol bg={isSelected ? '#EEF2F7' : 'white'} fontWeight={isSelected ? '600' : '400'}>
       <Text as="div">{title}</Text>
     </TabCol>
   </Link>

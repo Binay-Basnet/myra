@@ -107,13 +107,15 @@ export const VaultBalanceReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/transactions'
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'Vault Balance Report',
               link: isCbs
-                ? '/reports/cbs/transactions/vault-balance/new'
-                : '/accounting/reports/transactions/vault-balance/new',
+                ? '/cbs/reports/cbs-reports/transactions/vault-balance/new'
+                : '/accounting/reports/accounting-reports/transactions/vault-balance/new',
             },
           ]}
         />

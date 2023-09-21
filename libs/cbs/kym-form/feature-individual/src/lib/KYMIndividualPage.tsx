@@ -31,6 +31,7 @@ import { MemberKYMMainOccupation } from '../components/form/professional-info/Me
 import { KYMIndPersonalInfo } from '../components/form/personal-info/KYMIndPersonalInfo';
 import { KYMIndIncomeSourceDetails } from '../components/form/professional-info/KYMIndIncomeSourceDetails';
 import { KYMIndCoopDetailsFamilyMember } from '../components/form/coop-membership-form/KYMBasiccoopDetailsFamilyMember';
+import { KYMBankDetails } from '../components/form/coop-membership-form/KYMBankDetails';
 
 type KYMSection = {
   section: string;
@@ -237,6 +238,7 @@ export const KYMIndividualPage = () => {
               <KYMIndCoopBasicDetails />
               <KYMIndCoopDetailsFamilyMember />
               <KYMFinancialTransactionDetails />
+              <KYMBankDetails />
               <KYMEstimatedAmount />
             </SectionContainer>
 

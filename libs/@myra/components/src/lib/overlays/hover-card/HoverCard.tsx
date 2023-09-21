@@ -1,16 +1,21 @@
 import { ReactNode } from 'react';
-import { Portal } from '@chakra-ui/react';
+import { PopoverProps, Portal } from '@chakra-ui/react';
 
 import { Popover, PopoverBody, PopoverContent, PopoverTrigger } from '@myra-ui/components';
 import { Box } from '@myra-ui/foundations';
 
-interface IHoverCardProps {
+interface IHoverCardProps extends PopoverProps {
   children: ReactNode;
   triggerBy?: 'click' | 'hover';
 }
 
-const HoverCard = ({ children, triggerBy = 'hover' }: IHoverCardProps) => (
-  <Popover placement="bottom-start" gutter={3} trigger={triggerBy}>
+const HoverCard = ({
+  children,
+  triggerBy = 'hover',
+  placement = 'bottom-start',
+  ...rest
+}: IHoverCardProps) => (
+  <Popover placement={placement} gutter={3} trigger={triggerBy} {...rest}>
     {children}
   </Popover>
 );

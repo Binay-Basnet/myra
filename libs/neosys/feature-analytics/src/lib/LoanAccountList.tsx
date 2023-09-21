@@ -2,52 +2,38 @@ import { useMemo } from 'react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetLoanAccountCounterQuery } from '@coop/neosys-admin/data-access';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { useGetAllLoanAccountCounterQuery } from '@coop/neosys-admin/data-access';
 
 export const LoanAccountList = () => {
-  const { data, isFetching } = useGetLoanAccountCounterQuery({
-    pagination: { ...getPaginationQuery(), order: null },
-  });
+  const { data, isFetching } = useGetAllLoanAccountCounterQuery();
 
   const rowData = useMemo(
-    () => data?.neosys?.thread?.loanAccountCounter?.listLoanAccountCounter?.edges ?? [],
+    () => data?.neosys?.thread?.loanAccountCounter?.fetchLoanAccountCounter?.records ?? [],
     [data]
   );
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Id',
-        accessorFn: (row) => row?.node?.id,
-      },
-      {
-        header: 'Created at',
-        accessorFn: (row) => row?.node?.createdAt,
-      },
-      {
-        header: 'Approved Account',
-        accessorFn: (row) => row?.node?.approvedAccount,
-      },
-      {
-        header: 'Disbursed Account',
-        accessorFn: (row) => row?.node?.disbursedAccount,
-      },
-      {
-        header: 'Canceled Account',
-        accessorFn: (row) => row?.node?.canceledAccount,
+        header: 'Query Date',
+        accessorFn: (row) => row?.queryDate?.local,
       },
       {
         header: 'Slug',
-        accessorFn: (row) => row?.node?.slug,
+        accessorFn: (row) => row?.slug,
+      },
+
+      {
+        header: 'Approved Account',
+        accessorFn: (row) => row?.approvedAccount,
       },
       {
-        header: 'Query Id',
-        accessorFn: (row) => row?.node?.queryID,
+        header: 'Disbursed Account',
+        accessorFn: (row) => row?.disbursedAccount,
       },
       {
-        header: 'Created at',
-        accessorFn: (row) => row?.node?.createdAt,
+        header: 'Canceled Account',
+        accessorFn: (row) => row?.canceledAccount,
       },
     ],
     []
@@ -56,16 +42,7 @@ export const LoanAccountList = () => {
   return (
     <>
       <PageHeader heading="Loan Accounts" />
-      <Table
-        data={rowData}
-        isLoading={isFetching}
-        columns={columns}
-        pagination={{
-          total: data?.neosys?.thread?.loanAccountCounter?.listLoanAccountCounter
-            ?.totalCount as number,
-          pageInfo: data?.neosys?.thread?.loanAccountCounter?.listLoanAccountCounter?.pageInfo,
-        }}
-      />
+      <Table data={rowData} isLoading={isFetching} columns={columns} />
     </>
   );
 };

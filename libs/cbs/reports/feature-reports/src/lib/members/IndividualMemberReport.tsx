@@ -62,10 +62,10 @@ export const IndividualMemberReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Members Reports', link: '/reports/cbs/members' },
+            { label: 'Members Reports', link: '/cbs/reports/cbs-reports/members' },
             {
               label: 'Individual Member Profile Report',
-              link: '/reports/cbs/members/individual-member-report/new',
+              link: '/cbs/reports/cbs-reports/members/individual-member-report/new',
             },
           ]}
         />
@@ -387,18 +387,18 @@ export const IndividualMemberReport = () => {
                       isNumeric: true,
                     },
                   },
-                  {
-                    header: 'Remaining Amount',
-                    accessorKey: 'remainingAmount',
-                    footer: () =>
-                      amountConverter(individualMemberReportData?.totalRemainingAmount || 0),
+                  // {
+                  //   header: 'Remaining Amount',
+                  //   accessorKey: 'remainingAmount',
+                  //   footer: () =>
+                  //     amountConverter(individualMemberReportData?.totalRemainingAmount || 0),
 
-                    cell: (props) => amountConverter(props.getValue() as string),
-                    meta: {
-                      width: '15px',
-                      isNumeric: true,
-                    },
-                  },
+                  //   cell: (props) => amountConverter(props.getValue() as string),
+                  //   meta: {
+                  //     width: '15px',
+                  //     isNumeric: true,
+                  //   },
+                  // },
                   {
                     header: 'Last Payment Date',
                     accessorFn: (row) => localizedDate(row?.issuedDate),

@@ -21,8 +21,21 @@ query getLedgerReport($data: GeneralLedgerFilter!) {
             amount
             amountType
           }
+          yearEndBalance {
+            amount
+            amountType
+          }
         }
         adjustedEntries {
+          id
+          oldId
+          date
+          account
+          balance
+          credit
+          debit
+        }
+        yearEnd {
           id
           oldId
           date

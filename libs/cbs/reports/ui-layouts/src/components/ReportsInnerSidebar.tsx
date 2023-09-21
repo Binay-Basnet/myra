@@ -1,62 +1,71 @@
-import { Fragment, useMemo } from 'react';
+import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import { Tabs } from '@chakra-ui/react';
 
 import { Box, SidebarTabs } from '@myra-ui';
 
-const REPORTS_INNER_TAB_LINKS = [
-  // {
-  //   title: 'Organization Profile / Report',
-  //   to: '/reports/cbs/organizations',
-  // },
+import { AclKey, Can } from '@coop/cbs/utils';
+
+const REPORTS_INNER_TAB_LINKS: { title: string; to: string; acl: AclKey }[] = [
   {
     title: 'Share Report',
-    to: '/reports/cbs/share',
+    to: '/cbs/reports/cbs-reports/share',
+    acl: 'CBS_REPORTS_SHARE',
   },
   {
     title: 'Member Report',
-    to: '/reports/cbs/members',
+    to: '/cbs/reports/cbs-reports/members',
+    acl: 'CBS_REPORTS_MEMBER',
   },
   {
     title: 'Savings Report',
-    to: '/reports/cbs/savings',
+    to: '/cbs/reports/cbs-reports/savings',
+    acl: 'CBS_REPORTS_SAVINGS',
   },
   {
     title: 'Loan Report',
-    to: '/reports/cbs/loan',
+    to: '/cbs/reports/cbs-reports/loan',
+    acl: 'CBS_REPORTS_LOAN',
   },
   {
     title: 'Transaction Report',
-    to: '/reports/cbs/transactions',
+    to: '/cbs/reports/cbs-reports/transactions',
+    acl: 'CBS_REPORTS_TRANSACTION',
   },
   {
     title: 'Mobile Banking Reports',
-    to: '/reports/cbs/mobile-banking',
+    to: '/cbs/reports/cbs-reports/mobile-banking',
+    acl: 'CBS_REPORTS_MOBILE_BANKING',
   },
   {
     title: 'Service Center Report',
-    to: '/reports/cbs/service-center',
+    to: '/cbs/reports/cbs-reports/service-center',
+    acl: 'CBS_REPORTS_SERVICE_CENTER',
   },
   {
     title: 'Exception Reports',
-    to: '/reports/cbs/exceptions',
+    to: '/cbs/reports/cbs-reports/exceptions',
+    acl: 'CBS_REPORTS_EXCEPTION',
   },
   {
     title: 'Inventory Reports',
-    to: '/reports/cbs/inventory',
+    to: '/cbs/reports/cbs-reports/inventory',
+    acl: 'CBS_REPORTS_INVENTORY',
   },
   {
     title: 'Accounting Reports',
-    to: '/reports/cbs/accounting',
+    to: '/cbs/reports/cbs-reports/accounting',
+    acl: 'CBS_REPORTS_ACCOUNTING',
   },
   {
     title: 'Others Report',
-    to: '/reports/cbs/others',
+    to: '/cbs/reports/cbs-reports/others',
+    acl: 'CBS_REPORTS_OTHER',
   },
 ];
 
 interface IReportsInnerSidebarProps {
-  tabs?: { title: string; to: string }[];
+  tabs?: { title: string; to: string; acl: AclKey }[];
 }
 
 export const ReportsInnerSidebar = ({
@@ -64,16 +73,16 @@ export const ReportsInnerSidebar = ({
 }: IReportsInnerSidebarProps) => {
   const router = useRouter();
 
-  const currentIndex = useMemo(
-    () => tabs.findIndex((link) => router.pathname.includes(link.to)),
-    [router.pathname]
-  );
+  const listName = router.query['report-group'];
+
   return (
     <Box>
-      <Tabs variant="unstyled" index={currentIndex}>
+      <Tabs variant="unstyled" index={-1}>
         {tabs.map((tab) => (
           <Fragment key={tab?.title}>
-            <SidebarTabs {...tab} />
+            <Can I="SHOW_IN_MENU" a={tab.acl}>
+              <SidebarTabs isSelected={tab.to.split('/')[4] === listName} {...tab} />
+            </Can>
           </Fragment>
         ))}
       </Tabs>

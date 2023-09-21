@@ -98,34 +98,38 @@ export const AlternativeChannelGeneralSettings = () => {
           <SettingsCard title="Ledger Mapping" subtitle="Select Ledgers to map">
             <Grid templateColumns="repeat(3, 1fr)" gap="s16">
               <FormLeafCoaHeadSelect
-                name={UtilityLedgerType.Utility}
-                label="Utility Payment Ledger Mapping"
-              />
-
-              <FormLeafCoaHeadSelect
                 name={UtilityLedgerType.CashBack}
                 label="Cashback Ledger Mapping"
+                // coaClass={[CoaAccountClass.Assets]}
               />
 
               <FormLeafCoaHeadSelect
                 name={UtilityLedgerType.ServiceCharge}
                 label="Service Charge Ledger Mapping"
+                // coaClass={[CoaAccountClass.Assets]}
               />
 
               <FormLeafCoaHeadSelect
-                name={UtilityLedgerType.IncomeFromNeosys}
-                label="Income from Neosys Ledger Mapping"
+                name={UtilityLedgerType.UtilityLimitContra}
+                label="Utility Limit Contra Ledger Mapping"
+                // coaClass={[CoaAccountClass.Assets]}
               />
 
               <FormLeafCoaHeadSelect
+                name={UtilityLedgerType.UtilityLimit}
+                label="Utility Limit Ledger Mapping"
+                // coaClass={[CoaAccountClass.Assets]}
+              />
+
+              {/* <FormLeafCoaHeadSelect
                 name={UtilityLedgerType.IncomeFromNeosysSuspense}
                 label="Income from Neosys Suspense Ledger Mapping"
               />
 
               <FormLeafCoaHeadSelect
                 name={UtilityLedgerType.ExpenseToNeosys}
-                label="Expense to Neosys Ledger Mapping"
-              />
+                label="Expense to Neosys Ledger Mapping" */}
+              {/* /> */}
             </Grid>
           </SettingsCard>
         </Box>
@@ -142,12 +146,14 @@ export const AlternativeChannelGeneralSettings = () => {
             },
             promise: utilityLedgerSetup({
               value: [
-                UtilityLedgerType.Utility,
+                // UtilityLedgerType.Utility,
                 UtilityLedgerType.CashBack,
                 UtilityLedgerType.ServiceCharge,
-                UtilityLedgerType.IncomeFromNeosys,
-                UtilityLedgerType.IncomeFromNeosysSuspense,
-                UtilityLedgerType.ExpenseToNeosys,
+                UtilityLedgerType.UtilityLimit,
+                UtilityLedgerType.UtilityLimitContra,
+                // UtilityLedgerType.IncomeFromNeosys,
+                // UtilityLedgerType.IncomeFromNeosysSuspense,
+                // UtilityLedgerType.ExpenseToNeosys,
               ]?.map((ut) => ({
                 coaHead:
                   values && typeof values[ut] === 'object' && 'value' in values[ut]

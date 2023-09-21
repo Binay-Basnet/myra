@@ -148,13 +148,15 @@ export const TrialSheetReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/transactions'
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'Trial Balance',
               link: isCbs
-                ? '/reports/cbs/transactions/trial-sheet/new'
-                : '/accounting/reports/transactions/trial-sheet/new',
+                ? '/cbs/reports/cbs-reports/transactions/trial-sheet/new'
+                : '/accounting/reports/accounting-reports/transactions/trial-sheet/new',
             },
           ]}
         />

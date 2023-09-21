@@ -19,6 +19,15 @@ export const ShareDistribution = () => (
         </Text>
       }
     />
+    <FormNumberInput
+      name="dividendRate"
+      label="Dividend Rate"
+      rightElement={
+        <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+          %
+        </Text>
+      }
+    />
     {/* 
     <GridItem colSpan={2}>
       <FormSelect name="accountMapping" label="Account Mapping" />

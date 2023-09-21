@@ -2,18 +2,21 @@ import { FundManagementInput } from '@coop/cbs/data-access';
 
 export type ParticularTableType = {
   coaHead: string;
+  coaHeadName: string;
   percent: number | string;
   amount: string;
 };
 
 export type DistributionTableType = {
   coaHead: string;
+  coaHeadName: string;
   percent: number | string;
   amount: string;
 };
 
 export type OtherFundDistributionTableType = {
   coaHead: string;
+  coaHeadName: string;
   percent: number | string;
   amount: string;
 };

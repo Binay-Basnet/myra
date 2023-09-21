@@ -217,8 +217,12 @@ export type AccountCloseSuccessCard = {
   accId: Scalars['ID'];
   accName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
+  bankChequeNo?: Maybe<Scalars['String']>;
+  bankName?: Maybe<Scalars['String']>;
   charges?: Maybe<Scalars['String']>;
   closeReason?: Maybe<Scalars['String']>;
+  destAccId?: Maybe<Scalars['String']>;
+  destAccName?: Maybe<Scalars['String']>;
   interest?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<Scalars['String']>;
   tax?: Maybe<Scalars['String']>;
@@ -1398,11 +1402,13 @@ export const AllLoanType = {
 
 export type AllLoanType = typeof AllLoanType[keyof typeof AllLoanType];
 export type AllTransactionResult = {
+  accountCloseData?: Maybe<AccountCloseSuccessCard>;
   amount?: Maybe<Scalars['String']>;
   branch?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
   isYearEndAdjustment?: Maybe<Scalars['String']>;
+  loanDisbursementData?: Maybe<LoanDisbursementMinimal>;
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
   oldId?: Maybe<Scalars['String']>;
@@ -1896,6 +1902,22 @@ export type AutoOpenDetails = {
   accountID: Scalars['ID'];
   accountName?: Maybe<Scalars['String']>;
   status?: Maybe<ObjState>;
+};
+
+export type AwardsCashAndCertificatesDetailsInput = {
+  cashOrPrizeName?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  organization?: InputMaybe<Scalars['String']>;
+  receivedDate?: InputMaybe<Scalars['Localized']>;
+  verifiedBy?: InputMaybe<Scalars['String']>;
+};
+
+export type AwardsCashAndCertificatesDetailsType = {
+  cashOrPrizeName?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  organization?: Maybe<Scalars['String']>;
+  receivedDate?: Maybe<Scalars['Localized']>;
+  verifiedBy?: Maybe<Scalars['String']>;
 };
 
 export type BpmAnnouncements = {
@@ -3163,7 +3185,7 @@ export type CbsCodeManagementList = {
 };
 
 export type CbsCodeManagementListData = {
-  share?: Maybe<Array<Maybe<CbsCodeManagement>>>;
+  certificates?: Maybe<Array<Maybe<CbsCodeManagement>>>;
   transfers?: Maybe<Array<Maybe<CbsCodeManagement>>>;
   withdrawSlip?: Maybe<Array<Maybe<CbsCodeManagement>>>;
 };
@@ -3195,6 +3217,7 @@ export type CbsCodeMangementResult = {
 export const CbsCodeType = {
   BranchTransfer: 'BRANCH_TRANSFER',
   CashInTransit: 'CASH_IN_TRANSIT',
+  FdCertificate: 'FD_CERTIFICATE',
   ShareCertificate: 'SHARE_CERTIFICATE',
   TellerTransfer: 'TELLER_TRANSFER',
   VaultTransfer: 'VAULT_TRANSFER',
@@ -3419,6 +3442,12 @@ export type CoaView = {
   under?: Maybe<Scalars['ID']>;
 };
 
+export const CalculationTypeEnum = {
+  Amount: 'AMOUNT',
+  Percentage: 'PERCENTAGE',
+} as const;
+
+export type CalculationTypeEnum = typeof CalculationTypeEnum[keyof typeof CalculationTypeEnum];
 export type CashBack = {
   cashBackAmount?: InputMaybe<Scalars['String']>;
   cashBackPercent?: InputMaybe<Scalars['String']>;
@@ -3708,7 +3737,8 @@ export type CertificatePrintReportResult = {
 
 export type CharKhataReportFilter = {
   branchId: Array<InputMaybe<Scalars['String']>>;
-  coaHead: Array<Scalars['String']>;
+  coaHead?: InputMaybe<Array<Scalars['String']>>;
+  coaType?: InputMaybe<Array<CoaAccountClass>>;
   filter?: InputMaybe<TrialSheetFilter>;
   period: LocalizedDateFilter;
 };
@@ -4992,13 +5022,12 @@ export type DeductionComponentNode = {
   makeThisActive?: Maybe<Scalars['Boolean']>;
   multiplier?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
-  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
   status?: Maybe<DeductionStatusEnum>;
 };
 
 export const DeductionFrequencyEnum = {
-  Monthly: 'MONTHLY',
-  Yearly: 'YEARLY',
+  Fixed: 'FIXED',
+  Recurring: 'RECURRING',
 } as const;
 
 export type DeductionFrequencyEnum =
@@ -5009,6 +5038,12 @@ export const DeductionStatusEnum = {
 } as const;
 
 export type DeductionStatusEnum = typeof DeductionStatusEnum[keyof typeof DeductionStatusEnum];
+export const DeductionType = {
+  PostTaxDeduction: 'POST_TAX_DEDUCTION',
+  PreTaxDeduction: 'PRE_TAX_DEDUCTION',
+} as const;
+
+export type DeductionType = typeof DeductionType[keyof typeof DeductionType];
 export const DefaultAccountType = {
   Current: 'CURRENT',
   Saving: 'SAVING',
@@ -6604,12 +6639,16 @@ export type EachTransferRecord = {
 export type EarningComponentInput = {
   abbr?: InputMaybe<Scalars['String']>;
   baseMultiple?: InputMaybe<Scalars['String']>;
+  calculationType?: InputMaybe<CalculationTypeEnum>;
   description?: InputMaybe<Scalars['String']>;
-  isTaxApplicable?: InputMaybe<Scalars['Boolean']>;
+  earningFrequency?: InputMaybe<EarningFrequencyEnum>;
+  ledgerHead?: InputMaybe<Scalars['String']>;
   makeThisActive?: InputMaybe<Scalars['Boolean']>;
+  maximumAmountLimitPerYear?: InputMaybe<Scalars['String']>;
   multiplier?: InputMaybe<Scalars['Float']>;
   name?: InputMaybe<Scalars['String']>;
-  roundToNearestInteger?: InputMaybe<Scalars['Boolean']>;
+  requiredProof?: InputMaybe<Scalars['Boolean']>;
+  taxExempted?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type EarningComponentListConnection = {
@@ -6628,24 +6667,27 @@ export type EarningComponentNode = {
   baseMultiple?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
-  isTaxApplicable?: Maybe<Scalars['Boolean']>;
   makeThisActive?: Maybe<Scalars['Boolean']>;
   multiplier?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
-  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
   status?: Maybe<EarningComponentStatus>;
+  taxExempted?: Maybe<Scalars['Boolean']>;
 };
 
 export type EarningComponentRecord = {
   abbr?: Maybe<Scalars['String']>;
   baseMultiple?: Maybe<Scalars['String']>;
+  calculationType?: Maybe<CalculationTypeEnum>;
   description?: Maybe<Scalars['String']>;
+  earningFrequency?: Maybe<EarningFrequencyEnum>;
   id?: Maybe<Scalars['ID']>;
-  isTaxApplicable?: Maybe<Scalars['Boolean']>;
+  ledgerHead?: Maybe<Scalars['String']>;
   makeThisActive?: Maybe<Scalars['Boolean']>;
+  maximumAmountLimitPerYear?: Maybe<Scalars['String']>;
   multiplier?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
-  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
+  requiredProof?: Maybe<Scalars['Boolean']>;
+  taxExempted?: Maybe<Scalars['Boolean']>;
 };
 
 export const EarningComponentStatus = {
@@ -6655,6 +6697,12 @@ export const EarningComponentStatus = {
 
 export type EarningComponentStatus =
   typeof EarningComponentStatus[keyof typeof EarningComponentStatus];
+export const EarningFrequencyEnum = {
+  Fixed: 'FIXED',
+  Recurring: 'RECURRING',
+} as const;
+
+export type EarningFrequencyEnum = typeof EarningFrequencyEnum[keyof typeof EarningFrequencyEnum];
 export type EbankingRegistrationReportResult = {
   data?: Maybe<Array<Maybe<EbankingReportResult>>>;
   error?: Maybe<QueryError>;
@@ -6734,6 +6782,13 @@ export type EbankingTransactionFilter = {
   transactionDirection?: InputMaybe<EbankingTransactionCrOrDr>;
 };
 
+export const EmployeeClass = {
+  Class_1: 'CLASS_1',
+  Class_2: 'CLASS_2',
+  Class_3: 'CLASS_3',
+} as const;
+
+export type EmployeeClass = typeof EmployeeClass[keyof typeof EmployeeClass];
 export type EmployeeExitConnection = {
   edges?: Maybe<Array<Maybe<EmployeeExits>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -6807,41 +6862,70 @@ export type EmployeeHealthInsuranceResult = {
 };
 
 export type EmployeeInput = {
+  Handicapped?: InputMaybe<Scalars['Boolean']>;
+  account?: InputMaybe<Scalars['String']>;
+  accountName?: InputMaybe<Scalars['String']>;
+  accountNumber?: InputMaybe<Scalars['String']>;
   age?: InputMaybe<Scalars['Int']>;
-  appointmentLetter?: InputMaybe<Scalars['ID']>;
+  awardsCashAndCertificates?: InputMaybe<Array<InputMaybe<AwardsCashAndCertificatesDetailsInput>>>;
+  awardsCashCertificatesGiven?: InputMaybe<Scalars['Boolean']>;
+  bank?: InputMaybe<Scalars['String']>;
   bloodGroup?: InputMaybe<BloodGroup>;
+  cit?: InputMaybe<Scalars['Boolean']>;
+  citCode?: InputMaybe<Scalars['String']>;
+  citNumber?: InputMaybe<Scalars['String']>;
+  citizenship?: InputMaybe<IdentificationDetailsInput>;
+  citizenshipGiven?: InputMaybe<Scalars['Boolean']>;
+  coopMemberId?: InputMaybe<Scalars['String']>;
   dateOfBirth?: InputMaybe<Scalars['Localized']>;
-  dateOfJoining?: InputMaybe<Scalars['Localized']>;
   departmentId?: InputMaybe<Scalars['String']>;
   designationId?: InputMaybe<Scalars['String']>;
   documents?: InputMaybe<Array<InputMaybe<DocumentInsertInput>>>;
+  drivingLicense?: InputMaybe<IdentificationDetailsInput>;
+  drivingLicenseGiven?: InputMaybe<Scalars['Boolean']>;
   educationDetails?: InputMaybe<Array<InputMaybe<HrEmployeeEducationDetail>>>;
+  employeeClass?: InputMaybe<EmployeeClass>;
   employeeLevelId?: InputMaybe<Scalars['String']>;
   employeeStatus?: InputMaybe<EmployeeStatus>;
   employmentType?: InputMaybe<EmployeeTypeEnum>;
-  expenseApproverId?: InputMaybe<Scalars['String']>;
+  ethnicity?: InputMaybe<Scalars['String']>;
+  familyDetails?: InputMaybe<Array<InputMaybe<FamilyDetailsInput>>>;
   firstName?: InputMaybe<Scalars['String']>;
   gender?: InputMaybe<Scalars['ID']>;
-  healthInsuranceNumberId?: InputMaybe<Scalars['String']>;
-  healthInsuranceProviderId?: InputMaybe<Scalars['String']>;
+  internationalTour?: InputMaybe<Array<InputMaybe<InternationalTourDetailsInput>>>;
+  internationalTourGiven?: InputMaybe<Scalars['Boolean']>;
+  isCoopMember?: InputMaybe<Scalars['Boolean']>;
+  isJobApplication?: InputMaybe<Scalars['Boolean']>;
+  isMyraErpUser?: InputMaybe<Scalars['Boolean']>;
   isTemporarySameAsPermanent?: InputMaybe<Scalars['Boolean']>;
-  jobApplicationId?: InputMaybe<Scalars['ID']>;
-  jobOffer?: InputMaybe<Scalars['ID']>;
+  jobApplicationId?: InputMaybe<Scalars['String']>;
+  joiningDate?: InputMaybe<Scalars['Localized']>;
   lastName?: InputMaybe<Scalars['String']>;
-  leaveApproverId?: InputMaybe<Scalars['String']>;
   maritalStatus?: InputMaybe<Scalars['ID']>;
   middleName?: InputMaybe<Scalars['String']>;
+  myraErpUserId?: InputMaybe<Scalars['String']>;
+  noCitDeduction?: InputMaybe<Scalars['Boolean']>;
+  nominee?: InputMaybe<Scalars['String']>;
   panNumber?: InputMaybe<Scalars['String']>;
+  payGroup?: InputMaybe<Scalars['String']>;
   permanentAddress?: InputMaybe<KymAddressInput>;
-  personalEmailAddress?: InputMaybe<Scalars['String']>;
   personalPhoneNumber?: InputMaybe<Scalars['String']>;
-  providentFundAccount?: InputMaybe<Scalars['String']>;
-  reportsToId?: InputMaybe<Scalars['String']>;
+  pf?: InputMaybe<Scalars['Boolean']>;
+  providentNumber?: InputMaybe<Scalars['String']>;
+  referralBy?: InputMaybe<Scalars['String']>;
+  relationWithNominee?: InputMaybe<Scalars['String']>;
+  researchAndPublications?: InputMaybe<Array<InputMaybe<ResearchAndPublicationDetailsInput>>>;
+  researchAndPublicationsGiven?: InputMaybe<Scalars['Boolean']>;
   salaryPaymentMode?: InputMaybe<PaymentMode>;
   salaryStructureId?: InputMaybe<Scalars['String']>;
   serviceCenter?: InputMaybe<Scalars['String']>;
   sourceOfHire?: InputMaybe<SourceOfHire>;
+  ssf?: InputMaybe<Scalars['Boolean']>;
+  ssfNumber?: InputMaybe<Scalars['String']>;
+  supervisor?: InputMaybe<Scalars['String']>;
   temporaryAddress?: InputMaybe<KymAddressInput>;
+  trainingDetails?: InputMaybe<Array<InputMaybe<TrainingDetailsInput>>>;
+  trainingDetailsGiven?: InputMaybe<Scalars['Boolean']>;
   workEmailAddress?: InputMaybe<Scalars['String']>;
   workExperience?: InputMaybe<Array<InputMaybe<HrEmployeeWorkExperience>>>;
   workPhoneNumber?: InputMaybe<Scalars['String']>;
@@ -6995,42 +7079,71 @@ export type EmployeeReportUserReportArgs = {
 };
 
 export type EmployeeResultResponseType = {
+  Handicapped?: Maybe<Scalars['Boolean']>;
+  account?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
   age?: Maybe<Scalars['Int']>;
-  appointmentLetter?: Maybe<Scalars['ID']>;
+  awardsCashAndCertificates?: Maybe<Array<Maybe<AwardsCashAndCertificatesDetailsType>>>;
+  awardsCashCertificatesGiven?: Maybe<Scalars['Boolean']>;
+  bank?: Maybe<Scalars['String']>;
   bloodGroup?: Maybe<BloodGroup>;
+  cit?: Maybe<Scalars['Boolean']>;
+  citCode?: Maybe<Scalars['String']>;
+  citNumber?: Maybe<Scalars['String']>;
+  citizenship?: Maybe<IdentificationDetailsType>;
+  citizenshipGiven?: Maybe<Scalars['Boolean']>;
+  coopMemberId?: Maybe<Scalars['String']>;
   dateOfBirth?: Maybe<Scalars['Localized']>;
-  dateOfJoining?: Maybe<Scalars['Localized']>;
   departmentId?: Maybe<Scalars['String']>;
   designationId?: Maybe<Scalars['String']>;
   documents?: Maybe<Array<Maybe<UploadedDocument>>>;
+  drivingLicense?: Maybe<IdentificationDetailsType>;
+  drivingLicenseGiven?: Maybe<Scalars['Boolean']>;
   educationDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
+  employeeClass?: Maybe<EmployeeClass>;
   employeeLevelId?: Maybe<Scalars['String']>;
   employeeStatus?: Maybe<EmployeeStatus>;
   employmentType?: Maybe<EmployeeTypeEnum>;
-  expenseApproverId?: Maybe<Scalars['String']>;
+  ethnicity?: Maybe<Scalars['String']>;
+  familyDetails?: Maybe<Array<Maybe<FamilyDetailsType>>>;
   firstName?: Maybe<Scalars['String']>;
   gender?: Maybe<Scalars['ID']>;
-  healthInsuranceNumberId?: Maybe<Scalars['String']>;
-  healthInsuranceProviderId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  internationalTour?: Maybe<Array<Maybe<InternationalTourDetailsType>>>;
+  internationalTourGiven?: Maybe<Scalars['Boolean']>;
+  isCoopMember?: Maybe<Scalars['Boolean']>;
+  isJobApplication?: Maybe<Scalars['Boolean']>;
+  isMyraErpUser?: Maybe<Scalars['Boolean']>;
   isTemporarySameAsPermanent?: Maybe<Scalars['Boolean']>;
-  jobApplicationId?: Maybe<Scalars['ID']>;
-  jobOffer?: Maybe<Scalars['ID']>;
+  jobApplicationId?: Maybe<Scalars['String']>;
+  joiningDate?: Maybe<Scalars['Localized']>;
   lastName?: Maybe<Scalars['String']>;
-  leaveApproverId?: Maybe<Scalars['String']>;
   maritalStatus?: Maybe<Scalars['ID']>;
   middleName?: Maybe<Scalars['String']>;
+  myraErpUserId?: Maybe<Scalars['String']>;
+  noCitDeduction?: Maybe<Scalars['Boolean']>;
+  nominee?: Maybe<Scalars['String']>;
   panNumber?: Maybe<Scalars['String']>;
+  payGroup?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<KymAddress>;
-  personalEmailAddress?: Maybe<Scalars['String']>;
   personalPhoneNumber?: Maybe<Scalars['String']>;
-  providentFundAccount?: Maybe<Scalars['String']>;
-  reportsToId?: Maybe<Scalars['String']>;
+  pf?: Maybe<Scalars['Boolean']>;
+  providentNumber?: Maybe<Scalars['String']>;
+  referralBy?: Maybe<Scalars['String']>;
+  relationWithNominee?: Maybe<Scalars['String']>;
+  researchAndPublications?: Maybe<Array<Maybe<ResearchAndPublicationDetailsType>>>;
+  researchAndPublicationsGiven?: Maybe<Scalars['Boolean']>;
   salaryPaymentMode?: Maybe<PaymentMode>;
   salaryStructureId?: Maybe<Scalars['String']>;
   serviceCenter?: Maybe<Scalars['String']>;
   sourceOfHire?: Maybe<SourceOfHire>;
+  ssf?: Maybe<Scalars['Boolean']>;
+  ssfNumber?: Maybe<Scalars['String']>;
+  supervisor?: Maybe<Scalars['String']>;
   temporaryAddress?: Maybe<KymAddress>;
+  trainingDetails?: Maybe<Array<Maybe<TrainingDetailsType>>>;
+  trainingDetailsGiven?: Maybe<Scalars['Boolean']>;
   workEmailAddress?: Maybe<Scalars['String']>;
   workExperience?: Maybe<Array<Maybe<HrEmployeeWorkExperienceType>>>;
   workPhoneNumber?: Maybe<Scalars['String']>;
@@ -7668,6 +7781,18 @@ export type FamilyDetailsInNepali = {
   spouseName?: Maybe<Scalars['String']>;
 };
 
+export type FamilyDetailsInput = {
+  fullName?: InputMaybe<Scalars['String']>;
+  occupation?: InputMaybe<Scalars['String']>;
+  relation?: InputMaybe<Scalars['String']>;
+};
+
+export type FamilyDetailsType = {
+  fullName?: Maybe<Scalars['String']>;
+  occupation?: Maybe<Scalars['String']>;
+  relation?: Maybe<Scalars['String']>;
+};
+
 export type FamilyMemberDetails = {
   dob?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -7694,6 +7819,7 @@ export type FianancialTransactionReport = {
   dailyBalanceReport: DailyBalanceReportResult;
   dayBookReport: DayBookReportResult;
   fiscalTrialSheetReport: TrialSheetReportResult;
+  ledgerBalanceReport: LedgerBalanceReport;
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
   serviceCenterBalanceReport: SericeCenterStatementResult;
   tagKhataReport: TagKhataReportResult;
@@ -7733,6 +7859,10 @@ export type FianancialTransactionReportDayBookReportArgs = {
 
 export type FianancialTransactionReportFiscalTrialSheetReportArgs = {
   data: TrialSheetReportFilter;
+};
+
+export type FianancialTransactionReportLedgerBalanceReportArgs = {
+  data: LedgerBalanceReportInput;
 };
 
 export type FianancialTransactionReportMrTransactionReportArgs = {
@@ -8521,6 +8651,7 @@ export type GlReportSummary = {
   closingBalanceType?: Maybe<BalanceType>;
   openingBalance?: Maybe<Scalars['String']>;
   openingBalanceType?: Maybe<BalanceType>;
+  yearEndBalance?: Maybe<BalanceValue>;
 };
 
 export type GlStatementFilter = {
@@ -8542,6 +8673,7 @@ export type GenderLedgerReportResult = {
   error?: Maybe<QueryError>;
   ledgerName?: Maybe<Scalars['String']>;
   summary?: Maybe<GlReportSummary>;
+  yearEnd?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
 };
 
 export const GenderType = {
@@ -8655,13 +8787,16 @@ export type GeneralSettingsQuery = {
 export type GetDeductionComponentSchema = {
   abbr: Scalars['String'];
   baseMultiple?: Maybe<Scalars['String']>;
+  calculationType?: Maybe<CalculationTypeEnum>;
   deductionFrequency?: Maybe<DeductionFrequencyEnum>;
+  deductionType?: Maybe<DeductionType>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  ledgerHead?: Maybe<Scalars['String']>;
   makeThisActive?: Maybe<Scalars['Boolean']>;
+  maximumAmountLimitPerYear?: Maybe<Scalars['String']>;
   multiplier?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
-  roundToNearestInteger?: Maybe<Scalars['Boolean']>;
 };
 
 export type GetDeductionComponentSchemaWithError = {
@@ -8703,6 +8838,13 @@ export type GetInventoryItemResponse = {
   error?: Maybe<QueryError>;
 };
 
+export type GetPayGroupData = {
+  employees?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  paycycle?: Maybe<PaycycleEnum>;
+};
+
 export type GetSalaryStructureAssignment = {
   baseSalary?: Maybe<Scalars['String']>;
   deduction?: Maybe<Array<Maybe<SalaryAmountType>>>;
@@ -8723,12 +8865,10 @@ export type GetSalaryStructureSchema = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   makeThisActive?: Maybe<Scalars['Boolean']>;
-  modeOfPayment?: Maybe<PaymentModeEnum>;
   name?: Maybe<Scalars['String']>;
-  payrollFrequency?: Maybe<PayrollFrequencyEnum>;
+  paygroup?: Maybe<Scalars['String']>;
   salaryDeduction?: Maybe<Array<Maybe<SalaryStructureDeductionDetailsType>>>;
   salaryEarnings?: Maybe<Array<Maybe<SalaryStructureEarningDetailsType>>>;
-  salaryPaymentLedger?: Maybe<LedgerPaymentEnum>;
 };
 
 export type GetSalaryStructureSchemaWithError = {
@@ -8826,6 +8966,14 @@ export const GracePeriod = {
 } as const;
 
 export type GracePeriod = typeof GracePeriod[keyof typeof GracePeriod];
+export const GradeLevels = {
+  Distinction: 'DISTINCTION',
+  FirstDivision: 'FIRST_DIVISION',
+  SecondDivision: 'SECOND_DIVISION',
+  ThirdDivision: 'THIRD_DIVISION',
+} as const;
+
+export type GradeLevels = typeof GradeLevels[keyof typeof GradeLevels];
 export type GraphData = {
   amount?: Maybe<Scalars['String']>;
   time?: Maybe<Scalars['Int']>;
@@ -9116,18 +9264,74 @@ export type HcmPayrollEarningComponentQueryListEarningComponentArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type HcmPayrollGeneralMutation = {
+  updatePayrollGeneralSettingsDisableRoundedTotal: UpdatedOrNot;
+  updatePayrollGeneralSettingsEmailSalarySlipToEmployee: UpdatedOrNot;
+  updatePayrollGeneralSettingsIncludeHolidays: UpdatedOrNot;
+};
+
+export type HcmPayrollGeneralMutationUpdatePayrollGeneralSettingsDisableRoundedTotalArgs = {
+  input?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type HcmPayrollGeneralMutationUpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeArgs = {
+  input?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type HcmPayrollGeneralMutationUpdatePayrollGeneralSettingsIncludeHolidaysArgs = {
+  input?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type HcmPayrollGeneralQuery = {
+  getPayrollGeneral: PayrollGeneralSettingsWithError;
+};
+
 export type HcmPayrollMutation = {
   deductionComponent: HcmPayrollDeductionComponentMutation;
   earningComponent: HcmPayrollEarningComponentMutation;
+  general: HcmPayrollGeneralMutation;
+  paygroup: HcmPayrollSettingsPaygroupMutation;
   salaryStructure: HcmPayrollSalaryStructureMutation;
   taxSlab: HcmPayrollTaxSlabMutation;
+  taxsetup: HcmPayrollTaxSetupMutation;
 };
 
 export type HcmPayrollQuery = {
   deductionComponent: HcmPayrollDeductionComponentQuery;
   earningComponent: HcmPayrollEarningComponentQuery;
+  general: HcmPayrollGeneralQuery;
+  paygroup: HcmPayrollSettingPaygroupQuery;
   salaryStructure: HcmPayrollSalaryStructureQuery;
   taxSlab: HcmPayrollTaxSlabQuery;
+  taxsetup: HcmPayrollTaxSetupQuery;
+};
+
+export type HcmPayrollSettingPaygroupQuery = {
+  getPayGroup: PaygroupWithError;
+  listPayGroup: PaygroupConnection;
+};
+
+export type HcmPayrollSettingPaygroupQueryGetPayGroupArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type HcmPayrollSettingPaygroupQueryListPayGroupArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HcmPayrollSettingsPaygroupMutation = {
+  deletePaygroup: PaygroupDeletedWithError;
+  upsertPaygroup: PaygroupMutationWithError;
+};
+
+export type HcmPayrollSettingsPaygroupMutationDeletePaygroupArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type HcmPayrollSettingsPaygroupMutationUpsertPaygroupArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input?: InputMaybe<PaygroupInput>;
 };
 
 export type HcmSettingsMutation = {
@@ -9747,6 +9951,18 @@ export type HcmPayrollSalaryStructureQueryListSalaryStructureArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type HcmPayrollTaxSetupMutation = {
+  upsertTaxSetup: TaxSetupMutationWithError;
+};
+
+export type HcmPayrollTaxSetupMutationUpsertTaxSetupArgs = {
+  input?: InputMaybe<TaxSetupInput>;
+};
+
+export type HcmPayrollTaxSetupQuery = {
+  getTaxSetup: TaxSetupGetWithError;
+};
+
 export type HcmPayrollTaxSlabMutation = {
   deleteTaxSlab: DeleteTaxSlab;
   upsertTaxSlab: ReturnTaxSlab;
@@ -9787,15 +10003,17 @@ export type HrEmployeeAttendanceMutationUpsertAttendanceArgs = {
 export type HrEmployeeEducationDetail = {
   dateOfCompletion?: InputMaybe<Scalars['Localized']>;
   degree_diploma?: InputMaybe<Scalars['String']>;
+  durationInYrs?: InputMaybe<Scalars['Int']>;
+  grade?: InputMaybe<GradeLevels>;
   instituteName?: InputMaybe<Scalars['String']>;
-  specialization?: InputMaybe<Scalars['String']>;
 };
 
 export type HrEmployeeEducationDetailType = {
   dateOfCompletion?: Maybe<Scalars['Localized']>;
   degree_diploma?: Maybe<Scalars['String']>;
+  durationInYrs?: Maybe<Scalars['Int']>;
+  grade?: Maybe<GradeLevels>;
   instituteName?: Maybe<Scalars['String']>;
-  specialization?: Maybe<Scalars['String']>;
 };
 
 export const HrEmployeeFeedbackType = {
@@ -9832,14 +10050,14 @@ export type HrEmployeeWorkExperience = {
   address?: InputMaybe<Scalars['String']>;
   companyName?: InputMaybe<Scalars['String']>;
   designation?: InputMaybe<Scalars['String']>;
-  salary?: InputMaybe<Scalars['Int']>;
+  durationInYrs?: InputMaybe<Scalars['Int']>;
 };
 
 export type HrEmployeeWorkExperienceType = {
   address?: Maybe<Scalars['String']>;
   companyName?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
-  salary?: Maybe<Scalars['Int']>;
+  durationInYrs?: Maybe<Scalars['Int']>;
 };
 
 export type HumanizeAuditLog = {
@@ -9911,6 +10129,18 @@ export const Id_Type = {
 } as const;
 
 export type Id_Type = typeof Id_Type[keyof typeof Id_Type];
+export type IdentificationDetailsInput = {
+  id?: InputMaybe<Scalars['ID']>;
+  issuedDate?: InputMaybe<Scalars['Localized']>;
+  placeOfIssue?: InputMaybe<Scalars['String']>;
+};
+
+export type IdentificationDetailsType = {
+  id?: Maybe<Scalars['ID']>;
+  issuedDate?: Maybe<Scalars['Localized']>;
+  placeOfIssue?: Maybe<Scalars['String']>;
+};
+
 export type Identity = {
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -9968,6 +10198,8 @@ export type IndividualBasicMinInfo = {
 };
 
 export type IndividualBio = {
+  bankAccountId?: Maybe<Scalars['String']>;
+  bankName?: Maybe<Scalars['String']>;
   currentAddress?: Maybe<Scalars['Localized']>;
   dob?: Maybe<Scalars['Localized']>;
   docs?: Maybe<Array<Maybe<MemberDocumentDetails>>>;
@@ -10018,6 +10250,7 @@ export type IndividualMemberReport = {
 export type IndividualMemberReportData = {
   closedAccountDetail?: Maybe<Array<Maybe<MemberClosedAccounts>>>;
   header?: Maybe<IndividualMemberReport>;
+  kymStatusForMember?: Maybe<MemberKymStatus>;
   loanDetail?: Maybe<Array<Maybe<MemberLoanDetail>>>;
   recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactions>>>;
   savingDetail?: Maybe<Array<Maybe<MemberSavingDetail>>>;
@@ -10028,6 +10261,7 @@ export type IndividualMemberReportData = {
   totalSavingBalance?: Maybe<Scalars['String']>;
   totalShareBalance?: Maybe<Scalars['String']>;
   totalTransactionAmount?: Maybe<Scalars['String']>;
+  withDrawSlipIssueStatus?: Maybe<Array<Maybe<MemberWithDrawSlipIssueStatus>>>;
 };
 
 export const IndividualRequiredDocument = {
@@ -10043,23 +10277,24 @@ export type IndividualRequiredDocument =
 export type InputDeductionComponent = {
   abbr: Scalars['String'];
   baseMultiple?: InputMaybe<Scalars['String']>;
+  calculationType?: InputMaybe<CalculationTypeEnum>;
   deductionFrequency?: InputMaybe<DeductionFrequencyEnum>;
+  deductionType?: InputMaybe<DeductionType>;
   description?: InputMaybe<Scalars['String']>;
+  ledgerHead?: InputMaybe<Scalars['String']>;
   makeThisActive?: InputMaybe<Scalars['Boolean']>;
+  maximumAmountLimitPerYear?: InputMaybe<Scalars['String']>;
   multiplier?: InputMaybe<Scalars['Float']>;
   name?: InputMaybe<Scalars['String']>;
-  roundToNearestInteger?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type InputSalaryStructure = {
   description?: InputMaybe<Scalars['String']>;
   makeThisActive?: InputMaybe<Scalars['Boolean']>;
-  modeOfPayment?: InputMaybe<PaymentModeEnum>;
   name?: InputMaybe<Scalars['String']>;
-  payrollFrequency?: InputMaybe<PayrollFrequencyEnum>;
+  paygroup?: InputMaybe<Scalars['String']>;
   salaryDeduction?: InputMaybe<Array<InputMaybe<SalaryStructureDeductionDetails>>>;
   salaryEarnings?: InputMaybe<Array<InputMaybe<SalaryStructureEarningDetails>>>;
-  salaryPaymentLedger?: InputMaybe<LedgerPaymentEnum>;
 };
 
 export type InputSalaryStructureAssignment = {
@@ -10399,6 +10634,18 @@ export type InterestTaxReportFilter = {
 export type InterestTaxReportResult = {
   data?: Maybe<Array<Maybe<InterestTaxReportEntry>>>;
   error?: Maybe<QueryError>;
+};
+
+export type InternationalTourDetailsInput = {
+  duration?: InputMaybe<Scalars['String']>;
+  objective?: InputMaybe<Scalars['String']>;
+  tourCountry?: InputMaybe<Scalars['String']>;
+};
+
+export type InternationalTourDetailsType = {
+  duration?: Maybe<Scalars['String']>;
+  objective?: Maybe<Scalars['String']>;
+  tourCountry?: Maybe<Scalars['String']>;
 };
 
 export type InvAddSupplierResult = {
@@ -12493,6 +12740,8 @@ export type KymIndDeclarations = {
 export type KymIndFormData = {
   age?: Maybe<Scalars['Int']>;
   annualIncomeSourceId?: Maybe<Scalars['String']>;
+  bankAccountId?: Maybe<Scalars['String']>;
+  bankId?: Maybe<Scalars['String']>;
   beneficialFullName?: Maybe<Scalars['String']>;
   beneficialRelationshipId?: Maybe<Scalars['String']>;
   convictedDetails?: Maybe<Scalars['String']>;
@@ -12562,6 +12811,8 @@ export type KymIndFormStateQuery = {
 
 export type KymIndMemberInput = {
   annualIncomeSourceId?: InputMaybe<Scalars['String']>;
+  bankAccountId?: InputMaybe<Scalars['String']>;
+  bankId?: InputMaybe<Scalars['String']>;
   beneficialFullName?: InputMaybe<Scalars['String']>;
   beneficialRelationshipId?: InputMaybe<Scalars['String']>;
   convictedDetails?: InputMaybe<Scalars['String']>;
@@ -13321,6 +13572,31 @@ export type LedgerBalanceListConnection = {
 export type LedgerBalanceListEdges = {
   cursor?: Maybe<Scalars['Cursor']>;
   node?: Maybe<LedgerBalanceEntry>;
+};
+
+export type LedgerBalanceReport = {
+  data?: Maybe<Array<Maybe<LedgerBalanceReportData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type LedgerBalanceReportData = {
+  adjustedCr?: Maybe<Scalars['String']>;
+  adjustedDr?: Maybe<Scalars['String']>;
+  balance?: Maybe<BalanceValue>;
+  branchId: Scalars['ID'];
+  branchName: Scalars['String'];
+  cr?: Maybe<Scalars['String']>;
+  dr?: Maybe<Scalars['String']>;
+  ledgerId: Scalars['String'];
+  ledgerName: Scalars['String'];
+  openingBalance?: Maybe<BalanceValue>;
+  settledBalance?: Maybe<BalanceValue>;
+};
+
+export type LedgerBalanceReportInput = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  coaHead?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
 };
 
 export type LedgerBalanceSum = {
@@ -14392,6 +14668,19 @@ export const LoanDisbursementMethod = {
 
 export type LoanDisbursementMethod =
   typeof LoanDisbursementMethod[keyof typeof LoanDisbursementMethod];
+export type LoanDisbursementMinimal = {
+  bankChequeNo?: Maybe<Scalars['String']>;
+  bankName?: Maybe<Scalars['String']>;
+  destAccId?: Maybe<Scalars['String']>;
+  destAccName?: Maybe<Scalars['String']>;
+  disbursedAmount?: Maybe<Scalars['String']>;
+  disbursedDate?: Maybe<Scalars['Localized']>;
+  loanAccountId?: Maybe<Scalars['String']>;
+  loanAccountName?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<Scalars['String']>;
+  processingCharge?: Maybe<Scalars['String']>;
+};
+
 export type LoanDisbursementReportData = {
   disbursedDate?: Maybe<Scalars['Localized']>;
   interestRate?: Maybe<Scalars['Float']>;
@@ -16381,13 +16670,19 @@ export type MemberIndividualData = {
   shareInfo?: Maybe<ShareInformation>;
 };
 
+export type MemberKymStatus = {
+  ExpiryDays?: Maybe<Scalars['String']>;
+  Status?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  lastUpdatedDate?: Maybe<Scalars['Localized']>;
+  riskCategory?: Maybe<Scalars['String']>;
+};
+
 export type MemberLoanDetail = {
   approvedAmount?: Maybe<Scalars['String']>;
   issuedDate?: Maybe<Scalars['Localized']>;
-  lastPaymentDate?: Maybe<Scalars['Localized']>;
   loanAccountName?: Maybe<Scalars['String']>;
   loanAccountNo?: Maybe<Scalars['String']>;
-  remainingAmount?: Maybe<Scalars['String']>;
 };
 
 export type MemberLoanInformation = {
@@ -17020,6 +17315,14 @@ export type MemberType = typeof MemberType[keyof typeof MemberType];
 export type MemberTypeResult = {
   data?: Maybe<Array<Maybe<KymMemberTypes>>>;
   error?: Maybe<QueryError>;
+};
+
+export type MemberWithDrawSlipIssueStatus = {
+  accNum?: Maybe<Scalars['String']>;
+  accountType?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  id?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 export type MembershipFeeQueryResult = {
@@ -18080,6 +18383,57 @@ export type PasswordRecoveryResult = {
   recordID?: Maybe<Scalars['ID']>;
 };
 
+export const PaycycleEnum = {
+  BiMonthly: 'BI_MONTHLY',
+  OneMonth: 'ONE_MONTH',
+  OneYear: 'ONE_YEAR',
+  SixMonth: 'SIX_MONTH',
+  ThreeMonth: 'THREE_MONTH',
+  TwoMonth: 'TWO_MONTH',
+  Weekly: 'WEEKLY',
+} as const;
+
+export type PaycycleEnum = typeof PaycycleEnum[keyof typeof PaycycleEnum];
+export type PaygroupConnection = {
+  edges?: Maybe<Array<Maybe<PaygroupEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type PaygroupDeletedWithError = {
+  error?: Maybe<MutationError>;
+  isPaygroupDeleted?: Maybe<Scalars['Boolean']>;
+};
+
+export type PaygroupEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<PaygroupNode>;
+};
+
+export type PaygroupInput = {
+  employees?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  name?: InputMaybe<Scalars['String']>;
+  paycycle?: InputMaybe<PaycycleEnum>;
+};
+
+export type PaygroupMutationWithError = {
+  error?: Maybe<QueryError>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type PaygroupNode = {
+  employee?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['ID']>;
+  lastPayrollRun?: Maybe<Scalars['Localized']>;
+  name?: Maybe<Scalars['String']>;
+  paycycle?: Maybe<PaycycleEnum>;
+};
+
+export type PaygroupWithError = {
+  data?: Maybe<GetPayGroupData>;
+  error?: Maybe<QueryError>;
+};
+
 export type PaymentAllocation = {
   amount: Scalars['String'];
   date: Scalars['Localized'];
@@ -18112,7 +18466,8 @@ export type PaymentDetail = {
 };
 
 export const PaymentMode = {
-  Bank: 'BANK',
+  Account: 'ACCOUNT',
+  BankTransfer: 'BANK_TRANSFER',
   Cash: 'CASH',
 } as const;
 
@@ -18137,6 +18492,17 @@ export const PayrollFrequencyEnum = {
 } as const;
 
 export type PayrollFrequencyEnum = typeof PayrollFrequencyEnum[keyof typeof PayrollFrequencyEnum];
+export type PayrollGeneralSettings = {
+  disableRoundedTotal?: Maybe<Scalars['Boolean']>;
+  emailSalarySlipToEmployee?: Maybe<Scalars['Boolean']>;
+  includeHolidaysInTotalNumberOfWorkingDays?: Maybe<Scalars['Boolean']>;
+};
+
+export type PayrollGeneralSettingsWithError = {
+  data?: Maybe<PayrollGeneralSettings>;
+  error?: Maybe<QueryError>;
+};
+
 export type PayrollRunConnection = {
   edges?: Maybe<Array<Maybe<PayrollRuns>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -18852,12 +19218,12 @@ export const Resource = {
     'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_TODAY_COLLECTION_SHEET',
   CbsOthers: 'CBS_OTHERS',
   CbsReports: 'CBS_REPORTS',
-  CbsReportsAtm: 'CBS_REPORTS_ATM',
-  CbsReportsBranchlessBanking: 'CBS_REPORTS_BRANCHLESS_BANKING',
+  CbsReportsAccounting: 'CBS_REPORTS_ACCOUNTING',
+  CbsReportsException: 'CBS_REPORTS_EXCEPTION',
+  CbsReportsInventory: 'CBS_REPORTS_INVENTORY',
   CbsReportsLoan: 'CBS_REPORTS_LOAN',
   CbsReportsMember: 'CBS_REPORTS_MEMBER',
   CbsReportsMobileBanking: 'CBS_REPORTS_MOBILE_BANKING',
-  CbsReportsOrganization: 'CBS_REPORTS_ORGANIZATION',
   CbsReportsOther: 'CBS_REPORTS_OTHER',
   CbsReportsSavings: 'CBS_REPORTS_SAVINGS',
   CbsReportsServiceCenter: 'CBS_REPORTS_SERVICE_CENTER',
@@ -18935,6 +19301,95 @@ export const Resource = {
   HcmTraining: 'HCM_TRAINING',
   HcmTrainingCourses: 'HCM_TRAINING_COURSES',
   HcmTrainingStudents: 'HCM_TRAINING_STUDENTS',
+  ReportsAccountingExternalLoan: 'REPORTS_ACCOUNTING_EXTERNAL_LOAN',
+  ReportsAccountingExternalLoanStatement: 'REPORTS_ACCOUNTING_EXTERNAL_LOAN_STATEMENT',
+  ReportsAccountingFdInvestment: 'REPORTS_ACCOUNTING_FD_INVESTMENT',
+  ReportsAccountingFdInvestmentStatement: 'REPORTS_ACCOUNTING_FD_INVESTMENT_STATEMENT',
+  ReportsExceptionLoanBalanceException: 'REPORTS_EXCEPTION_LOAN_BALANCE_EXCEPTION',
+  ReportsExceptionSavingBalanceException: 'REPORTS_EXCEPTION_SAVING_BALANCE_EXCEPTION',
+  ReportsExceptionShareBalanceException: 'REPORTS_EXCEPTION_SHARE_BALANCE_EXCEPTION',
+  ReportsInventoryInventoryItemSales: 'REPORTS_INVENTORY_INVENTORY_ITEM_SALES',
+  ReportsInventoryInventoryPurchaseOrder: 'REPORTS_INVENTORY_INVENTORY_PURCHASE_ORDER',
+  ReportsInventoryInventoryRegister: 'REPORTS_INVENTORY_INVENTORY_REGISTER',
+  ReportsInventoryInventoryStockStatus: 'REPORTS_INVENTORY_INVENTORY_STOCK_STATUS',
+  ReportsLoanClosedLoanAccountStatement: 'REPORTS_LOAN_CLOSED_LOAN_ACCOUNT_STATEMENT',
+  ReportsLoanDoasriLoan: 'REPORTS_LOAN_DOASRI_LOAN',
+  ReportsLoanLoanAccountAccruedInterest: 'REPORTS_LOAN_LOAN_ACCOUNT_ACCRUED_INTEREST',
+  ReportsLoanLoanAccountStatement: 'REPORTS_LOAN_LOAN_ACCOUNT_STATEMENT',
+  ReportsLoanLoanAccountTransaction: 'REPORTS_LOAN_LOAN_ACCOUNT_TRANSACTION',
+  ReportsLoanLoanAging: 'REPORTS_LOAN_LOAN_AGING',
+  ReportsLoanLoanBalance: 'REPORTS_LOAN_LOAN_BALANCE',
+  ReportsLoanLoanCallSheet: 'REPORTS_LOAN_LOAN_CALL_SHEET',
+  ReportsLoanLoanCollateral: 'REPORTS_LOAN_LOAN_COLLATERAL',
+  ReportsLoanLoanDisbursement: 'REPORTS_LOAN_LOAN_DISBURSEMENT',
+  ReportsLoanLoanProductWiseBalance: 'REPORTS_LOAN_LOAN_PRODUCT_WISE_BALANCE',
+  ReportsLoanLoanWriteOff: 'REPORTS_LOAN_LOAN_WRITE_OFF',
+  ReportsLoanPersonalGuarantee: 'REPORTS_LOAN_PERSONAL_GUARANTEE',
+  ReportsMbMobileBankingChannelExpiry: 'REPORTS_MB_MOBILE_BANKING_CHANNEL_EXPIRY',
+  ReportsMbMobileBankingChannelRegistration: 'REPORTS_MB_MOBILE_BANKING_CHANNEL_REGISTRATION',
+  ReportsMbMobileBankingChannelTxn: 'REPORTS_MB_MOBILE_BANKING_CHANNEL_TXN',
+  ReportsMemberActiveInactive: 'REPORTS_MEMBER_ACTIVE_INACTIVE',
+  ReportsMemberDosariMember: 'REPORTS_MEMBER_DOSARI_MEMBER',
+  ReportsMemberIndividualMemberProfile: 'REPORTS_MEMBER_INDIVIDUAL_MEMBER_PROFILE',
+  ReportsMemberKymStatus: 'REPORTS_MEMBER_KYM_STATUS',
+  ReportsMemberMemberClassification: 'REPORTS_MEMBER_MEMBER_CLASSIFICATION',
+  ReportsMemberMemberRegister: 'REPORTS_MEMBER_MEMBER_REGISTER',
+  ReportsMemberMemberTransfer: 'REPORTS_MEMBER_MEMBER_TRANSFER',
+  ReportsMemberMemberWiseBalance: 'REPORTS_MEMBER_MEMBER_WISE_BALANCE',
+  ReportsMemberMinorList: 'REPORTS_MEMBER_MINOR_LIST',
+  ReportsOthersAdjustedLedger: 'REPORTS_OTHERS_ADJUSTED_LEDGER',
+  ReportsOthersCommitteeRegisteredDetails: 'REPORTS_OTHERS_COMMITTEE_REGISTERED_DETAILS',
+  ReportsOthersCopomisFinancial: 'REPORTS_OTHERS_COPOMIS_FINANCIAL',
+  ReportsOthersCopomisImportMember: 'REPORTS_OTHERS_COPOMIS_IMPORT_MEMBER',
+  ReportsOthersFdCertificate: 'REPORTS_OTHERS_FD_CERTIFICATE',
+  ReportsOthersGeneralLedger: 'REPORTS_OTHERS_GENERAL_LEDGER',
+  ReportsOthersOrganizationalPrrofile: 'REPORTS_OTHERS_ORGANIZATIONAL_PRROFILE',
+  ReportsOthersPearlsReport: 'REPORTS_OTHERS_PEARLS_REPORT',
+  ReportsOthersShareCertificate: 'REPORTS_OTHERS_SHARE_CERTIFICATE',
+  ReportsOthersUserList: 'REPORTS_OTHERS_USER_LIST',
+  ReportsSavingsAccountLockedStatus: 'REPORTS_SAVINGS_ACCOUNT_LOCKED_STATUS',
+  ReportsSavingsClosedAccount: 'REPORTS_SAVINGS_CLOSED_ACCOUNT',
+  ReportsSavingsClosedSavingAccount: 'REPORTS_SAVINGS_CLOSED_SAVING_ACCOUNT',
+  ReportsSavingsDormantAc: 'REPORTS_SAVINGS_DORMANT_AC',
+  ReportsSavingsETds: 'REPORTS_SAVINGS_E_TDS',
+  ReportsSavingsFixedDepositMaturity: 'REPORTS_SAVINGS_FIXED_DEPOSIT_MATURITY',
+  ReportsSavingsInterestReport: 'REPORTS_SAVINGS_INTEREST_REPORT',
+  ReportsSavingsInterestTax: 'REPORTS_SAVINGS_INTEREST_TAX',
+  ReportsSavingsMinorSavingBalance: 'REPORTS_SAVINGS_MINOR_SAVING_BALANCE',
+  ReportsSavingsOpenedAccount: 'REPORTS_SAVINGS_OPENED_ACCOUNT',
+  ReportsSavingsSavingAccountAccruedInterest: 'REPORTS_SAVINGS_SAVING_ACCOUNT_ACCRUED_INTEREST',
+  ReportsSavingsSavingAccountStatement: 'REPORTS_SAVINGS_SAVING_ACCOUNT_STATEMENT',
+  ReportsSavingsSavingBalanceInd: 'REPORTS_SAVINGS_SAVING_BALANCE_IND',
+  ReportsSavingsSavingProductWiseBalance: 'REPORTS_SAVINGS_SAVING_PRODUCT_WISE_BALANCE',
+  ReportsSavingsSuspiciousTransaction: 'REPORTS_SAVINGS_SUSPICIOUS_TRANSACTION',
+  ReportsSavingsThresholdTransaction: 'REPORTS_SAVINGS_THRESHOLD_TRANSACTION',
+  ReportsScAbbsReport: 'REPORTS_SC_ABBS_REPORT',
+  ReportsScBranchReadinessReport: 'REPORTS_SC_BRANCH_READINESS_REPORT',
+  ReportsScServiceCenterBalance: 'REPORTS_SC_SERVICE_CENTER_BALANCE',
+  ReportsScServiceCenterCoaHeadWiseBalance: 'REPORTS_SC_SERVICE_CENTER_COA_HEAD_WISE_BALANCE',
+  ReportsScServiceCenterList: 'REPORTS_SC_SERVICE_CENTER_LIST',
+  ReportsShareShareBalance: 'REPORTS_SHARE_SHARE_BALANCE',
+  ReportsShareShareRegister: 'REPORTS_SHARE_SHARE_REGISTER',
+  ReportsShareShareStatement: 'REPORTS_SHARE_SHARE_STATEMENT',
+  ReportsShareShareTransaction: 'REPORTS_SHARE_SHARE_TRANSACTION',
+  ReportsTxnAbbsTransaction: 'REPORTS_TXN_ABBS_TRANSACTION',
+  ReportsTxnBalanceSheetReport: 'REPORTS_TXN_BALANCE_SHEET_REPORT',
+  ReportsTxnBankGlBalance: 'REPORTS_TXN_BANK_GL_BALANCE',
+  ReportsTxnBankGlStatement: 'REPORTS_TXN_BANK_GL_STATEMENT',
+  ReportsTxnCashLedger: 'REPORTS_TXN_CASH_LEDGER',
+  ReportsTxnCharkhataLedgerReport: 'REPORTS_TXN_CHARKHATA_LEDGER_REPORT',
+  ReportsTxnDailyBalance: 'REPORTS_TXN_DAILY_BALANCE',
+  ReportsTxnDaybook: 'REPORTS_TXN_DAYBOOK',
+  ReportsTxnFiscalYearEndAdjustmentTrialBalance:
+    'REPORTS_TXN_FISCAL_YEAR_END_ADJUSTMENT_TRIAL_BALANCE',
+  ReportsTxnLedgerBalance: 'REPORTS_TXN_LEDGER_BALANCE',
+  ReportsTxnLedgerGroup: 'REPORTS_TXN_LEDGER_GROUP',
+  ReportsTxnMarketRepresentativeTxn: 'REPORTS_TXN_MARKET_REPRESENTATIVE_TXN',
+  ReportsTxnProfitAndLoss: 'REPORTS_TXN_PROFIT_AND_LOSS',
+  ReportsTxnTellerDaybook: 'REPORTS_TXN_TELLER_DAYBOOK',
+  ReportsTxnTellerReport: 'REPORTS_TXN_TELLER_REPORT',
+  ReportsTxnTrialBalance: 'REPORTS_TXN_TRIAL_BALANCE',
+  ReportsTxnVaultBalance: 'REPORTS_TXN_VAULT_BALANCE',
   SettingsAlternativeChannels: 'SETTINGS_ALTERNATIVE_CHANNELS',
   SettingsAuditLog: 'SETTINGS_AUDIT_LOG',
   SettingsBank: 'SETTINGS_BANK',
@@ -19223,6 +19678,20 @@ export type RequestsMutationRequestApproveOrDeclineArgs = {
 
 export type RequestsQuery = {
   list?: Maybe<RequestsList>;
+};
+
+export type ResearchAndPublicationDetailsInput = {
+  curriculum?: InputMaybe<Scalars['String']>;
+  language?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  publishedDate?: InputMaybe<Scalars['Localized']>;
+};
+
+export type ResearchAndPublicationDetailsType = {
+  curriculum?: Maybe<Scalars['String']>;
+  language?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  publishedDate?: Maybe<Scalars['Localized']>;
 };
 
 export type ResetPasswordData = {
@@ -20693,7 +21162,9 @@ export type ShareDetailResult = {
 
 export type ShareDividendInput = {
   condition: DistributionCondition;
+  dividendRate: Scalars['Float'];
   payableCOAHead: Scalars['ID'];
+  productID?: InputMaybe<Scalars['String']>;
   sourceCOAHead: Scalars['ID'];
   taxLedgerCOAHead: Scalars['ID'];
   taxRate: Scalars['Float'];
@@ -20728,13 +21199,17 @@ export type ShareDividendSettingsResult = {
 };
 
 export type ShareDividendSummary = {
+  AverageShareCount?: Maybe<Scalars['String']>;
   DestinationAccount?: Maybe<Scalars['String']>;
+  DestinationProduct?: Maybe<Scalars['String']>;
   Error?: Maybe<Scalars['String']>;
   MemberCode?: Maybe<Scalars['String']>;
   MemberID?: Maybe<Scalars['String']>;
   MemberName?: Maybe<Scalars['String']>;
+  PayableAmount?: Maybe<Scalars['String']>;
   SavingAmount?: Maybe<Scalars['String']>;
   ShareCount?: Maybe<Scalars['Int']>;
+  TDSAmount?: Maybe<Scalars['String']>;
   TotalAmount?: Maybe<Scalars['String']>;
 };
 
@@ -21609,6 +22084,26 @@ export const TaxPayerOptions = {
 } as const;
 
 export type TaxPayerOptions = typeof TaxPayerOptions[keyof typeof TaxPayerOptions];
+export type TaxSetup = {
+  taxExceptionRateInPercentage?: Maybe<Scalars['Float']>;
+  taxRebateRateInPercentage?: Maybe<Scalars['Float']>;
+};
+
+export type TaxSetupGetWithError = {
+  data?: Maybe<TaxSetup>;
+  error?: Maybe<MutationError>;
+};
+
+export type TaxSetupInput = {
+  taxExceptionRateInPercentage?: InputMaybe<Scalars['Float']>;
+  taxRebateRateInPercentage?: InputMaybe<Scalars['Float']>;
+};
+
+export type TaxSetupMutationWithError = {
+  error?: Maybe<MutationError>;
+  id?: Maybe<Scalars['ID']>;
+};
+
 export type TaxSlabConnection = {
   edges?: Maybe<Array<Maybe<TaxSlabs>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -21618,7 +22113,7 @@ export type TaxSlabConnection = {
 export type TaxSlabInput = {
   effectiveFrom?: InputMaybe<Scalars['Localized']>;
   fiscalYear?: InputMaybe<LocalizedDateFilter>;
-  makeThisActive?: InputMaybe<Scalars['Boolean']>;
+  makeItCurrentTaxSlab?: InputMaybe<Scalars['Boolean']>;
   marriedTaxableSalarySlab?: InputMaybe<Array<InputMaybe<SlabInput>>>;
   name?: InputMaybe<Scalars['String']>;
   unmarriedTaxableSalarySlab?: InputMaybe<Array<InputMaybe<SlabInput>>>;
@@ -21635,7 +22130,7 @@ export type TaxSlabRecord = {
   effectiveFrom?: Maybe<Scalars['Localized']>;
   fiscalYear?: Maybe<LocalizedDate>;
   id?: Maybe<Scalars['ID']>;
-  makeThisActive?: Maybe<Scalars['Boolean']>;
+  makeThisCurrentTaxSlab?: Maybe<Scalars['Boolean']>;
   marriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
   name?: Maybe<Scalars['String']>;
   unmarriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
@@ -21924,6 +22419,20 @@ export type TotalReport = {
   totalCr?: Maybe<Scalars['Int']>;
   totalDr?: Maybe<Scalars['Int']>;
   totalShares?: Maybe<Scalars['Int']>;
+};
+
+export type TrainingDetailsInput = {
+  duration?: InputMaybe<Scalars['String']>;
+  organizer?: InputMaybe<Scalars['String']>;
+  subject?: InputMaybe<Scalars['String']>;
+  trainingName?: InputMaybe<Scalars['String']>;
+};
+
+export type TrainingDetailsType = {
+  duration?: Maybe<Scalars['String']>;
+  organizer?: Maybe<Scalars['String']>;
+  subject?: Maybe<Scalars['String']>;
+  trainingName?: Maybe<Scalars['String']>;
 };
 
 export type TransactionConstraintList = {
@@ -22436,6 +22945,11 @@ export type UpdateLedgerResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type UpdatedOrNot = {
+  error?: Maybe<MutationError>;
+  isUpdated?: Maybe<Scalars['Boolean']>;
+};
+
 export type UpdatedOrNotWithError = {
   error?: Maybe<MutationError>;
   updatedOrNot?: Maybe<Scalars['Boolean']>;
@@ -22672,11 +23186,9 @@ export type UtilityLedgerSetupInputResult = {
 
 export const UtilityLedgerType = {
   CashBack: 'CASH_BACK',
-  ExpenseToNeosys: 'EXPENSE_TO_NEOSYS',
-  IncomeFromNeosys: 'INCOME_FROM_NEOSYS',
-  IncomeFromNeosysSuspense: 'INCOME_FROM_NEOSYS_SUSPENSE',
   ServiceCharge: 'SERVICE_CHARGE',
-  Utility: 'UTILITY',
+  UtilityLimit: 'UTILITY_LIMIT',
+  UtilityLimitContra: 'UTILITY_LIMIT_CONTRA',
 } as const;
 
 export type UtilityLedgerType = typeof UtilityLedgerType[keyof typeof UtilityLedgerType];
@@ -23778,6 +24290,10 @@ export type SetAccountCloseDataMutation = {
         paymentMode?: string | null;
         closeReason?: string | null;
         tax?: string | null;
+        destAccName?: string | null;
+        destAccId?: string | null;
+        bankName?: string | null;
+        bankChequeNo?: string | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -28645,11 +29161,16 @@ export type PostShareDividendMutation = {
       record?: string | null;
       summary?: Array<{
         MemberID?: string | null;
+        MemberCode?: string | null;
         MemberName?: string | null;
+        AverageShareCount?: string | null;
         ShareCount?: number | null;
         SavingAmount?: string | null;
         TotalAmount?: string | null;
+        PayableAmount?: string | null;
+        TDSAmount?: string | null;
         DestinationAccount?: string | null;
+        DestinationProduct?: string | null;
         Error?: string | null;
       } | null> | null;
       error?:
@@ -29408,8 +29929,6 @@ export type GetAccountTableListQuery = {
           interestAccured?: string | null;
           interestTax?: string | null;
           prematurePenalty?: string | null;
-          createdBy: { id: string };
-          modifiedBy: { id: string };
           member?: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
@@ -32364,6 +32883,8 @@ export type GetSingleEmployeeDetailsQuery = {
         getEmployee: {
           record?: {
             id?: string | null;
+            isCoopMember?: boolean | null;
+            coopMemberId?: string | null;
             firstName?: string | null;
             middleName?: string | null;
             lastName?: string | null;
@@ -32371,12 +32892,15 @@ export type GetSingleEmployeeDetailsQuery = {
             age?: number | null;
             gender?: string | null;
             maritalStatus?: string | null;
+            ethnicity?: string | null;
+            Handicapped?: boolean | null;
             bloodGroup?: BloodGroup | null;
             workPhoneNumber?: string | null;
             workEmailAddress?: string | null;
             personalPhoneNumber?: string | null;
-            personalEmailAddress?: string | null;
             isTemporarySameAsPermanent?: boolean | null;
+            citizenshipGiven?: boolean | null;
+            drivingLicenseGiven?: boolean | null;
             employeeLevelId?: string | null;
             departmentId?: string | null;
             designationId?: string | null;
@@ -32384,24 +32908,38 @@ export type GetSingleEmployeeDetailsQuery = {
             employmentType?: EmployeeTypeEnum | null;
             employeeStatus?: EmployeeStatus | null;
             sourceOfHire?: SourceOfHire | null;
-            salaryPaymentMode?: PaymentMode | null;
+            employeeClass?: EmployeeClass | null;
+            referralBy?: string | null;
+            trainingDetailsGiven?: boolean | null;
+            researchAndPublicationsGiven?: boolean | null;
+            awardsCashCertificatesGiven?: boolean | null;
+            internationalTourGiven?: boolean | null;
+            joiningDate?: Record<'local' | 'en' | 'np', string> | null;
+            payGroup?: string | null;
             panNumber?: string | null;
-            providentFundAccount?: string | null;
             salaryStructureId?: string | null;
-            jobApplicationId?: string | null;
-            jobOffer?: string | null;
-            appointmentLetter?: string | null;
-            dateOfJoining?: Record<'local' | 'en' | 'np', string> | null;
-            reportsToId?: string | null;
-            leaveApproverId?: string | null;
-            expenseApproverId?: string | null;
-            healthInsuranceProviderId?: string | null;
-            healthInsuranceNumberId?: string | null;
+            salaryPaymentMode?: PaymentMode | null;
+            account?: string | null;
+            bank?: string | null;
+            accountName?: string | null;
+            accountNumber?: string | null;
+            pf?: boolean | null;
+            ssf?: boolean | null;
+            cit?: boolean | null;
+            providentNumber?: string | null;
+            nominee?: string | null;
+            relationWithNominee?: string | null;
+            ssfNumber?: string | null;
+            citNumber?: string | null;
+            citCode?: string | null;
+            noCitDeduction?: boolean | null;
+            supervisor?: string | null;
             educationDetails?: Array<{
               instituteName?: string | null;
               degree_diploma?: string | null;
-              specialization?: string | null;
+              durationInYrs?: number | null;
               dateOfCompletion?: Record<'local' | 'en' | 'np', string> | null;
+              grade?: GradeLevels | null;
             } | null> | null;
             permanentAddress?: {
               provinceId?: number | null;
@@ -32421,11 +32959,50 @@ export type GetSingleEmployeeDetailsQuery = {
               houseNo?: string | null;
               coordinates?: { longitude?: number | null; latitude?: number | null } | null;
             } | null;
+            familyDetails?: Array<{
+              fullName?: string | null;
+              relation?: string | null;
+              occupation?: string | null;
+            } | null> | null;
+            citizenship?: {
+              id?: string | null;
+              placeOfIssue?: string | null;
+              issuedDate?: Record<'local' | 'en' | 'np', string> | null;
+            } | null;
+            drivingLicense?: {
+              id?: string | null;
+              placeOfIssue?: string | null;
+              issuedDate?: Record<'local' | 'en' | 'np', string> | null;
+            } | null;
             workExperience?: Array<{
               companyName?: string | null;
               designation?: string | null;
-              salary?: number | null;
+              durationInYrs?: number | null;
               address?: string | null;
+            } | null> | null;
+            trainingDetails?: Array<{
+              trainingName?: string | null;
+              duration?: string | null;
+              subject?: string | null;
+              organizer?: string | null;
+            } | null> | null;
+            researchAndPublications?: Array<{
+              name?: string | null;
+              publishedDate?: Record<'local' | 'en' | 'np', string> | null;
+              language?: string | null;
+              curriculum?: string | null;
+            } | null> | null;
+            awardsCashAndCertificates?: Array<{
+              description?: string | null;
+              receivedDate?: Record<'local' | 'en' | 'np', string> | null;
+              cashOrPrizeName?: string | null;
+              organization?: string | null;
+              verifiedBy?: string | null;
+            } | null> | null;
+            internationalTour?: Array<{
+              tourCountry?: string | null;
+              objective?: string | null;
+              duration?: string | null;
             } | null> | null;
             documents?: Array<{
               fieldId?: string | null;
@@ -33505,8 +34082,9 @@ export type GetJobApplicationQuery = {
             educationalDetails?: Array<{
               instituteName?: string | null;
               degree_diploma?: string | null;
-              specialization?: string | null;
+              durationInYrs?: number | null;
               dateOfCompletion?: Record<'local' | 'en' | 'np', string> | null;
+              grade?: GradeLevels | null;
             } | null> | null;
             experienceDetails?: Array<{
               occupationName?: string | null;
@@ -33632,8 +34210,9 @@ export type GetJobApplicationOverviewQuery = {
             educationalDetails?: Array<{
               instituteName?: string | null;
               degree_diploma?: string | null;
-              specialization?: string | null;
+              durationInYrs?: number | null;
               dateOfCompletion?: Record<'local' | 'en' | 'np', string> | null;
+              grade?: GradeLevels | null;
             } | null> | null;
           } | null;
           error?:
@@ -34868,6 +35447,8 @@ export type GetKymIndividualFormDataQuery = {
           declarationAgreement?: boolean | null;
           sameTempAsPermanentAddress?: boolean | null;
           identificationSelection?: Array<string | null> | null;
+          bankId?: string | null;
+          bankAccountId?: string | null;
           mainOccupation?: {
             registrationNo?: string | null;
             address?: string | null;
@@ -36982,6 +37563,8 @@ export type GetMemberKymDetailsBioQuery = {
               permanentAddress?: Record<'local' | 'en' | 'np', string> | null;
               maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
               panNo?: string | null;
+              bankName?: string | null;
+              bankAccountId?: string | null;
               familyMembers?: Array<{
                 relationship?: string | null;
                 fullName?: string | null;
@@ -39101,8 +39684,6 @@ export type GetIndividualMemberReportQuery = {
             loanAccountName?: string | null;
             issuedDate?: Record<'local' | 'en' | 'np', string> | null;
             approvedAmount?: string | null;
-            remainingAmount?: string | null;
-            lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
           } | null> | null;
           recentTransactions?: Array<{
             transactionId?: string | null;
@@ -39287,8 +39868,18 @@ export type GetLedgerReportQuery = {
             amount?: string | null;
             amountType?: BalanceType | null;
           } | null;
+          yearEndBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
         } | null;
         adjustedEntries?: Array<{
+          id?: string | null;
+          oldId?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          account?: string | null;
+          balance?: string | null;
+          credit?: string | null;
+          debit?: string | null;
+        } | null> | null;
+        yearEnd?: Array<{
           id?: string | null;
           oldId?: string | null;
           date?: Record<'local' | 'en' | 'np', string> | null;
@@ -40363,6 +40954,34 @@ export type GetAdjustedLedgerReportQuery = {
   };
 };
 
+export type GetLedgerBalanceReportQueryVariables = Exact<{
+  data: LedgerBalanceReportInput;
+}>;
+
+export type GetLedgerBalanceReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        ledgerBalanceReport: {
+          data?: Array<{
+            branchId: string;
+            branchName: string;
+            ledgerId: string;
+            ledgerName: string;
+            dr?: string | null;
+            cr?: string | null;
+            adjustedDr?: string | null;
+            adjustedCr?: string | null;
+            openingBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+            balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+            settledBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          } | null> | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetChequeBookRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
@@ -41220,16 +41839,16 @@ export type ListLeafCoaHeadsQuery = {
   };
 };
 
-export type ListCbsShareCodesQueryVariables = Exact<{ [key: string]: never }>;
+export type ListCbsCertificatesCodesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type ListCbsShareCodesQuery = {
+export type ListCbsCertificatesCodesQuery = {
   settings: {
     general?: {
       codes?: {
         cbs?: {
           allCbsCodes?: {
             data?: {
-              share?: Array<{
+              certificates?: Array<{
                 id?: string | null;
                 codeType?: CbsCodeType | null;
                 prefix?: string | null;
@@ -41772,10 +42391,14 @@ export type GetEarningComponentQuery = {
                 name?: string | null;
                 abbr?: string | null;
                 description?: string | null;
+                ledgerHead?: string | null;
+                earningFrequency?: EarningFrequencyEnum | null;
+                calculationType?: CalculationTypeEnum | null;
                 baseMultiple?: string | null;
                 multiplier?: number | null;
-                isTaxApplicable?: boolean | null;
-                roundToNearestInteger?: boolean | null;
+                maximumAmountLimitPerYear?: string | null;
+                taxExempted?: boolean | null;
+                requiredProof?: boolean | null;
                 makeThisActive?: boolean | null;
               } | null;
               error?:
@@ -41842,10 +42465,13 @@ export type GetDeductionComponentQuery = {
                 name?: string | null;
                 abbr: string;
                 description?: string | null;
+                ledgerHead?: string | null;
+                deductionType?: DeductionType | null;
                 deductionFrequency?: DeductionFrequencyEnum | null;
+                calculationType?: CalculationTypeEnum | null;
                 baseMultiple?: string | null;
                 multiplier?: number | null;
-                roundToNearestInteger?: boolean | null;
+                maximumAmountLimitPerYear?: string | null;
                 makeThisActive?: boolean | null;
               } | null;
               error?:
@@ -41910,10 +42536,8 @@ export type GetSalaryStructureQuery = {
               record?: {
                 id?: string | null;
                 name?: string | null;
-                payrollFrequency?: PayrollFrequencyEnum | null;
+                paygroup?: string | null;
                 description?: string | null;
-                modeOfPayment?: PaymentModeEnum | null;
-                salaryPaymentLedger?: LedgerPaymentEnum | null;
                 makeThisActive?: boolean | null;
                 salaryEarnings?: Array<{
                   id?: string | null;
@@ -41984,7 +42608,7 @@ export type GetTaxSlabQuery = {
                 id?: string | null;
                 name?: string | null;
                 effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
-                makeThisActive?: boolean | null;
+                makeThisCurrentTaxSlab?: boolean | null;
                 fiscalYear?: {
                   from: Record<'local' | 'en' | 'np', string>;
                   to: Record<'local' | 'en' | 'np', string>;
@@ -44973,6 +45597,33 @@ export type GetAllTransactionsDetailQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           profilePicUrl?: string | null;
         } | null;
+        loanDisbursementData?: {
+          loanAccountId?: string | null;
+          loanAccountName?: string | null;
+          disbursedDate?: Record<'local' | 'en' | 'np', string> | null;
+          disbursedAmount?: string | null;
+          paymentMode?: string | null;
+          destAccId?: string | null;
+          destAccName?: string | null;
+          bankName?: string | null;
+          bankChequeNo?: string | null;
+          processingCharge?: string | null;
+        } | null;
+        accountCloseData?: {
+          accId: string;
+          accCloseDate: Record<'local' | 'en' | 'np', string>;
+          accName?: string | null;
+          amount?: string | null;
+          interest?: string | null;
+          charges?: string | null;
+          paymentMode?: string | null;
+          closeReason?: string | null;
+          tax?: string | null;
+          destAccId?: string | null;
+          destAccName?: string | null;
+          bankName?: string | null;
+          bankChequeNo?: string | null;
+        } | null;
         glTransaction?: Array<{
           account: string;
           serviceCenter?: string | null;
@@ -46452,6 +47103,10 @@ export const SetAccountCloseDataDocument = `
         paymentMode
         closeReason
         tax
+        destAccName
+        destAccId
+        bankName
+        bankChequeNo
       }
       error {
         ...MutationError
@@ -53510,11 +54165,16 @@ export const PostShareDividendDocument = `
       record
       summary {
         MemberID
+        MemberCode
         MemberName
+        AverageShareCount
         ShareCount
         SavingAmount
         TotalAmount
+        PayableAmount
+        TDSAmount
         DestinationAccount
+        DestinationProduct
         Error
       }
       error {
@@ -54526,13 +55186,7 @@ export const GetAccountTableListDocument = `
           objState
           createdAt
           accountName
-          createdBy {
-            id
-          }
           modifiedAt
-          modifiedBy {
-            id
-          }
           installmentAmount
           balance
           availableBalance
@@ -58417,6 +59071,8 @@ export const GetSingleEmployeeDetailsDocument = `
         getEmployee(id: $id) {
           record {
             id
+            isCoopMember
+            coopMemberId
             firstName
             middleName
             lastName
@@ -58424,16 +59080,18 @@ export const GetSingleEmployeeDetailsDocument = `
             age
             gender
             maritalStatus
+            ethnicity
+            Handicapped
             bloodGroup
             workPhoneNumber
             workEmailAddress
             personalPhoneNumber
-            personalEmailAddress
             educationDetails {
               instituteName
               degree_diploma
-              specialization
+              durationInYrs
               dateOfCompletion
+              grade
             }
             permanentAddress {
               provinceId
@@ -58460,6 +59118,23 @@ export const GetSingleEmployeeDetailsDocument = `
                 latitude
               }
             }
+            familyDetails {
+              fullName
+              relation
+              occupation
+            }
+            citizenshipGiven
+            drivingLicenseGiven
+            citizenship {
+              id
+              placeOfIssue
+              issuedDate
+            }
+            drivingLicense {
+              id
+              placeOfIssue
+              issuedDate
+            }
             employeeLevelId
             departmentId
             designationId
@@ -58467,25 +59142,62 @@ export const GetSingleEmployeeDetailsDocument = `
             employmentType
             employeeStatus
             sourceOfHire
+            employeeClass
+            referralBy
             workExperience {
               companyName
               designation
-              salary
+              durationInYrs
               address
             }
-            salaryPaymentMode
+            trainingDetailsGiven
+            researchAndPublicationsGiven
+            awardsCashCertificatesGiven
+            internationalTourGiven
+            joiningDate
+            trainingDetails {
+              trainingName
+              duration
+              subject
+              organizer
+            }
+            researchAndPublications {
+              name
+              publishedDate
+              language
+              curriculum
+            }
+            awardsCashAndCertificates {
+              description
+              receivedDate
+              cashOrPrizeName
+              organization
+              verifiedBy
+            }
+            internationalTour {
+              tourCountry
+              objective
+              duration
+            }
+            payGroup
             panNumber
-            providentFundAccount
             salaryStructureId
-            jobApplicationId
-            jobOffer
-            appointmentLetter
-            dateOfJoining
-            reportsToId
-            leaveApproverId
-            expenseApproverId
-            healthInsuranceProviderId
-            healthInsuranceNumberId
+            salaryPaymentMode
+            account
+            bank
+            accountName
+            accountNumber
+            pf
+            ssf
+            cit
+            providentNumber
+            nominee
+            relationWithNominee
+            ssfNumber
+            citNumber
+            citCode
+            noCitDeduction
+            supervisor
             documents {
               fieldId
               identifiers: docData {
@@ -59907,8 +60619,9 @@ export const GetJobApplicationDocument = `
             educationalDetails {
               instituteName
               degree_diploma
-              specialization
+              durationInYrs
               dateOfCompletion
+              grade
             }
             experienceDetails {
               occupationName
@@ -60057,8 +60770,9 @@ export const GetJobApplicationOverviewDocument = `
             educationalDetails {
               instituteName
               degree_diploma
-              specialization
+              durationInYrs
               dateOfCompletion
+              grade
             }
           }
           error {
@@ -61832,6 +62546,8 @@ export const GetKymIndividualFormDataDocument = `
             id
             relationshipId
           }
+          bankId
+          bankAccountId
           documents {
             identifiers: docData {
               identifier
@@ -64109,6 +64825,8 @@ export const GetMemberKymDetailsBioDocument = `
               value
             }
             panNo
+            bankName
+            bankAccountId
           }
           ... on InstitutionBio {
             basicInfo {
@@ -67131,8 +67849,6 @@ export const GetIndividualMemberReportDocument = `
             loanAccountName
             issuedDate
             approvedAmount
-            remainingAmount
-            lastPaymentDate
           }
           recentTransactions {
             transactionId
@@ -67403,8 +68119,21 @@ export const GetLedgerReportDocument = `
             amount
             amountType
           }
+          yearEndBalance {
+            amount
+            amountType
+          }
         }
         adjustedEntries {
+          id
+          oldId
+          date
+          account
+          balance
+          credit
+          debit
+        }
+        yearEnd {
           id
           oldId
           date
@@ -68783,6 +69512,54 @@ export const useGetAdjustedLedgerReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetLedgerBalanceReportDocument = `
+    query getLedgerBalanceReport($data: LedgerBalanceReportInput!) {
+  report {
+    transactionReport {
+      financial {
+        ledgerBalanceReport(data: $data) {
+          data {
+            branchId
+            branchName
+            ledgerId
+            ledgerName
+            openingBalance {
+              amount
+              amountType
+            }
+            dr
+            cr
+            adjustedDr
+            adjustedCr
+            balance {
+              amount
+              amountType
+            }
+            settledBalance {
+              amount
+              amountType
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLedgerBalanceReportQuery = <
+  TData = GetLedgerBalanceReportQuery,
+  TError = unknown
+>(
+  variables: GetLedgerBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetLedgerBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetLedgerBalanceReportQuery, TError, TData>(
+    ['getLedgerBalanceReport', variables],
+    useAxios<GetLedgerBalanceReportQuery, GetLedgerBalanceReportQueryVariables>(
+      GetLedgerBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetChequeBookRequestsDocument = `
     query getChequeBookRequests($pagination: Pagination, $filter: Filter) {
   requests {
@@ -69965,15 +70742,15 @@ export const useListLeafCoaHeadsQuery = <TData = ListLeafCoaHeadsQuery, TError =
     ),
     options
   );
-export const ListCbsShareCodesDocument = `
-    query listCBSShareCodes {
+export const ListCbsCertificatesCodesDocument = `
+    query listCBSCertificatesCodes {
   settings {
     general {
       codes {
         cbs {
           allCbsCodes {
             data {
-              share {
+              certificates {
                 id
                 codeType
                 prefix
@@ -69988,14 +70765,19 @@ export const ListCbsShareCodesDocument = `
   }
 }
     `;
-export const useListCbsShareCodesQuery = <TData = ListCbsShareCodesQuery, TError = unknown>(
-  variables?: ListCbsShareCodesQueryVariables,
-  options?: UseQueryOptions<ListCbsShareCodesQuery, TError, TData>
+export const useListCbsCertificatesCodesQuery = <
+  TData = ListCbsCertificatesCodesQuery,
+  TError = unknown
+>(
+  variables?: ListCbsCertificatesCodesQueryVariables,
+  options?: UseQueryOptions<ListCbsCertificatesCodesQuery, TError, TData>
 ) =>
-  useQuery<ListCbsShareCodesQuery, TError, TData>(
-    variables === undefined ? ['listCBSShareCodes'] : ['listCBSShareCodes', variables],
-    useAxios<ListCbsShareCodesQuery, ListCbsShareCodesQueryVariables>(
-      ListCbsShareCodesDocument
+  useQuery<ListCbsCertificatesCodesQuery, TError, TData>(
+    variables === undefined
+      ? ['listCBSCertificatesCodes']
+      : ['listCBSCertificatesCodes', variables],
+    useAxios<ListCbsCertificatesCodesQuery, ListCbsCertificatesCodesQueryVariables>(
+      ListCbsCertificatesCodesDocument
     ).bind(null, variables),
     options
   );
@@ -70755,10 +71537,14 @@ export const GetEarningComponentDocument = `
                 name
                 abbr
                 description
+                ledgerHead
+                earningFrequency
+                calculationType
                 baseMultiple
                 multiplier
-                isTaxApplicable
-                roundToNearestInteger
+                maximumAmountLimitPerYear
+                taxExempted
+                requiredProof
                 makeThisActive
               }
               error {
@@ -70842,10 +71628,13 @@ export const GetDeductionComponentDocument = `
                 name
                 abbr
                 description
+                ledgerHead
+                deductionType
                 deductionFrequency
+                calculationType
                 baseMultiple
                 multiplier
-                roundToNearestInteger
+                maximumAmountLimitPerYear
                 makeThisActive
               }
               error {
@@ -70929,7 +71718,7 @@ export const GetSalaryStructureDocument = `
               record {
                 id
                 name
-                payrollFrequency
+                paygroup
                 description
                 salaryEarnings {
                   id
@@ -70939,8 +71728,6 @@ export const GetSalaryStructureDocument = `
                   id
                   amount
                 }
-                modeOfPayment
-                salaryPaymentLedger
                 makeThisActive
               }
               error {
@@ -71034,7 +71821,7 @@ export const GetTaxSlabDocument = `
                   percentageDeduction
                 }
                 effectiveFrom
-                makeThisActive
+                makeThisCurrentTaxSlab
               }
               error {
                 ...MutationError
@@ -75114,6 +75901,33 @@ export const GetAllTransactionsDetailDocument = `
         isYearEndAdjustment
         note
         status
+        loanDisbursementData {
+          loanAccountId
+          loanAccountName
+          disbursedDate
+          disbursedAmount
+          paymentMode
+          destAccId
+          destAccName
+          bankName
+          bankChequeNo
+          processingCharge
+        }
+        accountCloseData {
+          accId
+          accCloseDate
+          accName
+          amount
+          interest
+          charges
+          paymentMode
+          closeReason
+          tax
+          destAccId
+          destAccName
+          bankName
+          bankChequeNo
+        }
         glTransaction {
           account
           serviceCenter

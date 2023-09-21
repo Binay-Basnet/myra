@@ -422,6 +422,33 @@ query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
         isYearEndAdjustment
         note
         status
+        loanDisbursementData {
+          loanAccountId
+          loanAccountName
+          disbursedDate
+          disbursedAmount
+          paymentMode
+          destAccId
+          destAccName
+          bankName
+          bankChequeNo
+          processingCharge
+        }
+        accountCloseData {
+          accId
+          accCloseDate
+          accName
+          amount
+          interest
+          charges
+          paymentMode
+          closeReason
+          tax
+          destAccId
+          destAccName
+          bankName
+          bankChequeNo
+        }
         glTransaction {
           account
           serviceCenter

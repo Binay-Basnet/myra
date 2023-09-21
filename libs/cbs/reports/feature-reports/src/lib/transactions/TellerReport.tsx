@@ -73,13 +73,15 @@ export const TellerReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/transactions'
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'Teller Report',
               link: isCbs
-                ? '/reports/cbs/transactions/teller/new'
-                : '/accounting/reports/transactions/teller/new',
+                ? '/cbs/reports/cbs-reports/transactions/teller/new'
+                : '/accounting/reports/accounting-reports/transactions/teller/new',
             },
           ]}
         />

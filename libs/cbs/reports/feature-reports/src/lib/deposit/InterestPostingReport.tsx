@@ -57,10 +57,10 @@ export const InterestPostingReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Saving Reports', link: '/reports/cbs/savings' },
+            { label: 'Saving Reports', link: '/cbs/reports/cbs-reports/savings' },
             {
               label: 'Interest Statement',
-              link: '/reports/cbs/savings/interest-statement/new',
+              link: '/cbs/reports/cbs-reports/savings/interest-statement/new',
             },
           ]}
         />

@@ -97,11 +97,11 @@ export const LoanCollateralReport = () => {
           paths={[
             {
               label: 'Loan Reports',
-              link: '/reports/cbs/loan',
+              link: '/cbs/reports/cbs-reports/loan',
             },
             {
               label: 'Loan Collateral Report',
-              link: '/reports/cbs/loan/loan-collateral/new',
+              link: '/cbs/reports/cbs-reports/loan/loan-collateral/new',
             },
           ]}
         />

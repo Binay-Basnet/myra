@@ -31,20 +31,27 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Trial Balance and Adjusted Trial Balance report Branch seperation.',
-      'Charkhata report COA head filter.',
-      'Bulk Deposit implementation',
-      'Added ledger name in Adjusted ledger report',
+      'MR today’s list print added in the MR list section.',
+      'Withdraw slip print check added in the print preference of global settings.',
+      'Withdraw slip number editable and selectable number added in the withdraw slip book request section.',
+      'Date range filter added in the MR trans. Report.',
+      'Total number of deposit collected customers and accounts in MR transaction as well as Teller approval page.',
+      'Bank details added in the KYM form and bio details.',
+      'Destination details are added in the close bill print.',
+      'Presentation of Adjusted and Settled transaction in different table for GL Report.',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Alternative Channel charges view for teller and head teller',
-      'Amount display in Mr transaction page fixed.',
-      'Loan application incorrect interest rate.',
-      'Removed lock transaction from closed accounts.',
-      'Added Adjusted Trial Balance exclude zero filter on Adjustment Trial Balance',
+      'FD certificate serial number generation added in the certificate.',
+      'Share certificate number sqeuence issue fixed in certificate.',
+      'Error time to be hold at least 5 secs.',
+      'Monthly installment date with respect to BS date format.',
+      'In product edit, field which are not able to edit are removed.',
+      'Global search revamp.',
+      '"छोरा" is static in share certificates changed to gender wise.',
+      'Remove logo from the share certificate.',
     ],
   },
 };
@@ -83,8 +90,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.93</Text>
-          <Text fontSize="s3">September 13, 2023</Text>
+          <Text fontSize="r2">Version 1.0.94</Text>
+          <Text fontSize="s3">September 21, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>

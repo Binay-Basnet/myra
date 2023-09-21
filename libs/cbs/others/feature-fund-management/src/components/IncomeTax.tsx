@@ -3,41 +3,18 @@ import { useRouter } from 'next/router';
 
 import { FormSection, GridItem, Text } from '@myra-ui';
 
-import {
-  useGetCurrentFundAmountQuery,
-  useGetFundManagementFormStateQuery,
-} from '@coop/cbs/data-access';
 import { FormAmountInput, FormLeafCoaHeadSelect, FormNumberInput } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
+import { useFundManagement } from '../hooks';
+import { CustomFundManagementInput } from '../lib/type';
+
 export const IncomeTax = () => {
+  const { remainingProfitAfterStaff, remainingProfitAfterTax } = useFundManagement({});
+
   const router = useRouter();
 
-  const { setValue, watch } = useFormContext();
-
-  const id = router?.query?.['id'];
-
-  const { data: editData } = useGetFundManagementFormStateQuery(
-    { id: id as string },
-    { enabled: !!id }
-  );
-
-  const formData = editData?.profitToFundManagement?.get?.record;
-
-  const { data: currentFundAmountHOData } = useGetCurrentFundAmountQuery({ forHeadOffice: true });
-
-  const currentFundAmount =
-    formData?.state === 'COMPLETED'
-      ? Number(formData?.grossProfit || 0)
-      : Number(
-          currentFundAmountHOData?.profitToFundManagement?.getCurrentFundAmount?.amount?.amount || 0
-        );
-
-  const staffBonusFundAmount = Number(watch('staffBonus.amount') || 0);
-
-  const remainingProfit = Number((currentFundAmount - staffBonusFundAmount).toFixed(2));
-
-  const incomeTaxAmount = Number(watch('incomeTax.amount') || 0);
+  const { setValue } = useFormContext<CustomFundManagementInput>();
 
   return (
     <FormSection header="Income Tax">
@@ -56,11 +33,9 @@ export const IncomeTax = () => {
           </Text>
         }
         onChangeAction={(newVal) => {
-          setValue('incomeTax.amount', ((Number(newVal || 0) / 100) * remainingProfit).toFixed(2));
-
           setValue(
-            'netProfit',
-            remainingProfit - Number(((Number(newVal || 0) / 100) * remainingProfit).toFixed(2))
+            'incomeTax.amount',
+            ((Number(newVal || 0) / 100) * remainingProfitAfterStaff).toFixed(2)
           );
         }}
         isDisabled={router?.asPath?.includes('/view')}
@@ -70,16 +45,17 @@ export const IncomeTax = () => {
         name="incomeTax.amount"
         label="Amount"
         onChangeAction={(newVal) => {
-          setValue('incomeTax.percent', ((Number(newVal || 0) / remainingProfit) * 100).toFixed(2));
-
-          setValue('netProfit', Number(newVal || 0));
+          setValue(
+            'incomeTax.percent',
+            Number(((Number(newVal || 0) / remainingProfitAfterStaff) * 100).toFixed(4))
+          );
         }}
         isDisabled={router?.asPath?.includes('/view')}
       />
 
       <GridItem colSpan={3} display="flex" gap="s4">
         <Text>Remaining Profit:</Text>
-        <Text>{amountConverter(remainingProfit - incomeTaxAmount)}</Text>
+        <Text>{amountConverter(remainingProfitAfterTax)}</Text>
       </GridItem>
     </FormSection>
   );

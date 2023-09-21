@@ -63,10 +63,10 @@ export const AdjustedLedgersReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Other Report', link: '/reports/cbs/others' },
+            { label: 'Other Report', link: '/cbs/reports/cbs-reports/others' },
             {
               label: 'Adjusted Ledger Report',
-              link: '/reports/cbs/others/adjusted-ledger/new',
+              link: '/cbs/reports/cbs-reports/others/adjusted-ledger/new',
             },
           ]}
         />
@@ -95,7 +95,7 @@ export const AdjustedLedgersReport = () => {
                     color="primary.500"
                     onClick={() =>
                       window.open(
-                        `/reports/cbs/others/ledger/new?id=${props.row?.original?.ledgerId}&branch=${props?.row?.original?.branchId}&dateFromen=${datePeriod?.from?.en}&dateToen=${datePeriod?.to?.en}&dateFromnp=${datePeriod?.from?.np}&dateTonp=${datePeriod?.to?.np}&isAdjusted=true`,
+                        `/cbs/reports/cbs-reports/others/ledger/new?id=${props.row?.original?.ledgerId}&branch=${props?.row?.original?.branchId}&dateFromen=${datePeriod?.from?.en}&dateToen=${datePeriod?.to?.en}&dateFromnp=${datePeriod?.from?.np}&dateTonp=${datePeriod?.to?.np}&isAdjusted=true`,
 
                         '_blank'
                       )

@@ -109,7 +109,7 @@ export const ROUTES = {
   CBS_BLOCK_WITHDRAW_SLIP_REQUEST_LIST: '/cbs/withdraw/block-withdraw-slip-requests/list',
   CBS_BLOCK_WITHDRAW_SLIP_REQUEST_ADD: '/cbs/withdraw/block-withdraw-slip-requests/add',
 
-  CBS_REPORT_LIST: '/reports/cbs/share',
+  CBS_REPORT_LIST: '/cbs/reports/cbs-reports/share',
   CBS_REPORT_SAVED: '/reports/saved',
 
   CBS_OTHERS_FUND_MANAGEMENT_ADD: '/cbs/others/fund-management/add',
@@ -264,29 +264,31 @@ export const ROUTES = {
   CBS_LOAN_CLOSED_ACCOUNTS_ADD: '/cbs/loan/closed-accounts/add',
   CBS_LOAN_APPLICATIONS_EDIT: '/cbs/loan/applications/edit',
 
-  CBS_REPORTS_MEMBER_CLASSIFICATION: '/reports/cbs/members/classification/new',
-  CBS_REPORTS_MEMBER_ACTIVE_INACTIVE: '/reports/cbs/members/activations/new',
-  CBS_REPORTS_KYM_STATUS: '/reports/cbs/members/kym-status/new',
+  CBS_REPORTS_MEMBER_CLASSIFICATION: '/cbs/reports/cbs-reports/members/classification/new',
+  CBS_REPORTS_MEMBER_ACTIVE_INACTIVE: '/cbs/reports/cbs-reports/members/activations/new',
+  CBS_REPORTS_KYM_STATUS: '/cbs/reports/cbs-reports/members/kym-status/new',
 
-  CBS_REPORTS_SHARE_REGISTER: '/reports/cbs/share/register/new',
-  CBS_REPORTS_SHARE_STATEMENT: '/reports/cbs/share/statement/new',
-  CBS_REPORTS_SHARE_TRANSACTION: '/reports/cbs/share/transaction/new',
+  CBS_REPORTS_SHARE_REGISTER: '/cbs/reports/cbs-reports/share/register/new',
+  CBS_REPORTS_SHARE_STATEMENT: '/cbs/reports/cbs-reports/share/statement/new',
+  CBS_REPORTS_SHARE_TRANSACTION: '/cbs/reports/cbs-reports/share/transaction/new',
 
-  CBS_REPORTS_SAVING_STATEMENT: '/reports/cbs/savings/statement/new',
-  CBS_REPORTS_INTEREST_TAX_REPORT: '/reports/cbs/savings/interest-tax/new',
-  CBS_REPORTS_INTEREST_STATEMENT: '/reports/cbs/savings/interest-statement/new',
+  CBS_REPORTS_SAVING_STATEMENT: '/cbs/reports/cbs-reports/savings/statement/new',
+  CBS_REPORTS_INTEREST_TAX_REPORT: '/cbs/reports/cbs-reports/savings/interest-tax/new',
+  CBS_REPORTS_INTEREST_STATEMENT: '/cbs/reports/cbs-reports/savings/interest-statement/new',
 
-  CBS_REPORTS_LOAN_STATEMENT: '/reports/cbs/loan/statement/new',
-  CBS_REPORTS_LOAN_AGEING_REPORT: '/reports/cbs/loan/ageing/new',
+  CBS_REPORTS_LOAN_STATEMENT: '/cbs/reports/cbs-reports/loan/statement/new',
+  CBS_REPORTS_LOAN_AGEING_REPORT: '/cbs/reports/cbs-reports/loan/ageing/new',
 
-  CBS_REPORTS_LOAN_ACCOUNT_STATEMENT_REPORT: '/reports/cbs/loan/loan-transaction-statement/new',
+  CBS_REPORTS_LOAN_ACCOUNT_STATEMENT_REPORT:
+    '/cbs/reports/cbs-reports/loan/loan-transaction-statement/new',
 
-  CBS_REPORTS_TRANS_TRIAL_SHEET: '/reports/cbs/transactions/trial-sheet/new',
-  CBS_REPORTS_TRANS_CASH_LEDGER: '/reports/cbs/transactions/cash-ledger/new',
-  CBS_REPORTS_TRANS_BANK_GL_STATEMENT: '/reports/cbs/transactions/bank-gl-statement/new',
-  CBS_REPORTS_VAULT_BALANCE: '/reports/cbs/transactions/vault-balance/new',
-  CBS_REPORTS_TELLER_REPORT: '/reports/cbs/transactions/teller/new',
-  CBS_REPORTS_DAY_BOOK_REPORT: '/reports/cbs/transactions/day-book/new',
+  CBS_REPORTS_TRANS_TRIAL_SHEET: '/cbs/reports/cbs-reports/transactions/trial-sheet/new',
+  CBS_REPORTS_TRANS_CASH_LEDGER: '/cbs/reports/cbs-reports/transactions/cash-ledger/new',
+  CBS_REPORTS_TRANS_BANK_GL_STATEMENT:
+    '/cbs/reports/cbs-reports/transactions/bank-gl-statement/new',
+  CBS_REPORTS_VAULT_BALANCE: '/cbs/reports/cbs-reports/transactions/vault-balance/new',
+  CBS_REPORTS_TELLER_REPORT: '/cbs/reports/cbs-reports/transactions/teller/new',
+  CBS_REPORTS_DAY_BOOK_REPORT: '/cbs/reports/cbs-reports/transactions/day-book/new',
 
   ALTERNATIVE_CHANNELS_MBANKING_USERS: '/alternative-channels/users/mBanking',
   ALTERNATIVE_CHANNELS_MBANKING_DOWNLOADS: '/alternative-channels/downloads/form',
@@ -358,9 +360,10 @@ export const ROUTES = {
   ACCOUNTING_LEDGER_BALANCE_TRANSFER_DETAILS:
     '/accounting/accounting/ledger-balance-transfer/details',
 
-  ACCOUNTING_CHAR_KHATA_REPORT: '/accounting/reports/transactions/charkhata/new',
-  ACCOUNTING_DAY_BOOK_REPORT: '/accounting/reports/transactions/day-book/new',
-  ACCOUNTING_TRAIL_BALANCE_REPORT: '/accounting/reports/transactions/trial-sheet/new',
+  ACCOUNTING_CHAR_KHATA_REPORT: '/accounting/reports/accounting-reports/transactions/charkhata/new',
+  ACCOUNTING_DAY_BOOK_REPORT: '/accounting/reports/accounting-reports/transactions/day-book/new',
+  ACCOUNTING_TRAIL_BALANCE_REPORT:
+    '/accounting/reports/accounting-reports/transactions/trial-sheet/new',
 
   ACCOUNTING_EXTERNAL_LOAN_LIST: '/accounting/loan/external-loan/list',
   ACCOUNTING_EXTERNAL_LOAN_ADD: '/accounting/loan/external-loan/add',
@@ -373,7 +376,7 @@ export const ROUTES = {
   ACCOUNTING_INVESTMENT_ACCOUNT_TRANSACTIONS_ADD:
     '/accounting/investment/investment-transaction/add',
 
-  ACCOUNTING_REPORTS: '/accounting/reports/transactions',
+  ACCOUNTING_REPORTS: '/accounting/reports/accounting-reports/transactions',
 
   INVENTORY_REGISTER: '/inventory/inventory/register/list',
   INVENTORY_INVENTORY_ADJUSTMENT: '/inventory/inventory/adjustments/list',

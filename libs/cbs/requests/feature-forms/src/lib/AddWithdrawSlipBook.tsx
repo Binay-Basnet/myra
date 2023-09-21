@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
-import { Alert, asyncToast, Button, FormSection, GridItem } from '@myra-ui';
+import { Alert, asyncToast, Box, Button, FormSection, GridItem, Text } from '@myra-ui';
 
 import {
   PickupMethod,
@@ -12,14 +12,14 @@ import {
   useSetIssueNewSlipMutation,
   WithdrawSlipIssueInput,
 } from '@coop/cbs/data-access';
-import { ROUTES, WITHDRAW_SLIP_COUNT_OPTIONS } from '@coop/cbs/utils';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
   FormAgentSelect,
   FormBranchSelect,
   FormLayout,
   FormMemberSelect,
-  FormSelect,
+  FormNumberInput,
   FormSwitchTab,
 } from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
@@ -125,12 +125,27 @@ export const AddWithdrawSlipBook = () => {
               includeLoc
             />
 
-            <FormSelect
-              isRequired
-              name="count"
-              label="Total no of withdraw slip"
-              options={WITHDRAW_SLIP_COUNT_OPTIONS}
-            />
+            <Box display="flex" flexDirection="column" gap="s8">
+              <FormNumberInput isRequired name="count" label="Total no of withdraw slip" />
+
+              <Box display="flex" gap="s8">
+                {[10, 25, 50, 100].map((n) => (
+                  <Box
+                    py="s8"
+                    px="s16"
+                    bg="primary.100"
+                    borderRadius="br2"
+                    cursor="pointer"
+                    _hover={{ bg: 'primary.200' }}
+                    onClick={() => methods.setValue('count', n)}
+                  >
+                    <Text color="gray.800" fontWeight={500}>
+                      {n}
+                    </Text>
+                  </Box>
+                ))}
+              </Box>
+            </Box>
 
             {count && to && from && (
               <GridItem colSpan={2}>

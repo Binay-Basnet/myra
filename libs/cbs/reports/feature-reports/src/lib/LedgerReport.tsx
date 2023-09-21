@@ -41,6 +41,10 @@ export const LedgerReport = () => {
   const closingBalance = data?.report?.otherReport?.generalLedgerReport?.summary?.closingBalance;
   const closingAdjustedBalance =
     data?.report?.otherReport?.generalLedgerReport?.summary?.adjustedClosingBalance;
+  const closingDate = filters?.period?.to;
+  const settlementsTable = data?.report?.otherReport?.generalLedgerReport?.yearEnd;
+  const settlementClosingBalance =
+    data?.report?.otherReport?.generalLedgerReport?.summary?.yearEndBalance;
 
   return (
     <Report
@@ -54,10 +58,10 @@ export const LedgerReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Other Reports', link: '/reports/cbs/others' },
+            { label: 'Other Reports', link: '/cbs/reports/cbs-reports/others' },
             {
               label: 'Ledger Report',
-              link: '/reports/cbs/others/ledger/new',
+              link: '/cbs/reports/cbs-reports/others/ledger/new',
             },
           ]}
         />
@@ -180,8 +184,10 @@ export const LedgerReport = () => {
                     },
                   },
                   {
+                    id: 'Closing Date From Fiscal Year',
                     header: 'Date',
-                    accessorFn: (row) => localizedDate(row?.date),
+                    // accessorFn: (row) => localizedDate(row?.date),
+                    cell: () => localizedDate(closingDate),
                     meta: {
                       width: '30px',
                       isNumeric: true,
@@ -259,6 +265,111 @@ export const LedgerReport = () => {
                     {debitCreditConverter(
                       closingAdjustedBalance?.amount as string,
                       closingAdjustedBalance?.amountType as string
+                    )}
+                  </Text>
+                </Box>
+              </Box>
+            </Box>
+          )}
+          {isAdjusted && settlementsTable?.length && (
+            <Box display="flex" flexDirection="column" gap="s16" pt="s16">
+              <Text px="s32" fontSize="r1" fontWeight="600">
+                Settlements
+              </Text>
+              <Report.Table
+                hasSNo={false}
+                data={settlementsTable}
+                columns={[
+                  {
+                    header: 'S.N',
+                    accessorFn: (__, index) => index + 1,
+                    meta: {
+                      width: '30px',
+                      isNumeric: true,
+                    },
+                  },
+                  {
+                    id: 'Closing Date From Fiscal Year',
+                    header: 'Date',
+                    // accessorFn: (row) => localizedDate(row?.date),
+                    cell: () => localizedDate(closingDate),
+                    meta: {
+                      width: '30px',
+                      isNumeric: true,
+                      skipExcelFormatting: true,
+                    },
+                  },
+                  {
+                    header: 'ID ',
+                    accessorFn: (row) => row?.id,
+                    cell: (props) => (
+                      <RouteToDetailsPage
+                        id={props?.row?.original?.id as string}
+                        type="transactions"
+                        label={props?.row?.original?.id as string}
+                      />
+                    ),
+                    meta: {
+                      width: '3.125rem',
+                      skipExcelFormatting: true,
+                    },
+                  },
+                  {
+                    header: 'Old ID',
+                    accessorFn: (row) => row?.oldId,
+                    meta: {
+                      width: '3.125rem',
+                    },
+                  },
+                  {
+                    header: 'Particulars',
+                    accessorFn: (row) => row?.account,
+                    cell: (props) => (
+                      <Box whiteSpace="pre-line" my="s4" width="200px">
+                        {props?.row?.original?.account}{' '}
+                      </Box>
+                    ),
+                    meta: {
+                      width: '200px',
+                    },
+                  },
+                  {
+                    header: 'Dr.',
+                    accessorFn: (row) => row?.debit,
+                    cell: (props) => amountConverter(props.getValue() as string) || '-',
+                    meta: {
+                      width: '30px',
+                      isNumeric: true,
+                    },
+                  },
+                  {
+                    header: 'Cr. ',
+                    accessorFn: (row) => row?.credit,
+                    cell: (props) => amountConverter(props.getValue() as string) || '-',
+
+                    meta: {
+                      width: '30px',
+                      isNumeric: true,
+                    },
+                  },
+                  {
+                    header: 'Balance',
+                    accessorFn: (row) => row?.balance,
+                    meta: {
+                      width: '30px',
+                      isNumeric: true,
+                    },
+                  },
+                ]}
+              />
+              <Box display="flex" flexDirection="row" justifyContent="flex-end" p="s12">
+                <Box display="flex" flexDirection="column">
+                  <Text>
+                    {' '}
+                    Closing Settlemet Balance:{' '}
+                    {debitCreditConverter(
+                      settlementClosingBalance?.amount as string,
+                      settlementClosingBalance?.amountType as string
                     )}
                   </Text>
                 </Box>

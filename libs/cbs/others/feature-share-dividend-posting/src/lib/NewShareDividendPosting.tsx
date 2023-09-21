@@ -7,7 +7,7 @@ import { asyncToast, Button, FormSection, GridItem, Text } from '@myra-ui';
 
 import {
   DividendDistributionCondition,
-  DividendTransferTreatment,
+  DividendTreatment,
   ShareDividendInput,
   ShareDividendSummary,
   usePostShareDividendMutation,
@@ -39,7 +39,7 @@ export const NewShareDividendPosting = () => {
   const methods = useForm<ShareDividendInput>({
     defaultValues: {
       condition: DividendDistributionCondition.Daily,
-      treatment: DividendTransferTreatment.ShareAndAccount,
+      treatment: DividendTreatment.ShareAndAccount,
     },
   });
 

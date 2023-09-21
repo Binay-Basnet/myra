@@ -726,6 +726,21 @@ export const CbsAccountClose = () => {
                   Number(result?.tax || 0) -
                   Number(result?.interest);
 
+                let temp: Record<string, string> = {};
+
+                if (result?.destAccName) {
+                  temp = {
+                    'Destination Account Name': String(result?.destAccName),
+                    'Destination Account Number': String(result?.destAccId),
+                  };
+                }
+
+                if (result?.bankName) {
+                  temp = {
+                    'Bank Name': String(result?.bankName),
+                    'Cheque No': String(result?.bankChequeNo),
+                  };
+                }
                 return {
                   type: 'Saving Account Close',
                   total: amountConverter(result?.amount || 0) as string,
@@ -747,6 +762,7 @@ export const CbsAccountClose = () => {
                     Charges: result?.charges,
 
                     'Payment Mode': result?.paymentMode,
+                    ...temp,
                   },
                   subTitle: 'Account closed successfully. Details of the account is listed below.',
                   dublicate: true,

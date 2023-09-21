@@ -62,11 +62,11 @@ export const ABBSTransactionReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: '/reports/cbs/transactions',
+              link: '/cbs/reports/cbs-reports/transactions',
             },
             {
               label: 'ABBS Transaction Report',
-              link: '/reports/cbs/transactions/abbs-transaction/new',
+              link: '/cbs/reports/cbs-reports/transactions/abbs-transaction/new',
             },
           ]}
         />

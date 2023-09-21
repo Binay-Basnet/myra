@@ -4,26 +4,46 @@ import { useRouter } from 'next/router';
 import { Box, Text } from '@myra-ui';
 import { Table } from '@myra-ui/table';
 
+import { Can } from '@coop/cbs/utils';
 import { PopoverComponent } from '@coop/myra/components';
 
-import { ReportGroup, REPORTS } from '../constants/REPORTS';
+import { REPORTS } from '../constants/REPORTS';
 
-export const ShareReportList = () => (
-  <Box display="flex" flexDir="column" p="s16" gap="s16">
-    <Text fontSize="r3" color="gray.800" fontWeight="600" py="s16">
-      Share Report
-    </Text>
-    {REPORTS[ReportGroup.SHARE].map((report) => (
-      <ReportLinkText
-        key={report.id}
-        link={report.link ? `/reports/cbs/share/${report.link}/new` : undefined}
-      >
-        {/* {report.id} -  */}
-        {report.report}
-      </ReportLinkText>
-    ))}
-  </Box>
-);
+const moduleObj = {
+  CBS: 'cbs-reports',
+  ACCOUNTING: 'accounting-reports',
+};
+type ModulesType = {
+  module: keyof typeof moduleObj;
+};
+export const ShareReportList = ({ module }: ModulesType) => {
+  const router = useRouter();
+  const listName = router.query['report-group'] as keyof typeof REPORTS;
+  return (
+    <Box display="flex" flexDir="column" p="s16" gap="s16">
+      <Text fontSize="r3" color="gray.800" fontWeight="600" py="s16" textTransform="capitalize">
+        {listName.toLowerCase()} Report
+      </Text>
+      {REPORTS[listName].map((report) => (
+        <Can I="SHOW_IN_MENU" a={report.acl}>
+          <ReportLinkText
+            key={report.id}
+            link={
+              'link' in report
+                ? `/${module?.toLocaleLowerCase()}/reports/${moduleObj[module]}/${listName}/${
+                    report.link
+                  }/new`
+                : undefined
+            }
+          >
+            {/* {report.id} -  */}
+            {report.report}
+          </ReportLinkText>
+        </Can>
+      ))}
+    </Box>
+  );
+};
 
 export const ShareReportTable = () => (
   <Table

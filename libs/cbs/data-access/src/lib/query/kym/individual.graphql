@@ -157,6 +157,9 @@ query getKYMIndividualFormData($id: String!) {
             relationshipId
           }
 
+          bankId
+          bankAccountId
+
           documents {
             identifiers: docData {
               identifier

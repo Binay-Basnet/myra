@@ -56,11 +56,11 @@ export const LoanWriteOffReport = () => {
           paths={[
             {
               label: 'Loan Reports',
-              link: '/reports/cbs/loan',
+              link: '/cbs/reports/cbs-reports/loan',
             },
             {
               label: ReportEnum.LOAN_WRITE_OFF_REPORT,
-              link: '/reports/cbs/loan/loan-write-off/new',
+              link: '/cbs/reports/cbs-reports/loan/loan-write-off/new',
             },
           ]}
         />

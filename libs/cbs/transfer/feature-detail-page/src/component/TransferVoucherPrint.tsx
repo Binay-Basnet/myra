@@ -38,6 +38,7 @@ export const TransferVoucherPrint = forwardRef<HTMLInputElement, TransferVoucher
         sx={{
           '@media print': {
             display: 'flex',
+            color: '#000',
           },
           '@page': {
             size: 'A4 portrait',

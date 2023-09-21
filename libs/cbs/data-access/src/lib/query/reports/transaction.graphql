@@ -518,3 +518,36 @@ query getAdjustedLedgerReport($data: AdjustedLedgerReportInput!) {
     }
   }
 }
+
+query getLedgerBalanceReport($data: LedgerBalanceReportInput!) {
+  report {
+    transactionReport {
+      financial {
+        ledgerBalanceReport(data: $data) {
+          data {
+            branchId
+            branchName
+            ledgerId
+            ledgerName
+            openingBalance {
+              amount
+              amountType
+            }
+            dr
+            cr
+            adjustedDr
+            adjustedCr
+            balance {
+              amount
+              amountType
+            }
+            settledBalance {
+              amount
+              amountType
+            }
+          }
+        }
+      }
+    }
+  }
+}

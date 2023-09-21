@@ -422,7 +422,8 @@ export const SettingsDepositProductsAdd = () => {
                   <GridItems />
                 </Box>
 
-                {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <BalanceLimit />}
+                {depositNature !== NatureOfDepositProduct.TermSavingOrFd &&
+                  !router?.asPath?.includes('/edit') && <BalanceLimit />}
 
                 {(depositNature === NatureOfDepositProduct.RecurringSaving ||
                   depositNature === NatureOfDepositProduct.Saving) && <AllowedTransaction />}
@@ -438,23 +439,24 @@ export const SettingsDepositProductsAdd = () => {
                 )}
 
                 {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                  (depositNature === NatureOfDepositProduct.Saving && isMandatorySaving)) && (
-                  <>
-                    {/* <DepositAmount /> */}
-                    <Penalty />
-                    <Rebate />
-                  </>
-                )}
+                  (depositNature === NatureOfDepositProduct.Saving && isMandatorySaving)) &&
+                  !router?.asPath?.includes('/edit') && (
+                    <>
+                      {/* <DepositAmount /> */}
+                      <Penalty />
+                      <Rebate />
+                    </>
+                  )}
 
                 {depositNature === NatureOfDepositProduct.TermSavingOrFd && <FixedDepositAmount />}
 
                 {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                  depositNature === NatureOfDepositProduct.TermSavingOrFd) && <Tenure />}
+                  depositNature === NatureOfDepositProduct.TermSavingOrFd) &&
+                  !router?.asPath?.includes('/edit') && <Tenure />}
 
                 {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                  depositNature === NatureOfDepositProduct.TermSavingOrFd) && (
-                  <DefaultAccountName />
-                )}
+                  depositNature === NatureOfDepositProduct.TermSavingOrFd) &&
+                  !router?.asPath?.includes('/edit') && <DefaultAccountName />}
 
                 {depositNature !== NatureOfDepositProduct.Current && (
                   <>
@@ -463,8 +465,8 @@ export const SettingsDepositProductsAdd = () => {
                   </>
                 )}
 
-                <AccountOpenServices />
-                <AccountCloseServices />
+                {!router?.asPath?.includes('/edit') && <AccountOpenServices />}
+                {!router?.asPath?.includes('/edit') && <AccountCloseServices />}
 
                 <Questions />
 
@@ -474,11 +476,13 @@ export const SettingsDepositProductsAdd = () => {
                   depositNature === NatureOfDepositProduct.Saving) && <DormantSetup />}
 
                 {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                  depositNature === NatureOfDepositProduct.TermSavingOrFd) && <PrematuredPenalty />}
+                  depositNature === NatureOfDepositProduct.TermSavingOrFd) &&
+                  !router?.asPath?.includes('/edit') && <PrematuredPenalty />}
 
                 {(depositNature === NatureOfDepositProduct.RecurringSaving ||
                   depositNature === NatureOfDepositProduct.TermSavingOrFd ||
-                  depositNature === NatureOfDepositProduct?.Saving) && <WithdrawPenalty />}
+                  depositNature === NatureOfDepositProduct?.Saving) &&
+                  !router?.asPath?.includes('/edit') && <WithdrawPenalty />}
 
                 {(typesOfMember?.includes(KymMemberTypesEnum.Individual) ||
                   typesOfMember?.includes(KymMemberTypesEnum.Institution) ||

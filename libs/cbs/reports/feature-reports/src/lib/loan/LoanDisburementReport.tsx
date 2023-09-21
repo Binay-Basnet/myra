@@ -81,11 +81,11 @@ export const LoanDisburesementReport = () => {
           paths={[
             {
               label: 'Loan Reports',
-              link: '/reports/cbs/loan',
+              link: '/cbs/reports/cbs-reports/loan',
             },
             {
               label: ReportEnum.LOAN_DISBURSEMENT_REPORT,
-              link: '/reports/cbs/loan/disbursement/new',
+              link: '/cbs/reports/cbs-reports/loan/disbursement/new',
             },
           ]}
         />

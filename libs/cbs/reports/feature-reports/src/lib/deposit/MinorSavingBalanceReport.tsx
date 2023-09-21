@@ -73,10 +73,10 @@ export const SavingBalanceMinorReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Report Group', link: '/reports/cbs/savings' },
+            { label: 'Report Group', link: '/cbs/reports/cbs-reports/savings' },
             {
               label: 'Minor Saving Balance Report',
-              link: '/reports/cbs/others/saving-balance-minor/new',
+              link: '/cbs/reports/cbs-reports/others/saving-balance-minor/new',
             },
           ]}
         />

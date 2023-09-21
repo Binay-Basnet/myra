@@ -52,8 +52,11 @@ export const AccountOpenReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Saving Reports', link: '/reports/cbs/savings' },
-            { label: 'Opened Account Report', link: '/reports/cbs/savings/account-opening/new' },
+            { label: 'Saving Reports', link: '/cbs/reports/cbs-reports/savings' },
+            {
+              label: 'Opened Account Report',
+              link: '/cbs/reports/cbs-reports/savings/account-opening/new',
+            },
           ]}
         />
         <Report.Inputs>

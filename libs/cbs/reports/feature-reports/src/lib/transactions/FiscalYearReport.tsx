@@ -137,13 +137,15 @@ export const FiscalYearReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/transactions'
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'Fiscal Year and Adjustment Trial Balance',
               link: isCbs
-                ? '/reports/cbs/transactions/fiscal-year/new'
-                : '/accounting/reports/transactions/fiscal-year/new',
+                ? '/cbs/reports/cbs-reports/transactions/fiscal-year/new'
+                : '/accounting/reports/accounting-reports/transactions/fiscal-year/new',
             },
           ]}
         />
@@ -264,7 +266,7 @@ const FiscalYearCOATable = ({ data, type, total, coaRedirect = true }: ICOATable
                   color="primary.500"
                   onClick={() =>
                     window.open(
-                      `/reports/cbs/others/adjusted-ledger/new?id=${
+                      `/cbs/reports/cbs-reports/others/adjusted-ledger/new?id=${
                         props.row?.original?.ledgerId
                       }&branch=${JSON.stringify(branchIDs)}&dateFromen=${
                         datePeriod?.from?.en

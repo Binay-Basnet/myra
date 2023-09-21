@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import {
@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Alert, asyncToast, Box, Button, FormSection, Loader, Text } from '@myra-ui';
+import { Alert, asyncToast, Box, Button, Loader, Text } from '@myra-ui';
 
 import {
   FundManagementInput,
@@ -23,7 +23,7 @@ import {
 } from '@coop/cbs/data-access';
 import { findQueryError, getQueryError, QueryError, ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
-import { debitCreditConverter, featureCode } from '@coop/shared/utils';
+import { featureCode } from '@coop/shared/utils';
 
 import { CustomFundManagementInput } from './type';
 import {
@@ -35,6 +35,7 @@ import {
   StaffBonusFund,
   TransferPLtoHO,
 } from '../components';
+import { useFundManagement } from '../hooks';
 
 export const NewFundManagement = () => {
   const router = useRouter();
@@ -49,7 +50,9 @@ export const NewFundManagement = () => {
 
   const methods = useForm<CustomFundManagementInput>();
 
-  const { watch, getValues, reset } = methods;
+  const { watch, getValues } = methods;
+
+  const { remainingProfitAfterTax, remainingProfitAfterOther } = useFundManagement({ methods });
 
   const otherFunds = watch('otherFunds');
 
@@ -59,104 +62,6 @@ export const NewFundManagement = () => {
     { id: id as string },
     { enabled: !!id }
   );
-
-  const { data: currentFundAmountHOData } = useGetCurrentFundAmountQuery({ forHeadOffice: true });
-
-  const currentFundAmount = currentFundAmountHOData?.profitToFundManagement?.getCurrentFundAmount;
-
-  useEffect(() => {
-    if (editData?.profitToFundManagement?.get?.record) {
-      const formData = editData?.profitToFundManagement?.get?.record;
-
-      const grossProfit =
-        formData?.state === 'COMPLETED'
-          ? Number(formData?.grossProfit || 0)
-          : Number(currentFundAmount?.amount?.amount || 0);
-
-      const staffBonusAmount = Number(formData?.staffBonus?.amount || 0);
-
-      const incomeTaxAmount = Number(formData?.incometax?.amount || 0);
-
-      const netProfit = (grossProfit - staffBonusAmount - incomeTaxAmount).toFixed(2);
-
-      const generalReserveFund =
-        formData?.fundDistribution?.filter((fund) => fund?.tableIndex === 0) ?? [];
-
-      const distributionFund =
-        formData?.fundDistribution?.filter((fund) => fund?.tableIndex === 1) ?? [];
-
-      const otherFundsTable =
-        formData?.fundDistribution?.filter((fund) => fund?.tableIndex === 2) ?? [];
-
-      reset({
-        // ...methods.getValues(),
-        grossProfit,
-        grossProfitCoa:
-          formData?.state === 'COMPLETED'
-            ? (formData?.grossProfitCoa as string)
-            : `${currentFundAmount?.coaHead} - ${currentFundAmount?.coaHeadName}`,
-        grossProfitDr:
-          formData?.state === 'COMPLETED'
-            ? debitCreditConverter(grossProfit, 'CR')
-            : debitCreditConverter(
-                currentFundAmount?.amount?.amount as string,
-                currentFundAmount?.amount?.amountType as string
-              ),
-        staffBonus: {
-          coaHead: {
-            label: formData?.staffBonus?.accountName,
-            value: formData?.staffBonus?.accountCode,
-          } as unknown as string,
-          percent: formData?.staffBonus?.percent,
-          amount: formData?.staffBonus?.amount as string,
-        },
-        incomeTax: {
-          coaHead: {
-            label: formData?.incometax?.accountName,
-            value: formData?.incometax?.accountCode,
-          } as unknown as string,
-          percent: formData?.incometax?.percent,
-          amount: formData?.incometax?.amount as string,
-        },
-        generalReserveFund: generalReserveFund?.map((g) => ({
-          coaHead: { label: g?.accountName, value: g?.accountCode } as unknown as string,
-          percent: String(g?.percent),
-          amount: g?.amount as string,
-        })),
-        distributionTable: distributionFund?.map((g) => ({
-          coaHead: { label: g?.accountName, value: g?.accountCode } as unknown as string,
-          percent: String(g?.percent),
-          amount: g?.amount as string,
-        })),
-        otherFunds: otherFundsTable?.map((g) => ({
-          coaHead: { label: g?.accountName, value: g?.accountCode } as unknown as string,
-          percent: String(g?.percent),
-          amount: g?.amount as string,
-        })),
-        netProfit,
-      });
-    }
-  }, [editData, currentFundAmount]);
-
-  const isSubmitDisabled = useMemo(() => {
-    if (
-      router?.asPath?.includes('/view') &&
-      editData?.profitToFundManagement?.get?.record?.state === 'COMPLETED'
-    ) {
-      return true;
-    }
-
-    if (!otherFunds) {
-      return true;
-    }
-
-    const totalPercent = otherFunds?.reduce((sum, fund) => {
-      sum += Number(fund?.percent ?? 0);
-      return sum;
-    }, 0);
-
-    return totalPercent !== 100;
-  }, [otherFunds, editData, router?.asPath]);
 
   const { mutateAsync: addProfitToFundManagement } = useAddProfitToFundManagementDataMutation();
 
@@ -186,19 +91,19 @@ export const NewFundManagement = () => {
 
       others: [
         ...(values?.generalReserveFund?.map((gen) => ({
-          coaHead: (gen?.coaHead as unknown as { value: string })?.value,
+          coaHead: gen?.coaHead,
           amount: gen?.amount,
           percent: gen?.percent,
           tableIndex: 0,
         })) ?? []),
         ...(values?.distributionTable?.map((dis) => ({
-          coaHead: (dis?.coaHead as unknown as { value: string })?.value,
+          coaHead: dis?.coaHead,
           amount: dis?.amount,
           percent: dis?.percent,
           tableIndex: 1,
         })) ?? []),
         ...(values?.otherFunds?.map((oth) => ({
-          coaHead: (oth?.coaHead as unknown as { value: string })?.value,
+          coaHead: oth?.coaHead,
           amount: oth?.amount,
           percent: oth?.percent,
           tableIndex: 2,
@@ -256,7 +161,16 @@ export const NewFundManagement = () => {
       : '';
   }, [branchFundAmount]);
 
-  const netProfitField = watch('netProfit');
+  const isSubmitDisabled = useMemo(() => {
+    if (
+      router?.asPath?.includes('/view') &&
+      editData?.profitToFundManagement?.get?.record?.state === 'COMPLETED'
+    ) {
+      return true;
+    }
+
+    return remainingProfitAfterOther !== 0;
+  }, [otherFunds, editData, router?.asPath, remainingProfitAfterOther]);
 
   return (
     <>
@@ -284,40 +198,17 @@ export const NewFundManagement = () => {
 
                 <IncomeTax />
 
-                {Number(netProfitField) ? (
-                  <FormSection
-                    header="Appropriation of Profit (Profit Distribution)"
-                    divider={false}
-                  >
+                {Number(remainingProfitAfterTax) ? (
+                  <>
                     <ParticularTable />
 
                     <DistributionTable />
 
                     <OtherFundDistributionTable />
-                  </FormSection>
+                  </>
                 ) : null}
               </>
             )}
-
-            {/* {currentFundError ? (
-              <Box p="s20">
-                <Alert status="error" title={currentFundError as string} hideCloseIcon />
-              </Box>
-            ) : Number(currentFundAmount?.amount?.amount) === 0 ? (
-              <TransferPLtoHO />
-            ) : (
-              <>
-                <BasicFundManagement />
-
-                <FormSection header="Appropriation of Profit (Profit Distribution)" divider={false}>
-                  <ParticularTable />
-
-                  <DistributionTable />
-
-                  <OtherFundDistributionTable />
-                </FormSection>
-              </>
-            )} */}
           </FormLayout.Form>
         </FormLayout.Content>
 

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { Box, Column, Scrollable, Table, Text } from '@myra-ui';
 
-import { ObjState, useGetSavingsAccountListQuery } from '@coop/cbs/data-access';
+import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
@@ -13,14 +13,14 @@ export const DormantAccountListPage = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data, isLoading } = useGetSavingsAccountListQuery({
+  const { data, isLoading } = useGetAccountTableListQuery({
     paginate: {
       ...getPaginationQuery(),
 
       order: null,
     },
     filter: {
-      query: id as string,
+      // query: id as string,
       orConditions: [
         {
           andConditions: [
@@ -29,15 +29,17 @@ export const DormantAccountListPage = () => {
               comparator: 'EqualTo',
               value: ObjState.Dormant,
             },
+            {
+              column: 'productId',
+              comparator: 'EqualTo',
+              value: id,
+            },
           ],
         },
       ],
     },
   });
-  const rowData = useMemo(
-    () => data?.settings?.general?.depositProduct?.getAccountlist?.edges ?? [],
-    [data]
-  );
+  const rowData = useMemo(() => data?.account?.list?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -114,8 +116,8 @@ export const DormantAccountListPage = () => {
             data={rowData}
             columns={columns}
             pagination={{
-              total: data?.settings?.general?.depositProduct?.getAccountlist?.totalCount ?? 'Many',
-              pageInfo: data?.settings?.general?.depositProduct?.getAccountlist?.pageInfo,
+              total: data?.account?.list?.totalCount ?? 'Many',
+              pageInfo: data?.account?.list?.pageInfo,
             }}
           />
         </Box>

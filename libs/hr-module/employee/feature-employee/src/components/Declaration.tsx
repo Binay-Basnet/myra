@@ -3,7 +3,7 @@ import { FormSection } from '@myra-ui';
 import { FormFileInput } from '@coop/shared/form';
 
 export const Declarations = () => (
-  <FormSection id="Documents" templateColumns={2}>
+  <FormSection id="Documents Declarations" templateColumns={2}>
     <FormFileInput name="documents.0.identifiers" label="Passport Size Photo" />
     <FormFileInput name="documents.1.identifiers" label="Signature" />
     <FormFileInput name="documents.2.identifiers" label="CitizenshipPhoto" />

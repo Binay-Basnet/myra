@@ -81,13 +81,15 @@ export const BankGLStatementReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/transactions'
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'Bank GL Statement',
               link: isCbs
-                ? '/reports/cbs/transactions/bank-gl-statement/new'
-                : '/accounting/reports/transactions/bank-gl-statement/new',
+                ? '/cbs/reports/cbs-reports/transactions/bank-gl-statement/new'
+                : '/accounting/reports/accounting-reports/transactions/bank-gl-statement/new',
             },
           ]}
         />

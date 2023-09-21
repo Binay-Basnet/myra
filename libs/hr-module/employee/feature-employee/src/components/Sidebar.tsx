@@ -5,20 +5,16 @@ import { Box, Collapse, Text } from '@chakra-ui/react';
 const PersonalInformation = [
   'Personal Information',
   'Contact Details',
-  'Education Information',
   'Permanent Address',
-  'Temprorary Address',
+  'Temporary Address',
+  'Family Details',
+  'Educational Information',
+  'Identification Details',
 ];
 
-const ProfessionalDetails: string[] = [
-  'Work Information',
-  'Work Experience',
-  'Joining Details',
-  'Salary Info',
-  // 'Separation Information',
-];
-const configuration: string[] = ['Approvers', 'Employee Health Insurance'];
-const Decleration: string[] = ['Documents'];
+const ProfessionalDetails: string[] = ['Work Information', 'Work Experience', 'Other Details'];
+const Setups: string[] = ['Payroll Setup', 'Other Schemes', 'Configurations'];
+const Decleration: string[] = ['Documents Declarations'];
 
 interface AccordianProps {
   // formStatus?: any | null;
@@ -126,14 +122,14 @@ export const SidebarEmployeeAddForm = (props: AccordianProps) => {
         minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="Semibold">
-          3. Configurations
+          3. Setups
         </Text>
         {!isOpenConfigurations ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenConfigurations}>
         <Box display="flex" flexDirection="column" mb="s16">
-          {configuration.map((item) => (
+          {Setups.map((item) => (
             <Box
               key={`${item}${Math.random()}`}
               display="flex"
