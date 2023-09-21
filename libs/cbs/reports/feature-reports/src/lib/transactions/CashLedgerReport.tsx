@@ -84,13 +84,13 @@ export const CashLedgersReport = () => {
               label: 'Transaction Reports',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions'
-                : '/accounting/reports/transactions',
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'Cash Ledger',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions/cash-ledger/new'
-                : '/accounting/reports/transactions/cash-ledger/new',
+                : '/accounting/reports/accounting-reports/transactions/cash-ledger/new',
             },
           ]}
         />

@@ -75,13 +75,13 @@ export const TellerReport = () => {
               label: 'Transaction Reports',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions'
-                : '/accounting/reports/transactions',
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'Teller Report',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions/teller/new'
-                : '/accounting/reports/transactions/teller/new',
+                : '/accounting/reports/accounting-reports/transactions/teller/new',
             },
           ]}
         />

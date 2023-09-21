@@ -111,13 +111,13 @@ export const DayBookReport = () => {
               label: 'Transaction Reports',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions'
-                : '/accounting/reports/transactions',
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'Day Book Report',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions/day-book/new'
-                : '/accounting/reports/transactions/day-book/new',
+                : '/accounting/reports/accounting-reports/transactions/day-book/new',
             },
           ]}
         />

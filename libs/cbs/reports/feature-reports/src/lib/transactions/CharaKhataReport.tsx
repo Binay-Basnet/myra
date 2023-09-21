@@ -149,13 +149,13 @@ export const CharKhataReport = () => {
               label: 'Transaction Reports',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions'
-                : '/accounting/reports/transactions',
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'CharKhata Ledger Report',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions/charkhata/new'
-                : '/accounting/reports/transactions/charkhata/new',
+                : '/accounting/reports/accounting-reports/transactions/charkhata/new',
             },
           ]}
         />

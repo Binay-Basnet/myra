@@ -376,7 +376,7 @@ export const ROUTES = {
   ACCOUNTING_INVESTMENT_ACCOUNT_TRANSACTIONS_ADD:
     '/accounting/investment/investment-transaction/add',
 
-  ACCOUNTING_REPORTS: '/accounting/reports/accounting-reports/accounting-reports/transactions',
+  ACCOUNTING_REPORTS: '/accounting/reports/accounting-reports/transactions',
 
   INVENTORY_REGISTER: '/inventory/inventory/register/list',
   INVENTORY_INVENTORY_ADJUSTMENT: '/inventory/inventory/adjustments/list',

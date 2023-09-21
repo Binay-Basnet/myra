@@ -81,13 +81,13 @@ export const ProfitAndLossReport = () => {
               label: 'Transaction Reports',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions'
-                : '/accounting/reports/transactions',
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'Profit and Loss',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions/profile-and-loss/new'
-                : '/accounting/reports/transactions/profit-and-loss/new',
+                : '/accounting/reports/accounting-reports/transactions/profit-and-loss/new',
             },
           ]}
         />

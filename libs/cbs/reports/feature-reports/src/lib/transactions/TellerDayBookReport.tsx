@@ -123,13 +123,13 @@ export const TellerDayBookReport = () => {
               label: 'Transaction Reports',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions'
-                : '/accounting/reports/transactions',
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'Teller Day Book Report',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions/teller-day-book/new'
-                : '/accounting/reports/transactions/teller-day-book/new',
+                : '/accounting/reports/accounting-reports/transactions/teller-day-book/new',
             },
           ]}
         />
