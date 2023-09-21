@@ -1402,6 +1402,7 @@ export const AllLoanType = {
 
 export type AllLoanType = typeof AllLoanType[keyof typeof AllLoanType];
 export type AllTransactionResult = {
+  accountCloseData?: Maybe<AccountCloseSuccessCard>;
   amount?: Maybe<Scalars['String']>;
   branch?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
