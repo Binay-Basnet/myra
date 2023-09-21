@@ -729,7 +729,10 @@ export const CbsAccountClose = () => {
                 let temp: Record<string, string> = {};
 
                 if (result?.destAccName) {
-                  temp['Destination Account Name'] = String(result?.destAccName);
+                  temp = {
+                    'Destination Account Name': String(result?.destAccName),
+                    'Destination Account Number': String(result?.destAccId),
+                  };
                 }
 
                 if (result?.bankName) {

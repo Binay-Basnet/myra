@@ -233,7 +233,7 @@ export const REPORTS: ReportType = {
       id: '3.4',
       report: Report.SHARE_BALANCE_REPORT,
       link: 'balance',
-      component: <Reports.ShareTransactionsReport />,
+      component: <Reports.ShareBalanceReport />,
       acl: 'REPORTS_SHARE_SHARE_BALANCE',
     },
   ],
