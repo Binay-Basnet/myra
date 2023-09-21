@@ -139,13 +139,13 @@ export const FiscalYearReport = () => {
               label: 'Transaction Reports',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions'
-                : '/accounting/reports/transactions',
+                : '/accounting/reports/accounting-reports/transactions',
             },
             {
               label: 'Fiscal Year and Adjustment Trial Balance',
               link: isCbs
                 ? '/cbs/reports/cbs-reports/transactions/fiscal-year/new'
-                : '/accounting/reports/transactions/fiscal-year/new',
+                : '/accounting/reports/accounting-reports/transactions/fiscal-year/new',
             },
           ]}
         />

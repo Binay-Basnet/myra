@@ -51,13 +51,14 @@ const ROUTESOBJTRANS: Partial<Record<AllTransactionType, string>> = {
   [AllTransactionType.Transfer]: 'ACCOUNT-TRANSFER',
   [AllTransactionType.LoanRepayment]: 'REPAYMENTS',
   [AllTransactionType.JournalVoucher]: 'JOURNAL_VOUCHER',
+  [AllTransactionType.LoanDisbursment]: 'LOAN_DISBURSEMENT',
+  [AllTransactionType.AccountClose]: 'ACCOUNT_CLOSE',
 };
 
 const objKeys = Object.keys(ROUTESOBJTRANS);
 const DepositDetailsPage = () => {
   const [isVoucherPrintable, setIsVoucherPrintable] = useState(false);
   const router = useRouter();
-  const txnTypefromRouter = router.query['txnType'];
 
   const { id } = router.query;
 
@@ -76,6 +77,13 @@ const DepositDetailsPage = () => {
   );
 
   const allTransactionsData = allTransactionsDetails?.transaction?.viewTransactionDetail?.data;
+  const loanDisbursmentPrintData =
+    allTransactionsDetails?.transaction?.viewTransactionDetail?.data?.loanDisbursementData;
+
+  const accountcloseprintData =
+    allTransactionsDetails?.transaction?.viewTransactionDetail?.data?.accountCloseData;
+
+  const txnTypefromRouter = allTransactionsData?.txnType;
 
   const isCurrentFiscalYear = checkDateInFiscalYear({
     date: new Date(allTransactionsData?.transactionDate.en),
@@ -112,10 +120,7 @@ const DepositDetailsPage = () => {
     loanRepaymentDetailData,
   } = useTransactionDetailHooks();
 
-  const { data } = useGetJournalVoucherDetailQuery(
-    { entryId: id as string },
-    { enabled: !!id && router?.asPath?.includes(AllTransactionType?.JournalVoucher) }
-  );
+  const { data } = useGetJournalVoucherDetailQuery({ entryId: id as string }, { enabled: !!id });
 
   const voucherData = data?.accounting?.journalVoucher?.viewJournalVoucherDetail?.data;
 
@@ -192,7 +197,10 @@ const DepositDetailsPage = () => {
 
     let tempGlTotal;
 
-    if (router?.asPath?.includes(AllTransactionType?.Deposit)) {
+    if (
+      router?.asPath?.includes(AllTransactionType?.Deposit) ||
+      txnTypefromRouter?.includes(AllTransactionType?.Deposit)
+    ) {
       tempAccountName = depositDetailData?.accountName as string;
 
       tempAccountId = depositDetailData?.accountId as string;
@@ -232,7 +240,10 @@ const DepositDetailsPage = () => {
       };
     }
 
-    if (router?.asPath?.includes(AllTransactionType?.Withdraw)) {
+    if (
+      router?.asPath?.includes(AllTransactionType?.Withdraw) ||
+      txnTypefromRouter?.includes(AllTransactionType?.Withdraw)
+    ) {
       tempAccountName = depositDetailData?.accountName as string;
 
       tempAccountId = depositDetailData?.accountId as string;
@@ -280,7 +291,10 @@ const DepositDetailsPage = () => {
       };
     }
 
-    if (router?.asPath?.includes(AllTransactionType?.Transfer)) {
+    if (
+      router?.asPath?.includes(AllTransactionType?.Transfer) ||
+      txnTypefromRouter?.includes(AllTransactionType?.Transfer)
+    ) {
       tempAccountName = accountTransferDetailData?.sourceAccount?.accountName as string;
 
       tempAccountId = accountTransferDetailData?.sourceAccount?.id as string;
@@ -332,7 +346,8 @@ const DepositDetailsPage = () => {
 
     if (
       router?.asPath?.includes(AllTransactionType?.LoanRepayment) ||
-      router?.asPath?.includes('/loan-payment/')
+      router?.asPath?.includes('/loan-payment/') ||
+      txnTypefromRouter?.includes(AllTransactionType?.LoanRepayment)
     ) {
       tempAccountName = loanRepaymentDetailData?.loanAccountName as string;
 
@@ -377,8 +392,127 @@ const DepositDetailsPage = () => {
 
       tempDublicate = true;
     }
+    if (
+      router?.asPath?.includes(AllTransactionType?.LoanDisbursment) ||
+      txnTypefromRouter?.includes(AllTransactionType?.LoanDisbursment)
+    ) {
+      tempAccountName = loanDisbursmentPrintData?.loanAccountName as string;
 
-    if (router?.asPath?.includes(AllTransactionType?.JournalVoucher)) {
+      tempAccountId = loanDisbursmentPrintData?.loanAccountId as string;
+      let tempObj: Record<string, string> = {};
+      if (loanDisbursmentPrintData?.destAccName) {
+        tempObj['Destination Account Name'] = String(loanDisbursmentPrintData?.destAccName);
+      }
+
+      if (loanDisbursmentPrintData?.bankName) {
+        tempObj = {
+          'Bank Name': String(loanDisbursmentPrintData?.bankName),
+          'Cheque No': String(loanDisbursmentPrintData?.bankChequeNo),
+        };
+      }
+      tempDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {allTransactionsData?.id}
+          </Text>
+        ),
+        Date: localizedDate(loanDisbursmentPrintData?.disbursedDate),
+        'Disbursed Amount': amountConverter(loanDisbursmentPrintData?.disbursedAmount || 0),
+
+        'Payment Mode': loanDisbursmentPrintData?.paymentMode,
+        ...tempObj,
+      };
+      tempDublicate = true;
+      tempTotal = loanDisbursmentPrintData?.disbursedAmount as string;
+
+      tempGLTransactions = allTransactionsData?.glTransaction;
+
+      tempGlTotal = allTransactionsData?.totalDebit;
+
+      tempVoucherDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="SemiBold">
+            {allTransactionsData?.id}
+          </Text>
+        ),
+        'Transaction Date': localizedDate(loanDisbursmentPrintData?.disbursedDate),
+
+        'Disbursed Amount': loanDisbursmentPrintData?.disbursedAmount,
+      };
+    }
+
+    if (
+      router?.asPath?.includes(AllTransactionType?.AccountClose) ||
+      txnTypefromRouter?.includes(AllTransactionType?.AccountClose)
+    ) {
+      tempAccountName = accountcloseprintData?.accName as string;
+
+      tempAccountId = accountcloseprintData?.accId as string;
+      let tempObj: Record<string, string> = {};
+      if (accountcloseprintData?.destAccName) {
+        tempObj['Destination Account Name'] = String(accountcloseprintData?.destAccName);
+      }
+
+      if (accountcloseprintData?.bankName) {
+        tempObj = {
+          'Bank Name': String(accountcloseprintData?.bankName),
+          'Cheque No': String(accountcloseprintData?.bankChequeNo),
+        };
+      }
+
+      const principal =
+        Number(accountcloseprintData?.amount || 0) +
+        Number(accountcloseprintData?.charges || 0) +
+        Number(accountcloseprintData?.tax || 0) -
+        Number(accountcloseprintData?.interest);
+
+      tempDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {allTransactionsData?.id}
+          </Text>
+        ),
+
+        'Account Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {accountcloseprintData?.accId}
+          </Text>
+        ),
+        'Account Closed Date': localizedDate(accountcloseprintData?.accCloseDate),
+        'Reason For Closing': accountcloseprintData?.closeReason,
+        'Account Name': accountcloseprintData?.accName,
+        Principal: amountConverter(principal),
+        'Total Interest': accountcloseprintData?.interest,
+
+        Tax: amountConverter(accountcloseprintData?.tax || '0'),
+        Charges: accountcloseprintData?.charges,
+
+        'Payment Mode': accountcloseprintData?.paymentMode,
+
+        ...tempObj,
+      };
+      tempDublicate = true;
+      tempTotal = accountcloseprintData?.amount as string;
+
+      tempGLTransactions = allTransactionsData?.glTransaction;
+
+      tempGlTotal = allTransactionsData?.totalDebit;
+
+      tempVoucherDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="SemiBold">
+            {allTransactionsData?.id}
+          </Text>
+        ),
+        'Transaction Date': localizedDate(accountcloseprintData?.accCloseDate),
+
+        Amount: amountConverter(accountcloseprintData?.amount || '0'),
+      };
+    }
+    if (
+      router?.asPath?.includes(AllTransactionType?.JournalVoucher) ||
+      txnTypefromRouter?.includes(AllTransactionType?.JournalVoucher)
+    ) {
       tempTotal = voucherData?.amount as string;
 
       tempShowSignatures = true;
