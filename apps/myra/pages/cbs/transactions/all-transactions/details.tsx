@@ -443,7 +443,7 @@ const DepositDetailsPage = () => {
 
     if (
       router?.asPath?.includes(AllTransactionType?.AccountClose) ||
-      txnTypefromRouter?.includes(AllTransactionType?.AccountClose)
+      txnTypefromRouter === AllTransactionType?.AccountClose
     ) {
       tempAccountName = accountcloseprintData?.accName as string;
 
@@ -546,6 +546,7 @@ const DepositDetailsPage = () => {
     loanRepaymentDetailData,
     voucherData,
     router?.asPath,
+    txnTypefromRouter,
   ]);
 
   const handlePrint = useReactToPrint({
