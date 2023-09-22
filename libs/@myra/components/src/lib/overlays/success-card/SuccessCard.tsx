@@ -527,23 +527,18 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
             w="100%"
             bottom="100px"
             left={0}
-            display="grid"
-            gridTemplateColumns="repeat(3, 1fr)"
-            gap="s32"
+            pt={dublicate ? 's40' : '0'}
+            display="flex"
+            justifyContent="space-between"
             px="s32"
           >
             <Box display="flex" flexDir="column" alignItems="center" gap="s12">
               <Divider borderTop="1px dotted black" />
               <Text fontSize="s2" color="gray.800" fontWeight="500">
-                Prepared By
+                {`Prepared By [${user?.firstName?.en}]`}
               </Text>
             </Box>
-            <Box display="flex" flexDir="column" alignItems="center" gap="s12">
-              <Divider borderTop="1px dotted black" />
-              <Text fontSize="s2" color="gray.800" fontWeight="500">
-                Verified By
-              </Text>
-            </Box>
+
             <Box display="flex" flexDir="column" alignItems="center" gap="s12">
               <Divider borderTop="1px dotted black" />
               <Text fontSize="s2" color="gray.800" fontWeight="500">
@@ -562,6 +557,15 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
             bg="white"
             p={dublicate ? 's4' : 's32'}
             pt="s8"
+            sx={{
+              '@media print': {
+                pageBreakInside: 'avoid',
+              },
+              '@page': {
+                size: 'A4 portrait',
+                margin: '0.1in',
+              },
+            }}
             flexDir="column"
             gap={dublicate ? 's2' : 's8'}
           >
@@ -753,6 +757,37 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                 </Box>
               )}
             </Box>
+            {showSignatures && (
+              <Box
+                // position="fixed"
+                w="100%"
+                bottom="100px"
+                pt="s12"
+                left={0}
+                display="flex"
+                justifyContent="space-between"
+                px="s32"
+              >
+                <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+                  <Divider borderTop="1px dotted black" />
+                  <Text fontSize="s2" color="gray.800" fontWeight="500">
+                    {`Prepared By [${user?.firstName?.en}]`}
+                  </Text>
+                </Box>
+                {/* <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+              <Divider borderTop="1px dotted black" />
+              <Text fontSize="s2" color="gray.800" fontWeight="500">
+                Verified By
+              </Text>
+            </Box> */}
+                <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+                  <Divider borderTop="1px dotted black" />
+                  <Text fontSize="s2" color="gray.800" fontWeight="500">
+                    Approved By
+                  </Text>
+                </Box>
+              </Box>
+            )}
           </Box>
         )}
       </Box>

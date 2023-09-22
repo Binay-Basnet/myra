@@ -4775,16 +4775,6 @@ export type CurrentFundResult = {
   error?: Maybe<QueryError>;
 };
 
-export type CurrentMonthUpdateSalaryStructureWithError = {
-  data?: Maybe<CurrentMontheUpdatedSalaryStructure>;
-  error?: Maybe<QueryError>;
-};
-
-export type CurrentMontheUpdatedSalaryStructure = {
-  deductions?: Maybe<Array<Maybe<EarningsAndDeductionsType>>>;
-  earnings?: Maybe<Array<Maybe<EarningsAndDeductionsType>>>;
-};
-
 export type CustomFormListQueryResult = {
   data?: Maybe<Array<Maybe<FormElement>>>;
   error?: Maybe<QueryError>;
@@ -6714,16 +6704,6 @@ export const EarningFrequencyEnum = {
 } as const;
 
 export type EarningFrequencyEnum = typeof EarningFrequencyEnum[keyof typeof EarningFrequencyEnum];
-export type EarningsAndDeductionsInput = {
-  amount?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['ID']>;
-};
-
-export type EarningsAndDeductionsType = {
-  amount?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['ID']>;
-};
-
 export type EbankingRegistrationReportResult = {
   data?: Maybe<Array<Maybe<EbankingReportResult>>>;
   error?: Maybe<QueryError>;
@@ -9691,7 +9671,6 @@ export type HrMutation = {
 
 export type HrPayrollMutation = {
   payrollRun: HrPayrollPayrollRunMutation;
-  salStrucAdjustRevision: HrPayrollSalStructureAdjustmentRevisionMutation;
   salaryStructureAssignment: HrPayrollSalaryStructureAssignmentMutation;
 };
 
@@ -9738,7 +9717,6 @@ export type HrPayrollPayrollRunQueryListSalarySlipArgs = {
 
 export type HrPayrollQuery = {
   payrollRun: HrPayrollPayrollRunQuery;
-  salStrucAdjustRevision: HrPayrollSalaryStructureAssignmentQuery;
   salaryStructureAssignment: HrPayrollSalaryStructureAssignmentQuery;
 };
 
@@ -10082,25 +10060,6 @@ export type HrEmployeeWorkExperienceType = {
   designation?: Maybe<Scalars['String']>;
   durationInYrs?: Maybe<Scalars['Int']>;
 };
-
-export type HrPayrollSalStructureAdjustmentRevisionMutation = {
-  upsertSalAdjustmentRevision: SalStructureAdjustmentRevisionReturn;
-};
-
-export type HrPayrollSalStructureAdjustmentRevisionMutationUpsertSalAdjustmentRevisionArgs = {
-  id?: InputMaybe<Scalars['ID']>;
-  input?: InputMaybe<SalAdjustmentRevisionInput>;
-};
-
-export type HrPayrollSalStructureAdjustmentRevisionQuery = {
-  getCurrentMonthUpdatedSalaryStructure: CurrentMonthUpdateSalaryStructureWithError;
-};
-
-export type HrPayrollSalStructureAdjustmentRevisionQueryGetCurrentMonthUpdatedSalaryStructureArgs =
-  {
-    actionType?: InputMaybe<SalActionType>;
-    employeeId?: InputMaybe<Scalars['ID']>;
-  };
 
 export type HumanizeAuditLog = {
   extraData?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -17955,6 +17914,7 @@ export type NewBankAccountInput = {
   bankId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   displayName?: InputMaybe<Scalars['String']>;
+  ledgerId?: InputMaybe<Scalars['String']>;
   openingBalance?: InputMaybe<Scalars['String']>;
 };
 
@@ -20067,29 +20027,9 @@ export const SvUpdateType = {
 } as const;
 
 export type SvUpdateType = typeof SvUpdateType[keyof typeof SvUpdateType];
-export const SalActionType = {
-  Adjustment: 'ADJUSTMENT',
-  Revision: 'REVISION',
-} as const;
-
-export type SalActionType = typeof SalActionType[keyof typeof SalActionType];
-export type SalAdjustmentRevisionInput = {
-  actionType?: InputMaybe<SalActionType>;
-  adjustmentOn?: InputMaybe<Scalars['Localized']>;
-  deductions?: InputMaybe<Array<InputMaybe<EarningsAndDeductionsInput>>>;
-  earnings?: InputMaybe<Array<InputMaybe<EarningsAndDeductionsInput>>>;
-  employee?: InputMaybe<Scalars['ID']>;
-  revisionEffectiveFrom?: InputMaybe<Scalars['Localized']>;
-};
-
 export type SalStructAssignOutput = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
-};
-
-export type SalStructureAdjustmentRevisionReturn = {
-  error?: Maybe<MutationError>;
-  id?: Maybe<Scalars['ID']>;
 };
 
 export type SalaryAmount = {
