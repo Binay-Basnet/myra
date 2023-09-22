@@ -35,7 +35,7 @@ export const FormCOALedgerSelect = ({
 
   const selectOptions =
     ledgerListData?.settings?.chartsOfAccount?.coaLedgerList?.edges?.map((head) => ({
-      label: `${head?.node?.accountCode} - ${head?.node?.ledgerName}`,
+      label: head?.node?.ledgerName as string,
       value: head?.node?.accountCode as string,
     })) ?? [];
 
