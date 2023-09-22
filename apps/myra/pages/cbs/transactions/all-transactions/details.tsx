@@ -418,6 +418,7 @@ const DepositDetailsPage = () => {
         ),
         Date: localizedDate(loanDisbursmentPrintData?.disbursedDate),
         'Disbursed Amount': amountConverter(loanDisbursmentPrintData?.disbursedAmount || 0),
+        'Loan Processing Charge': amountConverter(loanDisbursmentPrintData?.processingCharge || 0),
 
         'Payment Mode': loanDisbursmentPrintData?.paymentMode,
         ...tempObj,
