@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
+import { Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetDepositListDataQuery } from '@coop/cbs/data-access';
+import { useGetMrTransactionsListQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
@@ -19,12 +19,12 @@ export const AgentTransactionList = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const { data, isFetching } = useGetDepositListDataQuery({
+  const { data, isFetching } = useGetMrTransactionsListQuery({
     pagination: getPaginationQuery(),
     filter: getFilterQuery(),
   });
 
-  const rowData = useMemo(() => data?.transaction?.listDeposit?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.transaction?.listMrTransaction?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -35,17 +35,13 @@ export const AgentTransactionList = () => {
       },
       {
         header: 'MR Transaction ID',
-        accessorFn: (row) => row?.node?.ID,
+        accessorFn: (row) => row?.node?.agentId,
       },
       {
-        accessorFn: (row) => row?.node?.agentName,
+        accessorFn: (row) => row?.node?.mrName,
         header: 'Market Representative Name',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
-            <Avatar
-              name={props.getValue() as string}
-              src={props?.row?.original?.node?.agentPicUrl ?? ''}
-            />
             <Text
               fontSize="s3"
               textTransform="capitalize"
@@ -56,10 +52,6 @@ export const AgentTransactionList = () => {
             </Text>
           </Box>
         ),
-
-        meta: {
-          width: '60%',
-        },
       },
       {
         id: 'amount',
@@ -106,7 +98,7 @@ export const AgentTransactionList = () => {
 
       <Table
         data={rowData}
-        getRowId={(row) => String(row?.node?.ID)}
+        getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
         rowOnClick={(row) =>
@@ -118,8 +110,8 @@ export const AgentTransactionList = () => {
         }
         noDataTitle="Market Representative Transaction"
         pagination={{
-          total: data?.transaction?.listDeposit?.totalCount ?? 'Many',
-          pageInfo: data?.transaction?.listDeposit?.pageInfo,
+          total: data?.transaction?.listMrTransaction?.totalCount ?? 'Many',
+          pageInfo: data?.transaction?.listMrTransaction?.pageInfo,
         }}
         menu="TRANSACTIONS"
       />

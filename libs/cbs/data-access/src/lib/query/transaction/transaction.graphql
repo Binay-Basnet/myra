@@ -792,3 +792,27 @@ query getDailyBalanceReport($data: DailyBalanceReport!) {
     }
   }
 }
+
+query getMrTransactionsList($filter: Filter, $pagination: Pagination) {
+  transaction {
+    listMrTransaction(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        cursor
+        node {
+          agentId
+          amount
+          date
+          id
+          mrName
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
