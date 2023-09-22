@@ -23230,6 +23230,11 @@ export type UtilityQueryListUtilitiesArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type UtilityTransactionCategory = {
+  Narration?: Maybe<Scalars['String']>;
+  Service?: Maybe<Scalars['String']>;
+};
+
 export type ValidationError = {
   code: Scalars['Int'];
   message: Scalars['InvalidData'];

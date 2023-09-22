@@ -141,7 +141,7 @@ export const ROUTES = {
     '/settings/general/utility-payment/internet',
 
   SETTINGS_GENERAL_AUDIT_LOG: '/settings/monitor/audit-log/list',
-  SETTINGS_EOD_SETUP: '/settings/global/eod/setup',
+  SETTINGS_EOD_SETUP: '/settings/global/eod/configure',
   SETTINGS_GENERAL_BANK: '/settings/global/bank/configure',
 
   SETTINGS_GENERAL_COA: '/settings/global/coa/list',
@@ -410,7 +410,7 @@ export const ROUTES = {
 
   SETTINGS_GENERAL_PRINT_PREFERENCE: '/settings/global/print-preference/withdraw-slip',
 
-  SETTINGS_EOD_HISTORY: '/settings/global/eod/history',
+  SETTINGS_EOD_HISTORY: '/settings/global/eod/list',
 
   SETTINGS_GENERAL_SAVINGS_ORGANIZATION_RATE: '/settings/general/savings/organization-rate',
 
@@ -419,7 +419,7 @@ export const ROUTES = {
   SETTINGS_GENERAL_ORGANIZATION_DETAILS: '/settings/global/organization',
   SETTINGS_GENERAL_ORGANIZATION_EDIT: '/settings/global/organization/edit',
 
-  SETTINGS_EOD_HISTORY_DETAILS: '/settings/global/eod/history/details',
+  SETTINGS_EOD_HISTORY_DETAILS: '/settings/global/eod/list/details',
   SETTINGS_GENERAL_COMMITTEE: '/settings/global/committee/list',
   SETTINGS_GENERAL_COMMITTEE_DETAILS: '/settings/global/committee/details',
 
