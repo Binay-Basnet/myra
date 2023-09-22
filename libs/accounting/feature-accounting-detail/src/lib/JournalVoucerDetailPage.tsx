@@ -24,7 +24,7 @@ export const JournalVoucerDetailPage = () => {
 
   const detailData = {
     id: voucherData?.transactionCode,
-    date: voucherData?.date,
+    dueDate: voucherData?.dueDate,
     reference: voucherData?.reference,
     // note: voucherData?.note,
   };

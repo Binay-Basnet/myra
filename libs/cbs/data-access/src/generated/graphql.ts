@@ -441,6 +441,7 @@ export const AccountType = {
   LineOfCreditSavingContra: 'LineOfCreditSavingContra',
   LoanAccount: 'LoanAccount',
   MemberShareDividend: 'MemberShareDividend',
+  MemberShareDividendTax: 'MemberShareDividendTax',
   PaidUpShareCapital: 'PaidUpShareCapital',
   SavingSuspense: 'SavingSuspense',
   TdsPayable: 'TDSPayable',
@@ -4774,6 +4775,16 @@ export type CurrentFundResult = {
   error?: Maybe<QueryError>;
 };
 
+export type CurrentMonthUpdateSalaryStructureWithError = {
+  data?: Maybe<CurrentMontheUpdatedSalaryStructure>;
+  error?: Maybe<QueryError>;
+};
+
+export type CurrentMontheUpdatedSalaryStructure = {
+  deductions?: Maybe<Array<Maybe<EarningsAndDeductionsType>>>;
+  earnings?: Maybe<Array<Maybe<EarningsAndDeductionsType>>>;
+};
+
 export type CustomFormListQueryResult = {
   data?: Maybe<Array<Maybe<FormElement>>>;
   error?: Maybe<QueryError>;
@@ -6703,6 +6714,16 @@ export const EarningFrequencyEnum = {
 } as const;
 
 export type EarningFrequencyEnum = typeof EarningFrequencyEnum[keyof typeof EarningFrequencyEnum];
+export type EarningsAndDeductionsInput = {
+  amount?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type EarningsAndDeductionsType = {
+  amount?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['ID']>;
+};
+
 export type EbankingRegistrationReportResult = {
   data?: Maybe<Array<Maybe<EbankingReportResult>>>;
   error?: Maybe<QueryError>;
@@ -9670,6 +9691,7 @@ export type HrMutation = {
 
 export type HrPayrollMutation = {
   payrollRun: HrPayrollPayrollRunMutation;
+  salStrucAdjustRevision: HrPayrollSalStructureAdjustmentRevisionMutation;
   salaryStructureAssignment: HrPayrollSalaryStructureAssignmentMutation;
 };
 
@@ -9716,6 +9738,7 @@ export type HrPayrollPayrollRunQueryListSalarySlipArgs = {
 
 export type HrPayrollQuery = {
   payrollRun: HrPayrollPayrollRunQuery;
+  salStrucAdjustRevision: HrPayrollSalaryStructureAssignmentQuery;
   salaryStructureAssignment: HrPayrollSalaryStructureAssignmentQuery;
 };
 
@@ -10059,6 +10082,25 @@ export type HrEmployeeWorkExperienceType = {
   designation?: Maybe<Scalars['String']>;
   durationInYrs?: Maybe<Scalars['Int']>;
 };
+
+export type HrPayrollSalStructureAdjustmentRevisionMutation = {
+  upsertSalAdjustmentRevision: SalStructureAdjustmentRevisionReturn;
+};
+
+export type HrPayrollSalStructureAdjustmentRevisionMutationUpsertSalAdjustmentRevisionArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input?: InputMaybe<SalAdjustmentRevisionInput>;
+};
+
+export type HrPayrollSalStructureAdjustmentRevisionQuery = {
+  getCurrentMonthUpdatedSalaryStructure: CurrentMonthUpdateSalaryStructureWithError;
+};
+
+export type HrPayrollSalStructureAdjustmentRevisionQueryGetCurrentMonthUpdatedSalaryStructureArgs =
+  {
+    actionType?: InputMaybe<SalActionType>;
+    employeeId?: InputMaybe<Scalars['ID']>;
+  };
 
 export type HumanizeAuditLog = {
   extraData?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -11740,6 +11782,7 @@ export type JournalVoucherDetail = {
   branchName?: Maybe<Scalars['String']>;
   creatorName?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
+  dueDate?: Maybe<Scalars['Localized']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id?: Maybe<Scalars['ID']>;
   note?: Maybe<Scalars['String']>;
@@ -17630,6 +17673,25 @@ export const MortageType = {
 } as const;
 
 export type MortageType = typeof MortageType[keyof typeof MortageType];
+export type MrTransactionEntry = {
+  agentId?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  mrName?: Maybe<Scalars['String']>;
+};
+
+export type MrTransactionListConnection = {
+  edges?: Maybe<Array<Maybe<MrTransactionListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type MrTransactionListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<MrTransactionEntry>;
+};
+
 export type Municipality = {
   id: Scalars['Int'];
   name: Scalars['String'];
@@ -19410,6 +19472,7 @@ export const Resource = {
   SettingsMember: 'SETTINGS_MEMBER',
   SettingsMigration: 'SETTINGS_MIGRATION',
   SettingsOrganizationProfile: 'SETTINGS_ORGANIZATION_PROFILE',
+  SettingsPennySetup: 'SETTINGS_PENNY_SETUP',
   SettingsPrintPreference: 'SETTINGS_PRINT_PREFERENCE',
   SettingsReportSetting: 'SETTINGS_REPORT_SETTING',
   SettingsSavingParameters: 'SETTINGS_SAVING_PARAMETERS',
@@ -20004,9 +20067,29 @@ export const SvUpdateType = {
 } as const;
 
 export type SvUpdateType = typeof SvUpdateType[keyof typeof SvUpdateType];
+export const SalActionType = {
+  Adjustment: 'ADJUSTMENT',
+  Revision: 'REVISION',
+} as const;
+
+export type SalActionType = typeof SalActionType[keyof typeof SalActionType];
+export type SalAdjustmentRevisionInput = {
+  actionType?: InputMaybe<SalActionType>;
+  adjustmentOn?: InputMaybe<Scalars['Localized']>;
+  deductions?: InputMaybe<Array<InputMaybe<EarningsAndDeductionsInput>>>;
+  earnings?: InputMaybe<Array<InputMaybe<EarningsAndDeductionsInput>>>;
+  employee?: InputMaybe<Scalars['ID']>;
+  revisionEffectiveFrom?: InputMaybe<Scalars['Localized']>;
+};
+
 export type SalStructAssignOutput = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type SalStructureAdjustmentRevisionReturn = {
+  error?: Maybe<MutationError>;
+  id?: Maybe<Scalars['ID']>;
 };
 
 export type SalaryAmount = {
@@ -20987,6 +21070,7 @@ export type SetupMutation = {
   eodException?: Maybe<Scalars['Boolean']>;
   eodSeed?: Maybe<Scalars['String']>;
   migration?: Maybe<DataMigration>;
+  pennyRestriction?: Maybe<MutationResult>;
   utilityCashBackLedger?: Maybe<Scalars['Boolean']>;
   utilityLedgerSetup?: Maybe<Scalars['Boolean']>;
   utilityOrganizationLedger?: Maybe<Scalars['Boolean']>;
@@ -21003,6 +21087,10 @@ export type SetupMutationEodExceptionArgs = {
 
 export type SetupMutationEodSeedArgs = {
   date: Scalars['Localized'];
+};
+
+export type SetupMutationPennyRestrictionArgs = {
+  value: Array<InputMaybe<AccountType>>;
 };
 
 export type SetupMutationUtilityCashBackLedgerArgs = {
@@ -21027,6 +21115,7 @@ export type SetupQuery = {
   eodSeed?: Maybe<Scalars['Localized']>;
   getSweepableLedgers: SweepableLedgerQueryResult;
   getUtilityLedgerSetup: UtilityLedgerSetupInputResult;
+  pennyRestriction?: Maybe<Array<Maybe<AccountType>>>;
 };
 
 export type SetupQueryGetSweepableLedgersArgs = {
@@ -22633,6 +22722,7 @@ export type TransactionQuery = {
   listAllTransactions?: Maybe<AllTransactionsConnection>;
   listBulkTransfers?: Maybe<BulkTransferConnection>;
   listDeposit: AccountActivityListConnection;
+  listMrTransaction: MrTransactionListConnection;
   listServiceCenterCashTransfer?: Maybe<ServiceCentreCashTransferActivity>;
   listTellerTransaction: TellerActivityListConnection;
   listTransfer: AccountTransferListConnection;
@@ -22670,6 +22760,11 @@ export type TransactionQueryListBulkTransfersArgs = {
 };
 
 export type TransactionQueryListDepositArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListMrTransactionArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -30805,6 +30900,7 @@ export type GetJournalVoucherDetailQuery = {
           totalDebit?: string | null;
           totalCredit?: string | null;
           creatorName?: string | null;
+          dueDate?: Record<'local' | 'en' | 'np', string> | null;
           glTransaction?: Array<{
             ledgerId?: string | null;
             account: string;
@@ -56382,6 +56478,7 @@ export const GetJournalVoucherDetailDocument = `
           totalDebit
           totalCredit
           creatorName
+          dueDate
         }
       }
     }
