@@ -7,12 +7,19 @@ import { asyncToast, FormSection, GridItem } from '@myra-ui';
 import {
   AccountingBankAccountType,
   NewBankAccountInput,
+  useAppSelector,
   useGetBankAccountDetailsQuery,
   useGetBankListQuery,
   useSetBankAccountsMutation,
   useUpdateBankAccountsMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormLayout, FormSelect, FormTextArea } from '@coop/shared/form';
+import {
+  FormCOALedgerSelect,
+  FormInput,
+  FormLayout,
+  FormSelect,
+  FormTextArea,
+} from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -35,6 +42,8 @@ export const AccountingFeatureAddBankAccount = () => {
       value: AccountingBankAccountType.Saving,
     },
   ];
+
+  const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
 
   const { mutateAsync: addAsync } = useSetBankAccountsMutation();
   const { mutateAsync: editAsync } = useUpdateBankAccountsMutation();
@@ -66,7 +75,10 @@ export const AccountingFeatureAddBankAccount = () => {
     }
   }, [selectedBank, accountName]);
 
-  const { data: bankAccountDetail } = useGetBankAccountDetailsQuery({ id: id as string });
+  const { data: bankAccountDetail } = useGetBankAccountDetailsQuery(
+    { id: id as string },
+    { enabled: !!id }
+  );
   const editedData = bankAccountDetail?.accounting?.bankAccounts?.details?.data;
 
   const submitForm = () => {
@@ -161,6 +173,15 @@ export const AccountingFeatureAddBankAccount = () => {
               label={t['accountingBankAccountAddAccountType']}
               options={accountTypeList}
             />
+
+            {router?.asPath?.includes('/add') && (
+              <FormCOALedgerSelect
+                name="ledgerId"
+                label="Ledger"
+                branchId={[branchId as string]}
+                coaHead={['90.1', '90.2']}
+              />
+            )}
             {/* <FormAmountInput
                   name="openingBalance"
                   textAlign="right"
