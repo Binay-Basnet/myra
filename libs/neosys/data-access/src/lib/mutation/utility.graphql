@@ -1,0 +1,10 @@
+mutation addSaccosAmount($input: [SaccosSetup!]!) {
+  utility {
+    addSaccosAmount(input: $input) {
+      ID
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

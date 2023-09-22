@@ -1,0 +1,22 @@
+query getUtilityTransactionList($paginate: Pagination!, $filter: Filter) {
+  utility {
+    listUtilityRecords(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          id
+          slug
+          saccossName
+          drAmount
+          crAmount
+          utility
+          txnStatus
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}

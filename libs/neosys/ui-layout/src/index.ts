@@ -7,3 +7,4 @@ export * from './lib/MainLayout';
 export * from './lib/NeosysUiLayout';
 export * from './lib/SettingsLayout';
 export * from './lib/UsersSiderbar';
+export * from './lib/UtilitySidebarLayout';
