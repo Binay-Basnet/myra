@@ -4775,6 +4775,16 @@ export type CurrentFundResult = {
   error?: Maybe<QueryError>;
 };
 
+export type CurrentMonthUpdateSalaryStructureWithError = {
+  data?: Maybe<CurrentMontheUpdatedSalaryStructure>;
+  error?: Maybe<QueryError>;
+};
+
+export type CurrentMontheUpdatedSalaryStructure = {
+  deductions?: Maybe<Array<Maybe<EarningsAndDeductionsType>>>;
+  earnings?: Maybe<Array<Maybe<EarningsAndDeductionsType>>>;
+};
+
 export type CustomFormListQueryResult = {
   data?: Maybe<Array<Maybe<FormElement>>>;
   error?: Maybe<QueryError>;
@@ -6704,6 +6714,16 @@ export const EarningFrequencyEnum = {
 } as const;
 
 export type EarningFrequencyEnum = typeof EarningFrequencyEnum[keyof typeof EarningFrequencyEnum];
+export type EarningsAndDeductionsInput = {
+  amount?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type EarningsAndDeductionsType = {
+  amount?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['ID']>;
+};
+
 export type EbankingRegistrationReportResult = {
   data?: Maybe<Array<Maybe<EbankingReportResult>>>;
   error?: Maybe<QueryError>;
@@ -9671,6 +9691,7 @@ export type HrMutation = {
 
 export type HrPayrollMutation = {
   payrollRun: HrPayrollPayrollRunMutation;
+  salStrucAdjustRevision: HrPayrollSalStructureAdjustmentRevisionMutation;
   salaryStructureAssignment: HrPayrollSalaryStructureAssignmentMutation;
 };
 
@@ -9717,6 +9738,7 @@ export type HrPayrollPayrollRunQueryListSalarySlipArgs = {
 
 export type HrPayrollQuery = {
   payrollRun: HrPayrollPayrollRunQuery;
+  salStrucAdjustRevision: HrPayrollSalaryStructureAssignmentQuery;
   salaryStructureAssignment: HrPayrollSalaryStructureAssignmentQuery;
 };
 
@@ -10060,6 +10082,25 @@ export type HrEmployeeWorkExperienceType = {
   designation?: Maybe<Scalars['String']>;
   durationInYrs?: Maybe<Scalars['Int']>;
 };
+
+export type HrPayrollSalStructureAdjustmentRevisionMutation = {
+  upsertSalAdjustmentRevision: SalStructureAdjustmentRevisionReturn;
+};
+
+export type HrPayrollSalStructureAdjustmentRevisionMutationUpsertSalAdjustmentRevisionArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input?: InputMaybe<SalAdjustmentRevisionInput>;
+};
+
+export type HrPayrollSalStructureAdjustmentRevisionQuery = {
+  getCurrentMonthUpdatedSalaryStructure: CurrentMonthUpdateSalaryStructureWithError;
+};
+
+export type HrPayrollSalStructureAdjustmentRevisionQueryGetCurrentMonthUpdatedSalaryStructureArgs =
+  {
+    actionType?: InputMaybe<SalActionType>;
+    employeeId?: InputMaybe<Scalars['ID']>;
+  };
 
 export type HumanizeAuditLog = {
   extraData?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -20027,9 +20068,29 @@ export const SvUpdateType = {
 } as const;
 
 export type SvUpdateType = typeof SvUpdateType[keyof typeof SvUpdateType];
+export const SalActionType = {
+  Adjustment: 'ADJUSTMENT',
+  Revision: 'REVISION',
+} as const;
+
+export type SalActionType = typeof SalActionType[keyof typeof SalActionType];
+export type SalAdjustmentRevisionInput = {
+  actionType?: InputMaybe<SalActionType>;
+  adjustmentOn?: InputMaybe<Scalars['Localized']>;
+  deductions?: InputMaybe<Array<InputMaybe<EarningsAndDeductionsInput>>>;
+  earnings?: InputMaybe<Array<InputMaybe<EarningsAndDeductionsInput>>>;
+  employee?: InputMaybe<Scalars['ID']>;
+  revisionEffectiveFrom?: InputMaybe<Scalars['Localized']>;
+};
+
 export type SalStructAssignOutput = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type SalStructureAdjustmentRevisionReturn = {
+  error?: Maybe<MutationError>;
+  id?: Maybe<Scalars['ID']>;
 };
 
 export type SalaryAmount = {
@@ -46019,6 +46080,35 @@ export type GetDailyBalanceReportQuery = {
           }> | null;
         };
       };
+    };
+  };
+};
+
+export type GetMrTransactionsListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetMrTransactionsListQuery = {
+  transaction: {
+    listMrTransaction: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          agentId?: string | null;
+          amount?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          id: string;
+          mrName?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
     };
   };
 };
@@ -76568,6 +76658,42 @@ export const useGetDailyBalanceReportQuery = <TData = GetDailyBalanceReportQuery
     ['getDailyBalanceReport', variables],
     useAxios<GetDailyBalanceReportQuery, GetDailyBalanceReportQueryVariables>(
       GetDailyBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMrTransactionsListDocument = `
+    query getMrTransactionsList($filter: Filter, $pagination: Pagination) {
+  transaction {
+    listMrTransaction(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        cursor
+        node {
+          agentId
+          amount
+          date
+          id
+          mrName
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetMrTransactionsListQuery = <TData = GetMrTransactionsListQuery, TError = unknown>(
+  variables?: GetMrTransactionsListQueryVariables,
+  options?: UseQueryOptions<GetMrTransactionsListQuery, TError, TData>
+) =>
+  useQuery<GetMrTransactionsListQuery, TError, TData>(
+    variables === undefined ? ['getMrTransactionsList'] : ['getMrTransactionsList', variables],
+    useAxios<GetMrTransactionsListQuery, GetMrTransactionsListQueryVariables>(
+      GetMrTransactionsListDocument
     ).bind(null, variables),
     options
   );
