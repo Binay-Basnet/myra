@@ -214,7 +214,11 @@ export const ROUTES = {
 
   SETTINGS_REPORTING_TAGS_LIST: '/settings/general/reporting-tags/list',
 
-  SETTINGS_GENERAL_TRANSACTION_CONSTRAINTS_LIST: '/settings/general/transaction-constraints/list',
+  SETTINGS_GENERAL_TRANSACTION_CONSTRAINTS_LIST:
+    '/settings/general/transactions/transaction-constraints/list',
+
+  SETTINGS_GENERAL_TRANSACTIONS_PENNY_RESTRICTIONS:
+    '/settings/general/transactions/penny-restrictions/configure',
 
   /* NOT INDEXED BY GLOBAL SEARCH */
 

@@ -1,0 +1,52 @@
+query transactionConstraintsList($filter: Filter, $pagination: Pagination) {
+  settings {
+    transactionConstraint(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          objState
+          valueDate
+          branch {
+            name
+          }
+          member {
+            id
+            code
+            name
+            profilePicUrl
+          }
+          account {
+            ID
+            accountName
+          }
+          effectiveSince
+          effectiveTill
+          txnType
+          ledgerId
+          accountType
+          coaHead
+          user
+          initiationType
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+
+query pennyRestrictionList {
+  settings {
+    general {
+      setup {
+        pennyRestriction
+      }
+    }
+  }
+}

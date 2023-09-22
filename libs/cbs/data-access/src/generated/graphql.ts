@@ -17914,6 +17914,7 @@ export type NewBankAccountInput = {
   bankId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   displayName?: InputMaybe<Scalars['String']>;
+  ledgerId?: InputMaybe<Scalars['String']>;
   openingBalance?: InputMaybe<Scalars['String']>;
 };
 
@@ -29112,6 +29113,29 @@ export type SetBankTransferMutation = {
           | MutationError_ValidationError_Fragment
           | null;
       } | null;
+    } | null;
+  };
+};
+
+export type PennyRestrictionMutationVariables = Exact<{
+  value: Array<InputMaybe<AccountType>> | InputMaybe<AccountType>;
+}>;
+
+export type PennyRestrictionMutation = {
+  settings: {
+    general?: {
+      setup: {
+        pennyRestriction?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      };
     } | null;
   };
 };
@@ -44732,6 +44756,12 @@ export type TransactionConstraintsListQuery = {
   };
 };
 
+export type PennyRestrictionListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type PennyRestrictionListQuery = {
+  settings: { general?: { setup: { pennyRestriction?: Array<AccountType | null> | null } } | null };
+};
+
 export type GetSettingsUserListDataQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
@@ -54111,6 +54141,35 @@ export const useSetBankTransferMutation = <TError = unknown, TContext = unknown>
   useMutation<SetBankTransferMutation, TError, SetBankTransferMutationVariables, TContext>(
     ['setBankTransfer'],
     useAxios<SetBankTransferMutation, SetBankTransferMutationVariables>(SetBankTransferDocument),
+    options
+  );
+export const PennyRestrictionDocument = `
+    mutation pennyRestriction($value: [AccountType]!) {
+  settings {
+    general {
+      setup {
+        pennyRestriction(value: $value) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const usePennyRestrictionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    PennyRestrictionMutation,
+    TError,
+    PennyRestrictionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<PennyRestrictionMutation, TError, PennyRestrictionMutationVariables, TContext>(
+    ['pennyRestriction'],
+    useAxios<PennyRestrictionMutation, PennyRestrictionMutationVariables>(PennyRestrictionDocument),
     options
   );
 export const SetSettingsUserDataDocument = `
@@ -74723,6 +74782,28 @@ export const useTransactionConstraintsListQuery = <
       : ['transactionConstraintsList', variables],
     useAxios<TransactionConstraintsListQuery, TransactionConstraintsListQueryVariables>(
       TransactionConstraintsListDocument
+    ).bind(null, variables),
+    options
+  );
+export const PennyRestrictionListDocument = `
+    query pennyRestrictionList {
+  settings {
+    general {
+      setup {
+        pennyRestriction
+      }
+    }
+  }
+}
+    `;
+export const usePennyRestrictionListQuery = <TData = PennyRestrictionListQuery, TError = unknown>(
+  variables?: PennyRestrictionListQueryVariables,
+  options?: UseQueryOptions<PennyRestrictionListQuery, TError, TData>
+) =>
+  useQuery<PennyRestrictionListQuery, TError, TData>(
+    variables === undefined ? ['pennyRestrictionList'] : ['pennyRestrictionList', variables],
+    useAxios<PennyRestrictionListQuery, PennyRestrictionListQueryVariables>(
+      PennyRestrictionListDocument
     ).bind(null, variables),
     options
   );

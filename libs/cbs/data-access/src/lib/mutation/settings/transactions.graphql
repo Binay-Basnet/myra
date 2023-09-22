@@ -1,0 +1,14 @@
+mutation pennyRestriction($value: [AccountType]!) {
+  settings {
+    general {
+      setup {
+        pennyRestriction(value: $value) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
