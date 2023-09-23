@@ -251,3 +251,101 @@ query getTaxSlabList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getPayGroupList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          paygroup {
+            listPayGroup(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  employee
+                  paycycle
+                  lastPayrollRun
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getPayGroup($id: ID) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          paygroup {
+            getPayGroup(id: $id) {
+              data {
+                id
+                name
+                paycycle
+                employees
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getPayrollGeneral {
+  settings {
+    general {
+      HCM {
+        payroll {
+          general {
+            getPayrollGeneral {
+              data {
+                includeHolidaysInTotalNumberOfWorkingDays
+                emailSalarySlipToEmployee
+                disableRoundedTotal
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getTaxSetup {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxsetup {
+            getTaxSetup {
+              data {
+                taxExceptionRateInPercentage
+                taxRebateRateInPercentage
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

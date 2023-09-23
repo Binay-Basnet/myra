@@ -149,3 +149,117 @@ mutation deleteTaxSlab($id: ID!) {
     }
   }
 }
+
+mutation setPayGroup($id: ID, $input: PaygroupInput) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          paygroup {
+            upsertPaygroup(id: $id, input: $input) {
+              id
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation deletePayGroup($id: ID) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          paygroup {
+            deletePaygroup(id: $id) {
+              isPaygroupDeleted
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation updatePayrollGeneralSettingsIncludeHolidays($input: Boolean) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          general {
+            updatePayrollGeneralSettingsIncludeHolidays(input: $input) {
+              isUpdated
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation updatePayrollGeneralSettingsEmailSalarySlipToEmployee($input: Boolean) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          general {
+            updatePayrollGeneralSettingsEmailSalarySlipToEmployee(input: $input) {
+              isUpdated
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation updatePayrollGeneralSettingsDisableRoundedTotal($input: Boolean) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          general {
+            updatePayrollGeneralSettingsDisableRoundedTotal(input: $input) {
+              isUpdated
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setTaxSetup($input: TaxSetupInput) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxsetup {
+            upsertTaxSetup(input: $input) {
+              id
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
