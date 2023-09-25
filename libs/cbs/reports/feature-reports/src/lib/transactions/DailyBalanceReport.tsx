@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import {
   DailyBalanceReportData,
@@ -9,14 +10,19 @@ import { Report } from '@coop/cbs/reports';
 import { DailyBalanceReportInputs } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate } from '@coop/cbs/utils';
+import { FormCheckbox, FormCOALedgerSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type ReportFilter = {
   branchId: { label: string; value: string }[];
   coaHead: { label: string; value: string }[];
-  ledgerId: { label: string; value: string }[];
+
   period: LocalizedDateFilter;
-  allLedgers: boolean;
+  // allLedgers: boolean;
+  filter: {
+    allLedgers: boolean;
+    ledgerId: { label: string; value: string }[];
+  };
 };
 
 export const DailyBalanceReport = () => {
@@ -30,11 +36,11 @@ export const DailyBalanceReport = () => {
   const coaHeads =
     filters?.coaHead && filters?.coaHead.length !== 0 ? filters?.coaHead?.map((t) => t.value) : [];
 
-  const allLedgers = filters?.allLedgers ?? false;
+  const allLedgers = filters?.filter?.allLedgers ?? false;
 
   const ledgerIds =
-    filters?.ledgerId && filters?.ledgerId.length !== 0
-      ? filters?.ledgerId?.map((t) => t.value)
+    filters?.filter?.ledgerId && filters?.filter?.ledgerId.length !== 0
+      ? filters?.filter?.ledgerId?.map((t) => t.value)
       : [];
 
   //   const { data: tagOptions } = useGetTagListForReportQuery();
@@ -63,7 +69,12 @@ export const DailyBalanceReport = () => {
       isLoading={isFetching}
       report={ReportEnum.TRANSACTION_DAILY_BALANCE_REPORT}
       filters={filters}
-      defaultFilters={{ allLedgers: true }}
+      defaultFilters={{
+        filter: {
+          allLedgers: true,
+          ledgerId: [],
+        },
+      }}
       setFilters={setFilters}
     >
       <Report.Header>
@@ -132,7 +143,47 @@ export const DailyBalanceReport = () => {
             ]}
           />
         </Report.Content>
+        <Report.Filters>
+          <ReportFiltersDailyBalance />
+        </Report.Filters>
       </Report.Body>
     </Report>
+  );
+};
+
+const ReportFiltersDailyBalance = () => {
+  const { watch } = useFormContext<ReportFilter>();
+  const branchId = watch('branchId');
+
+  const coaHead = watch('coaHead');
+
+  const allLedgers = watch('filter.allLedgers');
+
+  const { selectedBranch, selectedCOAHead } = useMemo(
+    () => ({
+      selectedBranch: branchId?.map((branch: { value: string }) => branch?.value),
+      selectedCOAHead: coaHead?.map((head: { value: string }) => head?.value),
+    }),
+    [branchId, coaHead]
+  );
+
+  return (
+    <>
+      {' '}
+      <Report.Filter title="Select All Ledgerss">
+        <FormCheckbox name="filter.allLedgers" label="All Ledgers" />
+      </Report.Filter>
+      {!allLedgers && (
+        <Report.Filter title="Product Type">
+          <FormCOALedgerSelect
+            name="filter.ledgerId"
+            label="Ledger"
+            branchId={selectedBranch}
+            coaHead={selectedCOAHead}
+            isMulti
+          />
+        </Report.Filter>
+      )}
+    </>
   );
 };
