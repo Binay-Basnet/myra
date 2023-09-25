@@ -59,7 +59,7 @@ export const ActivationForm = () => {
     defaultValues: {
       pin: null,
       paymentMode: AlternativeChannelPaymentMode.Cash,
-      cash: { disableDenomination: false },
+      cash: { disableDenomination: true },
     },
   });
   const { watch, getValues } = methods;
