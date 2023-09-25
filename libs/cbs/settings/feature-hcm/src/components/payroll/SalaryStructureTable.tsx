@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { BiEdit } from 'react-icons/bi';
+import { useGetPayGroupOptions } from '@hr/common';
 import { omit } from 'lodash';
 
 import {
@@ -20,9 +21,6 @@ import {
 
 import {
   InputSalaryStructure,
-  LedgerPaymentEnum,
-  PaymentModeEnum,
-  PayrollFrequencyEnum,
   useDeleteSalaryStructureMutation,
   useGetDeductionComponentListQuery,
   useGetEarningComponentListQuery,
@@ -42,12 +40,10 @@ import { getPaginationQuery } from '@coop/shared/utils';
 
 const defaultFormValue = {
   name: '',
-  payrollFrequency: null,
+  paygroup: null,
   description: '',
   salaryEarnings: null,
   salaryDeduction: null,
-  modeOfPayment: null,
-  salaryPaymentLedger: null,
   makeThisActive: false,
 };
 
@@ -56,8 +52,10 @@ export const SalaryStructureTable = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedSalaryStructureId, setselectedSalaryStructureId] = useState('');
 
+  const { payGroupOptions } = useGetPayGroupOptions();
+
   const { data, refetch } = useGetSalaryStructureListQuery({ pagination: getPaginationQuery() });
-  const { mutateAsync, isLoading } = useSetSalaryStructureMutation();
+  const { mutateAsync } = useSetSalaryStructureMutation();
   const { mutateAsync: deleteMutateAsync } = useDeleteSalaryStructureMutation();
 
   const { data: salaryStructureData } = useGetSalaryStructureQuery(
@@ -277,14 +275,7 @@ export const SalaryStructureTable = () => {
             <GridItem colSpan={2}>
               <FormInput name="name" label="Name" />
             </GridItem>
-            <FormSelect
-              name="payrollFrequency"
-              label="Payroll Frequency"
-              options={[
-                { label: PayrollFrequencyEnum?.Monthly, value: PayrollFrequencyEnum?.Monthly },
-                { label: PayrollFrequencyEnum?.Yearly, value: PayrollFrequencyEnum?.Yearly },
-              ]}
-            />
+            <FormSelect name="paygroup" label="Pay Group" options={payGroupOptions} />
             <GridItem colSpan={3}>
               <FormTextArea name="description" label="Description" />
             </GridItem>
@@ -397,55 +388,12 @@ export const SalaryStructureTable = () => {
               />
             </GridItem>
             <GridItem colSpan={3}>
-              <Box display="flex" gap="s16">
-                <FormSelect
-                  name="modeOfPayment"
-                  label="Mode of payment"
-                  options={[
-                    {
-                      label: 'Bank Transfer',
-                      value: PaymentModeEnum?.BankTransfer,
-                    },
-                    {
-                      label: 'Cash',
-                      value: PaymentModeEnum?.Cash,
-                    },
-                    {
-                      label: 'Check',
-                      value: PaymentModeEnum?.Check,
-                    },
-                  ]}
-                />
-                <FormSelect
-                  name="salaryPaymentLedger"
-                  label="Salary Payment Ledger"
-                  options={[
-                    {
-                      label: LedgerPaymentEnum?.LedgerPayment_1,
-                      value: LedgerPaymentEnum?.LedgerPayment_1,
-                    },
-                    {
-                      label: LedgerPaymentEnum?.LedgerPayment_2,
-                      value: LedgerPaymentEnum?.LedgerPayment_2,
-                    },
-                  ]}
-                />
-              </Box>
+              <Divider />
             </GridItem>
             <GridItem colSpan={3}>
-              <FormCheckbox name="makeThisActive" label="Make this Active" />
-            </GridItem>
-            <GridItem colSpan={3}>
-              <Box display="flex" flexDir="column" gap="s16">
-                <Divider />
-                <Button
-                  w="-webkit-fit-content"
-                  alignSelf="flex-end"
-                  onClick={onSubmit}
-                  isLoading={isLoading}
-                >
-                  Save
-                </Button>
+              <Box display="flex" justifyContent="space-between">
+                <FormCheckbox name="makeThisActive" label="Make this Active" />
+                <Button onClick={onSubmit}>Save</Button>
               </Box>
             </GridItem>
           </Grid>

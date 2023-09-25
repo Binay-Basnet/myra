@@ -15,8 +15,10 @@ const getIndex = (pathname: string) => {
       return 0;
     case 'users':
       return 1;
-    default:
+    case 'analytics':
       return 2;
+    default:
+      return 3;
   }
 };
 
@@ -49,6 +51,11 @@ export const TabMenu = () => {
       title: 'Analytics',
       icon: IoMdAnalytics,
       link: '/analytics/members',
+    },
+    {
+      title: 'Utility',
+      icon: IoMdAnalytics,
+      link: '/utility/transactions',
     },
   ];
 

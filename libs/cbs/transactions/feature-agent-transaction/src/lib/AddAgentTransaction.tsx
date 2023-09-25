@@ -396,7 +396,6 @@ export const AddAgentTransaction = () => {
                       cellWidth: 'sm',
                     },
                   ]}
-                  // defaultData={todaysList}
                   searchPlaceholder="Search or add member"
                   canDeleteRow={false}
                 />

@@ -67,6 +67,15 @@ export const CbsSettingsFeatureOrgEdit = () => {
           },
         },
       }),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
     });
   };
   return (

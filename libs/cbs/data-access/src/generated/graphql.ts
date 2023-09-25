@@ -28120,6 +28120,168 @@ export type DeleteTaxSlabMutation = {
   };
 };
 
+export type SetPayGroupMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input?: InputMaybe<PaygroupInput>;
+}>;
+
+export type SetPayGroupMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          paygroup: {
+            upsertPaygroup: {
+              id?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type DeletePayGroupMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+export type DeletePayGroupMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          paygroup: {
+            deletePaygroup: {
+              isPaygroupDeleted?: boolean | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdatePayrollGeneralSettingsIncludeHolidaysMutationVariables = Exact<{
+  input?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type UpdatePayrollGeneralSettingsIncludeHolidaysMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          general: {
+            updatePayrollGeneralSettingsIncludeHolidays: {
+              isUpdated?: boolean | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutationVariables = Exact<{
+  input?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          general: {
+            updatePayrollGeneralSettingsEmailSalarySlipToEmployee: {
+              isUpdated?: boolean | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdatePayrollGeneralSettingsDisableRoundedTotalMutationVariables = Exact<{
+  input?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type UpdatePayrollGeneralSettingsDisableRoundedTotalMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          general: {
+            updatePayrollGeneralSettingsDisableRoundedTotal: {
+              isUpdated?: boolean | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetTaxSetupMutationVariables = Exact<{
+  input?: InputMaybe<TaxSetupInput>;
+}>;
+
+export type SetTaxSetupMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxsetup: {
+            upsertTaxSetup: {
+              id?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type UpsertLedgerTagMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: LedgerTagInput;
@@ -42794,6 +42956,125 @@ export type GetTaxSlabListQuery = {
   };
 };
 
+export type GetPayGroupListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetPayGroupListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          paygroup: {
+            listPayGroup: {
+              totalCount: number;
+              edges?: Array<{
+                cursor?: string | null;
+                node?: {
+                  id?: string | null;
+                  name?: string | null;
+                  employee?: number | null;
+                  paycycle?: PaycycleEnum | null;
+                  lastPayrollRun?: Record<'local' | 'en' | 'np', string> | null;
+                } | null;
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetPayGroupQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+export type GetPayGroupQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          paygroup: {
+            getPayGroup: {
+              data?: {
+                id?: string | null;
+                name?: string | null;
+                paycycle?: PaycycleEnum | null;
+                employees?: Array<string | null> | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetPayrollGeneralQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetPayrollGeneralQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          general: {
+            getPayrollGeneral: {
+              data?: {
+                includeHolidaysInTotalNumberOfWorkingDays?: boolean | null;
+                emailSalarySlipToEmployee?: boolean | null;
+                disableRoundedTotal?: boolean | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetTaxSetupQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetTaxSetupQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxsetup: {
+            getTaxSetup: {
+              data?: {
+                taxExceptionRateInPercentage?: number | null;
+                taxRebateRateInPercentage?: number | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type LedgerTagsListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -52631,6 +52912,227 @@ export const useDeleteTaxSlabMutation = <TError = unknown, TContext = unknown>(
   useMutation<DeleteTaxSlabMutation, TError, DeleteTaxSlabMutationVariables, TContext>(
     ['deleteTaxSlab'],
     useAxios<DeleteTaxSlabMutation, DeleteTaxSlabMutationVariables>(DeleteTaxSlabDocument),
+    options
+  );
+export const SetPayGroupDocument = `
+    mutation setPayGroup($id: ID, $input: PaygroupInput) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          paygroup {
+            upsertPaygroup(id: $id, input: $input) {
+              id
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetPayGroupMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetPayGroupMutation, TError, SetPayGroupMutationVariables, TContext>
+) =>
+  useMutation<SetPayGroupMutation, TError, SetPayGroupMutationVariables, TContext>(
+    ['setPayGroup'],
+    useAxios<SetPayGroupMutation, SetPayGroupMutationVariables>(SetPayGroupDocument),
+    options
+  );
+export const DeletePayGroupDocument = `
+    mutation deletePayGroup($id: ID) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          paygroup {
+            deletePaygroup(id: $id) {
+              isPaygroupDeleted
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeletePayGroupMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeletePayGroupMutation,
+    TError,
+    DeletePayGroupMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeletePayGroupMutation, TError, DeletePayGroupMutationVariables, TContext>(
+    ['deletePayGroup'],
+    useAxios<DeletePayGroupMutation, DeletePayGroupMutationVariables>(DeletePayGroupDocument),
+    options
+  );
+export const UpdatePayrollGeneralSettingsIncludeHolidaysDocument = `
+    mutation updatePayrollGeneralSettingsIncludeHolidays($input: Boolean) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          general {
+            updatePayrollGeneralSettingsIncludeHolidays(input: $input) {
+              isUpdated
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdatePayrollGeneralSettingsIncludeHolidaysMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    UpdatePayrollGeneralSettingsIncludeHolidaysMutation,
+    TError,
+    UpdatePayrollGeneralSettingsIncludeHolidaysMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdatePayrollGeneralSettingsIncludeHolidaysMutation,
+    TError,
+    UpdatePayrollGeneralSettingsIncludeHolidaysMutationVariables,
+    TContext
+  >(
+    ['updatePayrollGeneralSettingsIncludeHolidays'],
+    useAxios<
+      UpdatePayrollGeneralSettingsIncludeHolidaysMutation,
+      UpdatePayrollGeneralSettingsIncludeHolidaysMutationVariables
+    >(UpdatePayrollGeneralSettingsIncludeHolidaysDocument),
+    options
+  );
+export const UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeDocument = `
+    mutation updatePayrollGeneralSettingsEmailSalarySlipToEmployee($input: Boolean) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          general {
+            updatePayrollGeneralSettingsEmailSalarySlipToEmployee(input: $input) {
+              isUpdated
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutation,
+    TError,
+    UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutation,
+    TError,
+    UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutationVariables,
+    TContext
+  >(
+    ['updatePayrollGeneralSettingsEmailSalarySlipToEmployee'],
+    useAxios<
+      UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutation,
+      UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutationVariables
+    >(UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeDocument),
+    options
+  );
+export const UpdatePayrollGeneralSettingsDisableRoundedTotalDocument = `
+    mutation updatePayrollGeneralSettingsDisableRoundedTotal($input: Boolean) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          general {
+            updatePayrollGeneralSettingsDisableRoundedTotal(input: $input) {
+              isUpdated
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdatePayrollGeneralSettingsDisableRoundedTotalMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    UpdatePayrollGeneralSettingsDisableRoundedTotalMutation,
+    TError,
+    UpdatePayrollGeneralSettingsDisableRoundedTotalMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdatePayrollGeneralSettingsDisableRoundedTotalMutation,
+    TError,
+    UpdatePayrollGeneralSettingsDisableRoundedTotalMutationVariables,
+    TContext
+  >(
+    ['updatePayrollGeneralSettingsDisableRoundedTotal'],
+    useAxios<
+      UpdatePayrollGeneralSettingsDisableRoundedTotalMutation,
+      UpdatePayrollGeneralSettingsDisableRoundedTotalMutationVariables
+    >(UpdatePayrollGeneralSettingsDisableRoundedTotalDocument),
+    options
+  );
+export const SetTaxSetupDocument = `
+    mutation setTaxSetup($input: TaxSetupInput) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxsetup {
+            upsertTaxSetup(input: $input) {
+              id
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetTaxSetupMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetTaxSetupMutation, TError, SetTaxSetupMutationVariables, TContext>
+) =>
+  useMutation<SetTaxSetupMutation, TError, SetTaxSetupMutationVariables, TContext>(
+    ['setTaxSetup'],
+    useAxios<SetTaxSetupMutation, SetTaxSetupMutationVariables>(SetTaxSetupDocument),
     options
   );
 export const UpsertLedgerTagDocument = `
@@ -72069,6 +72571,155 @@ export const useGetTaxSlabListQuery = <TData = GetTaxSlabListQuery, TError = unk
   useQuery<GetTaxSlabListQuery, TError, TData>(
     variables === undefined ? ['getTaxSlabList'] : ['getTaxSlabList', variables],
     useAxios<GetTaxSlabListQuery, GetTaxSlabListQueryVariables>(GetTaxSlabListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetPayGroupListDocument = `
+    query getPayGroupList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          paygroup {
+            listPayGroup(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  employee
+                  paycycle
+                  lastPayrollRun
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetPayGroupListQuery = <TData = GetPayGroupListQuery, TError = unknown>(
+  variables?: GetPayGroupListQueryVariables,
+  options?: UseQueryOptions<GetPayGroupListQuery, TError, TData>
+) =>
+  useQuery<GetPayGroupListQuery, TError, TData>(
+    variables === undefined ? ['getPayGroupList'] : ['getPayGroupList', variables],
+    useAxios<GetPayGroupListQuery, GetPayGroupListQueryVariables>(GetPayGroupListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetPayGroupDocument = `
+    query getPayGroup($id: ID) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          paygroup {
+            getPayGroup(id: $id) {
+              data {
+                id
+                name
+                paycycle
+                employees
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetPayGroupQuery = <TData = GetPayGroupQuery, TError = unknown>(
+  variables?: GetPayGroupQueryVariables,
+  options?: UseQueryOptions<GetPayGroupQuery, TError, TData>
+) =>
+  useQuery<GetPayGroupQuery, TError, TData>(
+    variables === undefined ? ['getPayGroup'] : ['getPayGroup', variables],
+    useAxios<GetPayGroupQuery, GetPayGroupQueryVariables>(GetPayGroupDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetPayrollGeneralDocument = `
+    query getPayrollGeneral {
+  settings {
+    general {
+      HCM {
+        payroll {
+          general {
+            getPayrollGeneral {
+              data {
+                includeHolidaysInTotalNumberOfWorkingDays
+                emailSalarySlipToEmployee
+                disableRoundedTotal
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetPayrollGeneralQuery = <TData = GetPayrollGeneralQuery, TError = unknown>(
+  variables?: GetPayrollGeneralQueryVariables,
+  options?: UseQueryOptions<GetPayrollGeneralQuery, TError, TData>
+) =>
+  useQuery<GetPayrollGeneralQuery, TError, TData>(
+    variables === undefined ? ['getPayrollGeneral'] : ['getPayrollGeneral', variables],
+    useAxios<GetPayrollGeneralQuery, GetPayrollGeneralQueryVariables>(
+      GetPayrollGeneralDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetTaxSetupDocument = `
+    query getTaxSetup {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxsetup {
+            getTaxSetup {
+              data {
+                taxExceptionRateInPercentage
+                taxRebateRateInPercentage
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetTaxSetupQuery = <TData = GetTaxSetupQuery, TError = unknown>(
+  variables?: GetTaxSetupQueryVariables,
+  options?: UseQueryOptions<GetTaxSetupQuery, TError, TData>
+) =>
+  useQuery<GetTaxSetupQuery, TError, TData>(
+    variables === undefined ? ['getTaxSetup'] : ['getTaxSetup', variables],
+    useAxios<GetTaxSetupQuery, GetTaxSetupQueryVariables>(GetTaxSetupDocument).bind(
       null,
       variables
     ),

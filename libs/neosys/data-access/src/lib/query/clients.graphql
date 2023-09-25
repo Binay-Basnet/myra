@@ -12,6 +12,7 @@ query getClientsList {
         wardNo
         dateJoined
         dbCreated
+        slug
       }
     }
   }
