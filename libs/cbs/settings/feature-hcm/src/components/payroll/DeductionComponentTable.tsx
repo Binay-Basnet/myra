@@ -58,7 +58,7 @@ export const DeductionComponentTable = () => {
   const [selectedDeductionComponentId, setSelectedDeductionComponentId] = useState('');
 
   const { data, refetch } = useGetDeductionComponentListQuery({ pagination: getPaginationQuery() });
-  const { mutateAsync } = useSetDeductionComponentMutation();
+  const { mutateAsync, isLoading } = useSetDeductionComponentMutation();
   const { mutateAsync: deleteMutateAsync } = useDeleteDeductionComponentMutation();
 
   const { data: deductionComponentData } = useGetDeductionComponentQuery(
@@ -317,7 +317,9 @@ export const DeductionComponentTable = () => {
             <GridItem colSpan={3}>
               <Box display="flex" justifyContent="space-between">
                 <FormCheckbox name="makeThisActive" label="Make this Active" />
-                <Button onClick={onSubmit}>Save</Button>
+                <Button onClick={onSubmit} isLoading={isLoading}>
+                  Save
+                </Button>
               </Box>
             </GridItem>
           </Grid>

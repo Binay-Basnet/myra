@@ -86,7 +86,7 @@ export const PayGroupTable = () => {
     }
   }, [employeeList]);
 
-  const { mutateAsync } = useSetPayGroupMutation();
+  const { mutateAsync, isLoading } = useSetPayGroupMutation();
   const { mutateAsync: deleteMutateAsync } = useDeletePayGroupMutation();
 
   // const { data: payGroupData } = useGetPayGroupQuery(
@@ -306,7 +306,9 @@ export const PayGroupTable = () => {
             </GridItem>
             <GridItem colSpan={3}>
               <Box display="flex" justifyContent="flex-end">
-                <Button onClick={onSubmit}>Save</Button>
+                <Button onClick={onSubmit} isLoading={isLoading}>
+                  Save
+                </Button>
               </Box>
             </GridItem>
           </Grid>

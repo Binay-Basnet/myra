@@ -55,7 +55,7 @@ export const SalaryStructureTable = () => {
   const { payGroupOptions } = useGetPayGroupOptions();
 
   const { data, refetch } = useGetSalaryStructureListQuery({ pagination: getPaginationQuery() });
-  const { mutateAsync } = useSetSalaryStructureMutation();
+  const { mutateAsync, isLoading } = useSetSalaryStructureMutation();
   const { mutateAsync: deleteMutateAsync } = useDeleteSalaryStructureMutation();
 
   const { data: salaryStructureData } = useGetSalaryStructureQuery(
@@ -393,7 +393,9 @@ export const SalaryStructureTable = () => {
             <GridItem colSpan={3}>
               <Box display="flex" justifyContent="space-between">
                 <FormCheckbox name="makeThisActive" label="Make this Active" />
-                <Button onClick={onSubmit}>Save</Button>
+                <Button onClick={onSubmit} isLoading={isLoading}>
+                  Save
+                </Button>
               </Box>
             </GridItem>
           </Grid>

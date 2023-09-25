@@ -9,6 +9,10 @@ import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMe
 
 const tabList = [
   {
+    title: 'General',
+    to: ROUTES.HRMODULE_PAYROLL_GENERAL_SETTINGS,
+  },
+  {
     title: 'Salary Components',
     to: ROUTES.HRMODULE_PAYROLL_SALARY_COMPONENTS_SETTINGS,
   },

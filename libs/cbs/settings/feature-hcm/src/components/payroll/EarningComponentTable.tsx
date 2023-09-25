@@ -59,7 +59,7 @@ export const EarningComponentTable = () => {
   const [selectedEarningComponentId, setselectedEarningComponentId] = useState('');
 
   const { data, refetch } = useGetEarningComponentListQuery({ pagination: getPaginationQuery() });
-  const { mutateAsync } = useSetEarningComponentMutation();
+  const { mutateAsync, isLoading } = useSetEarningComponentMutation();
   const { mutateAsync: deleteMutateAsync } = useDeleteEarningComponentMutation();
 
   const earningFrequencyOptions = [
@@ -340,7 +340,9 @@ export const EarningComponentTable = () => {
             <GridItem colSpan={3}>
               <Box display="flex" justifyContent="space-between">
                 <FormCheckbox name="makeThisActive" label="Make this Active" />
-                <Button onClick={onSubmit}>Save</Button>
+                <Button onClick={onSubmit} isLoading={isLoading}>
+                  Save
+                </Button>
               </Box>
             </GridItem>
           </Grid>

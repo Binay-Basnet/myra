@@ -119,7 +119,7 @@ const hcmTabList: TabList[] = [
   },
   {
     label: 'Payroll',
-    route: ROUTES.HRMODULE_PAYROLL_SALARY_COMPONENTS_SETTINGS,
+    route: ROUTES.HRMODULE_PAYROLL_GENERAL_SETTINGS,
     aclKey: 'SETTINGS_INDEXING',
   },
 ];
