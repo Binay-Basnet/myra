@@ -14854,6 +14854,7 @@ export type LoanInstallment = {
   payment: Scalars['String'];
   penalty?: Maybe<Scalars['String']>;
   principal: Scalars['String'];
+  rebate?: Maybe<Scalars['String']>;
   remainingInterest: Scalars['String'];
   remainingPrincipal: Scalars['String'];
   status?: Maybe<LoanInstallmentStatus>;
@@ -15364,6 +15365,7 @@ export type LoanProductsMutation = {
   updatePenaltyCharge: ProductChargeMutationResult;
   updateProcessingCharge: ProductChargeMutationResult;
   updateProductInterest: InterestSetupMutationResult;
+  updateRebateCharge: ProductChargeMutationResult;
   upsert?: Maybe<LoanProductsResult>;
 };
 
@@ -15396,6 +15398,13 @@ export type LoanProductsMutationUpdateProductInterestArgs = {
   productId: Scalars['ID'];
 };
 
+export type LoanProductsMutationUpdateRebateChargeArgs = {
+  additionalData: ProductChargeAdditionalDataInput;
+  id?: InputMaybe<Scalars['ID']>;
+  payload: RebateTypeInput;
+  productId: Scalars['ID'];
+};
+
 export type LoanProductsMutationUpsertArgs = {
   data?: InputMaybe<LoanProductInput>;
   edit?: InputMaybe<Scalars['Boolean']>;
@@ -15414,6 +15423,7 @@ export type LoanProductsQuery = {
   listPenaltyCharge: ProductPenaltyListQueryResult;
   listProcessingCharge: ProductAccountOpenCloseListQueryResult;
   listProductInterestRates: InterestSetupListResult;
+  listRebateCharge: ProductRebateListQueryResult;
 };
 
 export type LoanProductsQueryFormStateArgs = {
@@ -15460,6 +15470,10 @@ export type LoanProductsQueryListProcessingChargeArgs = {
 };
 
 export type LoanProductsQueryListProductInterestRatesArgs = {
+  productId: Scalars['ID'];
+};
+
+export type LoanProductsQueryListRebateChargeArgs = {
   productId: Scalars['ID'];
 };
 
@@ -15561,6 +15575,7 @@ export type LoanRepaymentInput = {
   memberId: Scalars['ID'];
   paymentMethod: LoanRepaymentMethod;
   penalty?: InputMaybe<RepaymentPenaltyInput>;
+  rebate?: InputMaybe<RepaymentPenaltyInput>;
   suspicionRemarks?: InputMaybe<Scalars['String']>;
   suspicionTopologies?: InputMaybe<Array<InputMaybe<SuspiciousTransactionTopology>>>;
   writeOffLedgerId?: InputMaybe<Scalars['String']>;
@@ -19005,6 +19020,16 @@ export type ProductPenaltyListQueryResult = {
 
 export type ProductPenaltyQueryResult = {
   data?: Maybe<ProductPenaltyData>;
+  error?: Maybe<QueryError>;
+};
+
+export type ProductRebateData = {
+  additionalData?: Maybe<ProductChargeAdditionalData>;
+  payload?: Maybe<Rebate>;
+};
+
+export type ProductRebateListQueryResult = {
+  data?: Maybe<Array<Maybe<ProductRebateData>>>;
   error?: Maybe<QueryError>;
 };
 
