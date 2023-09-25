@@ -87,13 +87,12 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
   const accountId = watch('accountId');
 
   useEffect(() => {
-    if (totalDeposit) {
+    if (totalDeposit || totalDeposit === 0) {
       setValue('cash.cashPaid', String(totalDeposit));
       setValue('withdrawSlip.amount', String(totalDeposit));
       setValue('bankVoucher.amount', String(totalDeposit));
     }
-  }, [totalDeposit]);
-
+  }, [totalDeposit, setValue]);
   const memberId = watch('memberId');
 
   const isDiffMember = watch('withdrawSlip.isDifferentMember');

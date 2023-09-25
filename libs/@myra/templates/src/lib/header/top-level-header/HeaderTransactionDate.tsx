@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { BiLinkExternal } from 'react-icons/bi';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { useRouter } from 'next/router';
-import { Spinner } from '@chakra-ui/react';
+import { Spinner, useDisclosure } from '@chakra-ui/react';
 import format from 'date-fns/format';
 
 import { Box, Button, Chips, Icon, Text } from '@myra-ui';
@@ -18,6 +18,7 @@ import {
   useSetEndOfDayDataMutation,
 } from '@coop/cbs/data-access';
 import { getLocalizedTodaysDate, localizedDate, ROUTES } from '@coop/cbs/utils';
+import { ConfirmationDialog } from '@coop/shared/components';
 
 const eodStatusIcon = (status: EodState | undefined | null, errors: number | null | undefined) => {
   switch (status) {
@@ -38,6 +39,20 @@ const eodStatusIcon = (status: EodState | undefined | null, errors: number | nul
 export const HeaderTransactionDate = () => {
   const router = useRouter();
   const user = useAppSelector((state) => state?.auth?.user);
+
+  const {
+    isOpen: isReadinessConfirmOpen,
+    onClose: onReadinessConfirmClose,
+    onToggle: onReadinessConfirmToggle,
+  } = useDisclosure();
+  const {
+    isOpen: isDayEndConfirmOpen,
+    onClose: onDayEndConfirmClose,
+    onToggle: onDayEndConfirmToggle,
+  } = useDisclosure();
+
+  const readinessConfirmCancelRef = useRef<HTMLButtonElement | null>(null);
+  const dayEndConfirmCancelRef = useRef<HTMLButtonElement | null>(null);
 
   const [stopFetch, setStopFetch] = useState(false);
 
@@ -97,193 +112,213 @@ export const HeaderTransactionDate = () => {
   };
 
   return (
-    <Popover placement="bottom-end" arrowPadding={0} gutter={3}>
-      {({ isOpen }) => (
-        <>
-          <PopoverTrigger>
-            <Box
-              as="button"
-              bg={isOpen ? 'secondary.900' : 'secondary.700'}
-              _hover={{ backgroundColor: 'secondary.900' }}
-              px="s12"
-              py="s10"
-              data-testid="topheader-date"
-              borderRadius="br1"
-            >
-              <Text p="s10 s12" fontSize="s3" fontWeight="500" color="gray.0">
-                Date: {localizedDate(closingDate)}
-              </Text>
-            </Box>
-          </PopoverTrigger>
-          <Box zIndex={15}>
-            <PopoverContent
-              bg="gray.0"
-              w="490px"
-              border="none"
-              boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
-              outline="none"
-              _focus={{
-                boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
-              }}
-            >
-              <PopoverBody p="0">
-                <Box display="flex" gap="s16" p="s8">
-                  <Box display="flex" flexDirection="column" gap="s16" w="200px">
-                    <Box display="flex" flexDirection="column" gap="s16">
-                      <Box display="flex" flexDirection="column">
-                        <Text fontSize="s3" fontWeight="500" color="gray.700">
-                          Transaction Date
-                        </Text>
-                        <Text fontSize="s3" fontWeight="500" color="gray.800">
-                          {localizedDate(closingDate)}
-                        </Text>
-                      </Box>
+    <>
+      <Popover placement="bottom-end" arrowPadding={0} gutter={3}>
+        {({ isOpen }) => (
+          <>
+            <PopoverTrigger>
+              <Box
+                as="button"
+                bg={isOpen ? 'secondary.900' : 'secondary.700'}
+                _hover={{ backgroundColor: 'secondary.900' }}
+                px="s12"
+                py="s10"
+                data-testid="topheader-date"
+                borderRadius="br1"
+              >
+                <Text p="s10 s12" fontSize="s3" fontWeight="500" color="gray.0">
+                  Date: {localizedDate(closingDate)}
+                </Text>
+              </Box>
+            </PopoverTrigger>
+            <Box zIndex={15}>
+              <PopoverContent
+                bg="gray.0"
+                w="490px"
+                border="none"
+                boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
+                outline="none"
+                _focus={{
+                  boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
+                }}
+              >
+                <PopoverBody p="0">
+                  <Box display="flex" gap="s16" p="s8">
+                    <Box display="flex" flexDirection="column" gap="s16" w="200px">
+                      <Box display="flex" flexDirection="column" gap="s16">
+                        <Box display="flex" flexDirection="column">
+                          <Text fontSize="s3" fontWeight="500" color="gray.700">
+                            Transaction Date
+                          </Text>
+                          <Text fontSize="s3" fontWeight="500" color="gray.800">
+                            {localizedDate(closingDate)}
+                          </Text>
+                        </Box>
 
-                      <Box display="flex" flexDirection="column">
-                        <Text fontSize="s3" fontWeight="500" color="gray.700">
-                          Calender Date
-                        </Text>
-                        <Text fontSize="s3" fontWeight="500" color="gray.800">
-                          {getLocalizedTodaysDate()}
-                        </Text>
+                        <Box display="flex" flexDirection="column">
+                          <Text fontSize="s3" fontWeight="500" color="gray.700">
+                            Calender Date
+                          </Text>
+                          <Text fontSize="s3" fontWeight="500" color="gray.800">
+                            {getLocalizedTodaysDate()}
+                          </Text>
+                        </Box>
                       </Box>
-                    </Box>
-                    <Box display="flex" flexDirection="column" gap="s8">
-                      {user?.currentBranch?.category === BranchCategory.HeadOffice ? (
-                        hasEodErrors ? (
-                          <>
-                            <Button
-                              variant="outline"
-                              display="flex"
-                              justifyContent="center"
-                              w="100%"
-                              onClick={reinitiateCloseDay}
-                            >
-                              Reinitiate
-                            </Button>
-                            <Button
-                              variant="solid"
-                              display="flex"
-                              justifyContent="center"
-                              w="100%"
-                              onClick={ignoreAndCloseDay}
-                            >
-                              Ignore and Close Day
-                            </Button>
-                          </>
+                      <Box display="flex" flexDirection="column" gap="s8">
+                        {user?.currentBranch?.category === BranchCategory.HeadOffice ? (
+                          hasEodErrors ? (
+                            <>
+                              <Button
+                                variant="outline"
+                                display="flex"
+                                justifyContent="center"
+                                w="100%"
+                                onClick={reinitiateCloseDay}
+                              >
+                                Reinitiate
+                              </Button>
+                              <Button
+                                variant="solid"
+                                display="flex"
+                                justifyContent="center"
+                                w="100%"
+                                onClick={ignoreAndCloseDay}
+                              >
+                                Ignore and Close Day
+                              </Button>
+                            </>
+                          ) : (
+                            <>
+                              <Button
+                                variant="outline"
+                                display="flex"
+                                justifyContent="center"
+                                w="100%"
+                                onClick={onReadinessConfirmToggle}
+                              >
+                                Branch Readiness
+                              </Button>
+                              {isHeadOfficeReady && (
+                                <Button
+                                  variant="solid"
+                                  display="flex"
+                                  justifyContent="center"
+                                  w="100%"
+                                  // onClick={() => router.push(ROUTES.DAY_CLOSE)}
+                                  onClick={onDayEndConfirmToggle}
+                                >
+                                  Close Day
+                                </Button>
+                              )}
+                              {isYearEnd && (
+                                <Button
+                                  variant="solid"
+                                  display="flex"
+                                  justifyContent="center"
+                                  w="100%"
+                                  // onClick={() => router.push(ROUTES.DAY_CLOSE)}
+                                  onClick={() => router.push(ROUTES.YEAR_END_CLOSE)}
+                                >
+                                  Initiate Year End
+                                </Button>
+                              )}
+                            </>
+                          )
                         ) : (
-                          <>
-                            <Button
-                              variant="outline"
-                              display="flex"
-                              justifyContent="center"
-                              w="100%"
-                              onClick={handleBranchReadiness}
-                            >
-                              Branch Readiness
-                            </Button>
-                            {isHeadOfficeReady && (
-                              <Button
-                                variant="solid"
-                                display="flex"
-                                justifyContent="center"
-                                w="100%"
-                                // onClick={() => router.push(ROUTES.DAY_CLOSE)}
-                                onClick={closeDayFxn}
-                              >
-                                Close Day
-                              </Button>
-                            )}
-                            {isYearEnd && (
-                              <Button
-                                variant="solid"
-                                display="flex"
-                                justifyContent="center"
-                                w="100%"
-                                // onClick={() => router.push(ROUTES.DAY_CLOSE)}
-                                onClick={() => router.push(ROUTES.YEAR_END_CLOSE)}
-                              >
-                                Initiate Year End
-                              </Button>
-                            )}
-                          </>
-                        )
-                      ) : (
-                        <Button
-                          variant="solid"
-                          display="flex"
-                          justifyContent="center"
-                          w="100%"
-                          onClick={handleBranchReadiness}
-                        >
-                          Branch Readiness
-                        </Button>
-                      )}
-                    </Box>
-                  </Box>
-
-                  <Box bg="highlight.500" p="s8" w="100%">
-                    <Box display="flex" flexDirection="column" gap="s16">
-                      <Text fontSize="s3" fontWeight={500} color="gray.500" pl="s12">
-                        Day End
-                      </Text>
-
-                      <Box display="flex" flexDirection="column">
-                        {eodHistoryData?.endOfDay?.history?.slice(0, 2)?.map((eod) => (
                           <Button
+                            variant="solid"
+                            display="flex"
+                            justifyContent="center"
+                            w="100%"
+                            onClick={onReadinessConfirmToggle}
+                          >
+                            Branch Readiness
+                          </Button>
+                        )}
+                      </Box>
+                    </Box>
+
+                    <Box bg="highlight.500" p="s8" w="100%">
+                      <Box display="flex" flexDirection="column" gap="s16">
+                        <Text fontSize="s3" fontWeight={500} color="gray.500" pl="s12">
+                          Day End
+                        </Text>
+
+                        <Box display="flex" flexDirection="column">
+                          {eodHistoryData?.endOfDay?.history?.slice(0, 2)?.map((eod) => (
+                            <Button
+                              variant="ghost"
+                              shade="neutral"
+                              testid={format(new Date(eod?.eodDate ?? ''), 'dd MMMM')}
+                              onClick={() => {
+                                if (eod?.status === 'ONGOING') {
+                                  return router.push(ROUTES.DAY_CLOSE);
+                                }
+
+                                return router.push(
+                                  `${ROUTES.SETTINGS_EOD_HISTORY_DETAILS}?id=${eod?.eodDate}`
+                                );
+                              }}
+                            >
+                              <Box display="flex" justifyContent="space-between" width="100%">
+                                <Box display="flex" alignItems="center" gap="s10">
+                                  {eodStatusIcon(eod?.status, eod?.errorCount)}
+                                  <Text fontSize="s3" fontWeight={500} color="gray.800">
+                                    {format(new Date(eod?.eodDate ?? ''), 'dd MMMM')}
+                                  </Text>
+                                </Box>
+
+                                {eod?.errorCount ? (
+                                  <Chips
+                                    variant="solid"
+                                    theme="danger"
+                                    size="sm"
+                                    type="status"
+                                    label={`${eod.errorCount} Errors`}
+                                  />
+                                ) : null}
+                              </Box>
+                            </Button>
+                          ))}
+                        </Box>
+
+                        <Box display="flex" alignItems="flex-end">
+                          <Button
+                            rightIcon={<Icon as={BiLinkExternal} size="sm" />}
                             variant="ghost"
                             shade="neutral"
-                            testid={format(new Date(eod?.eodDate ?? ''), 'dd MMMM')}
-                            onClick={() => {
-                              if (eod?.status === 'ONGOING') {
-                                return router.push(ROUTES.DAY_CLOSE);
-                              }
-
-                              return router.push(
-                                `${ROUTES.SETTINGS_EOD_HISTORY_DETAILS}?id=${eod?.eodDate}`
-                              );
-                            }}
+                            onClick={() => router?.push(ROUTES.SETTINGS_EOD_HISTORY)}
                           >
-                            <Box display="flex" justifyContent="space-between" width="100%">
-                              <Box display="flex" alignItems="center" gap="s10">
-                                {eodStatusIcon(eod?.status, eod?.errorCount)}
-                                <Text fontSize="s3" fontWeight={500} color="gray.800">
-                                  {format(new Date(eod?.eodDate ?? ''), 'dd MMMM')}
-                                </Text>
-                              </Box>
-
-                              {eod?.errorCount ? (
-                                <Chips
-                                  variant="solid"
-                                  theme="danger"
-                                  size="sm"
-                                  type="status"
-                                  label={`${eod.errorCount} Errors`}
-                                />
-                              ) : null}
-                            </Box>
+                            View All EOD History
                           </Button>
-                        ))}
-                      </Box>
-
-                      <Box display="flex" alignItems="flex-end">
-                        <Button
-                          rightIcon={<Icon as={BiLinkExternal} size="sm" />}
-                          variant="ghost"
-                          shade="neutral"
-                          onClick={() => router?.push(ROUTES.SETTINGS_EOD_HISTORY)}
-                        >
-                          View All EOD History
-                        </Button>
+                        </Box>
                       </Box>
                     </Box>
                   </Box>
-                </Box>
-              </PopoverBody>
-            </PopoverContent>
-          </Box>
-        </>
-      )}
-    </Popover>
+                </PopoverBody>
+              </PopoverContent>
+            </Box>
+          </>
+        )}
+      </Popover>
+
+      <ConfirmationDialog
+        isOpen={isReadinessConfirmOpen}
+        onClose={onReadinessConfirmClose}
+        cancelRef={readinessConfirmCancelRef}
+        handleConfirm={handleBranchReadiness}
+        title="Branch Readiness"
+        description="This action will start branch readiness process for your branch and can only be reverted by Head Office. Are you sure you want to continue?"
+      />
+
+      <ConfirmationDialog
+        isOpen={isDayEndConfirmOpen}
+        onClose={onDayEndConfirmClose}
+        cancelRef={dayEndConfirmCancelRef}
+        handleConfirm={closeDayFxn}
+        title="Day Close"
+        description="This action will start the day end process and once completed it cannot be reverted back. Are you sure you want to continue?"
+      />
+    </>
   );
 };
