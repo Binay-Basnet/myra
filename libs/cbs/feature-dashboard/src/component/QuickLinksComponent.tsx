@@ -136,7 +136,7 @@ export const QuickLinksComponent = () => {
 
       <Grid templateColumns="repeat(3,1fr)" columnGap="s8" rowGap="s8">
         {quickLinksList?.map((item) => (
-          <Can I="CREATE" a={item?.permissionKey as AclKey}>
+          <Can I={item?.text === 'Reports' ? 'VIEW' : 'CREATE'} a={item?.permissionKey as AclKey}>
             <GridItem key={item?.text}>
               <QuickLinks icon={item.icon} text={item.text} onclick={item.onclick} />
             </GridItem>
