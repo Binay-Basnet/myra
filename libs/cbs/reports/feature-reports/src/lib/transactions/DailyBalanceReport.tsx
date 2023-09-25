@@ -174,7 +174,7 @@ const ReportFiltersDailyBalance = () => {
         <FormCheckbox name="filter.allLedgers" label="All Ledgers" />
       </Report.Filter>
       {!allLedgers && (
-        <Report.Filter title="Product Type">
+        <Report.Filter title="Ledger Select">
           <FormCOALedgerSelect
             name="filter.ledgerId"
             label="Ledger"
