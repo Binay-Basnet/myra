@@ -3,11 +3,20 @@ mutation setLoanGeneralSettings(
   $epi: Boolean
   $flat: Boolean
   $collateralList: [CollateralListInputData]
+  $rebateLedger: String
 ) {
   settings {
     general {
       loan {
-        general(data: { emi: $emi, epi: $epi, flat: $flat, collateralList: $collateralList }) {
+        general(
+          data: {
+            emi: $emi
+            epi: $epi
+            flat: $flat
+            collateralList: $collateralList
+            rebateLedger: $rebateLedger
+          }
+        ) {
           recordId
           error {
             ...MutationError

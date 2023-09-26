@@ -520,6 +520,7 @@ query getLoanPreview($id: String!) {
             isPartial
             overdueAmount
             fullPrincipal
+            rebate
           }
           totalRemainingPayable
           duesSince
@@ -554,6 +555,7 @@ query getLoanPreview($id: String!) {
             isPartial
             overdueAmount
             fullPrincipal
+            rebate
           }
           totalRemainingPayable
         }

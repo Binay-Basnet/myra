@@ -12,9 +12,10 @@ import { IoClose } from 'react-icons/io5';
 import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
 import { AddIcon } from '@chakra-ui/icons';
 
+import { Box, Button, Collapse, Icon, Text } from '@myra-ui';
+
 import { useGetNewIdMutation } from '@coop/cbs/data-access';
 import { FormInput, FormSwitch } from '@coop/shared/form';
-import { Box, Button, Collapse, Icon, Text } from '@myra-ui';
 import { GRID2X3, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -53,7 +54,6 @@ export const AcceptedCollateral = (props: ICollateralProps) => {
       border="1px"
       borderColor="gray.200"
       borderRadius={5}
-      mb="s48"
     >
       <Box
         display="flex"

@@ -78,7 +78,14 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
             isNumeric: true,
           },
         },
-
+        {
+          header: 'Rebate',
+          accessorKey: 'rebate',
+          cell: (props) => amountConverter(props?.row?.original?.rebate || 0),
+          meta: {
+            isNumeric: true,
+          },
+        },
         {
           header: 'Total',
           accessorKey: 'payment',
