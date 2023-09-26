@@ -171,7 +171,7 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
           display: 'flex',
         },
         '@page': {
-          size: 'A4 potrait',
+          size: 'auto !important',
         },
       }}
       ref={ref}

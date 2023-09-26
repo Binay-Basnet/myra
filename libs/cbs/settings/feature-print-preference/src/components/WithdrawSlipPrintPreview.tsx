@@ -127,7 +127,7 @@ export const WithdrawSlipPrintPreview = () => {
             display: 'flex',
           },
           '@page': {
-            size: 'A4 landscape',
+            size: 'auto !important',
           },
         }}
       >

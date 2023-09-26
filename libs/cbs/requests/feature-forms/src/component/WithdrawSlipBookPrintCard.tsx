@@ -63,7 +63,7 @@ export const WithdrawSlipBookPrintCard = React.forwardRef<
               display: 'flex',
             },
             '@page': {
-              size: 'A4 landscape',
+              size: 'auto !important',
             },
           }}
         >
