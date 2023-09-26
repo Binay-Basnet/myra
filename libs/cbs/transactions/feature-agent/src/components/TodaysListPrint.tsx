@@ -36,7 +36,11 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
     { staleTime: 0, enabled: !!id }
   );
 
-  const todaysListData = agentTodayListQueryData?.agent?.listAgentTask?.record ?? [];
+  const todaysListData =
+    agentTodayListQueryData?.agent?.listAgentTask?.record?.map((d, i) => ({
+      ...d,
+      index: i + 1,
+    })) ?? [];
 
   const { data: assignedMemberListQueryData } = useGetAgentAssignedMemberListDataQuery(
     {
@@ -62,6 +66,13 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
   );
 
   const columns: Column<typeof todaysListData[0]>[] = [
+    {
+      accessorKey: 'index',
+      header: 'SN',
+      meta: {
+        width: '10px',
+      },
+    },
     {
       accessorKey: 'member',
       header: 'Member',
@@ -161,6 +172,13 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
         width: '10%',
       },
     },
+    {
+      header: 'Remarks',
+      id: 'remarks',
+      meta: {
+        width: 'auto',
+      },
+    },
   ];
 
   return (
@@ -176,7 +194,7 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
       }}
       ref={ref}
     >
-      <Box display="flex" flexDirection="column" gap="s16">
+      <Box display="flex" flexDirection="column" gap="s16" width="100%">
         <Box display="flex" justifyContent="space-between">
           <Box display="flex" gap="s4" fontSize="r1" fontWeight={500}>
             <Text>Market Representative: </Text>

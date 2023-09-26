@@ -394,7 +394,7 @@ export const MarketRepresentativeCollectionAdd = () => {
                   Total Accounts
                 </Text>
                 <Text fontSize="r1" fontWeight={500} color="gray.700">
-                  {accounts?.length || 0}
+                  {accounts?.filter((a: { amount: string | number }) => !!a?.amount)?.length || 0}
                 </Text>
               </Box>
               <Box display="flex" justifyContent="space-between">
