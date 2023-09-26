@@ -201,7 +201,7 @@ const TransactionHistoryPage = () => {
                       display: 'none',
                     },
                     '@page': {
-                      size: 'A4 potrait',
+                      size: 'auto !important',
                       margin: '0.2in',
                       marginLeft: '0.4in',
                       marginBottom: '0',
