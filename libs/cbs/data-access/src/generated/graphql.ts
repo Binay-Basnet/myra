@@ -14792,8 +14792,6 @@ export type LoanGeneralSettings = {
   emi?: Maybe<Scalars['Boolean']>;
   epi?: Maybe<Scalars['Boolean']>;
   flat?: Maybe<Scalars['Boolean']>;
-  rebateLedger?: Maybe<Scalars['String']>;
-  rebateLedgerName?: Maybe<Scalars['String']>;
 };
 
 export type LoanGeneralSettingsInput = {
@@ -14803,7 +14801,6 @@ export type LoanGeneralSettingsInput = {
   emi?: InputMaybe<Scalars['Boolean']>;
   epi?: InputMaybe<Scalars['Boolean']>;
   flat?: InputMaybe<Scalars['Boolean']>;
-  rebateLedger?: InputMaybe<Scalars['String']>;
 };
 
 export type LoanGuaranteeActionsInput = {
@@ -14996,7 +14993,6 @@ export type LoanPreviewGeneralInformation = {
   natureOfLoanProduct?: Maybe<NatureOfLoanProduct>;
   penalty?: Maybe<LoanPenalty>;
   productCode?: Maybe<Scalars['String']>;
-  rebate?: Maybe<Rebate>;
 };
 
 export type LoanPreviewInstallment = {
@@ -28533,7 +28529,6 @@ export type SetLoanGeneralSettingsMutationVariables = Exact<{
   collateralList?: InputMaybe<
     Array<InputMaybe<CollateralListInputData>> | InputMaybe<CollateralListInputData>
   >;
-  rebateLedger?: InputMaybe<Scalars['String']>;
 }>;
 
 export type SetLoanGeneralSettingsMutation = {
@@ -40010,6 +40005,20 @@ export type GetIndividualMemberReportQuery = {
             transactionType?: string | null;
             transactionAmount?: string | null;
           } | null> | null;
+          withDrawSlipIssueStatus?: Array<{
+            id?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            accountType?: string | null;
+            accNum?: string | null;
+            type?: string | null;
+          } | null> | null;
+          kymStatusForMember?: {
+            id?: string | null;
+            riskCategory?: string | null;
+            lastUpdatedDate?: Record<'local' | 'en' | 'np', string> | null;
+            ExpiryDays?: string | null;
+            Status?: string | null;
+          } | null;
           savingDetail?: Array<{
             accountNo?: string | null;
             accountName?: string | null;
@@ -43694,8 +43703,6 @@ export type GetLoanGeneralSettingsQuery = {
           emi?: boolean | null;
           epi?: boolean | null;
           flat?: boolean | null;
-          rebateLedger?: string | null;
-          rebateLedgerName?: string | null;
           collateralList?: Array<{
             id?: string | null;
             name?: string | null;
@@ -53484,12 +53491,12 @@ export const useUpdateLoanProductProcessingChargeMutation = <TError = unknown, T
     options
   );
 export const SetLoanGeneralSettingsDocument = `
-    mutation setLoanGeneralSettings($emi: Boolean, $epi: Boolean, $flat: Boolean, $collateralList: [CollateralListInputData], $rebateLedger: String) {
+    mutation setLoanGeneralSettings($emi: Boolean, $epi: Boolean, $flat: Boolean, $collateralList: [CollateralListInputData]) {
   settings {
     general {
       loan {
         general(
-          data: {emi: $emi, epi: $epi, flat: $flat, collateralList: $collateralList, rebateLedger: $rebateLedger}
+          data: {emi: $emi, epi: $epi, flat: $flat, collateralList: $collateralList}
         ) {
           recordId
           error {
@@ -68584,6 +68591,20 @@ export const GetIndividualMemberReportDocument = `
             transactionType
             transactionAmount
           }
+          withDrawSlipIssueStatus {
+            id
+            date
+            accountType
+            accNum
+            type
+          }
+          kymStatusForMember {
+            id
+            riskCategory
+            lastUpdatedDate
+            ExpiryDays
+            Status
+          }
           totalTransactionAmount
           savingDetail {
             accountNo
@@ -73518,8 +73539,6 @@ export const GetLoanGeneralSettingsDocument = `
             name
             enabled
           }
-          rebateLedger
-          rebateLedgerName
         }
       }
     }
