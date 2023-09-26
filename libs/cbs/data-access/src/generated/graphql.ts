@@ -40042,6 +40042,20 @@ export type GetIndividualMemberReportQuery = {
             transactionType?: string | null;
             transactionAmount?: string | null;
           } | null> | null;
+          withDrawSlipIssueStatus?: Array<{
+            id?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            accountType?: string | null;
+            accNum?: string | null;
+            type?: string | null;
+          } | null> | null;
+          kymStatusForMember?: {
+            id?: string | null;
+            riskCategory?: string | null;
+            lastUpdatedDate?: Record<'local' | 'en' | 'np', string> | null;
+            ExpiryDays?: string | null;
+            Status?: string | null;
+          } | null;
           savingDetail?: Array<{
             accountNo?: string | null;
             accountName?: string | null;
@@ -68692,6 +68706,20 @@ export const GetIndividualMemberReportDocument = `
             transactionDate
             transactionType
             transactionAmount
+          }
+          withDrawSlipIssueStatus {
+            id
+            date
+            accountType
+            accNum
+            type
+          }
+          kymStatusForMember {
+            id
+            riskCategory
+            lastUpdatedDate
+            ExpiryDays
+            Status
           }
           totalTransactionAmount
           savingDetail {

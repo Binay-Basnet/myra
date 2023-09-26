@@ -259,7 +259,20 @@ query getIndividualMemberReport($memberId: ID!) {
             transactionType
             transactionAmount
           }
-
+          withDrawSlipIssueStatus {
+            id
+            date
+            accountType
+            accNum
+            type
+          }
+          kymStatusForMember {
+            id
+            riskCategory
+            lastUpdatedDate
+            ExpiryDays
+            Status
+          }
           totalTransactionAmount
 
           savingDetail {
