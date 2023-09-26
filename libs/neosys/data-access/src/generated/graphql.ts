@@ -1420,6 +1420,8 @@ export type UtilityRecordsEdges = {
 };
 
 export type UtilityRecordsInfo = {
+  amount: Scalars['String'];
+  count?: Maybe<Scalars['String']>;
   crAmount: Scalars['String'];
   drAmount: Scalars['String'];
   id: Scalars['String'];
@@ -2571,6 +2573,7 @@ export type GetUtilityTransactionListQuery = {
           crAmount: string;
           utility: string;
           txnStatus: UtilityUsageObjStateType;
+          amount: string;
         } | null;
       } | null> | null;
       pageInfo?: PaginationFragment | null;
@@ -4115,6 +4118,7 @@ export const GetUtilityTransactionListDocument = `
           crAmount
           utility
           txnStatus
+          amount
         }
         cursor
       }

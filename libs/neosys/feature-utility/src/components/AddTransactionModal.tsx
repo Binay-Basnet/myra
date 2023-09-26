@@ -60,7 +60,7 @@ export const AddTransactionModal = ({ isOpen, onClose }: IAddTransactionModalPro
 
   return (
     <Modal
-      title="Update Penalty"
+      title="Add Transaction"
       open={isOpen}
       onClose={handleClose}
       primaryButtonLabel="Apply"
@@ -68,7 +68,13 @@ export const AddTransactionModal = ({ isOpen, onClose }: IAddTransactionModalPro
     >
       <FormProvider {...methods}>
         <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-          <FormSelect name="slug" label="SACCOS" options={slugOptions} isLoading={isFetching} />
+          <FormSelect
+            name="slug"
+            label="SACCOS"
+            options={slugOptions}
+            isLoading={isFetching}
+            menuPosition="fixed"
+          />
 
           <FormAmountInput name="amount" label="Amount" />
 

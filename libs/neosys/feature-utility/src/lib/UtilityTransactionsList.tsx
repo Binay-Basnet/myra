@@ -26,14 +26,23 @@ export const UtilityTransactionsList = () => {
       {
         header: 'SACCOSS',
         accessorFn: (row) => row?.node?.saccossName,
+        meta: {
+          width: 'auto',
+        },
       },
       {
         header: 'Debit',
         accessorFn: (row) => amountConverter(row?.node?.drAmount || 0),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Credit',
         accessorFn: (row) => amountConverter(row?.node?.crAmount || 0),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Utility',
@@ -42,6 +51,13 @@ export const UtilityTransactionsList = () => {
       {
         header: 'Transaction Status',
         accessorFn: (row) => row?.node?.txnStatus,
+      },
+      {
+        header: 'Remaining Balance',
+        accessorFn: (row) => amountConverter(row?.node?.amount || 0),
+        meta: {
+          isNumeric: true,
+        },
       },
     ],
     []

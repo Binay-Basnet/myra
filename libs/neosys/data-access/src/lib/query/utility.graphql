@@ -11,6 +11,7 @@ query getUtilityTransactionList($paginate: Pagination!, $filter: Filter) {
           crAmount
           utility
           txnStatus
+          amount
         }
         cursor
       }
