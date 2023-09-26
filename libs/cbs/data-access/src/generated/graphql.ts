@@ -18193,6 +18193,7 @@ export type OrganizationBasicDetails = {
 export type OrganizationBasicDetailsInput = {
   logo?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  slogan?: InputMaybe<Scalars['String']>;
   typeOfOrganization?: InputMaybe<TypeOfOrganization>;
 };
 
@@ -28526,6 +28527,32 @@ export type UpdateLoanProductProcessingChargeMutation = {
   };
 };
 
+export type UpdateLoanProductRebateMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  productId: Scalars['ID'];
+  payload: RebateTypeInput;
+  additionalData: ProductChargeAdditionalDataInput;
+}>;
+
+export type UpdateLoanProductRebateMutation = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        updateRebateCharge: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type SetLoanGeneralSettingsMutationVariables = Exact<{
   emi?: InputMaybe<Scalars['Boolean']>;
   epi?: InputMaybe<Scalars['Boolean']>;
@@ -36311,6 +36338,11 @@ export type GetLoanPreviewQuery = {
             penaltyRate?: number | null;
             penaltyAmount?: any | null;
           } | null;
+          rebate?: {
+            dayBeforeInstallmentDate?: number | null;
+            rebateRate?: number | null;
+            rebateAmount?: any | null;
+          } | null;
         } | null;
         loanDetails?: {
           appliedLoanAmount?: string | null;
@@ -43678,6 +43710,37 @@ export type GetLoanProductProcessingChargeDetailQuery = {
               fileUploads?: Array<{ identifier: string; url: string } | null> | null;
             } | null;
           } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanProductRebateUpdateListQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetLoanProductRebateUpdateListQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        listRebateCharge: {
+          data?: Array<{
+            payload?: {
+              dayBeforeInstallmentDate?: number | null;
+              rebateRate?: number | null;
+              rebateAmount?: any | null;
+              rebateLedgerMapping?: string | null;
+              noOfInstallment?: number | null;
+            } | null;
+            additionalData?: {
+              id?: string | null;
+              createdAt?: Record<'local' | 'en' | 'np', string> | null;
+              effectiveDate: Record<'local' | 'en' | 'np', string>;
+              notes?: string | null;
+              fileUploads?: Array<{ identifier: string; url: string } | null> | null;
+            } | null;
+          } | null> | null;
         };
       } | null;
     } | null;
@@ -53481,6 +53544,47 @@ export const useUpdateLoanProductProcessingChargeMutation = <TError = unknown, T
       UpdateLoanProductProcessingChargeMutation,
       UpdateLoanProductProcessingChargeMutationVariables
     >(UpdateLoanProductProcessingChargeDocument),
+    options
+  );
+export const UpdateLoanProductRebateDocument = `
+    mutation updateLoanProductRebate($id: ID, $productId: ID!, $payload: RebateTypeInput!, $additionalData: ProductChargeAdditionalDataInput!) {
+  settings {
+    general {
+      loanProducts {
+        updateRebateCharge(
+          id: $id
+          productId: $productId
+          payload: $payload
+          additionalData: $additionalData
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateLoanProductRebateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateLoanProductRebateMutation,
+    TError,
+    UpdateLoanProductRebateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateLoanProductRebateMutation,
+    TError,
+    UpdateLoanProductRebateMutationVariables,
+    TContext
+  >(
+    ['updateLoanProductRebate'],
+    useAxios<UpdateLoanProductRebateMutation, UpdateLoanProductRebateMutationVariables>(
+      UpdateLoanProductRebateDocument
+    ),
     options
   );
 export const SetLoanGeneralSettingsDocument = `
@@ -63782,6 +63886,11 @@ export const GetLoanPreviewDocument = `
             penaltyRate
             penaltyAmount
           }
+          rebate {
+            dayBeforeInstallmentDate
+            rebateRate
+            rebateAmount
+          }
         }
         loanDetails {
           appliedLoanAmount
@@ -73502,6 +73611,51 @@ export const useGetLoanProductProcessingChargeDetailQuery = <
       GetLoanProductProcessingChargeDetailQuery,
       GetLoanProductProcessingChargeDetailQueryVariables
     >(GetLoanProductProcessingChargeDetailDocument).bind(null, variables),
+    options
+  );
+export const GetLoanProductRebateUpdateListDocument = `
+    query getLoanProductRebateUpdateList($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        listRebateCharge(productId: $productId) {
+          data {
+            payload {
+              dayBeforeInstallmentDate
+              rebateRate
+              rebateAmount
+              rebateLedgerMapping
+              noOfInstallment
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductRebateUpdateListQuery = <
+  TData = GetLoanProductRebateUpdateListQuery,
+  TError = unknown
+>(
+  variables: GetLoanProductRebateUpdateListQueryVariables,
+  options?: UseQueryOptions<GetLoanProductRebateUpdateListQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductRebateUpdateListQuery, TError, TData>(
+    ['getLoanProductRebateUpdateList', variables],
+    useAxios<GetLoanProductRebateUpdateListQuery, GetLoanProductRebateUpdateListQueryVariables>(
+      GetLoanProductRebateUpdateListDocument
+    ).bind(null, variables),
     options
   );
 export const GetLoanGeneralSettingsDocument = `

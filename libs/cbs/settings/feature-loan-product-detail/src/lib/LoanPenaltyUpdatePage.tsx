@@ -90,7 +90,7 @@ export const LoanPenaltyUpdatePage = () => {
       },
       {
         header: 'Penalty Rate',
-        accessorFn: (row) => `${row?.payload?.penaltyRate} %`,
+        accessorFn: (row) => (row?.payload?.penaltyRate ? `${row?.payload?.penaltyRate} %` : '-'),
         meta: {
           isNumeric: true,
         },
@@ -104,7 +104,7 @@ export const LoanPenaltyUpdatePage = () => {
       },
       {
         header: 'Days after installment date',
-        accessorFn: (row) => row?.payload?.dayAfterInstallmentDate,
+        accessorFn: (row) => row?.payload?.dayAfterInstallmentDate || '-',
         meta: {
           isNumeric: true,
         },

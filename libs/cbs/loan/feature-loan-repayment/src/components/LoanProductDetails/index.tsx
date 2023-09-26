@@ -78,6 +78,25 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
     ];
   }, [loanData]);
 
+  const rebateInfo: { label: string; value: string | null | undefined }[] = useMemo(() => {
+    const rebate = loanData?.generalInformation?.rebate;
+
+    return [
+      {
+        label: 'Days Before Installment Date',
+        value: String(rebate?.dayBeforeInstallmentDate ?? '-'),
+      },
+      {
+        label: 'Penalty Rate',
+        value: rebate?.rebateRate ? `${rebate?.rebateRate} %` : '-',
+      },
+      {
+        label: 'Penalty Amount',
+        value: amountConverter(rebate?.rebateAmount),
+      },
+    ];
+  }, [loanData]);
+
   return (
     <Box display="flex" flexDirection="column" gap="s16">
       {' '}
@@ -243,7 +262,28 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
                 : 'Yearly'}
             </Text>
           </Box>
+
+          <Text fontSize="s3" fontWeight="500">
+            Penalty
+          </Text>
           {penaltyInfo?.map(
+            (info) =>
+              info?.value && (
+                <Box display="flex" flexDirection="column" gap="s4">
+                  <Text fontSize="s3" fontWeight="400">
+                    {info?.label}
+                  </Text>
+                  <Text fontSize="s3" fontWeight="600">
+                    {info?.value}
+                  </Text>
+                </Box>
+              )
+          )}
+
+          <Text fontSize="s3" fontWeight="500">
+            Rebate
+          </Text>
+          {rebateInfo?.map(
             (info) =>
               info?.value && (
                 <Box display="flex" flexDirection="column" gap="s4">

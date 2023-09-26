@@ -22,14 +22,6 @@ export const ProductRebate = ({ rebateData }: IProductRebateProps) => {
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
       },
       {
-        header: 'No. of Installments',
-        accessorKey: 'noOfInstallment',
-        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
-        meta: {
-          isNumeric: true,
-        },
-      },
-      {
         header: 'Rebate Amount',
         accessorKey: 'rebateAmount',
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
@@ -38,17 +30,12 @@ export const ProductRebate = ({ rebateData }: IProductRebateProps) => {
         },
       },
       {
-        header: '% of Deposited amount',
+        header: 'Rebate Rate',
         accessorKey: 'rebateRate',
         cell: (props) => (props.getValue() ? `${props.getValue()}  %` : 'N/A'),
         meta: {
           isNumeric: true,
         },
-      },
-      {
-        header: 'Rebate Ledger Mapping',
-        accessorKey: 'rebateLedgerMapping',
-        cell: (props) => (props.getValue() ? `${props.getValue()}  %` : 'N/A'),
       },
     ],
     []

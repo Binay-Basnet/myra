@@ -453,6 +453,11 @@ query getLoanPreview($id: String!) {
             penaltyRate
             penaltyAmount
           }
+          rebate {
+            dayBeforeInstallmentDate
+            rebateRate
+            rebateAmount
+          }
         }
         loanDetails {
           appliedLoanAmount
