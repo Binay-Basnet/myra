@@ -14792,6 +14792,8 @@ export type LoanGeneralSettings = {
   emi?: Maybe<Scalars['Boolean']>;
   epi?: Maybe<Scalars['Boolean']>;
   flat?: Maybe<Scalars['Boolean']>;
+  rebateLedger?: Maybe<Scalars['String']>;
+  rebateLedgerName?: Maybe<Scalars['String']>;
 };
 
 export type LoanGeneralSettingsInput = {
@@ -14801,6 +14803,7 @@ export type LoanGeneralSettingsInput = {
   emi?: InputMaybe<Scalars['Boolean']>;
   epi?: InputMaybe<Scalars['Boolean']>;
   flat?: InputMaybe<Scalars['Boolean']>;
+  rebateLedger?: InputMaybe<Scalars['String']>;
 };
 
 export type LoanGuaranteeActionsInput = {
@@ -14993,6 +14996,7 @@ export type LoanPreviewGeneralInformation = {
   natureOfLoanProduct?: Maybe<NatureOfLoanProduct>;
   penalty?: Maybe<LoanPenalty>;
   productCode?: Maybe<Scalars['String']>;
+  rebate?: Maybe<Rebate>;
 };
 
 export type LoanPreviewInstallment = {
@@ -18189,6 +18193,7 @@ export type OrganizationBasicDetails = {
 export type OrganizationBasicDetailsInput = {
   logo?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  slogan?: InputMaybe<Scalars['String']>;
   typeOfOrganization?: InputMaybe<TypeOfOrganization>;
 };
 
@@ -28529,6 +28534,7 @@ export type SetLoanGeneralSettingsMutationVariables = Exact<{
   collateralList?: InputMaybe<
     Array<InputMaybe<CollateralListInputData>> | InputMaybe<CollateralListInputData>
   >;
+  rebateLedger?: InputMaybe<Scalars['String']>;
 }>;
 
 export type SetLoanGeneralSettingsMutation = {
@@ -43703,6 +43709,8 @@ export type GetLoanGeneralSettingsQuery = {
           emi?: boolean | null;
           epi?: boolean | null;
           flat?: boolean | null;
+          rebateLedger?: string | null;
+          rebateLedgerName?: string | null;
           collateralList?: Array<{
             id?: string | null;
             name?: string | null;
@@ -53491,12 +53499,12 @@ export const useUpdateLoanProductProcessingChargeMutation = <TError = unknown, T
     options
   );
 export const SetLoanGeneralSettingsDocument = `
-    mutation setLoanGeneralSettings($emi: Boolean, $epi: Boolean, $flat: Boolean, $collateralList: [CollateralListInputData]) {
+    mutation setLoanGeneralSettings($emi: Boolean, $epi: Boolean, $flat: Boolean, $collateralList: [CollateralListInputData], $rebateLedger: String) {
   settings {
     general {
       loan {
         general(
-          data: {emi: $emi, epi: $epi, flat: $flat, collateralList: $collateralList}
+          data: {emi: $emi, epi: $epi, flat: $flat, collateralList: $collateralList, rebateLedger: $rebateLedger}
         ) {
           recordId
           error {
@@ -73539,6 +73547,8 @@ export const GetLoanGeneralSettingsDocument = `
             name
             enabled
           }
+          rebateLedger
+          rebateLedgerName
         }
       }
     }

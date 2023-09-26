@@ -11,8 +11,8 @@ query getLoanGeneralSettings {
             name
             enabled
           }
-          # rebateLedger
-          # rebateLedgerName
+          rebateLedger
+          rebateLedgerName
         }
       }
     }

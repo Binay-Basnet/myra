@@ -2,7 +2,8 @@ mutation setLoanGeneralSettings(
   $emi: Boolean
   $epi: Boolean
   $flat: Boolean
-  $collateralList: [CollateralListInputData] # $rebateLedger: String
+  $collateralList: [CollateralListInputData]
+  $rebateLedger: String
 ) {
   settings {
     general {
@@ -13,7 +14,7 @@ mutation setLoanGeneralSettings(
             epi: $epi
             flat: $flat
             collateralList: $collateralList
-            # rebateLedger: $rebateLedger
+            rebateLedger: $rebateLedger
           }
         ) {
           recordId
