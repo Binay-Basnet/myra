@@ -1,4 +1,5 @@
 export * from './BoxContainer';
+export * from './ConfirmationDialog';
 export * from './DetailsAlertBar';
 export * from './DetailsKeyValueCard';
 export * from './DetailsKeyValueCards';

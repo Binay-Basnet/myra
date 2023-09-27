@@ -110,9 +110,7 @@
       ],
       "@coop/cbs/settings/share": ["libs/cbs/settings/feature-share/src/index.ts"],
       "@coop/cbs/settings/super-admin": ["libs/cbs/settings/feature-super-admin/src/index.ts"],
-      "@coop/cbs/settings/transaction-constraints": [
-        "libs/cbs/settings/feature-transaction-constraints/src/index.ts"
-      ],
+      "@coop/cbs/settings/transactions": ["libs/cbs-settings-feature-transactions/src/index.ts"],
       "@coop/cbs/settings/ui-components": ["libs/cbs/settings/ui-components/src/index.ts"],
       "@coop/cbs/settings/ui-containers": ["libs/cbs/settings/ui-containers/src/index.ts"],
       "@coop/cbs/settings/ui-layout": ["libs/cbs/settings/ui-layout/src/index.ts"],
@@ -188,6 +186,7 @@
       "@coop/neosys-admin/settings": ["libs/neosys/feature-settings/src/index.ts"],
       "@coop/neosys-admin/ui-components": ["libs/neosys/ui-components/src/index.ts"],
       "@coop/neosys-admin/users": ["libs/neosys/feature-users/src/index.ts"],
+      "@coop/neosys-admin/utility": ["libs/neosys/feature-utility/src/index.ts"],
       "@coop/settings/access-log": ["libs/cbs/settings/feature-access-log/src/index.ts"],
       "@coop/settings/alternative-channels": [
         "libs/cbs/settings/feature-alternative-channels/src/index.ts"

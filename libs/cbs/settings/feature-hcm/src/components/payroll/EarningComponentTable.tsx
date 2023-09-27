@@ -19,24 +19,37 @@ import {
 } from '@myra-ui';
 
 import {
+  CalculationTypeEnum,
   EarningComponentInput,
+  EarningFrequencyEnum,
   useDeleteEarningComponentMutation,
   useGetEarningComponentListQuery,
   useGetEarningComponentQuery,
   useSetEarningComponentMutation,
 } from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
-import { FormCheckbox, FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
+import {
+  FormAmountInput,
+  FormCheckbox,
+  FormInput,
+  FormLeafCoaHeadSelect,
+  FormSelect,
+  FormTextArea,
+} from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 const defaultFormValue = {
   name: '',
   abbr: '',
   description: '',
+  ledgerHead: null,
+  earningFrequency: null,
+  calculationType: CalculationTypeEnum?.Amount,
   baseMultiple: null,
   multiplier: 0,
-  isTaxApplicable: false,
-  roundToNearestInteger: false,
+  maximumAmountLimitPerYear: '',
+  taxExempted: false,
+  requiredProof: false,
   makeThisActive: false,
 };
 
@@ -48,6 +61,16 @@ export const EarningComponentTable = () => {
   const { data, refetch } = useGetEarningComponentListQuery({ pagination: getPaginationQuery() });
   const { mutateAsync, isLoading } = useSetEarningComponentMutation();
   const { mutateAsync: deleteMutateAsync } = useDeleteEarningComponentMutation();
+
+  const earningFrequencyOptions = [
+    { label: 'Fixed', value: EarningFrequencyEnum?.Fixed },
+    { label: 'Reccuring', value: EarningFrequencyEnum?.Recurring },
+  ];
+
+  const calculationTypeOptions = [
+    { label: 'Amount', value: CalculationTypeEnum?.Amount },
+    { label: 'Percentage', value: CalculationTypeEnum?.Percentage },
+  ];
 
   const { data: earningComponentData } = useGetEarningComponentQuery(
     { id: selectedEarningComponentId },
@@ -65,7 +88,9 @@ export const EarningComponentTable = () => {
   const methods = useForm<EarningComponentInput>({
     defaultValues: defaultFormValue,
   });
-  const { getValues, reset } = methods;
+  const { getValues, reset, watch } = methods;
+
+  const calculationTypeWatch = watch('calculationType');
 
   const rowData = useMemo(
     () =>
@@ -236,7 +261,7 @@ export const EarningComponentTable = () => {
         onClose={handleAddModalClose}
         isCentered
         title="Earning Component"
-        width="xl"
+        width="4xl"
       >
         <FormProvider {...methods}>
           <Grid templateColumns="repeat(3,1fr)" gap="s16">
@@ -247,36 +272,75 @@ export const EarningComponentTable = () => {
             <GridItem colSpan={3}>
               <FormTextArea name="description" label="Description" />
             </GridItem>
-            <GridItem>
-              <FormSelect
-                name="baseMultiple"
-                label="Multiplier"
-                options={
-                  rowData?.map((item) => ({
-                    label: item?.node?.abbr,
-                    value: item?.node?.abbr,
-                  })) as { label: string; value: string }[]
-                }
-              />
+            <GridItem colSpan={3}>
+              <Divider />
             </GridItem>
-            <GridItem>
-              <Box display="flex" h="100%" justifyContent="center" alignItems="center" gap="s16">
-                <Text>X</Text>
-                <FormInput type="number" name="multiplier" label="Factor" />
+            <GridItem colSpan={3}>
+              <Box display="flex" gap="s20">
+                <Box flex={1}>
+                  <FormLeafCoaHeadSelect name="ledgerHead" label="Ledger Name" />
+                </Box>
+                <Box flex={1}>
+                  <FormSelect
+                    name="earningFrequency"
+                    label="Earning Frequency"
+                    options={earningFrequencyOptions}
+                  />
+                </Box>
+              </Box>
+              <Box display="flex" gap="s20" mt="s16">
+                <Box flex={1}>
+                  <FormSelect
+                    name="calculationType"
+                    label="Calculation Type"
+                    options={calculationTypeOptions}
+                  />
+                </Box>
+                {calculationTypeWatch === CalculationTypeEnum?.Amount ? (
+                  <Box flex={1}>
+                    <FormAmountInput
+                      type="number"
+                      name="maximumAmountLimitPerYear"
+                      label="Maximum Limit/year"
+                    />
+                  </Box>
+                ) : (
+                  <>
+                    <Box flex={1}>
+                      <FormSelect
+                        name="baseMultiple"
+                        label="Multiplier"
+                        options={
+                          rowData?.map((item) => ({
+                            label: item?.node?.abbr,
+                            value: item?.node?.abbr,
+                          })) as { label: string; value: string }[]
+                        }
+                      />
+                    </Box>
+                    <Box flex={1}>
+                      <FormInput type="number" name="multiplier" label="Factor" />
+                    </Box>
+                  </>
+                )}
               </Box>
             </GridItem>
             <GridItem colSpan={3}>
               <Box display="flex" flexDir="column" gap="s16">
-                <FormCheckbox name="isTaxApplicable" label="Is Tax Applicable" />
-                <FormCheckbox name="roundToNearestInteger" label="Round to the Nearest Integer" />
+                <Text fontSize="r1" fontWeight="medium">
+                  Additional Setup
+                </Text>
+                <FormCheckbox name="taxExempted" label="Tax Exempted" />
+                <FormCheckbox name="requiredProof" label="Required Proof" />
+              </Box>
+            </GridItem>
+            <GridItem colSpan={3}>
+              <Divider />
+            </GridItem>
+            <GridItem colSpan={3}>
+              <Box display="flex" justifyContent="space-between">
                 <FormCheckbox name="makeThisActive" label="Make this Active" />
-                <Divider />
-                <Button
-                  w="-webkit-fit-content"
-                  alignSelf="flex-end"
-                  onClick={onSubmit}
-                  isLoading={isLoading}
-                >
+                <Button onClick={onSubmit} isLoading={isLoading}>
                   Save
                 </Button>
               </Box>

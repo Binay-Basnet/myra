@@ -503,3 +503,33 @@ query getLoanProductProcessingChargeDetail($chargeId: ID!) {
     }
   }
 }
+
+query getLoanProductRebateUpdateList($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        listRebateCharge(productId: $productId) {
+          data {
+            payload {
+              dayBeforeInstallmentDate
+              rebateRate
+              rebateAmount
+              rebateLedgerMapping
+              noOfInstallment
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+        }
+      }
+    }
+  }
+}

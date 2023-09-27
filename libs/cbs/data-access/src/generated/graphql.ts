@@ -441,6 +441,7 @@ export const AccountType = {
   LineOfCreditSavingContra: 'LineOfCreditSavingContra',
   LoanAccount: 'LoanAccount',
   MemberShareDividend: 'MemberShareDividend',
+  MemberShareDividendTax: 'MemberShareDividendTax',
   PaidUpShareCapital: 'PaidUpShareCapital',
   SavingSuspense: 'SavingSuspense',
   TdsPayable: 'TDSPayable',
@@ -4774,6 +4775,16 @@ export type CurrentFundResult = {
   error?: Maybe<QueryError>;
 };
 
+export type CurrentMonthUpdateSalaryStructureWithError = {
+  data?: Maybe<CurrentMontheUpdatedSalaryStructure>;
+  error?: Maybe<QueryError>;
+};
+
+export type CurrentMontheUpdatedSalaryStructure = {
+  deductions?: Maybe<Array<Maybe<EarningsAndDeductionsType>>>;
+  earnings?: Maybe<Array<Maybe<EarningsAndDeductionsType>>>;
+};
+
 export type CustomFormListQueryResult = {
   data?: Maybe<Array<Maybe<FormElement>>>;
   error?: Maybe<QueryError>;
@@ -5356,6 +5367,7 @@ export type DepositLoanAccountListResult = {
 
 export type DepositLoanAccountMutation = {
   add?: Maybe<DepositLoanAccountResult>;
+  addSuspenseLedger: SuspenseUpdateResult;
   close?: Maybe<DepositAccountCloseResult>;
   editAccountInterest: InterestSetupMutationResult;
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
@@ -6703,6 +6715,16 @@ export const EarningFrequencyEnum = {
 } as const;
 
 export type EarningFrequencyEnum = typeof EarningFrequencyEnum[keyof typeof EarningFrequencyEnum];
+export type EarningsAndDeductionsInput = {
+  amount?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type EarningsAndDeductionsType = {
+  amount?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['ID']>;
+};
+
 export type EbankingRegistrationReportResult = {
   data?: Maybe<Array<Maybe<EbankingReportResult>>>;
   error?: Maybe<QueryError>;
@@ -9670,6 +9692,7 @@ export type HrMutation = {
 
 export type HrPayrollMutation = {
   payrollRun: HrPayrollPayrollRunMutation;
+  salStrucAdjustRevision: HrPayrollSalStructureAdjustmentRevisionMutation;
   salaryStructureAssignment: HrPayrollSalaryStructureAssignmentMutation;
 };
 
@@ -9690,6 +9713,7 @@ export type HrPayrollPayrollRunMutationUpsertPayrollRunArgs = {
 
 export type HrPayrollPayrollRunQuery = {
   ListSalaryAssignmentWithExtraDetails: ExtraDetailsConnection;
+  getAllEmployeesSalaryDetailsForThisPayrollRun: ReturnUnpaidEmployeeDetailsWithError;
   getPayrollRun: EachPayrollRunRecords;
   listPayrollRun: PayrollRunConnection;
   listSalarySlip: SalarySlipsConnection;
@@ -9698,6 +9722,12 @@ export type HrPayrollPayrollRunQuery = {
 export type HrPayrollPayrollRunQueryListSalaryAssignmentWithExtraDetailsArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type HrPayrollPayrollRunQueryGetAllEmployeesSalaryDetailsForThisPayrollRunArgs = {
+  paygroup?: InputMaybe<Scalars['ID']>;
+  payrollMonth?: InputMaybe<NepaliMonths>;
+  year?: InputMaybe<Scalars['Int']>;
 };
 
 export type HrPayrollPayrollRunQueryGetPayrollRunArgs = {
@@ -9716,6 +9746,7 @@ export type HrPayrollPayrollRunQueryListSalarySlipArgs = {
 
 export type HrPayrollQuery = {
   payrollRun: HrPayrollPayrollRunQuery;
+  salStrucAdjustRevision: HrPayrollSalStructureAdjustmentRevisionQuery;
   salaryStructureAssignment: HrPayrollSalaryStructureAssignmentQuery;
 };
 
@@ -10058,6 +10089,30 @@ export type HrEmployeeWorkExperienceType = {
   companyName?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
   durationInYrs?: Maybe<Scalars['Int']>;
+};
+
+export type HrPayrollSalStructureAdjustmentRevisionMutation = {
+  upsertSalAdjustmentRevision: SalStructureAdjustmentRevisionReturn;
+};
+
+export type HrPayrollSalStructureAdjustmentRevisionMutationUpsertSalAdjustmentRevisionArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input?: InputMaybe<SalAdjustmentRevisionInput>;
+};
+
+export type HrPayrollSalStructureAdjustmentRevisionQuery = {
+  getCurrentMonthUpdatedSalaryStructure: CurrentMonthUpdateSalaryStructureWithError;
+  getSalStructureAdjustRevision: ReturnSalStructureAdjustRevisionWithError;
+};
+
+export type HrPayrollSalStructureAdjustmentRevisionQueryGetCurrentMonthUpdatedSalaryStructureArgs =
+  {
+    actionType?: InputMaybe<SalActionType>;
+    employeeId?: InputMaybe<Scalars['ID']>;
+  };
+
+export type HrPayrollSalStructureAdjustmentRevisionQueryGetSalStructureAdjustRevisionArgs = {
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type HumanizeAuditLog = {
@@ -11740,6 +11795,7 @@ export type JournalVoucherDetail = {
   branchName?: Maybe<Scalars['String']>;
   creatorName?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
+  dueDate?: Maybe<Scalars['Localized']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id?: Maybe<Scalars['ID']>;
   note?: Maybe<Scalars['String']>;
@@ -14749,6 +14805,8 @@ export type LoanGeneralSettings = {
   emi?: Maybe<Scalars['Boolean']>;
   epi?: Maybe<Scalars['Boolean']>;
   flat?: Maybe<Scalars['Boolean']>;
+  rebateLedger?: Maybe<Scalars['String']>;
+  rebateLedgerName?: Maybe<Scalars['String']>;
 };
 
 export type LoanGeneralSettingsInput = {
@@ -14758,6 +14816,7 @@ export type LoanGeneralSettingsInput = {
   emi?: InputMaybe<Scalars['Boolean']>;
   epi?: InputMaybe<Scalars['Boolean']>;
   flat?: InputMaybe<Scalars['Boolean']>;
+  rebateLedger?: InputMaybe<Scalars['String']>;
 };
 
 export type LoanGuaranteeActionsInput = {
@@ -14811,6 +14870,7 @@ export type LoanInstallment = {
   payment: Scalars['String'];
   penalty?: Maybe<Scalars['String']>;
   principal: Scalars['String'];
+  rebate?: Maybe<Scalars['String']>;
   remainingInterest: Scalars['String'];
   remainingPrincipal: Scalars['String'];
   status?: Maybe<LoanInstallmentStatus>;
@@ -14949,6 +15009,7 @@ export type LoanPreviewGeneralInformation = {
   natureOfLoanProduct?: Maybe<NatureOfLoanProduct>;
   penalty?: Maybe<LoanPenalty>;
   productCode?: Maybe<Scalars['String']>;
+  rebate?: Maybe<Rebate>;
 };
 
 export type LoanPreviewInstallment = {
@@ -15321,6 +15382,7 @@ export type LoanProductsMutation = {
   updatePenaltyCharge: ProductChargeMutationResult;
   updateProcessingCharge: ProductChargeMutationResult;
   updateProductInterest: InterestSetupMutationResult;
+  updateRebateCharge: ProductChargeMutationResult;
   upsert?: Maybe<LoanProductsResult>;
 };
 
@@ -15353,6 +15415,13 @@ export type LoanProductsMutationUpdateProductInterestArgs = {
   productId: Scalars['ID'];
 };
 
+export type LoanProductsMutationUpdateRebateChargeArgs = {
+  additionalData: ProductChargeAdditionalDataInput;
+  id?: InputMaybe<Scalars['ID']>;
+  payload: RebateTypeInput;
+  productId: Scalars['ID'];
+};
+
 export type LoanProductsMutationUpsertArgs = {
   data?: InputMaybe<LoanProductInput>;
   edit?: InputMaybe<Scalars['Boolean']>;
@@ -15371,6 +15440,7 @@ export type LoanProductsQuery = {
   listPenaltyCharge: ProductPenaltyListQueryResult;
   listProcessingCharge: ProductAccountOpenCloseListQueryResult;
   listProductInterestRates: InterestSetupListResult;
+  listRebateCharge: ProductRebateListQueryResult;
 };
 
 export type LoanProductsQueryFormStateArgs = {
@@ -15417,6 +15487,10 @@ export type LoanProductsQueryListProcessingChargeArgs = {
 };
 
 export type LoanProductsQueryListProductInterestRatesArgs = {
+  productId: Scalars['ID'];
+};
+
+export type LoanProductsQueryListRebateChargeArgs = {
   productId: Scalars['ID'];
 };
 
@@ -15518,6 +15592,7 @@ export type LoanRepaymentInput = {
   memberId: Scalars['ID'];
   paymentMethod: LoanRepaymentMethod;
   penalty?: InputMaybe<RepaymentPenaltyInput>;
+  rebate?: InputMaybe<RepaymentPenaltyInput>;
   suspicionRemarks?: InputMaybe<Scalars['String']>;
   suspicionTopologies?: InputMaybe<Array<InputMaybe<SuspiciousTransactionTopology>>>;
   writeOffLedgerId?: InputMaybe<Scalars['String']>;
@@ -17630,6 +17705,25 @@ export const MortageType = {
 } as const;
 
 export type MortageType = typeof MortageType[keyof typeof MortageType];
+export type MrTransactionEntry = {
+  agentId?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  mrName?: Maybe<Scalars['String']>;
+};
+
+export type MrTransactionListConnection = {
+  edges?: Maybe<Array<Maybe<MrTransactionListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type MrTransactionListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<MrTransactionEntry>;
+};
+
 export type Municipality = {
   id: Scalars['Int'];
   name: Scalars['String'];
@@ -17886,6 +17980,22 @@ export const NatureOfTransaction = {
 } as const;
 
 export type NatureOfTransaction = typeof NatureOfTransaction[keyof typeof NatureOfTransaction];
+export const NepaliMonths = {
+  Asar: 'ASAR',
+  Ashoj: 'ASHOJ',
+  Baisakh: 'BAISAKH',
+  Bhadra: 'BHADRA',
+  Chaitra: 'CHAITRA',
+  Falgun: 'FALGUN',
+  Jestha: 'JESTHA',
+  Kartik: 'KARTIK',
+  Magh: 'MAGH',
+  Mangsir: 'MANGSIR',
+  Poush: 'POUSH',
+  Shrawan: 'SHRAWAN',
+} as const;
+
+export type NepaliMonths = typeof NepaliMonths[keyof typeof NepaliMonths];
 export type NewBankAccountInput = {
   accountName?: InputMaybe<Scalars['String']>;
   accountNumber?: InputMaybe<Scalars['String']>;
@@ -17893,6 +18003,7 @@ export type NewBankAccountInput = {
   bankId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   displayName?: InputMaybe<Scalars['String']>;
+  ledgerId?: InputMaybe<Scalars['String']>;
   openingBalance?: InputMaybe<Scalars['String']>;
 };
 
@@ -18111,6 +18222,7 @@ export type OrganizationBasicDetails = {
 export type OrganizationBasicDetailsInput = {
   logo?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  slogan?: InputMaybe<Scalars['String']>;
   typeOfOrganization?: InputMaybe<TypeOfOrganization>;
 };
 
@@ -18945,6 +19057,16 @@ export type ProductPenaltyQueryResult = {
   error?: Maybe<QueryError>;
 };
 
+export type ProductRebateData = {
+  additionalData?: Maybe<ProductChargeAdditionalData>;
+  payload?: Maybe<Rebate>;
+};
+
+export type ProductRebateListQueryResult = {
+  data?: Maybe<Array<Maybe<ProductRebateData>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type PromotionDetails = {
   designation?: Maybe<Scalars['String']>;
   employeeName?: Maybe<Scalars['String']>;
@@ -19410,6 +19532,7 @@ export const Resource = {
   SettingsMember: 'SETTINGS_MEMBER',
   SettingsMigration: 'SETTINGS_MIGRATION',
   SettingsOrganizationProfile: 'SETTINGS_ORGANIZATION_PROFILE',
+  SettingsPennySetup: 'SETTINGS_PENNY_SETUP',
   SettingsPrintPreference: 'SETTINGS_PRINT_PREFERENCE',
   SettingsReportSetting: 'SETTINGS_REPORT_SETTING',
   SettingsSavingParameters: 'SETTINGS_SAVING_PARAMETERS',
@@ -19847,6 +19970,11 @@ export type ReturnPayrollRun = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type ReturnSalStructureAdjustRevisionWithError = {
+  data?: Maybe<SalStructureAdjustRevision>;
+  error?: Maybe<QueryError>;
+};
+
 export type ReturnStaffPlan = {
   error?: Maybe<MutationError>;
   record?: Maybe<StaffPlanRecord>;
@@ -19862,6 +19990,11 @@ export type ReturnTaxSlab = {
   error?: Maybe<MutationError>;
   record?: Maybe<TaxSlabRecord>;
   recordId: Scalars['ID'];
+};
+
+export type ReturnUnpaidEmployeeDetailsWithError = {
+  data?: Maybe<Array<Maybe<UnPaidEmployeeDetails>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type ReturnWarehouseInput = {
@@ -20004,9 +20137,39 @@ export const SvUpdateType = {
 } as const;
 
 export type SvUpdateType = typeof SvUpdateType[keyof typeof SvUpdateType];
+export const SalActionType = {
+  Adjustment: 'ADJUSTMENT',
+  Revision: 'REVISION',
+} as const;
+
+export type SalActionType = typeof SalActionType[keyof typeof SalActionType];
+export type SalAdjustmentRevisionInput = {
+  actionType?: InputMaybe<SalActionType>;
+  adjustmentOn?: InputMaybe<Scalars['Localized']>;
+  deductions?: InputMaybe<Array<InputMaybe<EarningsAndDeductionsInput>>>;
+  earnings?: InputMaybe<Array<InputMaybe<EarningsAndDeductionsInput>>>;
+  employee?: InputMaybe<Scalars['ID']>;
+  revisionEffectiveFrom?: InputMaybe<Scalars['Localized']>;
+};
+
 export type SalStructAssignOutput = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type SalStructureAdjustRevision = {
+  actionType?: Maybe<SalActionType>;
+  adjustmentOn?: Maybe<Scalars['Localized']>;
+  deductions?: Maybe<Array<Maybe<EarningsAndDeductionsType>>>;
+  earnings?: Maybe<Array<Maybe<EarningsAndDeductionsType>>>;
+  employee?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
+  revisionEffectiveFrom?: Maybe<Scalars['Localized']>;
+};
+
+export type SalStructureAdjustmentRevisionReturn = {
+  error?: Maybe<MutationError>;
+  id?: Maybe<Scalars['ID']>;
 };
 
 export type SalaryAmount = {
@@ -20987,6 +21150,7 @@ export type SetupMutation = {
   eodException?: Maybe<Scalars['Boolean']>;
   eodSeed?: Maybe<Scalars['String']>;
   migration?: Maybe<DataMigration>;
+  pennyRestriction?: Maybe<MutationResult>;
   utilityCashBackLedger?: Maybe<Scalars['Boolean']>;
   utilityLedgerSetup?: Maybe<Scalars['Boolean']>;
   utilityOrganizationLedger?: Maybe<Scalars['Boolean']>;
@@ -21003,6 +21167,10 @@ export type SetupMutationEodExceptionArgs = {
 
 export type SetupMutationEodSeedArgs = {
   date: Scalars['Localized'];
+};
+
+export type SetupMutationPennyRestrictionArgs = {
+  value: Array<InputMaybe<AccountType>>;
 };
 
 export type SetupMutationUtilityCashBackLedgerArgs = {
@@ -21027,6 +21195,7 @@ export type SetupQuery = {
   eodSeed?: Maybe<Scalars['Localized']>;
   getSweepableLedgers: SweepableLedgerQueryResult;
   getUtilityLedgerSetup: UtilityLedgerSetupInputResult;
+  pennyRestriction?: Maybe<Array<Maybe<AccountType>>>;
 };
 
 export type SetupQueryGetSweepableLedgersArgs = {
@@ -21898,6 +22067,11 @@ export type SubscriptionMutationUpsertArgs = {
   identifiers: Array<Scalars['String']>;
 };
 
+export type SuspenseUpdateResult = {
+  error?: Maybe<MutationError>;
+  status?: Maybe<Scalars['Boolean']>;
+};
+
 export type SuspiciousTransactionReport = {
   amount?: Maybe<Scalars['String']>;
   branchId?: Maybe<Scalars['String']>;
@@ -22084,6 +22258,12 @@ export const TaxPayerOptions = {
 } as const;
 
 export type TaxPayerOptions = typeof TaxPayerOptions[keyof typeof TaxPayerOptions];
+export const TaxReceivedPaid = {
+  ToBePaid: 'TO_BE_PAID',
+  ToBeReceived: 'TO_BE_RECEIVED',
+} as const;
+
+export type TaxReceivedPaid = typeof TaxReceivedPaid[keyof typeof TaxReceivedPaid];
 export type TaxSetup = {
   taxExceptionRateInPercentage?: Maybe<Scalars['Float']>;
   taxRebateRateInPercentage?: Maybe<Scalars['Float']>;
@@ -22112,7 +22292,8 @@ export type TaxSlabConnection = {
 
 export type TaxSlabInput = {
   effectiveFrom?: InputMaybe<Scalars['Localized']>;
-  fiscalYear?: InputMaybe<LocalizedDateFilter>;
+  fiscalYearFrom?: InputMaybe<Scalars['Int']>;
+  fiscalYearTo?: InputMaybe<Scalars['Int']>;
   makeItCurrentTaxSlab?: InputMaybe<Scalars['Boolean']>;
   marriedTaxableSalarySlab?: InputMaybe<Array<InputMaybe<SlabInput>>>;
   name?: InputMaybe<Scalars['String']>;
@@ -22128,7 +22309,8 @@ export type TaxSlabListed = {
 
 export type TaxSlabRecord = {
   effectiveFrom?: Maybe<Scalars['Localized']>;
-  fiscalYear?: Maybe<LocalizedDate>;
+  fiscalYearFrom?: Maybe<Scalars['Int']>;
+  fiscalYearTo?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['ID']>;
   makeThisCurrentTaxSlab?: Maybe<Scalars['Boolean']>;
   marriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
@@ -22633,6 +22815,7 @@ export type TransactionQuery = {
   listAllTransactions?: Maybe<AllTransactionsConnection>;
   listBulkTransfers?: Maybe<BulkTransferConnection>;
   listDeposit: AccountActivityListConnection;
+  listMrTransaction: MrTransactionListConnection;
   listServiceCenterCashTransfer?: Maybe<ServiceCentreCashTransferActivity>;
   listTellerTransaction: TellerActivityListConnection;
   listTransfer: AccountTransferListConnection;
@@ -22670,6 +22853,11 @@ export type TransactionQueryListBulkTransfersArgs = {
 };
 
 export type TransactionQueryListDepositArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListMrTransactionArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -22923,6 +23111,21 @@ export const TypeOfShare = {
 } as const;
 
 export type TypeOfShare = typeof TypeOfShare[keyof typeof TypeOfShare];
+export type UnPaidEmployeeDetails = {
+  employeeId?: Maybe<Scalars['String']>;
+  employeeName?: Maybe<Scalars['String']>;
+  grossPay?: Maybe<Scalars['String']>;
+  netPay?: Maybe<Scalars['String']>;
+  postTaxDeductions?: Maybe<Scalars['String']>;
+  preTaxDeductions?: Maybe<Scalars['String']>;
+  taxReceivedOrPaid?: Maybe<TaxReceivedPaid>;
+  taxableIncome?: Maybe<Scalars['String']>;
+  totalTax?: Maybe<Scalars['String']>;
+  unPaidDays?: Maybe<Scalars['Int']>;
+  usedType?: Maybe<UsedTypeEnum>;
+  usedTypeId?: Maybe<Scalars['String']>;
+};
+
 export type UpdateBankAccountInput = {
   accountName?: InputMaybe<Scalars['String']>;
   accountNumber?: InputMaybe<Scalars['String']>;
@@ -22965,6 +23168,12 @@ export type UploadedDocumentData = {
   url: Scalars['String'];
 };
 
+export const UsedTypeEnum = {
+  Assignment: 'ASSIGNMENT',
+  RevisionOrAdjustment: 'REVISION_OR_ADJUSTMENT',
+} as const;
+
+export type UsedTypeEnum = typeof UsedTypeEnum[keyof typeof UsedTypeEnum];
 export type User = {
   contact?: Maybe<Scalars['String']>;
   currentBranch?: Maybe<Branch>;
@@ -23228,6 +23437,11 @@ export type UtilityQueryListServiceTypeArgs = {
 export type UtilityQueryListUtilitiesArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type UtilityTransactionCategory = {
+  Narration?: Maybe<Scalars['String']>;
+  Service?: Maybe<Scalars['String']>;
 };
 
 export type ValidationError = {
@@ -25609,6 +25823,30 @@ export type ApprovePayollRunMutation = {
       payrollRun: {
         approvePayrollRun: {
           approved: boolean;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type SetSalAdjustmentRevisionMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input?: InputMaybe<SalAdjustmentRevisionInput>;
+}>;
+
+export type SetSalAdjustmentRevisionMutation = {
+  hr: {
+    payroll: {
+      salStrucAdjustRevision: {
+        upsertSalAdjustmentRevision: {
+          id?: string | null;
           error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
@@ -28019,6 +28257,168 @@ export type DeleteTaxSlabMutation = {
   };
 };
 
+export type SetPayGroupMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input?: InputMaybe<PaygroupInput>;
+}>;
+
+export type SetPayGroupMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          paygroup: {
+            upsertPaygroup: {
+              id?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type DeletePayGroupMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+export type DeletePayGroupMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          paygroup: {
+            deletePaygroup: {
+              isPaygroupDeleted?: boolean | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdatePayrollGeneralSettingsIncludeHolidaysMutationVariables = Exact<{
+  input?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type UpdatePayrollGeneralSettingsIncludeHolidaysMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          general: {
+            updatePayrollGeneralSettingsIncludeHolidays: {
+              isUpdated?: boolean | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutationVariables = Exact<{
+  input?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          general: {
+            updatePayrollGeneralSettingsEmailSalarySlipToEmployee: {
+              isUpdated?: boolean | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdatePayrollGeneralSettingsDisableRoundedTotalMutationVariables = Exact<{
+  input?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type UpdatePayrollGeneralSettingsDisableRoundedTotalMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          general: {
+            updatePayrollGeneralSettingsDisableRoundedTotal: {
+              isUpdated?: boolean | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetTaxSetupMutationVariables = Exact<{
+  input?: InputMaybe<TaxSetupInput>;
+}>;
+
+export type SetTaxSetupMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxsetup: {
+            upsertTaxSetup: {
+              id?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type UpsertLedgerTagMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: LedgerTagInput;
@@ -28234,6 +28634,32 @@ export type UpdateLoanProductProcessingChargeMutation = {
   };
 };
 
+export type UpdateLoanProductRebateMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  productId: Scalars['ID'];
+  payload: RebateTypeInput;
+  additionalData: ProductChargeAdditionalDataInput;
+}>;
+
+export type UpdateLoanProductRebateMutation = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        updateRebateCharge: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type SetLoanGeneralSettingsMutationVariables = Exact<{
   emi?: InputMaybe<Scalars['Boolean']>;
   epi?: InputMaybe<Scalars['Boolean']>;
@@ -28241,6 +28667,7 @@ export type SetLoanGeneralSettingsMutationVariables = Exact<{
   collateralList?: InputMaybe<
     Array<InputMaybe<CollateralListInputData>> | InputMaybe<CollateralListInputData>
   >;
+  rebateLedger?: InputMaybe<Scalars['String']>;
 }>;
 
 export type SetLoanGeneralSettingsMutation = {
@@ -29073,6 +29500,29 @@ export type SetBankTransferMutation = {
           | MutationError_ValidationError_Fragment
           | null;
       } | null;
+    } | null;
+  };
+};
+
+export type PennyRestrictionMutationVariables = Exact<{
+  value: Array<InputMaybe<AccountType>> | InputMaybe<AccountType>;
+}>;
+
+export type PennyRestrictionMutation = {
+  settings: {
+    general?: {
+      setup: {
+        pennyRestriction?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      };
     } | null;
   };
 };
@@ -30800,6 +31250,7 @@ export type GetJournalVoucherDetailQuery = {
           totalDebit?: string | null;
           totalCredit?: string | null;
           creatorName?: string | null;
+          dueDate?: Record<'local' | 'en' | 'np', string> | null;
           glTransaction?: Array<{
             ledgerId?: string | null;
             account: string;
@@ -33797,6 +34248,62 @@ export type GetSalarySlipListQuery = {
   };
 };
 
+export type GetCurrentMonthUpdatedSalaryStructureQueryVariables = Exact<{
+  employeeId?: InputMaybe<Scalars['ID']>;
+  actionType?: InputMaybe<SalActionType>;
+}>;
+
+export type GetCurrentMonthUpdatedSalaryStructureQuery = {
+  hr: {
+    payroll: {
+      salStrucAdjustRevision: {
+        getCurrentMonthUpdatedSalaryStructure: {
+          data?: {
+            earnings?: Array<{ id?: string | null; amount?: number | null } | null> | null;
+            deductions?: Array<{ id?: string | null; amount?: number | null } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetSalStructureAdjustRevisionQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+export type GetSalStructureAdjustRevisionQuery = {
+  hr: {
+    payroll: {
+      salStrucAdjustRevision: {
+        getSalStructureAdjustRevision: {
+          data?: {
+            id?: string | null;
+            employee?: string | null;
+            actionType?: SalActionType | null;
+            revisionEffectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
+            adjustmentOn?: Record<'local' | 'en' | 'np', string> | null;
+            earnings?: Array<{ id?: string | null; amount?: number | null } | null> | null;
+            deductions?: Array<{ id?: string | null; amount?: number | null } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetStaffPlanningListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -35994,6 +36501,11 @@ export type GetLoanPreviewQuery = {
             penaltyRate?: number | null;
             penaltyAmount?: any | null;
           } | null;
+          rebate?: {
+            dayBeforeInstallmentDate?: number | null;
+            rebateRate?: number | null;
+            rebateAmount?: any | null;
+          } | null;
         } | null;
         loanDetails?: {
           appliedLoanAmount?: string | null;
@@ -36052,6 +36564,7 @@ export type GetLoanPreviewQuery = {
             isPartial?: boolean | null;
             overdueAmount?: string | null;
             fullPrincipal?: string | null;
+            rebate?: string | null;
           } | null> | null;
         } | null;
         statistics?: {
@@ -36080,6 +36593,7 @@ export type GetLoanPreviewQuery = {
             isPartial?: boolean | null;
             overdueAmount?: string | null;
             fullPrincipal?: string | null;
+            rebate?: string | null;
           } | null> | null;
         } | null;
       } | null;
@@ -39691,6 +40205,20 @@ export type GetIndividualMemberReportQuery = {
             transactionType?: string | null;
             transactionAmount?: string | null;
           } | null> | null;
+          withDrawSlipIssueStatus?: Array<{
+            id?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            accountType?: string | null;
+            accNum?: string | null;
+            type?: string | null;
+          } | null> | null;
+          kymStatusForMember?: {
+            id?: string | null;
+            riskCategory?: string | null;
+            lastUpdatedDate?: Record<'local' | 'en' | 'np', string> | null;
+            ExpiryDays?: string | null;
+            Status?: string | null;
+          } | null;
           savingDetail?: Array<{
             accountNo?: string | null;
             accountName?: string | null;
@@ -42607,12 +43135,10 @@ export type GetTaxSlabQuery = {
               data?: {
                 id?: string | null;
                 name?: string | null;
+                fiscalYearFrom?: number | null;
+                fiscalYearTo?: number | null;
                 effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
                 makeThisCurrentTaxSlab?: boolean | null;
-                fiscalYear?: {
-                  from: Record<'local' | 'en' | 'np', string>;
-                  to: Record<'local' | 'en' | 'np', string>;
-                } | null;
                 unmarriedTaxableSalarySlab?: Array<{
                   fromAmount?: string | null;
                   toAmount?: string | null;
@@ -42661,6 +43187,125 @@ export type GetTaxSlabListQuery = {
                 };
               } | null> | null;
               pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetPayGroupListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetPayGroupListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          paygroup: {
+            listPayGroup: {
+              totalCount: number;
+              edges?: Array<{
+                cursor?: string | null;
+                node?: {
+                  id?: string | null;
+                  name?: string | null;
+                  employee?: number | null;
+                  paycycle?: PaycycleEnum | null;
+                  lastPayrollRun?: Record<'local' | 'en' | 'np', string> | null;
+                } | null;
+              } | null> | null;
+              pageInfo?: PaginationFragment | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetPayGroupQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+export type GetPayGroupQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          paygroup: {
+            getPayGroup: {
+              data?: {
+                id?: string | null;
+                name?: string | null;
+                paycycle?: PaycycleEnum | null;
+                employees?: Array<string | null> | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetPayrollGeneralQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetPayrollGeneralQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          general: {
+            getPayrollGeneral: {
+              data?: {
+                includeHolidaysInTotalNumberOfWorkingDays?: boolean | null;
+                emailSalarySlipToEmployee?: boolean | null;
+                disableRoundedTotal?: boolean | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetTaxSetupQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetTaxSetupQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxsetup: {
+            getTaxSetup: {
+              data?: {
+                taxExceptionRateInPercentage?: number | null;
+                taxRebateRateInPercentage?: number | null;
+              } | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
             };
           };
         };
@@ -43246,6 +43891,37 @@ export type GetLoanProductProcessingChargeDetailQuery = {
   };
 };
 
+export type GetLoanProductRebateUpdateListQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetLoanProductRebateUpdateListQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        listRebateCharge: {
+          data?: Array<{
+            payload?: {
+              dayBeforeInstallmentDate?: number | null;
+              rebateRate?: number | null;
+              rebateAmount?: any | null;
+              rebateLedgerMapping?: string | null;
+              noOfInstallment?: number | null;
+            } | null;
+            additionalData?: {
+              id?: string | null;
+              createdAt?: Record<'local' | 'en' | 'np', string> | null;
+              effectiveDate: Record<'local' | 'en' | 'np', string>;
+              notes?: string | null;
+              fileUploads?: Array<{ identifier: string; url: string } | null> | null;
+            } | null;
+          } | null> | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type GetLoanGeneralSettingsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetLoanGeneralSettingsQuery = {
@@ -43256,6 +43932,8 @@ export type GetLoanGeneralSettingsQuery = {
           emi?: boolean | null;
           epi?: boolean | null;
           flat?: boolean | null;
+          rebateLedger?: string | null;
+          rebateLedgerName?: string | null;
           collateralList?: Array<{
             id?: string | null;
             name?: string | null;
@@ -44692,6 +45370,12 @@ export type TransactionConstraintsListQuery = {
   };
 };
 
+export type PennyRestrictionListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type PennyRestrictionListQuery = {
+  settings: { general?: { setup: { pennyRestriction?: Array<AccountType | null> | null } } | null };
+};
+
 export type GetSettingsUserListDataQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
@@ -45949,6 +46633,35 @@ export type GetDailyBalanceReportQuery = {
           }> | null;
         };
       };
+    };
+  };
+};
+
+export type GetMrTransactionsListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetMrTransactionsListQuery = {
+  transaction: {
+    listMrTransaction: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          agentId?: string | null;
+          amount?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          id: string;
+          mrName?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
     };
   };
 };
@@ -49009,6 +49722,42 @@ export const useApprovePayollRunMutation = <TError = unknown, TContext = unknown
   useMutation<ApprovePayollRunMutation, TError, ApprovePayollRunMutationVariables, TContext>(
     ['approvePayollRun'],
     useAxios<ApprovePayollRunMutation, ApprovePayollRunMutationVariables>(ApprovePayollRunDocument),
+    options
+  );
+export const SetSalAdjustmentRevisionDocument = `
+    mutation setSalAdjustmentRevision($id: ID, $input: SalAdjustmentRevisionInput) {
+  hr {
+    payroll {
+      salStrucAdjustRevision {
+        upsertSalAdjustmentRevision(id: $id, input: $input) {
+          id
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSalAdjustmentRevisionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalAdjustmentRevisionMutation,
+    TError,
+    SetSalAdjustmentRevisionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSalAdjustmentRevisionMutation,
+    TError,
+    SetSalAdjustmentRevisionMutationVariables,
+    TContext
+  >(
+    ['setSalAdjustmentRevision'],
+    useAxios<SetSalAdjustmentRevisionMutation, SetSalAdjustmentRevisionMutationVariables>(
+      SetSalAdjustmentRevisionDocument
+    ),
     options
   );
 export const SetStaffPlanningDocument = `
@@ -52473,6 +53222,227 @@ export const useDeleteTaxSlabMutation = <TError = unknown, TContext = unknown>(
     useAxios<DeleteTaxSlabMutation, DeleteTaxSlabMutationVariables>(DeleteTaxSlabDocument),
     options
   );
+export const SetPayGroupDocument = `
+    mutation setPayGroup($id: ID, $input: PaygroupInput) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          paygroup {
+            upsertPaygroup(id: $id, input: $input) {
+              id
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetPayGroupMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetPayGroupMutation, TError, SetPayGroupMutationVariables, TContext>
+) =>
+  useMutation<SetPayGroupMutation, TError, SetPayGroupMutationVariables, TContext>(
+    ['setPayGroup'],
+    useAxios<SetPayGroupMutation, SetPayGroupMutationVariables>(SetPayGroupDocument),
+    options
+  );
+export const DeletePayGroupDocument = `
+    mutation deletePayGroup($id: ID) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          paygroup {
+            deletePaygroup(id: $id) {
+              isPaygroupDeleted
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeletePayGroupMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeletePayGroupMutation,
+    TError,
+    DeletePayGroupMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeletePayGroupMutation, TError, DeletePayGroupMutationVariables, TContext>(
+    ['deletePayGroup'],
+    useAxios<DeletePayGroupMutation, DeletePayGroupMutationVariables>(DeletePayGroupDocument),
+    options
+  );
+export const UpdatePayrollGeneralSettingsIncludeHolidaysDocument = `
+    mutation updatePayrollGeneralSettingsIncludeHolidays($input: Boolean) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          general {
+            updatePayrollGeneralSettingsIncludeHolidays(input: $input) {
+              isUpdated
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdatePayrollGeneralSettingsIncludeHolidaysMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    UpdatePayrollGeneralSettingsIncludeHolidaysMutation,
+    TError,
+    UpdatePayrollGeneralSettingsIncludeHolidaysMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdatePayrollGeneralSettingsIncludeHolidaysMutation,
+    TError,
+    UpdatePayrollGeneralSettingsIncludeHolidaysMutationVariables,
+    TContext
+  >(
+    ['updatePayrollGeneralSettingsIncludeHolidays'],
+    useAxios<
+      UpdatePayrollGeneralSettingsIncludeHolidaysMutation,
+      UpdatePayrollGeneralSettingsIncludeHolidaysMutationVariables
+    >(UpdatePayrollGeneralSettingsIncludeHolidaysDocument),
+    options
+  );
+export const UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeDocument = `
+    mutation updatePayrollGeneralSettingsEmailSalarySlipToEmployee($input: Boolean) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          general {
+            updatePayrollGeneralSettingsEmailSalarySlipToEmployee(input: $input) {
+              isUpdated
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutation,
+    TError,
+    UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutation,
+    TError,
+    UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutationVariables,
+    TContext
+  >(
+    ['updatePayrollGeneralSettingsEmailSalarySlipToEmployee'],
+    useAxios<
+      UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutation,
+      UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeMutationVariables
+    >(UpdatePayrollGeneralSettingsEmailSalarySlipToEmployeeDocument),
+    options
+  );
+export const UpdatePayrollGeneralSettingsDisableRoundedTotalDocument = `
+    mutation updatePayrollGeneralSettingsDisableRoundedTotal($input: Boolean) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          general {
+            updatePayrollGeneralSettingsDisableRoundedTotal(input: $input) {
+              isUpdated
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdatePayrollGeneralSettingsDisableRoundedTotalMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    UpdatePayrollGeneralSettingsDisableRoundedTotalMutation,
+    TError,
+    UpdatePayrollGeneralSettingsDisableRoundedTotalMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdatePayrollGeneralSettingsDisableRoundedTotalMutation,
+    TError,
+    UpdatePayrollGeneralSettingsDisableRoundedTotalMutationVariables,
+    TContext
+  >(
+    ['updatePayrollGeneralSettingsDisableRoundedTotal'],
+    useAxios<
+      UpdatePayrollGeneralSettingsDisableRoundedTotalMutation,
+      UpdatePayrollGeneralSettingsDisableRoundedTotalMutationVariables
+    >(UpdatePayrollGeneralSettingsDisableRoundedTotalDocument),
+    options
+  );
+export const SetTaxSetupDocument = `
+    mutation setTaxSetup($input: TaxSetupInput) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxsetup {
+            upsertTaxSetup(input: $input) {
+              id
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetTaxSetupMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetTaxSetupMutation, TError, SetTaxSetupMutationVariables, TContext>
+) =>
+  useMutation<SetTaxSetupMutation, TError, SetTaxSetupMutationVariables, TContext>(
+    ['setTaxSetup'],
+    useAxios<SetTaxSetupMutation, SetTaxSetupMutationVariables>(SetTaxSetupDocument),
+    options
+  );
 export const UpsertLedgerTagDocument = `
     mutation upsertLedgerTag($id: ID, $data: LedgerTagInput!) {
   settings {
@@ -52787,13 +53757,54 @@ export const useUpdateLoanProductProcessingChargeMutation = <TError = unknown, T
     >(UpdateLoanProductProcessingChargeDocument),
     options
   );
+export const UpdateLoanProductRebateDocument = `
+    mutation updateLoanProductRebate($id: ID, $productId: ID!, $payload: RebateTypeInput!, $additionalData: ProductChargeAdditionalDataInput!) {
+  settings {
+    general {
+      loanProducts {
+        updateRebateCharge(
+          id: $id
+          productId: $productId
+          payload: $payload
+          additionalData: $additionalData
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateLoanProductRebateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateLoanProductRebateMutation,
+    TError,
+    UpdateLoanProductRebateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateLoanProductRebateMutation,
+    TError,
+    UpdateLoanProductRebateMutationVariables,
+    TContext
+  >(
+    ['updateLoanProductRebate'],
+    useAxios<UpdateLoanProductRebateMutation, UpdateLoanProductRebateMutationVariables>(
+      UpdateLoanProductRebateDocument
+    ),
+    options
+  );
 export const SetLoanGeneralSettingsDocument = `
-    mutation setLoanGeneralSettings($emi: Boolean, $epi: Boolean, $flat: Boolean, $collateralList: [CollateralListInputData]) {
+    mutation setLoanGeneralSettings($emi: Boolean, $epi: Boolean, $flat: Boolean, $collateralList: [CollateralListInputData], $rebateLedger: String) {
   settings {
     general {
       loan {
         general(
-          data: {emi: $emi, epi: $epi, flat: $flat, collateralList: $collateralList}
+          data: {emi: $emi, epi: $epi, flat: $flat, collateralList: $collateralList, rebateLedger: $rebateLedger}
         ) {
           recordId
           error {
@@ -54071,6 +55082,35 @@ export const useSetBankTransferMutation = <TError = unknown, TContext = unknown>
   useMutation<SetBankTransferMutation, TError, SetBankTransferMutationVariables, TContext>(
     ['setBankTransfer'],
     useAxios<SetBankTransferMutation, SetBankTransferMutationVariables>(SetBankTransferDocument),
+    options
+  );
+export const PennyRestrictionDocument = `
+    mutation pennyRestriction($value: [AccountType]!) {
+  settings {
+    general {
+      setup {
+        pennyRestriction(value: $value) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const usePennyRestrictionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    PennyRestrictionMutation,
+    TError,
+    PennyRestrictionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<PennyRestrictionMutation, TError, PennyRestrictionMutationVariables, TContext>(
+    ['pennyRestriction'],
+    useAxios<PennyRestrictionMutation, PennyRestrictionMutationVariables>(PennyRestrictionDocument),
     options
   );
 export const SetSettingsUserDataDocument = `
@@ -56377,6 +57417,7 @@ export const GetJournalVoucherDetailDocument = `
           totalDebit
           totalCredit
           creatorName
+          dueDate
         }
       }
     }
@@ -60257,6 +61298,97 @@ export const useGetSalarySlipListQuery = <TData = GetSalarySlipListQuery, TError
     ).bind(null, variables),
     options
   );
+export const GetCurrentMonthUpdatedSalaryStructureDocument = `
+    query getCurrentMonthUpdatedSalaryStructure($employeeId: ID, $actionType: SalActionType) {
+  hr {
+    payroll {
+      salStrucAdjustRevision {
+        getCurrentMonthUpdatedSalaryStructure(
+          employeeId: $employeeId
+          actionType: $actionType
+        ) {
+          data {
+            earnings {
+              id
+              amount
+            }
+            deductions {
+              id
+              amount
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetCurrentMonthUpdatedSalaryStructureQuery = <
+  TData = GetCurrentMonthUpdatedSalaryStructureQuery,
+  TError = unknown
+>(
+  variables?: GetCurrentMonthUpdatedSalaryStructureQueryVariables,
+  options?: UseQueryOptions<GetCurrentMonthUpdatedSalaryStructureQuery, TError, TData>
+) =>
+  useQuery<GetCurrentMonthUpdatedSalaryStructureQuery, TError, TData>(
+    variables === undefined
+      ? ['getCurrentMonthUpdatedSalaryStructure']
+      : ['getCurrentMonthUpdatedSalaryStructure', variables],
+    useAxios<
+      GetCurrentMonthUpdatedSalaryStructureQuery,
+      GetCurrentMonthUpdatedSalaryStructureQueryVariables
+    >(GetCurrentMonthUpdatedSalaryStructureDocument).bind(null, variables),
+    options
+  );
+export const GetSalStructureAdjustRevisionDocument = `
+    query getSalStructureAdjustRevision($id: ID) {
+  hr {
+    payroll {
+      salStrucAdjustRevision {
+        getSalStructureAdjustRevision(id: $id) {
+          data {
+            id
+            employee
+            actionType
+            revisionEffectiveFrom
+            adjustmentOn
+            earnings {
+              id
+              amount
+            }
+            deductions {
+              id
+              amount
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetSalStructureAdjustRevisionQuery = <
+  TData = GetSalStructureAdjustRevisionQuery,
+  TError = unknown
+>(
+  variables?: GetSalStructureAdjustRevisionQueryVariables,
+  options?: UseQueryOptions<GetSalStructureAdjustRevisionQuery, TError, TData>
+) =>
+  useQuery<GetSalStructureAdjustRevisionQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalStructureAdjustRevision']
+      : ['getSalStructureAdjustRevision', variables],
+    useAxios<GetSalStructureAdjustRevisionQuery, GetSalStructureAdjustRevisionQueryVariables>(
+      GetSalStructureAdjustRevisionDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetStaffPlanningListDocument = `
     query getStaffPlanningList($filter: Filter, $pagination: Pagination) {
   hr {
@@ -63056,6 +64188,11 @@ export const GetLoanPreviewDocument = `
             penaltyRate
             penaltyAmount
           }
+          rebate {
+            dayBeforeInstallmentDate
+            rebateRate
+            rebateAmount
+          }
         }
         loanDetails {
           appliedLoanAmount
@@ -63112,6 +64249,7 @@ export const GetLoanPreviewDocument = `
             isPartial
             overdueAmount
             fullPrincipal
+            rebate
           }
           totalRemainingPayable
           duesSince
@@ -63146,6 +64284,7 @@ export const GetLoanPreviewDocument = `
             isPartial
             overdueAmount
             fullPrincipal
+            rebate
           }
           totalRemainingPayable
         }
@@ -67856,6 +68995,20 @@ export const GetIndividualMemberReportDocument = `
             transactionType
             transactionAmount
           }
+          withDrawSlipIssueStatus {
+            id
+            date
+            accountType
+            accNum
+            type
+          }
+          kymStatusForMember {
+            id
+            riskCategory
+            lastUpdatedDate
+            ExpiryDays
+            Status
+          }
           totalTransactionAmount
           savingDetail {
             accountNo
@@ -71806,10 +72959,8 @@ export const GetTaxSlabDocument = `
               data {
                 id
                 name
-                fiscalYear {
-                  from
-                  to
-                }
+                fiscalYearFrom
+                fiscalYearTo
                 unmarriedTaxableSalarySlab {
                   fromAmount
                   toAmount
@@ -71879,6 +73030,155 @@ export const useGetTaxSlabListQuery = <TData = GetTaxSlabListQuery, TError = unk
   useQuery<GetTaxSlabListQuery, TError, TData>(
     variables === undefined ? ['getTaxSlabList'] : ['getTaxSlabList', variables],
     useAxios<GetTaxSlabListQuery, GetTaxSlabListQueryVariables>(GetTaxSlabListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetPayGroupListDocument = `
+    query getPayGroupList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          paygroup {
+            listPayGroup(filter: $filter, pagination: $pagination) {
+              totalCount
+              edges {
+                node {
+                  id
+                  name
+                  employee
+                  paycycle
+                  lastPayrollRun
+                }
+                cursor
+              }
+              pageInfo {
+                ...Pagination
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetPayGroupListQuery = <TData = GetPayGroupListQuery, TError = unknown>(
+  variables?: GetPayGroupListQueryVariables,
+  options?: UseQueryOptions<GetPayGroupListQuery, TError, TData>
+) =>
+  useQuery<GetPayGroupListQuery, TError, TData>(
+    variables === undefined ? ['getPayGroupList'] : ['getPayGroupList', variables],
+    useAxios<GetPayGroupListQuery, GetPayGroupListQueryVariables>(GetPayGroupListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetPayGroupDocument = `
+    query getPayGroup($id: ID) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          paygroup {
+            getPayGroup(id: $id) {
+              data {
+                id
+                name
+                paycycle
+                employees
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetPayGroupQuery = <TData = GetPayGroupQuery, TError = unknown>(
+  variables?: GetPayGroupQueryVariables,
+  options?: UseQueryOptions<GetPayGroupQuery, TError, TData>
+) =>
+  useQuery<GetPayGroupQuery, TError, TData>(
+    variables === undefined ? ['getPayGroup'] : ['getPayGroup', variables],
+    useAxios<GetPayGroupQuery, GetPayGroupQueryVariables>(GetPayGroupDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetPayrollGeneralDocument = `
+    query getPayrollGeneral {
+  settings {
+    general {
+      HCM {
+        payroll {
+          general {
+            getPayrollGeneral {
+              data {
+                includeHolidaysInTotalNumberOfWorkingDays
+                emailSalarySlipToEmployee
+                disableRoundedTotal
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetPayrollGeneralQuery = <TData = GetPayrollGeneralQuery, TError = unknown>(
+  variables?: GetPayrollGeneralQueryVariables,
+  options?: UseQueryOptions<GetPayrollGeneralQuery, TError, TData>
+) =>
+  useQuery<GetPayrollGeneralQuery, TError, TData>(
+    variables === undefined ? ['getPayrollGeneral'] : ['getPayrollGeneral', variables],
+    useAxios<GetPayrollGeneralQuery, GetPayrollGeneralQueryVariables>(
+      GetPayrollGeneralDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetTaxSetupDocument = `
+    query getTaxSetup {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxsetup {
+            getTaxSetup {
+              data {
+                taxExceptionRateInPercentage
+                taxRebateRateInPercentage
+              }
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetTaxSetupQuery = <TData = GetTaxSetupQuery, TError = unknown>(
+  variables?: GetTaxSetupQueryVariables,
+  options?: UseQueryOptions<GetTaxSetupQuery, TError, TData>
+) =>
+  useQuery<GetTaxSetupQuery, TError, TData>(
+    variables === undefined ? ['getTaxSetup'] : ['getTaxSetup', variables],
+    useAxios<GetTaxSetupQuery, GetTaxSetupQueryVariables>(GetTaxSetupDocument).bind(
       null,
       variables
     ),
@@ -72627,6 +73927,51 @@ export const useGetLoanProductProcessingChargeDetailQuery = <
     >(GetLoanProductProcessingChargeDetailDocument).bind(null, variables),
     options
   );
+export const GetLoanProductRebateUpdateListDocument = `
+    query getLoanProductRebateUpdateList($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        listRebateCharge(productId: $productId) {
+          data {
+            payload {
+              dayBeforeInstallmentDate
+              rebateRate
+              rebateAmount
+              rebateLedgerMapping
+              noOfInstallment
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductRebateUpdateListQuery = <
+  TData = GetLoanProductRebateUpdateListQuery,
+  TError = unknown
+>(
+  variables: GetLoanProductRebateUpdateListQueryVariables,
+  options?: UseQueryOptions<GetLoanProductRebateUpdateListQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductRebateUpdateListQuery, TError, TData>(
+    ['getLoanProductRebateUpdateList', variables],
+    useAxios<GetLoanProductRebateUpdateListQuery, GetLoanProductRebateUpdateListQueryVariables>(
+      GetLoanProductRebateUpdateListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanGeneralSettingsDocument = `
     query getLoanGeneralSettings {
   settings {
@@ -72641,6 +73986,8 @@ export const GetLoanGeneralSettingsDocument = `
             name
             enabled
           }
+          rebateLedger
+          rebateLedgerName
         }
       }
     }
@@ -74685,6 +76032,28 @@ export const useTransactionConstraintsListQuery = <
     ).bind(null, variables),
     options
   );
+export const PennyRestrictionListDocument = `
+    query pennyRestrictionList {
+  settings {
+    general {
+      setup {
+        pennyRestriction
+      }
+    }
+  }
+}
+    `;
+export const usePennyRestrictionListQuery = <TData = PennyRestrictionListQuery, TError = unknown>(
+  variables?: PennyRestrictionListQueryVariables,
+  options?: UseQueryOptions<PennyRestrictionListQuery, TError, TData>
+) =>
+  useQuery<PennyRestrictionListQuery, TError, TData>(
+    variables === undefined ? ['pennyRestrictionList'] : ['pennyRestrictionList', variables],
+    useAxios<PennyRestrictionListQuery, PennyRestrictionListQueryVariables>(
+      PennyRestrictionListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSettingsUserListDataDocument = `
     query getSettingsUserListData($paginate: Pagination, $filter: Filter) {
   settings {
@@ -76446,6 +77815,42 @@ export const useGetDailyBalanceReportQuery = <TData = GetDailyBalanceReportQuery
     ['getDailyBalanceReport', variables],
     useAxios<GetDailyBalanceReportQuery, GetDailyBalanceReportQueryVariables>(
       GetDailyBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMrTransactionsListDocument = `
+    query getMrTransactionsList($filter: Filter, $pagination: Pagination) {
+  transaction {
+    listMrTransaction(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        cursor
+        node {
+          agentId
+          amount
+          date
+          id
+          mrName
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetMrTransactionsListQuery = <TData = GetMrTransactionsListQuery, TError = unknown>(
+  variables?: GetMrTransactionsListQueryVariables,
+  options?: UseQueryOptions<GetMrTransactionsListQuery, TError, TData>
+) =>
+  useQuery<GetMrTransactionsListQuery, TError, TData>(
+    variables === undefined ? ['getMrTransactionsList'] : ['getMrTransactionsList', variables],
+    useAxios<GetMrTransactionsListQuery, GetMrTransactionsListQueryVariables>(
+      GetMrTransactionsListDocument
     ).bind(null, variables),
     options
   );

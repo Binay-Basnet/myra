@@ -27,4 +27,5 @@ export * from './lib/SettingsPearlsReport';
 export * from './lib/SettingsPrintPreferenceLayout';
 export * from './lib/SettingsShareLayout';
 export * from './lib/SettingsTabMenu';
+export * from './lib/SettingsTransactionLayout';
 export * from './lib/SettingsUserLayout';

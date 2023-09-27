@@ -19,7 +19,9 @@ import {
 } from '@myra-ui';
 
 import {
+  CalculationTypeEnum,
   DeductionFrequencyEnum,
+  DeductionType,
   InputDeductionComponent,
   useDeleteDeductionComponentMutation,
   useGetDeductionComponentListQuery,
@@ -27,19 +29,27 @@ import {
   useSetDeductionComponentMutation,
 } from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
-import { FormCheckbox, FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
+import {
+  FormCheckbox,
+  FormInput,
+  FormLeafCoaHeadSelect,
+  FormSelect,
+  FormTextArea,
+} from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 const defaultFormValue = {
   name: '',
   abbr: '',
   description: '',
+  ledgerHead: null,
+  deductionType: null,
+  deductionFrequency: null,
+  calculationType: CalculationTypeEnum?.Amount,
   baseMultiple: null,
   multiplier: 0,
-  isTaxApplicable: false,
-  roundToNearestInteger: false,
+  maximumAmountLimitPerYear: '',
   makeThisActive: false,
-  deductionFrequenct: DeductionFrequencyEnum?.Fixed,
 };
 
 export const DeductionComponentTable = () => {
@@ -67,7 +77,8 @@ export const DeductionComponentTable = () => {
   const methods = useForm<InputDeductionComponent>({
     defaultValues: defaultFormValue,
   });
-  const { getValues, reset } = methods;
+  const { getValues, reset, watch } = methods;
+  const calculationTypeWatch = watch('calculationType');
 
   const rowData = useMemo(
     () =>
@@ -132,9 +143,19 @@ export const DeductionComponentTable = () => {
     []
   );
 
+  const deductionTypeOptions = [
+    { label: 'Post Tax deduction', value: DeductionType?.PostTaxDeduction },
+    { label: 'Pre Tax deduction', value: DeductionType?.PreTaxDeduction },
+  ];
+
   const deductionFrequencyOptions = [
     { label: 'Fixed', value: DeductionFrequencyEnum?.Fixed },
     { label: 'Recurring', value: DeductionFrequencyEnum?.Recurring },
+  ];
+
+  const calculationTypeOptions = [
+    { label: 'Amount', value: CalculationTypeEnum?.Amount },
+    { label: 'Percentage', value: CalculationTypeEnum?.Percentage },
   ];
 
   const handleAddModalClose = () => {
@@ -244,7 +265,7 @@ export const DeductionComponentTable = () => {
         onClose={handleAddModalClose}
         isCentered
         title="Deduction Component"
-        width="xl"
+        width="4xl"
       >
         <FormProvider {...methods}>
           <Grid templateColumns="repeat(3,1fr)" gap="s16">
@@ -255,42 +276,48 @@ export const DeductionComponentTable = () => {
             <GridItem colSpan={3}>
               <FormTextArea name="description" label="Description" />
             </GridItem>
-            <GridItem colSpan={3}>
-              <FormSelect
-                name="deductionFrequency"
-                label="Deduction Frequency"
-                options={deductionFrequencyOptions}
-              />
-            </GridItem>
-            <GridItem>
-              <FormSelect
-                name="baseMultiple"
-                label="Multiplier"
-                options={
-                  rowData?.map((item) => ({
-                    label: item?.node?.abbr,
-                    value: item?.node?.abbr,
-                  })) as { label: string; value: string }[]
-                }
-              />
-            </GridItem>
-            <GridItem>
-              <Box display="flex" h="100%" justifyContent="center" alignItems="center" gap="s16">
-                <Text>X</Text>
+            <FormLeafCoaHeadSelect name="ledgerHead" label="Ledger Name" />
+            <FormSelect
+              name="deductionType"
+              label="Deduction Type"
+              options={deductionTypeOptions}
+            />
+            <FormSelect
+              name="deductionFrequency"
+              label="Deduction Frequency"
+              options={deductionFrequencyOptions}
+            />
+            <FormSelect
+              name="calculationType"
+              label="Calculation Type"
+              options={calculationTypeOptions}
+            />
+            {calculationTypeWatch === CalculationTypeEnum?.Amount ? (
+              <FormInput name="maximumAmountLimitPerYear" label="Value" />
+            ) : (
+              <>
+                <FormSelect
+                  name="baseMultiple"
+                  label="Multiplier"
+                  options={
+                    rowData?.map((item) => ({
+                      label: item?.node?.abbr,
+                      value: item?.node?.abbr,
+                    })) as { label: string; value: string }[]
+                  }
+                />
+
                 <FormInput type="number" name="multiplier" label="Factor" />
-              </Box>
+              </>
+            )}
+
+            <GridItem colSpan={3}>
+              <Divider />
             </GridItem>
             <GridItem colSpan={3}>
-              <Box display="flex" flexDir="column" gap="s16">
-                <FormCheckbox name="roundToNearestInteger" label="Round to the Nearest Integer" />
+              <Box display="flex" justifyContent="space-between">
                 <FormCheckbox name="makeThisActive" label="Make this Active" />
-                <Divider />
-                <Button
-                  w="-webkit-fit-content"
-                  alignSelf="flex-end"
-                  onClick={onSubmit}
-                  isLoading={isLoading}
-                >
+                <Button onClick={onSubmit} isLoading={isLoading}>
                   Save
                 </Button>
               </Box>

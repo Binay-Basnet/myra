@@ -59,10 +59,15 @@ const tabList: TabList[] = [
     route: ROUTES.SETTINGS_GENERAL_LP_LIST,
   },
   {
-    label: 'Transaction Constraints',
+    label: 'Transactions',
     aclKey: 'SETTINGS_LOAN_PRODUCTS',
     route: ROUTES.SETTINGS_GENERAL_TRANSACTION_CONSTRAINTS_LIST,
   },
+  // {
+  //   label: 'Transaction Constraints',
+  //   aclKey: 'SETTINGS_LOAN_PRODUCTS',
+  //   route: ROUTES.SETTINGS_GENERAL_TRANSACTION_CONSTRAINTS_LIST,
+  // },
 ];
 
 const alternativeChannelTabList: TabList[] = [
@@ -114,7 +119,7 @@ const hcmTabList: TabList[] = [
   },
   {
     label: 'Payroll',
-    route: ROUTES.HRMODULE_PAYROLL_SALARY_COMPONENTS_SETTINGS,
+    route: ROUTES.HRMODULE_PAYROLL_GENERAL_SETTINGS,
     aclKey: 'SETTINGS_INDEXING',
   },
 ];

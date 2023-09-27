@@ -48,6 +48,9 @@ export const BranchReadiness = () => {
         dispatch(setBranchReadinessErrors({ errors: data.transaction.readyBranchEOD }));
       } else {
         dispatch(clearBranchReadinessErrors());
+
+        refetch();
+        queryClient.invalidateQueries(['getEndOfDayDateData']);
       }
     },
   });
@@ -93,10 +96,10 @@ export const BranchReadiness = () => {
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.lg" height="fit-content" p="0">
             <FormFooter
-              mainButtonLabel="Complete"
+              mainButtonLabel="Back to Dashboard"
               mainButtonHandler={() => {
-                refetch();
-                queryClient.invalidateQueries(['getEndOfDayDateData']);
+                // refetch();
+                // queryClient.invalidateQueries(['getEndOfDayDateData']);
                 router?.push('/');
               }}
               isMainButtonDisabled={!!branchReadinessErrors?.length}

@@ -11,7 +11,6 @@ import {
   FrequencyTenure,
   Id_Type,
   LoanProductInput,
-  LoanRepaymentScheme,
   PenaltyType,
   TypeOfLoan,
   useGetLoanGeneralSettingsQuery,
@@ -139,7 +138,6 @@ export const SettingsLoanProductForm = () => {
 
   const criteria = watch('criteria');
   const allowGurantee = watch('allowGurantee');
-  const repaymentScheme = watch('repaymentScheme');
   const isCollateralRequired = watch('isCollateralRequired');
   const collateralTypes = watch('collateralTypes');
   const isPenaltyApplicable = watch('isPenaltyApplicable');
@@ -486,7 +484,7 @@ export const SettingsLoanProductForm = () => {
               {typeOfLoan === TypeOfLoan?.Normal && <PartialPayment />}
               {typeOfLoan === TypeOfLoan?.Normal && <Penalty />}
               {typeOfLoan === TypeOfLoan?.Normal && <PrematurePenalty />}
-              {repaymentScheme && repaymentScheme?.includes(LoanRepaymentScheme.Epi) && <Rebate />}
+              {typeOfLoan === TypeOfLoan?.Normal && <Rebate />}
 
               {typeOfLoan === TypeOfLoan?.Normal && <LoanRepayment />}
               <NewQuestions />

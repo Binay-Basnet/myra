@@ -298,7 +298,7 @@ export const NewAccountTransfer = () => {
                 memberID: memberDetailData?.id,
                 gender: memberDetailData?.gender,
                 age: memberDetailData?.age,
-                maritalStatus: memberDetailData?.maritalStatus,
+                maritalStatus: memberDetailData?.maritalStatus as string,
                 dateJoined: memberDetailData?.dateJoined,
                 // branch: 'Basantapur',
                 phoneNo: memberDetailData?.contact,
@@ -307,7 +307,7 @@ export const NewAccountTransfer = () => {
               }}
               // notice="KYM needs to be updated"
               signaturePath={sourceAccount?.member?.signaturePicUrl ?? ''}
-              citizenshipPath={memberCitizenshipUrl}
+              citizenshipPath={memberCitizenshipUrl as string}
               accountInfo={
                 sourceAccount
                   ? {
@@ -352,7 +352,7 @@ export const NewAccountTransfer = () => {
                     memberID: destMemberDetailData?.id,
                     gender: destMemberDetailData?.gender,
                     age: destMemberDetailData?.age,
-                    maritalStatus: destMemberDetailData?.maritalStatus,
+                    maritalStatus: destMemberDetailData?.maritalStatus as string,
                     dateJoined: destMemberDetailData?.dateJoined,
                     // branch: 'Basantapur',
                     phoneNo: destMemberDetailData?.contact,
@@ -360,8 +360,8 @@ export const NewAccountTransfer = () => {
                     address: destMemberDetailData?.address,
                   }}
                   // notice="KYM needs to be updated"
-                  signaturePath={destMemberSignatureUrl}
-                  citizenshipPath={destMemberCitizenshipUrl}
+                  signaturePath={destMemberSignatureUrl as string}
+                  citizenshipPath={destMemberCitizenshipUrl as string}
                 />
               </Box>
             )}
@@ -414,6 +414,8 @@ export const NewAccountTransfer = () => {
                   accountName: result?.senderAccountName,
                   member: localizedText(result?.senderMemberName),
                 },
+                showSignatures: true,
+                dublicate: true,
               };
             }}
             errorCardProps={{

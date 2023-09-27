@@ -31,27 +31,29 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'MR today’s list print added in the MR list section.',
-      'Withdraw slip print check added in the print preference of global settings.',
-      'Withdraw slip number editable and selectable number added in the withdraw slip book request section.',
-      'Date range filter added in the MR trans. Report.',
-      'Total number of deposit collected customers and accounts in MR transaction as well as Teller approval page.',
-      'Bank details added in the KYM form and bio details.',
-      'Destination details are added in the close bill print.',
-      'Presentation of Adjusted and Settled transaction in different table for GL Report.',
+      'bank ledger added in the accounting module.',
+      "add serial number and remarks column in today's print list (mr section).",
+      'Withdraw slip issue and kym status section added in the individual member profile report.',
+      'loan reabate in loan repayment.',
+      'Darker font color in reports print: daybook report, charkhata, trial balance, balance sheet, statement reports.',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'FD certificate serial number generation added in the certificate.',
-      'Share certificate number sqeuence issue fixed in certificate.',
-      'Error time to be hold at least 5 secs.',
-      'Monthly installment date with respect to BS date format.',
-      'In product edit, field which are not able to edit are removed.',
-      'Global search revamp.',
-      '"छोरा" is static in share certificates changed to gender wise.',
-      'Remove logo from the share certificate.',
+      'Prefix uniqueness in the loan product and deposit product while updating the products.',
+      'MR transaction report date filter.',
+      'charkhata report COA head select issue.',
+      'withdraw slip orientation issue.',
+      'kym member upsert issue due to amount limit in fields.',
+      'organization details validation added.',
+      'minor cannot be deletions if it is assocaited with saving accounts.',
+      "Branch readiness/day ends pop up model yes/no and change text : complete to 'GOTO DASHBOARD'.",
+      'interest rate shown in the loan schedule page.',
+      'Daily balnce report ledger account moved to filter section.',
+      'Bulk deposit fine display fix.',
+      'Denomination set off by default in Alternative channel activation.',
+      'In MR as well as teller approval page: COLLECTED total members and accounts to also be displayed.',
     ],
   },
 };
@@ -90,8 +92,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.94</Text>
-          <Text fontSize="s3">September 21, 2023</Text>
+          <Text fontSize="r2">Version 1.0.95</Text>
+          <Text fontSize="s3">September 27, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>

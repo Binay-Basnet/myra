@@ -372,6 +372,7 @@ export const SharePurchaseForm = () => {
                     member: result?.member?.name?.local,
                   },
                   dublicate: true,
+                  showSignatures: true,
                 };
               }}
               errorCardProps={{

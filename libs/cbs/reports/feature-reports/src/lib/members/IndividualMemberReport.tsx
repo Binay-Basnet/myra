@@ -6,10 +6,12 @@ import { Box, Button, GridItem, Text } from '@myra-ui';
 
 import {
   MemberClosedAccounts,
+  MemberKymStatus,
   MemberLoanDetail,
   MemberRecentTransactions,
   MemberSavingDetail,
   MemberShareDetail,
+  MemberWithDrawSlipIssueStatus,
   RiskCategoryFilter,
   useGetIndividualMemberReportQuery,
 } from '@coop/cbs/data-access';
@@ -43,6 +45,15 @@ export const IndividualMemberReport = () => {
   );
   const individualMemberReportData = data?.report?.memberReport?.individualMemberReport?.data;
   const individualMemberReportHeader = individualMemberReportData?.header;
+  const individualMemberKymtable = [
+    {
+      id: individualMemberReportData?.kymStatusForMember?.id,
+      riskCategory: individualMemberReportData?.kymStatusForMember?.riskCategory,
+      lastUpdatedDate: individualMemberReportData?.kymStatusForMember?.lastUpdatedDate,
+      ExpiryDays: individualMemberReportData?.kymStatusForMember?.ExpiryDays,
+      Status: individualMemberReportData?.kymStatusForMember?.Status,
+    },
+  ] as MemberKymStatus[];
 
   return (
     <Report
@@ -550,6 +561,104 @@ export const IndividualMemberReport = () => {
                     meta: {
                       width: '80%',
                     },
+                  },
+                ]}
+              />
+            </Box>
+          )}
+          {individualMemberReportData?.withDrawSlipIssueStatus && (
+            <Box display="flex" py="s8" flexDir="column">
+              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                Withdraw Slip Issue Status{' '}
+              </Text>
+              <Report.Table<MemberWithDrawSlipIssueStatus & { index: number }>
+                data={
+                  individualMemberReportData?.withDrawSlipIssueStatus as MemberWithDrawSlipIssueStatus &
+                    { index: number }[]
+                }
+                columns={[
+                  {
+                    header: 'S.No.',
+                    accessorKey: 'index',
+
+                    meta: {
+                      width: '60px',
+                      isNumeric: true,
+                    },
+                  },
+                  {
+                    header: 'Date',
+                    accessorKey: 'date',
+
+                    accessorFn: (row) => localizedDate(row?.date),
+                    meta: {
+                      Footer: {
+                        display: 'none',
+                      },
+                      skipExcelFormatting: true,
+                    },
+                  },
+
+                  {
+                    header: 'Account Type',
+                    accessorKey: 'accountType',
+                    meta: {
+                      Footer: {
+                        display: 'none',
+                      },
+                    },
+                  },
+                  {
+                    header: 'Account Number',
+                    accessorKey: 'accNum',
+                    cell: (props) => (
+                      <RouteToDetailsPage
+                        type="account-close"
+                        label={props.row.original.accNum as string}
+                        id={props.row.original.accNum as string}
+                      />
+                    ),
+                  },
+                  {
+                    header: 'Type',
+                    accessorKey: 'type',
+                  },
+                ]}
+              />
+            </Box>
+          )}
+          {individualMemberReportData?.kymStatusForMember && (
+            <Box display="flex" py="s8" flexDir="column">
+              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                KYM Status
+              </Text>
+              <Report.Table<MemberKymStatus>
+                data={individualMemberKymtable as MemberKymStatus[]}
+                columns={[
+                  {
+                    header: 'Risk Category',
+                    accessorKey: 'riskCategory',
+                  },
+
+                  {
+                    header: 'Last Updated Date',
+                    accessorKey: 'lastUpdatedDate',
+
+                    accessorFn: (row) => localizedDate(row?.lastUpdatedDate),
+                    meta: {
+                      Footer: {
+                        display: 'none',
+                      },
+                      skipExcelFormatting: true,
+                    },
+                  },
+                  {
+                    header: 'Expiry Days',
+                    accessorKey: 'ExpiryDays',
+                  },
+                  {
+                    header: 'Status',
+                    accessorKey: 'Status',
                   },
                 ]}
               />

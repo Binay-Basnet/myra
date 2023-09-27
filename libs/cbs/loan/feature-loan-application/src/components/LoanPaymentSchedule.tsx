@@ -11,11 +11,14 @@ import {
   LoanInstallment,
   LoanRepaymentScheme,
   useGetEndOfDayDateDataQuery,
+  useGetLoanCurrentOrganizationRateQuery,
   useGetLoanInstallmentsQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { FormDatePicker, FormInput } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
+
+import { useLoanProductContext } from '../hooks/useLoanProduct';
 
 export const LoanPaymentSchedule = () => {
   const {
@@ -38,10 +41,17 @@ export const LoanPaymentSchedule = () => {
   const installmentBeginDate = watch('installmentBeginDate');
 
   const [isOpen, setIsOpen] = useState(false);
+  // Send Organizational Rate
+  const { product } = useLoanProductContext();
+  const { data: loanCurrentOrgRateData } = useGetLoanCurrentOrganizationRateQuery();
+  const orgRate =
+    Number(interest || 0) +
+    Number(product?.productPremiumInterest || 0) +
+    Number(loanCurrentOrgRateData?.settings?.general?.loan?.getCurrentOrganizationRate || 0);
 
   const { data } = useGetLoanInstallmentsQuery(
     {
-      interest: interest ?? 12,
+      interest: orgRate,
       productId: String(productId),
       tenure: Number(tenure),
       sanctionAmount: Number(sanctionAmount),

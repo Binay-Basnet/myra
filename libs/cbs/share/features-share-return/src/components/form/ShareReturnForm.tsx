@@ -396,6 +396,7 @@ export const ShareReturnForm = () => {
                   subTitle:
                     'Share returned successfully. Details of the transaction is listed below.',
                   dublicate: true,
+                  showSignatures: true,
                 };
               }}
               errorCardProps={{

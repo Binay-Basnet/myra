@@ -9,6 +9,10 @@ import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMe
 
 const tabList = [
   {
+    title: 'General',
+    to: ROUTES.HRMODULE_PAYROLL_GENERAL_SETTINGS,
+  },
+  {
     title: 'Salary Components',
     to: ROUTES.HRMODULE_PAYROLL_SALARY_COMPONENTS_SETTINGS,
   },
@@ -17,8 +21,12 @@ const tabList = [
     to: ROUTES.HRMODULE_PAYROLL_SALARY_STRUCTURE_SETTINGS,
   },
   {
-    title: 'Income Tax Slab',
+    title: 'Tax',
     to: ROUTES.HRMODULE_PAYROLL_INCOME_TAX_SLAB_SETTINGS,
+  },
+  {
+    title: 'Pay Group',
+    to: ROUTES.HRMODULE_PAYROLL_PAY_GROUP_SETTINGS,
   },
 ];
 

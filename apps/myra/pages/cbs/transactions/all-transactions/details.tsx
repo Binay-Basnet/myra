@@ -229,6 +229,7 @@ const DepositDetailsPage = () => {
       tempGLTransactions = depositDetailData?.glTransaction;
 
       tempGlTotal = depositDetailData?.totalDebit;
+      tempShowSignatures = true;
 
       tempVoucherDetails = {
         'Transaction Id': (
@@ -274,6 +275,7 @@ const DepositDetailsPage = () => {
       tempGLTransactions = withdrawDetailData?.glTransaction;
 
       tempGlTotal = withdrawDetailData?.totalDebit;
+      tempShowSignatures = true;
 
       tempVoucherDetails = {
         'Transaction Id': (
@@ -340,6 +342,7 @@ const DepositDetailsPage = () => {
       tempTotal = accountTransferDetailData?.transferAmount as string;
 
       tempGLTransactions = accountTransferDetailData?.glTransaction;
+      tempShowSignatures = true;
 
       tempGlTotal = accountTransferDetailData?.totalDebit;
     }
@@ -391,6 +394,7 @@ const DepositDetailsPage = () => {
       tempGlTotal = loanRepaymentDetailData?.totalDebit;
 
       tempDublicate = true;
+      tempShowSignatures = true;
     }
     if (
       router?.asPath?.includes(AllTransactionType?.LoanDisbursment) ||
@@ -418,6 +422,7 @@ const DepositDetailsPage = () => {
         ),
         Date: localizedDate(loanDisbursmentPrintData?.disbursedDate),
         'Disbursed Amount': amountConverter(loanDisbursmentPrintData?.disbursedAmount || 0),
+        'Loan Processing Charge': amountConverter(loanDisbursmentPrintData?.processingCharge || 0),
 
         'Payment Mode': loanDisbursmentPrintData?.paymentMode,
         ...tempObj,
@@ -428,6 +433,7 @@ const DepositDetailsPage = () => {
       tempGLTransactions = allTransactionsData?.glTransaction;
 
       tempGlTotal = allTransactionsData?.totalDebit;
+      tempShowSignatures = true;
 
       tempVoucherDetails = {
         'Transaction Id': (
@@ -497,6 +503,7 @@ const DepositDetailsPage = () => {
       tempGLTransactions = allTransactionsData?.glTransaction;
 
       tempGlTotal = allTransactionsData?.totalDebit;
+      tempShowSignatures = true;
 
       tempVoucherDetails = {
         'Transaction Id': (
@@ -778,7 +785,12 @@ const YearEndAdjustmentConfirmationDialog = ({
 
               {!isAdjusted && (
                 <FormProvider {...methods}>
-                  <FormCheckbox name="yearEndSettlement" label="Flag this as year end settlement" />
+                  <Box display="none">
+                    <FormCheckbox
+                      name="yearEndSettlement"
+                      label="Flag this as year end settlement"
+                    />
+                  </Box>
                 </FormProvider>
               )}
             </Box>

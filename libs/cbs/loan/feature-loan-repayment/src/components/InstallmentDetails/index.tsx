@@ -1,15 +1,19 @@
-import { Dispatch, SetStateAction, useMemo } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { IoWarning } from 'react-icons/io5';
 
-import { Box, Chips, Divider, Text } from '@myra-ui';
+import { Box, Chips, Divider, Icon, Text, Tooltip } from '@myra-ui';
 
 import { useGetEndOfDayDateDataQuery, useGetLoanPreviewQuery } from '@coop/cbs/data-access';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, decimalAdjust } from '@coop/shared/utils';
+
+import { Rebate } from '../Rebate';
 
 interface IProps {
   loanAccountId: string;
   totalPayableAmount: number;
   setTotalPayableAmount: Dispatch<SetStateAction<number>>;
+  mode?: string;
 }
 
 type CoveredInstallment = {
@@ -20,15 +24,17 @@ type CoveredInstallment = {
   isInterestPartial: boolean;
   isFinePartial: boolean;
   installmentNo: number;
+  rebate: number;
 };
 
 export const InstallmentData = ({
   loanAccountId,
   totalPayableAmount,
   setTotalPayableAmount,
+  mode,
 }: IProps) => {
   const methods = useFormContext();
-  const { watch } = methods;
+  const { watch, resetField } = methods;
 
   const { data } = useGetEndOfDayDateDataQuery();
 
@@ -98,6 +104,7 @@ export const InstallmentData = ({
         isInterestPartial: false,
         isFinePartial: false,
         installmentNo: installment.installmentNo,
+        rebate: Number(installment.rebate || 0),
       };
 
       const principal = installment?.isPartial
@@ -175,25 +182,59 @@ export const InstallmentData = ({
     return tempCoveredInstallments;
   }, [amountPaid, remainingInstallments, loanType]);
 
-  const { totalCoveredPrincipal, totalCoveredInterest, returnAmount } = useMemo(() => {
-    const tempPrincipal = coveredInstallments?.reduce(
-      (sum, installment) => sum + Number(installment.principal),
-      0
-    );
+  const rebateApplied = Number(watch('rebate.amount') || 0);
 
-    const tempInterest = coveredInstallments?.reduce(
-      (sum, installment) => sum + Number(installment.interest),
-      0
-    );
+  const { totalCoveredPrincipal, totalCoveredInterest, returnAmount, totalRebate, totalAmount } =
+    useMemo(() => {
+      const tempPrincipal = coveredInstallments?.reduce(
+        (sum, installment) => sum + Number(installment.principal),
+        0
+      );
 
-    setTotalPayableAmount(Number((tempPrincipal + tempInterest + payableFine).toFixed(2)));
+      const tempInterest = coveredInstallments?.reduce(
+        (sum, installment) => sum + Number(installment.interest),
+        0
+      );
 
-    return {
-      totalCoveredPrincipal: tempPrincipal,
-      totalCoveredInterest: tempInterest,
-      returnAmount: amountPaid - tempPrincipal - tempInterest - payableFine,
-    };
-  }, [coveredInstallments, amountPaid, payableFine]);
+      const tempRebate = coveredInstallments?.reduce(
+        (sum, installment) => sum + Number(installment.rebate),
+        0
+      );
+
+      const tempTotalAmount = decimalAdjust(
+        'round',
+        tempPrincipal + tempInterest + payableFine,
+        -2
+      );
+
+      const tempTotalPayableAmount = decimalAdjust('round', tempTotalAmount - rebateApplied, -2);
+
+      setTotalPayableAmount(tempTotalPayableAmount);
+
+      return {
+        totalCoveredPrincipal: decimalAdjust('round', tempPrincipal, -2),
+        totalCoveredInterest: decimalAdjust('round', tempInterest, -2),
+        returnAmount: decimalAdjust('round', amountPaid - tempTotalPayableAmount, -2),
+        totalRebate: decimalAdjust('round', tempRebate, -2),
+        totalAmount: tempTotalAmount,
+      };
+    }, [coveredInstallments, amountPaid, payableFine, rebateApplied]);
+
+  useEffect(() => {
+    if (totalRebate === 0) {
+      resetField('isRebateApplied');
+      resetField('rebate.amount');
+      resetField('rebate.doc');
+    }
+  }, [totalRebate]);
+
+  const hasPartialInstallment = useMemo(
+    () =>
+      coveredInstallments?.findIndex(
+        (inst) => inst?.isInterestPartial || inst?.isPrincipalPartial
+      ) !== -1,
+    [coveredInstallments]
+  );
 
   return amountPaid ? (
     <Box display="flex" flexDirection="column" gap="s16">
@@ -312,6 +353,34 @@ export const InstallmentData = ({
         </>
       )}
 
+      {totalRebate && mode === '0' ? (
+        <>
+          <Box display="flex" justifyContent="space-between">
+            <Text fontSize="s3" fontWeight={500} color="gray.700">
+              Rebate Available
+            </Text>
+
+            <Box display="flex" gap="s4" alignItems="center">
+              <Text fontSize="s3" fontWeight={500} color="gray.700">
+                {amountConverter(totalRebate)}
+              </Text>
+
+              {hasPartialInstallment && (
+                <Tooltip title="This rebate includes for the payment that is paid partially. Please proceed accordingly.">
+                  <Box cursor="pointer" display="flex">
+                    <Icon as={IoWarning} color="warning.500" />
+                  </Box>
+                </Tooltip>
+              )}
+            </Box>
+          </Box>
+
+          <Rebate />
+        </>
+      ) : null}
+
+      <Divider />
+
       <Box
         display="flex"
         flexDirection="column"
@@ -355,6 +424,31 @@ export const InstallmentData = ({
             </Text>
           </Box>
         ) : null}
+
+        {totalAmount ? (
+          <Box display="flex" justifyContent="space-between">
+            <Text fontSize="s3" fontWeight={500} color="gray.700">
+              Total Amount
+            </Text>
+
+            <Text fontSize="s3" fontWeight={500} color="gray.700">
+              {amountConverter(totalAmount)}
+            </Text>
+          </Box>
+        ) : null}
+
+        {rebateApplied ? (
+          <Box display="flex" justifyContent="space-between">
+            <Text fontSize="s3" fontWeight={500} color="gray.700">
+              Total Rebate
+            </Text>
+
+            <Text fontSize="s3" fontWeight={500} color="gray.700">
+              {amountConverter(rebateApplied)}
+            </Text>
+          </Box>
+        ) : null}
+
         <Box display="flex" justifyContent="space-between">
           <Text fontSize="s3" fontWeight={500} color="gray.700">
             Total Payable Amount

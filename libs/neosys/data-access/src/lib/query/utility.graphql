@@ -1,0 +1,43 @@
+query getUtilityTransactionList($paginate: Pagination!, $filter: Filter) {
+  utility {
+    listUtilityRecords(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          id
+          slug
+          saccossName
+          drAmount
+          crAmount
+          utility
+          txnStatus
+          amount
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+
+query getUtilityClientBalanceList($paginate: Pagination!, $filter: Filter) {
+  utility {
+    listSaccosAvailableAmount(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          id
+          slug
+          Amount
+          saccossName
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}

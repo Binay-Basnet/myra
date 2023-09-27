@@ -40,3 +40,13 @@ query transactionConstraintsList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query pennyRestrictionList {
+  settings {
+    general {
+      setup {
+        pennyRestriction
+      }
+    }
+  }
+}

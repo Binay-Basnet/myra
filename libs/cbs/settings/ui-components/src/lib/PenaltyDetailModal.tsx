@@ -11,9 +11,9 @@ interface IPenaltyDetailModalProps {
 }
 
 export const PenaltyDetailModal = ({ isOpen, onClose, penalty }: IPenaltyDetailModalProps) => (
-  <Modal title="Interest Update Schedule" open={isOpen} onClose={onClose}>
+  <Modal title="Penalty Detail" open={isOpen} onClose={onClose}>
     <Box display="flex" flexDirection="column" gap="s20">
-      <Grid templateColumns="repeat(3,1fr)">
+      <Grid templateColumns="repeat(3,1fr)" gap="s16">
         <Box display="flex" flexDirection="column" gap="s4">
           <Text variant="formLabel" color="gray.700">
             Created At

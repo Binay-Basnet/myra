@@ -141,7 +141,7 @@ export const ROUTES = {
     '/settings/general/utility-payment/internet',
 
   SETTINGS_GENERAL_AUDIT_LOG: '/settings/monitor/audit-log/list',
-  SETTINGS_EOD_SETUP: '/settings/global/eod/setup',
+  SETTINGS_EOD_SETUP: '/settings/global/eod/configure',
   SETTINGS_GENERAL_BANK: '/settings/global/bank/configure',
 
   SETTINGS_GENERAL_COA: '/settings/global/coa/list',
@@ -214,7 +214,11 @@ export const ROUTES = {
 
   SETTINGS_REPORTING_TAGS_LIST: '/settings/general/reporting-tags/list',
 
-  SETTINGS_GENERAL_TRANSACTION_CONSTRAINTS_LIST: '/settings/general/transaction-constraints/list',
+  SETTINGS_GENERAL_TRANSACTION_CONSTRAINTS_LIST:
+    '/settings/general/transactions/transaction-constraints/list',
+
+  SETTINGS_GENERAL_TRANSACTIONS_PENNY_RESTRICTIONS:
+    '/settings/general/transactions/penny-restrictions/configure',
 
   /* NOT INDEXED BY GLOBAL SEARCH */
 
@@ -410,7 +414,7 @@ export const ROUTES = {
 
   SETTINGS_GENERAL_PRINT_PREFERENCE: '/settings/global/print-preference/withdraw-slip',
 
-  SETTINGS_EOD_HISTORY: '/settings/global/eod/history',
+  SETTINGS_EOD_HISTORY: '/settings/global/eod/list',
 
   SETTINGS_GENERAL_SAVINGS_ORGANIZATION_RATE: '/settings/general/savings/organization-rate',
 
@@ -419,7 +423,7 @@ export const ROUTES = {
   SETTINGS_GENERAL_ORGANIZATION_DETAILS: '/settings/global/organization',
   SETTINGS_GENERAL_ORGANIZATION_EDIT: '/settings/global/organization/edit',
 
-  SETTINGS_EOD_HISTORY_DETAILS: '/settings/global/eod/history/details',
+  SETTINGS_EOD_HISTORY_DETAILS: '/settings/global/eod/list/details',
   SETTINGS_GENERAL_COMMITTEE: '/settings/global/committee/list',
   SETTINGS_GENERAL_COMMITTEE_DETAILS: '/settings/global/committee/details',
 
@@ -461,9 +465,11 @@ export const ROUTES = {
   HRMODULE_EMPLOYEES_SETTINGS: '/settings/general/hcm-employee',
   HRMODULE_EMPLOYEES_LEAVE_SETTINGS: '/settings/general/hcm-employee/leave',
 
+  HRMODULE_PAYROLL_GENERAL_SETTINGS: '/settings/general/hcm-payroll/general',
   HRMODULE_PAYROLL_SALARY_COMPONENTS_SETTINGS: '/settings/general/hcm-payroll/salary-components',
   HRMODULE_PAYROLL_SALARY_STRUCTURE_SETTINGS: '/settings/general/hcm-payroll/salary-structure',
   HRMODULE_PAYROLL_INCOME_TAX_SLAB_SETTINGS: '/settings/general/hcm-payroll/income-tax-slab',
+  HRMODULE_PAYROLL_PAY_GROUP_SETTINGS: '/settings/general/hcm-payroll/pay-group',
 
   HRMODULE_ATTENDENCE_SETTINGS: '/hr/employee/attendence/list',
   HRMODULE_LEAVE_SETTINGS: '/hr/employee/leave/list',
@@ -525,12 +531,14 @@ export const ROUTES = {
   HR_PAYROLL_ENTRY_EDIT: '/hr/payroll/payroll-run/edit',
 
   HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_LIST: '/hr/payroll/salary-structure-assignment/list',
+  HR_PAYROLL_SALARY_STRUCTURE_LIST: '/hr/payroll/salary-structure/list',
   HR_PAYROLL_SALARY_SLIP_LIST: '/hr/payroll/salary-slip/list',
   HR_PAYROLL_EXPEN_LIST: '/hr/payroll/expen/list',
 
   HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_ADD: '/hr/payroll/salary-structure-assignment/add',
   HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_EDIT: '/hr/payroll/salary-structure-assignment/edit',
 
+  HR_PAYROLL_SALARY_STRUCTURE_ADD: '/hr/payroll/salary-structure/add',
   HR_PAYROLL_SALARY_SLIP_ADD: '/hr/payroll/salary-slip/add',
   HR_PAYROLL_EXPEN_ADD: '/hr/payroll/expen/add',
 

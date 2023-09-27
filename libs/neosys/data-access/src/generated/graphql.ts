@@ -495,6 +495,7 @@ export type Municipality = {
 export type Mutation = {
   neosys: NeosysMutation;
   presignedUrl: PresignedUrlMutation;
+  utility: UtilityMutation;
 };
 
 export type MutationError =
@@ -568,6 +569,7 @@ export type NeosysClientMinimalInfo = {
   locality?: Maybe<Scalars['String']>;
   organizationCode?: Maybe<Scalars['String']>;
   provinceId?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
   wardNo?: Maybe<Scalars['Int']>;
 };
 
@@ -963,6 +965,7 @@ export type Province = {
 export type Query = {
   administration: AdministrationQuery;
   neosys: NeosysQuery;
+  utility: UtilityQuery;
 };
 
 export type QueryError = AuthorizationError | BadRequestError | NotFoundError | ServerError;
@@ -978,6 +981,35 @@ export const Role = {
 } as const;
 
 export type Role = typeof Role[keyof typeof Role];
+export type SaccosAmountSetupResult = {
+  ID?: Maybe<Scalars['ID']>;
+  error?: Maybe<MutationError>;
+};
+
+export type SaccosAvailableAmountConnection = {
+  edges?: Maybe<Array<Maybe<SaccosAvailableAmountEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SaccosAvailableAmountEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<SaccosAvailableAmountInfo>;
+};
+
+export type SaccosAvailableAmountInfo = {
+  Amount: Scalars['String'];
+  id: Scalars['String'];
+  saccossName: Scalars['String'];
+  slug: Scalars['String'];
+};
+
+export type SaccosSetup = {
+  amount: Scalars['String'];
+  slug: Scalars['String'];
+  txnType: UtilityTxnTypeAtNeosys;
+};
+
 export type ServerError = {
   code: Scalars['Int'];
   message: Scalars['String'];
@@ -1394,6 +1426,44 @@ export const UserType = {
 } as const;
 
 export type UserType = typeof UserType[keyof typeof UserType];
+export type UtilityRecordsConnection = {
+  edges?: Maybe<Array<Maybe<UtilityRecordsEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type UtilityRecordsEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<UtilityRecordsInfo>;
+};
+
+export type UtilityRecordsInfo = {
+  amount: Scalars['String'];
+  count?: Maybe<Scalars['String']>;
+  crAmount: Scalars['String'];
+  drAmount: Scalars['String'];
+  id: Scalars['String'];
+  saccossName: Scalars['String'];
+  slug: Scalars['String'];
+  txnStatus: UtilityUsageObjStateType;
+  utility: Scalars['String'];
+};
+
+export const UtilityTxnTypeAtNeosys = {
+  Credit: 'CREDIT',
+  Debit: 'DEBIT',
+} as const;
+
+export type UtilityTxnTypeAtNeosys =
+  typeof UtilityTxnTypeAtNeosys[keyof typeof UtilityTxnTypeAtNeosys];
+export const UtilityUsageObjStateType = {
+  Cancelled: 'CANCELLED',
+  Pending: 'PENDING',
+  Success: 'SUCCESS',
+} as const;
+
+export type UtilityUsageObjStateType =
+  typeof UtilityUsageObjStateType[keyof typeof UtilityUsageObjStateType];
 export type ValidationError = {
   code: Scalars['Int'];
   message: Scalars['InvalidData'];
@@ -1402,6 +1472,29 @@ export type ValidationError = {
 export type VersionInput = {
   description?: InputMaybe<Scalars['String']>;
   version: Scalars['String'];
+};
+
+export type UtilityMutation = {
+  addSaccosAmount?: Maybe<SaccosAmountSetupResult>;
+};
+
+export type UtilityMutationAddSaccosAmountArgs = {
+  input: Array<SaccosSetup>;
+};
+
+export type UtilityQuery = {
+  listSaccosAvailableAmount?: Maybe<SaccosAvailableAmountConnection>;
+  listUtilityRecords?: Maybe<UtilityRecordsConnection>;
+};
+
+export type UtilityQueryListSaccosAvailableAmountArgs = {
+  filter?: InputMaybe<Filter>;
+  paginate: Pagination;
+};
+
+export type UtilityQueryListUtilityRecordsArgs = {
+  filter?: InputMaybe<Filter>;
+  paginate: Pagination;
 };
 
 export type LoginMutationVariables = Exact<{
@@ -1707,6 +1800,25 @@ export type SetUserMutation = {
           | MutationError_ValidationError_Fragment
           | null;
       } | null;
+    } | null;
+  };
+};
+
+export type AddSaccosAmountMutationVariables = Exact<{
+  input: Array<SaccosSetup> | SaccosSetup;
+}>;
+
+export type AddSaccosAmountMutation = {
+  utility: {
+    addSaccosAmount?: {
+      ID?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
     } | null;
   };
 };
@@ -2298,6 +2410,7 @@ export type GetClientsListQuery = {
         wardNo?: number | null;
         dateJoined?: string | null;
         dbCreated?: boolean | null;
+        slug?: string | null;
       } | null> | null;
     } | null;
   };
@@ -2461,6 +2574,51 @@ export type GetUserEditDataQuery = {
           | MutationError_ServerError_Fragment
           | null;
       } | null;
+    } | null;
+  };
+};
+
+export type GetUtilityTransactionListQueryVariables = Exact<{
+  paginate: Pagination;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetUtilityTransactionListQuery = {
+  utility: {
+    listUtilityRecords?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor?: string | null;
+        node?: {
+          id: string;
+          slug: string;
+          saccossName: string;
+          drAmount: string;
+          crAmount: string;
+          utility: string;
+          txnStatus: UtilityUsageObjStateType;
+          amount: string;
+        } | null;
+      } | null> | null;
+      pageInfo?: PaginationFragment | null;
+    } | null;
+  };
+};
+
+export type GetUtilityClientBalanceListQueryVariables = Exact<{
+  paginate: Pagination;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetUtilityClientBalanceListQuery = {
+  utility: {
+    listSaccosAvailableAmount?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor?: string | null;
+        node?: { id: string; slug: string; Amount: string; saccossName: string } | null;
+      } | null> | null;
+      pageInfo?: PaginationFragment | null;
     } | null;
   };
 };
@@ -2920,6 +3078,31 @@ export const useSetUserMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetUserMutation, TError, SetUserMutationVariables, TContext>(
     ['setUser'],
     useAxios<SetUserMutation, SetUserMutationVariables>(SetUserDocument),
+    options
+  );
+export const AddSaccosAmountDocument = `
+    mutation addSaccosAmount($input: [SaccosSetup!]!) {
+  utility {
+    addSaccosAmount(input: $input) {
+      ID
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddSaccosAmountMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddSaccosAmountMutation,
+    TError,
+    AddSaccosAmountMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddSaccosAmountMutation, TError, AddSaccosAmountMutationVariables, TContext>(
+    ['addSaccosAmount'],
+    useAxios<AddSaccosAmountMutation, AddSaccosAmountMutationVariables>(AddSaccosAmountDocument),
     options
   );
 export const AllAdministrationDocument = `
@@ -3805,6 +3988,7 @@ export const GetClientsListDocument = `
         wardNo
         dateJoined
         dbCreated
+        slug
       }
     }
   }
@@ -3960,5 +4144,79 @@ export const useGetUserEditDataQuery = <TData = GetUserEditDataQuery, TError = u
       null,
       variables
     ),
+    options
+  );
+export const GetUtilityTransactionListDocument = `
+    query getUtilityTransactionList($paginate: Pagination!, $filter: Filter) {
+  utility {
+    listUtilityRecords(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          id
+          slug
+          saccossName
+          drAmount
+          crAmount
+          utility
+          txnStatus
+          amount
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetUtilityTransactionListQuery = <
+  TData = GetUtilityTransactionListQuery,
+  TError = unknown
+>(
+  variables: GetUtilityTransactionListQueryVariables,
+  options?: UseQueryOptions<GetUtilityTransactionListQuery, TError, TData>
+) =>
+  useQuery<GetUtilityTransactionListQuery, TError, TData>(
+    ['getUtilityTransactionList', variables],
+    useAxios<GetUtilityTransactionListQuery, GetUtilityTransactionListQueryVariables>(
+      GetUtilityTransactionListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetUtilityClientBalanceListDocument = `
+    query getUtilityClientBalanceList($paginate: Pagination!, $filter: Filter) {
+  utility {
+    listSaccosAvailableAmount(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          id
+          slug
+          Amount
+          saccossName
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetUtilityClientBalanceListQuery = <
+  TData = GetUtilityClientBalanceListQuery,
+  TError = unknown
+>(
+  variables: GetUtilityClientBalanceListQueryVariables,
+  options?: UseQueryOptions<GetUtilityClientBalanceListQuery, TError, TData>
+) =>
+  useQuery<GetUtilityClientBalanceListQuery, TError, TData>(
+    ['getUtilityClientBalanceList', variables],
+    useAxios<GetUtilityClientBalanceListQuery, GetUtilityClientBalanceListQueryVariables>(
+      GetUtilityClientBalanceListDocument
+    ).bind(null, variables),
     options
   );

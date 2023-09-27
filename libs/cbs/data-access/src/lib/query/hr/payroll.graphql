@@ -157,3 +157,56 @@ query getSalarySlipList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getCurrentMonthUpdatedSalaryStructure($employeeId: ID, $actionType: SalActionType) {
+  hr {
+    payroll {
+      salStrucAdjustRevision {
+        getCurrentMonthUpdatedSalaryStructure(employeeId: $employeeId, actionType: $actionType) {
+          data {
+            earnings {
+              id
+              amount
+            }
+            deductions {
+              id
+              amount
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSalStructureAdjustRevision($id: ID) {
+  hr {
+    payroll {
+      salStrucAdjustRevision {
+        getSalStructureAdjustRevision(id: $id) {
+          data {
+            id
+            employee
+            actionType
+            revisionEffectiveFrom
+            adjustmentOn
+            earnings {
+              id
+              amount
+            }
+            deductions {
+              id
+              amount
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

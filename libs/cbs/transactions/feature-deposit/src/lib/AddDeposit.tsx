@@ -654,6 +654,7 @@ export const AddDeposit = () => {
                       member: result?.memberName?.local,
                     },
                     dublicate: true,
+                    showSignatures: true,
                   };
                 }}
                 errorCardProps={{

@@ -11,27 +11,10 @@ export const SalaryComponents = () => (
       allowances, arrears, etc.
     </Text>
     <Divider />
-    <Box display="flex">
-      <Box display="flex" flexDir="column" flex={1} gap="s16">
-        <EarningComponentTable />
-        <DeductionComponentTable />
-      </Box>
 
-      <Box display="flex" flexDir="column" minW="200" px="s16" gap="s16">
-        <Text fontSize="r2" fontWeight="medium">
-          On the Employee Settings
-        </Text>
-        <a href="#employee-level">
-          <Text fontSize="r1" fontWeight="medium" color="blue.500" cursor="pointer">
-            Earning Component
-          </Text>
-        </a>
-        <a href="#department">
-          <Text fontSize="r1" fontWeight="medium" color="blue.500" cursor="pointer">
-            Deduction Component
-          </Text>
-        </a>
-      </Box>
+    <Box display="flex" flexDir="column" flex={1} gap="s16">
+      <EarningComponentTable />
+      <DeductionComponentTable />
     </Box>
   </Box>
 );

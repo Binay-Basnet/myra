@@ -81,7 +81,7 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
 
   const overDueInstallments = useMemo(
     () => loanInstallments?.filter((installment) => installment?.status === 'OVERDUE') ?? [],
-    [paymentSchedule]
+    [loanInstallments]
   );
 
   const currentInstallment = useMemo(() => {
@@ -158,16 +158,11 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     loanInstallments,
   ]);
 
-  const totalOverdueInterest = useMemo(
-    () => Number(paymentSchedule?.totalOverdueInterest || 0),
-
-    [paymentSchedule]
-  );
-
-  const { totalOverdueAmount, totalOverduePrincipal } = useMemo(
+  const { totalOverdueAmount, totalOverduePrincipal, totalOverdueInterest } = useMemo(
     () => ({
       totalOverdueAmount: paymentSchedule?.totalOverduePayable,
       totalOverduePrincipal: paymentSchedule?.totalOverduePrincipal,
+      totalOverdueInterest: Number(paymentSchedule?.totalOverdueInterest || 0),
     }),
     [paymentSchedule]
   );

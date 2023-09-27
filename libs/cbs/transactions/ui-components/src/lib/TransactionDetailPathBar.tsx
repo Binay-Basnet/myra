@@ -161,6 +161,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       tempGLTransactions = depositDetailData?.glTransaction;
 
       tempGlTotal = depositDetailData?.totalDebit;
+      tempShowSignatures = true;
 
       tempVoucherDetails = {
         'Transaction Id': (
@@ -203,6 +204,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       tempGLTransactions = withdrawDetailData?.glTransaction;
 
       tempGlTotal = withdrawDetailData?.totalDebit;
+      tempShowSignatures = true;
 
       tempVoucherDetails = {
         'Transaction Id': (
@@ -272,6 +274,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       tempGLTransactions = accountTransferDetailData?.glTransaction;
 
       tempGlTotal = accountTransferDetailData?.totalDebit;
+      tempShowSignatures = true;
     }
 
     if (router?.asPath?.includes('/repayments/') || router?.asPath?.includes('/loan-payment/')) {
@@ -317,6 +320,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       tempGlTotal = loanRepaymentDetailData?.totalDebit;
 
       tempDublicate = true;
+      tempShowSignatures = true;
     }
 
     if (router?.asPath?.includes('/journal-vouchers/')) {

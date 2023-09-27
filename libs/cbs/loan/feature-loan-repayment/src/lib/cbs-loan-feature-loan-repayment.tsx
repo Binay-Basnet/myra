@@ -21,7 +21,12 @@ import {
 } from '@coop/cbs/data-access';
 import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { FormAmountInput, FormLayout, FormMemberSelect, FormSelect } from '@coop/shared/form';
-import { amountConverter, amountToWordsConverter, featureCode } from '@coop/shared/utils';
+import {
+  amountConverter,
+  amountToWordsConverter,
+  decimalAdjust,
+  featureCode,
+} from '@coop/shared/utils';
 
 import {
   Discount,
@@ -102,8 +107,15 @@ export const LoanRepayment = () => {
   const loanAccountId = watch('loanAccountId');
   const isDisableDenomination = watch('cash.disableDenomination');
 
-  const finePaid = watch('penalty.amount');
-  const amountPaid = Number(watch('amountPaid') || 0) + Number(finePaid || 0);
+  const finePaid = Number(watch('penalty.amount') || 0);
+
+  const rebateApplied = Number(watch('rebate.amount') || 0);
+
+  const amountPaid = decimalAdjust(
+    'round',
+    Number(watch('amountPaid') || 0) + finePaid - rebateApplied,
+    -2
+  );
 
   const cashPaid = watch('cash.cashPaid');
 
@@ -154,15 +166,27 @@ export const LoanRepayment = () => {
   const handleSubmit = () => {
     const values = getValues();
 
-    let filteredValues = omit(values, ['isFinePaid']);
+    let filteredValues = omit(values, ['isFinePaid', 'isRebateApplied']);
 
     if (!values?.penalty?.amount) {
       filteredValues = omit(filteredValues, ['penalty']);
     }
 
+    if (!values?.rebate?.amount) {
+      filteredValues = omit(filteredValues, ['rebate']);
+    }
+
+    if (values?.rebate?.amount) {
+      filteredValues = {
+        ...filteredValues,
+        amountPaid: (Number(values?.amountPaid) - Number(values?.rebate?.amount)).toFixed(2),
+      };
+    }
+
     if (values.paymentMethod === LoanRepaymentMethod.LocSaving) {
       filteredValues = omit({ ...filteredValues }, ['account', 'bankVoucher', 'cash']);
     }
+
     if (values.paymentMethod === LoanRepaymentMethod.Cash) {
       filteredValues = omit({ ...filteredValues }, ['account', 'bankVoucher']);
       filteredValues.cash = {
@@ -328,6 +352,7 @@ export const LoanRepayment = () => {
                   loanAccountId={loanAccountId}
                   totalPayableAmount={totalPayableAmount}
                   setTotalPayableAmount={setTotalPayableAmount}
+                  mode={mode}
                 />
               </Box>
             )}
@@ -422,7 +447,7 @@ export const LoanRepayment = () => {
                     'Principal Amount': amountConverter(result?.principalAmount ?? '0'),
                     'Interest Amount': amountConverter(result?.interestAmount ?? '0'),
                     'Penalty Amount': amountConverter(result?.penaltyAmount ?? '0'),
-                    'Rebate Amount': amountConverter(result?.rebateAmount ?? '0'),
+                    'Rebate Amount': amountConverter(result?.rebateAmount || '0'),
 
                     'Payment Mode': result?.paymentMethod,
                   },
@@ -456,6 +481,7 @@ export const LoanRepayment = () => {
                   //   Number(result?.nextInstallment?.currentRemainingPrincipal ?? 0) +
                   //   Number(result?.nextInstallment?.remainingInterest ?? 0),
                   dublicate: true,
+                  showSignatures: true,
                   transactionId: result?.transactionId as string,
                 };
               }}

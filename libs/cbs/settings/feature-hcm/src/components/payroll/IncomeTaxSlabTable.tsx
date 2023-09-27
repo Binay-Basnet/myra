@@ -35,7 +35,7 @@ const defaultFormValue = {
   unmarriedTaxableSalarySlab: null,
   marriedTaxableSalarySlab: null,
   effectiveFrom: null,
-  makeThisActive: false,
+  makeThisCurrentTaxSlab: false,
 };
 
 export const IncomeTaxSlabTable = () => {
@@ -236,8 +236,8 @@ export const IncomeTaxSlabTable = () => {
         <FormProvider {...methods}>
           <Grid templateColumns="repeat(3,1fr)" gap="s16">
             <FormInput name="name" label="Name" />
-            <FormDatePicker name="fiscalYear.from" label="Select Fiscal Year From" />
-            <FormDatePicker name="fiscalYear.to" label="Select Fiscal Year to" />
+            <FormInput type="number" name="fiscalYearFrom" label="Select Fiscal Year From" />
+            <FormInput type="number" name="fiscalYearTo" label="Select Fiscal Year to" />
 
             <GridItem colSpan={3}>
               <FormEditableTable
@@ -285,17 +285,15 @@ export const IncomeTaxSlabTable = () => {
                 <Box w="-webkit-fit-content">
                   <FormDatePicker name="effectiveFrom" label="Effective From" />
                 </Box>
-
-                <FormCheckbox name="makeThisActive" label="Make this Active" />
                 <Divider />
-                <Button
-                  w="-webkit-fit-content"
-                  alignSelf="flex-end"
-                  onClick={onSubmit}
-                  isLoading={isLoading}
-                >
-                  Save
-                </Button>
+                <GridItem colSpan={3}>
+                  <Box display="flex" justifyContent="space-between">
+                    <FormCheckbox name="makeItCurrentTaxSlab" label="Make this Current Tax Slab" />
+                    <Button onClick={onSubmit} isLoading={isLoading}>
+                      Save
+                    </Button>
+                  </Box>
+                </GridItem>
               </Box>
             </GridItem>
           </Grid>

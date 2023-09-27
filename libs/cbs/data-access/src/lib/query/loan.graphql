@@ -453,6 +453,11 @@ query getLoanPreview($id: String!) {
             penaltyRate
             penaltyAmount
           }
+          rebate {
+            dayBeforeInstallmentDate
+            rebateRate
+            rebateAmount
+          }
         }
         loanDetails {
           appliedLoanAmount
@@ -520,6 +525,7 @@ query getLoanPreview($id: String!) {
             isPartial
             overdueAmount
             fullPrincipal
+            rebate
           }
           totalRemainingPayable
           duesSince
@@ -554,6 +560,7 @@ query getLoanPreview($id: String!) {
             isPartial
             overdueAmount
             fullPrincipal
+            rebate
           }
           totalRemainingPayable
         }

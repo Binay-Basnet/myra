@@ -70,6 +70,7 @@ export const CharKhataReport = () => {
     filters?.coaHead && filters?.coaType?.length !== 0
       ? filters?.coaType?.map((t) => t?.value)
       : [];
+
   const { data, isFetching } = useGetCharKhataReportQuery(
     {
       data: {
@@ -169,86 +170,94 @@ export const CharKhataReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization />
 
-          {equityAndLiablities?.length !== 0 && (
-            <Box display="flex" py="s16" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                1. Equity and Liabilities
-              </Text>
-              <COATable
-                type="Liabilities"
-                total={
-                  data?.report?.transactionReport?.financial?.charKhataReport?.data
-                    ?.equityAndLiablitiesTotal as unknown as TrialBalance
-                }
-                data={equityAndLiablities as TrialSheetReportDataEntry[]}
-              />
-            </Box>
-          )}
+          {equityAndLiablities?.length !== 0 &&
+            ((coaTypes && coaTypes?.includes(CoaAccountClass.EquityAndLiabilities)) ||
+              !coaTypes?.length) && (
+              <Box display="flex" py="s16" flexDir="column">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  1. Equity and Liabilities
+                </Text>
+                <COATable
+                  type="Liabilities"
+                  total={
+                    data?.report?.transactionReport?.financial?.charKhataReport?.data
+                      ?.equityAndLiablitiesTotal as unknown as TrialBalance
+                  }
+                  data={equityAndLiablities as TrialSheetReportDataEntry[]}
+                />
+              </Box>
+            )}
 
-          {assetsReport?.length !== 0 && (
-            <Box display="flex" py="s16" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                2. Assets
-              </Text>
-              <COATable
-                total={
-                  data?.report?.transactionReport?.financial?.charKhataReport?.data
-                    ?.assetsTotal as unknown as TrialBalance
-                }
-                type="Assets"
-                data={assetsReport as TrialSheetReportDataEntry[]}
-              />
-            </Box>
-          )}
+          {assetsReport?.length !== 0 &&
+            ((coaTypes && coaTypes?.includes(CoaAccountClass.Assets)) || !coaTypes?.length) && (
+              <Box display="flex" py="s16" flexDir="column">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  2. Assets
+                </Text>
+                <COATable
+                  total={
+                    data?.report?.transactionReport?.financial?.charKhataReport?.data
+                      ?.assetsTotal as unknown as TrialBalance
+                  }
+                  type="Assets"
+                  data={assetsReport as TrialSheetReportDataEntry[]}
+                />
+              </Box>
+            )}
 
-          {expensesReport?.length !== 0 && (
-            <Box display="flex" py="s16" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                3. Expenses
-              </Text>
+          {expensesReport?.length !== 0 &&
+            ((coaTypes && coaTypes?.includes(CoaAccountClass.Expenditure)) ||
+              !coaTypes?.length) && (
+              <Box display="flex" py="s16" flexDir="column">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  3. Expenses
+                </Text>
 
-              <COATable
-                total={
-                  data?.report?.transactionReport?.financial?.charKhataReport?.data
-                    ?.expenseTotal as unknown as TrialBalance
-                }
-                type="Expenses"
-                data={expensesReport as TrialSheetReportDataEntry[]}
-              />
-            </Box>
-          )}
+                <COATable
+                  total={
+                    data?.report?.transactionReport?.financial?.charKhataReport?.data
+                      ?.expenseTotal as unknown as TrialBalance
+                  }
+                  type="Expenses"
+                  data={expensesReport as TrialSheetReportDataEntry[]}
+                />
+              </Box>
+            )}
 
-          {incomeReport?.length !== 0 && (
-            <Box display="flex" py="s16" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                4. Income
-              </Text>
-              <COATable
-                total={
-                  data?.report?.transactionReport?.financial?.charKhataReport?.data
-                    ?.incomeTotal as unknown as TrialBalance
-                }
-                type="Income"
-                data={incomeReport as TrialSheetReportDataEntry[]}
-              />
-            </Box>
-          )}
+          {incomeReport?.length !== 0 &&
+            ((coaTypes && coaTypes?.includes(CoaAccountClass.Income)) || !coaTypes?.length) && (
+              <Box display="flex" py="s16" flexDir="column">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  4. Income
+                </Text>
+                <COATable
+                  total={
+                    data?.report?.transactionReport?.financial?.charKhataReport?.data
+                      ?.incomeTotal as unknown as TrialBalance
+                  }
+                  type="Income"
+                  data={incomeReport as TrialSheetReportDataEntry[]}
+                />
+              </Box>
+            )}
 
-          {offBalanceSheetReport?.length !== 0 && (
-            <Box display="flex" py="s16" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                5. Off Balance Sheet
-              </Text>
-              <COATable
-                type="Off Balance"
-                total={
-                  data?.report?.transactionReport?.financial?.charKhataReport?.data
-                    ?.offBalanceTotal as unknown as TrialBalance
-                }
-                data={offBalanceSheetReport as TrialSheetReportDataEntry[]}
-              />
-            </Box>
-          )}
+          {offBalanceSheetReport?.length !== 0 &&
+            ((coaTypes && coaTypes?.includes(CoaAccountClass.OffBalanceSheet)) ||
+              !coaTypes?.length) && (
+              <Box display="flex" py="s16" flexDir="column">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  5. Off Balance Sheet
+                </Text>
+                <COATable
+                  type="Off Balance"
+                  total={
+                    data?.report?.transactionReport?.financial?.charKhataReport?.data
+                      ?.offBalanceTotal as unknown as TrialBalance
+                  }
+                  data={offBalanceSheetReport as TrialSheetReportDataEntry[]}
+                />
+              </Box>
+            )}
 
           {unMappedCoaHeads?.length !== 0 && (
             <Box display="flex" py="s16" flexDir="column">

@@ -766,6 +766,7 @@ export const CbsAccountClose = () => {
                   },
                   subTitle: 'Account closed successfully. Details of the account is listed below.',
                   dublicate: true,
+                  showSignatures: true,
                 };
               }}
               errorCardProps={{
