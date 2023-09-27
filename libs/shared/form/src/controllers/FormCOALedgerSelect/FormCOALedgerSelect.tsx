@@ -3,7 +3,7 @@ import debounce from 'lodash/debounce';
 
 import { SelectProps } from '@myra-ui';
 
-import { useGetLedgerListQuery } from '@coop/cbs/data-access';
+import { useAppSelector, useGetLedgerListQuery } from '@coop/cbs/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 import FormSelect from '../FormSelect/FormSelect';
@@ -11,8 +11,9 @@ import FormSelect from '../FormSelect/FormSelect';
 interface IFormCOALedgerSelectProps extends SelectProps {
   name: string;
   label?: string;
-  coaHead: string[];
-  branchId: string[];
+  coaHead?: string[];
+  branchId?: string[];
+  currentBranchOnly?: boolean;
 }
 
 export const FormCOALedgerSelect = ({
@@ -20,13 +21,16 @@ export const FormCOALedgerSelect = ({
   label,
   coaHead,
   branchId,
+  currentBranchOnly,
   ...rest
 }: IFormCOALedgerSelectProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
+  const currentBranchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
+
   const { data: ledgerListData, isFetching } = useGetLedgerListQuery({
-    id: coaHead,
-    branchId,
+    id: coaHead ?? null,
+    branchId: currentBranchOnly ? [currentBranchId as string] : branchId,
     pagination: getPaginationQuery(),
     filter: {
       query: searchQuery,

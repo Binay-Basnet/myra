@@ -1,3 +1,4 @@
+import { useFormContext } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { asyncToast, Button, FormSection, GridItem, Text } from '@myra-ui';
@@ -7,7 +8,13 @@ import { useTransferPLtoHoMutation } from '@coop/cbs/data-access';
 export const TransferPLtoHO = () => {
   const queryClient = useQueryClient();
 
+  const { watch } = useFormContext();
+
   const { mutateAsync: transferPLtoHO } = useTransferPLtoHoMutation();
+
+  const sourceCOA = watch('sourceCOA');
+
+  const destinationLedger = watch('destinationLedger');
 
   const handleTransfer = () => {
     asyncToast({
@@ -16,7 +23,7 @@ export const TransferPLtoHO = () => {
         loading: 'Transferring P/L to HO',
         success: 'Transferred P/L to HO',
       },
-      promise: transferPLtoHO({}),
+      promise: transferPLtoHO({ srcCOAHead: sourceCOA, destLedger: destinationLedger }),
       onSuccess: () => queryClient.invalidateQueries(['getCurrentFundAmount']),
     });
   };

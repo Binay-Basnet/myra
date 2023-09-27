@@ -245,21 +245,21 @@ mutation updatePayrollGeneralSettingsDisableRoundedTotal($input: Boolean) {
   }
 }
 
-mutation setTaxSetup($input: TaxSetupInput) {
-  settings {
-    general {
-      HCM {
-        payroll {
-          taxsetup {
-            upsertTaxSetup(input: $input) {
-              id
-              error {
-                ...MutationError
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
+# mutation setTaxSetup($input: TaxSetupInput) {
+#   settings {
+#     general {
+#       HCM {
+#         payroll {
+#           taxsetup {
+#             upsertTaxSetup(input: $input) {
+#               id
+#               error {
+#                 ...MutationError
+#               }
+#             }
+#           }
+#         }
+#       }
+#     }
+#   }
+# }

@@ -209,7 +209,7 @@ query getTaxSlab($id: ID!) {
                   percentageDeduction
                 }
                 effectiveFrom
-                makeThisCurrentTaxSlab
+                # makeThisCurrentTaxSlab
               }
               error {
                 ...MutationError

@@ -20,9 +20,9 @@ mutation executeProfitFundMangement($id: ID!) {
   }
 }
 
-mutation transferPLtoHO {
+mutation transferPLtoHO($srcCOAHead: String!, $destLedger: String!) {
   profitToFundManagement {
-    transferPLtoHO {
+    transferPLtoHO(srcCOAHead: $srcCOAHead, destLedger: $destLedger) {
       recordId
       error {
         ...MutationError

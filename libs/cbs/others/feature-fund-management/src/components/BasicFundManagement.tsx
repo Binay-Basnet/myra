@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { FormSection, GridItem } from '@myra-ui';
+import { FormSection } from '@myra-ui';
 
 import { FormInput } from '@coop/shared/form';
 import { debitCreditConverter } from '@coop/shared/utils';
@@ -18,23 +18,20 @@ export const BasicFundManagement = () => {
 
   useEffect(() => {
     if (currentFund && !router?.asPath?.includes('/view')) {
-      setValue('grossProfitCoa', `${currentFund?.coaHead} - ${currentFund?.coaHeadName}`);
+      // setValue('grossProfitCoa', `${currentFund?.coaHead} - ${currentFund?.coaHeadName}`);
 
       setValue(
         'grossProfit',
-        debitCreditConverter(
-          currentFund?.amount?.amount as string,
-          currentFund?.amount?.amountType as string
-        )
+        debitCreditConverter(currentFund?.amount as string, currentFund?.amountType as string)
       );
     }
   }, [currentFund, router?.asPath]);
 
   return (
     <FormSection>
-      <GridItem colSpan={2}>
+      {/* <GridItem colSpan={2}>
         <FormInput name="grossProfitCoa" label="Gross Profit COA" isDisabled />
-      </GridItem>
+      </GridItem> */}
 
       <FormInput name="grossProfit" label="Gross Profit" textAlign="right" isDisabled />
     </FormSection>
