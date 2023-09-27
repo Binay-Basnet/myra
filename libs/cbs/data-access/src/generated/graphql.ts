@@ -9712,6 +9712,7 @@ export type HrPayrollPayrollRunMutationUpsertPayrollRunArgs = {
 
 export type HrPayrollPayrollRunQuery = {
   ListSalaryAssignmentWithExtraDetails: ExtraDetailsConnection;
+  getAllEmployeesSalaryDetailsForThisPayrollRun: ReturnUnpaidEmployeeDetailsWithError;
   getPayrollRun: EachPayrollRunRecords;
   listPayrollRun: PayrollRunConnection;
   listSalarySlip: SalarySlipsConnection;
@@ -9720,6 +9721,12 @@ export type HrPayrollPayrollRunQuery = {
 export type HrPayrollPayrollRunQueryListSalaryAssignmentWithExtraDetailsArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type HrPayrollPayrollRunQueryGetAllEmployeesSalaryDetailsForThisPayrollRunArgs = {
+  paygroup?: InputMaybe<Scalars['ID']>;
+  payrollMonth?: InputMaybe<NepaliMonths>;
+  year?: InputMaybe<Scalars['Int']>;
 };
 
 export type HrPayrollPayrollRunQueryGetPayrollRunArgs = {
@@ -9738,7 +9745,7 @@ export type HrPayrollPayrollRunQueryListSalarySlipArgs = {
 
 export type HrPayrollQuery = {
   payrollRun: HrPayrollPayrollRunQuery;
-  salStrucAdjustRevision: HrPayrollSalaryStructureAssignmentQuery;
+  salStrucAdjustRevision: HrPayrollSalStructureAdjustmentRevisionQuery;
   salaryStructureAssignment: HrPayrollSalaryStructureAssignmentQuery;
 };
 
@@ -10094,6 +10101,7 @@ export type HrPayrollSalStructureAdjustmentRevisionMutationUpsertSalAdjustmentRe
 
 export type HrPayrollSalStructureAdjustmentRevisionQuery = {
   getCurrentMonthUpdatedSalaryStructure: CurrentMonthUpdateSalaryStructureWithError;
+  getSalStructureAdjustRevision: ReturnSalStructureAdjustRevisionWithError;
 };
 
 export type HrPayrollSalStructureAdjustmentRevisionQueryGetCurrentMonthUpdatedSalaryStructureArgs =
@@ -10101,6 +10109,10 @@ export type HrPayrollSalStructureAdjustmentRevisionQueryGetCurrentMonthUpdatedSa
     actionType?: InputMaybe<SalActionType>;
     employeeId?: InputMaybe<Scalars['ID']>;
   };
+
+export type HrPayrollSalStructureAdjustmentRevisionQueryGetSalStructureAdjustRevisionArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
 
 export type HumanizeAuditLog = {
   extraData?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -17967,6 +17979,22 @@ export const NatureOfTransaction = {
 } as const;
 
 export type NatureOfTransaction = typeof NatureOfTransaction[keyof typeof NatureOfTransaction];
+export const NepaliMonths = {
+  Asar: 'ASAR',
+  Ashoj: 'ASHOJ',
+  Baisakh: 'BAISAKH',
+  Bhadra: 'BHADRA',
+  Chaitra: 'CHAITRA',
+  Falgun: 'FALGUN',
+  Jestha: 'JESTHA',
+  Kartik: 'KARTIK',
+  Magh: 'MAGH',
+  Mangsir: 'MANGSIR',
+  Poush: 'POUSH',
+  Shrawan: 'SHRAWAN',
+} as const;
+
+export type NepaliMonths = typeof NepaliMonths[keyof typeof NepaliMonths];
 export type NewBankAccountInput = {
   accountName?: InputMaybe<Scalars['String']>;
   accountNumber?: InputMaybe<Scalars['String']>;
@@ -18193,6 +18221,7 @@ export type OrganizationBasicDetails = {
 export type OrganizationBasicDetailsInput = {
   logo?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  slogan?: InputMaybe<Scalars['String']>;
   typeOfOrganization?: InputMaybe<TypeOfOrganization>;
 };
 
@@ -19940,6 +19969,11 @@ export type ReturnPayrollRun = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type ReturnSalStructureAdjustRevisionWithError = {
+  data?: Maybe<SalStructureAdjustRevision>;
+  error?: Maybe<QueryError>;
+};
+
 export type ReturnStaffPlan = {
   error?: Maybe<MutationError>;
   record?: Maybe<StaffPlanRecord>;
@@ -19955,6 +19989,11 @@ export type ReturnTaxSlab = {
   error?: Maybe<MutationError>;
   record?: Maybe<TaxSlabRecord>;
   recordId: Scalars['ID'];
+};
+
+export type ReturnUnpaidEmployeeDetailsWithError = {
+  data?: Maybe<Array<Maybe<UnPaidEmployeeDetails>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type ReturnWarehouseInput = {
@@ -20115,6 +20154,16 @@ export type SalAdjustmentRevisionInput = {
 export type SalStructAssignOutput = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type SalStructureAdjustRevision = {
+  actionType?: Maybe<SalActionType>;
+  adjustmentOn?: Maybe<Scalars['Localized']>;
+  deductions?: Maybe<Array<Maybe<EarningsAndDeductionsType>>>;
+  earnings?: Maybe<Array<Maybe<EarningsAndDeductionsType>>>;
+  employee?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
+  revisionEffectiveFrom?: Maybe<Scalars['Localized']>;
 };
 
 export type SalStructureAdjustmentRevisionReturn = {
@@ -22203,6 +22252,12 @@ export const TaxPayerOptions = {
 } as const;
 
 export type TaxPayerOptions = typeof TaxPayerOptions[keyof typeof TaxPayerOptions];
+export const TaxReceivedPaid = {
+  ToBePaid: 'TO_BE_PAID',
+  ToBeReceived: 'TO_BE_RECEIVED',
+} as const;
+
+export type TaxReceivedPaid = typeof TaxReceivedPaid[keyof typeof TaxReceivedPaid];
 export type TaxSetup = {
   taxExceptionRateInPercentage?: Maybe<Scalars['Float']>;
   taxRebateRateInPercentage?: Maybe<Scalars['Float']>;
@@ -22231,7 +22286,8 @@ export type TaxSlabConnection = {
 
 export type TaxSlabInput = {
   effectiveFrom?: InputMaybe<Scalars['Localized']>;
-  fiscalYear?: InputMaybe<LocalizedDateFilter>;
+  fiscalYearFrom?: InputMaybe<Scalars['Int']>;
+  fiscalYearTo?: InputMaybe<Scalars['Int']>;
   makeItCurrentTaxSlab?: InputMaybe<Scalars['Boolean']>;
   marriedTaxableSalarySlab?: InputMaybe<Array<InputMaybe<SlabInput>>>;
   name?: InputMaybe<Scalars['String']>;
@@ -22247,7 +22303,8 @@ export type TaxSlabListed = {
 
 export type TaxSlabRecord = {
   effectiveFrom?: Maybe<Scalars['Localized']>;
-  fiscalYear?: Maybe<LocalizedDate>;
+  fiscalYearFrom?: Maybe<Scalars['Int']>;
+  fiscalYearTo?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['ID']>;
   makeThisCurrentTaxSlab?: Maybe<Scalars['Boolean']>;
   marriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
@@ -23048,6 +23105,21 @@ export const TypeOfShare = {
 } as const;
 
 export type TypeOfShare = typeof TypeOfShare[keyof typeof TypeOfShare];
+export type UnPaidEmployeeDetails = {
+  employeeId?: Maybe<Scalars['String']>;
+  employeeName?: Maybe<Scalars['String']>;
+  grossPay?: Maybe<Scalars['String']>;
+  netPay?: Maybe<Scalars['String']>;
+  postTaxDeductions?: Maybe<Scalars['String']>;
+  preTaxDeductions?: Maybe<Scalars['String']>;
+  taxReceivedOrPaid?: Maybe<TaxReceivedPaid>;
+  taxableIncome?: Maybe<Scalars['String']>;
+  totalTax?: Maybe<Scalars['String']>;
+  unPaidDays?: Maybe<Scalars['Int']>;
+  usedType?: Maybe<UsedTypeEnum>;
+  usedTypeId?: Maybe<Scalars['String']>;
+};
+
 export type UpdateBankAccountInput = {
   accountName?: InputMaybe<Scalars['String']>;
   accountNumber?: InputMaybe<Scalars['String']>;
@@ -23090,6 +23162,12 @@ export type UploadedDocumentData = {
   url: Scalars['String'];
 };
 
+export const UsedTypeEnum = {
+  Assignment: 'ASSIGNMENT',
+  RevisionOrAdjustment: 'REVISION_OR_ADJUSTMENT',
+} as const;
+
+export type UsedTypeEnum = typeof UsedTypeEnum[keyof typeof UsedTypeEnum];
 export type User = {
   contact?: Maybe<Scalars['String']>;
   currentBranch?: Maybe<Branch>;
@@ -25739,6 +25817,30 @@ export type ApprovePayollRunMutation = {
       payrollRun: {
         approvePayrollRun: {
           approved: boolean;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type SetSalAdjustmentRevisionMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input?: InputMaybe<SalAdjustmentRevisionInput>;
+}>;
+
+export type SetSalAdjustmentRevisionMutation = {
+  hr: {
+    payroll: {
+      salStrucAdjustRevision: {
+        upsertSalAdjustmentRevision: {
+          id?: string | null;
           error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
@@ -28512,6 +28614,32 @@ export type UpdateLoanProductProcessingChargeMutation = {
     general?: {
       loanProducts?: {
         updateProcessingCharge: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdateLoanProductRebateMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  productId: Scalars['ID'];
+  payload: RebateTypeInput;
+  additionalData: ProductChargeAdditionalDataInput;
+}>;
+
+export type UpdateLoanProductRebateMutation = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        updateRebateCharge: {
           record?: string | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -34114,6 +34242,62 @@ export type GetSalarySlipListQuery = {
   };
 };
 
+export type GetCurrentMonthUpdatedSalaryStructureQueryVariables = Exact<{
+  employeeId?: InputMaybe<Scalars['ID']>;
+  actionType?: InputMaybe<SalActionType>;
+}>;
+
+export type GetCurrentMonthUpdatedSalaryStructureQuery = {
+  hr: {
+    payroll: {
+      salStrucAdjustRevision: {
+        getCurrentMonthUpdatedSalaryStructure: {
+          data?: {
+            earnings?: Array<{ id?: string | null; amount?: number | null } | null> | null;
+            deductions?: Array<{ id?: string | null; amount?: number | null } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetSalStructureAdjustRevisionQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+export type GetSalStructureAdjustRevisionQuery = {
+  hr: {
+    payroll: {
+      salStrucAdjustRevision: {
+        getSalStructureAdjustRevision: {
+          data?: {
+            id?: string | null;
+            employee?: string | null;
+            actionType?: SalActionType | null;
+            revisionEffectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
+            adjustmentOn?: Record<'local' | 'en' | 'np', string> | null;
+            earnings?: Array<{ id?: string | null; amount?: number | null } | null> | null;
+            deductions?: Array<{ id?: string | null; amount?: number | null } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetStaffPlanningListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -36310,6 +36494,11 @@ export type GetLoanPreviewQuery = {
             penaltyDayAfterInstallmentDate?: number | null;
             penaltyRate?: number | null;
             penaltyAmount?: any | null;
+          } | null;
+          rebate?: {
+            dayBeforeInstallmentDate?: number | null;
+            rebateRate?: number | null;
+            rebateAmount?: any | null;
           } | null;
         } | null;
         loanDetails?: {
@@ -40010,6 +40199,20 @@ export type GetIndividualMemberReportQuery = {
             transactionType?: string | null;
             transactionAmount?: string | null;
           } | null> | null;
+          withDrawSlipIssueStatus?: Array<{
+            id?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            accountType?: string | null;
+            accNum?: string | null;
+            type?: string | null;
+          } | null> | null;
+          kymStatusForMember?: {
+            id?: string | null;
+            riskCategory?: string | null;
+            lastUpdatedDate?: Record<'local' | 'en' | 'np', string> | null;
+            ExpiryDays?: string | null;
+            Status?: string | null;
+          } | null;
           savingDetail?: Array<{
             accountNo?: string | null;
             accountName?: string | null;
@@ -42926,12 +43129,10 @@ export type GetTaxSlabQuery = {
               data?: {
                 id?: string | null;
                 name?: string | null;
+                fiscalYearFrom?: number | null;
+                fiscalYearTo?: number | null;
                 effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
                 makeThisCurrentTaxSlab?: boolean | null;
-                fiscalYear?: {
-                  from: Record<'local' | 'en' | 'np', string>;
-                  to: Record<'local' | 'en' | 'np', string>;
-                } | null;
                 unmarriedTaxableSalarySlab?: Array<{
                   fromAmount?: string | null;
                   toAmount?: string | null;
@@ -43678,6 +43879,37 @@ export type GetLoanProductProcessingChargeDetailQuery = {
               fileUploads?: Array<{ identifier: string; url: string } | null> | null;
             } | null;
           } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanProductRebateUpdateListQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetLoanProductRebateUpdateListQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        listRebateCharge: {
+          data?: Array<{
+            payload?: {
+              dayBeforeInstallmentDate?: number | null;
+              rebateRate?: number | null;
+              rebateAmount?: any | null;
+              rebateLedgerMapping?: string | null;
+              noOfInstallment?: number | null;
+            } | null;
+            additionalData?: {
+              id?: string | null;
+              createdAt?: Record<'local' | 'en' | 'np', string> | null;
+              effectiveDate: Record<'local' | 'en' | 'np', string>;
+              notes?: string | null;
+              fileUploads?: Array<{ identifier: string; url: string } | null> | null;
+            } | null;
+          } | null> | null;
         };
       } | null;
     } | null;
@@ -49486,6 +49718,42 @@ export const useApprovePayollRunMutation = <TError = unknown, TContext = unknown
     useAxios<ApprovePayollRunMutation, ApprovePayollRunMutationVariables>(ApprovePayollRunDocument),
     options
   );
+export const SetSalAdjustmentRevisionDocument = `
+    mutation setSalAdjustmentRevision($id: ID, $input: SalAdjustmentRevisionInput) {
+  hr {
+    payroll {
+      salStrucAdjustRevision {
+        upsertSalAdjustmentRevision(id: $id, input: $input) {
+          id
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSalAdjustmentRevisionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalAdjustmentRevisionMutation,
+    TError,
+    SetSalAdjustmentRevisionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSalAdjustmentRevisionMutation,
+    TError,
+    SetSalAdjustmentRevisionMutationVariables,
+    TContext
+  >(
+    ['setSalAdjustmentRevision'],
+    useAxios<SetSalAdjustmentRevisionMutation, SetSalAdjustmentRevisionMutationVariables>(
+      SetSalAdjustmentRevisionDocument
+    ),
+    options
+  );
 export const SetStaffPlanningDocument = `
     mutation setStaffPlanning($id: ID, $input: StaffPlanInput!) {
   hr {
@@ -53481,6 +53749,47 @@ export const useUpdateLoanProductProcessingChargeMutation = <TError = unknown, T
       UpdateLoanProductProcessingChargeMutation,
       UpdateLoanProductProcessingChargeMutationVariables
     >(UpdateLoanProductProcessingChargeDocument),
+    options
+  );
+export const UpdateLoanProductRebateDocument = `
+    mutation updateLoanProductRebate($id: ID, $productId: ID!, $payload: RebateTypeInput!, $additionalData: ProductChargeAdditionalDataInput!) {
+  settings {
+    general {
+      loanProducts {
+        updateRebateCharge(
+          id: $id
+          productId: $productId
+          payload: $payload
+          additionalData: $additionalData
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateLoanProductRebateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateLoanProductRebateMutation,
+    TError,
+    UpdateLoanProductRebateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateLoanProductRebateMutation,
+    TError,
+    UpdateLoanProductRebateMutationVariables,
+    TContext
+  >(
+    ['updateLoanProductRebate'],
+    useAxios<UpdateLoanProductRebateMutation, UpdateLoanProductRebateMutationVariables>(
+      UpdateLoanProductRebateDocument
+    ),
     options
   );
 export const SetLoanGeneralSettingsDocument = `
@@ -60983,6 +61292,97 @@ export const useGetSalarySlipListQuery = <TData = GetSalarySlipListQuery, TError
     ).bind(null, variables),
     options
   );
+export const GetCurrentMonthUpdatedSalaryStructureDocument = `
+    query getCurrentMonthUpdatedSalaryStructure($employeeId: ID, $actionType: SalActionType) {
+  hr {
+    payroll {
+      salStrucAdjustRevision {
+        getCurrentMonthUpdatedSalaryStructure(
+          employeeId: $employeeId
+          actionType: $actionType
+        ) {
+          data {
+            earnings {
+              id
+              amount
+            }
+            deductions {
+              id
+              amount
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetCurrentMonthUpdatedSalaryStructureQuery = <
+  TData = GetCurrentMonthUpdatedSalaryStructureQuery,
+  TError = unknown
+>(
+  variables?: GetCurrentMonthUpdatedSalaryStructureQueryVariables,
+  options?: UseQueryOptions<GetCurrentMonthUpdatedSalaryStructureQuery, TError, TData>
+) =>
+  useQuery<GetCurrentMonthUpdatedSalaryStructureQuery, TError, TData>(
+    variables === undefined
+      ? ['getCurrentMonthUpdatedSalaryStructure']
+      : ['getCurrentMonthUpdatedSalaryStructure', variables],
+    useAxios<
+      GetCurrentMonthUpdatedSalaryStructureQuery,
+      GetCurrentMonthUpdatedSalaryStructureQueryVariables
+    >(GetCurrentMonthUpdatedSalaryStructureDocument).bind(null, variables),
+    options
+  );
+export const GetSalStructureAdjustRevisionDocument = `
+    query getSalStructureAdjustRevision($id: ID) {
+  hr {
+    payroll {
+      salStrucAdjustRevision {
+        getSalStructureAdjustRevision(id: $id) {
+          data {
+            id
+            employee
+            actionType
+            revisionEffectiveFrom
+            adjustmentOn
+            earnings {
+              id
+              amount
+            }
+            deductions {
+              id
+              amount
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetSalStructureAdjustRevisionQuery = <
+  TData = GetSalStructureAdjustRevisionQuery,
+  TError = unknown
+>(
+  variables?: GetSalStructureAdjustRevisionQueryVariables,
+  options?: UseQueryOptions<GetSalStructureAdjustRevisionQuery, TError, TData>
+) =>
+  useQuery<GetSalStructureAdjustRevisionQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalStructureAdjustRevision']
+      : ['getSalStructureAdjustRevision', variables],
+    useAxios<GetSalStructureAdjustRevisionQuery, GetSalStructureAdjustRevisionQueryVariables>(
+      GetSalStructureAdjustRevisionDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetStaffPlanningListDocument = `
     query getStaffPlanningList($filter: Filter, $pagination: Pagination) {
   hr {
@@ -63781,6 +64181,11 @@ export const GetLoanPreviewDocument = `
             penaltyDayAfterInstallmentDate
             penaltyRate
             penaltyAmount
+          }
+          rebate {
+            dayBeforeInstallmentDate
+            rebateRate
+            rebateAmount
           }
         }
         loanDetails {
@@ -68584,6 +68989,20 @@ export const GetIndividualMemberReportDocument = `
             transactionType
             transactionAmount
           }
+          withDrawSlipIssueStatus {
+            id
+            date
+            accountType
+            accNum
+            type
+          }
+          kymStatusForMember {
+            id
+            riskCategory
+            lastUpdatedDate
+            ExpiryDays
+            Status
+          }
           totalTransactionAmount
           savingDetail {
             accountNo
@@ -72534,10 +72953,8 @@ export const GetTaxSlabDocument = `
               data {
                 id
                 name
-                fiscalYear {
-                  from
-                  to
-                }
+                fiscalYearFrom
+                fiscalYearTo
                 unmarriedTaxableSalarySlab {
                   fromAmount
                   toAmount
@@ -73502,6 +73919,51 @@ export const useGetLoanProductProcessingChargeDetailQuery = <
       GetLoanProductProcessingChargeDetailQuery,
       GetLoanProductProcessingChargeDetailQueryVariables
     >(GetLoanProductProcessingChargeDetailDocument).bind(null, variables),
+    options
+  );
+export const GetLoanProductRebateUpdateListDocument = `
+    query getLoanProductRebateUpdateList($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        listRebateCharge(productId: $productId) {
+          data {
+            payload {
+              dayBeforeInstallmentDate
+              rebateRate
+              rebateAmount
+              rebateLedgerMapping
+              noOfInstallment
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductRebateUpdateListQuery = <
+  TData = GetLoanProductRebateUpdateListQuery,
+  TError = unknown
+>(
+  variables: GetLoanProductRebateUpdateListQueryVariables,
+  options?: UseQueryOptions<GetLoanProductRebateUpdateListQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductRebateUpdateListQuery, TError, TData>(
+    ['getLoanProductRebateUpdateList', variables],
+    useAxios<GetLoanProductRebateUpdateListQuery, GetLoanProductRebateUpdateListQueryVariables>(
+      GetLoanProductRebateUpdateListDocument
+    ).bind(null, variables),
     options
   );
 export const GetLoanGeneralSettingsDocument = `

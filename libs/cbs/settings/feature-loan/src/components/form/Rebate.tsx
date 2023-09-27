@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
 
@@ -10,6 +11,8 @@ import { useTranslation } from '@coop/shared/utils';
 import { BoxContainer, TextBoxContainer } from '../formui';
 
 export const Rebate = () => {
+  const router = useRouter();
+
   const { t } = useTranslation();
   const { watch } = useFormContext();
   const rebate = watch('isRebateApplicable');
@@ -18,10 +21,12 @@ export const Rebate = () => {
     {
       label: t['enable'],
       value: true,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
     {
       label: t['disable'],
       value: false,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
   ];
 
@@ -56,6 +61,7 @@ export const Rebate = () => {
                   name="rebate.dayBeforeInstallmentDate"
                   type="number"
                   label={t['loanProductDaysafterinstallmentdate']}
+                  isDisabled={router?.asPath?.includes('/edit')}
                 />
                 <FormInput
                   name="rebate.rebateRate"
@@ -67,11 +73,13 @@ export const Rebate = () => {
                       %
                     </Text>
                   }
+                  isDisabled={router?.asPath?.includes('/edit')}
                 />
                 <FormInput
                   name="rebate.rebateAmount"
                   type="number"
                   label={t['loanProductRebateAmount']}
+                  isDisabled={router?.asPath?.includes('/edit')}
                 />
                 {/* 
                 <FormSelect

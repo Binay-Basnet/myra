@@ -42,3 +42,18 @@ mutation approvePayollRun($id: ID!, $input: PayrollStatus!) {
     }
   }
 }
+
+mutation setSalAdjustmentRevision($id: ID, $input: SalAdjustmentRevisionInput) {
+  hr {
+    payroll {
+      salStrucAdjustRevision {
+        upsertSalAdjustmentRevision(id: $id, input: $input) {
+          id
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

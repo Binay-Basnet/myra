@@ -125,3 +125,28 @@ mutation updateLoanProductProcessingCharge(
     }
   }
 }
+
+mutation updateLoanProductRebate(
+  $id: ID
+  $productId: ID!
+  $payload: RebateTypeInput!
+  $additionalData: ProductChargeAdditionalDataInput!
+) {
+  settings {
+    general {
+      loanProducts {
+        updateRebateCharge(
+          id: $id
+          productId: $productId
+          payload: $payload
+          additionalData: $additionalData
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

@@ -16,6 +16,7 @@ export * from './ProductLoanRepayment';
 export * from './ProductPenalty';
 export * from './ProductPrematurePenalty';
 export * from './ProductRebate';
+export * from './RebateDetailModal';
 export * from './SideBar';
 export * from './UpdateChargesDetailModal';
 export * from './UpdateChargesModal';

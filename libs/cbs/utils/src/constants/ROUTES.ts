@@ -531,12 +531,14 @@ export const ROUTES = {
   HR_PAYROLL_ENTRY_EDIT: '/hr/payroll/payroll-run/edit',
 
   HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_LIST: '/hr/payroll/salary-structure-assignment/list',
+  HR_PAYROLL_SALARY_STRUCTURE_LIST: '/hr/payroll/salary-structure/list',
   HR_PAYROLL_SALARY_SLIP_LIST: '/hr/payroll/salary-slip/list',
   HR_PAYROLL_EXPEN_LIST: '/hr/payroll/expen/list',
 
   HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_ADD: '/hr/payroll/salary-structure-assignment/add',
   HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_EDIT: '/hr/payroll/salary-structure-assignment/edit',
 
+  HR_PAYROLL_SALARY_STRUCTURE_ADD: '/hr/payroll/salary-structure/add',
   HR_PAYROLL_SALARY_SLIP_ADD: '/hr/payroll/salary-slip/add',
   HR_PAYROLL_EXPEN_ADD: '/hr/payroll/expen/add',
 

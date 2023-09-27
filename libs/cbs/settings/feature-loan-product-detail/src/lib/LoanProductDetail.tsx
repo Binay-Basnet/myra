@@ -10,6 +10,7 @@ import { InactiveLoanAccountListPage } from './InactiveAccountsList';
 import { InterestUpdatePage } from './InteretUpdatePage';
 import LoanFeesAndChargesUpdatePage from './LoanFeesAndChargesUpdatePage';
 import { LoanPenaltyUpdatePage } from './LoanPenaltyUpdatePage';
+import { LoanRebateUpdatePage } from './LoanRebateUpdatePage';
 import { OverviewPage } from './OverviewPage';
 import { useLoanProductDepositHook } from '../hooks/useLoanProductDepositHook';
 
@@ -34,6 +35,7 @@ export const LoanProductDetail = () => {
       {tabQuery === 'active accounts' && <AccountListPage />}
       {tabQuery === 'inactive accounts' && <InactiveLoanAccountListPage />}
       {tabQuery === 'penalty update' && <LoanPenaltyUpdatePage />}
+      {tabQuery === 'rebate update' && <LoanRebateUpdatePage />}
       {tabQuery === 'fee and charges update' && <LoanFeesAndChargesUpdatePage />}
       {tabQuery === 'general updates' && <GeneralUpdatesPage />}
     </>

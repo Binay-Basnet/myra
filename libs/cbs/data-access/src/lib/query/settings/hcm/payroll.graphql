@@ -196,10 +196,8 @@ query getTaxSlab($id: ID!) {
               data {
                 id
                 name
-                fiscalYear {
-                  from
-                  to
-                }
+                fiscalYearFrom
+                fiscalYearTo
                 unmarriedTaxableSalarySlab {
                   fromAmount
                   toAmount
