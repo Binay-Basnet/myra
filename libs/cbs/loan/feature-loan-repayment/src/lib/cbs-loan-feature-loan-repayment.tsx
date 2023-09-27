@@ -481,6 +481,7 @@ export const LoanRepayment = () => {
                   //   Number(result?.nextInstallment?.currentRemainingPrincipal ?? 0) +
                   //   Number(result?.nextInstallment?.remainingInterest ?? 0),
                   dublicate: true,
+                  showSignatures: true,
                   transactionId: result?.transactionId as string,
                 };
               }}
