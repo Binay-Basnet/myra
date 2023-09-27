@@ -12,12 +12,14 @@ import {
   AccordionItem,
   Box,
   Button,
+  Divider,
   GridItem,
   Icon,
   Text,
 } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
+import { useAppSelector } from '@coop/cbs/data-access';
 import { useReport } from '@coop/cbs/reports';
 
 import { ReportOrganizationHeader } from './ReportOrganizationHeader';
@@ -34,8 +36,15 @@ export const ReportBody = ({ children }: { children: React.ReactNode }) => (
   </Box>
 );
 
-export const ReportContent = ({ children }: { children: React.ReactNode }) => {
+export const ReportContent = ({
+  children,
+  showSignatures,
+}: {
+  children: React.ReactNode;
+  showSignatures?: boolean;
+}) => {
   const { isFilterShown, data, isLoading, filters, printRef } = useReport();
+  const user = useAppSelector((state) => state.auth.user);
 
   if (isLoading) {
     return (
@@ -110,6 +119,37 @@ export const ReportContent = ({ children }: { children: React.ReactNode }) => {
         }}
       >
         {children}
+        {showSignatures && (
+          <Box
+            // position="fixed"
+            w="100%"
+            bottom="100px"
+            pt="s40"
+            left={0}
+            display="flex"
+            justifyContent="space-between"
+            px="s32"
+          >
+            <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+              <Divider borderTop="1px dotted black" />
+              <Text fontSize="s2" color="gray.800" fontWeight="500">
+                {`Prepared By [${user?.firstName?.en}]`}
+              </Text>
+            </Box>
+            {/* <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+              <Divider borderTop="1px dotted black" />
+              <Text fontSize="s2" color="gray.800" fontWeight="500">
+                Verified By
+              </Text>
+            </Box> */}
+            <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+              <Divider borderTop="1px dotted black" />
+              <Text fontSize="s2" color="gray.800" fontWeight="500">
+                Approved By
+              </Text>
+            </Box>
+          </Box>
+        )}
       </Box>
     </Box>
   );

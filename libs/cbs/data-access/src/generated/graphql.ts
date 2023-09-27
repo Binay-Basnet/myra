@@ -5367,6 +5367,7 @@ export type DepositLoanAccountListResult = {
 
 export type DepositLoanAccountMutation = {
   add?: Maybe<DepositLoanAccountResult>;
+  addSuspenseLedger: SuspenseUpdateResult;
   close?: Maybe<DepositAccountCloseResult>;
   editAccountInterest: InterestSetupMutationResult;
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
@@ -22064,6 +22065,11 @@ export type SubscriptionMutationReferenceKymArgs = {
 export type SubscriptionMutationUpsertArgs = {
   fieldId: Scalars['String'];
   identifiers: Array<Scalars['String']>;
+};
+
+export type SuspenseUpdateResult = {
+  error?: Maybe<MutationError>;
+  status?: Maybe<Scalars['Boolean']>;
 };
 
 export type SuspiciousTransactionReport = {
