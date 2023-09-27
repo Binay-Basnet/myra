@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { IoWarning } from 'react-icons/io5';
 
-import { Box, Chips, Divider, Text } from '@myra-ui';
+import { Box, Chips, Divider, Icon, Text, Tooltip } from '@myra-ui';
 
 import { useGetEndOfDayDateDataQuery, useGetLoanPreviewQuery } from '@coop/cbs/data-access';
 import { amountConverter, decimalAdjust } from '@coop/shared/utils';
@@ -227,6 +228,14 @@ export const InstallmentData = ({
     }
   }, [totalRebate]);
 
+  const hasPartialInstallment = useMemo(
+    () =>
+      coveredInstallments?.findIndex(
+        (inst) => inst?.isInterestPartial || inst?.isPrincipalPartial
+      ) !== -1,
+    [coveredInstallments]
+  );
+
   return amountPaid ? (
     <Box display="flex" flexDirection="column" gap="s16">
       {!isLOC && (
@@ -351,9 +360,19 @@ export const InstallmentData = ({
               Rebate Available
             </Text>
 
-            <Text fontSize="s3" fontWeight={500} color="gray.700">
-              {amountConverter(totalRebate)}
-            </Text>
+            <Box display="flex" gap="s4" alignItems="center">
+              <Text fontSize="s3" fontWeight={500} color="gray.700">
+                {amountConverter(totalRebate)}
+              </Text>
+
+              {hasPartialInstallment && (
+                <Tooltip title="This rebate includes for the payment that is paid partially. Please proceed accordingly.">
+                  <Box cursor="pointer" display="flex">
+                    <Icon as={IoWarning} color="warning.500" />
+                  </Box>
+                </Tooltip>
+              )}
+            </Box>
           </Box>
 
           <Rebate />
