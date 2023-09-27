@@ -597,7 +597,6 @@ export const CBS: NavType = {
           route: ROUTES.CBS_OTHERS_FUND_MANAGEMENT_LIST,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_PROFIT_TO_FUND_MANAGEMENT',
           addRoute: ROUTES.CBS_OTHERS_FUND_MANAGEMENT_ADD,
-          prod: false,
         },
         {
           label: 'Share Dividend Posting',
