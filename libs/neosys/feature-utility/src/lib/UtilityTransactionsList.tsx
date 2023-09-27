@@ -24,7 +24,7 @@ export const UtilityTransactionsList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'SACCOSS',
+        header: 'SACCOS',
         accessorFn: (row) => row?.node?.saccossName,
         meta: {
           width: 'auto',

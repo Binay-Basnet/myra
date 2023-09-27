@@ -34,6 +34,7 @@ export const UtilitySidebarLayout = ({ children }: IUtilitySidebarLayoutProps) =
 
   const tabLinks = [
     { title: 'Transactions', to: `/utility/transactions` },
+    { title: 'Client Balance', to: `/utility/client-balance` },
     // {
     //   title: t['neoClientUserSiderbarUsersRole'],
     //   to: `/users/role`,

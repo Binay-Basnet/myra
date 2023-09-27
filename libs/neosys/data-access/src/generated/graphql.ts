@@ -986,6 +986,24 @@ export type SaccosAmountSetupResult = {
   error?: Maybe<MutationError>;
 };
 
+export type SaccosAvailableAmountConnection = {
+  edges?: Maybe<Array<Maybe<SaccosAvailableAmountEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SaccosAvailableAmountEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<SaccosAvailableAmountInfo>;
+};
+
+export type SaccosAvailableAmountInfo = {
+  Amount: Scalars['String'];
+  id: Scalars['String'];
+  saccossName: Scalars['String'];
+  slug: Scalars['String'];
+};
+
 export type SaccosSetup = {
   amount: Scalars['String'];
   slug: Scalars['String'];
@@ -1465,7 +1483,13 @@ export type UtilityMutationAddSaccosAmountArgs = {
 };
 
 export type UtilityQuery = {
+  listSaccosAvailableAmount?: Maybe<SaccosAvailableAmountConnection>;
   listUtilityRecords?: Maybe<UtilityRecordsConnection>;
+};
+
+export type UtilityQueryListSaccosAvailableAmountArgs = {
+  filter?: InputMaybe<Filter>;
+  paginate: Pagination;
 };
 
 export type UtilityQueryListUtilityRecordsArgs = {
@@ -2575,6 +2599,24 @@ export type GetUtilityTransactionListQuery = {
           txnStatus: UtilityUsageObjStateType;
           amount: string;
         } | null;
+      } | null> | null;
+      pageInfo?: PaginationFragment | null;
+    } | null;
+  };
+};
+
+export type GetUtilityClientBalanceListQueryVariables = Exact<{
+  paginate: Pagination;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetUtilityClientBalanceListQuery = {
+  utility: {
+    listSaccosAvailableAmount?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor?: string | null;
+        node?: { id: string; slug: string; Amount: string; saccossName: string } | null;
       } | null> | null;
       pageInfo?: PaginationFragment | null;
     } | null;
@@ -4140,6 +4182,41 @@ export const useGetUtilityTransactionListQuery = <
     ['getUtilityTransactionList', variables],
     useAxios<GetUtilityTransactionListQuery, GetUtilityTransactionListQueryVariables>(
       GetUtilityTransactionListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetUtilityClientBalanceListDocument = `
+    query getUtilityClientBalanceList($paginate: Pagination!, $filter: Filter) {
+  utility {
+    listSaccosAvailableAmount(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          id
+          slug
+          Amount
+          saccossName
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetUtilityClientBalanceListQuery = <
+  TData = GetUtilityClientBalanceListQuery,
+  TError = unknown
+>(
+  variables: GetUtilityClientBalanceListQueryVariables,
+  options?: UseQueryOptions<GetUtilityClientBalanceListQuery, TError, TData>
+) =>
+  useQuery<GetUtilityClientBalanceListQuery, TError, TData>(
+    ['getUtilityClientBalanceList', variables],
+    useAxios<GetUtilityClientBalanceListQuery, GetUtilityClientBalanceListQueryVariables>(
+      GetUtilityClientBalanceListDocument
     ).bind(null, variables),
     options
   );

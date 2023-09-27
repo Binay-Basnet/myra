@@ -21,3 +21,23 @@ query getUtilityTransactionList($paginate: Pagination!, $filter: Filter) {
     }
   }
 }
+
+query getUtilityClientBalanceList($paginate: Pagination!, $filter: Filter) {
+  utility {
+    listSaccosAvailableAmount(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          id
+          slug
+          Amount
+          saccossName
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
