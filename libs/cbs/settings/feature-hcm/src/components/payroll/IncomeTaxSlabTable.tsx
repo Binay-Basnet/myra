@@ -236,8 +236,8 @@ export const IncomeTaxSlabTable = () => {
         <FormProvider {...methods}>
           <Grid templateColumns="repeat(3,1fr)" gap="s16">
             <FormInput name="name" label="Name" />
-            <FormDatePicker name="fiscalYear.from" label="Select Fiscal Year From" />
-            <FormDatePicker name="fiscalYear.to" label="Select Fiscal Year to" />
+            <FormInput type="number" name="fiscalYearFrom" label="Select Fiscal Year From" />
+            <FormInput type="number" name="fiscalYearTo" label="Select Fiscal Year to" />
 
             <GridItem colSpan={3}>
               <FormEditableTable

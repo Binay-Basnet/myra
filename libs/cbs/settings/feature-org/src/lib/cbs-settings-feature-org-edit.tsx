@@ -19,7 +19,13 @@ import {
   useSetOrganizationDataMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormAddress, FormFileInput, FormInput, FormRadioGroup } from '@coop/shared/form';
+import {
+  FormAddress,
+  FormFileInput,
+  FormInput,
+  FormRadioGroup,
+  FormTextArea,
+} from '@coop/shared/form';
 
 export const CbsSettingsFeatureOrgEdit = () => {
   const router = useRouter();
@@ -90,6 +96,7 @@ export const CbsSettingsFeatureOrgEdit = () => {
               <GridItem colSpan={3}>
                 <FormInput label="Organization Name" name="basicDetails.name" />
               </GridItem>
+
               <GridItem colSpan={3}>
                 <Box w="-webkit-fit-content">
                   <FormFileInput size="sm" label="Organization Logo" name="basicDetails.logo" />
@@ -104,6 +111,9 @@ export const CbsSettingsFeatureOrgEdit = () => {
                     { label: 'Cooperative Union', value: TypeOfOrganization?.CooperativeUnion },
                   ]}
                 />
+              </GridItem>
+              <GridItem colSpan={3}>
+                <FormTextArea label="Slogan" name="basicDetails.slogan" />
               </GridItem>
             </FormSection>
             <FormSection header="Contact Details">

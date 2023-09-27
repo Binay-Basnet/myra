@@ -107,7 +107,7 @@ export const BalanceSheetReport = () => {
         </Report.Inputs>
       </Report.Header>
       <Report.Body>
-        <Report.Content>
+        <Report.Content showSignatures>
           <Report.OrganizationHeader />
           <Report.Organization />
           <COATable type="Particulars" total={[]} data={coaReport} />

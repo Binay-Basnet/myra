@@ -260,6 +260,11 @@ export const HRMODULE: NavType = {
           route: ROUTES.HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_ADD,
         },
         {
+          label: 'New Salary Structure Adjustment',
+          aclKey: 'HCM_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT',
+          route: ROUTES.HR_PAYROLL_SALARY_STRUCTURE_ADD,
+        },
+        {
           label: 'New Salary Slip',
           aclKey: 'HCM_PAYROLL_SALARY_SLIP',
           route: ROUTES.HR_PAYROLL_SALARY_SLIP_ADD,
@@ -283,6 +288,12 @@ export const HRMODULE: NavType = {
           aclKey: 'HCM_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT',
           addRoute: ROUTES.HR_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT_ADD,
         },
+        // {
+        //   label: 'Salary Structure',
+        //   route: ROUTES.HR_PAYROLL_SALARY_STRUCTURE_LIST,
+        //   aclKey: 'HCM_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT',
+        //   addRoute: ROUTES.HR_PAYROLL_SALARY_STRUCTURE_ADD,
+        // },
         {
           label: 'Salary Slip',
           route: ROUTES.HR_PAYROLL_SALARY_SLIP_LIST,
