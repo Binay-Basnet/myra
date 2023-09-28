@@ -21404,7 +21404,6 @@ export type ShareDividendSettingsResult = {
 };
 
 export type ShareDividendSummary = {
-  AverageShareCount?: Maybe<Scalars['String']>;
   DestinationAccount?: Maybe<Scalars['String']>;
   DestinationProduct?: Maybe<Scalars['String']>;
   Error?: Maybe<Scalars['String']>;
@@ -21416,6 +21415,7 @@ export type ShareDividendSummary = {
   ShareCount?: Maybe<Scalars['Int']>;
   TDSAmount?: Maybe<Scalars['String']>;
   TotalAmount?: Maybe<Scalars['String']>;
+  TotalShareBalanceSum?: Maybe<Scalars['String']>;
 };
 
 export type ShareExtraChargeDetails = {
@@ -29704,7 +29704,7 @@ export type PostShareDividendMutation = {
         MemberID?: string | null;
         MemberCode?: string | null;
         MemberName?: string | null;
-        AverageShareCount?: string | null;
+        TotalShareBalanceSum?: string | null;
         ShareCount?: number | null;
         SavingAmount?: string | null;
         TotalAmount?: string | null;
@@ -55404,7 +55404,7 @@ export const PostShareDividendDocument = `
         MemberID
         MemberCode
         MemberName
-        AverageShareCount
+        TotalShareBalanceSum
         ShareCount
         SavingAmount
         TotalAmount
