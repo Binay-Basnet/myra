@@ -1935,6 +1935,8 @@ export type GetAccessLogCounterListQuery = {
               queryFailed?: string | null;
               mutationSuccess?: string | null;
               mutationFailed?: string | null;
+              otherSuccess?: string | null;
+              otherFailed?: string | null;
               slug?: string | null;
               queryID?: number | null;
               queryDate?: Record<'local' | 'en' | 'np', string> | null;
@@ -3291,6 +3293,8 @@ export const GetAccessLogCounterListDocument = `
               queryFailed
               mutationSuccess
               mutationFailed
+              otherSuccess
+              otherFailed
               slug
               queryID
               queryDate
