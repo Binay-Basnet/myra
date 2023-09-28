@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { FormSection, GridItem, Text } from '@myra-ui';
 
-import { FormAmountInput, FormLeafCoaHeadSelect, FormNumberInput } from '@coop/shared/form';
+import { FormAmountInput, FormCOALedgerSelect, FormNumberInput } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 import { useFundManagement } from '../hooks';
@@ -19,9 +19,10 @@ export const StaffBonusFund = () => {
 
   return (
     <FormSection header="Staff Bonus Fund">
-      <FormLeafCoaHeadSelect
-        name="staffBonus.coaHead"
-        label="COA Head"
+      <FormCOALedgerSelect
+        name="staffBonus.ledgerId"
+        label="COA Ledger"
+        currentBranchOnly
         isDisabled={router?.asPath?.includes('/view')}
       />
 

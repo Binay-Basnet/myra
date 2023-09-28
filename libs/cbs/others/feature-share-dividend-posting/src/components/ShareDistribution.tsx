@@ -1,11 +1,11 @@
 import { FormSection, Text } from '@myra-ui';
 
-import { FormLeafCoaHeadSelect, FormNumberInput } from '@coop/shared/form';
+import { FormCOALedgerSelect, FormLeafCoaHeadSelect, FormNumberInput } from '@coop/shared/form';
 
 export const ShareDistribution = () => (
   <FormSection header="Share Distribution">
     {/* <GridItem colSpan={2}> */}
-    <FormLeafCoaHeadSelect name="sourceCOAHead" label="Source COA Head" />
+    <FormCOALedgerSelect name="sourceLedgerID" label="Source COA Ledger" currentBranchOnly />
 
     <FormLeafCoaHeadSelect name="taxLedgerCOAHead" label="Tax Rate Ledger Mapping" />
     {/* </GridItem> */}

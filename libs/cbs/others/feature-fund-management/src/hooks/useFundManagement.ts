@@ -4,7 +4,7 @@ import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
 import {
-  useGetCurrentFundAmountQuery,
+  useGetCoaAccountDetailsQuery,
   useGetFundManagementFormStateQuery,
 } from '@coop/cbs/data-access';
 import { debitCreditConverter } from '@coop/shared/utils';
@@ -24,9 +24,31 @@ export const useFundManagement = ({ methods }: IFundMangementProps) => {
 
   const { watch, getValues, setValue, reset } = methods || formContext;
 
-  const { data: currentFundAmountHOData } = useGetCurrentFundAmountQuery({ forHeadOffice: true });
+  const destinationLedger = watch('destinationLedger');
 
-  const currentFund = currentFundAmountHOData?.profitToFundManagement?.getCurrentFundAmount;
+  const { data: accountQueryData } = useGetCoaAccountDetailsQuery(
+    {
+      id:
+        destinationLedger && typeof destinationLedger === 'object'
+          ? (destinationLedger as { value: string })?.['value']
+          : destinationLedger,
+    },
+    {
+      enabled: !!destinationLedger,
+    }
+  );
+
+  const currentFund = useMemo(() => {
+    if (!destinationLedger) return { amount: 0 };
+
+    const accountData =
+      accountQueryData?.settings?.chartsOfAccount?.coaAccountDetails?.data?.overview;
+
+    return {
+      amount: accountData?.closingBalance,
+      amountType: accountData?.balanceType,
+    };
+  }, [accountQueryData, destinationLedger]);
 
   const { data: editData } = useGetFundManagementFormStateQuery(
     { id: id as string },
@@ -39,11 +61,8 @@ export const useFundManagement = ({ methods }: IFundMangementProps) => {
     () =>
       formData?.state === 'COMPLETED'
         ? Number(formData?.grossProfit || 0)
-        : Number(
-            currentFundAmountHOData?.profitToFundManagement?.getCurrentFundAmount?.amount?.amount ||
-              0
-          ),
-    [formData, currentFundAmountHOData]
+        : Number(currentFund.amount || 0),
+    [formData, currentFund]
   );
 
   // staff bonus fund section
@@ -71,8 +90,8 @@ export const useFundManagement = ({ methods }: IFundMangementProps) => {
     reset({
       ...getValues(),
       generalReserveFund: generalReserveFundData?.map((row) => ({
-        coaHead: row?.coaHead,
-        coaHeadName: row?.coaHeadName,
+        ledgerId: row?.ledgerId,
+        ledgerName: row?.ledgerName,
         percent: row?.percent,
         amount: ((Number(row?.percent || 0) / 100) * remainingProfitAfterTax).toFixed(2),
       })),
@@ -100,8 +119,8 @@ export const useFundManagement = ({ methods }: IFundMangementProps) => {
       reset({
         ...getValues(),
         distributionTable: distributionTableData?.map((row) => ({
-          coaHead: row?.coaHead,
-          coaHeadName: row?.coaHeadName,
+          ledgerId: row?.ledgerId,
+          ledgerName: row?.ledgerName,
           percent: row?.percent,
           amount: ((Number(row?.percent || 0) / 100) * remainingProfitAfterReserve).toFixed(2),
         })),
@@ -129,8 +148,8 @@ export const useFundManagement = ({ methods }: IFundMangementProps) => {
     reset({
       ...getValues(),
       otherFunds: values?.otherFunds?.map((other) => ({
-        coaHead: other?.coaHead,
-        coaHeadName: other?.coaHeadName,
+        ledgerId: other?.ledgerId,
+        ledgerName: other?.ledgerName,
         percent: other?.percent as number,
         amount: ((Number(other?.percent || 0) / 100) * remainingProfitAfterDistribution).toFixed(2),
       })),
@@ -163,7 +182,7 @@ export const useFundManagement = ({ methods }: IFundMangementProps) => {
       const grossProfit =
         formData?.state === 'COMPLETED'
           ? Number(formData?.grossProfit || 0)
-          : Number(currentFund?.amount?.amount || 0);
+          : Number(currentFund?.amount || 0);
 
       const staffBonusAmount = Number(formData?.staffBonus?.amount || 0);
 
@@ -183,48 +202,52 @@ export const useFundManagement = ({ methods }: IFundMangementProps) => {
       reset({
         // ...methods.getValues(),
         grossProfit,
-        grossProfitCoa:
-          formData?.state === 'COMPLETED'
-            ? (formData?.grossProfitCoa as string)
-            : `${currentFund?.coaHead} - ${currentFund?.coaHeadName}`,
+        destinationLedger: {
+          label: formData?.grossProfitLedgerName,
+          value: formData?.grossProfitLedgerID,
+        } as unknown as string,
+        // grossProfitCoa:
+        //   formData?.state === 'COMPLETED'
+        //     ? (formData?.grossProfitCoa as string)
+        //     : `${currentFund?.coaHead} - ${currentFund?.coaHeadName}`,
         grossProfitDr:
           formData?.state === 'COMPLETED'
             ? debitCreditConverter(grossProfit, 'CR')
             : debitCreditConverter(
-                currentFund?.amount?.amount as string,
-                currentFund?.amount?.amountType as string
+                currentFund?.amount as string,
+                currentFund?.amountType as string
               ),
         staffBonus: {
-          coaHead: {
-            label: formData?.staffBonus?.accountName,
-            value: formData?.staffBonus?.accountCode,
+          ledgerId: {
+            label: formData?.staffBonus?.ledgerName,
+            value: formData?.staffBonus?.ledgerID,
           } as unknown as string,
           percent: formData?.staffBonus?.percent,
           amount: formData?.staffBonus?.amount as string,
         },
         incomeTax: {
-          coaHead: {
-            label: formData?.incometax?.accountName,
-            value: formData?.incometax?.accountCode,
+          ledgerId: {
+            label: formData?.incometax?.ledgerName,
+            value: formData?.incometax?.ledgerID,
           } as unknown as string,
           percent: formData?.incometax?.percent,
           amount: formData?.incometax?.amount as string,
         },
         generalReserveFund: generalReserveFundForm?.map((g) => ({
-          coaHead: g?.accountCode as string,
-          coaHeadName: g?.accountName as string,
+          ledgerId: g?.ledgerID as string,
+          ledgerName: g?.ledgerName as string,
           percent: String(g?.percent),
           amount: g?.amount as string,
         })),
         distributionTable: distributionFund?.map((g) => ({
-          coaHead: g?.accountCode as string,
-          coaHeadName: g?.accountName as string,
+          ledgerId: g?.ledgerID as string,
+          ledgerName: g?.ledgerName as string,
           percent: String(g?.percent),
           amount: g?.amount as string,
         })),
         otherFunds: otherFundsTable?.map((g) => ({
-          coaHead: g?.accountCode as string,
-          coaHeadName: g?.accountName as string,
+          ledgerId: g?.ledgerID as string,
+          ledgerName: g?.ledgerName as string,
           percent: String(g?.percent),
           amount: g?.amount as string,
         })),

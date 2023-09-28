@@ -1,12 +1,10 @@
-query getCurrentFundAmount($forHeadOffice: Boolean!) {
+query getCurrentFundAmount($head: String!) {
   profitToFundManagement {
-    getCurrentFundAmount(forHeadOffice: $forHeadOffice) {
+    getCurrentFundAmount(head: $head) {
       amount {
         amount
         amountType
       }
-      coaHead
-      coaHeadName
       error {
         ...QueryError
       }
@@ -19,22 +17,25 @@ query getFundManagement($id: ID!) {
     get(id: $id) {
       record {
         grossProfit
-        grossProfitCoa
+        # grossProfitCoa
         staffBonus {
-          accountCode
-          accountName
+          ledgerID
+          # accountCode
+          # accountName
           percent
           amount
         }
         incometax {
-          accountCode
-          accountName
+          ledgerID
+          # accountCode
+          # accountName
           percent
           amount
         }
         fundDistribution {
-          accountCode
-          accountName
+          ledgerID
+          # accountCode
+          # accountName
           percent
           amount
         }
@@ -86,27 +87,44 @@ query getFundManagementFormState($id: ID!) {
     get(id: $id) {
       record {
         grossProfit
-        grossProfitCoa
+        grossProfitLedgerID
+        grossProfitLedgerName
+        # grossProfitCoa
         staffBonus {
-          accountCode
-          accountName
+          ledgerID
+          ledgerName
           percent
           amount
         }
         incometax {
-          accountCode
-          accountName
+          ledgerID
+          ledgerName
           percent
           amount
         }
         fundDistribution {
-          accountCode
-          accountName
+          ledgerID
+          ledgerName
           percent
           amount
           tableIndex
         }
         state
+      }
+    }
+  }
+}
+
+query checkSourceCOAValidity($head: String!) {
+  profitToFundManagement {
+    checkCOAValidity(head: $head) {
+      data {
+        branchId
+        branchName
+        count
+      }
+      error {
+        ...QueryError
       }
     }
   }

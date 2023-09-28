@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { FormSection, GridItem, Text } from '@myra-ui';
 
-import { FormAmountInput, FormLeafCoaHeadSelect, FormNumberInput } from '@coop/shared/form';
+import { FormAmountInput, FormCOALedgerSelect, FormNumberInput } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 import { useFundManagement } from '../hooks';
@@ -18,9 +18,10 @@ export const IncomeTax = () => {
 
   return (
     <FormSection header="Income Tax">
-      <FormLeafCoaHeadSelect
-        name="incomeTax.coaHead"
-        label="COA Head"
+      <FormCOALedgerSelect
+        name="incomeTax.ledgerId"
+        label="COA Ledger"
+        currentBranchOnly
         isDisabled={router?.asPath?.includes('/view')}
       />
 

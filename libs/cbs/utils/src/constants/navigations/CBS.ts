@@ -603,7 +603,6 @@ export const CBS: NavType = {
           route: ROUTES.CBS_OTHERS_SHARE_DIVIDEND_POSTING_LIST,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
           addRoute: ROUTES.CBS_OTHERS_SHARE_DIVIDEND_POSTING_ADD,
-          prod: false,
         },
         {
           label: 'Bulk Tansfers',

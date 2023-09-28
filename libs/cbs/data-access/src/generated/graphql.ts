@@ -3901,7 +3901,7 @@ export type ChartsOfAccountSettingsQueryCoaLeafNodeDetailsArgs = {
 export type ChartsOfAccountSettingsQueryCoaLedgerListArgs = {
   branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<Filter>;
-  id: Array<Scalars['ID']>;
+  id?: InputMaybe<Array<Scalars['ID']>>;
   pagination?: InputMaybe<Pagination>;
   snapshot?: InputMaybe<Scalars['String']>;
 };
@@ -4770,8 +4770,6 @@ export const CriteriaSection = {
 export type CriteriaSection = typeof CriteriaSection[keyof typeof CriteriaSection];
 export type CurrentFundResult = {
   amount?: Maybe<BalanceValue>;
-  coaHead?: Maybe<Scalars['String']>;
-  coaHeadName?: Maybe<Scalars['String']>;
   error?: Maybe<QueryError>;
 };
 
@@ -8556,16 +8554,16 @@ export const FrequencyTenure = {
 
 export type FrequencyTenure = typeof FrequencyTenure[keyof typeof FrequencyTenure];
 export type FundDistributionEntry = {
-  accountCode?: Maybe<Scalars['String']>;
-  accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
+  ledgerID?: Maybe<Scalars['String']>;
+  ledgerName?: Maybe<Scalars['String']>;
   percent?: Maybe<Scalars['Float']>;
   tableIndex?: Maybe<Scalars['Int']>;
 };
 
 export type FundDistributionEntryInput = {
   amount: Scalars['String'];
-  coaHead: Scalars['String'];
+  ledgerId: Scalars['String'];
   percent?: InputMaybe<Scalars['Float']>;
   tableIndex?: InputMaybe<Scalars['Int']>;
 };
@@ -8574,7 +8572,8 @@ export type FundManagement = {
   fiscalYear?: Maybe<Scalars['String']>;
   fundDistribution?: Maybe<Array<Maybe<FundDistributionEntry>>>;
   grossProfit?: Maybe<Scalars['String']>;
-  grossProfitCoa?: Maybe<Scalars['String']>;
+  grossProfitLedgerID?: Maybe<Scalars['String']>;
+  grossProfitLedgerName?: Maybe<Scalars['String']>;
   incometax: FundDistributionEntry;
   journalId?: Maybe<Scalars['String']>;
   staffBonus: FundDistributionEntry;
@@ -8607,6 +8606,7 @@ export type FundManagementInfo = {
 };
 
 export type FundManagementInput = {
+  destinationLedgerId: Scalars['String'];
   incomeTax: FundDistributionEntryInput;
   others: Array<FundDistributionEntryInput>;
   staffBonus: FundDistributionEntryInput;
@@ -8627,10 +8627,20 @@ export type FundManagementMutationNewArgs = {
   id?: InputMaybe<Scalars['ID']>;
 };
 
+export type FundManagementMutationTransferPLtoHoArgs = {
+  destLedger: Scalars['String'];
+  srcCOAHead: Scalars['String'];
+};
+
 export type FundManagementQuery = {
+  checkCOAValidity?: Maybe<FundManagementValidityResult>;
   get?: Maybe<FundManagementQueryResult>;
   getCurrentFundAmount?: Maybe<CurrentFundResult>;
   list?: Maybe<FundManagementConnection>;
+};
+
+export type FundManagementQueryCheckCoaValidityArgs = {
+  head: Scalars['String'];
 };
 
 export type FundManagementQueryGetArgs = {
@@ -8638,7 +8648,7 @@ export type FundManagementQueryGetArgs = {
 };
 
 export type FundManagementQueryGetCurrentFundAmountArgs = {
-  forHeadOffice: Scalars['Boolean'];
+  head: Scalars['String'];
 };
 
 export type FundManagementQueryListArgs = {
@@ -8663,6 +8673,17 @@ export const FundManagementState = {
 } as const;
 
 export type FundManagementState = typeof FundManagementState[keyof typeof FundManagementState];
+export type FundManagementValidity = {
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type FundManagementValidityResult = {
+  data?: Maybe<Array<Maybe<FundManagementValidity>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type GlBalanceFilter = {
   amount?: InputMaybe<MinMaxFilter>;
 };
@@ -9983,11 +10004,16 @@ export type HcmPayrollSalaryStructureQueryListSalaryStructureArgs = {
 };
 
 export type HcmPayrollTaxSetupMutation = {
-  upsertTaxSetup: TaxSetupMutationWithError;
+  upsertTaxSetupTaxExemptionRate: TaxSetupTaxExceptionRateMutationWithError;
+  upsertTaxSetupTaxRebateRateInPercentage: TaxSetupTaxRebateRateWithError;
 };
 
-export type HcmPayrollTaxSetupMutationUpsertTaxSetupArgs = {
-  input?: InputMaybe<TaxSetupInput>;
+export type HcmPayrollTaxSetupMutationUpsertTaxSetupTaxExemptionRateArgs = {
+  taxExceptionRate?: InputMaybe<Scalars['Float']>;
+};
+
+export type HcmPayrollTaxSetupMutationUpsertTaxSetupTaxRebateRateInPercentageArgs = {
+  taxRebateRateInPercentage?: InputMaybe<Scalars['Float']>;
 };
 
 export type HcmPayrollTaxSetupQuery = {
@@ -15380,6 +15406,7 @@ export type LoanProductsMutation = {
   editProductInterest: InterestSetupMutationResult;
   makeInactive?: Maybe<LoanProductInactiveResult>;
   updatePenaltyCharge: ProductChargeMutationResult;
+  updatePrematurePenalty: ProductChargeMutationResult;
   updateProcessingCharge: ProductChargeMutationResult;
   updateProductInterest: InterestSetupMutationResult;
   updateRebateCharge: ProductChargeMutationResult;
@@ -15400,6 +15427,12 @@ export type LoanProductsMutationUpdatePenaltyChargeArgs = {
   additionalData: ProductChargeAdditionalDataInput;
   id?: InputMaybe<Scalars['ID']>;
   payload: PenaltyTypeInput;
+  productId: Scalars['ID'];
+};
+
+export type LoanProductsMutationUpdatePrematurePenaltyArgs = {
+  allowPenalty: Scalars['Boolean'];
+  payload?: InputMaybe<PrematurePenalty>;
   productId: Scalars['ID'];
 };
 
@@ -18216,6 +18249,7 @@ export type OrganizationAddResult = {
 export type OrganizationBasicDetails = {
   logo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  slogan?: Maybe<Scalars['String']>;
   typeOfOrganization?: Maybe<TypeOfOrganization>;
 };
 
@@ -19397,6 +19431,7 @@ export const Resource = {
   CbsWithdrawSlipsWithdrawSlipsBlock: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK',
   CbsWithdrawSlipsWithdrawSlipsIssue: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_ISSUE',
   CbsWithdrawSlipsWithdrawSlipsRequests: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_REQUESTS',
+  FundManagement: 'FUND_MANAGEMENT',
   HcmEmployee: 'HCM_EMPLOYEE',
   HcmEmployeeAttendance: 'HCM_EMPLOYEE_ATTENDANCE',
   HcmEmployeeEmployees: 'HCM_EMPLOYEE_EMPLOYEES',
@@ -19541,6 +19576,7 @@ export const Resource = {
   SettingsShare: 'SETTINGS_SHARE',
   SettingsTransactionConstraint: 'SETTINGS_TRANSACTION_CONSTRAINT',
   SettingsUsers: 'SETTINGS_USERS',
+  SharedDividend: 'SHARED_DIVIDEND',
   UserUser: 'USER_USER',
   UserUserPassword: 'USER_USER_PASSWORD',
 } as const;
@@ -21334,7 +21370,7 @@ export type ShareDividendInput = {
   dividendRate: Scalars['Float'];
   payableCOAHead: Scalars['ID'];
   productID?: InputMaybe<Scalars['String']>;
-  sourceCOAHead: Scalars['ID'];
+  sourceLedgerID: Scalars['ID'];
   taxLedgerCOAHead: Scalars['ID'];
   taxRate: Scalars['Float'];
   treatment: DividendTreatment;
@@ -22274,12 +22310,12 @@ export type TaxSetupGetWithError = {
   error?: Maybe<MutationError>;
 };
 
-export type TaxSetupInput = {
-  taxExceptionRateInPercentage?: InputMaybe<Scalars['Float']>;
-  taxRebateRateInPercentage?: InputMaybe<Scalars['Float']>;
+export type TaxSetupTaxExceptionRateMutationWithError = {
+  error?: Maybe<MutationError>;
+  id?: Maybe<Scalars['ID']>;
 };
 
-export type TaxSetupMutationWithError = {
+export type TaxSetupTaxRebateRateWithError = {
   error?: Maybe<MutationError>;
   id?: Maybe<Scalars['ID']>;
 };
@@ -22312,7 +22348,7 @@ export type TaxSlabRecord = {
   fiscalYearFrom?: Maybe<Scalars['Int']>;
   fiscalYearTo?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['ID']>;
-  makeThisCurrentTaxSlab?: Maybe<Scalars['Boolean']>;
+  makeItCurrentTaxSlab?: Maybe<Scalars['Boolean']>;
   marriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
   name?: Maybe<Scalars['String']>;
   unmarriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
@@ -25510,7 +25546,10 @@ export type ExecuteProfitFundMangementMutation = {
   };
 };
 
-export type TransferPLtoHoMutationVariables = Exact<{ [key: string]: never }>;
+export type TransferPLtoHoMutationVariables = Exact<{
+  srcCOAHead: Scalars['String'];
+  destLedger: Scalars['String'];
+}>;
 
 export type TransferPLtoHoMutation = {
   profitToFundManagement: {
@@ -28377,33 +28416,6 @@ export type UpdatePayrollGeneralSettingsDisableRoundedTotalMutation = {
           general: {
             updatePayrollGeneralSettingsDisableRoundedTotal: {
               isUpdated?: boolean | null;
-              error?:
-                | MutationError_AuthorizationError_Fragment
-                | MutationError_BadRequestError_Fragment
-                | MutationError_NotFoundError_Fragment
-                | MutationError_ServerError_Fragment
-                | MutationError_ValidationError_Fragment
-                | null;
-            };
-          };
-        };
-      } | null;
-    } | null;
-  };
-};
-
-export type SetTaxSetupMutationVariables = Exact<{
-  input?: InputMaybe<TaxSetupInput>;
-}>;
-
-export type SetTaxSetupMutation = {
-  settings: {
-    general?: {
-      HCM?: {
-        payroll: {
-          taxsetup: {
-            upsertTaxSetup: {
-              id?: string | null;
               error?:
                 | MutationError_AuthorizationError_Fragment
                 | MutationError_BadRequestError_Fragment
@@ -33148,14 +33160,12 @@ export type GetDashboardInfoQuery = {
 };
 
 export type GetCurrentFundAmountQueryVariables = Exact<{
-  forHeadOffice: Scalars['Boolean'];
+  head: Scalars['String'];
 }>;
 
 export type GetCurrentFundAmountQuery = {
   profitToFundManagement: {
     getCurrentFundAmount?: {
-      coaHead?: string | null;
-      coaHeadName?: string | null;
       amount?: { amount?: string | null; amountType?: BalanceType | null } | null;
       error?:
         | QueryError_AuthorizationError_Fragment
@@ -33176,22 +33186,10 @@ export type GetFundManagementQuery = {
     get?: {
       record?: {
         grossProfit?: string | null;
-        grossProfitCoa?: string | null;
-        staffBonus: {
-          accountCode?: string | null;
-          accountName?: string | null;
-          percent?: number | null;
-          amount?: string | null;
-        };
-        incometax: {
-          accountCode?: string | null;
-          accountName?: string | null;
-          percent?: number | null;
-          amount?: string | null;
-        };
+        staffBonus: { ledgerID?: string | null; percent?: number | null; amount?: string | null };
+        incometax: { ledgerID?: string | null; percent?: number | null; amount?: string | null };
         fundDistribution?: Array<{
-          accountCode?: string | null;
-          accountName?: string | null;
+          ledgerID?: string | null;
           percent?: number | null;
           amount?: string | null;
         } | null> | null;
@@ -33234,28 +33232,51 @@ export type GetFundManagementFormStateQuery = {
     get?: {
       record?: {
         grossProfit?: string | null;
-        grossProfitCoa?: string | null;
+        grossProfitLedgerID?: string | null;
+        grossProfitLedgerName?: string | null;
         state?: FundManagementState | null;
         staffBonus: {
-          accountCode?: string | null;
-          accountName?: string | null;
+          ledgerID?: string | null;
+          ledgerName?: string | null;
           percent?: number | null;
           amount?: string | null;
         };
         incometax: {
-          accountCode?: string | null;
-          accountName?: string | null;
+          ledgerID?: string | null;
+          ledgerName?: string | null;
           percent?: number | null;
           amount?: string | null;
         };
         fundDistribution?: Array<{
-          accountCode?: string | null;
-          accountName?: string | null;
+          ledgerID?: string | null;
+          ledgerName?: string | null;
           percent?: number | null;
           amount?: string | null;
           tableIndex?: number | null;
         } | null> | null;
       } | null;
+    } | null;
+  };
+};
+
+export type CheckSourceCoaValidityQueryVariables = Exact<{
+  head: Scalars['String'];
+}>;
+
+export type CheckSourceCoaValidityQuery = {
+  profitToFundManagement: {
+    checkCOAValidity?: {
+      data?: Array<{
+        branchId?: string | null;
+        branchName?: string | null;
+        count?: number | null;
+      } | null> | null;
+      error?:
+        | QueryError_AuthorizationError_Fragment
+        | QueryError_BadRequestError_Fragment
+        | QueryError_NotFoundError_Fragment
+        | QueryError_ServerError_Fragment
+        | null;
     } | null;
   };
 };
@@ -42267,7 +42288,7 @@ export type GetCoaLeafNodeDetailsQuery = {
 };
 
 export type GetLedgerListQueryVariables = Exact<{
-  id: Array<Scalars['ID']> | Scalars['ID'];
+  id?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
   branchId?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
@@ -43138,7 +43159,6 @@ export type GetTaxSlabQuery = {
                 fiscalYearFrom?: number | null;
                 fiscalYearTo?: number | null;
                 effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
-                makeThisCurrentTaxSlab?: boolean | null;
                 unmarriedTaxableSalarySlab?: Array<{
                   fromAmount?: string | null;
                   toAmount?: string | null;
@@ -49284,9 +49304,9 @@ export const useExecuteProfitFundMangementMutation = <TError = unknown, TContext
     options
   );
 export const TransferPLtoHoDocument = `
-    mutation transferPLtoHO {
+    mutation transferPLtoHO($srcCOAHead: String!, $destLedger: String!) {
   profitToFundManagement {
-    transferPLtoHO {
+    transferPLtoHO(srcCOAHead: $srcCOAHead, destLedger: $destLedger) {
       recordId
       error {
         ...MutationError
@@ -53413,34 +53433,6 @@ export const useUpdatePayrollGeneralSettingsDisableRoundedTotalMutation = <
       UpdatePayrollGeneralSettingsDisableRoundedTotalMutation,
       UpdatePayrollGeneralSettingsDisableRoundedTotalMutationVariables
     >(UpdatePayrollGeneralSettingsDisableRoundedTotalDocument),
-    options
-  );
-export const SetTaxSetupDocument = `
-    mutation setTaxSetup($input: TaxSetupInput) {
-  settings {
-    general {
-      HCM {
-        payroll {
-          taxsetup {
-            upsertTaxSetup(input: $input) {
-              id
-              error {
-                ...MutationError
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useSetTaxSetupMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<SetTaxSetupMutation, TError, SetTaxSetupMutationVariables, TContext>
-) =>
-  useMutation<SetTaxSetupMutation, TError, SetTaxSetupMutationVariables, TContext>(
-    ['setTaxSetup'],
-    useAxios<SetTaxSetupMutation, SetTaxSetupMutationVariables>(SetTaxSetupDocument),
     options
   );
 export const UpsertLedgerTagDocument = `
@@ -59856,15 +59848,13 @@ export const useGetDashboardInfoQuery = <TData = GetDashboardInfoQuery, TError =
     options
   );
 export const GetCurrentFundAmountDocument = `
-    query getCurrentFundAmount($forHeadOffice: Boolean!) {
+    query getCurrentFundAmount($head: String!) {
   profitToFundManagement {
-    getCurrentFundAmount(forHeadOffice: $forHeadOffice) {
+    getCurrentFundAmount(head: $head) {
       amount {
         amount
         amountType
       }
-      coaHead
-      coaHeadName
       error {
         ...QueryError
       }
@@ -59889,22 +59879,18 @@ export const GetFundManagementDocument = `
     get(id: $id) {
       record {
         grossProfit
-        grossProfitCoa
         staffBonus {
-          accountCode
-          accountName
+          ledgerID
           percent
           amount
         }
         incometax {
-          accountCode
-          accountName
+          ledgerID
           percent
           amount
         }
         fundDistribution {
-          accountCode
-          accountName
+          ledgerID
           percent
           amount
         }
@@ -59978,22 +59964,23 @@ export const GetFundManagementFormStateDocument = `
     get(id: $id) {
       record {
         grossProfit
-        grossProfitCoa
+        grossProfitLedgerID
+        grossProfitLedgerName
         staffBonus {
-          accountCode
-          accountName
+          ledgerID
+          ledgerName
           percent
           amount
         }
         incometax {
-          accountCode
-          accountName
+          ledgerID
+          ledgerName
           percent
           amount
         }
         fundDistribution {
-          accountCode
-          accountName
+          ledgerID
+          ledgerName
           percent
           amount
           tableIndex
@@ -60015,6 +60002,36 @@ export const useGetFundManagementFormStateQuery = <
     ['getFundManagementFormState', variables],
     useAxios<GetFundManagementFormStateQuery, GetFundManagementFormStateQueryVariables>(
       GetFundManagementFormStateDocument
+    ).bind(null, variables),
+    options
+  );
+export const CheckSourceCoaValidityDocument = `
+    query checkSourceCOAValidity($head: String!) {
+  profitToFundManagement {
+    checkCOAValidity(head: $head) {
+      data {
+        branchId
+        branchName
+        count
+      }
+      error {
+        ...QueryError
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useCheckSourceCoaValidityQuery = <
+  TData = CheckSourceCoaValidityQuery,
+  TError = unknown
+>(
+  variables: CheckSourceCoaValidityQueryVariables,
+  options?: UseQueryOptions<CheckSourceCoaValidityQuery, TError, TData>
+) =>
+  useQuery<CheckSourceCoaValidityQuery, TError, TData>(
+    ['checkSourceCOAValidity', variables],
+    useAxios<CheckSourceCoaValidityQuery, CheckSourceCoaValidityQueryVariables>(
+      CheckSourceCoaValidityDocument
     ).bind(null, variables),
     options
   );
@@ -71743,7 +71760,7 @@ export const useGetCoaLeafNodeDetailsQuery = <TData = GetCoaLeafNodeDetailsQuery
     options
   );
 export const GetLedgerListDocument = `
-    query getLedgerList($id: [ID!]!, $pagination: Pagination, $filter: Filter, $branchId: [String!], $snapshot: String) {
+    query getLedgerList($id: [ID!], $pagination: Pagination, $filter: Filter, $branchId: [String!], $snapshot: String) {
   settings {
     chartsOfAccount {
       coaLedgerList(
@@ -71783,11 +71800,11 @@ export const GetLedgerListDocument = `
 }
     `;
 export const useGetLedgerListQuery = <TData = GetLedgerListQuery, TError = unknown>(
-  variables: GetLedgerListQueryVariables,
+  variables?: GetLedgerListQueryVariables,
   options?: UseQueryOptions<GetLedgerListQuery, TError, TData>
 ) =>
   useQuery<GetLedgerListQuery, TError, TData>(
-    ['getLedgerList', variables],
+    variables === undefined ? ['getLedgerList'] : ['getLedgerList', variables],
     useAxios<GetLedgerListQuery, GetLedgerListQueryVariables>(GetLedgerListDocument).bind(
       null,
       variables
@@ -72972,7 +72989,6 @@ export const GetTaxSlabDocument = `
                   percentageDeduction
                 }
                 effectiveFrom
-                makeThisCurrentTaxSlab
               }
               error {
                 ...MutationError

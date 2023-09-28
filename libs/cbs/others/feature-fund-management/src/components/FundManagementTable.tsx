@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
@@ -12,7 +12,7 @@ import {
 
 import { Box, Icon, Text } from '@myra-ui';
 
-import { useListLeafCoaHeadsQuery } from '@coop/cbs/data-access';
+import { useAppSelector, useGetLedgerListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormNumberInput } from '@coop/shared/form';
 import { getPaginationQuery, useDebounce } from '@coop/shared/utils';
 
@@ -40,7 +40,7 @@ export const FundManagementTable = ({ name, remainingProfit }: IFundManagementTa
         color="white"
       >
         <Text flexBasis="55%" fontWeight="600" fontSize="r1" px="s8">
-          COA Head
+          COA Ledger
         </Text>
 
         <Text flexBasis="20%" fontWeight="600" fontSize="r1" px="s8">
@@ -66,7 +66,7 @@ export const FundManagementTable = ({ name, remainingProfit }: IFundManagementTa
           >
             <Box flexBasis="55%">
               <FormInput
-                name={`${name}.${index}.coaHeadName`}
+                name={`${name}.${index}.ledgerName`}
                 py="0"
                 h="100%"
                 w="100%"
@@ -183,7 +183,7 @@ export const FundManagementTable = ({ name, remainingProfit }: IFundManagementTa
       <Box borderBottom="1px" borderX="1px" borderColor="border.layout" borderBottomRadius="br2">
         <LeafCOAHeadSearch
           handleSelect={(val) =>
-            append({ coaHead: val?.value, coaHeadName: val?.label, percent: '', amount: '' })
+            append({ ledgerId: val?.value, ledgerName: val?.label, percent: '', amount: '' })
           }
         />
       </Box>
@@ -198,31 +198,23 @@ interface ILeafCOAHeadSearchProps {
 const LeafCOAHeadSearch = ({ handleSelect }: ILeafCOAHeadSearchProps) => {
   const [searchValue, setSearchValue] = useState('');
 
+  const currentBranchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
+
   const router = useRouter();
 
-  const { data: leafCoaHeadsListData, isFetching } = useListLeafCoaHeadsQuery({
-    pagination: {
-      ...getPaginationQuery(),
-      order: {
-        arrange: 'ASC',
-        column: 'accountCode',
-      },
-    },
+  const { data: ledgerListData, isFetching } = useGetLedgerListQuery({
+    branchId: [currentBranchId as string],
+    pagination: getPaginationQuery(),
     filter: {
       query: useDebounce(searchValue, 800),
     },
   });
 
-  const leafCoaHeadsList = leafCoaHeadsListData?.settings?.chartsOfAccount?.listLeafCoaHeads?.edges;
-
-  const accountSearchOptions = useMemo(
-    () =>
-      leafCoaHeadsList?.map((head) => ({
-        label: `${head?.node?.accountCode} - ${head?.node?.Name}`,
-        value: head?.node?.accountCode as string,
-      })),
-    [leafCoaHeadsList]
-  );
+  const accountSearchOptions =
+    ledgerListData?.settings?.chartsOfAccount?.coaLedgerList?.edges?.map((head) => ({
+      label: head?.node?.ledgerName as string,
+      value: head?.node?.accountCode as string,
+    })) ?? [];
 
   return (
     <AutoComplete
