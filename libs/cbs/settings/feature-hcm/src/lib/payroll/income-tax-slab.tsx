@@ -1,13 +1,23 @@
+import { debounce } from 'lodash';
+
 import { Box, Divider, Input, Text } from '@myra-ui';
 
-import { useGetTaxSetupQuery } from '@coop/cbs/data-access';
+import {
+  useGetTaxSetupQuery,
+  useSetTaxSetupTaxExemptionRateMutation,
+  useSetTaxSetupTaxRebateInPercentageMutation,
+} from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
 
 import IncomeTaxSlabTable from '../../components/payroll/IncomeTaxSlabTable';
 
 export const IncomeTaxSlab = () => {
-  // const { mutateAsync } = useSetTaxSetupMutation();
-  const { data } = useGetTaxSetupQuery();
+  const { mutateAsync: taxExemptionRateMutateAsync } = useSetTaxSetupTaxExemptionRateMutation();
+  const { mutateAsync: taxRebateRateInPercentageMutateAsync } =
+    useSetTaxSetupTaxRebateInPercentageMutation();
+
+  const { data, refetch } = useGetTaxSetupQuery();
+
   const taxExemptionForHandicapped =
     data?.settings?.general?.HCM?.payroll?.taxsetup?.getTaxSetup?.data
       ?.taxExceptionRateInPercentage;
@@ -31,13 +41,13 @@ export const IncomeTaxSlab = () => {
               textAlign="right"
               defaultValue={taxExemptionForHandicapped as unknown as string}
               label="Tax Exemption Rate"
-              // onChange={debounce(
-              //   (e) =>
-              //     mutateAsync({
-              //       input: { taxExceptionRateInPercentage: e.target.value as unknown as number },
-              //     }).then(() => refetch()),
-              //   800
-              // )}
+              onChange={debounce(
+                (e) =>
+                  taxExemptionRateMutateAsync({
+                    taxExceptionRate: e.target.value as unknown as number,
+                  }).then(() => refetch()),
+                800
+              )}
               rightElement={<>%</>}
             />
           </Box>
@@ -58,13 +68,13 @@ export const IncomeTaxSlab = () => {
               textAlign="right"
               defaultValue={taxRebateForWomen as unknown as string}
               label="Tax Rebate Rate"
-              // onChange={debounce(
-              //   (e) =>
-              //     mutateAsync({
-              //       input: { taxRebateRateInPercentage: e.target.value as unknown as number },
-              //     }).then(() => refetch()),
-              //   800
-              // )}
+              onChange={debounce(
+                (e) =>
+                  taxRebateRateInPercentageMutateAsync({
+                    taxRebateRateInPercentage: e.target.value as unknown as number,
+                  }).then(() => refetch()),
+                800
+              )}
               rightElement={<>%</>}
             />
           </Box>

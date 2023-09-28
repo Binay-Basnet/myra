@@ -245,21 +245,42 @@ mutation updatePayrollGeneralSettingsDisableRoundedTotal($input: Boolean) {
   }
 }
 
-# mutation setTaxSetup($input: TaxSetupInput) {
-#   settings {
-#     general {
-#       HCM {
-#         payroll {
-#           taxsetup {
-#             upsertTaxSetup(input: $input) {
-#               id
-#               error {
-#                 ...MutationError
-#               }
-#             }
-#           }
-#         }
-#       }
-#     }
-#   }
-# }
+mutation setTaxSetupTaxExemptionRate($taxExceptionRate: Float) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxsetup {
+            upsertTaxSetupTaxExemptionRate(taxExceptionRate: $taxExceptionRate) {
+              id
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setTaxSetupTaxRebateInPercentage($taxRebateRateInPercentage: Float) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxsetup {
+            upsertTaxSetupTaxRebateRateInPercentage(
+              taxRebateRateInPercentage: $taxRebateRateInPercentage
+            ) {
+              id
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

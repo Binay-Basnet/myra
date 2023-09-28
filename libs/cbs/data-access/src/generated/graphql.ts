@@ -28431,6 +28431,60 @@ export type UpdatePayrollGeneralSettingsDisableRoundedTotalMutation = {
   };
 };
 
+export type SetTaxSetupTaxExemptionRateMutationVariables = Exact<{
+  taxExceptionRate?: InputMaybe<Scalars['Float']>;
+}>;
+
+export type SetTaxSetupTaxExemptionRateMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxsetup: {
+            upsertTaxSetupTaxExemptionRate: {
+              id?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetTaxSetupTaxRebateInPercentageMutationVariables = Exact<{
+  taxRebateRateInPercentage?: InputMaybe<Scalars['Float']>;
+}>;
+
+export type SetTaxSetupTaxRebateInPercentageMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxsetup: {
+            upsertTaxSetupTaxRebateRateInPercentage: {
+              id?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type UpsertLedgerTagMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: LedgerTagInput;
@@ -43184,6 +43238,7 @@ export type GetTaxSlabQuery = {
                 fiscalYearFrom?: number | null;
                 fiscalYearTo?: number | null;
                 effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
+                makeItCurrentTaxSlab?: boolean | null;
                 unmarriedTaxableSalarySlab?: Array<{
                   fromAmount?: string | null;
                   toAmount?: string | null;
@@ -44331,6 +44386,7 @@ export type GetOrganizationDataQuery = {
               name?: string | null;
               logo?: string | null;
               typeOfOrganization?: TypeOfOrganization | null;
+              slogan?: string | null;
             } | null;
             contactDetails?: {
               phoneNumber?: string | null;
@@ -44377,6 +44433,7 @@ export type GetOrganizationEditDataQuery = {
               name?: string | null;
               logo?: string | null;
               typeOfOrganization?: TypeOfOrganization | null;
+              slogan?: string | null;
             } | null;
             contactDetails?: {
               phoneNumber?: string | null;
@@ -53458,6 +53515,89 @@ export const useUpdatePayrollGeneralSettingsDisableRoundedTotalMutation = <
       UpdatePayrollGeneralSettingsDisableRoundedTotalMutation,
       UpdatePayrollGeneralSettingsDisableRoundedTotalMutationVariables
     >(UpdatePayrollGeneralSettingsDisableRoundedTotalDocument),
+    options
+  );
+export const SetTaxSetupTaxExemptionRateDocument = `
+    mutation setTaxSetupTaxExemptionRate($taxExceptionRate: Float) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxsetup {
+            upsertTaxSetupTaxExemptionRate(taxExceptionRate: $taxExceptionRate) {
+              id
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetTaxSetupTaxExemptionRateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetTaxSetupTaxExemptionRateMutation,
+    TError,
+    SetTaxSetupTaxExemptionRateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetTaxSetupTaxExemptionRateMutation,
+    TError,
+    SetTaxSetupTaxExemptionRateMutationVariables,
+    TContext
+  >(
+    ['setTaxSetupTaxExemptionRate'],
+    useAxios<SetTaxSetupTaxExemptionRateMutation, SetTaxSetupTaxExemptionRateMutationVariables>(
+      SetTaxSetupTaxExemptionRateDocument
+    ),
+    options
+  );
+export const SetTaxSetupTaxRebateInPercentageDocument = `
+    mutation setTaxSetupTaxRebateInPercentage($taxRebateRateInPercentage: Float) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxsetup {
+            upsertTaxSetupTaxRebateRateInPercentage(
+              taxRebateRateInPercentage: $taxRebateRateInPercentage
+            ) {
+              id
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetTaxSetupTaxRebateInPercentageMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetTaxSetupTaxRebateInPercentageMutation,
+    TError,
+    SetTaxSetupTaxRebateInPercentageMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetTaxSetupTaxRebateInPercentageMutation,
+    TError,
+    SetTaxSetupTaxRebateInPercentageMutationVariables,
+    TContext
+  >(
+    ['setTaxSetupTaxRebateInPercentage'],
+    useAxios<
+      SetTaxSetupTaxRebateInPercentageMutation,
+      SetTaxSetupTaxRebateInPercentageMutationVariables
+    >(SetTaxSetupTaxRebateInPercentageDocument),
     options
   );
 export const UpsertLedgerTagDocument = `
@@ -73054,6 +73194,7 @@ export const GetTaxSlabDocument = `
                   percentageDeduction
                 }
                 effectiveFrom
+                makeItCurrentTaxSlab
               }
               error {
                 ...MutationError
@@ -74574,6 +74715,7 @@ export const GetOrganizationDataDocument = `
               name
               logo
               typeOfOrganization
+              slogan
             }
             contactDetails {
               phoneNumber
@@ -74633,6 +74775,7 @@ export const GetOrganizationEditDataDocument = `
               name
               logo
               typeOfOrganization
+              slogan
             }
             contactDetails {
               phoneNumber

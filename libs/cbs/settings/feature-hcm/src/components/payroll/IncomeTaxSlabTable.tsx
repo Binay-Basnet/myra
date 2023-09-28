@@ -31,11 +31,12 @@ import { getPaginationQuery } from '@coop/shared/utils';
 
 const defaultFormValue = {
   name: '',
-  fiscalYear: null,
+  fiscalYearFrom: null,
+  fiscalYearTo: null,
   unmarriedTaxableSalarySlab: null,
   marriedTaxableSalarySlab: null,
   effectiveFrom: null,
-  makeThisCurrentTaxSlab: false,
+  makeItCurrentTaxSlab: false,
 };
 
 export const IncomeTaxSlabTable = () => {
