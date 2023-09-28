@@ -48,7 +48,7 @@ export const RebateDetailModal = ({ isOpen, onClose, rebate }: IRebateDetailModa
         </Box>
         <Box display="flex" flexDirection="column" gap="s4">
           <Text variant="formLabel" color="gray.700">
-            New Penalty Amount
+            New Rebate Amount
           </Text>
           <Text fontSize="r1" fontWeight={600} color="gray.800">
             {amountConverter(rebate?.payload?.rebateAmount)}

@@ -28672,6 +28672,31 @@ export type UpdateLoanProductRebateMutation = {
   };
 };
 
+export type UpdateLoanPrematurePenaltyMutationVariables = Exact<{
+  productId: Scalars['ID'];
+  allowPenalty: Scalars['Boolean'];
+  payload?: InputMaybe<PrematurePenalty>;
+}>;
+
+export type UpdateLoanPrematurePenaltyMutation = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        updatePrematurePenalty: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type SetLoanGeneralSettingsMutationVariables = Exact<{
   emi?: InputMaybe<Scalars['Boolean']>;
   epi?: InputMaybe<Scalars['Boolean']>;
@@ -53787,6 +53812,46 @@ export const useUpdateLoanProductRebateMutation = <TError = unknown, TContext = 
     ['updateLoanProductRebate'],
     useAxios<UpdateLoanProductRebateMutation, UpdateLoanProductRebateMutationVariables>(
       UpdateLoanProductRebateDocument
+    ),
+    options
+  );
+export const UpdateLoanPrematurePenaltyDocument = `
+    mutation updateLoanPrematurePenalty($productId: ID!, $allowPenalty: Boolean!, $payload: PrematurePenalty) {
+  settings {
+    general {
+      loanProducts {
+        updatePrematurePenalty(
+          productId: $productId
+          allowPenalty: $allowPenalty
+          payload: $payload
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateLoanPrematurePenaltyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateLoanPrematurePenaltyMutation,
+    TError,
+    UpdateLoanPrematurePenaltyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateLoanPrematurePenaltyMutation,
+    TError,
+    UpdateLoanPrematurePenaltyMutationVariables,
+    TContext
+  >(
+    ['updateLoanPrematurePenalty'],
+    useAxios<UpdateLoanPrematurePenaltyMutation, UpdateLoanPrematurePenaltyMutationVariables>(
+      UpdateLoanPrematurePenaltyDocument
     ),
     options
   );

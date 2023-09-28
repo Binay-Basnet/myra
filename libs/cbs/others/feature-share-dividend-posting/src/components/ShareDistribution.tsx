@@ -7,7 +7,7 @@ export const ShareDistribution = () => (
     {/* <GridItem colSpan={2}> */}
     <FormCOALedgerSelect name="sourceLedgerID" label="Source COA Ledger" currentBranchOnly />
 
-    <FormLeafCoaHeadSelect name="taxLedgerCOAHead" label="Tax Rate Ledger Mapping" />
+    <FormLeafCoaHeadSelect name="taxLedgerCOAHead" label="Tax Rate COA Head" />
     {/* </GridItem> */}
 
     <FormNumberInput
