@@ -32,6 +32,14 @@ export const AccessLogList = () => {
         accessorFn: (row) => row?.queryFailed,
       },
       {
+        header: 'Other Success',
+        accessorFn: (row) => row?.otherSuccess,
+      },
+      {
+        header: 'Other Failed',
+        accessorFn: (row) => row?.otherFailed,
+      },
+      {
         header: 'Mutation Success',
         accessorFn: (row) => row?.mutationSuccess,
       },
