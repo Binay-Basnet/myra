@@ -21,4 +21,5 @@ export * from './SideBar';
 export * from './UpdateChargesDetailModal';
 export * from './UpdateChargesModal';
 export * from './UpdateLoanAccountPremiumModal';
+export * from './UpdateLoanPrematurePenaltyModal';
 export * from './UpdateLoanTenureModal';
