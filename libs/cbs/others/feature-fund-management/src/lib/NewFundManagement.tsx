@@ -8,11 +8,12 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
+  GridItem,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Button, FormSection, Loader, Text } from '@myra-ui';
+import { Alert, asyncToast, Box, Button, FormSection, Loader, Text } from '@myra-ui';
 
 import {
   FundManagementInput,
@@ -217,8 +218,12 @@ export const NewFundManagement = () => {
     }
   );
 
-  const destinationLedgerBalance =
-    accountQueryData?.settings?.chartsOfAccount?.coaAccountDetails?.data?.overview?.closingBalance;
+  const destinationLedgerBalance = useMemo(() => {
+    if (!destinationLedger) return 0;
+
+    return accountQueryData?.settings?.chartsOfAccount?.coaAccountDetails?.data?.overview
+      ?.closingBalance;
+  }, [accountQueryData, destinationLedger]);
 
   return (
     <>
@@ -230,9 +235,9 @@ export const NewFundManagement = () => {
 
         <FormLayout.Content>
           <FormLayout.Form>
-            {(isFetchingBranchBalance || isCheckingSourceCOA) && <Loader />}
-
-            {
+            {isFetchingBranchBalance || isCheckingSourceCOA ? (
+              <Loader />
+            ) : (
               <>
                 {/* <LedgerSetup /> */}
                 <FormSection header="Ledger Setup">
@@ -243,11 +248,23 @@ export const NewFundManagement = () => {
                     label="Destination Ledger"
                     currentBranchOnly
                   />
+
+                  <GridItem colSpan={3}>
+                    {sourceCOA && !isCOAHeadValid && !isCheckingSourceCOA && (
+                      <Alert
+                        title="Source COA Head is not valid. Please select a valid one to proceed."
+                        status="error"
+                        hideCloseIcon
+                      />
+                    )}
+                  </GridItem>
                 </FormSection>
 
-                {branchFundAmount && Number(branchFundAmount?.amount?.amount) !== 0 ? (
-                  destinationLedger && <TransferPLtoHO />
-                ) : destinationLedgerBalance ? (
+                {branchFundAmount &&
+                  Number(branchFundAmount?.amount?.amount) !== 0 &&
+                  destinationLedger && <TransferPLtoHO />}
+
+                {destinationLedgerBalance ? (
                   <>
                     <BasicFundManagement />
                     <StaffBonusFund />
@@ -264,7 +281,7 @@ export const NewFundManagement = () => {
                   </>
                 ) : null}
               </>
-            }
+            )}
           </FormLayout.Form>
         </FormLayout.Content>
 

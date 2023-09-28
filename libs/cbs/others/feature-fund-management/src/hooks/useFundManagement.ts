@@ -38,13 +38,17 @@ export const useFundManagement = ({ methods }: IFundMangementProps) => {
     }
   );
 
-  const currentFund = {
-    amount:
-      accountQueryData?.settings?.chartsOfAccount?.coaAccountDetails?.data?.overview
-        ?.closingBalance,
-    amountType:
-      accountQueryData?.settings?.chartsOfAccount?.coaAccountDetails?.data?.overview?.balanceType,
-  };
+  const currentFund = useMemo(() => {
+    if (!destinationLedger) return { amount: 0 };
+
+    const accountData =
+      accountQueryData?.settings?.chartsOfAccount?.coaAccountDetails?.data?.overview;
+
+    return {
+      amount: accountData?.closingBalance,
+      amountType: accountData?.balanceType,
+    };
+  }, [accountQueryData, destinationLedger]);
 
   const { data: editData } = useGetFundManagementFormStateQuery(
     { id: id as string },
