@@ -36,6 +36,8 @@ const whatsNewData = {
       'Withdraw slip issue and kym status section added in the individual member profile report.',
       'loan reabate in loan repayment.',
       'Darker font color in reports print: daybook report, charkhata, trial balance, balance sheet, statement reports.',
+      'Signature (prepared by (name), approved by ) in the all types of transactions as well as TB, BS reports.',
+      'Profit Distribution',
     ],
   },
   bugsSquashed: {
@@ -54,6 +56,8 @@ const whatsNewData = {
       'Bulk deposit fine display fix.',
       'Denomination set off by default in Alternative channel activation.',
       'In MR as well as teller approval page: COLLECTED total members and accounts to also be displayed.',
+      'Reprint account closed transaction bill from all transactions with filter account close.',
+      'FD balance limit fields (not reflected when opening account).',
     ],
   },
 };

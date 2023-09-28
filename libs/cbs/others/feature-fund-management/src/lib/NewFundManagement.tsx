@@ -235,53 +235,52 @@ export const NewFundManagement = () => {
 
         <FormLayout.Content>
           <FormLayout.Form>
-            {isFetchingBranchBalance || isCheckingSourceCOA ? (
+            <Box display={isFetchingBranchBalance || isCheckingSourceCOA ? 'block' : 'none'}>
               <Loader />
-            ) : (
-              <>
-                {/* <LedgerSetup /> */}
-                <FormSection header="Ledger Setup">
-                  <FormLeafCoaHeadSelect name="sourceCOA" label="Source" />
+            </Box>
+            <Box display={isFetchingBranchBalance || isCheckingSourceCOA ? 'none' : 'block'}>
+              {/* <LedgerSetup /> */}
+              <FormSection header="Ledger Setup">
+                <FormLeafCoaHeadSelect name="sourceCOA" label="Source" />
 
-                  <FormCOALedgerSelect
-                    name="destinationLedger"
-                    label="Destination Ledger"
-                    currentBranchOnly
-                  />
+                <FormCOALedgerSelect
+                  name="destinationLedger"
+                  label="Destination Ledger"
+                  currentBranchOnly
+                />
 
-                  <GridItem colSpan={3}>
-                    {sourceCOA && !isCOAHeadValid && !isCheckingSourceCOA && (
-                      <Alert
-                        title="Source COA Head is not valid. Please select a valid one to proceed."
-                        status="error"
-                        hideCloseIcon
-                      />
-                    )}
-                  </GridItem>
-                </FormSection>
+                <GridItem colSpan={3}>
+                  {sourceCOA && !isCOAHeadValid && !isCheckingSourceCOA && (
+                    <Alert
+                      title="Source COA Head is not valid. Please select a valid one to proceed."
+                      status="error"
+                      hideCloseIcon
+                    />
+                  )}
+                </GridItem>
+              </FormSection>
 
-                {branchFundAmount &&
-                  Number(branchFundAmount?.amount?.amount) !== 0 &&
-                  destinationLedger && <TransferPLtoHO />}
+              {branchFundAmount &&
+                Number(branchFundAmount?.amount?.amount) !== 0 &&
+                destinationLedger && <TransferPLtoHO />}
 
-                {destinationLedgerBalance ? (
-                  <>
-                    <BasicFundManagement />
-                    <StaffBonusFund />
-                    <IncomeTax />
-                    {Number(remainingProfitAfterTax) ? (
-                      <>
-                        <ParticularTable />
+              {destinationLedgerBalance ? (
+                <>
+                  <BasicFundManagement />
+                  <StaffBonusFund />
+                  <IncomeTax />
+                  {Number(remainingProfitAfterTax) ? (
+                    <>
+                      <ParticularTable />
 
-                        <DistributionTable />
+                      <DistributionTable />
 
-                        <OtherFundDistributionTable />
-                      </>
-                    ) : null}
-                  </>
-                ) : null}
-              </>
-            )}
+                      <OtherFundDistributionTable />
+                    </>
+                  ) : null}
+                </>
+              ) : null}
+            </Box>
           </FormLayout.Form>
         </FormLayout.Content>
 
