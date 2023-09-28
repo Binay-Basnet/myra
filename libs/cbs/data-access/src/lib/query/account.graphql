@@ -91,6 +91,11 @@ query getAccountOpenProductDetails($id: ID!) {
               penaltyAmount
               penaltyLedgerMapping
             }
+            fixedDepositAmountLimit {
+              avgAmount
+              maxAmount
+              minAmount
+            }
             rebate
             rebateData {
               dayBeforeInstallmentDate

@@ -12853,7 +12853,7 @@ export type KymIndFormData = {
   incomeSource?: Maybe<Array<Maybe<KymIndIncomeSource>>>;
   initialLoan?: Maybe<Scalars['String']>;
   initialSaving?: Maybe<Scalars['String']>;
-  initialShare?: Maybe<Scalars['Int']>;
+  initialShare?: Maybe<Scalars['String']>;
   isConvicted?: Maybe<Scalars['Boolean']>;
   isFamilyAMember?: Maybe<Scalars['Boolean']>;
   isForeignEmployment?: Maybe<Scalars['Boolean']>;
@@ -12923,7 +12923,7 @@ export type KymIndMemberInput = {
   incomeSource?: InputMaybe<Array<InputMaybe<KymIndIncomeSourceInput>>>;
   initialLoan?: InputMaybe<Scalars['String']>;
   initialSaving?: InputMaybe<Scalars['String']>;
-  initialShare?: InputMaybe<Scalars['Int']>;
+  initialShare?: InputMaybe<Scalars['String']>;
   isConvicted?: InputMaybe<Scalars['Boolean']>;
   isFamilyAMember?: InputMaybe<Scalars['Boolean']>;
   isForeignEmployment?: InputMaybe<Scalars['Boolean']>;
@@ -30328,6 +30328,11 @@ export type GetAccountOpenProductDetailsQuery = {
               penaltyAmount?: any | null;
               penaltyLedgerMapping?: string | null;
             } | null;
+            fixedDepositAmountLimit?: {
+              avgAmount?: any | null;
+              maxAmount?: any | null;
+              minAmount?: any | null;
+            } | null;
             rebateData?: {
               dayBeforeInstallmentDate?: number | null;
               noOfInstallment?: number | null;
@@ -36034,7 +36039,7 @@ export type GetKymIndividualFormDataQuery = {
           firstIntroducerId?: string | null;
           secondIntroducerId?: string | null;
           isFamilyAMember?: boolean | null;
-          initialShare?: number | null;
+          initialShare?: string | null;
           initialSaving?: string | null;
           initialLoan?: string | null;
           otherFinancialAmount?: string | null;
@@ -56237,6 +56242,11 @@ export const GetAccountOpenProductDetailsDocument = `
               penaltyRate
               penaltyAmount
               penaltyLedgerMapping
+            }
+            fixedDepositAmountLimit {
+              avgAmount
+              maxAmount
+              minAmount
             }
             rebate
             rebateData {

@@ -111,6 +111,19 @@ export const ProductCard = ({ productId }: ProductProps) => {
             </Text>
           </Box>
         )}
+        {(productData?.fixedDepositAmountLimit?.minAmount ||
+          productData?.fixedDepositAmountLimit?.maxAmount) && (
+          <Box display="flex" flexDirection="column" gap="s4">
+            <Text fontSize="s3" fontWeight="400">
+              Fixed Deposit Limit
+            </Text>
+
+            <Text fontSize="s3" fontWeight="600">
+              {productData?.fixedDepositAmountLimit?.minAmount}-{' '}
+              {productData?.fixedDepositAmountLimit?.maxAmount}
+            </Text>
+          </Box>
+        )}
         {(productData?.depositAmount?.minAmount || productData?.depositAmount?.maxAmount) && (
           <Box display="flex" flexDirection="column" gap="s4">
             <Text fontSize="s3" fontWeight="400">
