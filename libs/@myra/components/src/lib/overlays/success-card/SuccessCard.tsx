@@ -527,10 +527,11 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
             w="100%"
             bottom="100px"
             left={0}
-            pt={dublicate ? 's40' : '0'}
-            display="flex"
-            justifyContent="space-between"
+            display="grid"
+            gridTemplateColumns="repeat(3, 1fr)"
+            gap="s32"
             px="s32"
+            pt="s64"
           >
             <Box display="flex" flexDir="column" alignItems="center" gap="s12">
               <Divider borderTop="1px dotted black" />
@@ -538,7 +539,12 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                 {`Prepared By [${user?.firstName?.en}]`}
               </Text>
             </Box>
-
+            <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+              <Divider borderTop="1px dotted black" />
+              <Text fontSize="s2" color="gray.800" fontWeight="500">
+                Checked By
+              </Text>
+            </Box>
             <Box display="flex" flexDir="column" alignItems="center" gap="s12">
               <Divider borderTop="1px dotted black" />
               <Text fontSize="s2" color="gray.800" fontWeight="500">
@@ -762,10 +768,11 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                 // position="fixed"
                 w="100%"
                 bottom="100px"
-                pt="s40"
+                pt="s64"
                 left={0}
-                display="flex"
-                justifyContent="space-between"
+                display="grid"
+                gridTemplateColumns="repeat(3, 1fr)"
+                gap="s32"
                 px="s32"
               >
                 <Box display="flex" flexDir="column" alignItems="center" gap="s12">
@@ -774,12 +781,12 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                     {`Prepared By [${user?.firstName?.en}]`}
                   </Text>
                 </Box>
-                {/* <Box display="flex" flexDir="column" alignItems="center" gap="s12">
-              <Divider borderTop="1px dotted black" />
-              <Text fontSize="s2" color="gray.800" fontWeight="500">
-                Verified By
-              </Text>
-            </Box> */}
+                <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+                  <Divider borderTop="1px dotted black" />
+                  <Text fontSize="s2" color="gray.800" fontWeight="500">
+                    Checked By
+                  </Text>
+                </Box>
                 <Box display="flex" flexDir="column" alignItems="center" gap="s12">
                   <Divider borderTop="1px dotted black" />
                   <Text fontSize="s2" color="gray.800" fontWeight="500">

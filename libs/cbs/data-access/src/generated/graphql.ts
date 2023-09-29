@@ -15656,6 +15656,8 @@ export type LoanRepaymentRecord = {
   principalAmount?: Maybe<Scalars['String']>;
   rebateAmount?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['String']>;
+  totalRemainingInterest?: Maybe<Scalars['String']>;
+  totalRemainingPrincipal?: Maybe<Scalars['String']>;
   transactionId?: Maybe<Scalars['String']>;
 };
 

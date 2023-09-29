@@ -126,8 +126,9 @@ export const ReportContent = ({
             bottom="100px"
             pt="s40"
             left={0}
-            display="flex"
-            justifyContent="space-between"
+            display="grid"
+            gridTemplateColumns="repeat(3, 1fr)"
+            gap="s32"
             px="s32"
           >
             <Box display="flex" flexDir="column" alignItems="center" gap="s12">
@@ -136,12 +137,12 @@ export const ReportContent = ({
                 {`Prepared By [${user?.firstName?.en}]`}
               </Text>
             </Box>
-            {/* <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+            <Box display="flex" flexDir="column" alignItems="center" gap="s12">
               <Divider borderTop="1px dotted black" />
               <Text fontSize="s2" color="gray.800" fontWeight="500">
-                Verified By
+                Checked By
               </Text>
-            </Box> */}
+            </Box>
             <Box display="flex" flexDir="column" alignItems="center" gap="s12">
               <Divider borderTop="1px dotted black" />
               <Text fontSize="s2" color="gray.800" fontWeight="500">
