@@ -4783,6 +4783,15 @@ export type CurrentMontheUpdatedSalaryStructure = {
   earnings?: Maybe<Array<Maybe<EarningsAndDeductionsType>>>;
 };
 
+export type CurrentTaxSlab = {
+  taxSlab?: Maybe<Array<Maybe<Slab>>>;
+};
+
+export type CurrentTaxSlabWithError = {
+  data?: Maybe<CurrentTaxSlab>;
+  error?: Maybe<QueryError>;
+};
+
 export type CustomFormListQueryResult = {
   data?: Maybe<Array<Maybe<FormElement>>>;
   error?: Maybe<QueryError>;
@@ -8890,7 +8899,7 @@ export type GetPayGroupData = {
 
 export type GetSalaryStructureAssignment = {
   baseSalary?: Maybe<Scalars['String']>;
-  deduction?: Maybe<Array<Maybe<SalaryAmountType>>>;
+  deductions?: Maybe<Array<Maybe<SalaryAmountType>>>;
   earnings?: Maybe<Array<Maybe<SalaryAmountType>>>;
   employeeId?: Maybe<Scalars['String']>;
   fromDate?: Maybe<Scalars['Localized']>;
@@ -9020,6 +9029,11 @@ export type GradeLevels = typeof GradeLevels[keyof typeof GradeLevels];
 export type GraphData = {
   amount?: Maybe<Scalars['String']>;
   time?: Maybe<Scalars['Int']>;
+};
+
+export type GrossEarningsDetailsWithError = {
+  data?: Maybe<Scalars['Map']>;
+  error?: Maybe<QueryError>;
 };
 
 export type GroupBalanceHistory = {
@@ -9719,7 +9733,7 @@ export type HrPayrollMutation = {
 
 export type HrPayrollPayrollRunMutation = {
   approvePayrollRun: ReturnApprovedOrNot;
-  upsertPayrollRun: ReturnPayrollRun;
+  createPayrollRun: ReturnPayrollRun;
 };
 
 export type HrPayrollPayrollRunMutationApprovePayrollRunArgs = {
@@ -9727,15 +9741,19 @@ export type HrPayrollPayrollRunMutationApprovePayrollRunArgs = {
   input: PayrollStatus;
 };
 
-export type HrPayrollPayrollRunMutationUpsertPayrollRunArgs = {
-  id?: InputMaybe<Scalars['ID']>;
+export type HrPayrollPayrollRunMutationCreatePayrollRunArgs = {
   input: PayrollRunInput;
 };
 
 export type HrPayrollPayrollRunQuery = {
   ListSalaryAssignmentWithExtraDetails: ExtraDetailsConnection;
-  getAllEmployeesSalaryDetailsForThisPayrollRun: ReturnUnpaidEmployeeDetailsWithError;
+  getAllEmployeesSalaryDetailsForThisPayrollRun?: Maybe<ReturnUnpaidEmployeeDetailsWithError>;
+  getCurrentTaxSlab: CurrentTaxSlabWithError;
+  getGrossEarningsDetails: GrossEarningsDetailsWithError;
   getPayrollRun: EachPayrollRunRecords;
+  getPostTaxDeductionsDetails: PostTaxDeductionDetailsWithError;
+  getPreTaxDeductionsDetails: PreTaxDeductionDetailsWithError;
+  getTaxPaidEachMonthDetails: TaxPaidEachMonthDetailsWithError;
   listPayrollRun: PayrollRunConnection;
   listSalarySlip: SalarySlipsConnection;
 };
@@ -9751,8 +9769,28 @@ export type HrPayrollPayrollRunQueryGetAllEmployeesSalaryDetailsForThisPayrollRu
   year?: InputMaybe<Scalars['Int']>;
 };
 
+export type HrPayrollPayrollRunQueryGetCurrentTaxSlabArgs = {
+  employee: Scalars['ID'];
+};
+
+export type HrPayrollPayrollRunQueryGetGrossEarningsDetailsArgs = {
+  id: Scalars['ID'];
+};
+
 export type HrPayrollPayrollRunQueryGetPayrollRunArgs = {
   id: Scalars['ID'];
+};
+
+export type HrPayrollPayrollRunQueryGetPostTaxDeductionsDetailsArgs = {
+  employeeId: Scalars['ID'];
+};
+
+export type HrPayrollPayrollRunQueryGetPreTaxDeductionsDetailsArgs = {
+  employeeId: Scalars['ID'];
+};
+
+export type HrPayrollPayrollRunQueryGetTaxPaidEachMonthDetailsArgs = {
+  employeeId: Scalars['ID'];
 };
 
 export type HrPayrollPayrollRunQueryListPayrollRunArgs = {
@@ -18658,12 +18696,10 @@ export type PayrollRunConnection = {
 };
 
 export type PayrollRunInput = {
-  branchId?: InputMaybe<Scalars['String']>;
-  departmentId?: InputMaybe<Scalars['String']>;
-  designationId?: InputMaybe<Scalars['String']>;
-  payDay?: InputMaybe<Scalars['Localized']>;
-  payrollPeriod?: InputMaybe<LocalizedDateFilter>;
-  salaryAssignments?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  paygroupId?: InputMaybe<Scalars['ID']>;
+  payrollMonth?: InputMaybe<NepaliMonths>;
+  payrollYear?: InputMaybe<Scalars['Int']>;
+  salaryDetailsOfEmployees?: InputMaybe<Array<InputMaybe<UnPaidEmployeeDetailsInput>>>;
 };
 
 export type PayrollRunListed = {
@@ -18889,6 +18925,16 @@ export type PostShareDividendResult = {
   error?: Maybe<MutationError>;
   record?: Maybe<Scalars['String']>;
   summary?: Maybe<Array<Maybe<ShareDividendSummary>>>;
+};
+
+export type PostTaxDeductionDetailsWithError = {
+  data?: Maybe<Scalars['Map']>;
+  error?: Maybe<QueryError>;
+};
+
+export type PreTaxDeductionDetailsWithError = {
+  data?: Maybe<Scalars['Map']>;
+  error?: Maybe<QueryError>;
 };
 
 export type PredefinedElementFilter = {
@@ -20004,8 +20050,7 @@ export type ReturnJobOpening = {
 
 export type ReturnPayrollRun = {
   error?: Maybe<MutationError>;
-  record?: Maybe<PayrollRunRecord>;
-  recordId?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['ID']>;
 };
 
 export type ReturnSalStructureAdjustRevisionWithError = {
@@ -22290,6 +22335,17 @@ export type TaskListed = {
   taskTitle?: Maybe<Scalars['String']>;
 };
 
+export type TaxPaidEachMonthDetails = {
+  taxPaidEachMonth?: Maybe<Scalars['Map']>;
+  taxRemainingToBePaid?: Maybe<Scalars['String']>;
+  totalTaxPaid?: Maybe<Scalars['String']>;
+};
+
+export type TaxPaidEachMonthDetailsWithError = {
+  data?: Maybe<TaxPaidEachMonthDetails>;
+  error?: Maybe<QueryError>;
+};
+
 export const TaxPayerOptions = {
   Cooperative: 'COOPERATIVE',
   Member: 'MEMBER',
@@ -23162,6 +23218,21 @@ export type UnPaidEmployeeDetails = {
   unPaidDays?: Maybe<Scalars['Int']>;
   usedType?: Maybe<UsedTypeEnum>;
   usedTypeId?: Maybe<Scalars['String']>;
+};
+
+export type UnPaidEmployeeDetailsInput = {
+  employeeId?: InputMaybe<Scalars['String']>;
+  employeeName?: InputMaybe<Scalars['String']>;
+  grossPay?: InputMaybe<Scalars['String']>;
+  netPay?: InputMaybe<Scalars['String']>;
+  postTaxDeductions?: InputMaybe<Scalars['String']>;
+  preTaxDeductions?: InputMaybe<Scalars['String']>;
+  taxReceivedOrPaid?: InputMaybe<TaxReceivedPaid>;
+  taxableIncome?: InputMaybe<Scalars['String']>;
+  totalTax?: InputMaybe<Scalars['String']>;
+  unPaidDays?: InputMaybe<Scalars['Int']>;
+  usedType?: InputMaybe<UsedTypeEnum>;
+  usedTypeId?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateBankAccountInput = {
@@ -25829,17 +25900,16 @@ export type SetSalaryStructureAssignmentMutation = {
   };
 };
 
-export type SetPayrollRunMutationVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']>;
+export type CreatePayrollRunMutationVariables = Exact<{
   input: PayrollRunInput;
 }>;
 
-export type SetPayrollRunMutation = {
+export type CreatePayrollRunMutation = {
   hr: {
     payroll: {
       payrollRun: {
-        upsertPayrollRun: {
-          recordId?: string | null;
+        createPayrollRun: {
+          id?: string | null;
           error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
@@ -25853,12 +25923,12 @@ export type SetPayrollRunMutation = {
   };
 };
 
-export type ApprovePayollRunMutationVariables = Exact<{
+export type ApprovePayrollRunMutationVariables = Exact<{
   id: Scalars['ID'];
   input: PayrollStatus;
 }>;
 
-export type ApprovePayollRunMutation = {
+export type ApprovePayrollRunMutation = {
   hr: {
     payroll: {
       payrollRun: {
@@ -34233,6 +34303,7 @@ export type GetSalaryStructureAssignmentQuery = {
             fromDate?: Record<'local' | 'en' | 'np', string> | null;
             paymentMode?: PaymentModeSalary | null;
             earnings?: Array<{ id?: string | null; amount?: number | null } | null> | null;
+            deductions?: Array<{ id?: string | null; amount?: number | null } | null> | null;
           } | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -34420,6 +34491,43 @@ export type GetSalStructureAdjustRevisionQuery = {
             | MutationError_ServerError_Fragment
             | null;
         };
+      };
+    };
+  };
+};
+
+export type GetAllEmployeeSalaryDetailsForThisPayrollRunQueryVariables = Exact<{
+  paygroup?: InputMaybe<Scalars['ID']>;
+  payrollMonth?: InputMaybe<NepaliMonths>;
+  year?: InputMaybe<Scalars['Int']>;
+}>;
+
+export type GetAllEmployeeSalaryDetailsForThisPayrollRunQuery = {
+  hr: {
+    payroll: {
+      payrollRun: {
+        getAllEmployeesSalaryDetailsForThisPayrollRun?: {
+          data?: Array<{
+            employeeId?: string | null;
+            employeeName?: string | null;
+            unPaidDays?: number | null;
+            grossPay?: string | null;
+            preTaxDeductions?: string | null;
+            taxableIncome?: string | null;
+            totalTax?: string | null;
+            taxReceivedOrPaid?: TaxReceivedPaid | null;
+            postTaxDeductions?: string | null;
+            netPay?: string | null;
+            usedType?: UsedTypeEnum | null;
+            usedTypeId?: string | null;
+          } | null> | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        } | null;
       };
     };
   };
@@ -49789,13 +49897,13 @@ export const useSetSalaryStructureAssignmentMutation = <TError = unknown, TConte
     ),
     options
   );
-export const SetPayrollRunDocument = `
-    mutation setPayrollRun($id: ID, $input: PayrollRunInput!) {
+export const CreatePayrollRunDocument = `
+    mutation createPayrollRun($input: PayrollRunInput!) {
   hr {
     payroll {
       payrollRun {
-        upsertPayrollRun(id: $id, input: $input) {
-          recordId
+        createPayrollRun(input: $input) {
+          id
           error {
             ...MutationError
           }
@@ -49805,21 +49913,21 @@ export const SetPayrollRunDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetPayrollRunMutation = <TError = unknown, TContext = unknown>(
+export const useCreatePayrollRunMutation = <TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
-    SetPayrollRunMutation,
+    CreatePayrollRunMutation,
     TError,
-    SetPayrollRunMutationVariables,
+    CreatePayrollRunMutationVariables,
     TContext
   >
 ) =>
-  useMutation<SetPayrollRunMutation, TError, SetPayrollRunMutationVariables, TContext>(
-    ['setPayrollRun'],
-    useAxios<SetPayrollRunMutation, SetPayrollRunMutationVariables>(SetPayrollRunDocument),
+  useMutation<CreatePayrollRunMutation, TError, CreatePayrollRunMutationVariables, TContext>(
+    ['createPayrollRun'],
+    useAxios<CreatePayrollRunMutation, CreatePayrollRunMutationVariables>(CreatePayrollRunDocument),
     options
   );
-export const ApprovePayollRunDocument = `
-    mutation approvePayollRun($id: ID!, $input: PayrollStatus!) {
+export const ApprovePayrollRunDocument = `
+    mutation approvePayrollRun($id: ID!, $input: PayrollStatus!) {
   hr {
     payroll {
       payrollRun {
@@ -49834,17 +49942,19 @@ export const ApprovePayollRunDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useApprovePayollRunMutation = <TError = unknown, TContext = unknown>(
+export const useApprovePayrollRunMutation = <TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
-    ApprovePayollRunMutation,
+    ApprovePayrollRunMutation,
     TError,
-    ApprovePayollRunMutationVariables,
+    ApprovePayrollRunMutationVariables,
     TContext
   >
 ) =>
-  useMutation<ApprovePayollRunMutation, TError, ApprovePayollRunMutationVariables, TContext>(
-    ['approvePayollRun'],
-    useAxios<ApprovePayollRunMutation, ApprovePayollRunMutationVariables>(ApprovePayollRunDocument),
+  useMutation<ApprovePayrollRunMutation, TError, ApprovePayrollRunMutationVariables, TContext>(
+    ['approvePayrollRun'],
+    useAxios<ApprovePayrollRunMutation, ApprovePayrollRunMutationVariables>(
+      ApprovePayrollRunDocument
+    ),
     options
   );
 export const SetSalAdjustmentRevisionDocument = `
@@ -61375,6 +61485,10 @@ export const GetSalaryStructureAssignmentDocument = `
               id
               amount
             }
+            deductions {
+              id
+              amount
+            }
           }
           error {
             ...MutationError
@@ -61649,6 +61763,56 @@ export const useGetSalStructureAdjustRevisionQuery = <
     useAxios<GetSalStructureAdjustRevisionQuery, GetSalStructureAdjustRevisionQueryVariables>(
       GetSalStructureAdjustRevisionDocument
     ).bind(null, variables),
+    options
+  );
+export const GetAllEmployeeSalaryDetailsForThisPayrollRunDocument = `
+    query getAllEmployeeSalaryDetailsForThisPayrollRun($paygroup: ID, $payrollMonth: NepaliMonths, $year: Int) {
+  hr {
+    payroll {
+      payrollRun {
+        getAllEmployeesSalaryDetailsForThisPayrollRun(
+          paygroup: $paygroup
+          payrollMonth: $payrollMonth
+          year: $year
+        ) {
+          data {
+            employeeId
+            employeeName
+            unPaidDays
+            grossPay
+            preTaxDeductions
+            taxableIncome
+            totalTax
+            taxReceivedOrPaid
+            postTaxDeductions
+            netPay
+            usedType
+            usedTypeId
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetAllEmployeeSalaryDetailsForThisPayrollRunQuery = <
+  TData = GetAllEmployeeSalaryDetailsForThisPayrollRunQuery,
+  TError = unknown
+>(
+  variables?: GetAllEmployeeSalaryDetailsForThisPayrollRunQueryVariables,
+  options?: UseQueryOptions<GetAllEmployeeSalaryDetailsForThisPayrollRunQuery, TError, TData>
+) =>
+  useQuery<GetAllEmployeeSalaryDetailsForThisPayrollRunQuery, TError, TData>(
+    variables === undefined
+      ? ['getAllEmployeeSalaryDetailsForThisPayrollRun']
+      : ['getAllEmployeeSalaryDetailsForThisPayrollRun', variables],
+    useAxios<
+      GetAllEmployeeSalaryDetailsForThisPayrollRunQuery,
+      GetAllEmployeeSalaryDetailsForThisPayrollRunQueryVariables
+    >(GetAllEmployeeSalaryDetailsForThisPayrollRunDocument).bind(null, variables),
     options
   );
 export const GetStaffPlanningListDocument = `
