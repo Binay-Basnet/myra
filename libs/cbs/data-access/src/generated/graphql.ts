@@ -29856,6 +29856,20 @@ export type SetBulkDepositDataMutation = {
   transaction: {
     bulkDeposit: {
       recordId?: string | null;
+      record?: {
+        amount?: string | null;
+        rebate?: string | null;
+        totalAmount?: string | null;
+        createdAt?: Record<'local' | 'en' | 'np', string> | null;
+        date?: Record<'local' | 'en' | 'np', string> | null;
+        depositedBy?: DepositedBy | null;
+        depositedOther?: string | null;
+        discount?: string | null;
+        fine?: string | null;
+        memberId?: string | null;
+        memberName?: string | null;
+        paymentMode?: DepositPaymentType | null;
+      } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -55599,6 +55613,20 @@ export const SetBulkDepositDataDocument = `
   transaction {
     bulkDeposit(data: $data) {
       recordId
+      record {
+        amount
+        rebate
+        totalAmount
+        createdAt
+        date
+        depositedBy
+        depositedOther
+        discount
+        fine
+        memberId
+        memberName
+        paymentMode
+      }
       error {
         ...MutationError
       }

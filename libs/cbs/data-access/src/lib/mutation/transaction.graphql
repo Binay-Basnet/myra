@@ -29,6 +29,20 @@ mutation setBulkDepositData($data: BulkDepositInput) {
   transaction {
     bulkDeposit(data: $data) {
       recordId
+      record {
+        amount
+        rebate
+        totalAmount
+        createdAt
+        date
+        depositedBy
+        depositedOther
+        discount
+        fine
+        memberId
+        memberName
+        paymentMode
+      }
       error {
         ...MutationError
       }
