@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
@@ -11,6 +11,7 @@ import {
   ShareDividendInput,
   ShareDividendSummary,
   usePostShareDividendMutation,
+  useShareDividendDetailQuery,
 } from '@coop/cbs/data-access';
 import { generateExcelFromJSON, ROUTES } from '@coop/cbs/utils';
 import { FormLayout, FormLeafCoaHeadSelect } from '@coop/shared/form';
@@ -30,11 +31,14 @@ export const NewShareDividendPosting = () => {
 
   const router = useRouter();
 
-  const {
-    isOpen: isErrorModalOpen,
-    onClose: onErrorModalClose,
-    onToggle: onErrorModalToggle,
-  } = useDisclosure();
+  const id = router?.query?.['id'];
+
+  const { data: shareDividendData } = useShareDividendDetailQuery(
+    { id: id as string },
+    {
+      enabled: !!id,
+    }
+  );
 
   const methods = useForm<ShareDividendInput>({
     defaultValues: {
@@ -42,6 +46,35 @@ export const NewShareDividendPosting = () => {
       treatment: DividendTreatment.ShareAndAccount,
     },
   });
+
+  useEffect(() => {
+    if (shareDividendData) {
+      const detail = shareDividendData?.shareDividend?.get?.data;
+
+      const filteredValues = {
+        sourceLedgerID: { label: detail?.sourceLedgerName, value: detail?.sourceLedgerID },
+        taxLedgerCOAHead: { label: detail?.taxLedgerCOAHeadName, value: detail?.taxLedgerCOAHead },
+        taxRate: detail?.taxRate,
+        dividendRate: detail?.dividendRate,
+        condition: detail?.condition,
+        treatment: detail?.treatment,
+        payableCOAHead: { label: detail?.payableCOAHeadName, value: detail?.payableCOAHead },
+        productID: detail?.productID
+          ? { label: detail?.productName, value: detail?.productID }
+          : null,
+      };
+
+      methods.reset(filteredValues as unknown as ShareDividendInput);
+
+      setSummary(detail?.summary as ShareDividendSummary[]);
+    }
+  }, [shareDividendData]);
+
+  const {
+    isOpen: isErrorModalOpen,
+    onClose: onErrorModalClose,
+    onToggle: onErrorModalToggle,
+  } = useDisclosure();
 
   const { mutateAsync: postShareDividend } = usePostShareDividendMutation();
 
@@ -98,7 +131,11 @@ export const NewShareDividendPosting = () => {
             <DividendTransferTreatmentSection />
 
             <FormSection header="Share Dividend Payable Ledger Mapping">
-              <FormLeafCoaHeadSelect name="payableCOAHead" label="Ledger Mapping" />
+              <FormLeafCoaHeadSelect
+                name="payableCOAHead"
+                label="Ledger Mapping"
+                isDisabled={router?.asPath?.includes('/view')}
+              />
             </FormSection>
 
             {summary?.length ? (
@@ -134,11 +171,16 @@ export const NewShareDividendPosting = () => {
           mainButtonHandler={mode === 0 ? handleProcess : handleSubmit}
           draftButton={
             summaryErrors?.length ? (
-              <Button variant="outline" onClick={handleProcess}>
+              <Button
+                variant="outline"
+                onClick={handleProcess}
+                isDisabled={router?.asPath?.includes('/view')}
+              >
                 Reinitiate
               </Button>
             ) : null
           }
+          isMainButtonDisabled={router?.asPath?.includes('/view')}
         />
       </FormLayout>
 

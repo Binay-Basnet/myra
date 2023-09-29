@@ -42,6 +42,10 @@ query getSalaryStructureAssignment($id: String!) {
               id
               amount
             }
+            deductions {
+              id
+              amount
+            }
           }
           error {
             ...MutationError
@@ -201,6 +205,42 @@ query getSalStructureAdjustRevision($id: ID) {
               id
               amount
             }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAllEmployeeSalaryDetailsForThisPayrollRun(
+  $paygroup: ID
+  $payrollMonth: NepaliMonths
+  $year: Int
+) {
+  hr {
+    payroll {
+      payrollRun {
+        getAllEmployeesSalaryDetailsForThisPayrollRun(
+          paygroup: $paygroup
+          payrollMonth: $payrollMonth
+          year: $year
+        ) {
+          data {
+            employeeId
+            employeeName
+            unPaidDays
+            grossPay
+            preTaxDeductions
+            taxableIncome
+            totalTax
+            taxReceivedOrPaid
+            postTaxDeductions
+            netPay
+            usedType
+            usedTypeId
           }
           error {
             ...MutationError

@@ -9,6 +9,7 @@ export * from './lib/useGetJobOfferOptions';
 export * from './lib/useGetJobOpeningOptions';
 export * from './lib/useGetLeavePolicyOptions';
 export * from './lib/useGetLeaveTypeOptions';
+export * from './lib/useGetNepaliMonthsOptions';
 export * from './lib/useGetPayGroupOptions';
 export * from './lib/useGetSalaryAssignmentsWithExtraDetails';
 export * from './lib/useGetSalaryStructureOptions';
