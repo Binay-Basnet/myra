@@ -448,6 +448,8 @@ export const LoanRepayment = () => {
                     'Interest Amount': amountConverter(result?.interestAmount ?? '0'),
                     'Penalty Amount': amountConverter(result?.penaltyAmount ?? '0'),
                     'Rebate Amount': amountConverter(result?.rebateAmount || '0'),
+                    'Remaining Principal': amountConverter(result?.totalRemainingPrincipal || '0'),
+                    'Remaining Interest': amountConverter(result?.totalRemainingInterest || '0'),
 
                     'Payment Mode': result?.paymentMethod,
                   },

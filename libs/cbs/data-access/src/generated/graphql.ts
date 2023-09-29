@@ -26434,6 +26434,8 @@ export type SetLoanRepaymentMutation = {
         rebateAmount?: string | null;
         totalAmount?: string | null;
         paymentMethod?: LoanRepaymentMethod | null;
+        totalRemainingPrincipal?: string | null;
+        totalRemainingInterest?: string | null;
         nextInstallment?: {
           installmentNo: number;
           installmentDate: Record<'local' | 'en' | 'np', string>;
@@ -50643,6 +50645,8 @@ export const SetLoanRepaymentDocument = `
           currentRemainingPrincipal
           remainingInterest
         }
+        totalRemainingPrincipal
+        totalRemainingInterest
       }
       recordId
     }
