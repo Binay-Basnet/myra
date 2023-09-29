@@ -58,7 +58,7 @@ export const AllTransactionDetailPagePrint = ({
           display: 'flex',
         },
         '@page': {
-          size: 'A4 portrait',
+          size: 'auto !important',
           margin: '0.1in',
         },
       }}

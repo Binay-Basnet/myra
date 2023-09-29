@@ -15700,6 +15700,8 @@ export type LoanRepaymentView = {
   teller?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
+  totalRemainingInterest?: Maybe<Scalars['String']>;
+  totalRemainingPrincipal?: Maybe<Scalars['String']>;
   totalRepaymentAmount?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
   transactionCode?: Maybe<Scalars['String']>;
@@ -19294,6 +19296,7 @@ export type Query = {
   search: SearchQuery;
   settings: SettingsQuery;
   share: ShareQuery;
+  shareDividend: ShareDividendQuery;
   transaction: TransactionQuery;
   user: UserQuery;
   withdrawSlip: WithdrawSlipQuery;
@@ -21367,6 +21370,22 @@ export type ShareDetailResult = {
   error?: Maybe<QueryError>;
 };
 
+export type ShareDividendConnection = {
+  edges?: Maybe<Array<Maybe<ShareDividendEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ShareDividendEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<ShareDividendState>;
+};
+
+export type ShareDividendFormStateResult = {
+  data?: Maybe<ShareDividendState>;
+  error?: Maybe<QueryError>;
+};
+
 export type ShareDividendInput = {
   condition: DistributionCondition;
   dividendRate: Scalars['Float'];
@@ -21387,6 +21406,20 @@ export type ShareDividendMutationPostDividendArgs = {
   data: ShareDividendInput;
 };
 
+export type ShareDividendQuery = {
+  get?: Maybe<ShareDividendFormStateResult>;
+  list?: Maybe<ShareDividendConnection>;
+};
+
+export type ShareDividendQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type ShareDividendQueryListArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type ShareDividendSettingsInput = {
   accountForFractionalDividends?: InputMaybe<Scalars['ID']>;
   accountForShareDividends?: InputMaybe<Scalars['ID']>;
@@ -21403,6 +21436,25 @@ export type ShareDividendSettingsResult = {
   dividendRate?: Maybe<DividendRate>;
   dividendTransferTreatment?: Maybe<DividendTransferTreatment>;
   organizationFundForDividends?: Maybe<Scalars['ID']>;
+};
+
+export type ShareDividendState = {
+  condition: DistributionCondition;
+  dividendRate: Scalars['Float'];
+  fiscalYear: Scalars['String'];
+  id: Scalars['ID'];
+  payableCOAHead: Scalars['ID'];
+  payableCOAHeadName: Scalars['String'];
+  productID?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
+  sourceLedgerID: Scalars['ID'];
+  sourceLedgerName: Scalars['String'];
+  summary?: Maybe<Array<Maybe<ShareDividendSummary>>>;
+  taxLedgerCOAHead: Scalars['ID'];
+  taxLedgerCOAHeadName: Scalars['String'];
+  taxRate: Scalars['Float'];
+  treatment: DividendTreatment;
+  valueDate: Scalars['Localized'];
 };
 
 export type ShareDividendSummary = {
@@ -46283,6 +46335,8 @@ export type LoanRepaymentDetailQuery = {
         teller?: string | null;
         totalDebit?: string | null;
         totalCredit?: string | null;
+        totalRemainingPrincipal?: string | null;
+        totalRemainingInterest?: string | null;
         note?: string | null;
         discount?: string | null;
         member?: {
@@ -77407,6 +77461,8 @@ export const LoanRepaymentDetailDocument = `
         }
         totalDebit
         totalCredit
+        totalRemainingPrincipal
+        totalRemainingInterest
         note
         discount
         discountDocs {

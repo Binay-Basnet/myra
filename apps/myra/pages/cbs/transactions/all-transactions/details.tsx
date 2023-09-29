@@ -385,6 +385,8 @@ const DepositDetailsPage = () => {
         'Rebate Amount': amountConverter(loanRepaymentDetailData?.rebate || 0),
 
         'Payment Mode': loanRepaymentDetailData?.paymentMode,
+        'Remaining Principal': loanRepaymentDetailData?.totalRemainingPrincipal,
+        'Remaining Interest': loanRepaymentDetailData?.totalRemainingInterest,
       };
 
       tempTotal = Number(loanRepaymentDetailData?.totalRepaymentAmount).toFixed(2);

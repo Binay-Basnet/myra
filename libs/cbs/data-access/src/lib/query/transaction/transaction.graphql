@@ -331,6 +331,8 @@ query loanRepaymentDetail($paymentId: ID!) {
         }
         totalDebit
         totalCredit
+        totalRemainingPrincipal
+        totalRemainingInterest
 
         note
         discount

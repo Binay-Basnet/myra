@@ -325,7 +325,7 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
             color: '#000 !important',
           },
           '@page': {
-            size: 'A4 portrait',
+            size: 'auto !important',
             margin: '0.1in',
           },
         }}
@@ -568,7 +568,7 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                 pageBreakInside: 'avoid',
               },
               '@page': {
-                size: 'A4 portrait',
+                size: 'auto !important',
                 margin: '0.1in',
               },
             }}
@@ -844,7 +844,7 @@ export const SuccessPrintJornalVoucher = React.forwardRef<HTMLInputElement, Succ
             display: 'flex',
           },
           '@page': {
-            size: 'A4 portrait',
+            size: 'auto !important',
             margin: '0.1in',
           },
         }}
