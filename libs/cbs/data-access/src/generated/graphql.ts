@@ -15738,6 +15738,8 @@ export type LoanRepaymentView = {
   teller?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
+  totalRemainingInterest?: Maybe<Scalars['String']>;
+  totalRemainingPrincipal?: Maybe<Scalars['String']>;
   totalRepaymentAmount?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
   transactionCode?: Maybe<Scalars['String']>;
@@ -19340,6 +19342,7 @@ export type Query = {
   search: SearchQuery;
   settings: SettingsQuery;
   share: ShareQuery;
+  shareDividend: ShareDividendQuery;
   transaction: TransactionQuery;
   user: UserQuery;
   withdrawSlip: WithdrawSlipQuery;
@@ -21412,6 +21415,22 @@ export type ShareDetailResult = {
   error?: Maybe<QueryError>;
 };
 
+export type ShareDividendConnection = {
+  edges?: Maybe<Array<Maybe<ShareDividendEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ShareDividendEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<ShareDividendState>;
+};
+
+export type ShareDividendFormStateResult = {
+  data?: Maybe<ShareDividendState>;
+  error?: Maybe<QueryError>;
+};
+
 export type ShareDividendInput = {
   condition: DistributionCondition;
   dividendRate: Scalars['Float'];
@@ -21432,6 +21451,20 @@ export type ShareDividendMutationPostDividendArgs = {
   data: ShareDividendInput;
 };
 
+export type ShareDividendQuery = {
+  get?: Maybe<ShareDividendFormStateResult>;
+  list?: Maybe<ShareDividendConnection>;
+};
+
+export type ShareDividendQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type ShareDividendQueryListArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type ShareDividendSettingsInput = {
   accountForFractionalDividends?: InputMaybe<Scalars['ID']>;
   accountForShareDividends?: InputMaybe<Scalars['ID']>;
@@ -21448,6 +21481,25 @@ export type ShareDividendSettingsResult = {
   dividendRate?: Maybe<DividendRate>;
   dividendTransferTreatment?: Maybe<DividendTransferTreatment>;
   organizationFundForDividends?: Maybe<Scalars['ID']>;
+};
+
+export type ShareDividendState = {
+  condition: DistributionCondition;
+  dividendRate: Scalars['Float'];
+  fiscalYear: Scalars['String'];
+  id: Scalars['ID'];
+  payableCOAHead: Scalars['ID'];
+  payableCOAHeadName: Scalars['String'];
+  productID?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
+  sourceLedgerID: Scalars['ID'];
+  sourceLedgerName: Scalars['String'];
+  summary?: Maybe<Array<Maybe<ShareDividendSummary>>>;
+  taxLedgerCOAHead: Scalars['ID'];
+  taxLedgerCOAHeadName: Scalars['String'];
+  taxRate: Scalars['Float'];
+  treatment: DividendTreatment;
+  valueDate: Scalars['Localized'];
 };
 
 export type ShareDividendSummary = {
@@ -46045,6 +46097,82 @@ export type GetShareFilterMappingQuery = {
     filterMapping?: {
       status?: Array<{ label?: string | null; value?: unknown | null }> | null;
       transactionDirection?: Array<{ label?: string | null; value?: unknown | null }> | null;
+    } | null;
+  };
+};
+
+export type ShareDividendListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type ShareDividendListQuery = {
+  shareDividend: {
+    list?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor?: string | null;
+        node?: {
+          id: string;
+          fiscalYear: string;
+          valueDate: Record<'local' | 'en' | 'np', string>;
+          sourceLedgerID: string;
+          sourceLedgerName: string;
+          taxLedgerCOAHead: string;
+          taxLedgerCOAHeadName: string;
+          dividendRate: number;
+          taxRate: number;
+          condition: DistributionCondition;
+          treatment: DividendTreatment;
+          productID?: string | null;
+          productName?: string | null;
+          payableCOAHead: string;
+          payableCOAHeadName: string;
+        } | null;
+      } | null> | null;
+      pageInfo?: PaginationFragment | null;
+    } | null;
+  };
+};
+
+export type ShareDividendDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type ShareDividendDetailQuery = {
+  shareDividend: {
+    get?: {
+      data?: {
+        id: string;
+        fiscalYear: string;
+        valueDate: Record<'local' | 'en' | 'np', string>;
+        sourceLedgerID: string;
+        sourceLedgerName: string;
+        taxLedgerCOAHead: string;
+        taxLedgerCOAHeadName: string;
+        dividendRate: number;
+        taxRate: number;
+        condition: DistributionCondition;
+        treatment: DividendTreatment;
+        productID?: string | null;
+        productName?: string | null;
+        payableCOAHead: string;
+        payableCOAHeadName: string;
+        summary?: Array<{
+          MemberID?: string | null;
+          MemberCode?: string | null;
+          MemberName?: string | null;
+          TotalShareBalanceSum?: string | null;
+          ShareCount?: number | null;
+          SavingAmount?: string | null;
+          TotalAmount?: string | null;
+          PayableAmount?: string | null;
+          TDSAmount?: string | null;
+          DestinationAccount?: string | null;
+          DestinationProduct?: string | null;
+          Error?: string | null;
+        } | null> | null;
+      } | null;
     } | null;
   };
 };
@@ -77117,6 +77245,99 @@ export const useGetShareFilterMappingQuery = <TData = GetShareFilterMappingQuery
     variables === undefined ? ['getShareFilterMapping'] : ['getShareFilterMapping', variables],
     useAxios<GetShareFilterMappingQuery, GetShareFilterMappingQueryVariables>(
       GetShareFilterMappingDocument
+    ).bind(null, variables),
+    options
+  );
+export const ShareDividendListDocument = `
+    query shareDividendList($filter: Filter, $pagination: Pagination) {
+  shareDividend {
+    list(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          fiscalYear
+          valueDate
+          sourceLedgerID
+          sourceLedgerName
+          taxLedgerCOAHead
+          taxLedgerCOAHeadName
+          dividendRate
+          taxRate
+          condition
+          treatment
+          productID
+          productName
+          payableCOAHead
+          payableCOAHeadName
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useShareDividendListQuery = <TData = ShareDividendListQuery, TError = unknown>(
+  variables?: ShareDividendListQueryVariables,
+  options?: UseQueryOptions<ShareDividendListQuery, TError, TData>
+) =>
+  useQuery<ShareDividendListQuery, TError, TData>(
+    variables === undefined ? ['shareDividendList'] : ['shareDividendList', variables],
+    useAxios<ShareDividendListQuery, ShareDividendListQueryVariables>(
+      ShareDividendListDocument
+    ).bind(null, variables),
+    options
+  );
+export const ShareDividendDetailDocument = `
+    query shareDividendDetail($id: ID!) {
+  shareDividend {
+    get(id: $id) {
+      data {
+        id
+        fiscalYear
+        valueDate
+        sourceLedgerID
+        sourceLedgerName
+        taxLedgerCOAHead
+        taxLedgerCOAHeadName
+        dividendRate
+        taxRate
+        condition
+        treatment
+        productID
+        productName
+        payableCOAHead
+        payableCOAHeadName
+        summary {
+          MemberID
+          MemberCode
+          MemberName
+          TotalShareBalanceSum
+          ShareCount
+          SavingAmount
+          TotalAmount
+          PayableAmount
+          TDSAmount
+          DestinationAccount
+          DestinationProduct
+          Error
+        }
+      }
+    }
+  }
+}
+    `;
+export const useShareDividendDetailQuery = <TData = ShareDividendDetailQuery, TError = unknown>(
+  variables: ShareDividendDetailQueryVariables,
+  options?: UseQueryOptions<ShareDividendDetailQuery, TError, TData>
+) =>
+  useQuery<ShareDividendDetailQuery, TError, TData>(
+    ['shareDividendDetail', variables],
+    useAxios<ShareDividendDetailQuery, ShareDividendDetailQueryVariables>(
+      ShareDividendDetailDocument
     ).bind(null, variables),
     options
   );

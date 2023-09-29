@@ -1,0 +1,68 @@
+query shareDividendList($filter: Filter, $pagination: Pagination) {
+  shareDividend {
+    list(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          fiscalYear
+          valueDate
+          sourceLedgerID
+          sourceLedgerName
+          taxLedgerCOAHead
+          taxLedgerCOAHeadName
+          dividendRate
+          taxRate
+          condition
+          treatment
+          productID
+          productName
+          payableCOAHead
+          payableCOAHeadName
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+
+query shareDividendDetail($id: ID!) {
+  shareDividend {
+    get(id: $id) {
+      data {
+        id
+        fiscalYear
+        valueDate
+        sourceLedgerID
+        sourceLedgerName
+        taxLedgerCOAHead
+        taxLedgerCOAHeadName
+        dividendRate
+        taxRate
+        condition
+        treatment
+        productID
+        productName
+        payableCOAHead
+        payableCOAHeadName
+        summary {
+          MemberID
+          MemberCode
+          MemberName
+          TotalShareBalanceSum
+          ShareCount
+          SavingAmount
+          TotalAmount
+          PayableAmount
+          TDSAmount
+          DestinationAccount
+          DestinationProduct
+          Error
+        }
+      }
+    }
+  }
+}
