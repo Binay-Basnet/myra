@@ -282,14 +282,14 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                 memberID: memberDetailData?.id,
                 gender: memberDetailData?.gender,
                 age: memberDetailData?.age,
-                maritalStatus: memberDetailData?.maritalStatus,
+                maritalStatus: memberDetailData?.maritalStatus as string,
                 dateJoined: memberDetailData?.dateJoined,
                 phoneNo: memberDetailData?.contact,
                 email: memberDetailData?.email,
                 address: memberDetailData?.address,
               }}
-              signaturePath={memberSignatureUrl}
-              citizenshipPath={memberCitizenshipUrl}
+              signaturePath={memberSignatureUrl as string}
+              citizenshipPath={memberCitizenshipUrl as string}
             />
             <Box p="s16" display="flex" flexDirection="column" gap="s16">
               <LoanProductCard productId={productId} />
