@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
-import { Box, Button, MemberCard, Text } from '@myra-ui';
+import { Box, Button, MemberCard, ResponseDialog, Text } from '@myra-ui';
 
 import {
   BulkDepositInput,
@@ -11,9 +12,11 @@ import {
   DepositedBy,
   DepositPaymentType,
   useGetIndividualMemberDetails,
+  useSetBulkDepositDataMutation,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { FormLayout, FormMemberSelect } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 import { BulkDepositAccountsSummary, BulkDepositAccountsTable, Payment } from '../components';
 
@@ -49,7 +52,7 @@ const cashOptions: Record<string, string> = {
 export const AddBulkDeposit = () => {
   const router = useRouter();
 
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const methods = useForm<CustomBulkDepositInput>({
     defaultValues: {
@@ -68,7 +71,7 @@ export const AddBulkDeposit = () => {
 
   const [mode, setMode] = useState<number>(0); // 0: form 1: payment
 
-  // const { mutateAsync } = useSetBulkDepositDataMutation();
+  const { mutateAsync } = useSetBulkDepositDataMutation();
 
   const disableDenomination = watch('cash.disableDenomination');
 
@@ -247,6 +250,52 @@ export const AddBulkDeposit = () => {
             </Button>
           }
           mainButtonLabel="Submit"
+          mainButton={
+            <ResponseDialog
+              onSuccess={() => {
+                queryClient.invalidateQueries(['getDepositListData']);
+                router.push(ROUTES.CBS_TRANS_DEPOSIT_LIST);
+              }}
+              promise={() => mutateAsync({ data: handleSubmit() })}
+              successCardProps={(response) => {
+                const result = response?.transaction?.bulkDeposit?.record;
+                const total = result?.totalAmount;
+
+                return {
+                  type: 'Bulk Deposit',
+                  receiptTitle: 'Bulk Deposit Receipt',
+                  total: amountConverter(total || 0) as string,
+                  title: 'Bulk Deposit Successful',
+                  details: {
+                    Date: localizedDate(result?.date),
+                    'Transaction Time': localizedTime(result?.createdAt),
+                    Amount: amountConverter(result?.amount || 0),
+                    Fine: amountConverter(result?.fine || 0) as string,
+                    Discount: amountConverter(result?.discount || 0) as string,
+                    Rebate: amountConverter(result?.rebate || 0) as string,
+
+                    'Payment Mode': result?.paymentMode,
+                    'Deposited By': result?.depositedOther ?? 'Self',
+                  },
+                  subTitle:
+                    'Bulk Deposit completed successfully. Details of the transaction is listed below.',
+                  meta: {
+                    memberId: result?.memberId,
+                    member: result?.memberName,
+                  },
+                  dublicate: true,
+                  showSignatures: true,
+                };
+              }}
+              errorCardProps={{
+                title: 'Bulk Deposit Failed',
+              }}
+            >
+              <Button width="160px" isDisabled={disableSubmitButtonFxn(paymentModes) && mode === 1}>
+                Confirm{' '}
+              </Button>
+            </ResponseDialog>
+          }
           mainButtonHandler={handleSubmit}
           isMainButtonDisabled={disableSubmitButtonFxn(paymentModes) && mode === 1}
         />
