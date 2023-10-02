@@ -617,7 +617,14 @@ export const AddDeposit = () => {
                   const result = response?.transaction?.deposit?.record;
 
                   const totalTxnAmount = Number(result?.amount || 0) + Number(result?.fine || 0);
+                  let tempObj: Record<string, string> = {};
 
+                  if (result?.from) {
+                    tempObj = {
+                      'Installment From': String(localizedDate(result?.from?.date)),
+                      'Installment To': String(localizedDate(result?.to?.date)),
+                    };
+                  }
                   return {
                     type: 'Deposit',
                     total: amountConverter(totalTxnAmount),
@@ -644,6 +651,7 @@ export const AddDeposit = () => {
                             result?.depositedOther
                           })`
                         : depositedByObj[result?.depositedBy as DepositedBy],
+                      ...tempObj,
                     },
                     subTitle:
                       'Amount deposited successfully. Details of the transaction is listed below.',
