@@ -6004,10 +6004,12 @@ export type DepositRecord = {
   depositedOther?: Maybe<Scalars['String']>;
   discount?: Maybe<Scalars['String']>;
   fine?: Maybe<Scalars['String']>;
+  from?: Maybe<InstallmentDate>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<DepositPaymentType>;
   rebate?: Maybe<Scalars['String']>;
+  to?: Maybe<InstallmentDate>;
   totalAmount?: Maybe<Scalars['String']>;
   transactionID?: Maybe<Scalars['ID']>;
 };
@@ -10518,6 +10520,11 @@ export type Installment = {
   number: Scalars['Int'];
   rebate?: Maybe<Scalars['String']>;
   status: InstallmentState;
+};
+
+export type InstallmentDate = {
+  date?: Maybe<Scalars['Localized']>;
+  month?: Maybe<Scalars['Localized']>;
 };
 
 export type InstallmentDetailsView = {
@@ -29979,6 +29986,14 @@ export type SetDepositDataMutation = {
         accountId?: string | null;
         accountName?: string | null;
         depositedOther?: string | null;
+        from?: {
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          month?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+        to?: {
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          month?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -55850,6 +55865,14 @@ export const SetDepositDataDocument = `
         accountId
         accountName
         depositedOther
+        from {
+          date
+          month
+        }
+        to {
+          date
+          month
+        }
       }
       error {
         ...MutationError

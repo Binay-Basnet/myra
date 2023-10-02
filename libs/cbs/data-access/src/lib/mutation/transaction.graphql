@@ -17,6 +17,14 @@ mutation setDepositData($data: DepositInput!) {
         accountId
         accountName
         depositedOther
+        from {
+          date
+          month
+        }
+        to {
+          date
+          month
+        }
       }
       error {
         ...MutationError
