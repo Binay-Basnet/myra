@@ -243,6 +243,7 @@ export const NewAccountTransfer = () => {
                         memberId={destMemberId}
                         filterBy={ObjState.Active}
                         includeLoc
+                        natureOfDepositProduct={['SAVING', 'CURRENT']}
                       />
                     </>
                   )}
