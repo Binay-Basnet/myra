@@ -2,10 +2,11 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 
+import { Box, Button, GridItem, Icon } from '@myra-ui';
+
 import { InfoCard } from '@coop/ebanking/cards';
 import { useAppSelector, useGetAccountListQuery } from '@coop/ebanking/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, GridItem, Icon } from '@myra-ui';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'loading';
 
@@ -15,7 +16,10 @@ interface AccountTransferFormProps {
 
 export const AccountTransferForm = ({ setPaymentStatus }: AccountTransferFormProps) => {
   const user = useAppSelector((state) => state.auth.cooperative.user);
-  const { data } = useGetAccountListQuery({ transactionPagination: { after: '', first: 1 } });
+  const { data } = useGetAccountListQuery({
+    listFilter: { allowedAccount: false },
+    transactionPagination: { after: '', first: 1 },
+  });
 
   const accounts = data?.eBanking?.account?.list?.accounts?.map((account) => ({
     label: `${account?.name} - ${account?.accountNumber} ${
