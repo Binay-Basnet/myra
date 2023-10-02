@@ -546,10 +546,10 @@ export const useMakePaymentMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const GetAccountListDocument = `
-    query getAccountList($transactionPagination: Pagination) {
+    query getAccountList($listFilter: EbankingAccountFilter, $transactionPagination: Pagination) {
   eBanking {
     account {
-      list {
+      list(filter: $listFilter) {
         totalBalance
         accounts {
           id
@@ -617,7 +617,7 @@ export const useGetAccountSummaryQuery = <TData = Types.GetAccountSummaryQuery, 
     options
   );
 export const GetTransactionListsDocument = `
-    query getTransactionLists($filter: EbankingTransactionFilter, $pagination: Pagination) {
+    query getTransactionLists($listFilter: EbankingAccountFilter, $filter: EbankingTransactionFilter, $pagination: Pagination) {
   eBanking {
     account {
       list {
