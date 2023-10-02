@@ -24031,10 +24031,12 @@ export type WithdrawResult = {
 export type WithdrawSlip = {
   accId: Scalars['String'];
   amount: Scalars['String'];
+  counterSlipNo?: InputMaybe<Scalars['String']>;
   isDifferentMember?: InputMaybe<Scalars['Boolean']>;
   memberId?: InputMaybe<Scalars['String']>;
   verifyWith?: InputMaybe<AccountOpenDepositVerify>;
   withdrawSlipNo?: InputMaybe<Scalars['String']>;
+  withdrawType: WithdrawWith;
 };
 
 export type WithdrawSlipDepositData = {
