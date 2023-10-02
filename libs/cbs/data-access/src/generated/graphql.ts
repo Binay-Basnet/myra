@@ -4072,6 +4072,16 @@ export type ClosedSavingAccountResultData = {
   totalWithdraw?: Maybe<Scalars['String']>;
 };
 
+export type CoaHeadTransferInput = {
+  destinationCoaHead: Scalars['String'];
+  sorceCoaHead: Scalars['String'];
+};
+
+export type CoaHeadTransferResult = {
+  error?: Maybe<MutationError>;
+  message?: Maybe<Scalars['String']>;
+};
+
 export type CodeManagementInput = {
   codeType: CbsCodeType;
   initialNo: Scalars['Int'];
@@ -13733,10 +13743,15 @@ export type LedgerBalanceTransferInput = {
 
 export type LedgerBalanceTransferMutation = {
   initiateTransferRequest: LedgerBalanceTransferResult;
+  transferCoaHead: CoaHeadTransferResult;
 };
 
 export type LedgerBalanceTransferMutationInitiateTransferRequestArgs = {
   input: LedgerBalanceTransferRequestInput;
+};
+
+export type LedgerBalanceTransferMutationTransferCoaHeadArgs = {
+  input: CoaHeadTransferInput;
 };
 
 export type LedgerBalanceTransferQuery = {

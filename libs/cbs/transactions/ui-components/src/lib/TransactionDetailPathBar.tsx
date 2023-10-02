@@ -196,8 +196,11 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         'Withdrawn By':
           withdrawDetailData?.withdrawnBy === 'AGENT'
             ? `Market Representative (${withdrawDetailData?.txnUserName})`
+            : withdrawDetailData?.withdrawnBy === 'OTHER'
+            ? `${withdrawDetailData?.txnUserName}`
             : withdrawDetailData?.withdrawnBy?.replace(/_/g, ' '),
       };
+
       tempDublicate = true;
       tempTotal = withdrawDetailData?.totalWithdrawnAmount as string;
 
@@ -219,6 +222,12 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
             : withdrawDetailData?.chequeNo
         })`,
         'Transfer Amount': withdrawDetailData?.totalWithdrawnAmount,
+        'Withdrawn By':
+          withdrawDetailData?.withdrawnBy === 'AGENT'
+            ? `Market Representative ${withdrawDetailData?.txnUserName}`
+            : withdrawDetailData?.withdrawnBy === 'OTHER'
+            ? `Others ${withdrawDetailData?.txnUserName}`
+            : withdrawDetailData?.withdrawnBy,
       };
     }
 

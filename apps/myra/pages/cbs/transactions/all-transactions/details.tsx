@@ -267,6 +267,8 @@ const DepositDetailsPage = () => {
         'Withdrawn By':
           withdrawDetailData?.withdrawnBy === 'AGENT'
             ? `Market Representative (${withdrawDetailData?.txnUserName})`
+            : withdrawDetailData?.withdrawnBy === 'OTHER'
+            ? `${withdrawDetailData?.txnUserName}`
             : withdrawDetailData?.withdrawnBy?.replace(/_/g, ' '),
       };
       tempDublicate = true;
@@ -290,6 +292,12 @@ const DepositDetailsPage = () => {
             : withdrawDetailData?.chequeNo
         })`,
         'Transfer Amount': withdrawDetailData?.totalWithdrawnAmount,
+        'Withdrawn By':
+          withdrawDetailData?.withdrawnBy === 'AGENT'
+            ? `Market Representative ${withdrawDetailData?.txnUserName}`
+            : withdrawDetailData?.withdrawnBy === 'OTHER'
+            ? `Others ${withdrawDetailData?.txnUserName}`
+            : withdrawDetailData?.withdrawnBy,
       };
     }
 
