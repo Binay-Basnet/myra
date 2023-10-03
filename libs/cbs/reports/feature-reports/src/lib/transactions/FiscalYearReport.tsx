@@ -95,46 +95,68 @@ export const FiscalYearReport = () => {
     const temp = coaReportData;
 
     coaReportData?.equityAndLiablities?.forEach((item, index) => {
-      Object.keys(item?.balance ?? [])?.forEach((bId) => {
+      Object.keys(item?.balance ?? {})?.forEach((bId) => {
         if (temp?.equityAndLiablities?.[index]?.['balance']?.[bId]) {
-          temp.equityAndLiablities[index]['balance'][bId]['prev'] =
-            prevCoaReportData?.equityAndLiablities?.[index]?.['balance']?.[bId];
+          const prevItem = prevCoaReportData?.equityAndLiablities?.find(
+            (i) => i?.ledgerId === item?.ledgerId
+          );
+
+          temp.equityAndLiablities[index]['balance'][bId]['prev'] = prevItem?.['balance']?.[bId];
         }
       });
     });
 
     coaReportData?.expenses?.forEach((item, index) => {
-      Object.keys(item?.balance ?? [])?.forEach((bId) => {
-        temp.expenses[index]['balance'][bId]['prev'] =
-          prevCoaReportData?.expenses[index]['balance'][bId];
+      Object.keys(item?.balance ?? {})?.forEach((bId) => {
+        if (temp?.expenses?.[index]?.['balance']?.[bId]) {
+          const prevItem = prevCoaReportData?.expenses?.find((i) => i?.ledgerId === item?.ledgerId);
+
+          temp.expenses[index]['balance'][bId]['prev'] = prevItem?.['balance']?.[bId];
+        }
       });
     });
 
     coaReportData?.income?.forEach((item, index) => {
-      Object.keys(item?.balance ?? [])?.forEach((bId) => {
-        temp.income[index]['balance'][bId]['prev'] =
-          prevCoaReportData?.income[index]['balance'][bId];
+      Object.keys(item?.balance ?? {})?.forEach((bId) => {
+        if (temp?.income?.[index]?.['balance']?.[bId]) {
+          const prevItem = prevCoaReportData?.income?.find((i) => i?.ledgerId === item?.ledgerId);
+
+          temp.income[index]['balance'][bId]['prev'] = prevItem?.['balance']?.[bId];
+        }
       });
     });
 
     coaReportData?.assets?.forEach((item, index) => {
-      Object.keys(item?.balance ?? [])?.forEach((bId) => {
-        temp.assets[index]['balance'][bId]['prev'] =
-          prevCoaReportData?.assets[index]['balance'][bId];
+      Object.keys(item?.balance ?? {})?.forEach((bId) => {
+        if (temp?.assets?.[index]?.['balance']?.[bId]) {
+          const prevItem = prevCoaReportData?.assets?.find((i) => i?.ledgerId === item?.ledgerId);
+
+          temp.assets[index]['balance'][bId]['prev'] = prevItem?.['balance']?.[bId];
+        }
       });
     });
 
     coaReportData?.offBalance?.forEach((item, index) => {
-      Object.keys(item?.balance)?.forEach((bId) => {
-        temp.offBalance[index]['balance'][bId]['prev'] =
-          prevCoaReportData?.offBalance[index]['balance'][bId];
+      Object.keys(item?.balance ?? {})?.forEach((bId) => {
+        if (temp?.offBalance?.[index]?.['balance']?.[bId]) {
+          const prevItem = prevCoaReportData?.offBalance?.find(
+            (i) => i?.ledgerId === item?.ledgerId
+          );
+
+          temp.offBalance[index]['balance'][bId]['prev'] = prevItem?.['balance']?.[bId];
+        }
       });
     });
 
     coaReportData?.orphanEntries?.forEach((item, index) => {
       Object.keys(item?.balance ?? [])?.forEach((bId) => {
-        temp.orphanEntries[index]['balance'][bId]['prev'] =
-          prevCoaReportData?.orphanEntries[index]['balance'][bId];
+        if (temp?.offBalance?.[index]?.['balance']?.[bId]) {
+          const prevItem = prevCoaReportData?.orphanEntries?.find(
+            (i) => i?.ledgerId === item?.ledgerId
+          );
+
+          temp.orphanEntries[index]['balance'][bId]['prev'] = prevItem?.['balance']?.[bId];
+        }
       });
     });
 
