@@ -27,24 +27,20 @@ export const Experience = () => {
         },
       },
       {
-        header: 'Occupation Name',
-        accessorFn: (row) => row?.occupationName,
+        header: 'Designation',
+        accessorFn: (row) => row?.designation,
       },
       {
         header: 'Company Name',
-        accessorFn: (row) => row?.company,
+        accessorFn: (row) => row?.companyName,
       },
       {
-        header: 'Date From',
-        accessorFn: (row) => row?.fromDate?.en,
+        header: 'Duration in yrs',
+        accessorFn: (row) => row?.durationInYrs,
       },
       {
-        header: 'Date To',
-        accessorFn: (row) => row?.fromDate?.en,
-      },
-      {
-        header: 'Duration',
-        accessorFn: (row) => row?.duration,
+        header: 'Address',
+        accessorFn: (row) => row?.address,
       },
     ],
     []

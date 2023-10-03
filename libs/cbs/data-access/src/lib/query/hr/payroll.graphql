@@ -250,3 +250,88 @@ query getAllEmployeeSalaryDetailsForThisPayrollRun(
     }
   }
 }
+
+query getGrossEarningsDetails($id: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        getGrossEarningsDetails(id: $id) {
+          data
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getPreTaxDeductionsDetails($employeeId: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        getPreTaxDeductionsDetails(employeeId: $employeeId) {
+          data
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getPostTaxDeductionsDetails($employeeId: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        getPostTaxDeductionsDetails(employeeId: $employeeId) {
+          data
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getTaxPaidEachMonthDetails($employeeId: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        getTaxPaidEachMonthDetails(employeeId: $employeeId) {
+          data {
+            taxPaidEachMonth
+            totalTaxPaid
+            taxRemainingToBePaid
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getCurrentTaxSlab($employee: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        getCurrentTaxSlab(employee: $employee) {
+          data {
+            taxSlab {
+              fromAmount
+              toAmount
+              percentageDeduction
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

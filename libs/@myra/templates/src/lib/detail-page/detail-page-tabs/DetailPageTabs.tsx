@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { chakra, Tab, Tabs, Text } from '@chakra-ui/react';
+import { omit } from 'lodash';
 
 import { Box } from '@myra-ui/foundations';
 
@@ -50,10 +51,7 @@ export const DetailPageTabs = ({ tabs }: DetailPageTabsProps) => {
                 onClick={() =>
                   router.push(
                     {
-                      query: {
-                        ...router.query,
-                        tab: tab.toLowerCase(),
-                      },
+                      query: omit({ ...router.query, tab: tab.toLowerCase() }, ['subTab']),
                     },
                     undefined,
                     { shallow: true }

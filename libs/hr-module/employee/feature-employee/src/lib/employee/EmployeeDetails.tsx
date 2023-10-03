@@ -6,6 +6,7 @@ import { Box, DetailPageHeader, DetailPageTabs, Divider, Icon, Scrollable, Text 
 import { useGetStaffPlanQuery } from '@coop/cbs/data-access';
 
 import Lifecycle from './components/Lifecycle';
+import Payroll from './components/Payroll';
 
 export const EmployeeDetails = () => {
   const router = useRouter();
@@ -71,12 +72,13 @@ export const EmployeeDetails = () => {
             </Text>
           </Box>
           <Divider />
-          <DetailPageTabs tabs={['Lifecycle']} />
+          <DetailPageTabs tabs={['Lifecycle', 'Payroll']} />
         </Box>
 
         <Scrollable detailPage>
           <Box display="flex" flexDir="column" gap="s16" bg="background.500" minH="100vh">
             {(tabQuery === 'lifecycle' || tabQuery === 'undefined' || !tabQuery) && <Lifecycle />}
+            {(tabQuery === 'payroll' || tabQuery === 'undefined' || !tabQuery) && <Payroll />}
           </Box>
         </Scrollable>
       </Box>

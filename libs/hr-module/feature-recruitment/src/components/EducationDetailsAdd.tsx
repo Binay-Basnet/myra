@@ -6,6 +6,7 @@ import { Box, Button, FormSection, Grid, GridItem, Icon, Text } from '@myra-ui';
 import {
   FormFieldSearchTerm,
   GetIndividualKymOptionsQuery,
+  GradeLevels,
   useGetIndividualKymOptionsQuery,
 } from '@coop/cbs/data-access';
 import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
@@ -34,6 +35,13 @@ const EducationalDetails = ({ index, removeEducationalDetails }: IAddEducational
   const { data: educationFields, isLoading: educationLoading } = useGetIndividualKymOptionsQuery({
     searchTerm: FormFieldSearchTerm.EducationQualification,
   });
+
+  const gradeOptions = [
+    { label: 'Distinction', value: GradeLevels?.Distinction },
+    { label: 'First Division', value: GradeLevels?.FirstDivision },
+    { label: 'Second Division', value: GradeLevels?.SecondDivision },
+    { label: 'Third Division', value: GradeLevels?.ThirdDivision },
+  ];
   return (
     <Box bg="highlight.500" p="s20" display="flex" flexDirection="column">
       <Grid templateColumns="repeat(3,1fr)" gap="s20" rowGap="s16">
@@ -52,15 +60,15 @@ const EducationalDetails = ({ index, removeEducationalDetails }: IAddEducational
           isLoading={educationLoading}
           options={getFieldOption(educationFields)}
         />
-        <FormInput
-          type="text"
-          bg="white"
-          name={`educationalDetails.${index}.specialization`}
-          label="Specialization"
+        <FormInput name={`educationalDetails.${index}.durationInYrs`} label="Duration in years" />
+        <FormSelect
+          name={`educationalDetails.${index}.grade`}
+          label="Grade"
+          options={gradeOptions}
         />
         <FormDatePicker
           name={`educationalDetails.${index}.dateOfCompletion`}
-          label="Date of Completion"
+          label="Date of completion"
         />
         <GridItem colSpan={3}>
           <Button w="-webkit-fit-content" variant="outline" onClick={removeEducationalDetails}>
