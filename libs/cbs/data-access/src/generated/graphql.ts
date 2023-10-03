@@ -3080,6 +3080,11 @@ export const BuildingType = {
 } as const;
 
 export type BuildingType = typeof BuildingType[keyof typeof BuildingType];
+export type BulkDepositAccounts = {
+  accountName?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+};
+
 export type BulkDepositInput = {
   accounts?: InputMaybe<Array<InputMaybe<BulkDepositInstanceInput>>>;
   agentId?: InputMaybe<Scalars['String']>;
@@ -3105,6 +3110,7 @@ export type BulkDepositInstanceInput = {
 };
 
 export type BulkDepositOutput = {
+  accounts?: Maybe<Array<Maybe<BulkDepositAccounts>>>;
   amount?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Localized']>;
   date?: Maybe<Scalars['Localized']>;
@@ -8732,6 +8738,7 @@ export type GlReportSummary = {
 export type GlStatementFilter = {
   amount?: InputMaybe<MinMaxFilter>;
   bank?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  includeZero?: InputMaybe<Scalars['Boolean']>;
   natureOfTransactions?: InputMaybe<NatureOfBankTransaction>;
 };
 
@@ -16700,7 +16707,8 @@ export type MemberBasicInfoView =
 
 export type MemberChargeData = {
   charge: Scalars['Int'];
-  ledgerId: Scalars['ID'];
+  ledgerId?: Maybe<Scalars['ID']>;
+  ledgerInfo?: Maybe<Array<MembershipFeeLedgers>>;
   memberType: KymMemberTypesEnum;
 };
 
@@ -17509,6 +17517,12 @@ export type MemberWithDrawSlipIssueStatus = {
   type?: Maybe<Scalars['String']>;
 };
 
+export type MembershipFeeLedgers = {
+  amount?: Maybe<Scalars['String']>;
+  ledgerId: Scalars['ID'];
+  ledgerName?: Maybe<Scalars['String']>;
+};
+
 export type MembershipFeeQueryResult = {
   data?: Maybe<MemberChargeData>;
   error?: Maybe<QueryError>;
@@ -17534,6 +17548,7 @@ export type MembershipPaymentRecord = {
   depositedBy?: Maybe<DepositedBy>;
   depositedOther?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  ledgersInfo?: Maybe<Array<MembershipFeeLedgers>>;
   memberCode?: Maybe<Scalars['String']>;
   memberId: Scalars['ID'];
   memberName?: Maybe<Scalars['Localized']>;
@@ -19866,6 +19881,7 @@ export const RequestStatus = {
   Approved: 'APPROVED',
   Declined: 'DECLINED',
   Pending: 'PENDING',
+  Printed: 'PRINTED',
 } as const;
 
 export type RequestStatus = typeof RequestStatus[keyof typeof RequestStatus];
@@ -37821,7 +37837,15 @@ export type GetMembershipFeeQuery = {
           | QueryError_NotFoundError_Fragment
           | QueryError_ServerError_Fragment
           | null;
-        data?: { charge: number } | null;
+        data?: {
+          charge: number;
+          memberType: KymMemberTypesEnum;
+          ledgerInfo?: Array<{
+            ledgerId: string;
+            ledgerName?: string | null;
+            amount?: string | null;
+          }> | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -44544,7 +44568,7 @@ export type GetGeneralMemberSettingsDataQuery = {
               } | null;
               charge?: Array<{
                 memberType: KymMemberTypesEnum;
-                ledgerId: string;
+                ledgerId?: string | null;
                 charge: number;
               } | null> | null;
               memberCode?: {
@@ -66269,6 +66293,12 @@ export const GetMembershipFeeDocument = `
         }
         data {
           charge
+          memberType
+          ledgerInfo {
+            ledgerId
+            ledgerName
+            amount
+          }
         }
       }
     }
