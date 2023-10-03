@@ -7,6 +7,12 @@ query getMembershipFee($memberID: ID!) {
         }
         data {
           charge
+          memberType
+          ledgerInfo {
+            ledgerId
+            ledgerName
+            amount
+          }
         }
       }
     }

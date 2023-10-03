@@ -1427,6 +1427,7 @@ export const AllTransactionType = {
   AccountingExternalLoan: 'ACCOUNTING_EXTERNAL_LOAN',
   AccountingInvestment: 'ACCOUNTING_INVESTMENT',
   AccountClose: 'ACCOUNT_CLOSE',
+  AccountOpen: 'ACCOUNT_OPEN',
   AlternateChannel: 'ALTERNATE_CHANNEL',
   BranchTransfer: 'BRANCH_TRANSFER',
   BulkTransfer: 'BULK_TRANSFER',
@@ -1451,15 +1452,24 @@ export const AllTransactionType = {
   MemberTransfer: 'MEMBER_TRANSFER',
   Migration: 'MIGRATION',
   MigrationPennySweep: 'MIGRATION_PENNY_SWEEP',
+  NomineeBalanceTransfer: 'NOMINEE_BALANCE_TRANSFER',
   OpeningBalance: 'OPENING_BALANCE',
+  ProfitToFund: 'PROFIT_TO_FUND',
+  ShareDividend: 'SHARE_DIVIDEND',
+  ShareDividendBranchwiseSettlement: 'SHARE_DIVIDEND_BRANCHWISE_SETTLEMENT',
+  ShareDividendSettlement: 'SHARE_DIVIDEND_SETTLEMENT',
   SharePurchase: 'SHARE_PURCHASE',
   ShareReturn: 'SHARE_RETURN',
   TellerBankTransfer: 'TELLER_BANK_TRANSFER',
   TellerTransfer: 'TELLER_TRANSFER',
   TransactionRevert: 'TRANSACTION_REVERT',
   Transfer: 'TRANSFER',
+  UtilityHolding: 'UTILITY_HOLDING',
+  UtilityPayment: 'UTILITY_PAYMENT',
   Withdraw: 'WITHDRAW',
   YearEnd: 'YEAR_END',
+  YearEndAdjustment: 'YEAR_END_ADJUSTMENT',
+  YearEndHoAggregation: 'YEAR_END_HO_AGGREGATION',
 } as const;
 
 export type AllTransactionType = typeof AllTransactionType[keyof typeof AllTransactionType];
@@ -4079,6 +4089,7 @@ export type CoaHeadTransferInput = {
 
 export type CoaHeadTransferResult = {
   error?: Maybe<MutationError>;
+  index?: Maybe<Scalars['String']>;
   message?: Maybe<Scalars['String']>;
 };
 
@@ -11659,7 +11670,7 @@ export type JobApplicationInput = {
   applicationStatus?: InputMaybe<ApplicantStatus>;
   documents?: InputMaybe<Array<InputMaybe<DocumentInsertInput>>>;
   educationalDetails?: InputMaybe<Array<InputMaybe<HrEmployeeEducationDetail>>>;
-  experienceDetails?: InputMaybe<Array<InputMaybe<ExperienceInput>>>;
+  experienceDetails?: InputMaybe<Array<InputMaybe<HrEmployeeWorkExperience>>>;
   jobOpening: Scalars['ID'];
   permanentAddress?: InputMaybe<KymAddressInput>;
   personalEmailAddress?: InputMaybe<Scalars['String']>;
@@ -11717,7 +11728,7 @@ export type JobApplicationRecord = {
   applicationStatus?: Maybe<ApplicantStatus>;
   documents?: Maybe<Array<Maybe<UploadedDocument>>>;
   educationalDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
-  experienceDetails?: Maybe<Array<Maybe<Experience>>>;
+  experienceDetails?: Maybe<Array<Maybe<HrEmployeeWorkExperienceType>>>;
   id: Scalars['ID'];
   jobOpening?: Maybe<Scalars['ID']>;
   permanentAddress?: Maybe<KymAddress>;
@@ -13758,7 +13769,7 @@ export type LedgerBalanceTransferMutationInitiateTransferRequestArgs = {
 };
 
 export type LedgerBalanceTransferMutationTransferCoaHeadArgs = {
-  input: CoaHeadTransferInput;
+  input: Array<CoaHeadTransferInput>;
 };
 
 export type LedgerBalanceTransferQuery = {
@@ -16688,7 +16699,8 @@ export type MemberBasicInfoView =
 
 export type MemberChargeData = {
   charge: Scalars['Int'];
-  ledgerId: Scalars['ID'];
+  ledgerId?: Maybe<Scalars['ID']>;
+  ledgerInfo?: Maybe<Array<MembershipFeeLedgers>>;
   memberType: KymMemberTypesEnum;
 };
 
@@ -17497,6 +17509,12 @@ export type MemberWithDrawSlipIssueStatus = {
   type?: Maybe<Scalars['String']>;
 };
 
+export type MembershipFeeLedgers = {
+  amount?: Maybe<Scalars['String']>;
+  ledgerId: Scalars['ID'];
+  ledgerName?: Maybe<Scalars['String']>;
+};
+
 export type MembershipFeeQueryResult = {
   data?: Maybe<MemberChargeData>;
   error?: Maybe<QueryError>;
@@ -17522,6 +17540,7 @@ export type MembershipPaymentRecord = {
   depositedBy?: Maybe<DepositedBy>;
   depositedOther?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  ledgersInfo?: Maybe<Array<MembershipFeeLedgers>>;
   memberCode?: Maybe<Scalars['String']>;
   memberId: Scalars['ID'];
   memberName?: Maybe<Scalars['Localized']>;
@@ -34908,14 +34927,6 @@ export type GetJobApplicationQuery = {
               dateOfCompletion?: Record<'local' | 'en' | 'np', string> | null;
               grade?: GradeLevels | null;
             } | null> | null;
-            experienceDetails?: Array<{
-              occupationName?: string | null;
-              company?: string | null;
-              fromDate?: Record<'local' | 'en' | 'np', string> | null;
-              toDate?: Record<'local' | 'en' | 'np', string> | null;
-              duration?: string | null;
-              summary?: string | null;
-            } | null> | null;
             documents?: Array<{
               fieldId?: string | null;
               identifiers: Array<{ identifier: string; url: string } | null>;
@@ -37691,7 +37702,15 @@ export type GetMembershipFeeQuery = {
           | QueryError_NotFoundError_Fragment
           | QueryError_ServerError_Fragment
           | null;
-        data?: { charge: number } | null;
+        data?: {
+          charge: number;
+          memberType: KymMemberTypesEnum;
+          ledgerInfo?: Array<{
+            ledgerId: string;
+            ledgerName?: string | null;
+            amount?: string | null;
+          }> | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -44414,7 +44433,7 @@ export type GetGeneralMemberSettingsDataQuery = {
               } | null;
               charge?: Array<{
                 memberType: KymMemberTypesEnum;
-                ledgerId: string;
+                ledgerId?: string | null;
                 charge: number;
               } | null> | null;
               memberCode?: {
@@ -62355,14 +62374,6 @@ export const GetJobApplicationDocument = `
               dateOfCompletion
               grade
             }
-            experienceDetails {
-              occupationName
-              company
-              fromDate
-              toDate
-              duration
-              summary
-            }
             applicationStatus
             applicationRating
             documents {
@@ -65984,6 +65995,12 @@ export const GetMembershipFeeDocument = `
         }
         data {
           charge
+          memberType
+          ledgerInfo {
+            ledgerId
+            ledgerName
+            amount
+          }
         }
       }
     }
