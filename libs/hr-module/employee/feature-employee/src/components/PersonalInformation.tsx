@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { calculateAge } from '@hr/common';
+
 import { FormSection } from '@myra-ui';
 
 import {
@@ -12,6 +16,18 @@ import { getFieldOption } from './EducationalDetails';
 
 export const PersonalInformation = () => {
   const { t } = useTranslation();
+
+  const { watch, setValue } = useFormContext();
+
+  const dateOfBirthWatch = watch('dateOfBirth');
+
+  const age = calculateAge(dateOfBirthWatch?.en);
+
+  useEffect(() => {
+    if (age) {
+      setValue('age', age);
+    }
+  }, [age]);
 
   const { data: genderFields, isLoading: genderLoading } = useGetIndividualKymOptionsQuery({
     searchTerm: FormFieldSearchTerm.Gender,

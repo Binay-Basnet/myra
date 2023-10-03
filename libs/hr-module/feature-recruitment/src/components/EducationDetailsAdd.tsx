@@ -38,9 +38,9 @@ const EducationalDetails = ({ index, removeEducationalDetails }: IAddEducational
 
   const gradeOptions = [
     { label: 'Distinction', value: GradeLevels?.Distinction },
-    { label: 'First Division', value: GradeLevels?.Distinction },
-    { label: 'Second Division', value: GradeLevels?.Distinction },
-    { label: 'Third Division', value: GradeLevels?.Distinction },
+    { label: 'First Division', value: GradeLevels?.FirstDivision },
+    { label: 'Second Division', value: GradeLevels?.SecondDivision },
+    { label: 'Third Division', value: GradeLevels?.ThirdDivision },
   ];
   return (
     <Box bg="highlight.500" p="s20" display="flex" flexDirection="column">

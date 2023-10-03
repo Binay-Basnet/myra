@@ -14,3 +14,4 @@ export * from './lib/useGetPayGroupOptions';
 export * from './lib/useGetSalaryAssignmentsWithExtraDetails';
 export * from './lib/useGetSalaryStructureOptions';
 export * from './lib/useGetStaffPlanningOptions';
+export * from './utils/calculateAge';

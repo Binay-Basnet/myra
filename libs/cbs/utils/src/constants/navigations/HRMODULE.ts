@@ -38,7 +38,7 @@ export const HRMODULE: NavType = {
           addRoute: ROUTES.HRMODULE_EMPLOYEES_ADD,
         },
         {
-          label: 'Attedance',
+          label: 'Attendance',
           route: ROUTES.HRMODULE_ATTENDENCE_LIST,
           aclKey: 'HCM_EMPLOYEE_ATTENDANCE',
           addRoute: ROUTES.HRMODULE_ATTENDENCE_ADD,
