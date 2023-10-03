@@ -27059,6 +27059,11 @@ export type PayMembershipMutation = {
           depositedBy?: DepositedBy | null;
           memberCode?: string | null;
           depositedOther?: string | null;
+          ledgersInfo?: Array<{
+            ledgerId: string;
+            ledgerName?: string | null;
+            amount?: string | null;
+          }> | null;
         } | null;
       } | null;
     } | null;
@@ -30049,6 +30054,7 @@ export type SetBulkDepositDataMutation = {
         memberId?: string | null;
         memberName?: string | null;
         paymentMode?: DepositPaymentType | null;
+        accounts?: Array<{ accountName?: string | null; amount?: string | null } | null> | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -51753,6 +51759,11 @@ export const PayMembershipDocument = `
           depositedBy
           memberCode
           depositedOther
+          ledgersInfo {
+            ledgerId
+            ledgerName
+            amount
+          }
         }
         recordId
       }
@@ -56107,6 +56118,10 @@ export const SetBulkDepositDataDocument = `
         memberId
         memberName
         paymentMode
+        accounts {
+          accountName
+          amount
+        }
       }
       error {
         ...MutationError
