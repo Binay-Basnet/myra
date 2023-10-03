@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Button, Column, ExpandedCell, ExpandedHeader, GridItem, MultiFooter } from '@myra-ui';
@@ -30,21 +30,25 @@ type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId
   };
 };
 
+type LedgerBalance = {
+  Dr: string;
+  Cr: string;
+  Total: string;
+  Type: string;
+  AdjustmentDr: string;
+  AdjustmentCr: string;
+  AdjustmentTotal: string;
+  AdjustmentType: string;
+  ClosingCr: string;
+  ClosingDr: string;
+  ClosingBalance: string;
+  ClosingBalanceType: string;
+};
+
 type TrialBalance = Record<
   string,
-  {
-    Dr: string;
-    Cr: string;
-    Total: string;
-    Type: string;
-    AdjustmentDr: string;
-    AdjustmentCr: string;
-    AdjustmentTotal: string;
-    AdjustmentType: string;
-    ClosingCr: string;
-    ClosingDr: string;
-    ClosingBalance: string;
-    ClosingBalanceType: string;
+  LedgerBalance & {
+    prev: LedgerBalance;
   }
 >;
 
@@ -84,36 +88,148 @@ export const FiscalYearReport = () => {
 
   const coaReportData = data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.data;
 
+  const prevCoaReportData =
+    data?.report?.transactionReport?.financial?.fiscalTrialSheetReport?.prevYearData;
+
+  const modCoaReportData = useMemo(() => {
+    const temp = coaReportData;
+
+    coaReportData?.equityAndLiablities?.forEach((item, index) => {
+      Object.keys(item?.balance ?? {})?.forEach((bId) => {
+        if (temp?.equityAndLiablities?.[index]?.['balance']?.[bId]) {
+          const prevItem = prevCoaReportData?.equityAndLiablities?.find(
+            (i) => i?.ledgerId === item?.ledgerId
+          );
+
+          temp.equityAndLiablities[index]['balance'][bId]['prev'] = prevItem?.['balance']?.[bId];
+        }
+      });
+    });
+
+    coaReportData?.expenses?.forEach((item, index) => {
+      Object.keys(item?.balance ?? {})?.forEach((bId) => {
+        if (temp?.expenses?.[index]?.['balance']?.[bId]) {
+          const prevItem = prevCoaReportData?.expenses?.find((i) => i?.ledgerId === item?.ledgerId);
+
+          temp.expenses[index]['balance'][bId]['prev'] = prevItem?.['balance']?.[bId];
+        }
+      });
+    });
+
+    coaReportData?.income?.forEach((item, index) => {
+      Object.keys(item?.balance ?? {})?.forEach((bId) => {
+        if (temp?.income?.[index]?.['balance']?.[bId]) {
+          const prevItem = prevCoaReportData?.income?.find((i) => i?.ledgerId === item?.ledgerId);
+
+          temp.income[index]['balance'][bId]['prev'] = prevItem?.['balance']?.[bId];
+        }
+      });
+    });
+
+    coaReportData?.assets?.forEach((item, index) => {
+      Object.keys(item?.balance ?? {})?.forEach((bId) => {
+        if (temp?.assets?.[index]?.['balance']?.[bId]) {
+          const prevItem = prevCoaReportData?.assets?.find((i) => i?.ledgerId === item?.ledgerId);
+
+          temp.assets[index]['balance'][bId]['prev'] = prevItem?.['balance']?.[bId];
+        }
+      });
+    });
+
+    coaReportData?.offBalance?.forEach((item, index) => {
+      Object.keys(item?.balance ?? {})?.forEach((bId) => {
+        if (temp?.offBalance?.[index]?.['balance']?.[bId]) {
+          const prevItem = prevCoaReportData?.offBalance?.find(
+            (i) => i?.ledgerId === item?.ledgerId
+          );
+
+          temp.offBalance[index]['balance'][bId]['prev'] = prevItem?.['balance']?.[bId];
+        }
+      });
+    });
+
+    coaReportData?.orphanEntries?.forEach((item, index) => {
+      Object.keys(item?.balance ?? [])?.forEach((bId) => {
+        if (temp?.offBalance?.[index]?.['balance']?.[bId]) {
+          const prevItem = prevCoaReportData?.orphanEntries?.find(
+            (i) => i?.ledgerId === item?.ledgerId
+          );
+
+          temp.orphanEntries[index]['balance'][bId]['prev'] = prevItem?.['balance']?.[bId];
+        }
+      });
+    });
+
+    Object.keys(coaReportData?.equityAndLiablitiesTotal ?? {})?.forEach((bId) => {
+      if (temp?.equityAndLiablitiesTotal?.[bId]) {
+        temp.equityAndLiablitiesTotal[bId]['prev'] =
+          prevCoaReportData?.equityAndLiablitiesTotal?.[bId];
+      }
+    });
+
+    Object.keys(coaReportData?.assetsTotal ?? {})?.forEach((bId) => {
+      if (temp?.assetsTotal?.[bId]) {
+        temp.assetsTotal[bId]['prev'] = prevCoaReportData?.assetsTotal?.[bId];
+      }
+    });
+
+    Object.keys(coaReportData?.expenseTotal ?? {})?.forEach((bId) => {
+      if (temp?.expenseTotal?.[bId]) {
+        temp.expenseTotal[bId]['prev'] = prevCoaReportData?.expenseTotal?.[bId];
+      }
+    });
+
+    Object.keys(coaReportData?.incomeTotal ?? {})?.forEach((bId) => {
+      if (temp?.incomeTotal?.[bId]) {
+        temp.incomeTotal[bId]['prev'] = prevCoaReportData?.incomeTotal?.[bId];
+      }
+    });
+
+    Object.keys(coaReportData?.offBalanceTotal ?? {})?.forEach((bId) => {
+      if (temp?.offBalanceTotal?.[bId]) {
+        temp.offBalanceTotal[bId]['prev'] = prevCoaReportData?.offBalanceTotal?.[bId];
+      }
+    });
+
+    Object.keys(coaReportData?.orphanTotal ?? {})?.forEach((bId) => {
+      if (temp?.orphanTotal?.[bId]) {
+        temp.orphanTotal[bId]['prev'] = prevCoaReportData?.orphanTotal?.[bId];
+      }
+    });
+
+    return temp;
+  }, [coaReportData, prevCoaReportData]);
+
   const coaReport = [
     ...generateAndSortCOATreeArray({
-      array: (coaReportData?.equityAndLiablities || []) as TrialSheetReportDataEntry[],
+      array: (modCoaReportData?.equityAndLiablities || []) as TrialSheetReportDataEntry[],
       type: 'EQUITY_AND_LIABILITIES',
-      total: coaReportData?.equityAndLiablitiesTotal || {},
+      total: modCoaReportData?.equityAndLiablitiesTotal || {},
     }),
     ...generateAndSortCOATreeArray({
-      array: (coaReportData?.assets || []) as TrialSheetReportDataEntry[],
+      array: (modCoaReportData?.assets || []) as TrialSheetReportDataEntry[],
       type: 'ASSETS',
-      total: coaReportData?.assetsTotal || {},
+      total: modCoaReportData?.assetsTotal || {},
     }),
     ...generateAndSortCOATreeArray({
-      array: (coaReportData?.expenses || []) as TrialSheetReportDataEntry[],
+      array: (modCoaReportData?.expenses || []) as TrialSheetReportDataEntry[],
       type: 'EXPENSES',
-      total: coaReportData?.expenseTotal || {},
+      total: modCoaReportData?.expenseTotal || {},
     }),
     ...generateAndSortCOATreeArray({
-      array: (coaReportData?.income || []) as TrialSheetReportDataEntry[],
+      array: (modCoaReportData?.income || []) as TrialSheetReportDataEntry[],
       type: 'INCOME',
-      total: coaReportData?.incomeTotal || {},
+      total: modCoaReportData?.incomeTotal || {},
     }),
     ...generateAndSortCOATreeArray({
-      array: (coaReportData?.offBalance || []) as TrialSheetReportDataEntry[],
+      array: (modCoaReportData?.offBalance || []) as TrialSheetReportDataEntry[],
       type: 'OFF_BALANCE',
-      total: coaReportData?.offBalanceTotal || {},
+      total: modCoaReportData?.offBalanceTotal || {},
     }),
     ...generateAndSortCOATreeArray({
-      array: (coaReportData?.orphanEntries || []) as TrialSheetReportDataEntry[],
+      array: (modCoaReportData?.orphanEntries || []) as TrialSheetReportDataEntry[],
       type: 'UNMAPPED_COA_HEADS',
-      total: coaReportData?.orphanTotal || {},
+      total: modCoaReportData?.orphanTotal || {},
     }),
   ];
 
@@ -169,15 +285,15 @@ export const FiscalYearReport = () => {
             total={[
               {
                 label: 'Total Profit/Loss (Total Income - Total Expenses)',
-                value: coaReportData?.totalProfitLoss as unknown as TrialBalance,
+                value: modCoaReportData?.totalProfitLoss as unknown as TrialBalance,
               },
               {
                 label: 'Total Assets + Total Expenses + Dr of Off Balance',
-                value: coaReportData?.totalAssetExpense as unknown as TrialBalance,
+                value: modCoaReportData?.totalAssetExpense as unknown as TrialBalance,
               },
               {
                 label: 'Total Liabilities + Total Income + Cr of Off Balance',
-                value: coaReportData?.totalLiablitiesIncome as unknown as TrialBalance,
+                value: modCoaReportData?.totalLiablitiesIncome as unknown as TrialBalance,
               },
             ]}
             data={coaReport as TrialSheetReportDataEntry[]}
@@ -311,6 +427,84 @@ const FiscalYearCOATable = ({ data, type, total, coaRedirect = true }: ICOATable
           header: branchList?.find((b) => b?.id === header)?.name || 'Total',
           // accessorKey: 'balance',
           columns: [
+            {
+              header: 'Previous Year Balance',
+              columns: [
+                {
+                  header: 'Debit (Dr.)',
+                  accessorFn: (row) => row?.balance,
+                  cell: (props) =>
+                    amountConverter(
+                      props.row?.original?.balance?.[header || '']?.prev?.ClosingDr || '0.00'
+                    ),
+
+                  // footer: () => (
+                  //   <MultiFooter
+                  //     texts={total?.map((t) =>
+                  //       amountConverter(t.value?.[header || '']?.Dr || '0.00')
+                  //     )}
+                  //   />
+                  // ),
+
+                  meta: {
+                    isNumeric: true,
+                  },
+                },
+                {
+                  header: 'Credit (Cr.)',
+                  accessorFn: (row) => row?.balance,
+                  cell: (props) =>
+                    amountConverter(
+                      props.row?.original?.balance?.[header || '']?.prev?.ClosingCr || '0.00'
+                    ),
+
+                  // footer: () => (
+                  //   <MultiFooter
+                  //     texts={total?.map((t) =>
+                  //       amountConverter(t.value?.[header || '']?.Cr || '0.00')
+                  //     )}
+                  //   />
+                  // ),
+                  meta: {
+                    isNumeric: true,
+                  },
+                },
+                {
+                  header: 'Balance',
+                  accessorFn: (row) => row?.balance,
+                  cell: (props) =>
+                    header
+                      ? amountConverter(
+                          props.row?.original?.balance?.[header]?.prev?.ClosingBalance || '0.00'
+                        )
+                      : '0.00',
+                  // footer: () => (
+                  //   <MultiFooter
+                  //     texts={total?.map((t) =>
+                  //       amountConverter(t.value?.[header || '']?.Total || '0.00')
+                  //     )}
+                  //   />
+                  // ),
+                  meta: {
+                    isNumeric: true,
+                  },
+                },
+                {
+                  header: '',
+                  id: 'cr',
+                  accessorFn: (row) =>
+                    header ? row.balance?.[header]?.prev?.ClosingBalanceType || '-' : '-',
+                  // footer: () => (
+                  //   <MultiFooter
+                  //     texts={total?.map((t) => t.value?.[header || '']?.Type || '0.00' || '-')}
+                  //   />
+                  // ),
+                  meta: {
+                    width: '10px',
+                  },
+                },
+              ],
+            },
             {
               header: 'Unadjusted Trial Balance',
               columns: [

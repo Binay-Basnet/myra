@@ -16700,7 +16700,8 @@ export type MemberBasicInfoView =
 
 export type MemberChargeData = {
   charge: Scalars['Int'];
-  ledgerId: Scalars['ID'];
+  ledgerId?: Maybe<Scalars['ID']>;
+  ledgerInfo?: Maybe<Array<MembershipFeeLedgers>>;
   memberType: KymMemberTypesEnum;
 };
 
@@ -17509,6 +17510,12 @@ export type MemberWithDrawSlipIssueStatus = {
   type?: Maybe<Scalars['String']>;
 };
 
+export type MembershipFeeLedgers = {
+  amount?: Maybe<Scalars['String']>;
+  ledgerId: Scalars['ID'];
+  ledgerName?: Maybe<Scalars['String']>;
+};
+
 export type MembershipFeeQueryResult = {
   data?: Maybe<MemberChargeData>;
   error?: Maybe<QueryError>;
@@ -17534,6 +17541,7 @@ export type MembershipPaymentRecord = {
   depositedBy?: Maybe<DepositedBy>;
   depositedOther?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  ledgersInfo?: Maybe<Array<MembershipFeeLedgers>>;
   memberCode?: Maybe<Scalars['String']>;
   memberId: Scalars['ID'];
   memberName?: Maybe<Scalars['Localized']>;
@@ -19866,6 +19874,7 @@ export const RequestStatus = {
   Approved: 'APPROVED',
   Declined: 'DECLINED',
   Pending: 'PENDING',
+  Printed: 'PRINTED',
 } as const;
 
 export type RequestStatus = typeof RequestStatus[keyof typeof RequestStatus];
@@ -23272,6 +23281,7 @@ export type TrialSheetReportFilter = {
 export type TrialSheetReportResult = {
   data?: Maybe<TrialSheetReportData>;
   error?: Maybe<QueryError>;
+  prevYearData?: Maybe<TrialSheetReportData>;
 };
 
 export const TypeOfLoan = {
@@ -27049,6 +27059,11 @@ export type PayMembershipMutation = {
           depositedBy?: DepositedBy | null;
           memberCode?: string | null;
           depositedOther?: string | null;
+          ledgersInfo?: Array<{
+            ledgerId: string;
+            ledgerName?: string | null;
+            amount?: string | null;
+          }> | null;
         } | null;
       } | null;
     } | null;
@@ -30039,6 +30054,7 @@ export type SetBulkDepositDataMutation = {
         memberId?: string | null;
         memberName?: string | null;
         paymentMode?: DepositPaymentType | null;
+        accounts?: Array<{ accountName?: string | null; amount?: string | null } | null> | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -37821,7 +37837,15 @@ export type GetMembershipFeeQuery = {
           | QueryError_NotFoundError_Fragment
           | QueryError_ServerError_Fragment
           | null;
-        data?: { charge: number } | null;
+        data?: {
+          charge: number;
+          memberType: KymMemberTypesEnum;
+          ledgerInfo?: Array<{
+            ledgerId: string;
+            ledgerName?: string | null;
+            amount?: string | null;
+          }> | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -41896,6 +41920,53 @@ export type GetFiscalYearTrialBalanceQuery = {
               under?: string | null;
             } | null> | null;
           } | null;
+          prevYearData?: {
+            equityAndLiablitiesTotal?: Record<string, unknown> | null;
+            assetsTotal?: Record<string, unknown> | null;
+            expenseTotal?: Record<string, unknown> | null;
+            incomeTotal?: Record<string, unknown> | null;
+            offBalanceTotal?: Record<string, unknown> | null;
+            orphanTotal?: Record<string, unknown> | null;
+            totalAssetExpense?: Record<string, unknown> | null;
+            totalLiablitiesIncome?: Record<string, unknown> | null;
+            totalProfitLoss?: Record<string, unknown> | null;
+            equityAndLiablities?: Array<{
+              balance?: Record<string, unknown> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            expenses?: Array<{
+              balance?: Record<string, unknown> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            income?: Array<{
+              balance?: Record<string, unknown> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            assets?: Array<{
+              balance?: Record<string, unknown> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            offBalance?: Array<{
+              balance?: Record<string, unknown> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            orphanEntries?: Array<{
+              balance?: Record<string, unknown> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+          } | null;
         };
       };
     };
@@ -44544,7 +44615,7 @@ export type GetGeneralMemberSettingsDataQuery = {
               } | null;
               charge?: Array<{
                 memberType: KymMemberTypesEnum;
-                ledgerId: string;
+                ledgerId?: string | null;
                 charge: number;
               } | null> | null;
               memberCode?: {
@@ -51688,6 +51759,11 @@ export const PayMembershipDocument = `
           depositedBy
           memberCode
           depositedOther
+          ledgersInfo {
+            ledgerId
+            ledgerName
+            amount
+          }
         }
         recordId
       }
@@ -56042,6 +56118,10 @@ export const SetBulkDepositDataDocument = `
         memberId
         memberName
         paymentMode
+        accounts {
+          accountName
+          amount
+        }
       }
       error {
         ...MutationError
@@ -66269,6 +66349,12 @@ export const GetMembershipFeeDocument = `
         }
         data {
           charge
+          memberType
+          ledgerInfo {
+            ledgerId
+            ledgerName
+            amount
+          }
         }
       }
     }
@@ -71442,6 +71528,53 @@ export const GetFiscalYearTrialBalanceDocument = `
       financial {
         fiscalTrialSheetReport(data: $data) {
           data {
+            equityAndLiablities {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            expenses {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            income {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            assets {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            offBalance {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            orphanEntries {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            equityAndLiablitiesTotal
+            assetsTotal
+            expenseTotal
+            incomeTotal
+            offBalanceTotal
+            orphanTotal
+            totalAssetExpense
+            totalLiablitiesIncome
+            totalProfitLoss
+          }
+          prevYearData {
             equityAndLiablities {
               balance
               ledgerId

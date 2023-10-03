@@ -30,6 +30,7 @@ const tellerActivityVariant: Record<RequestStatus, 'success' | 'failure' | 'pend
   [RequestStatus.Approved]: 'success',
   [RequestStatus.Pending]: 'pending',
   [RequestStatus.Declined]: 'failure',
+  [RequestStatus.Printed]: 'success',
 };
 
 const CASH_IN_TRANSIT_TAB_ITEMS = [

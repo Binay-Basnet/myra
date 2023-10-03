@@ -272,7 +272,7 @@ export const CbsCloseDay = () => {
     //   return 'Ignore and proceed';
     // }
 
-    return t['dayCloseCloseDay'];
+    return 'Back to Dashboard';
   };
 
   const getDraftButton = () => {

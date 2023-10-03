@@ -50,6 +50,10 @@ mutation setBulkDepositData($data: BulkDepositInput) {
         memberId
         memberName
         paymentMode
+        accounts {
+          accountName
+          amount
+        }
       }
       error {
         ...MutationError
