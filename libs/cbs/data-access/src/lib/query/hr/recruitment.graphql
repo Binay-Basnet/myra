@@ -259,12 +259,10 @@ query getJobApplication($id: ID!) {
               grade
             }
             experienceDetails {
-              occupationName
-              company
-              fromDate
-              toDate
-              duration
-              summary
+              companyName
+              designation
+              durationInYrs
+              address
             }
             applicationStatus
             applicationRating
