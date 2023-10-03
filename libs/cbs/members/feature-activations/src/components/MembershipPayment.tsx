@@ -505,6 +505,19 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
             successCardProps={(response) => {
               const result = response?.members?.activateMember?.membershipPayment?.record;
               const total = result?.amount;
+              let tempObj: Record<string, string> = {};
+
+              if (result?.ledgersInfo?.length) {
+                for (let i = 0; i < result?.ledgersInfo?.length; i += 1) {
+                  const item = result?.ledgersInfo?.[i];
+                  let tempDetails: Record<string, string> = {};
+                  tempDetails = {
+                    [`${item?.ledgerName}`]: String(item?.amount),
+                  };
+
+                  tempObj = { ...tempObj, ...tempDetails };
+                }
+              }
 
               return {
                 type: 'Membership Payment',
@@ -523,7 +536,7 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
                   ),
                   Date: localizedDate(result?.date),
                   'Payment Mode': result?.paymentMode,
-
+                  ...tempObj,
                   'Deposited By':
                     result?.depositedBy === 'OTHER'
                       ? `Other --${result?.depositedOther}`

@@ -315,6 +315,7 @@ export const NewLoanApplication = () => {
                 <FormSelect
                   name="productType"
                   label="Loan Type"
+                  isDisabled={!!id}
                   options={loanTypeData?.settings.general?.loan?.productType?.productTypes?.map(
                     (product) => ({
                       label: product?.productType as string,
@@ -327,6 +328,7 @@ export const NewLoanApplication = () => {
                 <FormSelect
                   name="productSubType"
                   label="Loan Sub Type"
+                  isDisabled={!!id}
                   options={loanSubTypeData?.settings?.general?.loan?.productType?.productSubTypes?.map(
                     (product) => ({
                       label: product?.productSubType as string,
@@ -339,6 +341,7 @@ export const NewLoanApplication = () => {
                 <FormSelect
                   name="productId"
                   label="Loan Product"
+                  isDisabled={!!id}
                   isLoading={isFetching}
                   options={loanProductOptions}
                 />

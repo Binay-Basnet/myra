@@ -260,7 +260,19 @@ export const AddBulkDeposit = () => {
               successCardProps={(response) => {
                 const result = response?.transaction?.bulkDeposit?.record;
                 const total = result?.totalAmount;
+                let tempObj: Record<string, string> = {};
 
+                if (result?.accounts?.length) {
+                  for (let i = 0; i < result?.accounts?.length; i += 1) {
+                    const item = result?.accounts?.[i];
+                    let tempDetails: Record<string, string> = {};
+                    tempDetails = {
+                      [`${item?.accountName}`]: String(item?.amount),
+                    };
+
+                    tempObj = { ...tempObj, ...tempDetails };
+                  }
+                }
                 return {
                   type: 'Bulk Deposit',
                   receiptTitle: 'Bulk Deposit Receipt',
@@ -270,9 +282,10 @@ export const AddBulkDeposit = () => {
                     Date: localizedDate(result?.date),
                     'Transaction Time': localizedTime(result?.createdAt),
                     Amount: amountConverter(result?.amount || 0),
-                    Fine: amountConverter(result?.fine || 0) as string,
-                    Discount: amountConverter(result?.discount || 0) as string,
-                    Rebate: amountConverter(result?.rebate || 0) as string,
+                    // Fine: amountConverter(result?.fine || 0) as string,
+                    // Discount: amountConverter(result?.discount || 0) as string,
+                    // Rebate: amountConverter(result?.rebate || 0) as string,
+                    ...tempObj,
 
                     'Payment Mode': result?.paymentMode,
                     'Deposited By': result?.depositedOther ?? 'Self',

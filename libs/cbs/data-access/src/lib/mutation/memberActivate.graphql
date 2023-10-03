@@ -15,6 +15,11 @@ mutation payMembership($data: MembershipPaymentInput, $memberId: ID!) {
           depositedBy
           memberCode
           depositedOther
+          ledgersInfo {
+            ledgerId
+            ledgerName
+            amount
+          }
         }
         recordId
       }
