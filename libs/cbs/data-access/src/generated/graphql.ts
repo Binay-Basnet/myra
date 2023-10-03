@@ -3080,11 +3080,6 @@ export const BuildingType = {
 } as const;
 
 export type BuildingType = typeof BuildingType[keyof typeof BuildingType];
-export type BulkDepositAccounts = {
-  accountName?: Maybe<Scalars['String']>;
-  amount?: Maybe<Scalars['String']>;
-};
-
 export type BulkDepositInput = {
   accounts?: InputMaybe<Array<InputMaybe<BulkDepositInstanceInput>>>;
   agentId?: InputMaybe<Scalars['String']>;
@@ -3110,7 +3105,6 @@ export type BulkDepositInstanceInput = {
 };
 
 export type BulkDepositOutput = {
-  accounts?: Maybe<Array<Maybe<BulkDepositAccounts>>>;
   amount?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Localized']>;
   date?: Maybe<Scalars['Localized']>;
@@ -8738,7 +8732,6 @@ export type GlReportSummary = {
 export type GlStatementFilter = {
   amount?: InputMaybe<MinMaxFilter>;
   bank?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  includeZero?: InputMaybe<Scalars['Boolean']>;
   natureOfTransactions?: InputMaybe<NatureOfBankTransaction>;
 };
 
@@ -23288,6 +23281,7 @@ export type TrialSheetReportFilter = {
 export type TrialSheetReportResult = {
   data?: Maybe<TrialSheetReportData>;
   error?: Maybe<QueryError>;
+  prevYearData?: Maybe<TrialSheetReportData>;
 };
 
 export const TypeOfLoan = {
@@ -41880,6 +41874,53 @@ export type GetFiscalYearTrialBalanceQuery = {
       financial: {
         fiscalTrialSheetReport: {
           data?: {
+            equityAndLiablitiesTotal?: Record<string, unknown> | null;
+            assetsTotal?: Record<string, unknown> | null;
+            expenseTotal?: Record<string, unknown> | null;
+            incomeTotal?: Record<string, unknown> | null;
+            offBalanceTotal?: Record<string, unknown> | null;
+            orphanTotal?: Record<string, unknown> | null;
+            totalAssetExpense?: Record<string, unknown> | null;
+            totalLiablitiesIncome?: Record<string, unknown> | null;
+            totalProfitLoss?: Record<string, unknown> | null;
+            equityAndLiablities?: Array<{
+              balance?: Record<string, unknown> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            expenses?: Array<{
+              balance?: Record<string, unknown> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            income?: Array<{
+              balance?: Record<string, unknown> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            assets?: Array<{
+              balance?: Record<string, unknown> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            offBalance?: Array<{
+              balance?: Record<string, unknown> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            orphanEntries?: Array<{
+              balance?: Record<string, unknown> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+          } | null;
+          prevYearData?: {
             equityAndLiablitiesTotal?: Record<string, unknown> | null;
             assetsTotal?: Record<string, unknown> | null;
             expenseTotal?: Record<string, unknown> | null;
@@ -71487,6 +71528,53 @@ export const GetFiscalYearTrialBalanceDocument = `
       financial {
         fiscalTrialSheetReport(data: $data) {
           data {
+            equityAndLiablities {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            expenses {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            income {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            assets {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            offBalance {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            orphanEntries {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            equityAndLiablitiesTotal
+            assetsTotal
+            expenseTotal
+            incomeTotal
+            offBalanceTotal
+            orphanTotal
+            totalAssetExpense
+            totalLiablitiesIncome
+            totalProfitLoss
+          }
+          prevYearData {
             equityAndLiablities {
               balance
               ledgerId

@@ -247,6 +247,8 @@ export const AddAgentTransaction = () => {
     [accounts]
   );
 
+  const totalSelected = useMemo(() => accounts?.filter((acc) => acc?.paid)?.length, [accounts]);
+
   return (
     <FormLayout methods={methods} hasSidebar>
       <FormLayout.Header
@@ -449,7 +451,15 @@ export const AddAgentTransaction = () => {
                   bg="background.500"
                   borderRadius="br2"
                 >
-                  <Box display="flex" justifyContent="space-between" pt="s8">
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      Account Selected
+                    </Text>
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      {totalSelected}
+                    </Text>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
                     <Text fontSize="r1" fontWeight={500} color="gray.700">
                       Amount Collected
                     </Text>
