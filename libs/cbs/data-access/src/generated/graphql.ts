@@ -33649,7 +33649,11 @@ export type GetSingleEmployeeDetailsQuery = {
           record?: {
             id?: string | null;
             isCoopMember?: boolean | null;
+            isMyraErpUser?: boolean | null;
+            isJobApplication?: boolean | null;
             coopMemberId?: string | null;
+            myraErpUserId?: string | null;
+            jobApplicationId?: string | null;
             firstName?: string | null;
             middleName?: string | null;
             lastName?: string | null;
@@ -60879,7 +60883,11 @@ export const GetSingleEmployeeDetailsDocument = `
           record {
             id
             isCoopMember
+            isMyraErpUser
+            isJobApplication
             coopMemberId
+            myraErpUserId
+            jobApplicationId
             firstName
             middleName
             lastName
