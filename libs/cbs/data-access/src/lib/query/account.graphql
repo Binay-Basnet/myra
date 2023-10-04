@@ -523,6 +523,7 @@ query getAccountDetailsData($id: ID!) {
           profilePicUrl
           profilePic
           signaturePicUrl
+
           address {
             state
             district
@@ -548,6 +549,7 @@ query getAccountDetailsData($id: ID!) {
         productName
         accountOpenDate
         accountType
+        minorName
         defaultAccountType
         accountBalance
         totalDepositBalance

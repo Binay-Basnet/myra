@@ -30963,6 +30963,7 @@ export type GetAccountDetailsDataQuery = {
         productName?: string | null;
         accountOpenDate?: Record<'local' | 'en' | 'np', string> | null;
         accountType?: NatureOfDepositProduct | null;
+        minorName?: string | null;
         defaultAccountType?: DefaultAccountType | null;
         accountBalance?: string | null;
         totalDepositBalance?: string | null;
@@ -57381,6 +57382,7 @@ export const GetAccountDetailsDataDocument = `
         productName
         accountOpenDate
         accountType
+        minorName
         defaultAccountType
         accountBalance
         totalDepositBalance

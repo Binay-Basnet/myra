@@ -105,6 +105,7 @@ export const ReportContent = ({
             // minW: '100%',
             // maxW: '100%',
             overflow: 'visible',
+            color: '#000',
             // overflowX: 'visible',
             borderRadius: '0',
           },
