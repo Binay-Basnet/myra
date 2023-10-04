@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
-import { IoClose } from 'react-icons/io5';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { AccordionPanel, Box, Button, Checkbox, Icon, Text } from '@myra-ui';
+import { AccordionPanel, Box, Button, Checkbox, Text } from '@myra-ui';
 
 import {
   FormField,
   FormOption,
-  useDeleteOptionMutation,
   useMoveOptionMutation,
   useToggleFieldOtherOptionMutation,
 } from '@coop/cbs/data-access';
@@ -25,7 +23,7 @@ export const KYMSettingsFormField = ({ fields }: KYMSettingsFormFieldProps) => {
   const [hasOtherField, setHasOtherField] = useState(!!fields?.hasOtherField);
   const [fieldOptions, setFieldOptions] = useState<Partial<FormOption>[]>(fields?.options ?? []);
 
-  const { mutateAsync: deleteOption } = useDeleteOptionMutation();
+  // const { mutateAsync: deleteOption } = useDeleteOptionMutation();
   const { mutateAsync: moveOption } = useMoveOptionMutation();
   const { mutateAsync: toggleOtherOption } = useToggleFieldOtherOptionMutation();
 
@@ -74,6 +72,9 @@ export const KYMSettingsFormField = ({ fields }: KYMSettingsFormFieldProps) => {
                           option={option}
                         />
 
+                        {/* 
+                        
+                        
                         <Icon
                           onClick={async () => {
                             setFieldOptions((prev) =>
@@ -90,7 +91,7 @@ export const KYMSettingsFormField = ({ fields }: KYMSettingsFormFieldProps) => {
                           color="gray.500"
                           cursor="pointer"
                           _hover={{ color: 'gray.800' }}
-                        />
+                        /> */}
                       </Box>
                     )}
                   </Draggable>
