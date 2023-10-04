@@ -96,7 +96,10 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
               title={t['transDetailPaymentMode']}
               subtitle={withdrawDetailData?.paymentMode?.replace(/_/g, ' ')}
             />
-            <DetailCardContent title="Withdraw Slip No" subtitle={withdrawDetailData?.chequeNo} />
+            <DetailCardContent
+              title="Withdraw Slip No"
+              subtitle={withdrawDetailData?.withdrawSlipNo}
+            />
             <DetailCardContent
               title={t['transDetailAmount']}
               subtitle={amountConverter(withdrawDetailData?.withdrawAmount ?? 0)}

@@ -26,6 +26,7 @@ type Filters = Omit<BankGlStatementFilter, 'filter' | 'branchId' | 'bankAccounts
     amount?: MinMaxFilter;
     bank?: { label: string; value: string }[];
     natureOfTransactions: NatureOfBankTransaction;
+    includeZero?: 'include' | 'exclude';
   };
 };
 
@@ -55,6 +56,7 @@ export const BankGLStatementReport = () => {
               ? filters?.filter?.amount
               : null,
           natureOfTransactions: filters?.filter?.natureOfTransactions,
+          includeZero: filters?.filter?.includeZero === 'include',
         },
       },
     },
@@ -176,6 +178,16 @@ export const BankGLStatementReport = () => {
           </Report.Filter>
           <Report.Filter title="Balance Range">
             <FormAmountFilter name="filter.amount" />
+          </Report.Filter>
+          <Report.Filter title="Zero Balance">
+            <FormRadioGroup
+              name="filter.includeZero"
+              options={[
+                { label: 'Include', value: 'include' },
+                { label: 'Exclude', value: 'exclude' },
+              ]}
+              direction="column"
+            />
           </Report.Filter>
         </Report.Filters>
       </Report.Body>

@@ -64,6 +64,8 @@ query getAccessLogCounterList($pagination: Pagination, $filter: Filter) {
               queryFailed
               mutationSuccess
               mutationFailed
+              otherSuccess
+              otherFailed
               slug
               queryID
               queryDate

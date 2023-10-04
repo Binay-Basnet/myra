@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 import { debounce } from 'lodash';
 
 import { Box, FormSection } from '@myra-ui';
@@ -17,6 +18,8 @@ export const DividendTransferTreatmentSection = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const { t } = useTranslation();
+
+  const router = useRouter();
 
   const { watch } = useFormContext();
 
@@ -73,6 +76,7 @@ export const DividendTransferTreatmentSection = () => {
             value: DividendTreatment.BookPayable,
           },
         ]}
+        isDisabled={router?.asPath?.includes('/view')}
       />
 
       <Box />
@@ -90,6 +94,7 @@ export const DividendTransferTreatmentSection = () => {
             setSearchTerm(id);
             // }
           }, 800)}
+          isDisabled={router?.asPath?.includes('/view')}
         />
       )}
     </FormSection>

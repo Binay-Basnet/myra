@@ -1,7 +1,7 @@
 import { BiPyramid } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
-import { Box, Button, DetailCardContent, Divider, Grid, Icon, Text } from '@myra-ui';
+import { Box, Button, DetailCardContent, Divider, Grid, GridItem, Icon, Text } from '@myra-ui';
 
 import { Organization } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -45,6 +45,9 @@ export const OrganizationalProfile = (props: { data?: Organization | null }) => 
             title="Type of Organization"
             subtitle={data?.basicDetails?.typeOfOrganization}
           />
+          <GridItem colSpan={3}>
+            <DetailCardContent title="Slogan" subtitle={data?.basicDetails?.slogan} />
+          </GridItem>
         </Grid>
       </Box>
       <Box p="s16" bg="white" borderRadius={5} border="1px" borderColor="border.layout">

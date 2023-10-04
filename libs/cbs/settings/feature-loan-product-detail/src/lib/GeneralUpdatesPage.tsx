@@ -4,7 +4,12 @@ import { useDisclosure } from '@chakra-ui/react';
 
 import { Box, DetailPageQuickLinks, Scrollable, Text } from '@myra-ui';
 
-import { SideBar, UpdateLoanAccountPremiumModal, UpdateLoanTenureModal } from '../components';
+import {
+  SideBar,
+  UpdateLoanAccountPremiumModal,
+  UpdateLoanPrematurePenaltyModal,
+  UpdateLoanTenureModal,
+} from '../components';
 import UpdateBalanceLimitModal from '../components/LoanDetailsUpdateBalanceLimitModal';
 
 export const GeneralUpdatesPage = () => {
@@ -19,10 +24,17 @@ export const GeneralUpdatesPage = () => {
     onClose: onAccountPremiumModalClose,
     onToggle: onAccountPremiumModalToggle,
   } = useDisclosure();
+
   const {
     isOpen: isUpdateTenureModalOpen,
     onClose: onUpdateTenureModalClose,
     onToggle: onUpdateTenureModalToggle,
+  } = useDisclosure();
+
+  const {
+    isOpen: isUpdatePrematureModalOpen,
+    onClose: onUpdatePrematureModalClose,
+    onToggle: onUpdatePrematureModalToggle,
   } = useDisclosure();
 
   const updateOptions = useMemo(
@@ -40,6 +52,11 @@ export const GeneralUpdatesPage = () => {
       {
         title: 'Tenure',
         onClick: onUpdateTenureModalToggle,
+        icon: HiOutlineRefresh,
+      },
+      {
+        title: 'Premature Penalty',
+        onClick: onUpdatePrematureModalToggle,
         icon: HiOutlineRefresh,
       },
     ],
@@ -84,6 +101,11 @@ export const GeneralUpdatesPage = () => {
       />
 
       <UpdateLoanTenureModal isOpen={isUpdateTenureModalOpen} onClose={onUpdateTenureModalClose} />
+
+      <UpdateLoanPrematurePenaltyModal
+        isOpen={isUpdatePrematureModalOpen}
+        onClose={onUpdatePrematureModalClose}
+      />
     </>
   );
 };

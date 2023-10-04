@@ -8,6 +8,7 @@ import {
   DepositPaymentType,
   ObjState,
   useGetAvailableSlipsListQuery,
+  WithdrawWith,
 } from '@coop/cbs/data-access';
 import {
   BoxContainer,
@@ -118,6 +119,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
   const returnAmount = totalCashPaid - totalDeposit;
+  const selectedWithdrawSlipType = watch('withdrawSlip.withdrawType');
 
   const withdrawSlipAccountId = watch('withdrawSlip.accId');
 
@@ -218,14 +220,31 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
                 excludeIds={[accountId]}
               />
             </GridItem>
-
-            <FormSelect
-              isRequired
-              name="withdrawSlip.withdrawSlipNo"
-              label="Withdraw Slip No."
-              options={availableSlipListOptions}
+            <FormSwitchTab
+              name="withdrawSlip.withdrawType"
+              label="Withdraw Type"
+              options={[
+                {
+                  label: 'Counter Slip',
+                  value: WithdrawWith?.CounterSlip,
+                },
+                {
+                  label: 'Withdraw Slip',
+                  value: WithdrawWith?.WithdrawSlip,
+                },
+              ]}
             />
-
+            {selectedWithdrawSlipType === WithdrawWith?.WithdrawSlip && (
+              <FormSelect
+                isRequired
+                name="withdrawSlip.withdrawSlipNo"
+                label="Withdraw Slip No."
+                options={availableSlipListOptions}
+              />
+            )}
+            {selectedWithdrawSlipType === WithdrawWith?.CounterSlip && (
+              <FormInput isRequired name="withdrawSlip.counterSlipNo" label="Counter Slip No" />
+            )}
             <FormAmountInput
               isDisabled
               type="number"

@@ -12,8 +12,8 @@ export const LoanPaymentSchedule = () => {
   const { loanPreview } = useLoanDetails();
 
   if (
-    !loanPreview?.paymentSchedule?.installments ||
-    loanPreview?.paymentSchedule?.installments?.length === 0
+    !loanPreview?.idealSchedule?.installments ||
+    loanPreview?.idealSchedule?.installments?.length === 0
   ) {
     return null;
   }
@@ -29,10 +29,10 @@ export const LoanPaymentSchedule = () => {
       }
     >
       <LoanPaymentScheduleTable
-        data={loanPreview?.paymentSchedule.installments?.slice(0, 11)}
-        total={String(amountConverter(loanPreview?.paymentSchedule?.total ?? 0))}
-        totalInterest={loanPreview?.paymentSchedule?.totalInterest ?? 0}
-        totalPrincipal={loanPreview?.paymentSchedule?.totalPrincipal ?? 0}
+        data={loanPreview?.idealSchedule.installments?.slice(0, 11)}
+        total={String(amountConverter(loanPreview?.idealSchedule?.total ?? 0))}
+        totalInterest={loanPreview?.idealSchedule?.totalInterest ?? 0}
+        totalPrincipal={loanPreview?.idealSchedule?.totalPrincipal ?? 0}
       />
 
       <Modal
@@ -44,10 +44,10 @@ export const LoanPaymentSchedule = () => {
         width="3xl"
       >
         <LoanPaymentScheduleTable
-          data={loanPreview?.paymentSchedule.installments}
-          total={String(amountConverter(loanPreview?.paymentSchedule?.total ?? 0))}
-          totalInterest={loanPreview?.paymentSchedule?.totalInterest ?? 0}
-          totalPrincipal={loanPreview?.paymentSchedule?.totalPrincipal ?? 0}
+          data={loanPreview?.idealSchedule.installments}
+          total={String(amountConverter(loanPreview?.idealSchedule?.total ?? 0))}
+          totalInterest={loanPreview?.idealSchedule?.totalInterest ?? 0}
+          totalPrincipal={loanPreview?.idealSchedule?.totalPrincipal ?? 0}
         />
       </Modal>
     </DetailsCard>

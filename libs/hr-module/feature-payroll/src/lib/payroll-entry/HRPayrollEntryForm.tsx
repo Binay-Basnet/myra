@@ -1,131 +1,109 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { BsArrowBarRight } from 'react-icons/bs';
 import { useRouter } from 'next/router';
-import {
-  useGetDepartmentOptions,
-  useGetDesignationOptions,
-  useGetSalaryAssignmentsWithExtraDetails,
-} from '@hr/common';
-import { filter, includes } from 'lodash';
+import { useGetNepaliMonthsOptions, useGetPayGroupOptions } from '@hr/common';
+import { compact, isEmpty, omit } from 'lodash';
 
-import { asyncToast, Button, FormSection, GridItem } from '@myra-ui';
+import { asyncToast, Box, Button, FormSection, GridItem, Icon, Text, toast } from '@myra-ui';
 
 import {
   PayrollStatus,
-  useApprovePayollRunMutation,
-  useGetBranchListQuery,
-  useGetPayrollRunQuery,
-  useSetPayrollRunMutation,
+  UnPaidEmployeeDetailsInput,
+  useApprovePayrollRunMutation,
+  useCreatePayrollRunMutation,
+  UsedTypeEnum,
+  useGetAllEmployeeSalaryDetailsForThisPayrollRunQuery,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
-import { FormEditableTable, FormLayout, FormSelect } from '@coop/shared/form';
+import { findQueryError, getQueryError, QueryError, ROUTES } from '@coop/cbs/utils';
+import { FormEditableTable, FormInput, FormLayout, FormSelect } from '@coop/shared/form';
+import { decimalAdjust } from '@coop/shared/utils';
 
-import { PayrollEntryBasicDetails } from '../../components';
+import EmployeeDrawer from './components/EmployeeDrawer';
 
 export const HrPayrollEntryUpsert = () => {
-  const [showTable, setShowTable] = useState(false);
   const router = useRouter();
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [usedType, setUsedType] = useState('');
+  const [usedTypeId, setUsedTypeId] = useState('');
+  const [employeeName, setEmployeeName] = useState('');
 
   const isApprove = router?.query?.['type'] === 'approve';
   const isDetail = router?.query?.['type'] === 'details';
 
   const methods = useForm();
-  const { getValues, reset, watch, setValue } = methods;
+  const { getValues, watch, setValue } = methods;
 
-  const { departmentOptions } = useGetDepartmentOptions();
-  const { designationOptions } = useGetDesignationOptions();
+  const { payGroupOptions } = useGetPayGroupOptions();
+  const { nepaliMonthsOptions } = useGetNepaliMonthsOptions();
 
-  const serviceCenterWatch = watch('branchId');
-  const departmentWatch = watch('departmentId');
-  const designationWatch = watch('designationId');
+  const payGroupIdWatch = watch('paygroupId');
+  const payrollYearWatch = watch('payrollYear');
+  const payrollMonthWatch = watch('payrollMonth');
 
-  const salaryAssignmentData = useGetSalaryAssignmentsWithExtraDetails({
-    serviceCenter: serviceCenterWatch,
-    department: departmentWatch,
-    designation: designationWatch,
-  });
+  const { data: employeeSalaryDetailsData } = useGetAllEmployeeSalaryDetailsForThisPayrollRunQuery(
+    {
+      paygroup: payGroupIdWatch,
+      payrollMonth: payrollMonthWatch,
+      year: payrollYearWatch,
+    },
+    {
+      enabled: !!payGroupIdWatch && !!payrollYearWatch && !!payrollMonthWatch,
+      onSuccess: (res) => {
+        const errorKeys = findQueryError(res, 'error');
+        if (errorKeys[0] !== null) {
+          const errorMessage = getQueryError(
+            errorKeys?.length ? errorKeys[0] : (errorKeys as unknown as QueryError)
+          );
 
-  useEffect(() => {
-    if (!router?.query?.['id']) {
-      setValue('salaryAssignments', salaryAssignmentData);
+          toast({
+            id: 'payroll-run-error',
+            type: 'error',
+            state: 'error',
+            message: errorMessage,
+          });
+        }
+      },
     }
-  }, [JSON.stringify(salaryAssignmentData)]);
-
-  const { mutateAsync } = useSetPayrollRunMutation();
-  const { mutateAsync: payrollRunApproveMutateAsync } = useApprovePayollRunMutation();
-
-  const { data: payrollRun } = useGetPayrollRunQuery(
-    { id: router?.query?.['id'] as string },
-    { enabled: !!router?.query?.['id'] }
   );
 
-  const payrollRunEditData = payrollRun?.hr?.payroll?.payrollRun?.getPayrollRun?.data;
+  const employeeSalaryDetails =
+    employeeSalaryDetailsData?.hr?.payroll?.payrollRun
+      ?.getAllEmployeesSalaryDetailsForThisPayrollRun?.data;
 
   useEffect(() => {
-    if (payrollRunEditData) {
-      const employeeList = filter(salaryAssignmentData, (obj) =>
-        includes(payrollRunEditData?.salaryAssignments, obj.id)
-      );
-
-      reset({ ...payrollRunEditData, salaryAssignments: employeeList });
+    if (!isEmpty(employeeSalaryDetails)) {
+      setValue('salaryDetailsOfEmployees', employeeSalaryDetails);
     }
-  }, [JSON.stringify(payrollRunEditData), JSON.stringify(salaryAssignmentData)]);
+  }, [JSON.stringify(employeeSalaryDetails)]);
 
-  const { data: branchData } = useGetBranchListQuery({
-    paginate: {
-      after: '',
-      first: -1,
-    },
-  });
-
-  const serviceCenterOptions = branchData?.settings?.general?.branch?.list?.edges?.map((data) => ({
-    label: data?.node?.name as string,
-    value: data?.node?.id as string,
-  }));
+  const { mutateAsync } = useCreatePayrollRunMutation();
+  const { mutateAsync: payrollRunApproveMutateAsync } = useApprovePayrollRunMutation();
 
   const submitForm = () => {
     const values = getValues();
-    const salaryAssignmentIdList = values?.salaryAssignments?.map(
-      (item: { id: string }) => item?.id
-    );
-
-    if (router?.query?.['id']) {
-      asyncToast({
-        id: 'edit-payroll-run',
-        msgs: {
-          success: 'payroll run edited successfully',
-          loading: 'editing payroll run',
+    asyncToast({
+      id: 'add-payroll-run',
+      msgs: {
+        success: 'new payroll run added succesfully',
+        loading: 'adding new payroll run',
+      },
+      onSuccess: () => {
+        router.push(ROUTES?.HR_PAYROLL_ENTRY_LIST);
+      },
+      promise: mutateAsync({
+        input: {
+          ...values,
+          salaryDetailsOfEmployees: compact(
+            values?.salaryDetailsOfEmployees?.map(
+              (item: UnPaidEmployeeDetailsInput & { isChecked: boolean }) =>
+                item?.isChecked && omit(item, ['isChecked'])
+            )
+          ),
         },
-        onSuccess: () => {
-          router.push(ROUTES?.HR_PAYROLL_ENTRY_LIST);
-        },
-        promise: mutateAsync({
-          id: router?.query?.['id'] as string,
-          input: {
-            ...values,
-            salaryAssignments: salaryAssignmentIdList,
-          },
-        }),
-      });
-    } else {
-      asyncToast({
-        id: 'add-payroll-run',
-        msgs: {
-          success: 'new payroll run added succesfully',
-          loading: 'adding new payroll run',
-        },
-        onSuccess: () => {
-          router.push(ROUTES?.HR_PAYROLL_ENTRY_LIST);
-        },
-        promise: mutateAsync({
-          id: null,
-          input: {
-            ...values,
-            salaryAssignments: salaryAssignmentIdList,
-          },
-        }),
-      });
-    }
+      }),
+    });
   };
 
   const approveHandler = () => {
@@ -162,78 +140,142 @@ export const HrPayrollEntryUpsert = () => {
     });
   };
 
+  const onCloseDrawer = () => {
+    setIsDrawerOpen(false);
+    setUsedType('');
+    setUsedTypeId('');
+  };
+
   return (
-    <FormLayout methods={methods}>
-      <FormLayout.Header title="Payroll Run" />
-      <FormLayout.Content>
-        <FormLayout.Form>
-          <PayrollEntryBasicDetails />
-          {!router?.query?.['id'] && (
-            <FormSection header="Employees" divider>
-              <FormSelect name="branchId" label="Service Center" options={serviceCenterOptions} />
-              <FormSelect name="departmentId" label="Department" options={departmentOptions} />
-              <FormSelect name="designationId" label="Designation" options={designationOptions} />
-              <Button variant="outline" onClick={() => setShowTable(true)}>
-                Get Employees
-              </Button>
+    <>
+      <FormLayout methods={methods}>
+        <FormLayout.Header title="Payroll Run" />
+        <FormLayout.Content>
+          <FormLayout.Form>
+            <FormSection>
+              <FormSelect name="paygroupId" label="Paygroup" options={payGroupOptions} />
+              <FormInput type="number" name="payrollYear" label="Payroll Year" />
+              <FormSelect name="payrollMonth" label="Payroll Month" options={nepaliMonthsOptions} />
             </FormSection>
-          )}
-          {(showTable || router?.query?.['id']) && (
-            <FormSection header="Employees" divider>
-              <GridItem colSpan={4}>
+            <FormSection>
+              <GridItem colSpan={3}>
+                {' '}
                 <FormEditableTable
-                  name="salaryAssignments"
+                  name="salaryDetailsOfEmployees"
+                  label="Employee"
                   canAddRow={false}
+                  hideSN
+                  canDeleteRow={false}
                   columns={[
+                    {
+                      accessor: 'isChecked',
+                      header: '',
+                      fieldType: 'checkbox',
+                      cellWidth: 'sm',
+                    },
                     {
                       accessor: 'employeeName',
                       header: 'Employee Name',
-                      cellWidth: 'lg',
                       getDisabled: () => true,
                     },
                     {
-                      accessor: 'paidDays',
-                      header: 'Paid Days',
+                      accessor: 'unPaidDays',
+                      header: 'Unpaid Days',
                       getDisabled: () => true,
                     },
                     {
                       accessor: 'grossPay',
                       header: 'Gross Pay',
+                      cell: (row) => (
+                        <Text>{decimalAdjust('round', row?.grossPay as number, -2)}</Text>
+                      ),
                       getDisabled: () => true,
                     },
                     {
-                      accessor: 'deductions',
-                      header: 'Deductions',
+                      accessor: 'preTaxDeductions',
+                      header: 'Pre Tax Deductions',
+                      cell: (row) => (
+                        <Text>{decimalAdjust('round', row?.preTaxDeductions as number, -2)}</Text>
+                      ),
+                      getDisabled: () => true,
+                    },
+                    {
+                      accessor: 'postTaxDeductions',
+                      header: 'Post Tax Deductions',
+                      cell: (row) => (
+                        <Text>{decimalAdjust('round', row?.postTaxDeductions as number, -2)}</Text>
+                      ),
+                      getDisabled: () => true,
+                    },
+                    {
+                      accessor: 'totalTax',
+                      header: 'Tax',
+                      cell: (row) => (
+                        <Text>{decimalAdjust('round', row?.totalTax as number, -2)}</Text>
+                      ),
                       getDisabled: () => true,
                     },
                     {
                       accessor: 'netPay',
                       header: 'Net Pay',
+                      cell: (row) => (
+                        <Text>{decimalAdjust('round', row?.netPay as number, -2)}</Text>
+                      ),
                       getDisabled: () => true,
+                    },
+                    {
+                      accessor: '',
+                      header: '',
+                      cell: (row) => (
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          gap="s8"
+                          cursor="pointer"
+                          onClick={() => {
+                            setIsDrawerOpen(true);
+                            setUsedTypeId(row?.usedTypeId as string);
+                            setUsedType(row?.usedType as string);
+                            setEmployeeName(row?.employeeName as string);
+                          }}
+                        >
+                          <Text fontSize="r1" color="green.500" fontWeight="medium">
+                            View
+                          </Text>
+                          <Icon as={BsArrowBarRight} />
+                        </Box>
+                      ),
                     },
                   ]}
                 />
               </GridItem>
             </FormSection>
-          )}
-        </FormLayout.Form>
-      </FormLayout.Content>
-      {isApprove && (
-        <FormLayout.Footer
-          mainButtonLabel="Approve and Generate Salary Slip"
-          draftButton={
-            isApprove && (
-              <Button variant="outline" onClick={rejectHandler}>
-                Reject Request
-              </Button>
-            )
-          }
-          mainButtonHandler={approveHandler}
-        />
-      )}
-      {!isApprove && !isDetail && (
-        <FormLayout.Footer mainButtonLabel="Submit for Approval" mainButtonHandler={submitForm} />
-      )}
-    </FormLayout>
+          </FormLayout.Form>
+        </FormLayout.Content>
+        {isApprove && (
+          <FormLayout.Footer
+            mainButtonLabel="Approve and Generate Salary Slip"
+            draftButton={
+              isApprove && (
+                <Button variant="outline" onClick={rejectHandler}>
+                  Reject Request
+                </Button>
+              )
+            }
+            mainButtonHandler={approveHandler}
+          />
+        )}
+        {!isApprove && !isDetail && (
+          <FormLayout.Footer mainButtonLabel="Submit for Approval" mainButtonHandler={submitForm} />
+        )}
+      </FormLayout>
+      <EmployeeDrawer
+        isDrawerOpen={isDrawerOpen}
+        onCloseDrawer={onCloseDrawer}
+        usedType={usedType as UsedTypeEnum}
+        usedTypeId={usedTypeId}
+        employeeName={employeeName}
+      />
+    </>
   );
 };

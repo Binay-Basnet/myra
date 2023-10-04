@@ -241,8 +241,7 @@ export const NewAccountTransfer = () => {
                         name="destAccountId"
                         label={t['newAccountTransferReceipentAccount']}
                         memberId={destMemberId}
-                        filterBy={ObjState.Active}
-                        includeLoc
+                        isLinkedAccounts
                       />
                     </>
                   )}

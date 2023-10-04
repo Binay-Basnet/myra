@@ -19,15 +19,15 @@ type ServerError = { __typename: 'ServerError'; code: number; serverErrorMessage
 export type QueryError = AuthorizationError | BadRequestError | NotFoundError | ServerError;
 
 export const getQueryError = (error: QueryError) => {
-  switch (error.__typename) {
+  switch (error?.__typename) {
     case 'BadRequestError':
-      return error.badRequestErrorMessage;
+      return error?.badRequestErrorMessage;
     case 'AuthorizationError':
-      return error.authorizationErrorMsg;
+      return error?.authorizationErrorMsg;
     case 'NotFoundError':
-      return error.notFoundErrorMsg;
+      return error?.notFoundErrorMsg;
     case 'ServerError':
-      return error.serverErrorMessage;
+      return error?.serverErrorMessage;
     default:
       return 'Something Went Wrong';
   }

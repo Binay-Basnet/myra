@@ -80,7 +80,7 @@ export const FormAccountSelect = ({
       includeLoc,
     },
     {
-      enabled: !!isLinkedAccounts,
+      enabled: !!memberId && memberId !== 'undefined' && !!isLinkedAccounts,
     }
   );
 

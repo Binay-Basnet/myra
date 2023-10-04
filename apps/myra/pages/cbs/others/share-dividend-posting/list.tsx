@@ -1,13 +1,11 @@
 import { ReactElement } from 'react';
 
-import { OthersPageLayout } from '@coop/cbs/others/ui-layouts';
-import { Box, MainLayout, WIPState } from '@myra-ui';
+import { MainLayout } from '@myra-ui';
 
-const FundManagementListPage = () => (
-  <Box display="flex" justifyContent="center" alignItems="center" pt="60px">
-    <WIPState />
-  </Box>
-);
+import { ShareDividendPostingList } from '@coop/cbs/others/share-dividend-posting';
+import { OthersPageLayout } from '@coop/cbs/others/ui-layouts';
+
+const FundManagementListPage = () => <ShareDividendPostingList />;
 
 export default FundManagementListPage;
 

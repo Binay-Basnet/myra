@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
-import { Box, Button, FormSection, Grid, GridItem, ResponseDialog, Text } from '@myra-ui';
+import { Box, Button, Divider, FormSection, Grid, GridItem, ResponseDialog, Text } from '@myra-ui';
 
 import {
   DepositedBy,
@@ -56,15 +56,27 @@ interface MembershipPaymentProps {
   setMode: Dispatch<SetStateAction<'details' | 'payment'>>;
 }
 
+type Testtype = {
+  isFullyPaid?: boolean | null;
+  amount?: string | null;
+
+  ledgerId?: string | null;
+  ledgerName?: string | null;
+  remainingPay?: string | null | number;
+};
+
 export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const id = router.query['id'] as string;
 
   const [totalAmount, setTotalAmount] = useState('');
+  const [totalPaid, setTotalPaid] = useState('');
+
+  const [array, setArray] = useState<Testtype[] | null>([]);
 
   const { mutateAsync: payFee } = usePayMembershipMutation();
-  useGetMembershipFeeQuery(
+  const data = useGetMembershipFeeQuery(
     {
       memberID: id,
     },
@@ -76,6 +88,8 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
         ),
     }
   );
+  const ledgerArray = data?.data?.members?.activateMember?.getMembershipFee?.data?.ledgerInfo;
+  // dataForPayment?.data?.members?.activateMember?.getMembershipFee?.data?.ledgerInfo;
 
   const methods = useForm<CustomMembershipPaymentInput>({
     defaultValues: {
@@ -105,6 +119,8 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
     0;
 
   const cashPaid = watch('cashData.cash');
+  const withdrawSlipAmount = watch('withdrawSlipData.amount');
+  const bankDepositAmount = watch('bankDeposit.amount');
   const totalCashPaid = Number((disableDenomination ? cashPaid : denominationTotal) ?? 0);
   const returnAmount = totalCashPaid - Number(totalAmount) ?? 0;
 
@@ -152,6 +168,48 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
       methods.setValue('withdrawSlipData.amount', String(totalAmount));
     }
   }, [totalAmount]);
+
+  // for ledger deduction
+  useEffect(() => {
+    let remainingAmount = totalPaid ? Number(totalPaid || '0') : Number(totalAmount || '0');
+    const result: Testtype[] | null = [];
+    if (ledgerArray?.length) {
+      for (let i = 0; i < ledgerArray?.length; i += 1) {
+        const item = ledgerArray[i];
+
+        const pay = Number(item?.amount || '0');
+        const isFullyPaid = pay <= remainingAmount;
+        if (isFullyPaid) {
+          remainingAmount -= pay;
+          result.push({
+            ...item,
+            remainingPay: remainingAmount,
+            isFullyPaid: true,
+          });
+        } else {
+          result.push({ ...item, isFullyPaid: false, remainingPay: (remainingAmount -= pay) });
+          break;
+        }
+      }
+    }
+    setArray(result);
+  }, [ledgerArray, totalAmount, totalPaid]);
+
+  useEffect(() => {
+    if (cashPaid && selectedPaymentMode === 'CASH') {
+      setTotalPaid(cashPaid);
+    }
+  }, [cashPaid, selectedPaymentMode]);
+  useEffect(() => {
+    if (withdrawSlipAmount && selectedPaymentMode === 'WITHDRAW_SLIP') {
+      setTotalPaid(withdrawSlipAmount);
+    }
+  }, [withdrawSlipAmount, selectedPaymentMode]);
+  useEffect(() => {
+    if (bankDepositAmount && selectedPaymentMode === 'BANK_VOUCHER') {
+      setTotalPaid(bankDepositAmount);
+    }
+  }, [bankDepositAmount, selectedPaymentMode]);
 
   const onSubmit = () => {
     const values = methods.getValues();
@@ -210,7 +268,7 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
   };
 
   return (
-    <FormLayout methods={methods}>
+    <FormLayout methods={methods} hasSidebar>
       <FormLayout.Header title="Membership Payment" />
       <FormLayout.Content>
         <FormLayout.Form>
@@ -386,6 +444,39 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
             </FormSection>
           </Box>
         </FormLayout.Form>
+        <FormLayout.Sidebar>
+          <Box p="s16">
+            <Box
+              w="100%"
+              p="s16"
+              display="flex"
+              flexDirection="column"
+              gap="s4"
+              bg="gray.100"
+              alignItems="start"
+            >
+              <Text fontWeight="500" fontSize="r1" pb="s16">
+                Affected Ledgers
+              </Text>
+              {array?.map((item) => (
+                <Box display="flex" flexDir="column" gap="s4">
+                  <Text fontWeight="500" fontSize="s3">{`${item?.ledgerName}`}</Text>
+                  <Text fontWeight="500" fontSize="s3">{`Amount -${item?.amount}`}</Text>
+
+                  <Text fontWeight="500" fontSize="s3" color="primary.500">{`Amount Paid - ${
+                    item?.isFullyPaid
+                      ? item?.amount
+                      : Number(item?.amount || '0') - Math.abs(Number(item?.remainingPay))
+                  }`}</Text>
+                  <Text fontWeight="500" fontSize="s3" color="danger.500">{`Amount Remaining - ${
+                    item?.isFullyPaid ? '0' : Math.abs(Number(item?.remainingPay || '0'))
+                  }`}</Text>
+                  <Divider />
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        </FormLayout.Sidebar>
       </FormLayout.Content>
 
       <FormLayout.Footer
@@ -414,6 +505,19 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
             successCardProps={(response) => {
               const result = response?.members?.activateMember?.membershipPayment?.record;
               const total = result?.amount;
+              let tempObj: Record<string, string> = {};
+
+              if (result?.ledgersInfo?.length) {
+                for (let i = 0; i < result?.ledgersInfo?.length; i += 1) {
+                  const item = result?.ledgersInfo?.[i];
+                  let tempDetails: Record<string, string> = {};
+                  tempDetails = {
+                    [`${item?.ledgerName}`]: String(item?.amount),
+                  };
+
+                  tempObj = { ...tempObj, ...tempDetails };
+                }
+              }
 
               return {
                 type: 'Membership Payment',
@@ -432,7 +536,7 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
                   ),
                   Date: localizedDate(result?.date),
                   'Payment Mode': result?.paymentMode,
-
+                  ...tempObj,
                   'Deposited By':
                     result?.depositedBy === 'OTHER'
                       ? `Other --${result?.depositedOther}`

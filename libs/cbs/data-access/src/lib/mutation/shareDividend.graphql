@@ -6,7 +6,7 @@ mutation postShareDividend($data: ShareDividendInput!, $commit: Boolean) {
         MemberID
         MemberCode
         MemberName
-        AverageShareCount
+        TotalShareBalanceSum
         ShareCount
         SavingAmount
         TotalAmount

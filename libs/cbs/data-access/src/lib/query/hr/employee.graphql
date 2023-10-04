@@ -65,7 +65,11 @@ query getSingleEmployeeDetails($id: String!) {
           record {
             id
             isCoopMember
+            isMyraErpUser
+            isJobApplication
             coopMemberId
+            myraErpUserId
+            jobApplicationId
             firstName
             middleName
             lastName

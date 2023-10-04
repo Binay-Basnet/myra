@@ -17,6 +17,14 @@ mutation setDepositData($data: DepositInput!) {
         accountId
         accountName
         depositedOther
+        from {
+          date
+          month
+        }
+        to {
+          date
+          month
+        }
       }
       error {
         ...MutationError
@@ -29,6 +37,24 @@ mutation setBulkDepositData($data: BulkDepositInput) {
   transaction {
     bulkDeposit(data: $data) {
       recordId
+      record {
+        amount
+        rebate
+        totalAmount
+        createdAt
+        date
+        depositedBy
+        depositedOther
+        discount
+        fine
+        memberId
+        memberName
+        paymentMode
+        accounts {
+          accountName
+          amount
+        }
+      }
       error {
         ...MutationError
       }

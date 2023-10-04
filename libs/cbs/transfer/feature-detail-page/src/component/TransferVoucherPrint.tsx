@@ -41,7 +41,7 @@ export const TransferVoucherPrint = forwardRef<HTMLInputElement, TransferVoucher
             color: '#000',
           },
           '@page': {
-            size: 'A4 portrait',
+            size: 'auto !important',
             margin: '0.1in',
           },
         }}

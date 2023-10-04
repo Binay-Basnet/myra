@@ -220,7 +220,7 @@ export const UpcomingPayments = () => {
             borderRadius: '0',
           },
           '@page': {
-            size: 'A4 portrait',
+            size: 'auto !important',
             margin: '0.1in',
           },
         }}

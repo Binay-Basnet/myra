@@ -42,6 +42,10 @@ query getSalaryStructureAssignment($id: String!) {
               id
               amount
             }
+            deductions {
+              id
+              amount
+            }
           }
           error {
             ...MutationError
@@ -200,6 +204,127 @@ query getSalStructureAdjustRevision($id: ID) {
             deductions {
               id
               amount
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAllEmployeeSalaryDetailsForThisPayrollRun(
+  $paygroup: ID
+  $payrollMonth: NepaliMonths
+  $year: Int
+) {
+  hr {
+    payroll {
+      payrollRun {
+        getAllEmployeesSalaryDetailsForThisPayrollRun(
+          paygroup: $paygroup
+          payrollMonth: $payrollMonth
+          year: $year
+        ) {
+          data {
+            employeeId
+            employeeName
+            unPaidDays
+            grossPay
+            preTaxDeductions
+            taxableIncome
+            totalTax
+            taxReceivedOrPaid
+            postTaxDeductions
+            netPay
+            usedType
+            usedTypeId
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getGrossEarningsDetails($id: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        getGrossEarningsDetails(id: $id) {
+          data
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getPreTaxDeductionsDetails($employeeId: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        getPreTaxDeductionsDetails(employeeId: $employeeId) {
+          data
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getPostTaxDeductionsDetails($employeeId: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        getPostTaxDeductionsDetails(employeeId: $employeeId) {
+          data
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getTaxPaidEachMonthDetails($employeeId: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        getTaxPaidEachMonthDetails(employeeId: $employeeId) {
+          data {
+            taxPaidEachMonth
+            totalTaxPaid
+            taxRemainingToBePaid
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getCurrentTaxSlab($employee: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        getCurrentTaxSlab(employee: $employee) {
+          data {
+            taxSlab {
+              fromAmount
+              toAmount
+              percentageDeduction
             }
           }
           error {

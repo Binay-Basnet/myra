@@ -59,6 +59,8 @@ mutation setLoanRepayment($data: LoanRepaymentInput) {
           currentRemainingPrincipal
           remainingInterest
         }
+        totalRemainingPrincipal
+        totalRemainingInterest
       }
 
       recordId

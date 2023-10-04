@@ -185,13 +185,13 @@ export const SalaryStructureAssignmentAdd = () => {
                     accessor: 'amount',
                     header: 'Amount',
                     isNumeric: true,
-                    getDisabled: (row) => {
-                      const selectedEarningComponent = earningComponentData?.find(
-                        (item) => item?.node?.id === row?.id
-                      );
+                    // getDisabled: (row) => {
+                    //   const selectedEarningComponent = earningComponentData?.find(
+                    //     (item) => item?.node?.id === row?.id
+                    //   );
 
-                      return !!selectedEarningComponent;
-                    },
+                    //   return !!selectedEarningComponent;
+                    // },
                   },
 
                   {
@@ -244,13 +244,13 @@ export const SalaryStructureAssignmentAdd = () => {
                     accessor: 'amount',
                     header: 'Amount',
                     isNumeric: true,
-                    getDisabled: (row) => {
-                      const selectedEarningComponent = earningComponentData?.find(
-                        (item) => item?.node?.id === row?.id
-                      );
+                    // getDisabled: (row) => {
+                    //   const selectedEarningComponent = earningComponentData?.find(
+                    //     (item) => item?.node?.id === row?.id
+                    //   );
 
-                      return !!selectedEarningComponent;
-                    },
+                    //   return !!selectedEarningComponent;
+                    // },
                   },
                   {
                     accessor: 'formula',

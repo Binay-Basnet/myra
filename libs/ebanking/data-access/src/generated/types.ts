@@ -556,6 +556,10 @@ export type EBankingAccountQueryGetArgs = {
   id: Scalars['ID'];
 };
 
+export type EBankingAccountQueryListArgs = {
+  filter?: InputMaybe<EbankingAccountFilter>;
+};
+
 export const EBankingActiveLoanStatus = {
   Pending: 'Pending',
   Processing: 'Processing',
@@ -1012,6 +1016,10 @@ export type EbankingAccountExistsResult = {
   error?: Maybe<MutationError>;
   record?: Maybe<EbankingUser>;
   success?: Maybe<Scalars['Boolean']>;
+};
+
+export type EbankingAccountFilter = {
+  allowedAccount?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type EbankingAccountRecord = {
@@ -1584,6 +1592,8 @@ export type KymIndAddResult = {
 
 export type KymIndMemberInput = {
   annualIncomeSourceId?: InputMaybe<Scalars['String']>;
+  bankAccountId?: InputMaybe<Scalars['String']>;
+  bankId?: InputMaybe<Scalars['String']>;
   beneficialFullName?: InputMaybe<Scalars['String']>;
   beneficialRelationshipId?: InputMaybe<Scalars['String']>;
   convictedDetails?: InputMaybe<Scalars['String']>;
@@ -1612,7 +1622,7 @@ export type KymIndMemberInput = {
   incomeSource?: InputMaybe<Array<InputMaybe<KymIndIncomeSourceInput>>>;
   initialLoan?: InputMaybe<Scalars['String']>;
   initialSaving?: InputMaybe<Scalars['String']>;
-  initialShare?: InputMaybe<Scalars['Int']>;
+  initialShare?: InputMaybe<Scalars['String']>;
   isConvicted?: InputMaybe<Scalars['Boolean']>;
   isFamilyAMember?: InputMaybe<Scalars['Boolean']>;
   isForeignEmployment?: InputMaybe<Scalars['Boolean']>;
@@ -1678,6 +1688,7 @@ export type LoanInstallment = {
   payment: Scalars['String'];
   penalty?: Maybe<Scalars['String']>;
   principal: Scalars['String'];
+  rebate?: Maybe<Scalars['String']>;
   remainingInterest: Scalars['String'];
   remainingPrincipal: Scalars['String'];
   status?: Maybe<LoanInstallmentStatus>;
@@ -3036,6 +3047,7 @@ export type MakePaymentMutation = {
 };
 
 export type GetAccountListQueryVariables = Exact<{
+  listFilter?: InputMaybe<EbankingAccountFilter>;
   transactionPagination?: InputMaybe<Pagination>;
 }>;
 
@@ -3085,6 +3097,7 @@ export type GetAccountSummaryQuery = {
 };
 
 export type GetTransactionListsQueryVariables = Exact<{
+  listFilter?: InputMaybe<EbankingAccountFilter>;
   filter?: InputMaybe<EbankingTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 }>;

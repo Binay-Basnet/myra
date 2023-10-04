@@ -91,6 +91,11 @@ query getAccountOpenProductDetails($id: ID!) {
               penaltyAmount
               penaltyLedgerMapping
             }
+            fixedDepositAmountLimit {
+              avgAmount
+              maxAmount
+              minAmount
+            }
             rebate
             rebateData {
               dayBeforeInstallmentDate
@@ -518,6 +523,7 @@ query getAccountDetailsData($id: ID!) {
           profilePicUrl
           profilePic
           signaturePicUrl
+
           address {
             state
             district
@@ -543,6 +549,7 @@ query getAccountDetailsData($id: ID!) {
         productName
         accountOpenDate
         accountType
+        minorName
         defaultAccountType
         accountBalance
         totalDepositBalance

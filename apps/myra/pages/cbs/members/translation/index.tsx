@@ -20,7 +20,7 @@ const Translation = () => {
 
   const router = useRouter();
   const id = String(router?.query?.id);
-  const isIndividual = router?.query?.type === 'individual';
+  const isIndividual = router?.asPath?.slice(-4)?.includes('INDI');
   // const translatedData = useGetMemberTranslationQuery({ id });
   // const translationDataArray = translatedData?.data?.members?.translate.data;
 
@@ -121,7 +121,7 @@ const Translation = () => {
                   {isIndividual && (
                     <>
                       {' '}
-                      <Box>
+                      {/* <Box>
                         <FormSwitchTab
                           label="Is Member a Staff?"
                           options={booleanList}
@@ -139,12 +139,11 @@ const Translation = () => {
                           options={booleanList}
                           name="checkNegative"
                         />
-                      </Box>
+                      </Box> */}
                       <Box>
-                        <Text fontWeight="Regular" fontSize="s3" color="neutralColorLight.gray-80">
-                          Risk Category
-                        </Text>
                         <FormRadioGroup
+                          label="Risk Category"
+                          orientation="vertical"
                           name="riskCategory"
                           radioList={['Low Risk', 'Medium Risk', 'High Risk', 'PEP Risk']}
                           labelFontSize="s3"

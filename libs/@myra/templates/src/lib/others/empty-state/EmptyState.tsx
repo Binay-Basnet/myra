@@ -47,7 +47,7 @@ export const EmptyState = (props: IEmptyStateProps) => {
                   forms[0].onClick();
                 } else if (forms[0].idType) {
                   mutateAsync({ idType: forms[0]?.idType ?? null }).then((res) =>
-                    router.push(`${forms[0].route}/${res?.newId}`)
+                    router.push(`${forms[0].route}?id=${res?.newId}`)
                   );
                 } else {
                   router.push(forms[0].route as string);
@@ -69,7 +69,7 @@ export const EmptyState = (props: IEmptyStateProps) => {
                         item.onClick();
                       } else if (item.idType) {
                         mutateAsync({ idType: item?.idType ?? null }).then((res) =>
-                          router.push(`${item.route}/${res?.newId}`)
+                          router.push(`${item.route}?id=${res?.newId}`)
                         );
                       } else {
                         router.push(item.route as string);

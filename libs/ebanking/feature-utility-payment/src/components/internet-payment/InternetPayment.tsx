@@ -19,7 +19,10 @@ interface InternetPaymentProps {
 
 export const InternetPayment = ({ setCurrentSequence }: InternetPaymentProps) => {
   const user = useAppSelector((state) => state.auth.cooperative.user);
-  const { data } = useGetAccountListQuery({ transactionPagination: { after: '', first: 1 } });
+  const { data } = useGetAccountListQuery({
+    listFilter: { allowedAccount: true },
+    transactionPagination: { after: '', first: 1 },
+  });
 
   const accounts = data?.eBanking?.account?.list?.accounts?.map((account) => ({
     label: `${account?.name} - ${account?.accountNumber} ${

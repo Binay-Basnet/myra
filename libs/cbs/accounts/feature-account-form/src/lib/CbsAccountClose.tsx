@@ -755,7 +755,7 @@ export const CbsAccountClose = () => {
                     'Account Closed Date': localizedDate(result?.accCloseDate),
                     'Reason For Closing': result?.closeReason,
                     'Account Name': result?.accName,
-                    Principal: amountConverter(principal),
+                    Balance: amountConverter(principal),
                     'Total Interest': result?.interest,
 
                     Tax: amountConverter(result?.tax || '0'),

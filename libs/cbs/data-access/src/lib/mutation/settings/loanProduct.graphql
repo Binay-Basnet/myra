@@ -150,3 +150,26 @@ mutation updateLoanProductRebate(
     }
   }
 }
+
+mutation updateLoanPrematurePenalty(
+  $productId: ID!
+  $allowPenalty: Boolean!
+  $payload: PrematurePenalty
+) {
+  settings {
+    general {
+      loanProducts {
+        updatePrematurePenalty(
+          productId: $productId
+          allowPenalty: $allowPenalty
+          payload: $payload
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
