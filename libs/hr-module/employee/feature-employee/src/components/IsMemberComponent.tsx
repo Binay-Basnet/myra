@@ -149,6 +149,7 @@ export const IsMemberComponent = () => {
       setValue('isCoopMember', isCoopMemberWatch);
       setValue('isMyraErpUser', isMyraErpUserWatch);
       setValue('isJobApplication', isJobApplicationWatch);
+      setValue('coopMemberId', coopMemberIdWatch);
       setValue('jobApplicationId', jobApplicantIdWatch);
       setValue('myraErpUserId', myraErpUserIdWatch);
     }

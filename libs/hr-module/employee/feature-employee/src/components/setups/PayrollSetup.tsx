@@ -1,13 +1,14 @@
 import { useFormContext } from 'react-hook-form';
-import { useGetSalaryStructureOptions } from '@hr/common';
+import { useGetPayGroupOptions, useGetSalaryStructureOptions } from '@hr/common';
 
 import { Box, FormSection, GridItem } from '@myra-ui';
 
-import { PaymentMode, useGetBankListQuery } from '@coop/cbs/data-access';
+import { ObjState, PaymentMode, useGetBankListQuery } from '@coop/cbs/data-access';
 import { FormAccountSelect, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 
 export const PayrollSetup = () => {
   const { salaryStructureOptions } = useGetSalaryStructureOptions();
+  const { payGroupOptions } = useGetPayGroupOptions();
   const { watch } = useFormContext();
 
   const coopMemberIdWatch = watch('coopMemberId');
@@ -22,7 +23,7 @@ export const PayrollSetup = () => {
       header="Payroll Setup"
       subHeader="Following fields are optional and can be updated later from Employee > Payroll ? Payroll Setup"
     >
-      <FormSelect name="payGroup" label="Pay Group" />
+      <FormSelect name="payGroup" label="Pay Group" options={payGroupOptions} />
       <FormInput name="panNumber" label="Pan" />
       <FormSelect
         name="salaryStructureId"
@@ -52,7 +53,12 @@ export const PayrollSetup = () => {
       {salaryPaymentModeWatch === PaymentMode?.Account && (
         <GridItem colSpan={3}>
           <Box w="-webkit-fit-content">
-            <FormAccountSelect name="account" label="Select Account" memberId={coopMemberIdWatch} />
+            <FormAccountSelect
+              name="account"
+              label="Select Account"
+              memberId={coopMemberIdWatch}
+              filterBy={ObjState.Active}
+            />
           </Box>
         </GridItem>
       )}

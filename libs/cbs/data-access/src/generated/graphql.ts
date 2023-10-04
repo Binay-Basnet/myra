@@ -3080,6 +3080,11 @@ export const BuildingType = {
 } as const;
 
 export type BuildingType = typeof BuildingType[keyof typeof BuildingType];
+export type BulkDepositAccounts = {
+  accountName?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+};
+
 export type BulkDepositInput = {
   accounts?: InputMaybe<Array<InputMaybe<BulkDepositInstanceInput>>>;
   agentId?: InputMaybe<Scalars['String']>;
@@ -3105,6 +3110,7 @@ export type BulkDepositInstanceInput = {
 };
 
 export type BulkDepositOutput = {
+  accounts?: Maybe<Array<Maybe<BulkDepositAccounts>>>;
   amount?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Localized']>;
   date?: Maybe<Scalars['Localized']>;
@@ -8732,6 +8738,7 @@ export type GlReportSummary = {
 export type GlStatementFilter = {
   amount?: InputMaybe<MinMaxFilter>;
   bank?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  includeZero?: InputMaybe<Scalars['Boolean']>;
   natureOfTransactions?: InputMaybe<NatureOfBankTransaction>;
 };
 
@@ -22671,6 +22678,7 @@ export type TellerDayBookReportFilter = {
 };
 
 export type TellerFilter = {
+  includeZero?: InputMaybe<Scalars['Boolean']>;
   tellerId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   tellerType?: InputMaybe<TellerType>;
 };
@@ -33640,7 +33648,11 @@ export type GetSingleEmployeeDetailsQuery = {
           record?: {
             id?: string | null;
             isCoopMember?: boolean | null;
+            isMyraErpUser?: boolean | null;
+            isJobApplication?: boolean | null;
             coopMemberId?: string | null;
+            myraErpUserId?: string | null;
+            jobApplicationId?: string | null;
             firstName?: string | null;
             middleName?: string | null;
             lastName?: string | null;
@@ -60869,7 +60881,11 @@ export const GetSingleEmployeeDetailsDocument = `
           record {
             id
             isCoopMember
+            isMyraErpUser
+            isJobApplication
             coopMemberId
+            myraErpUserId
+            jobApplicationId
             firstName
             middleName
             lastName

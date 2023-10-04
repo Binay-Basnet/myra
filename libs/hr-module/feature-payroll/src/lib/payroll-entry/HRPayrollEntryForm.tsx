@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useGetNepaliMonthsOptions, useGetPayGroupOptions } from '@hr/common';
 import { compact, isEmpty, omit } from 'lodash';
 
-import { asyncToast, Box, Button, FormSection, GridItem, Icon, Text } from '@myra-ui';
+import { asyncToast, Box, Button, FormSection, GridItem, Icon, Text, toast } from '@myra-ui';
 
 import {
   PayrollStatus,
@@ -15,7 +15,7 @@ import {
   UsedTypeEnum,
   useGetAllEmployeeSalaryDetailsForThisPayrollRunQuery,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { findQueryError, getQueryError, QueryError, ROUTES } from '@coop/cbs/utils';
 import { FormEditableTable, FormInput, FormLayout, FormSelect } from '@coop/shared/form';
 
 import EmployeeDrawer from './components/EmployeeDrawer';
@@ -49,6 +49,19 @@ export const HrPayrollEntryUpsert = () => {
     },
     {
       enabled: !!payGroupIdWatch && !!payrollYearWatch && !!payrollMonthWatch,
+      onSuccess: (res) => {
+        const errorKeys = findQueryError(res, 'error');
+        const errorMessage = getQueryError(
+          errorKeys?.length ? errorKeys[0] : (errorKeys as unknown as QueryError)
+        );
+        !isEmpty(errorMessage) &&
+          toast({
+            id: 'payroll-run-error',
+            type: 'error',
+            state: 'error',
+            message: errorMessage,
+          });
+      },
     }
   );
 

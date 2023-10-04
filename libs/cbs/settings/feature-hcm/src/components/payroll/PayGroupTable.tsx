@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
-import { BiEdit } from 'react-icons/bi';
 import { compact, isEmpty } from 'lodash';
 
 import {
@@ -89,18 +88,6 @@ export const PayGroupTable = () => {
   const { mutateAsync, isLoading } = useSetPayGroupMutation();
   const { mutateAsync: deleteMutateAsync } = useDeletePayGroupMutation();
 
-  // const { data: payGroupData } = useGetPayGroupQuery(
-  //   { id: selectedPayGroupId },
-  //   { enabled: !!selectedPayGroupId }
-  // );
-
-  // const payGroupDataEdit =
-  //   payGroupData?.settings?.general?.HCM?.payroll?.paygroup?.getPayGroup?.data;
-
-  // useEffect(() => {
-  //   reset(omit({ ...payGroupDataEdit }, ['id']) as InputPayGroup);
-  // }, [payGroupDataEdit]);
-
   const rowData = useMemo(
     () => data?.settings?.general?.HCM?.payroll?.paygroup?.listPayGroup?.edges ?? [],
     [data]
@@ -131,34 +118,19 @@ export const PayGroupTable = () => {
       {
         header: 'Actions',
         cell: (props) => (
-          <Box display="flex" alignItems="center" gap="s24">
-            <Box
-              display="flex"
-              alignItems="center"
-              gap="s8"
-              cursor="pointer"
-              onClick={() => {
-                setselectedPayGroupId(props?.row?.original?.node?.id as string);
-                setIsAddModal(true);
-              }}
-            >
-              <Icon as={BiEdit} />
-              <Text>Edit</Text>
-            </Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              color="red.500"
-              gap="s8"
-              cursor="pointer"
-              onClick={() => {
-                setselectedPayGroupId(props?.row?.original?.node?.id as string);
-                setIsDeleteModalOpen(true);
-              }}
-            >
-              <Icon as={AiOutlineDelete} />
-              <Text>Delete</Text>
-            </Box>
+          <Box
+            display="flex"
+            alignItems="center"
+            color="red.500"
+            gap="s8"
+            cursor="pointer"
+            onClick={() => {
+              setselectedPayGroupId(props?.row?.original?.node?.id as string);
+              setIsDeleteModalOpen(true);
+            }}
+          >
+            <Icon as={AiOutlineDelete} />
+            <Text>Delete</Text>
           </Box>
         ),
       },
