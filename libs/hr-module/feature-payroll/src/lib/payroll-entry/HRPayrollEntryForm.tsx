@@ -17,6 +17,7 @@ import {
 } from '@coop/cbs/data-access';
 import { findQueryError, getQueryError, QueryError, ROUTES } from '@coop/cbs/utils';
 import { FormEditableTable, FormInput, FormLayout, FormSelect } from '@coop/shared/form';
+import { decimalAdjust } from '@coop/shared/utils';
 
 import EmployeeDrawer from './components/EmployeeDrawer';
 
@@ -51,16 +52,18 @@ export const HrPayrollEntryUpsert = () => {
       enabled: !!payGroupIdWatch && !!payrollYearWatch && !!payrollMonthWatch,
       onSuccess: (res) => {
         const errorKeys = findQueryError(res, 'error');
-        const errorMessage = getQueryError(
-          errorKeys?.length ? errorKeys[0] : (errorKeys as unknown as QueryError)
-        );
-        !isEmpty(errorMessage) &&
+        if (errorKeys[0] !== null) {
+          const errorMessage = getQueryError(
+            errorKeys?.length ? errorKeys[0] : (errorKeys as unknown as QueryError)
+          );
+
           toast({
             id: 'payroll-run-error',
             type: 'error',
             state: 'error',
             message: errorMessage,
           });
+        }
       },
     }
   );
@@ -183,26 +186,41 @@ export const HrPayrollEntryUpsert = () => {
                     {
                       accessor: 'grossPay',
                       header: 'Gross Pay',
+                      cell: (row) => (
+                        <Text>{decimalAdjust('round', row?.grossPay as number, -2)}</Text>
+                      ),
                       getDisabled: () => true,
                     },
                     {
                       accessor: 'preTaxDeductions',
                       header: 'Pre Tax Deductions',
+                      cell: (row) => (
+                        <Text>{decimalAdjust('round', row?.preTaxDeductions as number, -2)}</Text>
+                      ),
                       getDisabled: () => true,
                     },
                     {
                       accessor: 'postTaxDeductions',
                       header: 'Post Tax Deductions',
+                      cell: (row) => (
+                        <Text>{decimalAdjust('round', row?.postTaxDeductions as number, -2)}</Text>
+                      ),
                       getDisabled: () => true,
                     },
                     {
                       accessor: 'totalTax',
                       header: 'Tax',
+                      cell: (row) => (
+                        <Text>{decimalAdjust('round', row?.totalTax as number, -2)}</Text>
+                      ),
                       getDisabled: () => true,
                     },
                     {
                       accessor: 'netPay',
                       header: 'Net Pay',
+                      cell: (row) => (
+                        <Text>{decimalAdjust('round', row?.netPay as number, -2)}</Text>
+                      ),
                       getDisabled: () => true,
                     },
                     {
