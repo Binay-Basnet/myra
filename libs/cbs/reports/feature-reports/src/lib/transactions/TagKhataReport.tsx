@@ -12,13 +12,16 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormBranchSelect, FormSelect } from '@coop/shared/form';
+import { FormBranchSelect, FormRadioGroup, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type ReportFilter = {
   branchId: { label: string; value: string }[];
   period: LocalizedDateFilter;
   tagId: { label: string; value: string }[];
+  filter: {
+    includeZero?: 'include' | 'exclude';
+  };
 };
 
 export type Ledger = {
@@ -62,6 +65,9 @@ export const TagKhataReport = () => {
         } as LocalizedDateFilter,
         branchId: branchIDs,
         tagId,
+        filter: {
+          includeZero: filters?.filter?.includeZero === 'include',
+        },
       },
     },
     { enabled: !!filters }
@@ -235,6 +241,18 @@ export const TagKhataReport = () => {
             tableTitle="Payments (Dr.)"
           />
         </Report.Content>
+        <Report.Filters>
+          <Report.Filter title="Zero Balance">
+            <FormRadioGroup
+              name="filter.includeZero"
+              options={[
+                { label: 'Include', value: 'include' },
+                { label: 'Exclude', value: 'exclude' },
+              ]}
+              direction="column"
+            />
+          </Report.Filter>
+        </Report.Filters>
       </Report.Body>
     </Report>
   );

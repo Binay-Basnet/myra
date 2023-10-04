@@ -4090,7 +4090,7 @@ export type ClosedSavingAccountResultData = {
 
 export type CoaHeadTransferInput = {
   destinationCoaHead: Scalars['String'];
-  sorceCoaHead: Scalars['String'];
+  sourceCoaHead: Scalars['String'];
 };
 
 export type CoaHeadTransferResult = {
@@ -20983,6 +20983,7 @@ export const SeparationStatusEnum = {
 
 export type SeparationStatusEnum = typeof SeparationStatusEnum[keyof typeof SeparationStatusEnum];
 export const SeparationTypeEnum = {
+  OnNoticePeriod: 'ON_NOTICE_PERIOD',
   Resigned: 'RESIGNED',
   Retired: 'RETIRED',
   Transferred: 'TRANSFERRED',
@@ -24049,7 +24050,7 @@ export type WithdrawRecord = {
   fine?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
-  paymentMode?: Maybe<WithdrawPaymentType>;
+  paymentMode?: Maybe<Scalars['String']>;
   slipNo?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['String']>;
   transactionID?: Maybe<Scalars['ID']>;
@@ -24166,6 +24167,7 @@ export type WithdrawTransactionView = {
   transactionDate?: Maybe<Scalars['Localized']>;
   txnUserName?: Maybe<Scalars['String']>;
   withdrawAmount?: Maybe<Scalars['String']>;
+  withdrawSlipNo?: Maybe<Scalars['String']>;
   withdrawWith?: Maybe<WithdrawWith>;
   withdrawnBy?: Maybe<WithdrawBy>;
 };
@@ -30097,7 +30099,7 @@ export type SetWithdrawDataMutation = {
         withdrawnBy?: WithdrawBy | null;
         withdrawOther?: string | null;
         withdrawWith?: WithdrawWith | null;
-        paymentMode?: WithdrawPaymentType | null;
+        paymentMode?: string | null;
         slipNo?: string | null;
       } | null;
       error?:
@@ -46653,6 +46655,7 @@ export type TransactionWithdrawDetailQuery = {
         accountId?: string | null;
         accountName?: string | null;
         chequeNo?: string | null;
+        withdrawSlipNo?: string | null;
         withdrawAmount?: string | null;
         withdrawWith?: WithdrawWith | null;
         fine?: string | null;
@@ -78115,6 +78118,7 @@ export const TransactionWithdrawDetailDocument = `
         accountId
         accountName
         chequeNo
+        withdrawSlipNo
         withdrawAmount
         withdrawWith
         fine

@@ -426,13 +426,17 @@ export const LoanRepayment = () => {
               promise={() => mutateAsync({ data: handleSubmit() })}
               successCardProps={(response) => {
                 const result = response?.loanAccount?.repayment?.record;
+                const totalWithCalculation =
+                  Number(result?.totalAmount || '0') +
+                  Number(result?.penaltyAmount || '0') -
+                  Number(result?.rebateAmount || '0');
 
                 return {
                   type: 'Loan Repayment',
                   receiptTitle: 'Loan Repayment Receipt',
-                  total: amountConverter(result?.totalAmount || 0) as string,
+                  total: amountConverter(totalWithCalculation || 0) as string,
                   totalWords: amountToWordsConverter(
-                    result?.totalAmount ? Number(result?.totalAmount) : 0
+                    totalWithCalculation ? Number(totalWithCalculation) : 0
                   ),
                   title: 'Loan Repayment Successful',
                   details: {
