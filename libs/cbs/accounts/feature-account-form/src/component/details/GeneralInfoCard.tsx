@@ -28,6 +28,7 @@ interface IGeneralInfoCardProps {
     accountExpiryDate: Record<'local' | 'en' | 'np', string> | null | undefined;
     installmentAmount?: string | null;
     signaturePicUrl?: string | null;
+    minorName: string | null | undefined;
   };
   // accountTypes?: {
   //   SAVING: string;
@@ -103,6 +104,9 @@ export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => {
             />
           </DetailCardContent>
         ) : null}
+        {data?.minorName && (
+          <DetailCardContent title="Minor Name" subtitle={data?.minorName ?? '-'} />
+        )}
         <DetailCardContent
           title="Minimum Balance"
           subtitle={amountConverter(data?.productMinimumBalance || 0)}
