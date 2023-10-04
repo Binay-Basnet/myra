@@ -19,6 +19,7 @@ type Filter = {
   branchId: string;
   filter?: {
     tellerType?: TellerType;
+    includeZero?: 'include' | 'exclude';
     tellerId?: {
       label: string;
       value: string;
@@ -46,6 +47,7 @@ export const TellerReport = () => {
         filter: {
           ...filters?.filter,
           tellerId: tellerIds,
+          includeZero: filters?.filter?.includeZero === 'include',
         },
       },
     },
@@ -341,6 +343,16 @@ export const TellerReport = () => {
                 { label: 'All', value: TellerType.All },
                 { label: 'Head Teller', value: TellerType?.HeadTeller },
                 { label: 'Teller', value: TellerType?.Teller },
+              ]}
+              direction="column"
+            />
+          </Report.Filter>
+          <Report.Filter title="Zero Balance">
+            <FormRadioGroup
+              name="filter.includeZero"
+              options={[
+                { label: 'Include', value: 'include' },
+                { label: 'Exclude', value: 'exclude' },
               ]}
               direction="column"
             />
