@@ -282,9 +282,9 @@ export const AddBulkDeposit = () => {
                     Date: localizedDate(result?.date),
                     'Transaction Time': localizedTime(result?.createdAt),
                     Amount: amountConverter(result?.amount || 0),
-                    // Fine: amountConverter(result?.fine || 0) as string,
+                    Fine: amountConverter(result?.fine || 0) as string,
                     // Discount: amountConverter(result?.discount || 0) as string,
-                    // Rebate: amountConverter(result?.rebate || 0) as string,
+                    Rebate: amountConverter(result?.rebate || 0) as string,
                     ...tempObj,
 
                     'Payment Mode': result?.paymentMode,
