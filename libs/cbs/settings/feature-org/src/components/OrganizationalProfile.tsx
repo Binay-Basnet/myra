@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Box, Button, DetailCardContent, Divider, Grid, GridItem, Icon, Text } from '@myra-ui';
 
 import { Organization } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 
 export const OrganizationalProfile = (props: { data?: Organization | null }) => {
   const { data } = props;
@@ -44,6 +44,10 @@ export const OrganizationalProfile = (props: { data?: Organization | null }) => 
           <DetailCardContent
             title="Type of Organization"
             subtitle={data?.basicDetails?.typeOfOrganization}
+          />
+          <DetailCardContent
+            title="Organization Start Date"
+            subtitle={localizedDate(data?.basicDetails?.organizationStartDate)}
           />
           <GridItem colSpan={3}>
             <DetailCardContent title="Slogan" subtitle={data?.basicDetails?.slogan} />

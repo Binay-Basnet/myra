@@ -24,6 +24,10 @@ export const ReportDateRange = ({
   const calendarType = useAppSelector((state) => state?.auth?.preference?.date);
   const transactionDate = data?.transaction?.endOfDayDate?.value;
 
+  const user = useAppSelector((state) => state?.auth?.user);
+
+  const organizationStartDate = user?.organization?.basicDetails?.organizationStartDate;
+
   useEffect(() => {
     if (setInitialDate) {
       setValue(name, { from: transactionDate, to: transactionDate });
@@ -51,7 +55,9 @@ export const ReportDateRange = ({
               },
             })
           }
-          tillDateStart={new Date('2014-07-14')}
+          tillDateStart={
+            organizationStartDate ? new Date(organizationStartDate?.en) : new Date('2014-07-14')
+          }
         />
       )}
       control={control}

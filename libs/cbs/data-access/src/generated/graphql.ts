@@ -4811,7 +4811,7 @@ export type CurrentMontheUpdatedSalaryStructure = {
 };
 
 export type CurrentTaxSlab = {
-  taxSlab?: Maybe<Array<Maybe<Slab>>>;
+  taxSlab?: Maybe<Array<Maybe<TaxSlabIntType>>>;
 };
 
 export type CurrentTaxSlabWithError = {
@@ -18340,6 +18340,7 @@ export type OrganizationAddResult = {
 export type OrganizationBasicDetails = {
   logo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  organizationStartDate?: Maybe<Scalars['Localized']>;
   slogan?: Maybe<Scalars['String']>;
   typeOfOrganization?: Maybe<TypeOfOrganization>;
 };
@@ -18347,6 +18348,7 @@ export type OrganizationBasicDetails = {
 export type OrganizationBasicDetailsInput = {
   logo?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  organizationStartDate?: InputMaybe<Scalars['Localized']>;
   slogan?: InputMaybe<Scalars['String']>;
   typeOfOrganization?: InputMaybe<TypeOfOrganization>;
 };
@@ -22497,6 +22499,12 @@ export type TaxSlabInput = {
   unmarriedTaxableSalarySlab?: InputMaybe<Array<InputMaybe<SlabInput>>>;
 };
 
+export type TaxSlabIntType = {
+  fromAmount?: Maybe<Scalars['Int']>;
+  percentageDeduction?: Maybe<Scalars['String']>;
+  toAmount?: Maybe<Scalars['Int']>;
+};
+
 export type TaxSlabListed = {
   effectiveFrom?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['ID']>;
@@ -22510,9 +22518,9 @@ export type TaxSlabRecord = {
   fiscalYearTo?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['ID']>;
   makeItCurrentTaxSlab?: Maybe<Scalars['Boolean']>;
-  marriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
+  marriedTaxableSalarySlab?: Maybe<Array<Maybe<TaxSlabIntType>>>;
   name?: Maybe<Scalars['String']>;
-  unmarriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
+  unmarriedTaxableSalarySlab?: Maybe<Array<Maybe<TaxSlabIntType>>>;
 };
 
 export type TaxSlabs = {
@@ -32530,7 +32538,11 @@ export type UserFragment = {
   } | null;
   organization?: {
     id: string;
-    basicDetails?: { name?: string | null; logo?: string | null } | null;
+    basicDetails?: {
+      name?: string | null;
+      logo?: string | null;
+      organizationStartDate?: Record<'local' | 'en' | 'np', string> | null;
+    } | null;
     contactDetails?: {
       website?: string | null;
       phoneNumber?: string | null;
@@ -34765,8 +34777,8 @@ export type GetCurrentTaxSlabQuery = {
         getCurrentTaxSlab: {
           data?: {
             taxSlab?: Array<{
-              fromAmount?: string | null;
-              toAmount?: string | null;
+              fromAmount?: number | null;
+              toAmount?: number | null;
               percentageDeduction?: string | null;
             } | null> | null;
           } | null;
@@ -43671,13 +43683,13 @@ export type GetTaxSlabQuery = {
                 effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
                 makeItCurrentTaxSlab?: boolean | null;
                 unmarriedTaxableSalarySlab?: Array<{
-                  fromAmount?: string | null;
-                  toAmount?: string | null;
+                  fromAmount?: number | null;
+                  toAmount?: number | null;
                   percentageDeduction?: string | null;
                 } | null> | null;
                 marriedTaxableSalarySlab?: Array<{
-                  fromAmount?: string | null;
-                  toAmount?: string | null;
+                  fromAmount?: number | null;
+                  toAmount?: number | null;
                   percentageDeduction?: string | null;
                 } | null> | null;
               } | null;
@@ -44818,6 +44830,7 @@ export type GetOrganizationDataQuery = {
               logo?: string | null;
               typeOfOrganization?: TypeOfOrganization | null;
               slogan?: string | null;
+              organizationStartDate?: Record<'local' | 'en' | 'np', string> | null;
             } | null;
             contactDetails?: {
               phoneNumber?: string | null;
@@ -44865,6 +44878,7 @@ export type GetOrganizationEditDataQuery = {
               logo?: string | null;
               typeOfOrganization?: TypeOfOrganization | null;
               slogan?: string | null;
+              organizationStartDate?: Record<'local' | 'en' | 'np', string> | null;
             } | null;
             contactDetails?: {
               phoneNumber?: string | null;
@@ -47666,6 +47680,7 @@ export const UserFragmentDoc = `
     basicDetails {
       name
       logo
+      organizationStartDate
     }
     contactDetails {
       website
@@ -75533,6 +75548,7 @@ export const GetOrganizationDataDocument = `
               logo
               typeOfOrganization
               slogan
+              organizationStartDate
             }
             contactDetails {
               phoneNumber
@@ -75593,6 +75609,7 @@ export const GetOrganizationEditDataDocument = `
               logo
               typeOfOrganization
               slogan
+              organizationStartDate
             }
             contactDetails {
               phoneNumber
