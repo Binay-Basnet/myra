@@ -17,6 +17,7 @@ import {
   Modal,
   Table,
   Text,
+  Tooltip,
 } from '@myra-ui';
 
 import {
@@ -114,6 +115,16 @@ export const SalaryStructureTable = () => {
       {
         header: 'Description',
         accessorFn: (row) => row?.node?.description,
+        cell: (row) => (
+          <Tooltip title={row?.row?.original?.node?.description as string}>
+            <Text overflow="hidden" textOverflow="ellipsis" maxWidth="xs" cursor="pointer">
+              {row?.row?.original?.node?.description}
+            </Text>
+          </Tooltip>
+        ),
+        meta: {
+          width: '30%',
+        },
       },
       {
         header: 'Actions',
