@@ -427,10 +427,7 @@ export const LoanRepayment = () => {
               successCardProps={(response) => {
                 const result = response?.loanAccount?.repayment?.record;
                 const totalWithCalculation =
-                  Number(result?.totalAmount || '0') +
-                  Number(result?.penaltyAmount || '0') -
-                  Number(result?.rebateAmount || '0');
-
+                  Number(result?.totalAmount || '0') + Number(result?.penaltyAmount || '0');
                 return {
                   type: 'Loan Repayment',
                   receiptTitle: 'Loan Repayment Receipt',
