@@ -105,6 +105,26 @@ export const EmployeeAddForm = () => {
     const identificationSelection = values?.identificationSelection;
     const otherDetails = values?.otherDetails;
 
+    const dataToBeSent = omit(
+      {
+        ...values,
+        pf: otherSchemes?.includes('pf'),
+        ssf: otherSchemes?.includes('ssf'),
+        cit: otherSchemes?.includes('cit'),
+        citizenshipGiven: identificationSelection?.includes('citizenship'),
+        drivingLicenseGiven: identificationSelection?.includes('drivingLicense'),
+        trainingDetailsGiven: otherDetails?.includes('trainingDetails'),
+        researchAndPublicationsGiven: otherDetails?.includes('researchAndPublications'),
+        awardsCashCertificatesGiven: otherDetails?.includes('awardsCashCertificates'),
+        internationalTourGiven: otherDetails?.includes('internationalTour'),
+        documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
+          fieldId: documentMap[index],
+          identifiers: item?.identifiers || [],
+        })),
+      },
+      ['id', 'otherSchemes', 'identificationSelection', 'otherDetails']
+    ) as EmployeeInput;
+
     if (router?.query?.['id']) {
       asyncToast({
         id: 'edit-employee',
@@ -117,26 +137,17 @@ export const EmployeeAddForm = () => {
         },
         promise: mutateAsync({
           id: router?.query?.['id'] as string,
-          input: omit(
-            {
-              ...values,
-              pf: otherSchemes?.includes('pf'),
-              ssf: otherSchemes?.includes('ssf'),
-              cit: otherSchemes?.includes('cit'),
-              citizenshipGiven: identificationSelection?.includes('citizenship'),
-              drivingLicenseGiven: identificationSelection?.includes('drivingLicense'),
-              trainingDetailsGiven: otherDetails?.includes('trainingDetails'),
-              researchAndPublicationsGiven: otherDetails?.includes('researchAndPublications'),
-              awardsCashCertificatesGiven: otherDetails?.includes('awardsCashCertificates'),
-              internationalTourGiven: otherDetails?.includes('internationalTour'),
-              documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
-                fieldId: documentMap[index],
-                identifiers: item?.identifiers || [],
-              })),
-            },
-            ['id', 'otherSchemes', 'identificationSelection', 'otherDetails']
-          ) as EmployeeInput,
+          input: dataToBeSent,
         }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof EmployeeInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
       });
     } else {
       asyncToast({
@@ -150,25 +161,7 @@ export const EmployeeAddForm = () => {
         },
         promise: mutateAsync({
           id: null,
-          input: omit(
-            {
-              ...values,
-              pf: otherSchemes?.includes('pf'),
-              ssf: otherSchemes?.includes('ssf'),
-              cit: otherSchemes?.includes('cit'),
-              citizenshipGiven: identificationSelection?.includes('citizenship'),
-              drivingLicenseGiven: identificationSelection?.includes('drivingLicense'),
-              trainingDetailsGiven: otherDetails?.includes('trainingDetails'),
-              researchAndPublicationsGiven: otherDetails?.includes('researchAndPublications'),
-              awardsCashCertificatesGiven: otherDetails?.includes('awardsCashCertificates'),
-              internationalTourGiven: otherDetails?.includes('internationalTour'),
-              documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
-                fieldId: documentMap[index],
-                identifiers: item?.identifiers || [],
-              })),
-            },
-            ['id', 'otherSchemes', 'identificationSelection', 'otherDetails']
-          ) as EmployeeInput,
+          input: dataToBeSent,
         }),
         onError: (error) => {
           if (error.__typename === 'ValidationError') {

@@ -7878,6 +7878,7 @@ export type FianancialTransactionReport = {
   dayBookReport: DayBookReportResult;
   fiscalTrialSheetReport: TrialSheetReportResult;
   ledgerBalanceReport: LedgerBalanceReport;
+  ledgerCumulativeBalanceReport: LedgerCumulativeBalanceReport;
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
   serviceCenterBalanceReport: SericeCenterStatementResult;
   tagKhataReport: TagKhataReportResult;
@@ -7920,6 +7921,10 @@ export type FianancialTransactionReportFiscalTrialSheetReportArgs = {
 };
 
 export type FianancialTransactionReportLedgerBalanceReportArgs = {
+  data: LedgerBalanceReportInput;
+};
+
+export type FianancialTransactionReportLedgerCumulativeBalanceReportArgs = {
   data: LedgerBalanceReportInput;
 };
 
@@ -13825,6 +13830,17 @@ export type LedgerBalanceTransferResultData = {
   totalLedgerAccounts: Scalars['String'];
   totalTransferBalance: BalanceValue;
   transactionId: Scalars['String'];
+};
+
+export type LedgerCumulativeBalanceReport = {
+  data?: Maybe<Array<Maybe<LedgerCumulativeBalanceReportData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type LedgerCumulativeBalanceReportData = {
+  balance?: Maybe<BalanceValue>;
+  ledgerId: Scalars['String'];
+  ledgerName: Scalars['String'];
 };
 
 export type LedgerList = {

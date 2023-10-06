@@ -140,6 +140,26 @@ export const IsMemberComponent = () => {
       relation: item?.relationshipId,
     })),
     educationDetails: jobApplicantInfo?.educationalDetails,
+    identificationSelection:
+      memberInfo?.identificationSelection || userInfo?.identificationSelection,
+    citizenship: {
+      id:
+        memberInfo?.identification?.[0]?.identificationNo ||
+        userInfo?.identificationDetails?.[0]?.idNo,
+      placeOfIssue:
+        memberInfo?.identification?.[0]?.place || userInfo?.identificationDetails?.[0]?.place,
+      issuedDate:
+        memberInfo?.identification?.[0]?.date || userInfo?.identificationDetails?.[0]?.date,
+    },
+    drivingLicense: {
+      id:
+        memberInfo?.identification?.[1]?.identificationNo ||
+        userInfo?.identificationDetails?.[1]?.idNo,
+      placeOfIssue:
+        memberInfo?.identification?.[1]?.place || userInfo?.identificationDetails?.[1]?.place,
+      issuedDate:
+        memberInfo?.identification?.[1]?.date || userInfo?.identificationDetails?.[1]?.date,
+    },
     workExperience: jobApplicantInfo?.experienceDetails,
   };
 
