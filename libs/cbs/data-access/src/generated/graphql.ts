@@ -13501,6 +13501,14 @@ export const Language = {
 } as const;
 
 export type Language = typeof Language[keyof typeof Language];
+export type LastKymUpdatedMemberDate = {
+  getKymDate?: Maybe<LastKymUpdatedMemberDateResult>;
+};
+
+export type LastKymUpdatedMemberDateResult = {
+  kymUpdatedDate?: Maybe<Scalars['Localized']>;
+};
+
 export type LeadgerHeadChangeResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
@@ -17152,6 +17160,7 @@ export type MemberQuery = {
   inactivateMember?: Maybe<MemberInactivateQuery>;
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
+  lastKymUpdatedDate?: Maybe<LastKymUpdatedMemberDateResult>;
   list: KymMemberListConnection;
   listMinor?: Maybe<MinorListConnection>;
   memberOverview?: Maybe<MemberOverviewResult>;
@@ -17191,6 +17200,10 @@ export type MemberQueryIndividualArgs = {
 
 export type MemberQueryInstitutionArgs = {
   includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type MemberQueryLastKymUpdatedDateArgs = {
+  id: Scalars['String'];
 };
 
 export type MemberQueryListArgs = {
@@ -37863,6 +37876,16 @@ export type GetMemberTransferQuery = {
           | null;
       };
     };
+  };
+};
+
+export type LastKymUpdatedDateQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type LastKymUpdatedDateQuery = {
+  members: {
+    lastKymUpdatedDate?: { kymUpdatedDate?: Record<'local' | 'en' | 'np', string> | null } | null;
   };
 };
 
@@ -66388,6 +66411,26 @@ export const useGetMemberTransferQuery = <TData = GetMemberTransferQuery, TError
     ['getMemberTransfer', variables],
     useAxios<GetMemberTransferQuery, GetMemberTransferQueryVariables>(
       GetMemberTransferDocument
+    ).bind(null, variables),
+    options
+  );
+export const LastKymUpdatedDateDocument = `
+    query lastKymUpdatedDate($id: String!) {
+  members {
+    lastKymUpdatedDate(id: $id) {
+      kymUpdatedDate
+    }
+  }
+}
+    `;
+export const useLastKymUpdatedDateQuery = <TData = LastKymUpdatedDateQuery, TError = unknown>(
+  variables: LastKymUpdatedDateQueryVariables,
+  options?: UseQueryOptions<LastKymUpdatedDateQuery, TError, TData>
+) =>
+  useQuery<LastKymUpdatedDateQuery, TError, TData>(
+    ['lastKymUpdatedDate', variables],
+    useAxios<LastKymUpdatedDateQuery, LastKymUpdatedDateQueryVariables>(
+      LastKymUpdatedDateDocument
     ).bind(null, variables),
     options
   );

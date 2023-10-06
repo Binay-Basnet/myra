@@ -335,3 +335,11 @@ query getMemberTransfer($requestId: ID!) {
     }
   }
 }
+
+query lastKymUpdatedDate($id: String!) {
+  members {
+    lastKymUpdatedDate(id: $id) {
+      kymUpdatedDate
+    }
+  }
+}

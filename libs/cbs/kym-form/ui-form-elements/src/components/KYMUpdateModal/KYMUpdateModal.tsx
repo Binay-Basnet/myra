@@ -1,10 +1,11 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
+import { Box, Text } from '@myra-ui';
 import { Alert, asyncToast, Modal } from '@myra-ui/components';
-import { Box } from '@myra-ui/foundations';
 
-import { useUpdateKymMutation } from '@coop/cbs/data-access';
+import { useLastKymUpdatedDateQuery, useUpdateKymMutation } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormDatePicker } from '@coop/shared/form';
 
 interface IKymUpdateModalProps {
@@ -17,6 +18,15 @@ export const KYMUpdateModal = ({ isOpen, onClose, onUpdateClick }: IKymUpdateMod
   const router = useRouter();
   const methods = useForm<{ date: { en: string; np: string; local: string } }>();
   const { mutateAsync } = useUpdateKymMutation();
+
+  const memberId = router.query?.['id'];
+
+  const { data: lastKymUpdatedDateData } = useLastKymUpdatedDateQuery(
+    { id: memberId as string },
+    { enabled: !!memberId }
+  );
+
+  const kymUpdatedDate = lastKymUpdatedDateData?.members?.lastKymUpdatedDate?.kymUpdatedDate;
 
   const onUpdate = () =>
     new Promise<Record<string, unknown>>((resolve) => {
@@ -47,11 +57,18 @@ export const KYMUpdateModal = ({ isOpen, onClose, onUpdateClick }: IKymUpdateMod
         });
       }}
     >
-      <Box display="flex" flexDir="column" gap="s32">
+      <Box display="flex" flexDir="column" gap="s16">
         <Alert
           status="info"
           title="All the updates done to the member will be visible only after the effective date "
         />
+
+        <Box display="flex" gap="s4">
+          <Text fontSize="r1">Kym Last Updated On:</Text>
+          <Text fontSize="r1" fontWeight={500}>
+            {kymUpdatedDate ? localizedDate(kymUpdatedDate) : '-'}
+          </Text>
+        </Box>
         <FormProvider {...methods}>
           <Box w="50%">
             <FormDatePicker label="Effective From" name="date" />
