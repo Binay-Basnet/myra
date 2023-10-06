@@ -28,7 +28,7 @@ export const FiscalPeriod = ({
   const fiscalYears = getFiscalYears(tillDateStart, calendarType);
 
   return (
-    <Box p="s8">
+    <Box p="s8" maxH="25rem" overflowY="scroll">
       {fiscalYears?.map((fiscalYear) => {
         const adStartFiscalYear =
           calendarType === 'BS'

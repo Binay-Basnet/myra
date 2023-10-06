@@ -47,7 +47,11 @@ export const OrganizationalProfile = (props: { data?: Organization | null }) => 
           />
           <DetailCardContent
             title="Organization Start Date"
-            subtitle={localizedDate(data?.basicDetails?.organizationStartDate)}
+            subtitle={
+              data?.basicDetails?.organizationStartDate
+                ? localizedDate(data?.basicDetails?.organizationStartDate)
+                : '-'
+            }
           />
           <GridItem colSpan={3}>
             <DetailCardContent title="Slogan" subtitle={data?.basicDetails?.slogan} />

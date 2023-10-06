@@ -29,6 +29,10 @@ export const TableDateFilter = ({ column }: TableDateFilterProps) => {
 
   const filterCols = Object.keys(parsedQuery);
 
+  const user = useAppSelector((state) => state?.auth?.user);
+
+  const organizationStartDate = user?.organization?.basicDetails?.organizationStartDate;
+
   return (
     <Box fontWeight="normal">
       <RangedDatePicker
@@ -47,7 +51,9 @@ export const TableDateFilter = ({ column }: TableDateFilterProps) => {
           </Box>
         )}
         baseDate={new Date(transactionDate || '')}
-        tillDateStart={new Date('2014-07-14')}
+        tillDateStart={
+          organizationStartDate ? new Date(organizationStartDate?.en) : new Date('2014-07-14')
+        }
         locale={router.locale === 'ne' ? 'ne' : 'en'}
         calendarType={calendarType || 'BS'}
         value={
