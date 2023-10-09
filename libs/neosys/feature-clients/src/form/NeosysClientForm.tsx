@@ -19,6 +19,7 @@ import {
   FormNeosysFileInput,
   FormSelect,
   FormSwitchTab,
+  FormTextArea,
 } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -37,9 +38,12 @@ export const NeosysClientForm = () => {
           <FormInput name="organizationName" label="Organization Name" />
         </GridItem>
         <FormInput type="text" name="organizationCode" label={t['neoClientOrganizationCode']} />
+        <GridItem colSpan={3}>
+          <FormTextArea name="slogan" label="Slogan" />
+        </GridItem>
       </FormSection>
 
-      <FormSection templateColumns={2}>
+      <FormSection>
         <FormSelect
           name="organizationType"
           label={t['neoClientOrganizationType']}
@@ -76,6 +80,8 @@ export const NeosysClientForm = () => {
             },
           ]}
         />
+
+        <FormDatePicker name="organizationStartDate" label="Start Date" />
       </FormSection>
 
       <FormSection flexLayout>

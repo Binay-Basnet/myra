@@ -452,7 +452,7 @@ export type KymIndMemberInput = {
   incomeSource?: InputMaybe<Array<InputMaybe<KymIndIncomeSourceInput>>>;
   initialLoan?: InputMaybe<Scalars['String']>;
   initialSaving?: InputMaybe<Scalars['String']>;
-  initialShare?: InputMaybe<Scalars['Int']>;
+  initialShare?: InputMaybe<Scalars['String']>;
   isConvicted?: InputMaybe<Scalars['Boolean']>;
   isFamilyAMember?: InputMaybe<Scalars['Boolean']>;
   isForeignEmployment?: InputMaybe<Scalars['Boolean']>;
@@ -812,9 +812,11 @@ export type OrganizationClient = {
   organizationCode?: Maybe<Scalars['String']>;
   organizationLogo?: Maybe<Scalars['String']>;
   organizationName?: Maybe<Scalars['String']>;
+  organizationStartDate?: Maybe<Scalars['Localized']>;
   organizationType?: Maybe<OrganizationType>;
   registrationDetails?: Maybe<Array<Maybe<OrganizationRegistrationDetails>>>;
   securitySetup?: Maybe<OrganizationSecuritySetup>;
+  slogan?: Maybe<Scalars['String']>;
   technicalContactPerson?: Maybe<ContactPerson>;
   urlSlug?: Maybe<Scalars['String']>;
   workingArea?: Maybe<Array<Maybe<OrganizationAddressDetails>>>;
@@ -866,9 +868,11 @@ export type OrganizationClientInput = {
   organizationCode?: InputMaybe<Scalars['String']>;
   organizationLogo?: InputMaybe<Scalars['String']>;
   organizationName?: InputMaybe<Scalars['String']>;
+  organizationStartDate?: InputMaybe<Scalars['Localized']>;
   organizationType?: InputMaybe<OrganizationType>;
   registrationDetails?: InputMaybe<Array<InputMaybe<OrganizationRegistrationDetailsInput>>>;
   securitySetup?: InputMaybe<OrganizationSecuritySetup>;
+  slogan?: InputMaybe<Scalars['String']>;
   technicalContactPerson?: InputMaybe<ContactPersonInput>;
   urlSlug?: InputMaybe<Scalars['String']>;
   workingArea?: InputMaybe<Array<InputMaybe<OrganizationAddressDetailsInput>>>;

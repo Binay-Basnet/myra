@@ -1,10 +1,11 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { asyncToast } from '@myra-ui';
 
 import { OrganizationClientInput, useAddNewClientMutation } from '@coop/neosys-admin/data-access';
+import { FormLayout } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { NeosysClientForm } from '../form/NeosysClientForm';
@@ -50,60 +51,50 @@ export const NeosysFeatureClientsAdd = () => {
   const { mutateAsync } = useAddNewClientMutation();
 
   return (
-    <Container minW="container.xl" p="0" bg="white">
-      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader title={t['neoClientNewUser']} />
-      </Box>
-      <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
-        <Box
-          display="flex"
-          flexDirection="column"
-          w="100%"
-          borderRight="1px solid"
-          borderColor="border.layout"
-        >
-          <FormProvider {...methods}>
-            <NeosysClientForm />
-          </FormProvider>
-        </Box>
-      </Box>
-      <Box position="sticky" bottom={0} zIndex="11">
-        <FormFooter
-          status=""
-          mainButtonLabel="Submit"
-          mainButtonHandler={async () => {
-            const formValues = methods.getValues();
+    <FormLayout methods={methods}>
+      <FormLayout.Header title={t['neoClientNewUser']} />
 
-            await asyncToast({
-              id: 'new-client',
-              msgs: {
-                loading: 'Adding New Client',
-                success: 'New Client Added',
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <NeosysClientForm />
+        </FormLayout.Form>
+      </FormLayout.Content>
+
+      <FormLayout.Footer
+        status=""
+        mainButtonLabel="Submit"
+        mainButtonHandler={async () => {
+          const formValues = methods.getValues();
+
+          await asyncToast({
+            id: 'new-client',
+            msgs: {
+              loading: 'Adding New Client',
+              success: 'New Client Added',
+            },
+            onSuccess: () => {
+              router.push('/clients');
+              queryClient.invalidateQueries(['getClientsList']);
+            },
+            promise: mutateAsync({
+              data: {
+                ...formValues,
+                organizationLogo: formValues.organizationLogo[0],
               },
-              onSuccess: () => {
-                router.push('/clients');
-                queryClient.invalidateQueries(['getClientsList']);
-              },
-              promise: mutateAsync({
-                data: {
-                  ...formValues,
-                  organizationLogo: formValues.organizationLogo[0],
-                },
-              }),
-              onError: (error) => {
-                if (error.__typename === 'ValidationError') {
-                  clearErrors();
-                  Object.keys(error.validationErrorMsg).map((key) =>
-                    methods.setError(key as keyof OrganizationClientInput, {
-                      message: error.validationErrorMsg[key][0] as string,
-                    })
-                  );
-                }
-              },
-            });
-          }}
-        />
-      </Box>
-    </Container>
+            }),
+            onError: (error) => {
+              if (error.__typename === 'ValidationError') {
+                clearErrors();
+                Object.keys(error.validationErrorMsg).map((key) =>
+                  methods.setError(key as keyof OrganizationClientInput, {
+                    message: error.validationErrorMsg[key][0] as string,
+                  })
+                );
+              }
+            },
+          });
+        }}
+      />
+    </FormLayout>
   );
 };
