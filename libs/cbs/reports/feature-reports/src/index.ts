@@ -65,6 +65,7 @@ export * from './lib/share/ShareTransactionReport';
 export * from './lib/transactions';
 export * from './lib/transactions/ABBSStatusReport';
 export * from './lib/transactions/ABBSTransactionReport';
+export * from './lib/transactions/AdjustedCharKhataReport';
 export * from './lib/transactions/BalanceSheetReport';
 export * from './lib/transactions/BankGLBalanceReport';
 export * from './lib/transactions/BankGLStatementReport';

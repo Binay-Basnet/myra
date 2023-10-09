@@ -89,6 +89,7 @@ export enum Report {
   TRANSACTION_ABBS_STATUS_REPORT = 'ABBS Report',
   TRANSACTION_ABBS_TRANSACTION_REPORT = 'ABBS Transaction Report',
   TRANSACTION_CHAR_KHATA_REPORT = 'Charkhata Ledger Report',
+  TRANSACTION_ADJUSTED_CHAR_KHATA_REPORT = 'Adjusted Charkhata Ledger Report',
   TRANSACTION_MRTRANSACTION_REPORT = 'Market Representative Transaction Report',
   TRANSACTION_TAG_KHATA_REPORT = 'Ledger Group Report',
   TRANSACTION_DAILY_BALANCE_REPORT = 'Daily Balance Report',
@@ -513,6 +514,13 @@ export const REPORTS: ReportType = {
       report: Report.TRANSACTION_CHAR_KHATA_REPORT,
       link: 'charkhata',
       component: <Reports.CharKhataReport />,
+      acl: 'REPORTS_TXN_CHARKHATA_LEDGER_REPORT',
+    },
+    {
+      id: '7.1.2',
+      report: Report.TRANSACTION_ADJUSTED_CHAR_KHATA_REPORT,
+      link: 'adjusted-charkhata',
+      component: <Reports.AdjustedCharKhataReport />,
       acl: 'REPORTS_TXN_CHARKHATA_LEDGER_REPORT',
     },
     {

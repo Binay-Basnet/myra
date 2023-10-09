@@ -377,6 +377,64 @@ query getCharKhataReport($data: CharKhataReportFilter!) {
   }
 }
 
+query getAdjustedCharKhataReport($data: CharKhataReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        adjustedCharKhataReport(data: $data) {
+          data {
+            equityAndLiablities {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            equityAndLiablitiesTotal
+            assets {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            assetsTotal
+            expenses {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            expenseTotal
+            income {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            incomeTotal
+            offBalance {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            offBalanceTotal
+            orphanEntries {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            orphanTotal
+            totalProfitLoss
+            totalAssetExpense
+            totalLiablitiesIncome
+          }
+        }
+      }
+    }
+  }
+}
+
 query getABBSTransactionReport($data: AbbsTransactionReportFilter!) {
   report {
     transactionReport {

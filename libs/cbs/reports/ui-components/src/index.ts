@@ -1,4 +1,5 @@
 export * from './components';
+export * from './lib/AdjustedCharKhataReportInputs';
 export * from './lib/CharKhataReportInputs';
 export * from './lib/ClosedAccountInputs';
 export * from './lib/DailyBalanceReportInputs';

@@ -1,0 +1,513 @@
+import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+
+import { Box, Column, Text } from '@myra-ui';
+
+import {
+  CharKhataReportFilter,
+  CoaAccountClass,
+  CoaHead,
+  LocalizedDateFilter,
+  Maybe,
+  Scalars,
+  useGetAdjustedCharKhataReportQuery,
+  useGetBranchListQuery,
+} from '@coop/cbs/data-access';
+import { Report } from '@coop/cbs/reports';
+import { AdjustedCharkhataReportInputs } from '@coop/cbs/reports/components';
+import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedText } from '@coop/cbs/utils';
+import { FormRadioGroup } from '@coop/shared/form';
+import { amountConverter, useIsCbs } from '@coop/shared/utils';
+
+type TrialSheetReportFilters = Omit<
+  CharKhataReportFilter,
+  'filter' | 'branchId' | 'coaHead' | 'coaType'
+> & {
+  branchId: { label: string; value: string }[];
+  coaHead: { label: string; value: CoaHead }[];
+  filter: {
+    includeZero: 'include' | 'exclude';
+    includeParent: 'yes' | 'no';
+  };
+  coaType: { label: string; value: string }[];
+};
+
+type TrialBalance = Record<
+  string,
+  {
+    Dr: string;
+    Cr: string;
+    Total: string;
+    Type: string;
+    OpeningBalance: string;
+    OpeningBalanceType: string;
+    ClosingBalance: string;
+    ClosingBalanceType: string;
+  }
+>;
+
+type TrialSheetReportDataEntry = {
+  balance?: TrialBalance;
+  ledgerId?: Maybe<Scalars['String']>;
+  ledgerName?: Maybe<Scalars['Localized']>;
+  under?: Maybe<Scalars['String']>;
+};
+
+export const AdjustedCharKhataReport = () => {
+  const [filters, setFilters] = useState<TrialSheetReportFilters | null>(null);
+
+  const { isCbs } = useIsCbs();
+
+  const branchIDs =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : [];
+
+  const coaHeads =
+    filters?.coaHead && filters?.coaHead.length !== 0 ? filters?.coaHead?.map((t) => t.value) : [];
+  const coaTypes =
+    filters?.coaHead && filters?.coaType?.length !== 0
+      ? filters?.coaType?.map((t) => t?.value)
+      : [];
+
+  const { data, isFetching } = useGetAdjustedCharKhataReportQuery(
+    {
+      data: {
+        branchId: branchIDs,
+        period: {
+          from: filters?.period?.from,
+          to: filters?.period?.to,
+        } as LocalizedDateFilter,
+        coaType: coaTypes as CoaAccountClass[],
+        coaHead: coaHeads,
+        filter: {
+          includeZero: filters?.filter?.includeZero === 'include',
+          includeParent: filters?.filter?.includeParent === 'no',
+        },
+      },
+    },
+    { enabled: !!filters }
+  );
+
+  const assetsReport = sortCoa(
+    (data?.report?.transactionReport?.financial?.adjustedCharKhataReport?.data?.assets ??
+      []) as unknown as TrialSheetReportDataEntry[]
+  );
+  const equityAndLiablities = sortCoa(
+    (data?.report?.transactionReport?.financial?.adjustedCharKhataReport?.data
+      ?.equityAndLiablities ?? []) as unknown as TrialSheetReportDataEntry[]
+  );
+  const incomeReport = sortCoa(
+    (data?.report?.transactionReport?.financial?.adjustedCharKhataReport?.data?.income ??
+      []) as unknown as TrialSheetReportDataEntry[]
+  );
+  const expensesReport = sortCoa(
+    (data?.report?.transactionReport?.financial?.adjustedCharKhataReport?.data?.expenses ??
+      []) as unknown as TrialSheetReportDataEntry[]
+  );
+
+  const offBalanceSheetReport = sortCoa(
+    (data?.report?.transactionReport?.financial?.adjustedCharKhataReport?.data?.offBalance ??
+      []) as unknown as TrialSheetReportDataEntry[]
+  );
+
+  const unMappedCoaHeads = sortCoa(
+    (data?.report?.transactionReport?.financial?.adjustedCharKhataReport?.data?.orphanEntries ??
+      []) as unknown as TrialSheetReportDataEntry[]
+  );
+
+  const dataCheck = assetsReport?.length
+    ? assetsReport
+    : equityAndLiablities?.length
+    ? equityAndLiablities
+    : incomeReport?.length
+    ? incomeReport
+    : expensesReport?.length
+    ? expensesReport
+    : offBalanceSheetReport?.length
+    ? offBalanceSheetReport
+    : unMappedCoaHeads;
+
+  return (
+    <Report
+      defaultFilters={{
+        filter: {
+          includeZero: 'include',
+          includeParent: 'no',
+        },
+      }}
+      data={dataCheck as TrialSheetReportDataEntry[]}
+      filters={filters}
+      setFilters={setFilters}
+      isLoading={isFetching}
+      report={ReportEnum.TRANSACTION_ADJUSTED_CHAR_KHATA_REPORT}
+    >
+      <Report.Header>
+        <Report.PageHeader
+          paths={[
+            {
+              label: 'Transaction Reports',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/transactions'
+                : '/accounting/reports/accounting-reports/transactions',
+            },
+            {
+              label: 'Adjusted CharKhata Ledger Report',
+              link: isCbs
+                ? '/cbs/reports/cbs-reports/transactions/adjusted-charkhata/new'
+                : '/accounting/reports/accounting-reports/transactions/adjusted-charkhata/new',
+            },
+          ]}
+        />
+
+        <Report.Inputs hideDate>
+          <AdjustedCharkhataReportInputs />
+        </Report.Inputs>
+      </Report.Header>
+      <Report.Body>
+        <Report.Content>
+          <Report.OrganizationHeader />
+          <Report.Organization />
+
+          {equityAndLiablities?.length !== 0 &&
+            ((coaTypes && coaTypes?.includes(CoaAccountClass.EquityAndLiabilities)) ||
+              !coaTypes?.length) && (
+              <Box display="flex" py="s16" flexDir="column">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  1. Equity and Liabilities
+                </Text>
+                <COATable
+                  type="Liabilities"
+                  total={
+                    data?.report?.transactionReport?.financial?.adjustedCharKhataReport?.data
+                      ?.equityAndLiablitiesTotal as unknown as TrialBalance
+                  }
+                  data={equityAndLiablities as TrialSheetReportDataEntry[]}
+                />
+              </Box>
+            )}
+
+          {assetsReport?.length !== 0 &&
+            ((coaTypes && coaTypes?.includes(CoaAccountClass.Assets)) || !coaTypes?.length) && (
+              <Box display="flex" py="s16" flexDir="column">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  2. Assets
+                </Text>
+                <COATable
+                  total={
+                    data?.report?.transactionReport?.financial?.adjustedCharKhataReport?.data
+                      ?.assetsTotal as unknown as TrialBalance
+                  }
+                  type="Assets"
+                  data={assetsReport as TrialSheetReportDataEntry[]}
+                />
+              </Box>
+            )}
+
+          {expensesReport?.length !== 0 &&
+            ((coaTypes && coaTypes?.includes(CoaAccountClass.Expenditure)) ||
+              !coaTypes?.length) && (
+              <Box display="flex" py="s16" flexDir="column">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  3. Expenses
+                </Text>
+
+                <COATable
+                  total={
+                    data?.report?.transactionReport?.financial?.adjustedCharKhataReport?.data
+                      ?.expenseTotal as unknown as TrialBalance
+                  }
+                  type="Expenses"
+                  data={expensesReport as TrialSheetReportDataEntry[]}
+                />
+              </Box>
+            )}
+
+          {incomeReport?.length !== 0 &&
+            ((coaTypes && coaTypes?.includes(CoaAccountClass.Income)) || !coaTypes?.length) && (
+              <Box display="flex" py="s16" flexDir="column">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  4. Income
+                </Text>
+                <COATable
+                  total={
+                    data?.report?.transactionReport?.financial?.adjustedCharKhataReport?.data
+                      ?.incomeTotal as unknown as TrialBalance
+                  }
+                  type="Income"
+                  data={incomeReport as TrialSheetReportDataEntry[]}
+                />
+              </Box>
+            )}
+
+          {offBalanceSheetReport?.length !== 0 &&
+            ((coaTypes && coaTypes?.includes(CoaAccountClass.OffBalanceSheet)) ||
+              !coaTypes?.length) && (
+              <Box display="flex" py="s16" flexDir="column">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  5. Off Balance Sheet
+                </Text>
+                <COATable
+                  type="Off Balance"
+                  total={
+                    data?.report?.transactionReport?.financial?.adjustedCharKhataReport?.data
+                      ?.offBalanceTotal as unknown as TrialBalance
+                  }
+                  data={offBalanceSheetReport as TrialSheetReportDataEntry[]}
+                />
+              </Box>
+            )}
+
+          {unMappedCoaHeads?.length !== 0 && (
+            <Box display="flex" py="s16" flexDir="column">
+              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                6. Unmapped COA Heads
+              </Text>
+              <COATable
+                total={
+                  data?.report?.transactionReport?.financial?.adjustedCharKhataReport?.data
+                    ?.orphanTotal as unknown as TrialBalance
+                }
+                type="Unmapped COA Heads"
+                data={unMappedCoaHeads as TrialSheetReportDataEntry[]}
+              />
+            </Box>
+          )}
+        </Report.Content>
+        <Report.Filters>
+          <Report.Filter title="Zero Balance">
+            <FormRadioGroup
+              name="filter.includeZero"
+              options={[
+                { label: 'Include', value: 'include' },
+                { label: 'Exclude', value: 'exclude' },
+              ]}
+              direction="column"
+            />
+          </Report.Filter>
+          <Report.Filter title="Show COA Head Only">
+            <FormRadioGroup
+              name="filter.includeParent"
+              options={[
+                { label: 'Yes', value: 'yes' },
+                { label: 'No', value: 'no' },
+              ]}
+              direction="column"
+            />
+          </Report.Filter>
+        </Report.Filters>
+      </Report.Body>
+    </Report>
+  );
+};
+
+interface ICOATableProps {
+  data: TrialSheetReportDataEntry[];
+  type: string;
+  total: TrialBalance | null | undefined;
+}
+
+const COATable = ({ data, type, total }: ICOATableProps) => {
+  const { getValues } = useFormContext<TrialSheetReportFilters>();
+  const branchIDs = getValues()?.branchId?.map((a) => a.value);
+
+  //   const datePeriod = getValues()?.period;
+
+  const { data: branchListQueryData } = useGetBranchListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+
+  if (data?.length === 0 && !branchListQueryData) {
+    return null;
+  }
+
+  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
+  const headers =
+    branchIDs?.length === branchList?.length
+      ? ['Total']
+      : [
+          ...((branchList
+            ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
+            ?.map((a) => a.node?.id) || []) as string[]),
+          branchIDs.length === 1 ? undefined : 'Total',
+        ]?.filter(Boolean);
+
+  const baseColumn: Column<TrialSheetReportDataEntry>[] = [
+    {
+      header: 'Ledger Name',
+      accessorKey: 'ledgerName',
+      accessorFn: (row) =>
+        `${row?.ledgerId} ${row?.ledgerName ? '-' : ''} ${localizedText(row?.ledgerName)}`,
+      //   cell: (props) => (
+      //     <Button
+      //       variant="link"
+      //       color="primary.500"
+      //       onClick={() =>
+      //         window.open(
+      //           `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
+      //             props.row?.original?.ledgerId
+      //           }&branch=${JSON.stringify(branchIDs)}&date=${datePeriod.to.en}`,
+      //           '_blank'
+      //         )
+      //       }
+      //     >
+      //       {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+      //       {localizedText(props?.row?.original?.ledgerName)}
+      //     </Button>
+      //   ),
+      meta: {
+        width: '80%',
+      },
+      footer: () => <>Total {type}</>,
+    },
+  ];
+
+  const columns: Column<TrialSheetReportDataEntry>[] = [
+    ...baseColumn,
+    ...headers.map(
+      (header) =>
+        ({
+          header: branchList?.find((b) => b?.node?.id === header)?.node?.name || 'Total',
+          accessorKey: 'balance',
+          columns: [
+            {
+              header: 'Opening Balance',
+              id: 'opening Balance',
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                amountConverter(
+                  props.row?.original?.balance?.[header || '']?.OpeningBalance || '0.00'
+                ),
+
+              footer: () => amountConverter(total?.[header || '']?.OpeningBalance || '0.00'),
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: '',
+              id: 'opening Balance Type',
+
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                props.row?.original?.balance?.[header || '']?.OpeningBalanceType || '-',
+
+              footer: () => total?.[header || '']?.OpeningBalanceType || '-',
+
+              meta: {
+                width: '15px',
+                isNumeric: true,
+              },
+            },
+            {
+              header: 'Amount (Dr)',
+              id: 'Amount(Dr)',
+
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                amountConverter(props.row?.original?.balance?.[header || '']?.Dr || '0.00'),
+
+              footer: () => amountConverter(total?.[header || '']?.Dr || '0.00'),
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: 'Amount (Cr)',
+              id: 'Amount(Cr)',
+
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                amountConverter(props.row?.original?.balance?.[header || '']?.Cr || '0.00'),
+              footer: () => amountConverter(total?.[header || '']?.Cr || '0.00'),
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: 'Net Balance',
+              id: 'Net Balance',
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                header
+                  ? amountConverter(props.row?.original?.balance?.[header]?.Total || '0.00')
+                  : '0.00',
+              footer: () => amountConverter(total?.[header || '']?.Total || '0.00'),
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: '',
+              id: 'Net Balance Type',
+
+              accessorFn: (row) => row?.balance,
+              cell: (props) => props.row?.original?.balance?.[header || '']?.Type || '-',
+
+              footer: () => total?.[header || '']?.Type || '-',
+
+              meta: {
+                width: '15px',
+                isNumeric: true,
+              },
+            },
+
+            {
+              header: 'Closing Balance',
+              id: 'Closing Balance',
+
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                header
+                  ? amountConverter(
+                      props.row?.original?.balance?.[header]?.ClosingBalance || '0.00'
+                    )
+                  : '0.00',
+              footer: () => amountConverter(total?.[header || '']?.ClosingBalance || '0.00'),
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: '',
+              id: 'Closing Balance Type',
+
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                props.row?.original?.balance?.[header || '']?.ClosingBalanceType || '-',
+
+              footer: () => total?.[header || '']?.ClosingBalanceType || '-',
+
+              meta: {
+                width: '15px',
+                isNumeric: true,
+              },
+            },
+          ],
+        } as Column<TrialSheetReportDataEntry>)
+    ),
+  ];
+
+  // const tree = arrayToTree(
+  //   data.map((d) => ({ ...d, id: d?.ledgerId as string })).filter((d) => !!d.id),
+  //   ''
+  // );
+
+  return (
+    <Report.Table<TrialSheetReportDataEntry> data={data} columns={columns} tableTitle={type} />
+  );
+};
+
+const sortCoa = (data: TrialSheetReportDataEntry[]) =>
+  data?.sort((a, b) =>
+    Number(
+      a?.ledgerId?.localeCompare(b?.ledgerId as string, undefined, {
+        numeric: true,
+        sensitivity: 'base',
+      })
+    )
+  );

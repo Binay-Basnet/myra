@@ -7870,6 +7870,7 @@ export type FeedbackDetailsWithError = {
 
 export type FianancialTransactionReport = {
   abbsTransactionReport?: Maybe<AbbsTransactionReportResult>;
+  adjustedCharKhataReport: TrialSheetReportResult;
   adjustedLedgerReport: AdjustedLedgerReport;
   bankGLBalanceReport: BankGlBalanceResult;
   bankGLStatementReport: BankGlStatementResult;
@@ -7890,6 +7891,10 @@ export type FianancialTransactionReport = {
 
 export type FianancialTransactionReportAbbsTransactionReportArgs = {
   data?: InputMaybe<AbbsTransactionReportFilter>;
+};
+
+export type FianancialTransactionReportAdjustedCharKhataReportArgs = {
+  data: CharKhataReportFilter;
 };
 
 export type FianancialTransactionReportAdjustedLedgerReportArgs = {
@@ -41866,6 +41871,68 @@ export type GetCharKhataReportQuery = {
   };
 };
 
+export type GetAdjustedCharKhataReportQueryVariables = Exact<{
+  data: CharKhataReportFilter;
+}>;
+
+export type GetAdjustedCharKhataReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        adjustedCharKhataReport: {
+          data?: {
+            equityAndLiablitiesTotal?: Record<string, unknown> | null;
+            assetsTotal?: Record<string, unknown> | null;
+            expenseTotal?: Record<string, unknown> | null;
+            incomeTotal?: Record<string, unknown> | null;
+            offBalanceTotal?: Record<string, unknown> | null;
+            orphanTotal?: Record<string, unknown> | null;
+            totalProfitLoss?: Record<string, unknown> | null;
+            totalAssetExpense?: Record<string, unknown> | null;
+            totalLiablitiesIncome?: Record<string, unknown> | null;
+            equityAndLiablities?: Array<{
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              balance?: Record<string, unknown> | null;
+              under?: string | null;
+            } | null> | null;
+            assets?: Array<{
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              balance?: Record<string, unknown> | null;
+              under?: string | null;
+            } | null> | null;
+            expenses?: Array<{
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              balance?: Record<string, unknown> | null;
+              under?: string | null;
+            } | null> | null;
+            income?: Array<{
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              balance?: Record<string, unknown> | null;
+              under?: string | null;
+            } | null> | null;
+            offBalance?: Array<{
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              balance?: Record<string, unknown> | null;
+              under?: string | null;
+            } | null> | null;
+            orphanEntries?: Array<{
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              balance?: Record<string, unknown> | null;
+              under?: string | null;
+            } | null> | null;
+          } | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetAbbsTransactionReportQueryVariables = Exact<{
   data: AbbsTransactionReportFilter;
 }>;
@@ -71527,6 +71594,79 @@ export const useGetCharKhataReportQuery = <TData = GetCharKhataReportQuery, TErr
     ['getCharKhataReport', variables],
     useAxios<GetCharKhataReportQuery, GetCharKhataReportQueryVariables>(
       GetCharKhataReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAdjustedCharKhataReportDocument = `
+    query getAdjustedCharKhataReport($data: CharKhataReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        adjustedCharKhataReport(data: $data) {
+          data {
+            equityAndLiablities {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            equityAndLiablitiesTotal
+            assets {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            assetsTotal
+            expenses {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            expenseTotal
+            income {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            incomeTotal
+            offBalance {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            offBalanceTotal
+            orphanEntries {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            orphanTotal
+            totalProfitLoss
+            totalAssetExpense
+            totalLiablitiesIncome
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAdjustedCharKhataReportQuery = <
+  TData = GetAdjustedCharKhataReportQuery,
+  TError = unknown
+>(
+  variables: GetAdjustedCharKhataReportQueryVariables,
+  options?: UseQueryOptions<GetAdjustedCharKhataReportQuery, TError, TData>
+) =>
+  useQuery<GetAdjustedCharKhataReportQuery, TError, TData>(
+    ['getAdjustedCharKhataReport', variables],
+    useAxios<GetAdjustedCharKhataReportQuery, GetAdjustedCharKhataReportQueryVariables>(
+      GetAdjustedCharKhataReportDocument
     ).bind(null, variables),
     options
   );
