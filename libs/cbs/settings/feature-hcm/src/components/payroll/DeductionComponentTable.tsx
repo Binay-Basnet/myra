@@ -26,6 +26,7 @@ import {
   useDeleteDeductionComponentMutation,
   useGetDeductionComponentListQuery,
   useGetDeductionComponentQuery,
+  useGetEarningComponentListQuery,
   useSetDeductionComponentMutation,
 } from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
@@ -58,6 +59,12 @@ export const DeductionComponentTable = () => {
   const [selectedDeductionComponentId, setSelectedDeductionComponentId] = useState('');
 
   const { data, refetch } = useGetDeductionComponentListQuery({ pagination: getPaginationQuery() });
+  const { data: earningComponentListData } = useGetEarningComponentListQuery({
+    pagination: getPaginationQuery(),
+  });
+  const earningComponentList =
+    earningComponentListData?.settings?.general?.HCM?.payroll?.earningComponent
+      ?.listEarningComponent?.edges;
   const { mutateAsync, isLoading } = useSetDeductionComponentMutation();
   const { mutateAsync: deleteMutateAsync } = useDeleteDeductionComponentMutation();
 
@@ -300,7 +307,7 @@ export const DeductionComponentTable = () => {
                   name="baseMultiple"
                   label="Multiplier"
                   options={
-                    rowData?.map((item) => ({
+                    earningComponentList?.map((item) => ({
                       label: item?.node?.abbr,
                       value: item?.node?.abbr,
                     })) as { label: string; value: string }[]
