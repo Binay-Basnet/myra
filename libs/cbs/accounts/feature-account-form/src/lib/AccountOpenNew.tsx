@@ -5,7 +5,17 @@ import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
-import { Alert, asyncToast, Box, Button, Divider, Grid, Loader, MemberCard, Text } from '@myra-ui';
+import {
+  Alert,
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Loader,
+  MemberCard,
+  ResponseDialog,
+  Text,
+} from '@myra-ui';
 
 import {
   DepositedBy,
@@ -24,7 +34,7 @@ import {
   useGetProductListQuery,
   useSetAccountOpenDataMutation,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { CashOptions } from '@coop/shared/components';
 import {
   FormAgentSelect,
@@ -35,7 +45,12 @@ import {
   FormMemberSelect,
   FormSelect,
 } from '@coop/shared/form';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  amountToWordsConverter,
+  featureCode,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import {
   AddMinorModal,
@@ -419,36 +434,7 @@ export const AccountOpenNew = () => {
       accountDocuments: tempDocuments,
     };
 
-    asyncToast({
-      id: 'account-open-id',
-      msgs: {
-        success: 'New Account Opened',
-        loading: 'Opening new Account',
-      },
-      onSuccess: () => {
-        if (values.openingPayment?.payment_type === DepositPaymentType.WithdrawSlip) {
-          queryClient.invalidateQueries(['getAvailableSlipsList']);
-          queryClient.invalidateQueries(['getPastSlipsList']);
-        }
-        if (redirectPath) {
-          router.push(String(redirectPath));
-          queryClient.invalidateQueries(['getAccountCheck']);
-          queryClient.invalidateQueries(['getOperationsAutoOpenDetails']);
-        } else {
-          router.push(ROUTES.CBS_ACCOUNT_LIST);
-        }
-      },
-      promise: mutateAsync({ id, data: updatedData as DepositLoanAccountInput }),
-      onError: (error) => {
-        if (error.__typename === 'ValidationError') {
-          Object.keys(error.validationErrorMsg).map((key) =>
-            methods.setError(key as keyof DepositLoanAccountInput, {
-              message: error.validationErrorMsg[key][0] as string,
-            })
-          );
-        }
-      },
-    });
+    return updatedData;
 
     // Object.keys(fileList).forEach((fieldName) => {
     //   if (fileList[fieldName as FileList]) {
@@ -732,9 +718,9 @@ export const AccountOpenNew = () => {
           )}
         </FormLayout.Content>
 
-        {mode === '0' && (
-          <FormLayout.Footer
-            status={
+        <FormLayout.Footer
+          status={
+            mode === '0' ? (
               <Box display="flex" gap="s32">
                 <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
                   Total Deposit Amount
@@ -743,26 +729,91 @@ export const AccountOpenNew = () => {
                   {totalDeposit ?? '---'}
                 </Text>
               </Box>
-            }
-            isMainButtonDisabled={
-              !!errors ||
-              !memberId ||
-              !productID ||
-              !accountName ||
-              (isForMinors && !minorselectedValue)
-            }
-            mainButtonLabel={totalDeposit === 0 ? 'Open Account' : 'Proceed Transaction'}
-            mainButtonHandler={totalDeposit === 0 ? submitForm : proceedToPaymentHandler}
-          />
-        )}
-        {mode === '1' && (
-          <FormLayout.Footer
-            status={<Button onClick={previousButtonHandler}> Previous</Button>}
-            mainButtonLabel="Confirm Payment"
-            mainButtonHandler={submitForm}
-            isMainButtonDisabled={checkIsSubmitButtonDisabled()}
-          />
-        )}
+            ) : (
+              <Button onClick={previousButtonHandler}>Previous</Button>
+            )
+          }
+          isMainButtonDisabled={
+            mode === '0'
+              ? !!errors ||
+                !memberId ||
+                !productID ||
+                !accountName ||
+                (isForMinors && !minorselectedValue)
+              : checkIsSubmitButtonDisabled()
+          }
+          mainButtonLabel={totalDeposit === 0 ? 'Open Account' : 'Proceed Transaction'}
+          mainButtonHandler={totalDeposit === 0 ? submitForm : proceedToPaymentHandler}
+          mainButton={
+            (mode === '0' && totalDeposit === 0) || mode !== '0' ? (
+              <ResponseDialog
+                onSuccess={() => {
+                  if (
+                    getValues().openingPayment?.payment_type === DepositPaymentType.WithdrawSlip
+                  ) {
+                    queryClient.invalidateQueries(['getAvailableSlipsList']);
+                    queryClient.invalidateQueries(['getPastSlipsList']);
+                  }
+                  if (redirectPath) {
+                    router.push(String(redirectPath));
+                    queryClient.invalidateQueries(['getAccountCheck']);
+                    queryClient.invalidateQueries(['getOperationsAutoOpenDetails']);
+                  } else {
+                    router.push(ROUTES.CBS_ACCOUNT_LIST);
+                  }
+                }}
+                promise={() => mutateAsync({ id, data: submitForm() as DepositLoanAccountInput })}
+                successCardProps={(response) => {
+                  const result = response?.account?.add?.record;
+
+                  const totalPayment =
+                    Number(result?.initialDepositAmount || 0) + Number(result?.charges || 0);
+
+                  return {
+                    type: 'Saving Account Open',
+                    total: amountConverter(totalPayment) as string,
+                    totalWords: amountToWordsConverter(totalPayment),
+                    title: 'Account Open Successful',
+                    details: {
+                      'Account Id': (
+                        <Text fontSize="s3" color="primary.500" fontWeight="600">
+                          {result?.accountId}
+                        </Text>
+                      ),
+                      'Account Name': result?.accountName,
+                      'Account Type': result?.accountType,
+                      'Account Opened Date': localizedDate(result?.accOpenedDate),
+                      'Linked Account': result?.linkedAccountId
+                        ? `${result?.linkedAccountName} [${result?.linkedAccountId}]`
+                        : '-',
+                      'Initial Deposit Amount': amountConverter(result?.initialDepositAmount || 0),
+                      Charges: amountConverter(result?.charges || 0),
+                      'Payment Mode': result?.paymentMode,
+                    },
+                    subTitle:
+                      'Account opened successfully. Details of the account is listed below.',
+                    dublicate: true,
+                    showSignatures: true,
+                  };
+                }}
+                errorCardProps={{
+                  title: 'Saving Account Open Failed',
+                }}
+                onError={(error) => {
+                  if (error.__typename === 'ValidationError') {
+                    Object.keys(error.validationErrorMsg).map((key) =>
+                      methods.setError(key as keyof DepositLoanAccountInput, {
+                        message: error.validationErrorMsg[key][0] as string,
+                      })
+                    );
+                  }
+                }}
+              >
+                <Button width="160px">{mode === '0' ? 'Account Open' : 'Confirm Payment'}</Button>
+              </ResponseDialog>
+            ) : null
+          }
+        />
       </FormLayout>
       <AddMinorModal isOpen={isMinorModalOpen} onClose={onCloseMinorModal} memberId={memberId} />
     </>

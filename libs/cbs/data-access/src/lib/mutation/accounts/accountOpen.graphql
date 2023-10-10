@@ -2,6 +2,18 @@ mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!) {
   account {
     add(id: $id, data: $data) {
       recordId
+      record {
+        accountId
+        transactionId
+        accOpenedDate
+        accountName
+        accountType
+        linkedAccountId
+        linkedAccountName
+        initialDepositAmount
+        charges
+        paymentMode
+      }
       error {
         ...MutationError
       }
