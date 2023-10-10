@@ -18,6 +18,10 @@ export const ReportCustomDateRange = ({ label = 'Select Period', name }: IReport
   const calendarType = useAppSelector((state) => state?.auth?.preference?.date);
   const transactionDate = data?.transaction?.endOfDayDate?.value?.en;
 
+  const user = useAppSelector((state) => state?.auth?.user);
+
+  const organizationStartDate = user?.organization?.basicDetails?.organizationStartDate;
+
   return (
     <Controller
       render={({ field: { onChange, value } }) => (
@@ -39,7 +43,9 @@ export const ReportCustomDateRange = ({ label = 'Select Period', name }: IReport
               },
             })
           }
-          tillDateStart={new Date('2014-07-14')}
+          tillDateStart={
+            organizationStartDate ? new Date(organizationStartDate?.en) : new Date('2014-07-14')
+          }
           // showFiscalPeriod={fa}
           showFiscalYearOnly
           showPeriods={false}

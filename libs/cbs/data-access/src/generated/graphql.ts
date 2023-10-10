@@ -366,6 +366,19 @@ export type AccountPremium = {
   minRate?: InputMaybe<Scalars['Float']>;
 };
 
+export type AccountSuccessCardData = {
+  accOpenedDate?: Maybe<Scalars['Localized']>;
+  accountId: Scalars['ID'];
+  accountName?: Maybe<Scalars['String']>;
+  accountType?: Maybe<Scalars['String']>;
+  charges?: Maybe<Scalars['String']>;
+  initialDepositAmount?: Maybe<Scalars['String']>;
+  linkedAccountId?: Maybe<Scalars['ID']>;
+  linkedAccountName?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<Scalars['String']>;
+  transactionId: Scalars['ID'];
+};
+
 export type AccountTransferEntry = {
   ID: Scalars['ID'];
   amount?: Maybe<Scalars['String']>;
@@ -4811,7 +4824,7 @@ export type CurrentMontheUpdatedSalaryStructure = {
 };
 
 export type CurrentTaxSlab = {
-  taxSlab?: Maybe<Array<Maybe<Slab>>>;
+  taxSlab?: Maybe<Array<Maybe<TaxSlabIntType>>>;
 };
 
 export type CurrentTaxSlabWithError = {
@@ -5559,7 +5572,7 @@ export type DepositLoanAccountQueryListTransactionsArgs = {
 export type DepositLoanAccountResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<DepositLoanAccountQuery>;
-  record?: Maybe<DepositLoanAccount>;
+  record?: Maybe<AccountSuccessCardData>;
   recordId: Scalars['ID'];
 };
 
@@ -7870,6 +7883,7 @@ export type FeedbackDetailsWithError = {
 
 export type FianancialTransactionReport = {
   abbsTransactionReport?: Maybe<AbbsTransactionReportResult>;
+  adjustedCharKhataReport: TrialSheetReportResult;
   adjustedLedgerReport: AdjustedLedgerReport;
   bankGLBalanceReport: BankGlBalanceResult;
   bankGLStatementReport: BankGlStatementResult;
@@ -7878,6 +7892,7 @@ export type FianancialTransactionReport = {
   dayBookReport: DayBookReportResult;
   fiscalTrialSheetReport: TrialSheetReportResult;
   ledgerBalanceReport: LedgerBalanceReport;
+  ledgerCumulativeBalanceReport: LedgerCumulativeBalanceReport;
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
   serviceCenterBalanceReport: SericeCenterStatementResult;
   tagKhataReport: TagKhataReportResult;
@@ -7889,6 +7904,10 @@ export type FianancialTransactionReport = {
 
 export type FianancialTransactionReportAbbsTransactionReportArgs = {
   data?: InputMaybe<AbbsTransactionReportFilter>;
+};
+
+export type FianancialTransactionReportAdjustedCharKhataReportArgs = {
+  data: CharKhataReportFilter;
 };
 
 export type FianancialTransactionReportAdjustedLedgerReportArgs = {
@@ -7920,6 +7939,10 @@ export type FianancialTransactionReportFiscalTrialSheetReportArgs = {
 };
 
 export type FianancialTransactionReportLedgerBalanceReportArgs = {
+  data: LedgerBalanceReportInput;
+};
+
+export type FianancialTransactionReportLedgerCumulativeBalanceReportArgs = {
   data: LedgerBalanceReportInput;
 };
 
@@ -13496,6 +13519,14 @@ export const Language = {
 } as const;
 
 export type Language = typeof Language[keyof typeof Language];
+export type LastKymUpdatedMemberDate = {
+  getKymDate?: Maybe<LastKymUpdatedMemberDateResult>;
+};
+
+export type LastKymUpdatedMemberDateResult = {
+  kymUpdatedDate?: Maybe<Scalars['Localized']>;
+};
+
 export type LeadgerHeadChangeResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
@@ -13825,6 +13856,17 @@ export type LedgerBalanceTransferResultData = {
   totalLedgerAccounts: Scalars['String'];
   totalTransferBalance: BalanceValue;
   transactionId: Scalars['String'];
+};
+
+export type LedgerCumulativeBalanceReport = {
+  data?: Maybe<Array<Maybe<LedgerCumulativeBalanceReportData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type LedgerCumulativeBalanceReportData = {
+  balance?: Maybe<BalanceValue>;
+  ledgerId: Scalars['String'];
+  ledgerName: Scalars['String'];
 };
 
 export type LedgerList = {
@@ -17136,6 +17178,7 @@ export type MemberQuery = {
   inactivateMember?: Maybe<MemberInactivateQuery>;
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
+  lastKymUpdatedDate?: Maybe<LastKymUpdatedMemberDateResult>;
   list: KymMemberListConnection;
   listMinor?: Maybe<MinorListConnection>;
   memberOverview?: Maybe<MemberOverviewResult>;
@@ -17175,6 +17218,10 @@ export type MemberQueryIndividualArgs = {
 
 export type MemberQueryInstitutionArgs = {
   includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type MemberQueryLastKymUpdatedDateArgs = {
+  id: Scalars['String'];
 };
 
 export type MemberQueryListArgs = {
@@ -18340,6 +18387,7 @@ export type OrganizationAddResult = {
 export type OrganizationBasicDetails = {
   logo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  organizationStartDate?: Maybe<Scalars['Localized']>;
   slogan?: Maybe<Scalars['String']>;
   typeOfOrganization?: Maybe<TypeOfOrganization>;
 };
@@ -18347,6 +18395,7 @@ export type OrganizationBasicDetails = {
 export type OrganizationBasicDetailsInput = {
   logo?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  organizationStartDate?: InputMaybe<Scalars['Localized']>;
   slogan?: InputMaybe<Scalars['String']>;
   typeOfOrganization?: InputMaybe<TypeOfOrganization>;
 };
@@ -22497,6 +22546,12 @@ export type TaxSlabInput = {
   unmarriedTaxableSalarySlab?: InputMaybe<Array<InputMaybe<SlabInput>>>;
 };
 
+export type TaxSlabIntType = {
+  fromAmount?: Maybe<Scalars['Int']>;
+  percentageDeduction?: Maybe<Scalars['String']>;
+  toAmount?: Maybe<Scalars['Int']>;
+};
+
 export type TaxSlabListed = {
   effectiveFrom?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['ID']>;
@@ -22510,9 +22565,9 @@ export type TaxSlabRecord = {
   fiscalYearTo?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['ID']>;
   makeItCurrentTaxSlab?: Maybe<Scalars['Boolean']>;
-  marriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
+  marriedTaxableSalarySlab?: Maybe<Array<Maybe<TaxSlabIntType>>>;
   name?: Maybe<Scalars['String']>;
-  unmarriedTaxableSalarySlab?: Maybe<Array<Maybe<Slab>>>;
+  unmarriedTaxableSalarySlab?: Maybe<Array<Maybe<TaxSlabIntType>>>;
 };
 
 export type TaxSlabs = {
@@ -24074,7 +24129,7 @@ export type WithdrawSlip = {
   memberId?: InputMaybe<Scalars['String']>;
   verifyWith?: InputMaybe<AccountOpenDepositVerify>;
   withdrawSlipNo?: InputMaybe<Scalars['String']>;
-  withdrawType: WithdrawWith;
+  withdrawType?: InputMaybe<WithdrawWith>;
 };
 
 export type WithdrawSlipDepositData = {
@@ -24746,6 +24801,18 @@ export type SetAccountOpenDataMutation = {
   account: {
     add?: {
       recordId: string;
+      record?: {
+        accountId: string;
+        transactionId: string;
+        accOpenedDate?: Record<'local' | 'en' | 'np', string> | null;
+        accountName?: string | null;
+        accountType?: string | null;
+        linkedAccountId?: string | null;
+        linkedAccountName?: string | null;
+        initialDepositAmount?: string | null;
+        charges?: string | null;
+        paymentMode?: string | null;
+      } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -32530,7 +32597,11 @@ export type UserFragment = {
   } | null;
   organization?: {
     id: string;
-    basicDetails?: { name?: string | null; logo?: string | null } | null;
+    basicDetails?: {
+      name?: string | null;
+      logo?: string | null;
+      organizationStartDate?: Record<'local' | 'en' | 'np', string> | null;
+    } | null;
     contactDetails?: {
       website?: string | null;
       phoneNumber?: string | null;
@@ -34765,8 +34836,8 @@ export type GetCurrentTaxSlabQuery = {
         getCurrentTaxSlab: {
           data?: {
             taxSlab?: Array<{
-              fromAmount?: string | null;
-              toAmount?: string | null;
+              fromAmount?: number | null;
+              toAmount?: number | null;
               percentageDeduction?: string | null;
             } | null> | null;
           } | null;
@@ -37835,6 +37906,16 @@ export type GetMemberTransferQuery = {
           | null;
       };
     };
+  };
+};
+
+export type LastKymUpdatedDateQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type LastKymUpdatedDateQuery = {
+  members: {
+    lastKymUpdatedDate?: { kymUpdatedDate?: Record<'local' | 'en' | 'np', string> | null } | null;
   };
 };
 
@@ -41815,6 +41896,68 @@ export type GetCharKhataReportQuery = {
   };
 };
 
+export type GetAdjustedCharKhataReportQueryVariables = Exact<{
+  data: CharKhataReportFilter;
+}>;
+
+export type GetAdjustedCharKhataReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        adjustedCharKhataReport: {
+          data?: {
+            equityAndLiablitiesTotal?: Record<string, unknown> | null;
+            assetsTotal?: Record<string, unknown> | null;
+            expenseTotal?: Record<string, unknown> | null;
+            incomeTotal?: Record<string, unknown> | null;
+            offBalanceTotal?: Record<string, unknown> | null;
+            orphanTotal?: Record<string, unknown> | null;
+            totalProfitLoss?: Record<string, unknown> | null;
+            totalAssetExpense?: Record<string, unknown> | null;
+            totalLiablitiesIncome?: Record<string, unknown> | null;
+            equityAndLiablities?: Array<{
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              balance?: Record<string, unknown> | null;
+              under?: string | null;
+            } | null> | null;
+            assets?: Array<{
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              balance?: Record<string, unknown> | null;
+              under?: string | null;
+            } | null> | null;
+            expenses?: Array<{
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              balance?: Record<string, unknown> | null;
+              under?: string | null;
+            } | null> | null;
+            income?: Array<{
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              balance?: Record<string, unknown> | null;
+              under?: string | null;
+            } | null> | null;
+            offBalance?: Array<{
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              balance?: Record<string, unknown> | null;
+              under?: string | null;
+            } | null> | null;
+            orphanEntries?: Array<{
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              balance?: Record<string, unknown> | null;
+              under?: string | null;
+            } | null> | null;
+          } | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetAbbsTransactionReportQueryVariables = Exact<{
   data: AbbsTransactionReportFilter;
 }>;
@@ -43671,13 +43814,13 @@ export type GetTaxSlabQuery = {
                 effectiveFrom?: Record<'local' | 'en' | 'np', string> | null;
                 makeItCurrentTaxSlab?: boolean | null;
                 unmarriedTaxableSalarySlab?: Array<{
-                  fromAmount?: string | null;
-                  toAmount?: string | null;
+                  fromAmount?: number | null;
+                  toAmount?: number | null;
                   percentageDeduction?: string | null;
                 } | null> | null;
                 marriedTaxableSalarySlab?: Array<{
-                  fromAmount?: string | null;
-                  toAmount?: string | null;
+                  fromAmount?: number | null;
+                  toAmount?: number | null;
                   percentageDeduction?: string | null;
                 } | null> | null;
               } | null;
@@ -44818,6 +44961,7 @@ export type GetOrganizationDataQuery = {
               logo?: string | null;
               typeOfOrganization?: TypeOfOrganization | null;
               slogan?: string | null;
+              organizationStartDate?: Record<'local' | 'en' | 'np', string> | null;
             } | null;
             contactDetails?: {
               phoneNumber?: string | null;
@@ -44865,6 +45009,7 @@ export type GetOrganizationEditDataQuery = {
               logo?: string | null;
               typeOfOrganization?: TypeOfOrganization | null;
               slogan?: string | null;
+              organizationStartDate?: Record<'local' | 'en' | 'np', string> | null;
             } | null;
             contactDetails?: {
               phoneNumber?: string | null;
@@ -47666,6 +47811,7 @@ export const UserFragmentDoc = `
     basicDetails {
       name
       logo
+      organizationStartDate
     }
     contactDetails {
       website
@@ -48460,6 +48606,18 @@ export const SetAccountOpenDataDocument = `
   account {
     add(id: $id, data: $data) {
       recordId
+      record {
+        accountId
+        transactionId
+        accOpenedDate
+        accountName
+        accountType
+        linkedAccountId
+        linkedAccountName
+        initialDepositAmount
+        charges
+        paymentMode
+      }
       error {
         ...MutationError
       }
@@ -66360,6 +66518,26 @@ export const useGetMemberTransferQuery = <TData = GetMemberTransferQuery, TError
     ).bind(null, variables),
     options
   );
+export const LastKymUpdatedDateDocument = `
+    query lastKymUpdatedDate($id: String!) {
+  members {
+    lastKymUpdatedDate(id: $id) {
+      kymUpdatedDate
+    }
+  }
+}
+    `;
+export const useLastKymUpdatedDateQuery = <TData = LastKymUpdatedDateQuery, TError = unknown>(
+  variables: LastKymUpdatedDateQueryVariables,
+  options?: UseQueryOptions<LastKymUpdatedDateQuery, TError, TData>
+) =>
+  useQuery<LastKymUpdatedDateQuery, TError, TData>(
+    ['lastKymUpdatedDate', variables],
+    useAxios<LastKymUpdatedDateQuery, LastKymUpdatedDateQueryVariables>(
+      LastKymUpdatedDateDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMembershipFeeDocument = `
     query getMembershipFee($memberID: ID!) {
   members {
@@ -71456,6 +71634,79 @@ export const useGetCharKhataReportQuery = <TData = GetCharKhataReportQuery, TErr
     ).bind(null, variables),
     options
   );
+export const GetAdjustedCharKhataReportDocument = `
+    query getAdjustedCharKhataReport($data: CharKhataReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        adjustedCharKhataReport(data: $data) {
+          data {
+            equityAndLiablities {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            equityAndLiablitiesTotal
+            assets {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            assetsTotal
+            expenses {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            expenseTotal
+            income {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            incomeTotal
+            offBalance {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            offBalanceTotal
+            orphanEntries {
+              ledgerId
+              ledgerName
+              balance
+              under
+            }
+            orphanTotal
+            totalProfitLoss
+            totalAssetExpense
+            totalLiablitiesIncome
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAdjustedCharKhataReportQuery = <
+  TData = GetAdjustedCharKhataReportQuery,
+  TError = unknown
+>(
+  variables: GetAdjustedCharKhataReportQueryVariables,
+  options?: UseQueryOptions<GetAdjustedCharKhataReportQuery, TError, TData>
+) =>
+  useQuery<GetAdjustedCharKhataReportQuery, TError, TData>(
+    ['getAdjustedCharKhataReport', variables],
+    useAxios<GetAdjustedCharKhataReportQuery, GetAdjustedCharKhataReportQueryVariables>(
+      GetAdjustedCharKhataReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAbbsTransactionReportDocument = `
     query getABBSTransactionReport($data: AbbsTransactionReportFilter!) {
   report {
@@ -75533,6 +75784,7 @@ export const GetOrganizationDataDocument = `
               logo
               typeOfOrganization
               slogan
+              organizationStartDate
             }
             contactDetails {
               phoneNumber
@@ -75593,6 +75845,7 @@ export const GetOrganizationEditDataDocument = `
               logo
               typeOfOrganization
               slogan
+              organizationStartDate
             }
             contactDetails {
               phoneNumber

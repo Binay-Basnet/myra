@@ -21,6 +21,7 @@ import {
 import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAddress,
+  FormDatePicker,
   FormFileInput,
   FormInput,
   FormRadioGroup,
@@ -93,9 +94,14 @@ export const CbsSettingsFeatureOrgEdit = () => {
         <FormProvider {...methods}>
           <form>
             <FormSection header="Basic Details">
-              <GridItem colSpan={3}>
+              <GridItem colSpan={2}>
                 <FormInput label="Organization Name" name="basicDetails.name" />
               </GridItem>
+
+              <FormDatePicker
+                name="basicDetails.organizationStartDate"
+                label="Organization Start Date"
+              />
 
               <GridItem colSpan={3}>
                 <Box w="-webkit-fit-content">

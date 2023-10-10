@@ -181,6 +181,7 @@ export const HrPayrollEntryUpsert = () => {
                     {
                       accessor: 'unPaidDays',
                       header: 'Unpaid Days',
+                      cell: (row) => <Text>{String(row?.unPaidDays) || '0'}</Text>,
                       getDisabled: () => true,
                     },
                     {

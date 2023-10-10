@@ -3,7 +3,18 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { BiEdit } from 'react-icons/bi';
 
-import { asyncToast, Box, Button, Column, Divider, Icon, Modal, Table, Text } from '@myra-ui';
+import {
+  asyncToast,
+  Box,
+  Button,
+  Column,
+  Divider,
+  Icon,
+  Modal,
+  Table,
+  Text,
+  Tooltip,
+} from '@myra-ui';
 
 import {
   NewEmployeeType,
@@ -57,6 +68,16 @@ export const EmployeeTypeTable = () => {
       {
         header: 'Description',
         accessorFn: (row) => row?.node?.description,
+        cell: (row) => (
+          <Tooltip title={row?.row?.original?.node?.description as string}>
+            <Text overflow="hidden" textOverflow="ellipsis" maxWidth="xs" cursor="pointer">
+              {row?.row?.original?.node?.description}
+            </Text>
+          </Tooltip>
+        ),
+        meta: {
+          width: '40%',
+        },
       },
       {
         header: 'Actions',
