@@ -24116,7 +24116,7 @@ export type WithdrawSlip = {
   memberId?: InputMaybe<Scalars['String']>;
   verifyWith?: InputMaybe<AccountOpenDepositVerify>;
   withdrawSlipNo?: InputMaybe<Scalars['String']>;
-  withdrawType: WithdrawWith;
+  withdrawType?: InputMaybe<WithdrawWith>;
 };
 
 export type WithdrawSlipDepositData = {

@@ -31,38 +31,19 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Error message to be displayed correctly: issues created due to branch readyness - in teller-vault transaction. (Id name added in msg)',
-      'Teller page of MR transaction- total number selected accounts to also be displayed',
-      'past year added in the adjusted year and fiscal trail balance.',
-      'Approved and Printed status in withdraw slip book page.',
-      'Account Open type of transaction in all transactions list (with service charge as well).',
-      'Ledgers with status off to be not shown in JV/Others.',
-      'CounterSlip option in payment mode of deposit.',
-      'Remaining Principal and Interest from ledger balance in Loan repayment voucher (bill print).',
-      'Loan product to not be editable in applied loan application.',
-      'Member transfer authority branch restriction.',
-      'Multiple membership charges: individual charges to also be displayed initially (directly added and redirected to payment mode).',
-      'Zero balance exclude in bank GL, LEDGER and teller report.',
-      'In Withdraw GL page: Withdrawn by detail (name) and bank cheque number missing',
+      'Success card and print added for the account open.',
+      'Adjusted charkhata report.',
+      'Kym last updated date added in the update Kym pop up model.',
+      'Slogan and start date added in the neosys portal.',
+      'Start date added in the organization edit page.',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'LOC amount mismatch in overview and report pages.',
-      'Ledger already associated with other banks to not be displayed in dropdown',
-      "'Checked by' added in Signature section",
-      'Loan Schedule to be calculated according to correct effective interest rate in loan application page',
-      'Correctly calculated in application page; incorrect in approval and disbursed page.',
-      'Member risk category in member KYM',
-      'Mandatory Saving deposit: installment (month/range) information to be shown in bill print',
-      "Account transfer: recurring saving type accounts to not be available in destination for 'member to member'.",
-      'Alternative Channel access to Teller.',
-      'Organization slogan field to be added on organization setup/edit page.',
-      'Total amount corrected in loan repayment success card.',
-      'Issues arose by deleting used relationship to be sorted (entry disappears from minor list, member profile does not load) - its can’t remove from settings from now onwards.',
-      'Minor name to be displayed in minor saving account overview',
-      'Success card of bulk deposit,  for all entries in bulk deposit.',
+      'Unable to open current account due to interest rate validation.',
+      "KYM updated date and withdraw slip issued doesn't update in individual member profile report.",
+      'Narration changed for the account open.',
     ],
   },
 };
@@ -101,8 +82,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.96</Text>
-          <Text fontSize="s3">October4, 2023</Text>
+          <Text fontSize="r2">Version 1.0.97</Text>
+          <Text fontSize="s3">October 10, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>

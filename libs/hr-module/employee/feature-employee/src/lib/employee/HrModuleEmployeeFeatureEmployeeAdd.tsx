@@ -213,8 +213,6 @@ export const EmployeeAddForm = () => {
               <EmployeeWorkInformation />
               <WorkExperienceTable />
               <OtherDetails />
-              {/* <JoiningDetails /> */}
-              {/* <SalaryDetails /> */}
             </SectionContainer>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
@@ -222,8 +220,6 @@ export const EmployeeAddForm = () => {
               </Text>
               <PayrollSetup />
               <OtherSchemes />
-              {/* <Approvers />
-              <EmployeeHealthInsurance /> */}
             </SectionContainer>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">

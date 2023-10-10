@@ -2,18 +2,16 @@ const basicInfo = [
   'firstName',
   'lastName',
   'middleName',
-  'genderId',
-  'dateOfBirth',
+  'gender',
   'age',
-  'maritalStatusId',
+  'dateOfBirth',
+  'maritalStatus',
+  'ethnicity',
+  'bloodGroup',
+  'Handicapped',
 ];
 
-const contact = [
-  'workPhoneNumber',
-  'workEmailAddress',
-  'personalPhoneNumber',
-  'personalEmailAddress',
-];
+const contact = ['workPhoneNumber', 'workEmailAddress', 'personalPhoneNumber'];
 const permanentAddress = [
   'permanentAddress.provinceId',
   'permanentAddress.districtId',
@@ -24,7 +22,7 @@ const permanentAddress = [
   'permanentAddress.coordinates',
 ];
 const temporaryAddress = [
-  'sameTempAsPermanentAddress',
+  'isTemporarySameAsPermanent',
   'temporaryAddress.provinceId',
   'temporaryAddress.districtId',
   'temporaryAddress.localGovernmentId',
@@ -34,20 +32,61 @@ const temporaryAddress = [
   'temporaryAddress.coordinates',
 ];
 
+const educationDetails = ['instituteName'];
+
 const workInformation = [
   'departmentId',
   'designationId',
-  'branchId',
-  'employmentTypeId',
-  'employmentStatus',
+  'employeeClass',
+  'employeeLevelId',
+  'serviceCenter',
+  'employmentType',
+  'employeeStatus',
   'sourceOfHire',
+  'referralBy',
+  'joiningDate',
 ];
-const joiningDetails = ['jobApplication'];
-const workExperience = ['workExperience'];
-const salaryDetails = ['salaryPaymentMode', 'pan', 'pfAccount', 'salaryStructure'];
-const approvers = ['reportsToId', 'leaveApproverId', 'expenseApproverId'];
-const healthInsurance = ['healthInsuranceProviderId', 'healthInsuranceNumberId'];
-const educationalDetails = ['educationalDetails'];
+
+const identificationDetails = [
+  'identificationSelection',
+  'citizenship.id',
+  'citizenship.placeOfIssue',
+  'citizenship.issuedDate',
+  'drivingLicense.id',
+  'drivingLicense.placeOfIssue',
+  'drivingLicense.issuedDate',
+];
+
+const payrollSetup = [
+  'payGroup',
+  'panNumber',
+  'salaryStructureId',
+  'salaryPaymentMode',
+  'account',
+  'bank',
+  'accountName',
+  'accountNumber',
+];
+
+const otherScheme = [
+  'otherSchemes',
+  'providentNumber',
+  'nominee',
+  'relationWithNominee',
+  'ssfNumber',
+  'citNumber',
+  'citCode',
+  'noCitDeduction',
+];
+
+const configurations = ['supervisor'];
+
+const documents = [
+  'documents.0.identifiers',
+  'documents.1.identifiers',
+  'documents.2.identifiers',
+  'documents.3.identifiers',
+];
 
 export const getEmployeeSection = (id: string) => {
   if (basicInfo.includes(id)) {
@@ -62,15 +101,9 @@ export const getEmployeeSection = (id: string) => {
       subSection: 'Contact Details',
     };
   }
-  if (educationalDetails.includes(id.split('.')[0])) {
-    return {
-      section: 'personalDetails',
-      subSection: 'Education Information',
-    };
-  }
   if (permanentAddress.includes(id)) {
     return {
-      section: 'Permanent Address',
+      section: 'personalDetails',
       subSection: 'Permanent Address',
     };
   }
@@ -80,40 +113,46 @@ export const getEmployeeSection = (id: string) => {
       subSection: 'Temporary Address',
     };
   }
+  if (identificationDetails.includes(id)) {
+    return {
+      section: 'personalDetails',
+      subSection: 'Identification Details',
+    };
+  }
+  if (educationDetails.includes(id)) {
+    return {
+      section: 'personalDetails',
+      subSection: 'Educational Information',
+    };
+  }
   if (workInformation.includes(id)) {
     return {
       section: 'professionalDetails',
       subSection: 'Work Information',
     };
   }
-  if (joiningDetails.includes(id)) {
+  if (payrollSetup.includes(id)) {
     return {
-      section: 'professionalDetails',
-      subSection: 'Joining Details',
+      section: 'setups',
+      subSection: 'Payroll Setup',
     };
   }
-  if (workExperience.includes(id.split('.')[0])) {
+  if (otherScheme.includes(id)) {
     return {
-      section: 'professionalDetails',
-      subSection: 'Work Experience',
+      section: 'setups',
+      subSection: 'Other Schemes',
     };
   }
-  if (salaryDetails.includes(id)) {
+  if (configurations.includes(id)) {
     return {
-      section: 'professionalDetails',
-      subSection: 'Salary Info',
+      section: 'setups',
+      subSection: 'Configurations',
     };
   }
-  if (approvers.includes(id)) {
+  if (documents.includes(id)) {
     return {
-      section: 'Configurations',
-      subSection: 'Approvers',
-    };
-  }
-  if (healthInsurance.includes(id)) {
-    return {
-      section: 'Configurations',
-      subSection: 'Employee Health Insurance',
+      section: 'declaration',
+      subSection: 'Documents Declarations',
     };
   }
   return undefined;

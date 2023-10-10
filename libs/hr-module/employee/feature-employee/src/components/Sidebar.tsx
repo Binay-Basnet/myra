@@ -30,14 +30,14 @@ export const SidebarEmployeeAddForm = (props: AccordianProps) => {
   const subsection = currentSection?.subSection;
   const [isOpenPersonal, setIsOpenPersonal] = React.useState(false);
   const [isOpenProfessional, setIsOpenProfessional] = React.useState(false);
-  const [isOpenConfigurations, setIsOpenConfigurations] = React.useState(false);
+  const [isOpenSetups, setIsOpenSetups] = React.useState(false);
   const [isOpenDeclaration, setIsOpenDeclaration] = React.useState(false);
 
   React.useEffect(() => {
     const section = currentSection?.section;
     setIsOpenPersonal(section === 'personalDetails');
     setIsOpenProfessional(section === 'professionalDetails');
-    setIsOpenConfigurations(section === 'Configurations');
+    setIsOpenSetups(section === 'setups');
     setIsOpenDeclaration(section === 'declaration');
   }, [currentSection]);
 
@@ -117,17 +117,17 @@ export const SidebarEmployeeAddForm = (props: AccordianProps) => {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        onClick={() => setIsOpenConfigurations(!isOpenConfigurations)}
+        onClick={() => setIsOpenSetups(!isOpenSetups)}
         cursor="pointer"
         minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="Semibold">
           3. Setups
         </Text>
-        {!isOpenConfigurations ? <ChevronRightIcon /> : <ChevronDownIcon />}
+        {!isOpenSetups ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
-      <Collapse in={isOpenConfigurations}>
+      <Collapse in={isOpenSetups}>
         <Box display="flex" flexDirection="column" mb="s16">
           {Setups.map((item) => (
             <Box

@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { FormSection, GridItem } from '@myra-ui';
+import { Box, FormSection, GridItem } from '@myra-ui';
 
 import { FormAddress, FormSwitch } from '@coop/shared/form';
 
@@ -11,11 +11,15 @@ export const EmployeeAddress = () => {
   const isPermanentAndTemporaryAddressSame = watch('isTemporarySameAsPermanent');
   return (
     <>
-      <FormAddress
-        sectionId="Permanent Address"
-        sectionHeader="Permanent Address"
-        name="permanentAddress"
-      />
+      <Box id="Permanent Address">
+        <GridItem colSpan={3}>
+          <FormAddress
+            sectionId="Permanent Address"
+            sectionHeader="Permanent Address"
+            name="permanentAddress"
+          />
+        </GridItem>
+      </Box>
 
       <FormSection id="Temporary Address" header="Temporary Address">
         <GridItem colSpan={3}>
