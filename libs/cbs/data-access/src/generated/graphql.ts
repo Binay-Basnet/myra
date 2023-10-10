@@ -366,6 +366,19 @@ export type AccountPremium = {
   minRate?: InputMaybe<Scalars['Float']>;
 };
 
+export type AccountSuccessCardData = {
+  accOpenedDate?: Maybe<Scalars['Localized']>;
+  accountId: Scalars['ID'];
+  accountName?: Maybe<Scalars['String']>;
+  accountType?: Maybe<Scalars['String']>;
+  charges?: Maybe<Scalars['String']>;
+  initialDepositAmount?: Maybe<Scalars['String']>;
+  linkedAccountId?: Maybe<Scalars['ID']>;
+  linkedAccountName?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<Scalars['String']>;
+  transactionId: Scalars['ID'];
+};
+
 export type AccountTransferEntry = {
   ID: Scalars['ID'];
   amount?: Maybe<Scalars['String']>;
@@ -5559,7 +5572,7 @@ export type DepositLoanAccountQueryListTransactionsArgs = {
 export type DepositLoanAccountResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<DepositLoanAccountQuery>;
-  record?: Maybe<DepositLoanAccount>;
+  record?: Maybe<AccountSuccessCardData>;
   recordId: Scalars['ID'];
 };
 
@@ -24116,7 +24129,7 @@ export type WithdrawSlip = {
   memberId?: InputMaybe<Scalars['String']>;
   verifyWith?: InputMaybe<AccountOpenDepositVerify>;
   withdrawSlipNo?: InputMaybe<Scalars['String']>;
-  withdrawType: WithdrawWith;
+  withdrawType?: InputMaybe<WithdrawWith>;
 };
 
 export type WithdrawSlipDepositData = {
@@ -24788,6 +24801,18 @@ export type SetAccountOpenDataMutation = {
   account: {
     add?: {
       recordId: string;
+      record?: {
+        accountId: string;
+        transactionId: string;
+        accOpenedDate?: Record<'local' | 'en' | 'np', string> | null;
+        accountName?: string | null;
+        accountType?: string | null;
+        linkedAccountId?: string | null;
+        linkedAccountName?: string | null;
+        initialDepositAmount?: string | null;
+        charges?: string | null;
+        paymentMode?: string | null;
+      } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -48581,6 +48606,18 @@ export const SetAccountOpenDataDocument = `
   account {
     add(id: $id, data: $data) {
       recordId
+      record {
+        accountId
+        transactionId
+        accOpenedDate
+        accountName
+        accountType
+        linkedAccountId
+        linkedAccountName
+        initialDepositAmount
+        charges
+        paymentMode
+      }
       error {
         ...MutationError
       }
