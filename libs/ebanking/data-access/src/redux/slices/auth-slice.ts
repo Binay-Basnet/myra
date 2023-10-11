@@ -22,6 +22,8 @@ interface AuthState {
   isLogged: boolean | null;
   token: string | null;
 
+  selectedCoop: string | null;
+
   cooperative: {
     isLogged: boolean | null;
 
@@ -36,6 +38,7 @@ const initialState: AuthState = {
   user: null,
   isLogged: null,
   token: null,
+  selectedCoop: null,
   cooperative: {
     isLogged: null,
     user: null,
@@ -112,6 +115,10 @@ export const authSlice = createSlice({
         defaultAccount: action.payload,
       };
     },
+
+    setSelectedCoop: (state, action) => {
+      state.selectedCoop = action.payload.selectedCoop;
+    },
   },
 });
 
@@ -126,6 +133,7 @@ export const {
   logoutCooperative,
   setCurrentToken,
   updateDefaultAccountInCoop,
+  setSelectedCoop,
 } = authSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

@@ -18711,6 +18711,11 @@ react-nanny@^2.15.0:
   resolved "https://registry.yarnpkg.com/react-nanny/-/react-nanny-2.15.0.tgz#9472984af45761263b92b209f925e773fd761653"
   integrity sha512-fn6tAnJ+UEdD0pq5YytlZJb5XmjVcvXoxq3i2r1o/BavgipwRWsw7oOXNJ8bJd33iedlkNyAQMXVC6qTl0Hv4A==
 
+react-otp-input@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-otp-input/-/react-otp-input-3.1.0.tgz#50095dfb037d27725a17ecd7d354a4e0e7d12e18"
+  integrity sha512-SNDwqPemy5DYLVQJrOEfZXvJePcDIDmjkln0QyHdje8hRcB1TnrqthxHs0M+E9MWQAyxM84R5yPe2wYjqnH4UA==
+
 react-pdf@^6.0.3:
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/react-pdf/-/react-pdf-6.0.3.tgz#88a0d489f87f29cd7bb3050930a0d64dae30f83b"

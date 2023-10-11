@@ -282,6 +282,13 @@ export type Condition = {
   value: Scalars['Any'];
 };
 
+export type CoopPinResetInput = {
+  cooperativeId: Scalars['String'];
+  mobileNumber: Scalars['String'];
+  newPin: Scalars['String'];
+  otp: Scalars['String'];
+};
+
 export type CoopStatistics = {
   totalBranches: Scalars['Int'];
   totalCapital?: Maybe<Scalars['String']>;
@@ -622,7 +629,9 @@ export type EBankingAuthMutation = {
   loginToCooperative?: Maybe<EbankingCooperativeLoginResult>;
   requestSource?: Maybe<RequestSource>;
   resendOtp?: Maybe<EbankingOtpResult>;
+  resetCoopPin?: Maybe<EbankingChangeCoopPinResult>;
   resetPassword?: Maybe<EbankingChangePasswordResult>;
+  sendOtpForCoopPinReset?: Maybe<EbankingChangePasswordResult>;
   setNewPin?: Maybe<EbankingUserResult>;
   setPassword?: Maybe<EbankingPasswordResult>;
   signUp?: Maybe<EbankingSignUpResult>;
@@ -666,10 +675,19 @@ export type EBankingAuthMutationResendOtpArgs = {
   otpFor: OtpFor;
 };
 
+export type EBankingAuthMutationResetCoopPinArgs = {
+  input: CoopPinResetInput;
+};
+
 export type EBankingAuthMutationResetPasswordArgs = {
   mobileNo: Scalars['String'];
   newPassword: Scalars['String'];
   otp: Scalars['String'];
+};
+
+export type EBankingAuthMutationSendOtpForCoopPinResetArgs = {
+  cooperativeId: Scalars['ID'];
+  mobileNumber: Scalars['String'];
 };
 
 export type EBankingAuthMutationSetNewPinArgs = {
@@ -3249,7 +3267,9 @@ export type GetEbankLoanAccountDetailsQuery = {
   };
 };
 
-export type GetTotalExpenseQueryVariables = Exact<{ [key: string]: never }>;
+export type GetTotalExpenseQueryVariables = Exact<{
+  listFilter?: InputMaybe<EbankingAccountFilter>;
+}>;
 
 export type GetTotalExpenseQuery = {
   eBanking: {
@@ -4285,6 +4305,57 @@ export type NewMembershipRequestMutation = {
     membershipRequest?: {
       new?: {
         recordId?: string | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SendOtpForCoopPinResetMutationVariables = Exact<{
+  cooperativeId: Scalars['ID'];
+  mobileNumber: Scalars['String'];
+}>;
+
+export type SendOtpForCoopPinResetMutation = {
+  eBanking: {
+    auth?: {
+      sendOtpForCoopPinReset?: {
+        success: boolean;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type ResetCoopPinMutationVariables = Exact<{
+  input: CoopPinResetInput;
+}>;
+
+export type ResetCoopPinMutation = {
+  eBanking: {
+    auth?: {
+      resetCoopPin?: {
+        success: boolean;
         error?:
           | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
           | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
