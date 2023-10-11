@@ -13,6 +13,7 @@ import {
   useSetBankAccountsMutation,
   useUpdateBankAccountsMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   FormCOALedgerSelect,
   FormInput,
@@ -91,7 +92,7 @@ export const AccountingFeatureAddBankAccount = () => {
           success: 'Accounting Bank Account Edited',
           loading: 'Editing Accounting Bank Account',
         },
-        onSuccess: () => router.push('/accounting/accounting/bank-accounts/list'),
+        onSuccess: () => router.back(),
         promise: editAsync({ data: { ...values, id: id as string } }),
         onError: (error) => {
           if (error.__typename === 'ValidationError') {
@@ -110,7 +111,7 @@ export const AccountingFeatureAddBankAccount = () => {
           success: 'New Accounting Bank Account Added',
           loading: 'Adding Accounting Bank Account',
         },
-        onSuccess: () => router.push('/accounting/accounting/bank-accounts/list'),
+        onSuccess: () => router.push(ROUTES.ACCOUNTING_BANK_ACCOUNTS_LIST),
         promise: addAsync({ data: values }),
         onError: (error) => {
           if (error.__typename === 'ValidationError') {
