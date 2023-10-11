@@ -142,7 +142,7 @@ export const EmployeeDrawer = (props: EmployeeDrawerProps) => {
           fontWeight="medium"
           color="gray.800"
           cursor="pointer"
-          onClick={() => setDeductionComponentCollapse(!earningComponentCollapse)}
+          onClick={() => setDeductionComponentCollapse(!deductionComponentCollapse)}
         >
           Deductions
         </Text>
