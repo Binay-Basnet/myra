@@ -620,7 +620,7 @@ export const GetTransactionListsDocument = `
     query getTransactionLists($listFilter: EbankingAccountFilter, $filter: EbankingTransactionFilter, $pagination: Pagination) {
   eBanking {
     account {
-      list {
+      list(filter: $listFilter) {
         accounts {
           id
           name
@@ -817,10 +817,10 @@ export const useGetEbankLoanAccountDetailsQuery = <
     options
   );
 export const GetTotalExpenseDocument = `
-    query getTotalExpense {
+    query getTotalExpense($listFilter: EbankingAccountFilter) {
   eBanking {
     account {
-      list {
+      list(filter: $listFilter) {
         recentTransactions(paginate: {after: "", first: -1}) {
           summary {
             expensesThisMonth

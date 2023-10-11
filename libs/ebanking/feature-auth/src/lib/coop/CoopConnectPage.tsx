@@ -7,6 +7,7 @@ import { Avatar, Box, Button, Input, Text, toast } from '@myra-ui';
 
 import { GoBack } from '@coop/ebanking/components';
 import {
+  setSelectedCoop,
   switchCooperative,
   useAppSelector,
   useLoginToCooperativeMutation,
@@ -20,7 +21,9 @@ export const CoopConnectPage = () => {
 
   const cooperativesList = useAppSelector((state) => state?.auth?.user?.cooperatives);
 
-  const [selectedCoop, setSelectedCoop] = useState<string | null>(null);
+  const selectedCoop = useAppSelector((state) => state?.auth?.selectedCoop);
+
+  // const [selectedCoop, setSelectedCoop] = useState<string | null>(null);
   const [status, setStatus] = useState<'coop-select' | 'pin'>('coop-select');
 
   const { mutateAsync: loginToCooperative, isLoading } = useLoginToCooperativeMutation();
@@ -99,7 +102,8 @@ export const CoopConnectPage = () => {
                     gap="s8"
                     onClick={() => {
                       if (coop?.id) {
-                        setSelectedCoop(coop?.id);
+                        dispatch(setSelectedCoop({ selectedCoop: coop?.id }));
+                        // setSelectedCoop(coop?.id);
                         setStatus('pin');
                       }
                     }}
@@ -172,6 +176,18 @@ export const CoopConnectPage = () => {
                 >
                   Continue
                 </Button>
+
+                <Box display="flex" justifyContent="flex-end">
+                  <Box
+                    // fontStyle="italic"
+                    color="primary.500"
+                    fontSize="s3"
+                    cursor="pointer"
+                    onClick={() => router.push('/login/coop/reset-pin')}
+                  >
+                    Reset Pin?
+                  </Box>
+                </Box>
               </Box>
             </>
           );

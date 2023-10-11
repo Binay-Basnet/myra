@@ -164,3 +164,29 @@ mutation newMembershipRequest($cooperativeId: String!, $data: MembershipRequestI
     }
   }
 }
+
+mutation sendOtpForCoopPinReset($cooperativeId: ID!, $mobileNumber: String!) {
+  eBanking(source: EBANKING) {
+    auth {
+      sendOtpForCoopPinReset(cooperativeId: $cooperativeId, mobileNumber: $mobileNumber) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation resetCoopPin($input: CoopPinResetInput!) {
+  eBanking(source: EBANKING) {
+    auth {
+      resetCoopPin(input: $input) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
