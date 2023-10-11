@@ -37,7 +37,7 @@ import {
   FormSelect,
   FormTextArea,
 } from '@coop/shared/form';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { decimalAdjust, getPaginationQuery } from '@coop/shared/utils';
 
 const defaultFormValue = {
   name: '',
@@ -339,7 +339,11 @@ export const SalaryStructureTable = () => {
                       return (
                         <Box textAlign="right">
                           {selectedEarningComponent?.node?.baseMultiple} × &nbsp;
-                          {selectedEarningComponent?.node?.multiplier}
+                          {decimalAdjust(
+                            'round',
+                            selectedEarningComponent?.node?.multiplier as number,
+                            -2
+                          )}
                         </Box>
                       );
                     },
@@ -390,7 +394,11 @@ export const SalaryStructureTable = () => {
                       return (
                         <Box textAlign="right">
                           {selectedDeductionComponent?.node?.baseMultiple} × &nbsp;
-                          {selectedDeductionComponent?.node?.multiplier}
+                          {decimalAdjust(
+                            'round',
+                            selectedDeductionComponent?.node?.multiplier as number,
+                            -2
+                          )}
                         </Box>
                       );
                     },

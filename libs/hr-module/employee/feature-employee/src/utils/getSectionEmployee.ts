@@ -32,7 +32,8 @@ const temporaryAddress = [
   'temporaryAddress.coordinates',
 ];
 
-const educationDetails = ['instituteName'];
+const familyDetails = ['fullName', 'relation', 'occupation'];
+const educationDetails = ['instituteName', 'degree_diploma', 'durationInYrs', 'grade', 'dateOfCompletion'];
 
 const workInformation = [
   'departmentId',
@@ -119,7 +120,13 @@ export const getEmployeeSection = (id: string) => {
       subSection: 'Identification Details',
     };
   }
-  if (educationDetails.includes(id)) {
+  if (familyDetails.includes(id) || familyDetails.includes(id.split('.')[2])) {
+    return {
+      section: 'personalDetails',
+      subSection: 'Family Details',
+    };
+  }
+  if (educationDetails.includes(id) || educationDetails.includes(id.split('.')[2])) {
     return {
       section: 'personalDetails',
       subSection: 'Educational Information',
