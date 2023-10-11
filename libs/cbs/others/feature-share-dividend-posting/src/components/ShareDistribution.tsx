@@ -19,7 +19,7 @@ export const ShareDistribution = () => {
 
       <FormLeafCoaHeadSelect
         name="taxLedgerCOAHead"
-        label="Tax Rate COA Head"
+        label="Tax COA Head"
         isDisabled={router?.asPath?.includes('/view')}
       />
       {/* </GridItem> */}
