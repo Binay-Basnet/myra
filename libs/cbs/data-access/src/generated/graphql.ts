@@ -10096,11 +10096,16 @@ export type HcmPayrollSalaryStructureQueryListSalaryStructureArgs = {
 
 export type HcmPayrollTaxSetupMutation = {
   upsertTaxSetupTaxExemptionRate: TaxSetupTaxExceptionRateMutationWithError;
+  upsertTaxSetupTaxLedgerHead: TaxSetupTaxLedgerHeadWithError;
   upsertTaxSetupTaxRebateRateInPercentage: TaxSetupTaxRebateRateWithError;
 };
 
 export type HcmPayrollTaxSetupMutationUpsertTaxSetupTaxExemptionRateArgs = {
   taxExceptionRate?: InputMaybe<Scalars['Float']>;
+};
+
+export type HcmPayrollTaxSetupMutationUpsertTaxSetupTaxLedgerHeadArgs = {
+  taxSetupTaxLedgerHead?: InputMaybe<Scalars['String']>;
 };
 
 export type HcmPayrollTaxSetupMutationUpsertTaxSetupTaxRebateRateInPercentageArgs = {
@@ -22512,6 +22517,7 @@ export const TaxReceivedPaid = {
 export type TaxReceivedPaid = typeof TaxReceivedPaid[keyof typeof TaxReceivedPaid];
 export type TaxSetup = {
   taxExceptionRateInPercentage?: Maybe<Scalars['Float']>;
+  taxParentLedgerHead?: Maybe<Scalars['String']>;
   taxRebateRateInPercentage?: Maybe<Scalars['Float']>;
 };
 
@@ -22521,6 +22527,11 @@ export type TaxSetupGetWithError = {
 };
 
 export type TaxSetupTaxExceptionRateMutationWithError = {
+  error?: Maybe<MutationError>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type TaxSetupTaxLedgerHeadWithError = {
   error?: Maybe<MutationError>;
   id?: Maybe<Scalars['ID']>;
 };

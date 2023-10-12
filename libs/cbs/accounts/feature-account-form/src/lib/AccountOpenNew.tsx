@@ -630,6 +630,15 @@ export const AccountOpenNew = () => {
                             Other Services
                           </Text>
                           <Box display="flex" flexDirection="column" gap="s8">
+                            {ProductData?.alternativeChannels && (
+                              <>
+                                <FormCheckbox name="mobileBanking" label="Mobile Banking" />
+
+                                <FormCheckbox name="eBanking" label="EBanking" />
+
+                                <FormCheckbox name="smsBanking" label="SMS Banking" />
+                              </>
+                            )}
                             {ProductData?.atmFacility && (
                               <FormCheckbox name="atmFacility" label="ATM Facility" />
                             )}
