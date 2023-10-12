@@ -284,3 +284,22 @@ mutation setTaxSetupTaxRebateInPercentage($taxRebateRateInPercentage: Float) {
     }
   }
 }
+
+mutation setTaxSetupTaxLedgerHead($taxSetupTaxLedgerHead: String) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxsetup {
+            upsertTaxSetupTaxLedgerHead(taxSetupTaxLedgerHead: $taxSetupTaxLedgerHead) {
+              id
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -28750,6 +28750,33 @@ export type SetTaxSetupTaxRebateInPercentageMutation = {
   };
 };
 
+export type SetTaxSetupTaxLedgerHeadMutationVariables = Exact<{
+  taxSetupTaxLedgerHead?: InputMaybe<Scalars['String']>;
+}>;
+
+export type SetTaxSetupTaxLedgerHeadMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxsetup: {
+            upsertTaxSetupTaxLedgerHead: {
+              id?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type UpsertLedgerTagMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: LedgerTagInput;
@@ -43983,6 +44010,7 @@ export type GetTaxSetupQuery = {
               data?: {
                 taxExceptionRateInPercentage?: number | null;
                 taxRebateRateInPercentage?: number | null;
+                taxParentLedgerHead?: string | null;
               } | null;
               error?:
                 | MutationError_AuthorizationError_Fragment
@@ -54286,6 +54314,46 @@ export const useSetTaxSetupTaxRebateInPercentageMutation = <TError = unknown, TC
       SetTaxSetupTaxRebateInPercentageMutation,
       SetTaxSetupTaxRebateInPercentageMutationVariables
     >(SetTaxSetupTaxRebateInPercentageDocument),
+    options
+  );
+export const SetTaxSetupTaxLedgerHeadDocument = `
+    mutation setTaxSetupTaxLedgerHead($taxSetupTaxLedgerHead: String) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxsetup {
+            upsertTaxSetupTaxLedgerHead(taxSetupTaxLedgerHead: $taxSetupTaxLedgerHead) {
+              id
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetTaxSetupTaxLedgerHeadMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetTaxSetupTaxLedgerHeadMutation,
+    TError,
+    SetTaxSetupTaxLedgerHeadMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetTaxSetupTaxLedgerHeadMutation,
+    TError,
+    SetTaxSetupTaxLedgerHeadMutationVariables,
+    TContext
+  >(
+    ['setTaxSetupTaxLedgerHead'],
+    useAxios<SetTaxSetupTaxLedgerHeadMutation, SetTaxSetupTaxLedgerHeadMutationVariables>(
+      SetTaxSetupTaxLedgerHeadDocument
+    ),
     options
   );
 export const UpsertLedgerTagDocument = `
@@ -74461,6 +74529,7 @@ export const GetTaxSetupDocument = `
               data {
                 taxExceptionRateInPercentage
                 taxRebateRateInPercentage
+                taxParentLedgerHead
               }
               error {
                 ...MutationError

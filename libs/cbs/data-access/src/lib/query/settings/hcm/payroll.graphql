@@ -336,6 +336,7 @@ query getTaxSetup {
               data {
                 taxExceptionRateInPercentage
                 taxRebateRateInPercentage
+                taxParentLedgerHead
               }
               error {
                 ...MutationError

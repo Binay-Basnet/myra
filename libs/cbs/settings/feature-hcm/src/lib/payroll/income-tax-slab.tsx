@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { debounce } from 'lodash';
 
 import { Box, Divider, Input, Text } from '@myra-ui';
@@ -5,16 +7,21 @@ import { Box, Divider, Input, Text } from '@myra-ui';
 import {
   useGetTaxSetupQuery,
   useSetTaxSetupTaxExemptionRateMutation,
+  useSetTaxSetupTaxLedgerHeadMutation,
   useSetTaxSetupTaxRebateInPercentageMutation,
 } from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
+import { FormLeafCoaHeadSelect } from '@coop/shared/form';
 
 import IncomeTaxSlabTable from '../../components/payroll/IncomeTaxSlabTable';
 
 export const IncomeTaxSlab = () => {
+  const methods = useForm();
+  const { watch, setValue } = methods;
   const { mutateAsync: taxExemptionRateMutateAsync } = useSetTaxSetupTaxExemptionRateMutation();
   const { mutateAsync: taxRebateRateInPercentageMutateAsync } =
     useSetTaxSetupTaxRebateInPercentageMutation();
+  const { mutateAsync: taxLedgerHeadMutateAsync } = useSetTaxSetupTaxLedgerHeadMutation();
 
   const { data, refetch } = useGetTaxSetupQuery();
 
@@ -23,6 +30,19 @@ export const IncomeTaxSlab = () => {
       ?.taxExceptionRateInPercentage;
   const taxRebateForWomen =
     data?.settings?.general?.HCM?.payroll?.taxsetup?.getTaxSetup?.data?.taxRebateRateInPercentage;
+
+  const taxSetupLedgerHead =
+    data?.settings?.general?.HCM?.payroll?.taxsetup?.getTaxSetup?.data?.taxParentLedgerHead;
+
+  const ledgerIdWatch = watch('ledgerId');
+
+  useEffect(() => {
+    taxLedgerHeadMutateAsync({ taxSetupTaxLedgerHead: ledgerIdWatch });
+  }, [ledgerIdWatch]);
+
+  useEffect(() => {
+    setValue('ledgerId', taxSetupLedgerHead);
+  }, [taxSetupLedgerHead]);
 
   return (
     <Box p="s16" display="flex" flexDir="column" gap="s16">
@@ -77,6 +97,19 @@ export const IncomeTaxSlab = () => {
               )}
               rightElement={<>%</>}
             />
+          </Box>
+        </Box>
+        <Divider />
+        <Box display="flex" justifyContent="space-between" alignItems="center" mt="s16" mb="s16">
+          <Box>
+            <Text fontSize="r1" fontWeight="semibold">
+              Select Ledger
+            </Text>
+          </Box>
+          <Box w="-webkit-fit-content">
+            <FormProvider {...methods}>
+              <FormLeafCoaHeadSelect name="ledgerId" />
+            </FormProvider>
           </Box>
         </Box>
       </SettingsCard>

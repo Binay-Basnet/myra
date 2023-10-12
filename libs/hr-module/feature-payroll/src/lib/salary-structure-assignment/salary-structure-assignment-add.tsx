@@ -248,13 +248,6 @@ export const SalaryStructureAssignmentAdd = () => {
                     accessor: 'amount',
                     header: 'Amount',
                     isNumeric: true,
-                    // getDisabled: (row) => {
-                    //   const selectedEarningComponent = earningComponentData?.find(
-                    //     (item) => item?.node?.id === row?.id
-                    //   );
-
-                    //   return !!selectedEarningComponent;
-                    // },
                   },
                   {
                     accessor: 'formula',
