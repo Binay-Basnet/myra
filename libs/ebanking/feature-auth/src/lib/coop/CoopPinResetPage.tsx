@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import OtpInput from 'react-otp-input';
 import { useRouter } from 'next/router';
-import { Input as ChakraInput } from '@chakra-ui/react';
 import {
   useResetCoopPinMutation,
   useSendOtpForCoopPinResetMutation,
@@ -11,16 +9,16 @@ import {
 import { asyncToast, Box, Button, PasswordInput, Text } from '@myra-ui';
 
 import { useAppSelector } from '@coop/ebanking/data-access';
+import { FormPinInput } from '@coop/shared/form';
 
 export const CoopPinResetPage = () => {
   const methods = useForm();
-
-  const [otp, setOtp] = useState('');
 
   const {
     register,
     getValues,
     formState: { errors },
+    setValue,
   } = methods;
 
   const router = useRouter();
@@ -47,9 +45,8 @@ export const CoopPinResetPage = () => {
         mobileNumber: selectedCoopPhone as string,
       }),
       onSuccess: () => {
-        if (otp) {
-          setOtp('');
-        }
+        setValue('otp', '');
+
         handleStart(120);
         setStatus('otp');
       },
@@ -73,7 +70,7 @@ export const CoopPinResetPage = () => {
             cooperativeId: selectedCoop as string,
             mobileNumber: selectedCoopPhone as string,
             newPin: values['newPin'],
-            otp,
+            otp: values['otp'],
           },
         }),
         onSuccess: () => {
@@ -143,7 +140,6 @@ export const CoopPinResetPage = () => {
       </Box>
 
       <Button onClick={handleGenerateOTP}>Send OTP</Button>
-      {/* <Button onClick={() => handleStart(10)}>Send OTP</Button> */}
     </Box>
   ) : (
     <FormProvider {...methods}>
@@ -158,34 +154,29 @@ export const CoopPinResetPage = () => {
             </Text>
           </Box>
 
-          <Box display="flex" flexDirection="column" gap="s4">
-            <Text variant="formLabel">Enter OTP</Text>
-            <OtpInput
-              value={otp}
-              onChange={setOtp}
-              numInputs={4}
-              renderInput={(props) => <ChakraInput {...props} />}
-              inputStyle={{ width: '30px' }}
-              containerStyle={{ display: 'flex', gap: '8px' }}
-            />
-
-            <Text variant="formHelper">
-              {currentTime === 0
+          <FormPinInput
+            name="otp"
+            label="Enter OTP"
+            type="number"
+            helperText={
+              currentTime === 0
                 ? 'OTP Expired. Please generate OTP again.'
-                : `OTP expires in ${secondsToHHMMSS(currentTime)}`}
-            </Text>
-          </Box>
+                : `OTP expires in ${secondsToHHMMSS(currentTime)}`
+            }
+          />
 
           <PasswordInput
             label="New Pin"
             placeholder="Enter Pin"
             // errorText={errors.password?.message}
+            autoComplete="new-password"
             {...register('newPin')}
           />
 
           <PasswordInput
             label="Confirm Pin"
             placeholder="Confirm Pin"
+            autoComplete="new-password"
             errorText={(errors?.['confirmPin']?.message as string) ?? ''}
             {...register('confirmPin')}
           />
@@ -195,7 +186,6 @@ export const CoopPinResetPage = () => {
           </Button>
 
           {currentTime === 0 && <Button onClick={handleGenerateOTP}>Resend OTP</Button>}
-          {/* <Button onClick={() => handleStart(10)}>Resend OTP</Button> */}
         </Box>
       </Box>
     </FormProvider>
