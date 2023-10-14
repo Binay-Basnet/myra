@@ -18810,9 +18810,10 @@ export type PayrollRunInput = {
 export type PayrollRunListed = {
   employees?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['ID']>;
-  payDate?: Maybe<Scalars['Localized']>;
-  payPeriod?: Maybe<LocalizedDate>;
-  payableCost?: Maybe<Scalars['String']>;
+  payMonth?: Maybe<NepaliMonths>;
+  payYear?: Maybe<Scalars['Int']>;
+  payableCost?: Maybe<Scalars['Float']>;
+  paygroup?: Maybe<Scalars['String']>;
   status?: Maybe<PayrollStatus>;
 };
 
@@ -23381,6 +23382,9 @@ export type UnPaidEmployeeDetails = {
   employeeName?: Maybe<Scalars['String']>;
   grossPay?: Maybe<Scalars['String']>;
   netPay?: Maybe<Scalars['String']>;
+  paymentEarningDetails?: Maybe<Scalars['Map']>;
+  paymentPostTaxDeductionDetails?: Maybe<Scalars['Map']>;
+  paymentPreTaxDeductionDetails?: Maybe<Scalars['Map']>;
   postTaxDeductions?: Maybe<Scalars['String']>;
   preTaxDeductions?: Maybe<Scalars['String']>;
   taxReceivedOrPaid?: Maybe<TaxReceivedPaid>;
@@ -23396,6 +23400,9 @@ export type UnPaidEmployeeDetailsInput = {
   employeeName?: InputMaybe<Scalars['String']>;
   grossPay?: InputMaybe<Scalars['String']>;
   netPay?: InputMaybe<Scalars['String']>;
+  paymentEarningDetails?: InputMaybe<Scalars['Map']>;
+  paymentPostTaxDeductionDetails?: InputMaybe<Scalars['Map']>;
+  paymentPreTaxDeductionDetails?: InputMaybe<Scalars['Map']>;
   postTaxDeductions?: InputMaybe<Scalars['String']>;
   preTaxDeductions?: InputMaybe<Scalars['String']>;
   taxReceivedOrPaid?: InputMaybe<TaxReceivedPaid>;
@@ -34571,14 +34578,12 @@ export type GetPayrollRunListQuery = {
             cursor: string;
             node: {
               id?: string | null;
+              payMonth?: NepaliMonths | null;
+              payYear?: number | null;
+              paygroup?: string | null;
               employees?: number | null;
-              payableCost?: string | null;
-              payDate?: Record<'local' | 'en' | 'np', string> | null;
+              payableCost?: number | null;
               status?: PayrollStatus | null;
-              payPeriod?: {
-                from: Record<'local' | 'en' | 'np', string>;
-                to: Record<'local' | 'en' | 'np', string>;
-              } | null;
             };
           } | null> | null;
           pageInfo?: PaginationFragment | null;
@@ -34758,6 +34763,9 @@ export type GetAllEmployeeSalaryDetailsForThisPayrollRunQuery = {
             netPay?: string | null;
             usedType?: UsedTypeEnum | null;
             usedTypeId?: string | null;
+            paymentEarningDetails?: Record<string, unknown> | null;
+            paymentPreTaxDeductionDetails?: Record<string, unknown> | null;
+            paymentPostTaxDeductionDetails?: Record<string, unknown> | null;
           } | null> | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -62165,13 +62173,11 @@ export const GetPayrollRunListDocument = `
           edges {
             node {
               id
-              payPeriod {
-                from
-                to
-              }
+              payMonth
+              payYear
+              paygroup
               employees
               payableCost
-              payDate
               status
             }
             cursor
@@ -62430,6 +62436,9 @@ export const GetAllEmployeeSalaryDetailsForThisPayrollRunDocument = `
             netPay
             usedType
             usedTypeId
+            paymentEarningDetails
+            paymentPreTaxDeductionDetails
+            paymentPostTaxDeductionDetails
           }
           error {
             ...MutationError

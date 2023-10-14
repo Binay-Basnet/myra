@@ -65,13 +65,11 @@ query getPayrollRunList($filter: Filter, $pagination: Pagination) {
           edges {
             node {
               id
-              payPeriod {
-                from
-                to
-              }
+              payMonth
+              payYear
+              paygroup
               employees
               payableCost
-              payDate
               status
             }
             cursor
@@ -241,6 +239,9 @@ query getAllEmployeeSalaryDetailsForThisPayrollRun(
             netPay
             usedType
             usedTypeId
+            paymentEarningDetails
+            paymentPreTaxDeductionDetails
+            paymentPostTaxDeductionDetails
           }
           error {
             ...MutationError

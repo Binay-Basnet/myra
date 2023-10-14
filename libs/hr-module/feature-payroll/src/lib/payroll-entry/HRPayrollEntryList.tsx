@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { ApprovalStatusItem } from 'libs/cbs/requests/feature-lists/src/components/ApprovalStatusItem';
 
-import { Column, PageHeader, Table, TablePopover, Text } from '@myra-ui';
+import { Column, PageHeader, Table, TablePopover } from '@myra-ui';
 
 import { PayrollStatus, useGetPayrollRunListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -19,14 +19,12 @@ export const HRPayrollEntryList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Pay Period',
-        accessorFn: (row) => row?.node?.payPeriod?.from,
-        cell: (props) => (
-          <Text>
-            {props?.row.original?.node?.payPeriod?.from?.local} -{' '}
-            {props?.row.original?.node?.payPeriod?.to?.local}
-          </Text>
-        ),
+        header: 'Pay Month',
+        accessorFn: (row) => row?.node?.payMonth,
+      },
+      {
+        header: 'Pay Year',
+        accessorFn: (row) => row?.node?.payYear,
       },
       {
         header: 'Employees',
@@ -37,11 +35,11 @@ export const HRPayrollEntryList = () => {
         accessorFn: (row) => row?.node?.payableCost,
       },
       {
-        header: 'Pay Date',
-        accessorFn: (row) => row?.node?.payDate?.local,
+        header: 'Pay Group',
+        accessorFn: (row) => row?.node?.paygroup,
       },
       {
-        id: 'state',
+        id: 'status',
         header: 'Status',
         accessorFn: (row) => row?.node?.status,
 
