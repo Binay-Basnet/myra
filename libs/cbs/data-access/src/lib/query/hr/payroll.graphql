@@ -336,3 +336,39 @@ query getCurrentTaxSlab($employee: ID!) {
     }
   }
 }
+
+query returnAssignmentMapsEPrePost($assignmentId: String) {
+  hr {
+    payroll {
+      payrollRun {
+        returnAssignmentMapsEPrePost(assignmentId: $assignmentId) {
+          data {
+            earnings
+            deductions
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query returnSalAdjustReviseMapsEPrePost($salAdjustReviseId: String) {
+  hr {
+    payroll {
+      payrollRun {
+        returnSalAdjustReviseMapsEPrePost(salAdjustReviseId: $salAdjustReviseId) {
+          data {
+            earnings
+            deductions
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

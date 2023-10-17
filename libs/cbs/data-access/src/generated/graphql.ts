@@ -1113,6 +1113,11 @@ export type AddressType = {
   temporary?: Maybe<Address>;
 };
 
+export type AdjustRevisedCalculatedMaps = {
+  deductions?: Maybe<Scalars['Map']>;
+  earnings?: Maybe<Scalars['Map']>;
+};
+
 export type AdjustedLedgerReport = {
   data?: Maybe<Array<Maybe<AdjustedLedgerReportData>>>;
   error?: Maybe<QueryError>;
@@ -1791,6 +1796,16 @@ export const AssignedTo = {
 } as const;
 
 export type AssignedTo = typeof AssignedTo[keyof typeof AssignedTo];
+export type AssignmentCalculatedMaps = {
+  deductions?: Maybe<Scalars['Map']>;
+  earnings?: Maybe<Scalars['Map']>;
+};
+
+export type AssignmentCalculatedWithError = {
+  data?: Maybe<AssignmentCalculatedMaps>;
+  error?: Maybe<QueryError>;
+};
+
 export type AssociatedGuaranteeAccountListResult = {
   data?: Maybe<Array<Maybe<AssociatedGuaranteeDetails>>>;
   error?: Maybe<QueryError>;
@@ -8928,6 +8943,16 @@ export type GetEmployeeLifecycleNode = {
   status?: Maybe<Scalars['String']>;
 };
 
+export type GetEmployeeOverviewSummaryData = {
+  loanAccount?: Maybe<Array<Maybe<LoanAccounts>>>;
+  savingAccount?: Maybe<Array<Maybe<SavingAccounts>>>;
+};
+
+export type GetEmployeeOverviewSummaryWithError = {
+  data?: Maybe<GetEmployeeOverviewSummaryData>;
+  error?: Maybe<QueryError>;
+};
+
 export type GetEmployeeSchema = {
   error?: Maybe<QueryError>;
   record?: Maybe<HcmEmployeeSchema>;
@@ -9495,6 +9520,7 @@ export type HrEmployeeKyeMutationUpsertEmployeeArgs = {
 export type HrEmployeeKyeQuery = {
   getEmployee: EmployteeResultWithError;
   getEmployeeLifecycleView: GetEmployeeLifecycleDetail;
+  getEmployeeOverviewSummary: GetEmployeeOverviewSummaryWithError;
   listEmployee: HrEmployeeListConnection;
 };
 
@@ -9504,6 +9530,10 @@ export type HrEmployeeKyeQueryGetEmployeeArgs = {
 
 export type HrEmployeeKyeQueryGetEmployeeLifecycleViewArgs = {
   id: Scalars['String'];
+};
+
+export type HrEmployeeKyeQueryGetEmployeeOverviewSummaryArgs = {
+  employeeId: Scalars['String'];
 };
 
 export type HrEmployeeKyeQueryListEmployeeArgs = {
@@ -9809,6 +9839,8 @@ export type HrPayrollPayrollRunQuery = {
   getTaxPaidEachMonthDetails: TaxPaidEachMonthDetailsWithError;
   listPayrollRun: PayrollRunConnection;
   listSalarySlip: SalarySlipsConnection;
+  returnAssignmentMapsEPrePost: AssignmentCalculatedWithError;
+  returnSalAdjustReviseMapsEPrePost: SalAdjustRevisedWithError;
 };
 
 export type HrPayrollPayrollRunQueryListSalaryAssignmentWithExtraDetailsArgs = {
@@ -9854,6 +9886,14 @@ export type HrPayrollPayrollRunQueryListPayrollRunArgs = {
 export type HrPayrollPayrollRunQueryListSalarySlipArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type HrPayrollPayrollRunQueryReturnAssignmentMapsEPrePostArgs = {
+  assignmentId?: InputMaybe<Scalars['String']>;
+};
+
+export type HrPayrollPayrollRunQueryReturnSalAdjustReviseMapsEPrePostArgs = {
+  salAdjustReviseId?: InputMaybe<Scalars['String']>;
 };
 
 export type HrPayrollQuery = {
@@ -14553,6 +14593,16 @@ export type LoanAccountResult = {
   query?: Maybe<LoanAccountQuery>;
   record?: Maybe<LoanAccount>;
   recordId: Scalars['ID'];
+};
+
+export type LoanAccounts = {
+  disbursedDate?: Maybe<Scalars['Localized']>;
+  interest?: Maybe<Scalars['String']>;
+  loanAccountId?: Maybe<Scalars['String']>;
+  loanAccountName?: Maybe<Scalars['String']>;
+  loanSubType?: Maybe<Scalars['String']>;
+  repaymentScheme?: Maybe<Scalars['String']>;
+  totalLoanAmount?: Maybe<Scalars['String']>;
 };
 
 export type LoanAccrueBasicInfo = {
@@ -20334,6 +20384,11 @@ export const SalActionType = {
 } as const;
 
 export type SalActionType = typeof SalActionType[keyof typeof SalActionType];
+export type SalAdjustRevisedWithError = {
+  data?: Maybe<AdjustRevisedCalculatedMaps>;
+  error?: Maybe<QueryError>;
+};
+
 export type SalAdjustmentRevisionInput = {
   actionType?: InputMaybe<SalActionType>;
   adjustmentOn?: InputMaybe<Scalars['Localized']>;
@@ -20771,6 +20826,14 @@ export type SavedReportResponse = {
 };
 
 export type SavedReportSettings = ShareStatementReportSettingsType;
+
+export type SavingAccounts = {
+  savingAccountActive?: Maybe<Scalars['String']>;
+  savingAccountActiveDate?: Maybe<Scalars['String']>;
+  savingAccountBalance?: Maybe<Scalars['String']>;
+  savingAccountId?: Maybe<Scalars['String']>;
+  savingAccountName?: Maybe<Scalars['String']>;
+};
 
 export type SavingAccrueBasicInfo = {
   accountId: Scalars['String'];
@@ -34886,6 +34949,56 @@ export type GetCurrentTaxSlabQuery = {
               toAmount?: number | null;
               percentageDeduction?: string | null;
             } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type ReturnAssignmentMapsEPrePostQueryVariables = Exact<{
+  assignmentId?: InputMaybe<Scalars['String']>;
+}>;
+
+export type ReturnAssignmentMapsEPrePostQuery = {
+  hr: {
+    payroll: {
+      payrollRun: {
+        returnAssignmentMapsEPrePost: {
+          data?: {
+            earnings?: Record<string, unknown> | null;
+            deductions?: Record<string, unknown> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type ReturnSalAdjustReviseMapsEPrePostQueryVariables = Exact<{
+  salAdjustReviseId?: InputMaybe<Scalars['String']>;
+}>;
+
+export type ReturnSalAdjustReviseMapsEPrePostQuery = {
+  hr: {
+    payroll: {
+      payrollRun: {
+        returnSalAdjustReviseMapsEPrePost: {
+          data?: {
+            earnings?: Record<string, unknown> | null;
+            deductions?: Record<string, unknown> | null;
           } | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -62621,6 +62734,77 @@ export const useGetCurrentTaxSlabQuery = <TData = GetCurrentTaxSlabQuery, TError
     useAxios<GetCurrentTaxSlabQuery, GetCurrentTaxSlabQueryVariables>(
       GetCurrentTaxSlabDocument
     ).bind(null, variables),
+    options
+  );
+export const ReturnAssignmentMapsEPrePostDocument = `
+    query returnAssignmentMapsEPrePost($assignmentId: String) {
+  hr {
+    payroll {
+      payrollRun {
+        returnAssignmentMapsEPrePost(assignmentId: $assignmentId) {
+          data {
+            earnings
+            deductions
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useReturnAssignmentMapsEPrePostQuery = <
+  TData = ReturnAssignmentMapsEPrePostQuery,
+  TError = unknown
+>(
+  variables?: ReturnAssignmentMapsEPrePostQueryVariables,
+  options?: UseQueryOptions<ReturnAssignmentMapsEPrePostQuery, TError, TData>
+) =>
+  useQuery<ReturnAssignmentMapsEPrePostQuery, TError, TData>(
+    variables === undefined
+      ? ['returnAssignmentMapsEPrePost']
+      : ['returnAssignmentMapsEPrePost', variables],
+    useAxios<ReturnAssignmentMapsEPrePostQuery, ReturnAssignmentMapsEPrePostQueryVariables>(
+      ReturnAssignmentMapsEPrePostDocument
+    ).bind(null, variables),
+    options
+  );
+export const ReturnSalAdjustReviseMapsEPrePostDocument = `
+    query returnSalAdjustReviseMapsEPrePost($salAdjustReviseId: String) {
+  hr {
+    payroll {
+      payrollRun {
+        returnSalAdjustReviseMapsEPrePost(salAdjustReviseId: $salAdjustReviseId) {
+          data {
+            earnings
+            deductions
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useReturnSalAdjustReviseMapsEPrePostQuery = <
+  TData = ReturnSalAdjustReviseMapsEPrePostQuery,
+  TError = unknown
+>(
+  variables?: ReturnSalAdjustReviseMapsEPrePostQueryVariables,
+  options?: UseQueryOptions<ReturnSalAdjustReviseMapsEPrePostQuery, TError, TData>
+) =>
+  useQuery<ReturnSalAdjustReviseMapsEPrePostQuery, TError, TData>(
+    variables === undefined
+      ? ['returnSalAdjustReviseMapsEPrePost']
+      : ['returnSalAdjustReviseMapsEPrePost', variables],
+    useAxios<
+      ReturnSalAdjustReviseMapsEPrePostQuery,
+      ReturnSalAdjustReviseMapsEPrePostQueryVariables
+    >(ReturnSalAdjustReviseMapsEPrePostDocument).bind(null, variables),
     options
   );
 export const GetStaffPlanningListDocument = `
