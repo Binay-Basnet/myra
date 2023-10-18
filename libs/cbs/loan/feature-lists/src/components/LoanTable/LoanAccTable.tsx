@@ -43,12 +43,22 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
         filterFn: 'dateTime',
       },
       {
+        id: 'memberCode',
         header: 'Member Code',
         accessorFn: (row) => row?.node?.member?.code,
+        enableSorting: true,
+        meta: {
+          orderId: 'member__code',
+        },
       },
       {
+        id: 'loanId',
         header: 'Loan ID',
         accessorFn: (row) => row?.node?.id,
+        enableSorting: true,
+        meta: {
+          orderId: 'id',
+        },
       },
       {
         id: 'productName',
@@ -58,11 +68,14 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
           filterMaps: {
             list: loanFilterMapping?.loanAccount?.filterMapping?.productName,
           },
+          orderId: 'product__productName',
         },
         accessorFn: (row) => row?.node?.product.productName,
         enableColumnFilter: true,
+        enableSorting: true,
       },
       {
+        id: 'memberName',
         header: 'Member',
         accessorFn: (row) => row?.node?.member?.name?.local,
         cell: (props) => (

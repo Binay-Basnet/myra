@@ -7,7 +7,7 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import * as ChakraTable from '@chakra-ui/table';
 import { Cell, flexRender, Header, Row, Table } from '@tanstack/react-table';
 
-import { EmptyState, Loader, NoDataState } from '@myra-ui';
+import { EmptyState, Loader, NoDataState, TableHeaderWithSorting } from '@myra-ui';
 
 import { Id_Type } from '@coop/cbs/data-access';
 import { AclKey, EMPTYSTATE, MenuType, RouteValue } from '@coop/cbs/utils';
@@ -216,11 +216,8 @@ export const TableHeadCell = <T,>({
       }
       alignItems="center"
     >
-      {header.isPlaceholder ? null : (
-        <Box display="inline">
-          {flexRender(header.column.columnDef.header, header.getContext())}
-        </Box>
-      )}
+      {header.isPlaceholder ? null : <TableHeaderWithSorting header={header} />}
+
       {(() => {
         if (header.column.getCanFilter()) {
           if (header.column.columnDef.filterFn === 'dateTime') {

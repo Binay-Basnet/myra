@@ -15,16 +15,16 @@ type Pagination = {
   before?: string;
   first?: number;
   last?: number;
-  order: {
+  order?: {
     arrange: Arrange;
     column: string;
   };
 };
 
-const DEFAULT_ORDER = {
-  arrange: Arrange.Desc,
-  column: 'ID',
-};
+// const DEFAULT_ORDER = {
+//   arrange: Arrange.Desc,
+//   column: 'ID',
+// };
 
 export const getPaginationQuery = (query?: ParsedUrlQuery): Pagination => {
   try {
@@ -41,7 +41,7 @@ export const getPaginationQuery = (query?: ParsedUrlQuery): Pagination => {
       return {
         after: '',
         first: DEFAULT_PAGE_SIZE,
-        order: DEFAULT_ORDER,
+        // order: DEFAULT_ORDER,
       };
     }
 
@@ -57,7 +57,7 @@ export const getPaginationQuery = (query?: ParsedUrlQuery): Pagination => {
     }
 
     if (isEmpty(sortParams)) {
-      return { ...paginationParams, order: DEFAULT_ORDER };
+      return { ...paginationParams };
     }
 
     return {
@@ -71,7 +71,7 @@ export const getPaginationQuery = (query?: ParsedUrlQuery): Pagination => {
     return {
       after: '',
       first: DEFAULT_PAGE_SIZE,
-      order: DEFAULT_ORDER,
+      // order: DEFAULT_ORDER,
     };
   }
 };

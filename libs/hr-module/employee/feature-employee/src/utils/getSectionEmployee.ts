@@ -33,7 +33,13 @@ const temporaryAddress = [
 ];
 
 const familyDetails = ['fullName', 'relation', 'occupation'];
-const educationDetails = ['instituteName', 'degree_diploma', 'durationInYrs', 'grade', 'dateOfCompletion'];
+const educationDetails = [
+  'instituteName',
+  'degree_diploma',
+  'durationInYrs',
+  'grade',
+  'dateOfCompletion',
+];
 
 const workInformation = [
   'departmentId',

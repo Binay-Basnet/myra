@@ -69,17 +69,26 @@ export const CBSAccountList = () => {
         enableColumnFilter: true,
       },
       {
+        id: 'memberCode',
         header: 'Member Code',
         accessorFn: (row) => row?.node?.member?.code,
+        enableSorting: true,
+        meta: {
+          orderId: 'member__code',
+        },
       },
       {
+        id: 'id',
         header: 'Account ID',
         accessorFn: (row) => row?.node?.id,
+        enableSorting: true,
       },
-
       {
+        id: 'accountName',
         header: 'Account Name',
+        accessorFn: (row) => row?.node?.accountName,
         cell: (props) => <Tooltip title={props?.row?.original?.node?.accountName as string} />,
+        enableSorting: true,
       },
       {
         id: 'productName',
@@ -90,9 +99,12 @@ export const CBSAccountList = () => {
           filterMaps: {
             list: savingFilterMapping?.account.filterMapping?.productID,
           },
+          orderId: 'product__productName',
         },
+        enableSorting: true,
       },
       {
+        id: 'memberName',
         header: 'Member Name',
         accessorFn: (row) => row?.node?.member?.name?.local,
         cell: (props) => (

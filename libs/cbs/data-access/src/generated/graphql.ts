@@ -1661,6 +1661,16 @@ export type AmountLimitFormState = {
   minAmount?: Maybe<Scalars['Amount']>;
 };
 
+export type AnnouncementGroupInput = {
+  groupMember: Array<SmsAnnouncementGroupMember>;
+  name: Scalars['String'];
+};
+
+export type AnnouncementGroupResult = {
+  error?: Maybe<MutationError>;
+  id?: Maybe<Scalars['String']>;
+};
+
 export type AppointmentLetterConnection = {
   edges?: Maybe<Array<Maybe<AppointmentLetters>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -20323,6 +20333,35 @@ export const Share_Transaction_Direction = {
 
 export type Share_Transaction_Direction =
   typeof Share_Transaction_Direction[keyof typeof Share_Transaction_Direction];
+export const SmsCategory = {
+  Schedule: 'SCHEDULE',
+  Transaction: 'TRANSACTION',
+  Update: 'UPDATE',
+} as const;
+
+export type SmsCategory = typeof SmsCategory[keyof typeof SmsCategory];
+export const SmsType = {
+  AtmTransaction: 'ATM_TRANSACTION',
+  Birthday: 'BIRTHDAY',
+  Deposit: 'DEPOSIT',
+  Ebanking: 'EBANKING',
+  FdMaturity: 'FD_MATURITY',
+  FeesAndCharge: 'FEES_AND_CHARGE',
+  InterestPosting: 'INTEREST_POSTING',
+  InterestRateChange: 'INTEREST_RATE_CHANGE',
+  KymUpdate: 'KYM_UPDATE',
+  LoanRepayment: 'LOAN_REPAYMENT',
+  MemberOnBoard: 'MEMBER_ON_BOARD',
+  NewLogin: 'NEW_LOGIN',
+  Withdraw: 'WITHDRAW',
+} as const;
+
+export type SmsType = typeof SmsType[keyof typeof SmsType];
+export type SmsTypeFilter = {
+  activeStatus?: InputMaybe<Scalars['Boolean']>;
+  category?: InputMaybe<SmsCategory>;
+};
+
 export type StrDetailData = {
   bio?: Maybe<IndividualBio>;
   deposits?: Maybe<Array<Maybe<TransactionDetail>>>;
@@ -20829,7 +20868,7 @@ export type SavedReportSettings = ShareStatementReportSettingsType;
 
 export type SavingAccounts = {
   savingAccountActive?: Maybe<Scalars['String']>;
-  savingAccountActiveDate?: Maybe<Scalars['String']>;
+  savingAccountActiveDate?: Maybe<Scalars['Localized']>;
   savingAccountBalance?: Maybe<Scalars['String']>;
   savingAccountId?: Maybe<Scalars['String']>;
   savingAccountName?: Maybe<Scalars['String']>;
@@ -21371,6 +21410,7 @@ export type SettingsMutation = {
   general?: Maybe<GeneralSettingsMutation>;
   myraUser?: Maybe<MyraUserMutation>;
   report?: Maybe<ReportSettingMutation>;
+  sms?: Maybe<SmsSettingsMutation>;
   switchTransactionConstraintState: MutationResult;
 };
 
@@ -21387,6 +21427,7 @@ export type SettingsQuery = {
   general?: Maybe<GeneralSettingsQuery>;
   getPrintCount: Scalars['Int'];
   myraUser?: Maybe<MyraUserQuery>;
+  sms?: Maybe<SmsSettingsQuery>;
   transactionConstraint: TransactionConstraintList;
 };
 
@@ -22263,6 +22304,127 @@ export const SlipState = {
 } as const;
 
 export type SlipState = typeof SlipState[keyof typeof SlipState];
+export type SmsAnnouncementGroupMember = {
+  email: Scalars['String'];
+  name: Scalars['String'];
+  phoneNumber: Scalars['String'];
+};
+
+export type SmsSettingData = {
+  activeStatus: Scalars['Boolean'];
+  category: SmsCategory;
+  id: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  type: SmsType;
+};
+
+export type SmsSettingInput = {
+  activeStatus: Scalars['Boolean'];
+  id: Scalars['String'];
+};
+
+export type SmsSettingResult = {
+  data?: Maybe<Array<Maybe<SmsSettingData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type SmsSettingStatusChange = {
+  error?: Maybe<MutationError>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
+export type SmsSettingsMutation = {
+  addAnnoucementGroup: AnnouncementGroupResult;
+  addTemplate: SmsSettingStatusChange;
+  changeStatus: SmsSettingStatusChange;
+  deleteSmsTemplate: SmsTemplateDeleteResult;
+};
+
+export type SmsSettingsMutationAddAnnoucementGroupArgs = {
+  input: AnnouncementGroupInput;
+};
+
+export type SmsSettingsMutationAddTemplateArgs = {
+  input: SmsTemplateInput;
+};
+
+export type SmsSettingsMutationChangeStatusArgs = {
+  input: Array<SmsSettingInput>;
+};
+
+export type SmsSettingsMutationDeleteSmsTemplateArgs = {
+  id: Scalars['ID'];
+};
+
+export type SmsSettingsQuery = {
+  listSmsSetting: SmsSettingResult;
+  listSmsTemplate?: Maybe<SmsTemplateConnection>;
+  listSmsTemplateField: SmsTemplateFieldFetchResult;
+  smsTemplateDetail: SmsTemplateDetailResult;
+};
+
+export type SmsSettingsQueryListSmsSettingArgs = {
+  filter?: InputMaybe<SmsTypeFilter>;
+};
+
+export type SmsSettingsQueryListSmsTemplateArgs = {
+  filter?: InputMaybe<Filter>;
+  paginate: Pagination;
+};
+
+export type SmsSettingsQuerySmsTemplateDetailArgs = {
+  id: Scalars['ID'];
+};
+
+export type SmsTemplateConnection = {
+  edges?: Maybe<Array<Maybe<SmsTemplateEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SmsTemplateDeleteResult = {
+  error?: Maybe<MutationError>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
+export type SmsTemplateDetailResult = {
+  data?: Maybe<SmsTemplateInfo>;
+  error?: Maybe<QueryError>;
+};
+
+export type SmsTemplateEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<SmsTemplateInfo>;
+};
+
+export type SmsTemplateFieldFetchData = {
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type SmsTemplateFieldFetchResult = {
+  data?: Maybe<Array<SmsTemplateFieldFetchData>>;
+  error?: Maybe<QueryError>;
+};
+
+export type SmsTemplateInfo = {
+  activeStatus: Scalars['Boolean'];
+  content: Scalars['String'];
+  id: Scalars['String'];
+  modifiedDate: Scalars['Localized'];
+  name: Scalars['String'];
+  smsType: Scalars['String'];
+  smsTypeId: Scalars['String'];
+};
+
+export type SmsTemplateInput = {
+  activeStatus: Scalars['Boolean'];
+  content: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  smsType: Scalars['String'];
+};
+
 export const SourceOfHire = {
   Direct: 'DIRECT',
   Referel: 'REFEREL',
