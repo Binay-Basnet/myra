@@ -42,5 +42,6 @@ export * from './controllers/FormSelectPopout/FormSelectPopout';
 export * from './controllers/FormSupplierSelect/FormSupplierSelect';
 export * from './controllers/FormSwitchTab/FormSwitchTab';
 export * from './controllers/FormTellerSelect/FormTellerSelect';
+export * from './controllers/FormTextAreaWithMentions/FormTextAreaWithMentions';
 export * from './lib/controllers-temp';
 export * from './lib/shared-form';

@@ -27682,6 +27682,69 @@ export type ChangeUtilityServiceStatusMutation = {
   };
 };
 
+export type ChangeSmsStatusMutationVariables = Exact<{
+  input: Array<SmsSettingInput> | SmsSettingInput;
+}>;
+
+export type ChangeSmsStatusMutation = {
+  settings: {
+    sms?: {
+      changeStatus: {
+        success?: boolean | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type AddSmsTemplateMutationVariables = Exact<{
+  input: SmsTemplateInput;
+}>;
+
+export type AddSmsTemplateMutation = {
+  settings: {
+    sms?: {
+      addTemplate: {
+        success?: boolean | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type DeleteSmsTemplateMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type DeleteSmsTemplateMutation = {
+  settings: {
+    sms?: {
+      deleteSmsTemplate: {
+        success?: boolean | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
 export type SetBankListMutationVariables = Exact<{
   data?: InputMaybe<Array<InputMaybe<BankInput>> | InputMaybe<BankInput>>;
 }>;
@@ -42878,6 +42941,84 @@ export type GetUtilityLedgerSetupQuery = {
   };
 };
 
+export type ListSmsSettingQueryVariables = Exact<{
+  filter?: InputMaybe<SmsTypeFilter>;
+}>;
+
+export type ListSmsSettingQuery = {
+  settings: {
+    sms?: {
+      listSmsSetting: {
+        data?: Array<{
+          id: string;
+          name?: string | null;
+          category: SmsCategory;
+          type: SmsType;
+          activeStatus: boolean;
+        } | null> | null;
+      };
+    } | null;
+  };
+};
+
+export type ListSmsTemplateFieldQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListSmsTemplateFieldQuery = {
+  settings: {
+    sms?: { listSmsTemplateField: { data?: Array<{ id: string; name: string }> | null } } | null;
+  };
+};
+
+export type ListSmsTemplateQueryVariables = Exact<{
+  paginate: Pagination;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type ListSmsTemplateQuery = {
+  settings: {
+    sms?: {
+      listSmsTemplate?: {
+        totalCount: number;
+        pageInfo?: PaginationFragment | null;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id: string;
+            name: string;
+            content: string;
+            smsTypeId: string;
+            smsType: string;
+            modifiedDate: Record<'local' | 'en' | 'np', string>;
+            activeStatus: boolean;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type ListSmsTemplateDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type ListSmsTemplateDetailQuery = {
+  settings: {
+    sms?: {
+      smsTemplateDetail: {
+        data?: {
+          id: string;
+          name: string;
+          content: string;
+          smsTypeId: string;
+          smsType: string;
+          modifiedDate: Record<'local' | 'en' | 'np', string>;
+          activeStatus: boolean;
+        } | null;
+      };
+    } | null;
+  };
+};
+
 export type GetAuditLogListQueryVariables = Exact<{
   filter?: InputMaybe<AuditLogFilters>;
 }>;
@@ -52731,6 +52872,89 @@ export const useChangeUtilityServiceStatusMutation = <TError = unknown, TContext
     ['changeUtilityServiceStatus'],
     useAxios<ChangeUtilityServiceStatusMutation, ChangeUtilityServiceStatusMutationVariables>(
       ChangeUtilityServiceStatusDocument
+    ),
+    options
+  );
+export const ChangeSmsStatusDocument = `
+    mutation changeSMSStatus($input: [SmsSettingInput!]!) {
+  settings {
+    sms {
+      changeStatus(input: $input) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useChangeSmsStatusMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ChangeSmsStatusMutation,
+    TError,
+    ChangeSmsStatusMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ChangeSmsStatusMutation, TError, ChangeSmsStatusMutationVariables, TContext>(
+    ['changeSMSStatus'],
+    useAxios<ChangeSmsStatusMutation, ChangeSmsStatusMutationVariables>(ChangeSmsStatusDocument),
+    options
+  );
+export const AddSmsTemplateDocument = `
+    mutation addSMSTemplate($input: SmsTemplateInput!) {
+  settings {
+    sms {
+      addTemplate(input: $input) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddSmsTemplateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddSmsTemplateMutation,
+    TError,
+    AddSmsTemplateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddSmsTemplateMutation, TError, AddSmsTemplateMutationVariables, TContext>(
+    ['addSMSTemplate'],
+    useAxios<AddSmsTemplateMutation, AddSmsTemplateMutationVariables>(AddSmsTemplateDocument),
+    options
+  );
+export const DeleteSmsTemplateDocument = `
+    mutation deleteSMSTemplate($id: ID!) {
+  settings {
+    sms {
+      deleteSmsTemplate(id: $id) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteSmsTemplateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteSmsTemplateMutation,
+    TError,
+    DeleteSmsTemplateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteSmsTemplateMutation, TError, DeleteSmsTemplateMutationVariables, TContext>(
+    ['deleteSMSTemplate'],
+    useAxios<DeleteSmsTemplateMutation, DeleteSmsTemplateMutationVariables>(
+      DeleteSmsTemplateDocument
     ),
     options
   );
@@ -72974,6 +73198,128 @@ export const useGetUtilityLedgerSetupQuery = <TData = GetUtilityLedgerSetupQuery
     variables === undefined ? ['getUtilityLedgerSetup'] : ['getUtilityLedgerSetup', variables],
     useAxios<GetUtilityLedgerSetupQuery, GetUtilityLedgerSetupQueryVariables>(
       GetUtilityLedgerSetupDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListSmsSettingDocument = `
+    query listSMSSetting($filter: SMSTypeFilter) {
+  settings {
+    sms {
+      listSmsSetting(filter: $filter) {
+        data {
+          id
+          name
+          category
+          type
+          activeStatus
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListSmsSettingQuery = <TData = ListSmsSettingQuery, TError = unknown>(
+  variables?: ListSmsSettingQueryVariables,
+  options?: UseQueryOptions<ListSmsSettingQuery, TError, TData>
+) =>
+  useQuery<ListSmsSettingQuery, TError, TData>(
+    variables === undefined ? ['listSMSSetting'] : ['listSMSSetting', variables],
+    useAxios<ListSmsSettingQuery, ListSmsSettingQueryVariables>(ListSmsSettingDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const ListSmsTemplateFieldDocument = `
+    query listSmsTemplateField {
+  settings {
+    sms {
+      listSmsTemplateField {
+        data {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListSmsTemplateFieldQuery = <TData = ListSmsTemplateFieldQuery, TError = unknown>(
+  variables?: ListSmsTemplateFieldQueryVariables,
+  options?: UseQueryOptions<ListSmsTemplateFieldQuery, TError, TData>
+) =>
+  useQuery<ListSmsTemplateFieldQuery, TError, TData>(
+    variables === undefined ? ['listSmsTemplateField'] : ['listSmsTemplateField', variables],
+    useAxios<ListSmsTemplateFieldQuery, ListSmsTemplateFieldQueryVariables>(
+      ListSmsTemplateFieldDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListSmsTemplateDocument = `
+    query listSmsTemplate($paginate: Pagination!, $filter: Filter) {
+  settings {
+    sms {
+      listSmsTemplate(paginate: $paginate, filter: $filter) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          cursor
+          node {
+            id
+            name
+            content
+            smsTypeId
+            smsType
+            modifiedDate
+            activeStatus
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useListSmsTemplateQuery = <TData = ListSmsTemplateQuery, TError = unknown>(
+  variables: ListSmsTemplateQueryVariables,
+  options?: UseQueryOptions<ListSmsTemplateQuery, TError, TData>
+) =>
+  useQuery<ListSmsTemplateQuery, TError, TData>(
+    ['listSmsTemplate', variables],
+    useAxios<ListSmsTemplateQuery, ListSmsTemplateQueryVariables>(ListSmsTemplateDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const ListSmsTemplateDetailDocument = `
+    query listSmsTemplateDetail($id: ID!) {
+  settings {
+    sms {
+      smsTemplateDetail(id: $id) {
+        data {
+          id
+          name
+          content
+          smsTypeId
+          smsType
+          modifiedDate
+          activeStatus
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListSmsTemplateDetailQuery = <TData = ListSmsTemplateDetailQuery, TError = unknown>(
+  variables: ListSmsTemplateDetailQueryVariables,
+  options?: UseQueryOptions<ListSmsTemplateDetailQuery, TError, TData>
+) =>
+  useQuery<ListSmsTemplateDetailQuery, TError, TData>(
+    ['listSmsTemplateDetail', variables],
+    useAxios<ListSmsTemplateDetailQuery, ListSmsTemplateDetailQueryVariables>(
+      ListSmsTemplateDetailDocument
     ).bind(null, variables),
     options
   );

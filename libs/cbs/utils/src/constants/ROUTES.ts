@@ -140,6 +140,10 @@ export const ROUTES = {
     '/settings/general/utility-payment/topup',
   SETTINGS_APPLICATION_ALTERNATIVE_CHANNEL_UTILITY_PAYMENT_INTERNET:
     '/settings/general/utility-payment/internet',
+  SETTINGS_APPLICATION_ALTERNATIVE_CHANNEL_SMS_BANKING_SMS_TEMPLATE:
+    '/settings/general/sms-banking/sms-template',
+  SETTINGS_APPLICATION_ALTERNATIVE_CHANNEL_SMS_BANKING_SMS_SETTING:
+    '/settings/general/sms-banking/sms-setting',
 
   SETTINGS_GENERAL_AUDIT_LOG: '/settings/monitor/audit-log/list',
   SETTINGS_EOD_SETUP: '/settings/global/eod/configure',
