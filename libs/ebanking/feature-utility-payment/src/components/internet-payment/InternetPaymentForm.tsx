@@ -79,7 +79,7 @@ export const InternetPaymentForm = ({
     });
 
     asyncToast({
-      id: 'sdad',
+      id: 'utility-internet-payment-process',
       msgs: {
         loading: 'Proccessing',
         success: 'Proceed',
@@ -100,7 +100,11 @@ export const InternetPaymentForm = ({
         const responseMapObj: Record<string, string> = {};
 
         currentSequenceObj?.responseFieldMapping?.forEach((field) => {
-          if (field?.mapField && responseData?.[field?.fieldName as string] && !field?.options) {
+          if (
+            field?.mapField &&
+            responseData?.[field?.fieldName as string] !== undefined &&
+            !field?.options
+          ) {
             responseMapObj[field?.mapField as string] = responseData[field?.fieldName as string];
           }
         });
@@ -156,6 +160,8 @@ export const InternetPaymentForm = ({
         </Grid>
 
         {currentSequenceObj?.requiredFields?.map((field) => {
+          if (!field?.fieldLabel) return null;
+
           const options: { label: string; value: string }[] = [];
 
           if (field?.fieldType === 'OPTION') {
