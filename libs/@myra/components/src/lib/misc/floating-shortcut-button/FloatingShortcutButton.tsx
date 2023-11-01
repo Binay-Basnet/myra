@@ -31,19 +31,17 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Success card and print added for the account open.',
-      'Adjusted charkhata report.',
-      'Kym last updated date added in the update Kym pop up model.',
-      'Slogan and start date added in the neosys portal.',
-      'Start date added in the organization edit page.',
+      'Utility payment mobile topup set.',
+      'Sorting added in the member list, saving accounts and loan accounts.',
+      'Mutation created for the interest postings.',
+      'Mr app login fixes by query.',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Unable to open current account due to interest rate validation.',
-      "KYM updated date and withdraw slip issued doesn't update in individual member profile report.",
-      'Narration changed for the account open.',
+      'Loan aging outstanding balance fixed and date filter.',
+      'Number Validation is set in the user settings.',
     ],
   },
 };
@@ -82,8 +80,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.97</Text>
-          <Text fontSize="s3">October 10, 2023</Text>
+          <Text fontSize="r2">Version 1.0.98</Text>
+          <Text fontSize="s3">November 1, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>
