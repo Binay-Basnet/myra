@@ -1661,6 +1661,24 @@ export type AmountLimitFormState = {
   minAmount?: Maybe<Scalars['Amount']>;
 };
 
+export type AnnouncementGroupConnection = {
+  edges?: Maybe<Array<Maybe<AnnouncementGroupEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AnnouncementGroupEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<AnnouncementGroupInfo>;
+};
+
+export type AnnouncementGroupInfo = {
+  id: Scalars['String'];
+  modifiedDate: Scalars['Localized'];
+  name: Scalars['String'];
+  noOfAudience: Scalars['String'];
+};
+
 export type AnnouncementGroupInput = {
   groupMember: Array<SmsAnnouncementGroupMember>;
   name: Scalars['String'];
@@ -20912,6 +20930,10 @@ export type SavingFilters = {
   transactionType?: InputMaybe<SavingTransactionType>;
 };
 
+export type SavingInterestPostingResult = {
+  error?: Maybe<MutationError>;
+};
+
 export type SavingInvestment = {
   frequency: InstallmentFrequency;
   installmentAmount: Scalars['String'];
@@ -22337,6 +22359,7 @@ export type SmsSettingsMutation = {
   addAnnoucementGroup: AnnouncementGroupResult;
   addTemplate: SmsSettingStatusChange;
   changeStatus: SmsSettingStatusChange;
+  deleteAnnouncementGroup: SmsTemplateDeleteResult;
   deleteSmsTemplate: SmsTemplateDeleteResult;
 };
 
@@ -22352,15 +22375,25 @@ export type SmsSettingsMutationChangeStatusArgs = {
   input: Array<SmsSettingInput>;
 };
 
+export type SmsSettingsMutationDeleteAnnouncementGroupArgs = {
+  id: Scalars['ID'];
+};
+
 export type SmsSettingsMutationDeleteSmsTemplateArgs = {
   id: Scalars['ID'];
 };
 
 export type SmsSettingsQuery = {
+  listAnnouncementGroup?: Maybe<AnnouncementGroupConnection>;
   listSmsSetting: SmsSettingResult;
   listSmsTemplate?: Maybe<SmsTemplateConnection>;
   listSmsTemplateField: SmsTemplateFieldFetchResult;
   smsTemplateDetail: SmsTemplateDetailResult;
+};
+
+export type SmsSettingsQueryListAnnouncementGroupArgs = {
+  filter?: InputMaybe<Filter>;
+  paginate: Pagination;
 };
 
 export type SmsSettingsQueryListSmsSettingArgs = {
@@ -23203,6 +23236,7 @@ export type TransactionMutation = {
   readyBranchEOD?: Maybe<Array<Maybe<Scalars['String']>>>;
   restrictAccounting?: Maybe<RestrictTransactionMutation>;
   revertTransaction: RevertTransactionResult;
+  savingInterestPosting?: Maybe<SavingInterestPostingResult>;
   serviceCentreCashTransfer: ServiceCentreCashTransferResult;
   strTransactionAction?: Maybe<StrTransactionActionResult>;
   switchTransactionYearEndFlag?: Maybe<MutationResult>;

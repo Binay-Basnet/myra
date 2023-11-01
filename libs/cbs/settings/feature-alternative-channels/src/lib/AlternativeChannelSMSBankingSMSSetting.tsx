@@ -50,29 +50,35 @@ export const AlternativeChannelSMSBankingSMSSetting = () => {
             </Box>
           </Box>
 
-          <SettingsCard title="Transactions">
-            <Box display="flex" flexDirection="column" gap="s8">
-              {transactionStatus?.map((status) => (
-                <FormSwitch name={status?.id as string} label={status?.name as string} />
-              ))}
-            </Box>
-          </SettingsCard>
+          {!!transactionStatus?.length && (
+            <SettingsCard title="Transactions">
+              <Box display="flex" flexDirection="column" gap="s8">
+                {transactionStatus?.map((status) => (
+                  <FormSwitch name={status?.id as string} label={status?.name as string} />
+                ))}
+              </Box>
+            </SettingsCard>
+          )}
 
-          <SettingsCard title="Update/Miscellaneous">
-            <Box display="flex" flexDirection="column" gap="s8">
-              {updateStatus?.map((status) => (
-                <FormSwitch name={status?.id as string} label={status?.name as string} />
-              ))}
-            </Box>
-          </SettingsCard>
+          {!!updateStatus?.length && (
+            <SettingsCard title="Update/Miscellaneous">
+              <Box display="flex" flexDirection="column" gap="s8">
+                {updateStatus?.map((status) => (
+                  <FormSwitch name={status?.id as string} label={status?.name as string} />
+                ))}
+              </Box>
+            </SettingsCard>
+          )}
 
-          <SettingsCard title="Schedules">
-            <Box display="flex" flexDirection="column" gap="s8">
-              {scheduleStatus?.map((status) => (
-                <FormSwitch name={status?.id as string} label={status?.name as string} />
-              ))}
-            </Box>
-          </SettingsCard>
+          {!!scheduleStatus?.length && (
+            <SettingsCard title="Schedules">
+              <Box display="flex" flexDirection="column" gap="s8">
+                {scheduleStatus?.map((status) => (
+                  <FormSwitch name={status?.id as string} label={status?.name as string} />
+                ))}
+              </Box>
+            </SettingsCard>
+          )}
         </Box>
       </FormProvider>
       <SettingsFooter
