@@ -19,9 +19,10 @@ interface MapComponentProps {
   id?: string;
   currentLoc: MapPosition;
   setCurrentLoc: (location: MapPosition) => void;
+  setCurrentAddr?: (address: string) => void;
 }
 
-const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
+const MapComponent = ({ id, currentLoc, setCurrentLoc, setCurrentAddr }: MapComponentProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [location, setLocation] = useState<MapPosition>({
     latitude: 27.7172,
@@ -48,6 +49,15 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
             temp?.city ? `${temp?.city}, ` : ''
           }${temp?.country ? temp?.country : ''}`
         );
+        setCurrentAddr &&
+          setCurrentAddr(
+            `${temp?.amenity ? `${temp?.amenity}, ` : ''}${temp?.road ? `${temp?.road}, ` : ''}${
+              temp?.neighbourhood ? `${temp?.neighbourhood}, ` : ''
+            }${temp?.suburb ? `${temp?.suburb}, ` : ''}${temp?.town ? `${temp?.town}, ` : ''}${
+              temp?.city ? `${temp?.city}, ` : ''
+            }${temp?.country ? temp?.country : ''}`
+          );
+
         return temp;
       } catch (e) {
         return 0;
