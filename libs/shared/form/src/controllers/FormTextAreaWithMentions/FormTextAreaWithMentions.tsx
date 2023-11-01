@@ -55,12 +55,12 @@ IFormTextAreaWithMentionsProps) => {
                   padding: 9,
                   boxSizing: 'border-box',
                   overflow: 'hidden',
-                  height: 70,
+                  height: 120,
                 },
                 input: {
                   padding: 9,
                   overflow: 'auto',
-                  height: 70,
+                  height: 120,
                 },
               },
 

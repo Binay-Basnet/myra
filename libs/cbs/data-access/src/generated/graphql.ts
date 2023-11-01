@@ -17818,6 +17818,11 @@ export type MinMaxFilter = {
   min?: InputMaybe<Scalars['String']>;
 };
 
+export type MinTxnAmount = {
+  amount: Scalars['String'];
+  id: SmsCategory;
+};
+
 export type MinorFilter = {
   branchId?: InputMaybe<Array<Scalars['String']>>;
   id?: InputMaybe<Scalars['String']>;
@@ -22357,6 +22362,7 @@ export type SmsSettingStatusChange = {
 
 export type SmsSettingsMutation = {
   addAnnoucementGroup: AnnouncementGroupResult;
+  addMinimunTxnAmount: SmsSettingStatusChange;
   addTemplate: SmsSettingStatusChange;
   changeStatus: SmsSettingStatusChange;
   deleteAnnouncementGroup: SmsTemplateDeleteResult;
@@ -22365,6 +22371,10 @@ export type SmsSettingsMutation = {
 
 export type SmsSettingsMutationAddAnnoucementGroupArgs = {
   input: AnnouncementGroupInput;
+};
+
+export type SmsSettingsMutationAddMinimunTxnAmountArgs = {
+  input: MinTxnAmount;
 };
 
 export type SmsSettingsMutationAddTemplateArgs = {
