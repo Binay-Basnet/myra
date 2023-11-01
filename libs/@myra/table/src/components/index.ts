@@ -1,4 +1,5 @@
 export * from './footer/MultiFooter';
+export * from './table-header-sorting/TableHeaderWithSorting';
 export * from './table-popover/TablePopover';
 export * from './table-search/TableSearch';
 export * from './TableCheckbox/TableCheckbox';

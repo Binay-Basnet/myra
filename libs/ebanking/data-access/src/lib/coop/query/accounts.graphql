@@ -130,10 +130,10 @@ query getAccountDetails($id: ID!, $transactionPagination: Pagination) {
   }
 }
 
-query getEbankingLoanAccounts($listFilter: EbankingAccountFilter) {
+query getEbankingLoanAccounts {
   eBanking {
     loanAccount {
-      list(filter: $listFilter) {
+      list {
         totalBalance
         accounts {
           id

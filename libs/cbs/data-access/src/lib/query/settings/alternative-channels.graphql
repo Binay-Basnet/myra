@@ -146,3 +146,75 @@ query getUtilityLedgerSetup {
     }
   }
 }
+
+query listSMSSetting($filter: SMSTypeFilter) {
+  settings {
+    sms {
+      listSmsSetting(filter: $filter) {
+        data {
+          id
+          name
+          category
+          type
+          activeStatus
+        }
+      }
+    }
+  }
+}
+
+query listSmsTemplateField {
+  settings {
+    sms {
+      listSmsTemplateField {
+        data {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+
+query listSmsTemplate($paginate: Pagination!, $filter: Filter) {
+  settings {
+    sms {
+      listSmsTemplate(paginate: $paginate, filter: $filter) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          cursor
+          node {
+            id
+            name
+            content
+            smsTypeId
+            smsType
+            modifiedDate
+            activeStatus
+          }
+        }
+      }
+    }
+  }
+}
+
+query listSmsTemplateDetail($id: ID!) {
+  settings {
+    sms {
+      smsTemplateDetail(id: $id) {
+        data {
+          id
+          name
+          content
+          smsTypeId
+          smsType
+          modifiedDate
+          activeStatus
+        }
+      }
+    }
+  }
+}

@@ -68,3 +68,42 @@ mutation changeUtilityServiceStatus($input: [ActivationInput!]!) {
     }
   }
 }
+
+mutation changeSMSStatus($input: [SmsSettingInput!]!) {
+  settings {
+    sms {
+      changeStatus(input: $input) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation addSMSTemplate($input: SmsTemplateInput!) {
+  settings {
+    sms {
+      addTemplate(input: $input) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation deleteSMSTemplate($id: ID!) {
+  settings {
+    sms {
+      deleteSmsTemplate(id: $id) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

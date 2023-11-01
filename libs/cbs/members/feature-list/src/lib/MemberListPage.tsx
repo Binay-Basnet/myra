@@ -88,7 +88,7 @@ export const MemberListPage = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        id: objState === 'DRAFT' || objState === 'VALIDATED' ? 'createdAtDate' : 'activeDate',
+        id: objState === 'DRAFT' || objState === 'VALIDATED' ? 'createdAt' : 'activeDate',
         header:
           objState === 'DRAFT' || objState === 'VALIDATED'
             ? t['memberListDateJoined']
@@ -113,6 +113,7 @@ export const MemberListPage = () => {
           objState === 'DRAFT' ? t['memberListTableMemberId'] : t['memberListTableMemberCode'],
 
         accessorFn: (row) => (objState === 'DRAFT' ? row?.node?.id : row?.node?.code),
+        enableSorting: true,
       },
       {
         id: 'name',

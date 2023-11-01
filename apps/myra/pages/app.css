@@ -40,3 +40,83 @@
   font-family: 'Roboto-Medium';
   src: url('/Roboto-Medium.ttf');
 }
+
+/* ======================== full callender css ======================================== */
+
+.fc-daygrid-event {
+  border: none;
+  z-index: 1;
+}
+
+/* .fc-daygrid-event-harness .fc-event-main {
+  z-index: 2;
+} */
+
+.fc-col-header-cell-cushion {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  color: #343c46;
+}
+
+.fc .fc-daygrid-day {
+  padding: 8px 16px;
+}
+
+.fc .fc-daygrid-day-top {
+  display: flex;
+  flex-direction: row;
+}
+
+.fc .fc-daygrid-day-number {
+  position: relative;
+  z-index: 4;
+  padding: 0px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.fc-day-today .fc-daygrid-day-number {
+  display: flex;
+  background-color: #006837;
+  color: white;
+  height: 24px;
+  width: 24px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: white;
+  padding: 4px;
+}
+
+.fc .fc-daygrid-day {
+  background-color: white;
+}
+
+/* making saturday and sunday red */
+.fc-day-sun .fc-daygrid-day-number {
+  color: #ff4538;
+  /*your styles goes here*/
+}
+
+.fc-day-sat .fc-daygrid-day-number {
+  color: #ff4538;
+  /*your styles goes here*/
+}
+
+.fc .fc-day-other {
+  background-color: #f7f9fe;
+}
+.fc .fc-event {
+  background: none;
+}
+.fc .fc-event-main {
+  background-color: #e6f0eb;
+  border-radius: 4px;
+}
+
+/* fc-event fc-event-start fc-event-end fc-event-past fc-daygrid-event fc-daygrid-block-event fc-h-event */

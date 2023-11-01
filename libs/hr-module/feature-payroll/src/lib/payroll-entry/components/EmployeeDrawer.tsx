@@ -5,12 +5,10 @@ import { Box, Collapse, Column, Drawer, Table, Text } from '@myra-ui';
 
 import {
   UsedTypeEnum,
-  useGetDeductionComponentListQuery,
-  useGetEarningComponentListQuery,
-  useGetSalaryStructureAssignmentQuery,
-  useGetSalStructureAdjustRevisionQuery,
+  useReturnAssignmentMapsEPrePostQuery,
+  useReturnSalAdjustReviseMapsEPrePostQuery,
 } from '@coop/cbs/data-access';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { decimalAdjust } from '@coop/shared/utils';
 
 interface EmployeeDrawerProps {
   isDrawerOpen?: boolean;
@@ -26,40 +24,22 @@ export const EmployeeDrawer = (props: EmployeeDrawerProps) => {
   const [earningComponentCollapse, setEarningComponentCollapse] = useState(true);
   const [deductionComponentCollapse, setDeductionComponentCollapse] = useState(true);
 
-  const { data: earningComponentData } = useGetEarningComponentListQuery({
-    pagination: getPaginationQuery(),
-  });
-
-  const earningComponentList =
-    earningComponentData?.settings?.general?.HCM?.payroll?.earningComponent?.listEarningComponent
-      ?.edges;
-
-  const { data: deductionComponentData } = useGetDeductionComponentListQuery({
-    pagination: getPaginationQuery(),
-  });
-
-  const deductionComponentList =
-    deductionComponentData?.settings?.general?.HCM?.payroll?.deductionComponent
-      ?.listDeductionComponent?.edges;
-
   const { data: salaryAssignmentData, isFetching: salaryAssignmentFetching } =
-    useGetSalaryStructureAssignmentQuery(
-      { id: usedTypeId },
+    useReturnAssignmentMapsEPrePostQuery(
+      { assignmentId: usedTypeId },
       { enabled: !!usedTypeId && usedType === UsedTypeEnum?.Assignment }
     );
   const salaryAssignment =
-    salaryAssignmentData?.hr?.payroll?.salaryStructureAssignment?.getSalaryStructureAssignment
-      ?.data;
+    salaryAssignmentData?.hr?.payroll?.payrollRun?.returnAssignmentMapsEPrePost?.data;
 
   const { data: salaryRevisionAssignmentData, isFetching: salaryRevisionAssignmentFetching } =
-    useGetSalStructureAdjustRevisionQuery(
-      { id: usedTypeId },
+    useReturnSalAdjustReviseMapsEPrePostQuery(
+      { salAdjustReviseId: usedTypeId },
       { enabled: !!usedTypeId && usedType === UsedTypeEnum?.RevisionOrAdjustment }
     );
 
   const salaryRevisionAssignment =
-    salaryRevisionAssignmentData?.hr?.payroll?.salStrucAdjustRevision?.getSalStructureAdjustRevision
-      ?.data;
+    salaryRevisionAssignmentData?.hr?.payroll?.payrollRun?.returnSalAdjustReviseMapsEPrePost?.data;
 
   const data =
     (!isEmpty(salaryAssignment) && salaryAssignment) ||
@@ -67,48 +47,52 @@ export const EmployeeDrawer = (props: EmployeeDrawerProps) => {
 
   const isFetching = salaryAssignmentFetching || salaryRevisionAssignmentFetching;
 
-  const earningRowData = useMemo(() => data?.earnings ?? [], [data]);
+  const earningData =
+    (!isEmpty(data?.earnings) &&
+      Object?.entries(data?.earnings)?.map(([component, amount]) => ({
+        component,
+        amount,
+      }))) ||
+    [];
 
-  const earningColumns = useMemo<Column<typeof earningRowData[0]>[]>(
+  const earningRowData = useMemo(() => earningData ?? [], [JSON.stringify(earningData)]);
+
+  const earningColumns = useMemo<Column<typeof earningData[0]>[]>(
     () => [
       {
         header: 'Component',
-        accessorFn: (row) => row?.id,
-        cell: (row) => {
-          const filteredRowWithName = earningComponentList?.filter(
-            (item) => item?.node?.id === row?.row?.original?.id
-          );
-          return <Text>{filteredRowWithName?.[0]?.node?.name}</Text>;
-        },
+        accessorFn: (row) => row?.component,
       },
       {
         header: 'Amount',
-        accessorFn: (row) => row?.amount,
+        cell: (row) => <>{decimalAdjust('round', row?.row?.original?.amount as number, -2)}</>,
       },
     ],
-    [JSON.stringify(earningComponentList)]
+    [JSON.stringify(earningData)]
   );
 
-  const deductionRowData = useMemo(() => data?.deductions ?? [], [data]);
+  const deductionData =
+    (!isEmpty(data?.earnings) &&
+      Object?.entries(data?.earnings)?.map(([component, amount]) => ({
+        component,
+        amount,
+      }))) ||
+    [];
 
-  const deductionColumns = useMemo<Column<typeof earningRowData[0]>[]>(
+  const deductionRowData = useMemo(() => deductionData ?? [], [JSON.stringify(deductionData)]);
+
+  const deductionColumns = useMemo<Column<typeof deductionRowData[0]>[]>(
     () => [
       {
         header: 'Component',
-        accessorFn: (row) => row?.id,
-        cell: (row) => {
-          const filteredRowWithName = deductionComponentList?.filter(
-            (item) => item?.node?.id === row?.row?.original?.id
-          );
-          return <Text>{filteredRowWithName?.[0]?.node?.name}</Text>;
-        },
+        accessorFn: (row) => row?.component,
       },
       {
         header: 'Amount',
-        accessorFn: (row) => row?.amount,
+        cell: (row) => <>{decimalAdjust('round', row?.row?.original?.amount as number, -2)}</>,
       },
     ],
-    [JSON.stringify(deductionComponentList)]
+    [JSON.stringify(deductionData)]
   );
 
   return (
@@ -142,7 +126,7 @@ export const EmployeeDrawer = (props: EmployeeDrawerProps) => {
           fontWeight="medium"
           color="gray.800"
           cursor="pointer"
-          onClick={() => setDeductionComponentCollapse(!earningComponentCollapse)}
+          onClick={() => setDeductionComponentCollapse(!deductionComponentCollapse)}
         >
           Deductions
         </Text>

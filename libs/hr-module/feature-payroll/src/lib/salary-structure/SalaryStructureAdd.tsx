@@ -215,6 +215,7 @@ export const SalaryStructureAdd = () => {
                   {
                     accessor: 'amount',
                     header: 'Amount',
+                    isNumeric: true,
                   },
                   {
                     accessor: 'formula',

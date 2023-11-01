@@ -161,9 +161,9 @@ export const AccountCard = ({ isDefault, account, isLoan }: IAccountCardProps) =
         <Text variant="formHelper" color="gray.700">
           {account?.productName}
         </Text>
-        <Text variant="formHelper" color="gray.500">
+        {/* <Text variant="formHelper" color="gray.500">
           Term Saving
-        </Text>
+        </Text> */}
       </Box>
       <Divider />
       <Box display="flex" alignItems="center" justifyContent="space-between" mt="s8">

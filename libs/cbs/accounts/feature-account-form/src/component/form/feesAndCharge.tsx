@@ -34,15 +34,15 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
     }
   );
 
-  const isEbankingEnabled = watch('eBanking');
-  const isMobileBankingEnabled = watch('mobileBanking');
+  // const isEbankingEnabled = watch('eBanking');
+  // const isMobileBankingEnabled = watch('mobileBanking');
   const isATMenabled = watch('atmFacility');
-  const isSmsBankingEnabled = watch('smsBanking');
+  // const isSmsBankingEnabled = watch('smsBanking');
   const serviceCharge = watch('serviceCharge');
   const isChequeEnabled = watch('chequeFacility');
 
-  const altCharges =
-    data?.settings?.general?.depositProduct?.formState?.data?.alternativeChannelCharge;
+  // const altCharges =
+  //   data?.settings?.general?.depositProduct?.formState?.data?.alternativeChannelCharge;
   const chequeCharge = data?.settings?.general?.depositProduct?.formState?.data?.chequeCharge;
   const aTMCharge = data?.settings?.general?.depositProduct?.formState?.data?.atmCharge;
   const extraCharge = data?.settings?.general?.depositProduct?.formState?.data?.serviceCharge;
@@ -56,24 +56,24 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
       shouldFocus: false,
     })) ?? []),
 
-    {
-      name: 'Mobile Banking',
-      amount: altCharges?.find((d) => d?.serviceName === 'Mobile Banking')?.amount,
-      isEnabled: isMobileBankingEnabled || false,
-      shouldFocus: true,
-    },
-    {
-      name: 'Ebanking',
-      amount: altCharges?.find((d) => d?.serviceName === 'Ebanking')?.amount,
-      isEnabled: isEbankingEnabled || false,
-      shouldFocus: true,
-    },
-    {
-      name: 'Sms',
-      amount: altCharges?.find((d) => d?.serviceName === 'Sms banking')?.amount,
-      isEnabled: isSmsBankingEnabled || false,
-      shouldFocus: true,
-    },
+    // {
+    //   name: 'Mobile Banking',
+    //   amount: altCharges?.find((d) => d?.serviceName === 'Mobile Banking')?.amount,
+    //   isEnabled: isMobileBankingEnabled || false,
+    //   shouldFocus: true,
+    // },
+    // {
+    //   name: 'Ebanking',
+    //   amount: altCharges?.find((d) => d?.serviceName === 'Ebanking')?.amount,
+    //   isEnabled: isEbankingEnabled || false,
+    //   shouldFocus: true,
+    // },
+    // {
+    //   name: 'Sms',
+    //   amount: altCharges?.find((d) => d?.serviceName === 'Sms banking')?.amount,
+    //   isEnabled: isSmsBankingEnabled || false,
+    //   shouldFocus: true,
+    // },
     {
       name: 'cheque',
       amount: chequeCharge?.find((d) => d?.serviceName === 'Cheque issue charge')?.amount,

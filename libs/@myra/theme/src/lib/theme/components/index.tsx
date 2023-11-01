@@ -4,6 +4,7 @@ import Button from './button';
 import { checkboxTheme } from './checkbox';
 import Input from './input';
 import Modal from './modal';
+import PinInput from './pin-input';
 import { radioTheme } from './radio';
 import Switch from './switches';
 import { tableTheme } from './table';
@@ -16,6 +17,7 @@ export const components = {
   Button,
   Checkbox: checkboxTheme,
   Input,
+  PinInput,
   Modal,
   Radio: radioTheme,
   Switch,

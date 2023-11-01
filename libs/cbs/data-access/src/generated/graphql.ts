@@ -1113,6 +1113,11 @@ export type AddressType = {
   temporary?: Maybe<Address>;
 };
 
+export type AdjustRevisedCalculatedMaps = {
+  deductions?: Maybe<Scalars['Map']>;
+  earnings?: Maybe<Scalars['Map']>;
+};
+
 export type AdjustedLedgerReport = {
   data?: Maybe<Array<Maybe<AdjustedLedgerReportData>>>;
   error?: Maybe<QueryError>;
@@ -1656,6 +1661,34 @@ export type AmountLimitFormState = {
   minAmount?: Maybe<Scalars['Amount']>;
 };
 
+export type AnnouncementGroupConnection = {
+  edges?: Maybe<Array<Maybe<AnnouncementGroupEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AnnouncementGroupEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<AnnouncementGroupInfo>;
+};
+
+export type AnnouncementGroupInfo = {
+  id: Scalars['String'];
+  modifiedDate: Scalars['Localized'];
+  name: Scalars['String'];
+  noOfAudience: Scalars['String'];
+};
+
+export type AnnouncementGroupInput = {
+  groupMember: Array<SmsAnnouncementGroupMember>;
+  name: Scalars['String'];
+};
+
+export type AnnouncementGroupResult = {
+  error?: Maybe<MutationError>;
+  id?: Maybe<Scalars['String']>;
+};
+
 export type AppointmentLetterConnection = {
   edges?: Maybe<Array<Maybe<AppointmentLetters>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -1791,6 +1824,16 @@ export const AssignedTo = {
 } as const;
 
 export type AssignedTo = typeof AssignedTo[keyof typeof AssignedTo];
+export type AssignmentCalculatedMaps = {
+  deductions?: Maybe<Scalars['Map']>;
+  earnings?: Maybe<Scalars['Map']>;
+};
+
+export type AssignmentCalculatedWithError = {
+  data?: Maybe<AssignmentCalculatedMaps>;
+  error?: Maybe<QueryError>;
+};
+
 export type AssociatedGuaranteeAccountListResult = {
   data?: Maybe<Array<Maybe<AssociatedGuaranteeDetails>>>;
   error?: Maybe<QueryError>;
@@ -8928,6 +8971,16 @@ export type GetEmployeeLifecycleNode = {
   status?: Maybe<Scalars['String']>;
 };
 
+export type GetEmployeeOverviewSummaryData = {
+  loanAccount?: Maybe<Array<Maybe<LoanAccounts>>>;
+  savingAccount?: Maybe<Array<Maybe<SavingAccounts>>>;
+};
+
+export type GetEmployeeOverviewSummaryWithError = {
+  data?: Maybe<GetEmployeeOverviewSummaryData>;
+  error?: Maybe<QueryError>;
+};
+
 export type GetEmployeeSchema = {
   error?: Maybe<QueryError>;
   record?: Maybe<HcmEmployeeSchema>;
@@ -9495,6 +9548,7 @@ export type HrEmployeeKyeMutationUpsertEmployeeArgs = {
 export type HrEmployeeKyeQuery = {
   getEmployee: EmployteeResultWithError;
   getEmployeeLifecycleView: GetEmployeeLifecycleDetail;
+  getEmployeeOverviewSummary: GetEmployeeOverviewSummaryWithError;
   listEmployee: HrEmployeeListConnection;
 };
 
@@ -9504,6 +9558,10 @@ export type HrEmployeeKyeQueryGetEmployeeArgs = {
 
 export type HrEmployeeKyeQueryGetEmployeeLifecycleViewArgs = {
   id: Scalars['String'];
+};
+
+export type HrEmployeeKyeQueryGetEmployeeOverviewSummaryArgs = {
+  employeeId: Scalars['String'];
 };
 
 export type HrEmployeeKyeQueryListEmployeeArgs = {
@@ -9809,6 +9867,8 @@ export type HrPayrollPayrollRunQuery = {
   getTaxPaidEachMonthDetails: TaxPaidEachMonthDetailsWithError;
   listPayrollRun: PayrollRunConnection;
   listSalarySlip: SalarySlipsConnection;
+  returnAssignmentMapsEPrePost: AssignmentCalculatedWithError;
+  returnSalAdjustReviseMapsEPrePost: SalAdjustRevisedWithError;
 };
 
 export type HrPayrollPayrollRunQueryListSalaryAssignmentWithExtraDetailsArgs = {
@@ -9854,6 +9914,14 @@ export type HrPayrollPayrollRunQueryListPayrollRunArgs = {
 export type HrPayrollPayrollRunQueryListSalarySlipArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type HrPayrollPayrollRunQueryReturnAssignmentMapsEPrePostArgs = {
+  assignmentId?: InputMaybe<Scalars['String']>;
+};
+
+export type HrPayrollPayrollRunQueryReturnSalAdjustReviseMapsEPrePostArgs = {
+  salAdjustReviseId?: InputMaybe<Scalars['String']>;
 };
 
 export type HrPayrollQuery = {
@@ -10096,11 +10164,16 @@ export type HcmPayrollSalaryStructureQueryListSalaryStructureArgs = {
 
 export type HcmPayrollTaxSetupMutation = {
   upsertTaxSetupTaxExemptionRate: TaxSetupTaxExceptionRateMutationWithError;
+  upsertTaxSetupTaxLedgerHead: TaxSetupTaxLedgerHeadWithError;
   upsertTaxSetupTaxRebateRateInPercentage: TaxSetupTaxRebateRateWithError;
 };
 
 export type HcmPayrollTaxSetupMutationUpsertTaxSetupTaxExemptionRateArgs = {
   taxExceptionRate?: InputMaybe<Scalars['Float']>;
+};
+
+export type HcmPayrollTaxSetupMutationUpsertTaxSetupTaxLedgerHeadArgs = {
+  taxSetupTaxLedgerHead?: InputMaybe<Scalars['String']>;
 };
 
 export type HcmPayrollTaxSetupMutationUpsertTaxSetupTaxRebateRateInPercentageArgs = {
@@ -14550,6 +14623,16 @@ export type LoanAccountResult = {
   recordId: Scalars['ID'];
 };
 
+export type LoanAccounts = {
+  disbursedDate?: Maybe<Scalars['Localized']>;
+  interest?: Maybe<Scalars['String']>;
+  loanAccountId?: Maybe<Scalars['String']>;
+  loanAccountName?: Maybe<Scalars['String']>;
+  loanSubType?: Maybe<Scalars['String']>;
+  repaymentScheme?: Maybe<Scalars['String']>;
+  totalLoanAmount?: Maybe<Scalars['String']>;
+};
+
 export type LoanAccrueBasicInfo = {
   accountId: Scalars['String'];
   accountName: Scalars['String'];
@@ -18805,9 +18888,10 @@ export type PayrollRunInput = {
 export type PayrollRunListed = {
   employees?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['ID']>;
-  payDate?: Maybe<Scalars['Localized']>;
-  payPeriod?: Maybe<LocalizedDate>;
-  payableCost?: Maybe<Scalars['String']>;
+  payMonth?: Maybe<NepaliMonths>;
+  payYear?: Maybe<Scalars['Int']>;
+  payableCost?: Maybe<Scalars['Float']>;
+  paygroup?: Maybe<Scalars['String']>;
   status?: Maybe<PayrollStatus>;
 };
 
@@ -20267,6 +20351,35 @@ export const Share_Transaction_Direction = {
 
 export type Share_Transaction_Direction =
   typeof Share_Transaction_Direction[keyof typeof Share_Transaction_Direction];
+export const SmsCategory = {
+  Schedule: 'SCHEDULE',
+  Transaction: 'TRANSACTION',
+  Update: 'UPDATE',
+} as const;
+
+export type SmsCategory = typeof SmsCategory[keyof typeof SmsCategory];
+export const SmsType = {
+  AtmTransaction: 'ATM_TRANSACTION',
+  Birthday: 'BIRTHDAY',
+  Deposit: 'DEPOSIT',
+  Ebanking: 'EBANKING',
+  FdMaturity: 'FD_MATURITY',
+  FeesAndCharge: 'FEES_AND_CHARGE',
+  InterestPosting: 'INTEREST_POSTING',
+  InterestRateChange: 'INTEREST_RATE_CHANGE',
+  KymUpdate: 'KYM_UPDATE',
+  LoanRepayment: 'LOAN_REPAYMENT',
+  MemberOnBoard: 'MEMBER_ON_BOARD',
+  NewLogin: 'NEW_LOGIN',
+  Withdraw: 'WITHDRAW',
+} as const;
+
+export type SmsType = typeof SmsType[keyof typeof SmsType];
+export type SmsTypeFilter = {
+  activeStatus?: InputMaybe<Scalars['Boolean']>;
+  category?: InputMaybe<SmsCategory>;
+};
+
 export type StrDetailData = {
   bio?: Maybe<IndividualBio>;
   deposits?: Maybe<Array<Maybe<TransactionDetail>>>;
@@ -20328,6 +20441,11 @@ export const SalActionType = {
 } as const;
 
 export type SalActionType = typeof SalActionType[keyof typeof SalActionType];
+export type SalAdjustRevisedWithError = {
+  data?: Maybe<AdjustRevisedCalculatedMaps>;
+  error?: Maybe<QueryError>;
+};
+
 export type SalAdjustmentRevisionInput = {
   actionType?: InputMaybe<SalActionType>;
   adjustmentOn?: InputMaybe<Scalars['Localized']>;
@@ -20766,6 +20884,14 @@ export type SavedReportResponse = {
 
 export type SavedReportSettings = ShareStatementReportSettingsType;
 
+export type SavingAccounts = {
+  savingAccountActive?: Maybe<Scalars['String']>;
+  savingAccountActiveDate?: Maybe<Scalars['Localized']>;
+  savingAccountBalance?: Maybe<Scalars['String']>;
+  savingAccountId?: Maybe<Scalars['String']>;
+  savingAccountName?: Maybe<Scalars['String']>;
+};
+
 export type SavingAccrueBasicInfo = {
   accountId: Scalars['String'];
   accountName: Scalars['String'];
@@ -20802,6 +20928,10 @@ export type SavingFilters = {
   amountRange?: InputMaybe<SavingAmountRange>;
   service?: InputMaybe<SavingServiceType>;
   transactionType?: InputMaybe<SavingTransactionType>;
+};
+
+export type SavingInterestPostingResult = {
+  error?: Maybe<MutationError>;
 };
 
 export type SavingInvestment = {
@@ -21302,6 +21432,7 @@ export type SettingsMutation = {
   general?: Maybe<GeneralSettingsMutation>;
   myraUser?: Maybe<MyraUserMutation>;
   report?: Maybe<ReportSettingMutation>;
+  sms?: Maybe<SmsSettingsMutation>;
   switchTransactionConstraintState: MutationResult;
 };
 
@@ -21318,6 +21449,7 @@ export type SettingsQuery = {
   general?: Maybe<GeneralSettingsQuery>;
   getPrintCount: Scalars['Int'];
   myraUser?: Maybe<MyraUserQuery>;
+  sms?: Maybe<SmsSettingsQuery>;
   transactionConstraint: TransactionConstraintList;
 };
 
@@ -22194,6 +22326,138 @@ export const SlipState = {
 } as const;
 
 export type SlipState = typeof SlipState[keyof typeof SlipState];
+export type SmsAnnouncementGroupMember = {
+  email: Scalars['String'];
+  name: Scalars['String'];
+  phoneNumber: Scalars['String'];
+};
+
+export type SmsSettingData = {
+  activeStatus: Scalars['Boolean'];
+  category: SmsCategory;
+  id: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  type: SmsType;
+};
+
+export type SmsSettingInput = {
+  activeStatus: Scalars['Boolean'];
+  id: Scalars['String'];
+};
+
+export type SmsSettingResult = {
+  data?: Maybe<Array<Maybe<SmsSettingData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type SmsSettingStatusChange = {
+  error?: Maybe<MutationError>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
+export type SmsSettingsMutation = {
+  addAnnoucementGroup: AnnouncementGroupResult;
+  addTemplate: SmsSettingStatusChange;
+  changeStatus: SmsSettingStatusChange;
+  deleteAnnouncementGroup: SmsTemplateDeleteResult;
+  deleteSmsTemplate: SmsTemplateDeleteResult;
+};
+
+export type SmsSettingsMutationAddAnnoucementGroupArgs = {
+  input: AnnouncementGroupInput;
+};
+
+export type SmsSettingsMutationAddTemplateArgs = {
+  input: SmsTemplateInput;
+};
+
+export type SmsSettingsMutationChangeStatusArgs = {
+  input: Array<SmsSettingInput>;
+};
+
+export type SmsSettingsMutationDeleteAnnouncementGroupArgs = {
+  id: Scalars['ID'];
+};
+
+export type SmsSettingsMutationDeleteSmsTemplateArgs = {
+  id: Scalars['ID'];
+};
+
+export type SmsSettingsQuery = {
+  listAnnouncementGroup?: Maybe<AnnouncementGroupConnection>;
+  listSmsSetting: SmsSettingResult;
+  listSmsTemplate?: Maybe<SmsTemplateConnection>;
+  listSmsTemplateField: SmsTemplateFieldFetchResult;
+  smsTemplateDetail: SmsTemplateDetailResult;
+};
+
+export type SmsSettingsQueryListAnnouncementGroupArgs = {
+  filter?: InputMaybe<Filter>;
+  paginate: Pagination;
+};
+
+export type SmsSettingsQueryListSmsSettingArgs = {
+  filter?: InputMaybe<SmsTypeFilter>;
+};
+
+export type SmsSettingsQueryListSmsTemplateArgs = {
+  filter?: InputMaybe<Filter>;
+  paginate: Pagination;
+};
+
+export type SmsSettingsQuerySmsTemplateDetailArgs = {
+  id: Scalars['ID'];
+};
+
+export type SmsTemplateConnection = {
+  edges?: Maybe<Array<Maybe<SmsTemplateEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SmsTemplateDeleteResult = {
+  error?: Maybe<MutationError>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
+export type SmsTemplateDetailResult = {
+  data?: Maybe<SmsTemplateInfo>;
+  error?: Maybe<QueryError>;
+};
+
+export type SmsTemplateEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<SmsTemplateInfo>;
+};
+
+export type SmsTemplateFieldFetchData = {
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type SmsTemplateFieldFetchResult = {
+  data?: Maybe<Array<SmsTemplateFieldFetchData>>;
+  error?: Maybe<QueryError>;
+};
+
+export type SmsTemplateInfo = {
+  activeStatus: Scalars['Boolean'];
+  content: Scalars['String'];
+  id: Scalars['String'];
+  modifiedDate: Scalars['Localized'];
+  name: Scalars['String'];
+  smsType: Scalars['String'];
+  smsTypeId: Scalars['String'];
+};
+
+export type SmsTemplateInput = {
+  activeStatus: Scalars['Boolean'];
+  content: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  smsType: Scalars['String'];
+};
+
 export const SourceOfHire = {
   Direct: 'DIRECT',
   Referel: 'REFEREL',
@@ -22512,6 +22776,7 @@ export const TaxReceivedPaid = {
 export type TaxReceivedPaid = typeof TaxReceivedPaid[keyof typeof TaxReceivedPaid];
 export type TaxSetup = {
   taxExceptionRateInPercentage?: Maybe<Scalars['Float']>;
+  taxParentLedgerHead?: Maybe<Scalars['String']>;
   taxRebateRateInPercentage?: Maybe<Scalars['Float']>;
 };
 
@@ -22521,6 +22786,11 @@ export type TaxSetupGetWithError = {
 };
 
 export type TaxSetupTaxExceptionRateMutationWithError = {
+  error?: Maybe<MutationError>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type TaxSetupTaxLedgerHeadWithError = {
   error?: Maybe<MutationError>;
   id?: Maybe<Scalars['ID']>;
 };
@@ -22966,6 +23236,7 @@ export type TransactionMutation = {
   readyBranchEOD?: Maybe<Array<Maybe<Scalars['String']>>>;
   restrictAccounting?: Maybe<RestrictTransactionMutation>;
   revertTransaction: RevertTransactionResult;
+  savingInterestPosting?: Maybe<SavingInterestPostingResult>;
   serviceCentreCashTransfer: ServiceCentreCashTransferResult;
   strTransactionAction?: Maybe<StrTransactionActionResult>;
   switchTransactionYearEndFlag?: Maybe<MutationResult>;
@@ -23370,6 +23641,9 @@ export type UnPaidEmployeeDetails = {
   employeeName?: Maybe<Scalars['String']>;
   grossPay?: Maybe<Scalars['String']>;
   netPay?: Maybe<Scalars['String']>;
+  paymentEarningDetails?: Maybe<Scalars['Map']>;
+  paymentPostTaxDeductionDetails?: Maybe<Scalars['Map']>;
+  paymentPreTaxDeductionDetails?: Maybe<Scalars['Map']>;
   postTaxDeductions?: Maybe<Scalars['String']>;
   preTaxDeductions?: Maybe<Scalars['String']>;
   taxReceivedOrPaid?: Maybe<TaxReceivedPaid>;
@@ -23385,6 +23659,9 @@ export type UnPaidEmployeeDetailsInput = {
   employeeName?: InputMaybe<Scalars['String']>;
   grossPay?: InputMaybe<Scalars['String']>;
   netPay?: InputMaybe<Scalars['String']>;
+  paymentEarningDetails?: InputMaybe<Scalars['Map']>;
+  paymentPostTaxDeductionDetails?: InputMaybe<Scalars['Map']>;
+  paymentPreTaxDeductionDetails?: InputMaybe<Scalars['Map']>;
   postTaxDeductions?: InputMaybe<Scalars['String']>;
   preTaxDeductions?: InputMaybe<Scalars['String']>;
   taxReceivedOrPaid?: InputMaybe<TaxReceivedPaid>;
@@ -27439,6 +27716,69 @@ export type ChangeUtilityServiceStatusMutation = {
   };
 };
 
+export type ChangeSmsStatusMutationVariables = Exact<{
+  input: Array<SmsSettingInput> | SmsSettingInput;
+}>;
+
+export type ChangeSmsStatusMutation = {
+  settings: {
+    sms?: {
+      changeStatus: {
+        success?: boolean | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type AddSmsTemplateMutationVariables = Exact<{
+  input: SmsTemplateInput;
+}>;
+
+export type AddSmsTemplateMutation = {
+  settings: {
+    sms?: {
+      addTemplate: {
+        success?: boolean | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type DeleteSmsTemplateMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type DeleteSmsTemplateMutation = {
+  settings: {
+    sms?: {
+      deleteSmsTemplate: {
+        success?: boolean | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
 export type SetBankListMutationVariables = Exact<{
   data?: InputMaybe<Array<InputMaybe<BankInput>> | InputMaybe<BankInput>>;
 }>;
@@ -28723,6 +29063,33 @@ export type SetTaxSetupTaxRebateInPercentageMutation = {
         payroll: {
           taxsetup: {
             upsertTaxSetupTaxRebateRateInPercentage: {
+              id?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetTaxSetupTaxLedgerHeadMutationVariables = Exact<{
+  taxSetupTaxLedgerHead?: InputMaybe<Scalars['String']>;
+}>;
+
+export type SetTaxSetupTaxLedgerHeadMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        payroll: {
+          taxsetup: {
+            upsertTaxSetupTaxLedgerHead: {
               id?: string | null;
               error?:
                 | MutationError_AuthorizationError_Fragment
@@ -34533,14 +34900,12 @@ export type GetPayrollRunListQuery = {
             cursor: string;
             node: {
               id?: string | null;
+              payMonth?: NepaliMonths | null;
+              payYear?: number | null;
+              paygroup?: string | null;
               employees?: number | null;
-              payableCost?: string | null;
-              payDate?: Record<'local' | 'en' | 'np', string> | null;
+              payableCost?: number | null;
               status?: PayrollStatus | null;
-              payPeriod?: {
-                from: Record<'local' | 'en' | 'np', string>;
-                to: Record<'local' | 'en' | 'np', string>;
-              } | null;
             };
           } | null> | null;
           pageInfo?: PaginationFragment | null;
@@ -34720,6 +35085,9 @@ export type GetAllEmployeeSalaryDetailsForThisPayrollRunQuery = {
             netPay?: string | null;
             usedType?: UsedTypeEnum | null;
             usedTypeId?: string | null;
+            paymentEarningDetails?: Record<string, unknown> | null;
+            paymentPreTaxDeductionDetails?: Record<string, unknown> | null;
+            paymentPostTaxDeductionDetails?: Record<string, unknown> | null;
           } | null> | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -34840,6 +35208,56 @@ export type GetCurrentTaxSlabQuery = {
               toAmount?: number | null;
               percentageDeduction?: string | null;
             } | null> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type ReturnAssignmentMapsEPrePostQueryVariables = Exact<{
+  assignmentId?: InputMaybe<Scalars['String']>;
+}>;
+
+export type ReturnAssignmentMapsEPrePostQuery = {
+  hr: {
+    payroll: {
+      payrollRun: {
+        returnAssignmentMapsEPrePost: {
+          data?: {
+            earnings?: Record<string, unknown> | null;
+            deductions?: Record<string, unknown> | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type ReturnSalAdjustReviseMapsEPrePostQueryVariables = Exact<{
+  salAdjustReviseId?: InputMaybe<Scalars['String']>;
+}>;
+
+export type ReturnSalAdjustReviseMapsEPrePostQuery = {
+  hr: {
+    payroll: {
+      payrollRun: {
+        returnSalAdjustReviseMapsEPrePost: {
+          data?: {
+            earnings?: Record<string, unknown> | null;
+            deductions?: Record<string, unknown> | null;
           } | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -42557,6 +42975,84 @@ export type GetUtilityLedgerSetupQuery = {
   };
 };
 
+export type ListSmsSettingQueryVariables = Exact<{
+  filter?: InputMaybe<SmsTypeFilter>;
+}>;
+
+export type ListSmsSettingQuery = {
+  settings: {
+    sms?: {
+      listSmsSetting: {
+        data?: Array<{
+          id: string;
+          name?: string | null;
+          category: SmsCategory;
+          type: SmsType;
+          activeStatus: boolean;
+        } | null> | null;
+      };
+    } | null;
+  };
+};
+
+export type ListSmsTemplateFieldQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListSmsTemplateFieldQuery = {
+  settings: {
+    sms?: { listSmsTemplateField: { data?: Array<{ id: string; name: string }> | null } } | null;
+  };
+};
+
+export type ListSmsTemplateQueryVariables = Exact<{
+  paginate: Pagination;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type ListSmsTemplateQuery = {
+  settings: {
+    sms?: {
+      listSmsTemplate?: {
+        totalCount: number;
+        pageInfo?: PaginationFragment | null;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id: string;
+            name: string;
+            content: string;
+            smsTypeId: string;
+            smsType: string;
+            modifiedDate: Record<'local' | 'en' | 'np', string>;
+            activeStatus: boolean;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type ListSmsTemplateDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type ListSmsTemplateDetailQuery = {
+  settings: {
+    sms?: {
+      smsTemplateDetail: {
+        data?: {
+          id: string;
+          name: string;
+          content: string;
+          smsTypeId: string;
+          smsType: string;
+          modifiedDate: Record<'local' | 'en' | 'np', string>;
+          activeStatus: boolean;
+        } | null;
+      };
+    } | null;
+  };
+};
+
 export type GetAuditLogListQueryVariables = Exact<{
   filter?: InputMaybe<AuditLogFilters>;
 }>;
@@ -43972,6 +44468,7 @@ export type GetTaxSetupQuery = {
               data?: {
                 taxExceptionRateInPercentage?: number | null;
                 taxRebateRateInPercentage?: number | null;
+                taxParentLedgerHead?: string | null;
               } | null;
               error?:
                 | MutationError_AuthorizationError_Fragment
@@ -52412,6 +52909,89 @@ export const useChangeUtilityServiceStatusMutation = <TError = unknown, TContext
     ),
     options
   );
+export const ChangeSmsStatusDocument = `
+    mutation changeSMSStatus($input: [SmsSettingInput!]!) {
+  settings {
+    sms {
+      changeStatus(input: $input) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useChangeSmsStatusMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ChangeSmsStatusMutation,
+    TError,
+    ChangeSmsStatusMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ChangeSmsStatusMutation, TError, ChangeSmsStatusMutationVariables, TContext>(
+    ['changeSMSStatus'],
+    useAxios<ChangeSmsStatusMutation, ChangeSmsStatusMutationVariables>(ChangeSmsStatusDocument),
+    options
+  );
+export const AddSmsTemplateDocument = `
+    mutation addSMSTemplate($input: SmsTemplateInput!) {
+  settings {
+    sms {
+      addTemplate(input: $input) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddSmsTemplateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddSmsTemplateMutation,
+    TError,
+    AddSmsTemplateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddSmsTemplateMutation, TError, AddSmsTemplateMutationVariables, TContext>(
+    ['addSMSTemplate'],
+    useAxios<AddSmsTemplateMutation, AddSmsTemplateMutationVariables>(AddSmsTemplateDocument),
+    options
+  );
+export const DeleteSmsTemplateDocument = `
+    mutation deleteSMSTemplate($id: ID!) {
+  settings {
+    sms {
+      deleteSmsTemplate(id: $id) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteSmsTemplateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteSmsTemplateMutation,
+    TError,
+    DeleteSmsTemplateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteSmsTemplateMutation, TError, DeleteSmsTemplateMutationVariables, TContext>(
+    ['deleteSMSTemplate'],
+    useAxios<DeleteSmsTemplateMutation, DeleteSmsTemplateMutationVariables>(
+      DeleteSmsTemplateDocument
+    ),
+    options
+  );
 export const SetBankListDocument = `
     mutation setBankList($data: [BankInput]) {
   bank {
@@ -54275,6 +54855,46 @@ export const useSetTaxSetupTaxRebateInPercentageMutation = <TError = unknown, TC
       SetTaxSetupTaxRebateInPercentageMutation,
       SetTaxSetupTaxRebateInPercentageMutationVariables
     >(SetTaxSetupTaxRebateInPercentageDocument),
+    options
+  );
+export const SetTaxSetupTaxLedgerHeadDocument = `
+    mutation setTaxSetupTaxLedgerHead($taxSetupTaxLedgerHead: String) {
+  settings {
+    general {
+      HCM {
+        payroll {
+          taxsetup {
+            upsertTaxSetupTaxLedgerHead(taxSetupTaxLedgerHead: $taxSetupTaxLedgerHead) {
+              id
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetTaxSetupTaxLedgerHeadMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetTaxSetupTaxLedgerHeadMutation,
+    TError,
+    SetTaxSetupTaxLedgerHeadMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetTaxSetupTaxLedgerHeadMutation,
+    TError,
+    SetTaxSetupTaxLedgerHeadMutationVariables,
+    TContext
+  >(
+    ['setTaxSetupTaxLedgerHead'],
+    useAxios<SetTaxSetupTaxLedgerHeadMutation, SetTaxSetupTaxLedgerHeadMutationVariables>(
+      SetTaxSetupTaxLedgerHeadDocument
+    ),
     options
   );
 export const UpsertLedgerTagDocument = `
@@ -62086,13 +62706,11 @@ export const GetPayrollRunListDocument = `
           edges {
             node {
               id
-              payPeriod {
-                from
-                to
-              }
+              payMonth
+              payYear
+              paygroup
               employees
               payableCost
-              payDate
               status
             }
             cursor
@@ -62351,6 +62969,9 @@ export const GetAllEmployeeSalaryDetailsForThisPayrollRunDocument = `
             netPay
             usedType
             usedTypeId
+            paymentEarningDetails
+            paymentPreTaxDeductionDetails
+            paymentPostTaxDeductionDetails
           }
           error {
             ...MutationError
@@ -62533,6 +63154,77 @@ export const useGetCurrentTaxSlabQuery = <TData = GetCurrentTaxSlabQuery, TError
     useAxios<GetCurrentTaxSlabQuery, GetCurrentTaxSlabQueryVariables>(
       GetCurrentTaxSlabDocument
     ).bind(null, variables),
+    options
+  );
+export const ReturnAssignmentMapsEPrePostDocument = `
+    query returnAssignmentMapsEPrePost($assignmentId: String) {
+  hr {
+    payroll {
+      payrollRun {
+        returnAssignmentMapsEPrePost(assignmentId: $assignmentId) {
+          data {
+            earnings
+            deductions
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useReturnAssignmentMapsEPrePostQuery = <
+  TData = ReturnAssignmentMapsEPrePostQuery,
+  TError = unknown
+>(
+  variables?: ReturnAssignmentMapsEPrePostQueryVariables,
+  options?: UseQueryOptions<ReturnAssignmentMapsEPrePostQuery, TError, TData>
+) =>
+  useQuery<ReturnAssignmentMapsEPrePostQuery, TError, TData>(
+    variables === undefined
+      ? ['returnAssignmentMapsEPrePost']
+      : ['returnAssignmentMapsEPrePost', variables],
+    useAxios<ReturnAssignmentMapsEPrePostQuery, ReturnAssignmentMapsEPrePostQueryVariables>(
+      ReturnAssignmentMapsEPrePostDocument
+    ).bind(null, variables),
+    options
+  );
+export const ReturnSalAdjustReviseMapsEPrePostDocument = `
+    query returnSalAdjustReviseMapsEPrePost($salAdjustReviseId: String) {
+  hr {
+    payroll {
+      payrollRun {
+        returnSalAdjustReviseMapsEPrePost(salAdjustReviseId: $salAdjustReviseId) {
+          data {
+            earnings
+            deductions
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useReturnSalAdjustReviseMapsEPrePostQuery = <
+  TData = ReturnSalAdjustReviseMapsEPrePostQuery,
+  TError = unknown
+>(
+  variables?: ReturnSalAdjustReviseMapsEPrePostQueryVariables,
+  options?: UseQueryOptions<ReturnSalAdjustReviseMapsEPrePostQuery, TError, TData>
+) =>
+  useQuery<ReturnSalAdjustReviseMapsEPrePostQuery, TError, TData>(
+    variables === undefined
+      ? ['returnSalAdjustReviseMapsEPrePost']
+      : ['returnSalAdjustReviseMapsEPrePost', variables],
+    useAxios<
+      ReturnSalAdjustReviseMapsEPrePostQuery,
+      ReturnSalAdjustReviseMapsEPrePostQueryVariables
+    >(ReturnSalAdjustReviseMapsEPrePostDocument).bind(null, variables),
     options
   );
 export const GetStaffPlanningListDocument = `
@@ -72543,6 +73235,128 @@ export const useGetUtilityLedgerSetupQuery = <TData = GetUtilityLedgerSetupQuery
     ).bind(null, variables),
     options
   );
+export const ListSmsSettingDocument = `
+    query listSMSSetting($filter: SMSTypeFilter) {
+  settings {
+    sms {
+      listSmsSetting(filter: $filter) {
+        data {
+          id
+          name
+          category
+          type
+          activeStatus
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListSmsSettingQuery = <TData = ListSmsSettingQuery, TError = unknown>(
+  variables?: ListSmsSettingQueryVariables,
+  options?: UseQueryOptions<ListSmsSettingQuery, TError, TData>
+) =>
+  useQuery<ListSmsSettingQuery, TError, TData>(
+    variables === undefined ? ['listSMSSetting'] : ['listSMSSetting', variables],
+    useAxios<ListSmsSettingQuery, ListSmsSettingQueryVariables>(ListSmsSettingDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const ListSmsTemplateFieldDocument = `
+    query listSmsTemplateField {
+  settings {
+    sms {
+      listSmsTemplateField {
+        data {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListSmsTemplateFieldQuery = <TData = ListSmsTemplateFieldQuery, TError = unknown>(
+  variables?: ListSmsTemplateFieldQueryVariables,
+  options?: UseQueryOptions<ListSmsTemplateFieldQuery, TError, TData>
+) =>
+  useQuery<ListSmsTemplateFieldQuery, TError, TData>(
+    variables === undefined ? ['listSmsTemplateField'] : ['listSmsTemplateField', variables],
+    useAxios<ListSmsTemplateFieldQuery, ListSmsTemplateFieldQueryVariables>(
+      ListSmsTemplateFieldDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListSmsTemplateDocument = `
+    query listSmsTemplate($paginate: Pagination!, $filter: Filter) {
+  settings {
+    sms {
+      listSmsTemplate(paginate: $paginate, filter: $filter) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          cursor
+          node {
+            id
+            name
+            content
+            smsTypeId
+            smsType
+            modifiedDate
+            activeStatus
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useListSmsTemplateQuery = <TData = ListSmsTemplateQuery, TError = unknown>(
+  variables: ListSmsTemplateQueryVariables,
+  options?: UseQueryOptions<ListSmsTemplateQuery, TError, TData>
+) =>
+  useQuery<ListSmsTemplateQuery, TError, TData>(
+    ['listSmsTemplate', variables],
+    useAxios<ListSmsTemplateQuery, ListSmsTemplateQueryVariables>(ListSmsTemplateDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const ListSmsTemplateDetailDocument = `
+    query listSmsTemplateDetail($id: ID!) {
+  settings {
+    sms {
+      smsTemplateDetail(id: $id) {
+        data {
+          id
+          name
+          content
+          smsTypeId
+          smsType
+          modifiedDate
+          activeStatus
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListSmsTemplateDetailQuery = <TData = ListSmsTemplateDetailQuery, TError = unknown>(
+  variables: ListSmsTemplateDetailQueryVariables,
+  options?: UseQueryOptions<ListSmsTemplateDetailQuery, TError, TData>
+) =>
+  useQuery<ListSmsTemplateDetailQuery, TError, TData>(
+    ['listSmsTemplateDetail', variables],
+    useAxios<ListSmsTemplateDetailQuery, ListSmsTemplateDetailQueryVariables>(
+      ListSmsTemplateDetailDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAuditLogListDocument = `
     query getAuditLogList($filter: AuditLogFilters) {
   auditLog {
@@ -74450,6 +75264,7 @@ export const GetTaxSetupDocument = `
               data {
                 taxExceptionRateInPercentage
                 taxRebateRateInPercentage
+                taxParentLedgerHead
               }
               error {
                 ...MutationError

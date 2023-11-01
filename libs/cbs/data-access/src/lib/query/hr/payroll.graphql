@@ -65,13 +65,11 @@ query getPayrollRunList($filter: Filter, $pagination: Pagination) {
           edges {
             node {
               id
-              payPeriod {
-                from
-                to
-              }
+              payMonth
+              payYear
+              paygroup
               employees
               payableCost
-              payDate
               status
             }
             cursor
@@ -241,6 +239,9 @@ query getAllEmployeeSalaryDetailsForThisPayrollRun(
             netPay
             usedType
             usedTypeId
+            paymentEarningDetails
+            paymentPreTaxDeductionDetails
+            paymentPostTaxDeductionDetails
           }
           error {
             ...MutationError
@@ -326,6 +327,42 @@ query getCurrentTaxSlab($employee: ID!) {
               toAmount
               percentageDeduction
             }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query returnAssignmentMapsEPrePost($assignmentId: String) {
+  hr {
+    payroll {
+      payrollRun {
+        returnAssignmentMapsEPrePost(assignmentId: $assignmentId) {
+          data {
+            earnings
+            deductions
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query returnSalAdjustReviseMapsEPrePost($salAdjustReviseId: String) {
+  hr {
+    payroll {
+      payrollRun {
+        returnSalAdjustReviseMapsEPrePost(salAdjustReviseId: $salAdjustReviseId) {
+          data {
+            earnings
+            deductions
           }
           error {
             ...MutationError
