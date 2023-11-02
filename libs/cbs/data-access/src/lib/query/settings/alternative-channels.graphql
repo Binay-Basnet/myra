@@ -218,3 +218,13 @@ query listSmsTemplateDetail($id: ID!) {
     }
   }
 }
+
+query getSMSMinimumTxnAmount {
+  settings {
+    sms {
+      getMinimunTxnAmount {
+        amount
+      }
+    }
+  }
+}

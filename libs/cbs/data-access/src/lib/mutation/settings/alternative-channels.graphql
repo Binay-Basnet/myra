@@ -107,3 +107,16 @@ mutation deleteSMSTemplate($id: ID!) {
     }
   }
 }
+
+mutation addSMSMinimumTxnAmount($input: MinTxnAmount!) {
+  settings {
+    sms {
+      addMinimunTxnAmount(input: $input) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

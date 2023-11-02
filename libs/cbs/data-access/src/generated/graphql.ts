@@ -17823,6 +17823,11 @@ export type MinTxnAmount = {
   id: SmsCategory;
 };
 
+export type MinimunTxnAmountResult = {
+  amount?: Maybe<Scalars['String']>;
+  error?: Maybe<QueryError>;
+};
+
 export type MinorFilter = {
   branchId?: InputMaybe<Array<Scalars['String']>>;
   id?: InputMaybe<Scalars['String']>;
@@ -22394,6 +22399,7 @@ export type SmsSettingsMutationDeleteSmsTemplateArgs = {
 };
 
 export type SmsSettingsQuery = {
+  getMinimunTxnAmount: MinimunTxnAmountResult;
   listAnnouncementGroup?: Maybe<AnnouncementGroupConnection>;
   listSmsSetting: SmsSettingResult;
   listSmsTemplate?: Maybe<SmsTemplateConnection>;
@@ -27776,6 +27782,27 @@ export type DeleteSmsTemplateMutation = {
   settings: {
     sms?: {
       deleteSmsTemplate: {
+        success?: boolean | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type AddSmsMinimumTxnAmountMutationVariables = Exact<{
+  input: MinTxnAmount;
+}>;
+
+export type AddSmsMinimumTxnAmountMutation = {
+  settings: {
+    sms?: {
+      addMinimunTxnAmount: {
         success?: boolean | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -43063,6 +43090,12 @@ export type ListSmsTemplateDetailQuery = {
   };
 };
 
+export type GetSmsMinimumTxnAmountQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetSmsMinimumTxnAmountQuery = {
+  settings: { sms?: { getMinimunTxnAmount: { amount?: string | null } } | null };
+};
+
 export type GetAuditLogListQueryVariables = Exact<{
   filter?: InputMaybe<AuditLogFilters>;
 }>;
@@ -52999,6 +53032,40 @@ export const useDeleteSmsTemplateMutation = <TError = unknown, TContext = unknow
     ['deleteSMSTemplate'],
     useAxios<DeleteSmsTemplateMutation, DeleteSmsTemplateMutationVariables>(
       DeleteSmsTemplateDocument
+    ),
+    options
+  );
+export const AddSmsMinimumTxnAmountDocument = `
+    mutation addSMSMinimumTxnAmount($input: MinTxnAmount!) {
+  settings {
+    sms {
+      addMinimunTxnAmount(input: $input) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddSmsMinimumTxnAmountMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddSmsMinimumTxnAmountMutation,
+    TError,
+    AddSmsMinimumTxnAmountMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    AddSmsMinimumTxnAmountMutation,
+    TError,
+    AddSmsMinimumTxnAmountMutationVariables,
+    TContext
+  >(
+    ['addSMSMinimumTxnAmount'],
+    useAxios<AddSmsMinimumTxnAmountMutation, AddSmsMinimumTxnAmountMutationVariables>(
+      AddSmsMinimumTxnAmountDocument
     ),
     options
   );
@@ -73364,6 +73431,31 @@ export const useListSmsTemplateDetailQuery = <TData = ListSmsTemplateDetailQuery
     ['listSmsTemplateDetail', variables],
     useAxios<ListSmsTemplateDetailQuery, ListSmsTemplateDetailQueryVariables>(
       ListSmsTemplateDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSmsMinimumTxnAmountDocument = `
+    query getSMSMinimumTxnAmount {
+  settings {
+    sms {
+      getMinimunTxnAmount {
+        amount
+      }
+    }
+  }
+}
+    `;
+export const useGetSmsMinimumTxnAmountQuery = <
+  TData = GetSmsMinimumTxnAmountQuery,
+  TError = unknown
+>(
+  variables?: GetSmsMinimumTxnAmountQueryVariables,
+  options?: UseQueryOptions<GetSmsMinimumTxnAmountQuery, TError, TData>
+) =>
+  useQuery<GetSmsMinimumTxnAmountQuery, TError, TData>(
+    variables === undefined ? ['getSMSMinimumTxnAmount'] : ['getSMSMinimumTxnAmount', variables],
+    useAxios<GetSmsMinimumTxnAmountQuery, GetSmsMinimumTxnAmountQueryVariables>(
+      GetSmsMinimumTxnAmountDocument
     ).bind(null, variables),
     options
   );

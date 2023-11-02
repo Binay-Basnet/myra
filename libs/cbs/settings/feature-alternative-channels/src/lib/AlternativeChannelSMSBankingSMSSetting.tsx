@@ -1,17 +1,27 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { SettingsIcon } from '@chakra-ui/icons';
+import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, SettingsFooter, Text } from '@myra-ui';
+import { asyncToast, Box, Button, Icon, SettingsFooter, Text } from '@myra-ui';
 
 import { useChangeSmsStatusMutation, useListSmsSettingQuery } from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
 import { FormSwitch } from '@coop/shared/form';
 
+import { ConfigureMinimumTransactionModal } from '../components';
+
 export const AlternativeChannelSMSBankingSMSSetting = () => {
   const queryClient = useQueryClient();
 
   const methods = useForm();
+
+  const {
+    isOpen: isConfigureOpen,
+    onClose: onConfigureClose,
+    onToggle: onConfigureToggle,
+  } = useDisclosure();
 
   const { data: statusListData } = useListSmsSettingQuery();
   const statusList = statusListData?.settings?.sms?.listSmsSetting?.data ?? [];
@@ -51,7 +61,14 @@ export const AlternativeChannelSMSBankingSMSSetting = () => {
           </Box>
 
           {!!transactionStatus?.length && (
-            <SettingsCard title="Transactions">
+            <SettingsCard
+              title="Transactions"
+              headerButton={
+                <Button leftIcon={<Icon as={SettingsIcon} size="sm" />} onClick={onConfigureToggle}>
+                  Configure
+                </Button>
+              }
+            >
               <Box display="flex" flexDirection="column" gap="s8">
                 {transactionStatus?.map((status) => (
                   <FormSwitch name={status?.id as string} label={status?.name as string} />
@@ -108,6 +125,8 @@ export const AlternativeChannelSMSBankingSMSSetting = () => {
         }}
         saveLoading={isLoading}
       />
+
+      <ConfigureMinimumTransactionModal isOpen={isConfigureOpen} onClose={onConfigureClose} />
     </>
   );
 };
