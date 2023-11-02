@@ -9,6 +9,7 @@ import {
   ALTERNATIVE_CHANNELS,
   BPM,
   CBS,
+  FAM,
   HRMODULE,
   INVENTORY,
   MICROFINANCE,
@@ -23,6 +24,7 @@ export type ModuleType =
   | 'INVENTORY'
   | 'HRMODULE'
   | 'BPM'
+  | 'FAM'
   | 'MICROFINANCE';
 
 export type MenuType =
@@ -60,7 +62,10 @@ export type MenuType =
   | 'PROGRAMS'
   | 'OPERATIONS'
   | 'GROUPS'
-  | 'GLOBAL';
+  | 'GLOBAL'
+  | 'ASSETS'
+  | 'OPERATIONS'
+  | 'PURCHASE';
 
 export type Page = {
   label: string;
@@ -103,6 +108,7 @@ export const APP_NAVS = {
   HRMODULE,
   BPM,
   MICROFINANCE,
+  FAM,
 };
 
 export const useLink = (app: ModuleType = 'CBS') => {

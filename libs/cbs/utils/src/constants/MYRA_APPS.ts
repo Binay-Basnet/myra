@@ -44,6 +44,12 @@ export const MYRA_APPS = [
     link: ROUTES.BPM_TASKS_LISTS,
   },
   {
+    key: 'FAM',
+    title: 'fixedAssetManagement',
+    img: '/rvn.svg',
+    link: ROUTES?.FAM_ASSETS_LIST,
+  },
+  {
     key: 'MICROFINANCE',
     title: 'microfinance',
     img: '/cbs.svg',

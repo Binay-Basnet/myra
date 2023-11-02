@@ -6,6 +6,7 @@ export type ModuleType =
   | 'INVENTORY'
   | 'HCM'
   | 'BPM'
+  | 'FAM'
   | 'MICROFINANCE';
 
 const modules = {
@@ -34,6 +35,10 @@ const modules = {
     prod: false,
   },
   BPM: {
+    dev: true,
+    prod: false,
+  },
+  FAM: {
     dev: true,
     prod: false,
   },
