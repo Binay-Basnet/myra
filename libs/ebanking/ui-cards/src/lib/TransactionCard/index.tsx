@@ -26,10 +26,10 @@ export const TransactionCard = ({ transaction, accountName }: ITransactionCardPr
       )}
 
       <Box display="flex" flexDir="column" gap="s4">
-        <Text variant="navItems" color="gray.800" textTransform="capitalize">
-          {transaction.name?.toLowerCase()}
+        <Text variant="navItems" color="gray.800">
+          {transaction.name}
         </Text>
-        <Text variant="formHelper" color="gray.500" textTransform="capitalize">
+        <Text variant="formHelper" color="gray.500">
           {accountName}
         </Text>
       </Box>
