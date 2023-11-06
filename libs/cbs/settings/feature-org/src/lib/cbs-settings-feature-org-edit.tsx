@@ -1,17 +1,9 @@
 import { useEffect } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  GridItem,
-} from '@myra-ui';
+import { asyncToast, Box, FormSection, GridItem } from '@myra-ui';
 
 import {
   TypeOfOrganization,
@@ -24,6 +16,7 @@ import {
   FormDatePicker,
   FormFileInput,
   FormInput,
+  FormLayout,
   FormRadioGroup,
   FormTextArea,
 } from '@coop/shared/form';
@@ -85,78 +78,75 @@ export const CbsSettingsFeatureOrgEdit = () => {
       },
     });
   };
+
   return (
-    <Container minW="container.lg" height="fit-content" paddingInline="0">
-      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader title="Edit Organization Profile" />
-      </Box>
-      <Box bg="white">
-        <FormProvider {...methods}>
-          <form>
-            <FormSection header="Basic Details">
-              <GridItem colSpan={2}>
-                <FormInput label="Organization Name" name="basicDetails.name" />
-              </GridItem>
+    <FormLayout methods={methods}>
+      <FormLayout.Header title="Edit Organization Profile" />
 
-              <FormDatePicker
-                name="basicDetails.organizationStartDate"
-                label="Organization Start Date"
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <FormSection header="Basic Details">
+            <GridItem colSpan={2}>
+              <FormInput label="Organization Name" name="basicDetails.name" />
+            </GridItem>
+
+            <FormDatePicker
+              name="basicDetails.organizationStartDate"
+              label="Organization Start Date"
+            />
+
+            <GridItem colSpan={3}>
+              <Box w="-webkit-fit-content">
+                <FormFileInput size="sm" label="Organization Logo" name="basicDetails.logo" />
+              </Box>
+            </GridItem>
+            <GridItem colSpan={3}>
+              <FormRadioGroup
+                label="Type of Organization"
+                name="basicDetails.typeOfOrganization"
+                options={[
+                  { label: 'Cooperative', value: TypeOfOrganization?.Cooperative },
+                  { label: 'Cooperative Union', value: TypeOfOrganization?.CooperativeUnion },
+                ]}
               />
+            </GridItem>
+            <GridItem colSpan={3}>
+              <FormTextArea label="Slogan" name="basicDetails.slogan" />
+            </GridItem>
+          </FormSection>
+          <FormSection header="Contact Details">
+            <FormInput label="Phone No" name="contactDetails.phoneNumber" />
+            <FormInput label="Email" name="contactDetails.email" />
+            <FormInput label="Website" name="contactDetails.website" />
+          </FormSection>
+          <FormSection header="Main Contact Person">
+            <FormInput label="Name" name="mainContactPerson.contactPersonName" />
+            <FormInput label="Contact No" name="mainContactPerson.contactPersonContactNumber" />
+            <FormInput label="Title/Person" name="mainContactPerson.title" />
+          </FormSection>
+          <FormSection header="Address">
+            <FormAddress name="address" />
+          </FormSection>
+          <FormSection header="Registration Details">
+            <GridItem colSpan={2}>
+              <FormInput label="Registered Office" name="registrationDetails.regdOffice" />
+            </GridItem>
+            <FormInput label="Registered No" name="registrationDetails.regdNo" />
+            <GridItem colSpan={3}>
+              <FormInput label="Registered Address" name="registrationDetails.regdAddress" />
+            </GridItem>
+            <FormInput label="PAN / VAT No" name="registrationDetails.panOrVat" />
+          </FormSection>
+          <FormSection header="Documents">
+            <GridItem colSpan={3}>
+              <FormFileInput name="documents" />
+            </GridItem>
+          </FormSection>
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-              <GridItem colSpan={3}>
-                <Box w="-webkit-fit-content">
-                  <FormFileInput size="sm" label="Organization Logo" name="basicDetails.logo" />
-                </Box>
-              </GridItem>
-              <GridItem colSpan={3}>
-                <FormRadioGroup
-                  label="Type of Organization"
-                  name="basicDetails.typeOfOrganization"
-                  options={[
-                    { label: 'Cooperative', value: TypeOfOrganization?.Cooperative },
-                    { label: 'Cooperative Union', value: TypeOfOrganization?.CooperativeUnion },
-                  ]}
-                />
-              </GridItem>
-              <GridItem colSpan={3}>
-                <FormTextArea label="Slogan" name="basicDetails.slogan" />
-              </GridItem>
-            </FormSection>
-            <FormSection header="Contact Details">
-              <FormInput label="Phone No" name="contactDetails.phoneNumber" />
-              <FormInput label="Email" name="contactDetails.email" />
-              <FormInput label="Website" name="contactDetails.website" />
-            </FormSection>
-            <FormSection header="Main Contact Person">
-              <FormInput label="Name" name="mainContactPerson.contactPersonName" />
-              <FormInput label="Contact No" name="mainContactPerson.contactPersonContactNumber" />
-              <FormInput label="Title/Person" name="mainContactPerson.title" />
-            </FormSection>
-            <FormSection header="Address">
-              <FormAddress name="address" />
-            </FormSection>
-            <FormSection header="Registration Details">
-              <GridItem colSpan={2}>
-                <FormInput label="Registered Office" name="registrationDetails.regdOffice" />
-              </GridItem>
-              <FormInput label="Registered No" name="registrationDetails.regdNo" />
-              <GridItem colSpan={3}>
-                <FormInput label="Registered Address" name="registrationDetails.regdAddress" />
-              </GridItem>
-              <FormInput label="PAN / VAT No" name="registrationDetails.panOrVat" />
-            </FormSection>
-            <FormSection header="Documents">
-              <GridItem colSpan={3}>
-                <FormFileInput name="documents" />
-              </GridItem>
-            </FormSection>
-          </form>
-        </FormProvider>
-      </Box>
-      <Box position="sticky" bottom={0}>
-        <FormFooter mainButtonLabel="Save Changes" mainButtonHandler={submitForm} />
-      </Box>
-    </Container>
+      <FormLayout.Footer mainButtonLabel="Save Changes" mainButtonHandler={submitForm} />
+    </FormLayout>
   );
 };
 
