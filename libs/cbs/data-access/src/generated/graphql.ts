@@ -19959,6 +19959,7 @@ export type ReportQuery = {
   printReport: CertificatePrint;
   shareReport: ShareReport;
   transactionReport: TransactionReport;
+  utilityReport: UtilityReport;
 };
 
 export type ReportQueryCopomisFinancialReportArgs = {
@@ -23939,6 +23940,13 @@ export type UtilititesListEdges = {
   node?: Maybe<UtilititesEntry>;
 };
 
+export type UtilityAdditionalJournalData = {
+  Service?: Maybe<Scalars['String']>;
+  destinationId?: Maybe<Scalars['String']>;
+  sourceAccount?: Maybe<Scalars['String']>;
+  sourceId?: Maybe<Scalars['String']>;
+};
+
 export type UtilityLedgerSetupFormState = {
   coaHead: Scalars['String'];
   coaHeadName: Scalars['String'];
@@ -24001,9 +24009,43 @@ export type UtilityQueryListUtilitiesArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type UtilityReport = {
+  utilityUsageReport: UtilityUsageReportResult;
+};
+
+export type UtilityReportUtilityUsageReportArgs = {
+  data: UtilityUsageFilter;
+};
+
 export type UtilityTransactionCategory = {
   Narration?: Maybe<Scalars['String']>;
   Service?: Maybe<Scalars['String']>;
+};
+
+export type UtilityUsageFilter = {
+  branchId: Array<Scalars['String']>;
+  period?: InputMaybe<LocalizedDateFilter>;
+  utility?: InputMaybe<Scalars['String']>;
+  utilityType?: InputMaybe<Scalars['String']>;
+};
+
+export type UtilityUsageReportResult = {
+  data?: Maybe<Array<UtilityUsageReportResultList>>;
+  error?: Maybe<QueryError>;
+};
+
+export type UtilityUsageReportResultList = {
+  amount: Scalars['String'];
+  cashBack: Scalars['String'];
+  date: Scalars['Localized'];
+  destinationAccount: Scalars['String'];
+  initiatorPhoneNo: Scalars['String'];
+  memberAccount: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['String'];
+  serviceCharge: Scalars['String'];
+  utilityName: Scalars['String'];
+  utilityTypeName: Scalars['String'];
 };
 
 export type ValidationError = {
@@ -32943,7 +32985,6 @@ export type ListAgentTemplateQuery = {
   agent: {
     listAgentTemplate?: {
       record?: Array<{
-        amount?: string | null;
         member?: {
           id: string;
           code: string;
@@ -60286,7 +60327,6 @@ export const ListAgentTemplateDocument = `
           id
           installmentAmount
         }
-        amount
       }
     }
   }
