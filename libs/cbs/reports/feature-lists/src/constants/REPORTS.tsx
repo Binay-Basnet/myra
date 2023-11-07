@@ -97,6 +97,7 @@ export enum Report {
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
   MB_CHANNEL_TRANSACTION_REPORT = 'Mobile Banking Channel Transaction Report',
+  MB_UTILITY_USAGE_REPORT = 'Utility Usage Report',
 
   SERVICE_CENTER_LIST_REPORT = 'Service Center List Report',
   BRANCH_READINESS_REPORT = 'Branch Readiness Report',
@@ -477,6 +478,13 @@ export const REPORTS: ReportType = {
       link: 'expiry',
       component: <Reports.MBExpiryReport />,
       acl: 'REPORTS_MB_MOBILE_BANKING_CHANNEL_EXPIRY',
+    },
+    {
+      id: '4.8',
+      acl: 'REPORTS_UTILITY_USAGE',
+      component: <Reports.UtilityUsageReport />,
+      report: Report.MB_UTILITY_USAGE_REPORT,
+      link: 'utility-usage',
     },
   ],
 

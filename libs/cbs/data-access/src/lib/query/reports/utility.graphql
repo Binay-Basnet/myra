@@ -1,0 +1,22 @@
+query getUtilityUsageReport($data: UtilityUsageFilter!) {
+  report {
+    utilityReport {
+      utilityUsageReport(data: $data) {
+        data {
+          date
+          utilityName
+          utilityTypeName
+          memberId
+          memberName
+          memberCode
+          initiatorPhoneNo
+          destinationAccount
+          memberAccount
+          amount
+          cashBack
+          serviceCharge
+        }
+      }
+    }
+  }
+}

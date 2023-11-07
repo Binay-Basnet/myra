@@ -19790,6 +19790,7 @@ export const Resource = {
   ReportsTxnTellerReport: 'REPORTS_TXN_TELLER_REPORT',
   ReportsTxnTrialBalance: 'REPORTS_TXN_TRIAL_BALANCE',
   ReportsTxnVaultBalance: 'REPORTS_TXN_VAULT_BALANCE',
+  ReportsUtilityUsage: 'REPORTS_UTILITY_USAGE',
   SettingsAlternativeChannels: 'SETTINGS_ALTERNATIVE_CHANNELS',
   SettingsAuditLog: 'SETTINGS_AUDIT_LOG',
   SettingsBank: 'SETTINGS_BANK',
@@ -24041,6 +24042,7 @@ export type UtilityUsageReportResultList = {
   destinationAccount: Scalars['String'];
   initiatorPhoneNo: Scalars['String'];
   memberAccount: Scalars['String'];
+  memberCode: Scalars['String'];
   memberId: Scalars['String'];
   memberName: Scalars['String'];
   serviceCharge: Scalars['String'];
@@ -42675,6 +42677,33 @@ export type GetLedgerBalanceReportQuery = {
             settledBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
           } | null> | null;
         };
+      };
+    };
+  };
+};
+
+export type GetUtilityUsageReportQueryVariables = Exact<{
+  data: UtilityUsageFilter;
+}>;
+
+export type GetUtilityUsageReportQuery = {
+  report: {
+    utilityReport: {
+      utilityUsageReport: {
+        data?: Array<{
+          date: Record<'local' | 'en' | 'np', string>;
+          utilityName: string;
+          utilityTypeName: string;
+          memberId: string;
+          memberName: string;
+          memberCode: string;
+          initiatorPhoneNo: string;
+          destinationAccount: string;
+          memberAccount: string;
+          amount: string;
+          cashBack: string;
+          serviceCharge: string;
+        }> | null;
       };
     };
   };
@@ -72809,6 +72838,41 @@ export const useGetLedgerBalanceReportQuery = <
     ['getLedgerBalanceReport', variables],
     useAxios<GetLedgerBalanceReportQuery, GetLedgerBalanceReportQueryVariables>(
       GetLedgerBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetUtilityUsageReportDocument = `
+    query getUtilityUsageReport($data: UtilityUsageFilter!) {
+  report {
+    utilityReport {
+      utilityUsageReport(data: $data) {
+        data {
+          date
+          utilityName
+          utilityTypeName
+          memberId
+          memberName
+          memberCode
+          initiatorPhoneNo
+          destinationAccount
+          memberAccount
+          amount
+          cashBack
+          serviceCharge
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetUtilityUsageReportQuery = <TData = GetUtilityUsageReportQuery, TError = unknown>(
+  variables: GetUtilityUsageReportQueryVariables,
+  options?: UseQueryOptions<GetUtilityUsageReportQuery, TError, TData>
+) =>
+  useQuery<GetUtilityUsageReportQuery, TError, TData>(
+    ['getUtilityUsageReport', variables],
+    useAxios<GetUtilityUsageReportQuery, GetUtilityUsageReportQueryVariables>(
+      GetUtilityUsageReportDocument
     ).bind(null, variables),
     options
   );

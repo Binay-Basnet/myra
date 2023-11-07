@@ -46,6 +46,7 @@ export * from './lib/members/UsersReport';
 export * from './lib/mobile-banking/MBExpiryReport';
 export * from './lib/mobile-banking/MBRegistrationReport';
 export * from './lib/mobile-banking/MBTransactionReport';
+export * from './lib/mobile-banking/UtilityUsageReport';
 export * from './lib/others';
 export * from './lib/others/AdjustedLedgerReport';
 export * from './lib/others/BODDetailsRegisterReport';
