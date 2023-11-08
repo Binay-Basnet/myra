@@ -609,6 +609,38 @@ export const ROUTES = {
   MICRO_FINANCE_WITHDRAW_ADD: '/micro-finance/savings/withdraw/add',
   MICRO_FINANCE_SAVING_PRODUCTS_LIST: '/micro-finance/savings/products/list',
   MICRO_FINANCE_SAVING_PRODUCTS_ADD: '/micro-finance/savings/products--/add',
+
+  // FAM
+  // Assets
+  FAM_ASSETS_LIST: '/fam/assets/assets-list/list',
+  FAM_ASSETS_GROUP_LIST: '/fam/assets/assets-group/list',
+  FAM_ASSETS_TYPE_LIST: '/fam/assets/assets-type/list',
+  FAM_CUSTOM_FIELDS_LIST: '/fam/assets/custom-fields/list',
+
+  FAM_ASSETS_ADD: '/fam/assets/assets-list/add',
+  FAM_ASSETS_GROUP_ADD: '/fam/assets/assets-group/add',
+  FAM_ASSETS_TYPE_ADD: '/fam/assets/assets-type/add',
+  FAM_CUSTOM_FIELDS_ADD: '/fam/assets/custom-fields/add',
+
+  // Operations
+  FAM_ASSETS_TRANSFER_LIST: '/fam/operations/assets-transfer/list',
+  FAM_ASSETS_ASSIGN_LIST: '/fam/operations/assets-assign/list',
+  FAM_SCHEDULING_LIST: '/fam/operations/scheduling/list',
+  FAM_DISPOSAL_LIST: '/fam/operations/disposal/list',
+  FAM_MAINTENANCE_LIST: '/fam/operations/maintenance/list',
+
+  FAM_ASSETS_TRANSFER_ADD: '/fam/operations/assets-transfer/add',
+  FAM_ASSETS_ASSIGN_ADD: '/fam/operations/assets-assign/add',
+  FAM_SCHEDULING_ADD: '/fam/operations/scheduling/add',
+  FAM_DISPOSAL_ADD: '/fam/operations/disposal/add',
+  FAM_MAINTENANCE_ADD: '/fam/operations/maintenance/add',
+
+  // Purchase
+  FAM_PURCHASE_ENTRY_LIST: '/fam/purchase/purchase-entry/list',
+  FAM_SUPPLIER_LIST: '/fam/purchase/supplier/list',
+
+  FAM_PURCHASE_ENTRY_ADD: '/fam/purchase/purchase-entry/add',
+  FAM_SUPPLIER_ADD: '/fam/purchase/supplier/add',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

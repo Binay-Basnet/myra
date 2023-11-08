@@ -1,8 +1,20 @@
 import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { IoWarning } from 'react-icons/io5';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Alert, asyncToast, Box, FormSection, GridItem, Loader, Modal, Text } from '@myra-ui';
+import {
+  Alert,
+  asyncToast,
+  Box,
+  FormSection,
+  GridItem,
+  Icon,
+  Loader,
+  Modal,
+  Text,
+  Tooltip,
+} from '@myra-ui';
 
 import {
   SmsTemplateInput,
@@ -106,6 +118,8 @@ export const AddSMSTemplateModal = ({ isOpen, onClose, id }: IAddSMSTemplateModa
     onClose();
   };
 
+  const content = methods.watch('content');
+
   return (
     <Modal
       title="SMS Template"
@@ -134,11 +148,23 @@ export const AddSMSTemplateModal = ({ isOpen, onClose, id }: IAddSMSTemplateModa
                 SMS Details
               </Text>
 
-              <FormTextAreaWithMentions
-                name="content"
-                label="SMS Content"
-                list={smsTemplateFields}
-              />
+              <Box display="flex" flexDirection="column" gap="s4">
+                <FormTextAreaWithMentions
+                  name="content"
+                  label="SMS Content"
+                  list={smsTemplateFields}
+                />
+
+                <Box display="flex" justifyContent="flex-end" alignItems="center" gap="s4">
+                  <Text>Characters: ~{content?.length}</Text>
+
+                  <Tooltip title="Total characters may vary because of dynamic fields.">
+                    <Box cursor="pointer">
+                      <Icon as={IoWarning} color="info.500" />
+                    </Box>
+                  </Tooltip>
+                </Box>
+              </Box>
 
               <Alert
                 title="Note:"

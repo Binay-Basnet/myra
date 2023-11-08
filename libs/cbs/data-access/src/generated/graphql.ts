@@ -17818,6 +17818,16 @@ export type MinMaxFilter = {
   min?: InputMaybe<Scalars['String']>;
 };
 
+export type MinTxnAmount = {
+  amount: Scalars['String'];
+  id: SmsCategory;
+};
+
+export type MinimunTxnAmountResult = {
+  amount?: Maybe<Scalars['String']>;
+  error?: Maybe<QueryError>;
+};
+
 export type MinorFilter = {
   branchId?: InputMaybe<Array<Scalars['String']>>;
   id?: InputMaybe<Scalars['String']>;
@@ -19780,6 +19790,7 @@ export const Resource = {
   ReportsTxnTellerReport: 'REPORTS_TXN_TELLER_REPORT',
   ReportsTxnTrialBalance: 'REPORTS_TXN_TRIAL_BALANCE',
   ReportsTxnVaultBalance: 'REPORTS_TXN_VAULT_BALANCE',
+  ReportsUtilityUsage: 'REPORTS_UTILITY_USAGE',
   SettingsAlternativeChannels: 'SETTINGS_ALTERNATIVE_CHANNELS',
   SettingsAuditLog: 'SETTINGS_AUDIT_LOG',
   SettingsBank: 'SETTINGS_BANK',
@@ -19949,6 +19960,7 @@ export type ReportQuery = {
   printReport: CertificatePrint;
   shareReport: ShareReport;
   transactionReport: TransactionReport;
+  utilityReport: UtilityReport;
 };
 
 export type ReportQueryCopomisFinancialReportArgs = {
@@ -22357,6 +22369,7 @@ export type SmsSettingStatusChange = {
 
 export type SmsSettingsMutation = {
   addAnnoucementGroup: AnnouncementGroupResult;
+  addMinimunTxnAmount: SmsSettingStatusChange;
   addTemplate: SmsSettingStatusChange;
   changeStatus: SmsSettingStatusChange;
   deleteAnnouncementGroup: SmsTemplateDeleteResult;
@@ -22365,6 +22378,10 @@ export type SmsSettingsMutation = {
 
 export type SmsSettingsMutationAddAnnoucementGroupArgs = {
   input: AnnouncementGroupInput;
+};
+
+export type SmsSettingsMutationAddMinimunTxnAmountArgs = {
+  input: MinTxnAmount;
 };
 
 export type SmsSettingsMutationAddTemplateArgs = {
@@ -22384,6 +22401,7 @@ export type SmsSettingsMutationDeleteSmsTemplateArgs = {
 };
 
 export type SmsSettingsQuery = {
+  getMinimunTxnAmount: MinimunTxnAmountResult;
   listAnnouncementGroup?: Maybe<AnnouncementGroupConnection>;
   listSmsSetting: SmsSettingResult;
   listSmsTemplate?: Maybe<SmsTemplateConnection>;
@@ -23923,6 +23941,13 @@ export type UtilititesListEdges = {
   node?: Maybe<UtilititesEntry>;
 };
 
+export type UtilityAdditionalJournalData = {
+  Service?: Maybe<Scalars['String']>;
+  destinationId?: Maybe<Scalars['String']>;
+  sourceAccount?: Maybe<Scalars['String']>;
+  sourceId?: Maybe<Scalars['String']>;
+};
+
 export type UtilityLedgerSetupFormState = {
   coaHead: Scalars['String'];
   coaHeadName: Scalars['String'];
@@ -23985,9 +24010,44 @@ export type UtilityQueryListUtilitiesArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type UtilityReport = {
+  utilityUsageReport: UtilityUsageReportResult;
+};
+
+export type UtilityReportUtilityUsageReportArgs = {
+  data: UtilityUsageFilter;
+};
+
 export type UtilityTransactionCategory = {
   Narration?: Maybe<Scalars['String']>;
   Service?: Maybe<Scalars['String']>;
+};
+
+export type UtilityUsageFilter = {
+  branchId: Array<Scalars['String']>;
+  period?: InputMaybe<LocalizedDateFilter>;
+  utility?: InputMaybe<Scalars['String']>;
+  utilityType?: InputMaybe<Scalars['String']>;
+};
+
+export type UtilityUsageReportResult = {
+  data?: Maybe<Array<UtilityUsageReportResultList>>;
+  error?: Maybe<QueryError>;
+};
+
+export type UtilityUsageReportResultList = {
+  amount: Scalars['String'];
+  cashBack: Scalars['String'];
+  date: Scalars['Localized'];
+  destinationAccount: Scalars['String'];
+  initiatorPhoneNo: Scalars['String'];
+  memberAccount: Scalars['String'];
+  memberCode: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['String'];
+  serviceCharge: Scalars['String'];
+  utilityName: Scalars['String'];
+  utilityTypeName: Scalars['String'];
 };
 
 export type ValidationError = {
@@ -27766,6 +27826,27 @@ export type DeleteSmsTemplateMutation = {
   settings: {
     sms?: {
       deleteSmsTemplate: {
+        success?: boolean | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type AddSmsMinimumTxnAmountMutationVariables = Exact<{
+  input: MinTxnAmount;
+}>;
+
+export type AddSmsMinimumTxnAmountMutation = {
+  settings: {
+    sms?: {
+      addMinimunTxnAmount: {
         success?: boolean | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -32906,7 +32987,6 @@ export type ListAgentTemplateQuery = {
   agent: {
     listAgentTemplate?: {
       record?: Array<{
-        amount?: string | null;
         member?: {
           id: string;
           code: string;
@@ -42602,6 +42682,33 @@ export type GetLedgerBalanceReportQuery = {
   };
 };
 
+export type GetUtilityUsageReportQueryVariables = Exact<{
+  data: UtilityUsageFilter;
+}>;
+
+export type GetUtilityUsageReportQuery = {
+  report: {
+    utilityReport: {
+      utilityUsageReport: {
+        data?: Array<{
+          date: Record<'local' | 'en' | 'np', string>;
+          utilityName: string;
+          utilityTypeName: string;
+          memberId: string;
+          memberName: string;
+          memberCode: string;
+          initiatorPhoneNo: string;
+          destinationAccount: string;
+          memberAccount: string;
+          amount: string;
+          cashBack: string;
+          serviceCharge: string;
+        }> | null;
+      };
+    };
+  };
+};
+
 export type GetChequeBookRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
@@ -43051,6 +43158,12 @@ export type ListSmsTemplateDetailQuery = {
       };
     } | null;
   };
+};
+
+export type GetSmsMinimumTxnAmountQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetSmsMinimumTxnAmountQuery = {
+  settings: { sms?: { getMinimunTxnAmount: { amount?: string | null } } | null };
 };
 
 export type GetAuditLogListQueryVariables = Exact<{
@@ -52992,6 +53105,40 @@ export const useDeleteSmsTemplateMutation = <TError = unknown, TContext = unknow
     ),
     options
   );
+export const AddSmsMinimumTxnAmountDocument = `
+    mutation addSMSMinimumTxnAmount($input: MinTxnAmount!) {
+  settings {
+    sms {
+      addMinimunTxnAmount(input: $input) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddSmsMinimumTxnAmountMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddSmsMinimumTxnAmountMutation,
+    TError,
+    AddSmsMinimumTxnAmountMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    AddSmsMinimumTxnAmountMutation,
+    TError,
+    AddSmsMinimumTxnAmountMutationVariables,
+    TContext
+  >(
+    ['addSMSMinimumTxnAmount'],
+    useAxios<AddSmsMinimumTxnAmountMutation, AddSmsMinimumTxnAmountMutationVariables>(
+      AddSmsMinimumTxnAmountDocument
+    ),
+    options
+  );
 export const SetBankListDocument = `
     mutation setBankList($data: [BankInput]) {
   bank {
@@ -60209,7 +60356,6 @@ export const ListAgentTemplateDocument = `
           id
           installmentAmount
         }
-        amount
       }
     }
   }
@@ -72695,6 +72841,41 @@ export const useGetLedgerBalanceReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetUtilityUsageReportDocument = `
+    query getUtilityUsageReport($data: UtilityUsageFilter!) {
+  report {
+    utilityReport {
+      utilityUsageReport(data: $data) {
+        data {
+          date
+          utilityName
+          utilityTypeName
+          memberId
+          memberName
+          memberCode
+          initiatorPhoneNo
+          destinationAccount
+          memberAccount
+          amount
+          cashBack
+          serviceCharge
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetUtilityUsageReportQuery = <TData = GetUtilityUsageReportQuery, TError = unknown>(
+  variables: GetUtilityUsageReportQueryVariables,
+  options?: UseQueryOptions<GetUtilityUsageReportQuery, TError, TData>
+) =>
+  useQuery<GetUtilityUsageReportQuery, TError, TData>(
+    ['getUtilityUsageReport', variables],
+    useAxios<GetUtilityUsageReportQuery, GetUtilityUsageReportQueryVariables>(
+      GetUtilityUsageReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetChequeBookRequestsDocument = `
     query getChequeBookRequests($pagination: Pagination, $filter: Filter) {
   requests {
@@ -73354,6 +73535,31 @@ export const useListSmsTemplateDetailQuery = <TData = ListSmsTemplateDetailQuery
     ['listSmsTemplateDetail', variables],
     useAxios<ListSmsTemplateDetailQuery, ListSmsTemplateDetailQueryVariables>(
       ListSmsTemplateDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSmsMinimumTxnAmountDocument = `
+    query getSMSMinimumTxnAmount {
+  settings {
+    sms {
+      getMinimunTxnAmount {
+        amount
+      }
+    }
+  }
+}
+    `;
+export const useGetSmsMinimumTxnAmountQuery = <
+  TData = GetSmsMinimumTxnAmountQuery,
+  TError = unknown
+>(
+  variables?: GetSmsMinimumTxnAmountQueryVariables,
+  options?: UseQueryOptions<GetSmsMinimumTxnAmountQuery, TError, TData>
+) =>
+  useQuery<GetSmsMinimumTxnAmountQuery, TError, TData>(
+    variables === undefined ? ['getSMSMinimumTxnAmount'] : ['getSMSMinimumTxnAmount', variables],
+    useAxios<GetSmsMinimumTxnAmountQuery, GetSmsMinimumTxnAmountQueryVariables>(
+      GetSmsMinimumTxnAmountDocument
     ).bind(null, variables),
     options
   );

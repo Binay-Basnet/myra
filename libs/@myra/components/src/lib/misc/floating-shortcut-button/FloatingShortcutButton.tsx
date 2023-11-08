@@ -30,18 +30,16 @@ interface WhatsNewModalProps {
 const whatsNewData = {
   features: {
     title: 'New Features',
-    data: [
-      'Utility payment mobile topup set.',
-      'Sorting added in the member list, saving accounts and loan accounts.',
-      'Mutation created for the interest postings.',
-      'Mr app login fixes by query.',
-    ],
+    data: ['Utility usage report.'],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Loan aging outstanding balance fixed and date filter.',
-      'Number Validation is set in the user settings.',
+      'Share balance report fixes related to unequal amount with trial balance report.',
+      'Organization date is not saved in organization details.',
+      'Some accounts are unfetchable due to deposit frequency issue in MR app.',
+      'Pagination issues in all transactions list page.',
+      'Remove amount column from the mr template.',
     ],
   },
 };
@@ -80,8 +78,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.98</Text>
-          <Text fontSize="s3">November 1, 2023</Text>
+          <Text fontSize="r2">Version 1.0.99</Text>
+          <Text fontSize="s3">November 8, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>

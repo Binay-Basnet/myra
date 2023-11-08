@@ -169,7 +169,6 @@ query listAgentTemplate($agentId: ID!) {
           id
           installmentAmount
         }
-        amount
       }
     }
   }

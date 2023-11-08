@@ -50,7 +50,6 @@ export const Templates = () => {
         agentTemplateData?.agent?.listAgentTemplate?.record?.map((record) => ({
           memberId: record?.member?.id,
           accountId: record?.account?.id,
-          amount: record?.amount,
         }))
       );
     }
@@ -124,7 +123,6 @@ export const Templates = () => {
           ['accounts'].map((account: { memberId: string; accountId: string; amount: string }) => ({
             memberId: account.memberId,
             accountId: account.accountId,
-            amount: String(account.amount),
           })),
       }),
       msgs: {
@@ -231,11 +229,11 @@ export const Templates = () => {
                       );
                     },
                   },
-                  {
-                    accessor: 'amount',
-                    header: 'Amount',
-                    isNumeric: true,
-                  },
+                  // {
+                  //   accessor: 'amount',
+                  //   header: 'Amount',
+                  //   isNumeric: true,
+                  // },
                 ]}
                 canDeleteRow
               />

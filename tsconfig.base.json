@@ -207,6 +207,8 @@
       "@dhadda-migration/data-access": ["libs/dhadda-migration/data-access/src/index.ts"],
       "@dhadda-migration/ui-components": ["libs/dhadda-migration/ui-components/src/index.ts"],
       "@dhadda-migration/ui-layout": ["libs/dhadda-migration/ui-layout/src/index.ts"],
+      "@fam/assets": ["libs/fam-module/feature-assets/src/index.ts"],
+      "@fam/layouts": ["libs/fam-module/layouts/src/index.ts"],
       "@hr/common": ["libs/hr-module/common/src/index.ts"],
       "@hr/feature-recruitment": ["libs/hr-module/feature-recruitment/src/index.ts"],
       "@micro-finance": ["libs/micro-finance/src/index.ts"],

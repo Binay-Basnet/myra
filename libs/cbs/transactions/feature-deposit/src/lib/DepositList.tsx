@@ -36,7 +36,7 @@ export const DepositList = () => {
   const { data: depositFilterMapping } = useGetDepositFilterMappingQuery();
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
   const { data, isFetching } = useGetDepositListDataQuery({
-    pagination: getPaginationQuery(),
+    pagination: { ...getPaginationQuery(), order: { column: 'id', arrange: 'DESC' } },
     filter: getFilterQuery(),
   });
 
