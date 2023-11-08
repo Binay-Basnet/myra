@@ -18,7 +18,7 @@ import * as yup from 'yup';
 import { Box, Button, Grid, GridItem, Modal } from '@myra-ui';
 import { DatePicker } from '@myra-ui/date-picker';
 
-import { CalendarScheduler } from '@coop/shared/components';
+import { CalendarScheduler, FolderComponent } from '@coop/shared/components';
 import { FormInput, FormTextArea } from '@coop/shared/form';
 
 const validationSchema = yup.object({
@@ -87,97 +87,101 @@ const Test = () => {
   });
 
   return (
-    <Box>
-      <Button onClick={addEventModal.onOpen}>Add event</Button>
-      <CalendarScheduler events={event} />
-      {addEventModal.isOpen && (
-        <Modal
-          width="2xl"
-          open={addEventModal.isOpen}
-          onClose={addEventModal.onClose}
-          title="Add Event"
-          primaryButtonLabel="Save"
-          primaryButtonHandler={methods.handleSubmit(() => {
-            const value = methods.getValues();
+    <>
+      <Box>
+        <FolderComponent />
+      </Box>
+      <Box>
+        <Button onClick={addEventModal.onOpen}>Add event</Button>
+        <CalendarScheduler events={event} />
+        {addEventModal.isOpen && (
+          <Modal
+            width="2xl"
+            open={addEventModal.isOpen}
+            onClose={addEventModal.onClose}
+            title="Add Event"
+            primaryButtonLabel="Save"
+            primaryButtonHandler={methods.handleSubmit(() => {
+              const value = methods.getValues();
 
-            setEvent([
-              // ...event,
+              setEvent([
+                // ...event,
 
-              {
-                _id: String(Math.random()),
-                title: value.title,
-                start: dayjs(value.startDate).format('YYYY-MM-DDTHH:mm:ss'),
-                end: dayjs(value.endDate).add(1, 'd').format('YYYY-MM-DDTHH:mm:ss'),
-                allDay: true,
-                meta: {
-                  description: value?.description,
+                {
+                  _id: String(Math.random()),
                   title: value.title,
-                  time: { start: value.startTime, end: value.endTime },
-                  date: {
-                    year: dayjs(value.startDate).format('YYYY'),
-                    start: dayjs(value.startDate).format('MMM D'),
-                    end: dayjs(value.endDate).add(1, 'd').format('MMM D'),
+                  start: dayjs(value.startDate).format('YYYY-MM-DDTHH:mm:ss'),
+                  end: dayjs(value.endDate).add(1, 'd').format('YYYY-MM-DDTHH:mm:ss'),
+                  allDay: true,
+                  meta: {
+                    description: value?.description,
+                    title: value.title,
+                    time: { start: value.startTime, end: value.endTime },
+                    date: {
+                      year: dayjs(value.startDate).format('YYYY'),
+                      start: dayjs(value.startDate).format('MMM D'),
+                      end: dayjs(value.endDate).add(1, 'd').format('MMM D'),
+                    },
+                    location: value?.location,
+                    link: value.link,
+                    enrolledMember: value?.enrolledMember,
+
+                    courseObjectives: [
+                      'Understand the history of cooperatives',
+                      'Identify the principles of cooperation',
+                      'Appreciate the benefits of cooperation',
+                      'Describe the different types of cooperatives',
+                    ],
                   },
-                  location: value?.location,
-                  link: value.link,
-                  enrolledMember: value?.enrolledMember,
-
-                  courseObjectives: [
-                    'Understand the history of cooperatives',
-                    'Identify the principles of cooperation',
-                    'Appreciate the benefits of cooperation',
-                    'Describe the different types of cooperatives',
-                  ],
                 },
-              },
-            ]);
-            addEventModal.onClose();
-          })}
-        >
-          <Box>
-            <FormProvider {...methods}>
-              <Box display="flex" flexDirection="column" gap="s24">
-                <FormInput name="title" label="Title" />
-                <Grid templateColumns="repeat(2,1fr)" gap="s20">
-                  <GridItem colSpan={1}>
-                    <DatePicker
-                      value={{ date: methods.watch('startDate') }}
-                      onChange={(e) => methods.setValue('startDate', e.date)}
-                      name="start"
-                      label="Start Date"
-                      calendarType="AD"
-                      isRequired
-                    />
-                  </GridItem>
-                  <GridItem colSpan={1}>
-                    <DatePicker
-                      value={{ date: methods.watch('endDate') }}
-                      onChange={(e) => methods.setValue('endDate', e.date)}
-                      name="end"
-                      calendarType="AD"
-                      label="End Date"
-                      isRequired
-                    />
-                  </GridItem>
-                </Grid>
-                <Grid templateColumns="repeat(2,1fr)" gap="s20">
-                  <GridItem colSpan={1}>
-                    <FormInput name="startTime" type="time" label="Start Time" />
-                  </GridItem>
-                  <GridItem colSpan={1}>
-                    <FormInput name="endTime" type="time" label="End Time" />
-                  </GridItem>
-                </Grid>
-                <FormTextArea name="description" label="Description" isRequired />
-                <FormInput
-                  name="enrolledMember"
-                  type="number"
-                  label="Total enrolled member"
-                  isRequired
-                />
-                <FormInput name="link" label="Link" />
+              ]);
+              addEventModal.onClose();
+            })}
+          >
+            <Box>
+              <FormProvider {...methods}>
+                <Box display="flex" flexDirection="column" gap="s24">
+                  <FormInput name="title" label="Title" />
+                  <Grid templateColumns="repeat(2,1fr)" gap="s20">
+                    <GridItem colSpan={1}>
+                      <DatePicker
+                        value={{ date: methods.watch('startDate') }}
+                        onChange={(e) => methods.setValue('startDate', e.date)}
+                        name="start"
+                        label="Start Date"
+                        calendarType="AD"
+                        isRequired
+                      />
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                      <DatePicker
+                        value={{ date: methods.watch('endDate') }}
+                        onChange={(e) => methods.setValue('endDate', e.date)}
+                        name="end"
+                        calendarType="AD"
+                        label="End Date"
+                        isRequired
+                      />
+                    </GridItem>
+                  </Grid>
+                  <Grid templateColumns="repeat(2,1fr)" gap="s20">
+                    <GridItem colSpan={1}>
+                      <FormInput name="startTime" type="time" label="Start Time" />
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                      <FormInput name="endTime" type="time" label="End Time" />
+                    </GridItem>
+                  </Grid>
+                  <FormTextArea name="description" label="Description" isRequired />
+                  <FormInput
+                    name="enrolledMember"
+                    type="number"
+                    label="Total enrolled member"
+                    isRequired
+                  />
+                  <FormInput name="link" label="Link" />
 
-                {/* 
+                  {/* 
                 <Box display="flex" flexDir="column" gap="s4">
                   <Text variant="formLabel" color="gray.800">
                     Location
@@ -192,12 +196,13 @@ const Test = () => {
                     }}
                   />
                 </Box> */}
-              </Box>
-            </FormProvider>
-          </Box>
-        </Modal>
-      )}
-    </Box>
+                </Box>
+              </FormProvider>
+            </Box>
+          </Modal>
+        )}
+      </Box>
+    </>
   );
 };
 
