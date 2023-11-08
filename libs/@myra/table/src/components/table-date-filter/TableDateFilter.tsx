@@ -52,7 +52,7 @@ export const TableDateFilter = ({ column }: TableDateFilterProps) => {
         )}
         baseDate={new Date(transactionDate || '')}
         tillDateStart={
-          organizationStartDate ? new Date(organizationStartDate?.en) : new Date('2014-07-14')
+          organizationStartDate?.en ? new Date(organizationStartDate?.en) : new Date('2014-07-14')
         }
         locale={router.locale === 'ne' ? 'ne' : 'en'}
         calendarType={calendarType || 'BS'}

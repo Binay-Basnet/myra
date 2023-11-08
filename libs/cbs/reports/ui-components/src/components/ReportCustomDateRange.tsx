@@ -44,7 +44,7 @@ export const ReportCustomDateRange = ({ label = 'Select Period', name }: IReport
             })
           }
           tillDateStart={
-            organizationStartDate ? new Date(organizationStartDate?.en) : new Date('2014-07-14')
+            organizationStartDate?.en ? new Date(organizationStartDate?.en) : new Date('2014-07-14')
           }
           // showFiscalPeriod={fa}
           showFiscalYearOnly
