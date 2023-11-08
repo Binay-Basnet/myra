@@ -27,7 +27,8 @@ export const AllTransactionsList = () => {
 
   const { data: allTransactionFilterMapping } = useGetAllTransactionFilterMappingQuery();
   const { data, isFetching } = useGetAllTransactionsListQuery({
-    pagination: getPaginationQuery(),
+    pagination: { ...getPaginationQuery(), order: { column: 'id', arrange: 'DESC' } },
+    // pagination: getPaginationQuery(),
     filter: getFilterQuery(),
   });
 

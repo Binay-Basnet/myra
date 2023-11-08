@@ -36,7 +36,7 @@ export const AccountTransferList = () => {
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
   const { data, isFetching } = useGetAccountTransferListDataQuery({
-    pagination: getPaginationQuery(),
+    pagination: { ...getPaginationQuery(), order: { column: 'id', arrange: 'DESC' } },
     filter: getFilterQuery(),
   });
 

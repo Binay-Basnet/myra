@@ -28,7 +28,8 @@ export const CBSLoanRepaymentList = () => {
 
   const { data, isFetching } = useGetLoanRepaymentListQuery(
     {
-      paginate: getPaginationQuery(),
+      paginate: { ...getPaginationQuery(), order: { column: 'id', arrange: 'DESC' } },
+      // paginate: getPaginationQuery(),
       filter: getFilterQuery(),
     },
     {

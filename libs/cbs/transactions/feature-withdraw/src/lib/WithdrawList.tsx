@@ -34,7 +34,7 @@ export const WithdrawList = () => {
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
   const { data, isFetching } = useGetWithdrawListDataQuery({
-    pagination: getPaginationQuery(),
+    pagination: { ...getPaginationQuery(), order: { column: 'id', arrange: 'DESC' } },
     filter: getFilterQuery(),
   });
 
