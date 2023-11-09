@@ -199,7 +199,7 @@ export const ReportFilters = ({ children }: { children: React.ReactNode }) => {
             Filters
           </Text>
 
-          {indices.length === 0 ? (
+          {indices?.length === 0 ? (
             <Button
               shade="neutral"
               variant="ghost"

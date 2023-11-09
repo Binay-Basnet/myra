@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
-import { FamModuleFeatureAssets } from '@fam/assets';
+import { AssetsList } from '@fam/assets';
 import { AssetsSidebarLayout, FamLayout } from '@fam/layouts';
 
-export const AssetsListPage = () => <FamModuleFeatureAssets />;
+export const AssetsListPage = () => <AssetsList />;
 
 AssetsListPage.getLayout = function getLayout(page: ReactElement) {
   return (
