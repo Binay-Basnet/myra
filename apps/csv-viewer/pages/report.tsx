@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
+import dynamic from 'next/dynamic';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 
@@ -10,7 +11,13 @@ import { getAPIUrl } from '@coop/shared/utils';
 
 import { Resizer, Tab, TableSvg } from '.';
 import { AppBar } from '../components/AppBar';
-import LoanStatementReport from '../components/LoanStatementReport';
+
+const LedgerStatementReport = dynamic(() => import('../components/LedgerStatementReport'), {
+  ssr: false,
+});
+const LoanStatementReport = dynamic(() => import('../components/LoanStatementReport'), {
+  ssr: false,
+});
 
 const getReportTypes = async () => {
   const response = await privateAgent.get<{ data: string[] }>(`${getAPIUrl()}/report_types`);
@@ -217,7 +224,7 @@ export const Report = () => {
             ))}
             <Box flex={1} h="40px" borderBottom="1px" borderBottomColor="border.layout" />
           </Box>
-          {/* {selectedTab?.value === 'LEDGER_STATEMENT' && <LedgerStatementReport />} */}
+          {selectedTab?.value === 'LEDGER_STATEMENT' && <LedgerStatementReport />}
           {selectedTab?.value === 'LOAN_STATEMENT' && <LoanStatementReport />}
         </Box>
       </Box>

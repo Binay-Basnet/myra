@@ -19,7 +19,7 @@ const getLedgerReport = async (ledger_id: string) => {
     params: {
       input: {
         report_type: 'LEDGER_STATEMENT',
-        id: ledger_id,
+        ledger_id,
       },
     },
   });
@@ -27,19 +27,7 @@ const getLedgerReport = async (ledger_id: string) => {
   return response?.data;
 };
 
-const getMembers = async () => {
-  const response = await privateAgent.get<{
-    data: {
-      member_name: string;
-      member_code: string;
-    }[];
-    total_pages: number;
-  }>(`${getAPIUrl()}/member`, {});
-
-  return response?.data;
-};
-
-const getLedger = async (member_id: string) => {
+const getLedger = async () => {
   const response = await privateAgent.get<{
     data: {
       ledger_name: string;
@@ -47,11 +35,7 @@ const getLedger = async (member_id: string) => {
     }[];
     total_pages: number;
   }>(`${getAPIUrl()}/ledger`, {
-    params: {
-      filter: {
-        member_id,
-      },
-    },
+    params: {},
   });
 
   return response?.data;
@@ -60,13 +44,18 @@ const getLedger = async (member_id: string) => {
 export const LedgerStatementReport = () => {
   const [filters, setFilters] = useState<GeneralLedgerFilter | null>(null);
 
+  const methods = useFormContext();
+  const ledgerIdWatch = methods?.watch('ledgerId');
+
   const { data, isFetching } = useQuery(
-    ['ledger-report', filters],
-    async () => getLedgerReport(filters?.ledgerId),
+    ['ledger-report', ledgerIdWatch],
+    async () => getLedgerReport(ledgerIdWatch),
     {}
   );
 
   const ledgerReport = data?.data;
+
+  const { data: ledgerData } = useQuery(['ledger'], async () => getLedger(), {});
 
   return (
     <Report
@@ -87,7 +76,18 @@ export const LedgerStatementReport = () => {
             },
           ]}
         />
-        <LedgerReportInputs />
+        <Report.Inputs hideDate>
+          <GridItem colSpan={2}>
+            <FormSelect
+              label="Select Ledger"
+              name="ledgerId"
+              options={ledgerData?.data?.map((item) => ({
+                label: item?.ledger_name,
+                value: item?.ledger_code,
+              }))}
+            />
+          </GridItem>
+        </Report.Inputs>{' '}
       </Report.Header>
 
       <Report.Body>
@@ -144,43 +144,6 @@ export const LedgerStatementReport = () => {
         </Report.Content>
       </Report.Body>
     </Report>
-  );
-};
-
-const LedgerReportInputs = () => {
-  const { data: memberData } = useQuery(['members'], async () => getMembers(), {});
-  const { watch } = useFormContext();
-
-  const memberIdWatch = watch('member_id');
-
-  const { data: ledgerData } = useQuery(['ledger'], async () => getLedger(memberIdWatch), {
-    enabled: !!memberIdWatch,
-  });
-
-  return (
-    <Report.Inputs hideDate>
-      <GridItem colSpan={2}>
-        <FormSelect
-          label="Select members"
-          name="member_id"
-          options={memberData?.data?.map((item) => ({
-            label: item?.member_name,
-            value: item?.member_code,
-          }))}
-        />
-      </GridItem>
-
-      <GridItem colSpan={2}>
-        <FormSelect
-          label="Select Ledger"
-          name="ledgerId"
-          options={ledgerData?.data?.map((item) => ({
-            label: item?.ledger_name,
-            value: item?.ledger_code,
-          }))}
-        />
-      </GridItem>
-    </Report.Inputs>
   );
 };
 

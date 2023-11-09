@@ -2,7 +2,7 @@ import Router from 'next/router';
 import axios, { AxiosError } from 'axios';
 
 import { logout, saveToken, store } from '@coop/csv-viewer/data-access';
-import { getAPIUrl, getDatabaseSlug } from '@coop/shared/utils';
+import { getAPIUrl } from '@coop/shared/utils';
 
 interface IToken {
   access: string;
@@ -25,7 +25,8 @@ publicAgent.interceptors.request.use(
   (request) => {
     request.headers = {
       ...request.headers,
-      slug: getDatabaseSlug(),
+      // slug: getDatabaseSlug(),
+      slug: 'myra-devv',
     };
     return request;
   },
@@ -37,7 +38,8 @@ privateAgent.interceptors.request.use(
     request.headers = {
       ...request.headers,
       Authorization: `Bearer ${store.getState().auth.accessToken}`,
-      slug: getDatabaseSlug(),
+      // slug: getDatabaseSlug(),
+      slug: 'myra-devv',
     };
     return request;
   },
