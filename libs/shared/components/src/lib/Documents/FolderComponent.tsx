@@ -54,7 +54,7 @@ export const FolderComponent = () => (
             <Portal>
               <CustomPopoverContent>
                 {mainPopoverList?.map((item) => (
-                  <Text>{item}</Text>
+                  <Text mb="s8">{item}</Text>
                 ))}
                 <Popover isLazy placement="right" colorScheme="primary">
                   {() => (
@@ -81,9 +81,9 @@ export const FolderComponent = () => (
                     </>
                   )}
                 </Popover>
-                <Divider />
+                <Divider my="s8" />
                 {subPopoverList?.map((item) => (
-                  <Text>{item}</Text>
+                  <Text mb="s8">{item}</Text>
                 ))}
               </CustomPopoverContent>
             </Portal>
