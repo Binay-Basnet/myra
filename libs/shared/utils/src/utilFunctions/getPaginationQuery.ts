@@ -22,7 +22,7 @@ type Pagination = {
 };
 
 const DEFAULT_ORDER = {
-  arrange: Arrange.Asc,
+  arrange: Arrange.Desc,
   column: 'id',
 };
 
