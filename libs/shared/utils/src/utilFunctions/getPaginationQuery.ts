@@ -21,10 +21,10 @@ type Pagination = {
   };
 };
 
-// const DEFAULT_ORDER = {
-//   arrange: Arrange.Desc,
-//   column: 'ID',
-// };
+const DEFAULT_ORDER = {
+  arrange: Arrange.Desc,
+  column: 'id',
+};
 
 export const getPaginationQuery = (query?: ParsedUrlQuery): Pagination => {
   try {
@@ -41,7 +41,7 @@ export const getPaginationQuery = (query?: ParsedUrlQuery): Pagination => {
       return {
         after: '',
         first: DEFAULT_PAGE_SIZE,
-        // order: DEFAULT_ORDER,
+        order: DEFAULT_ORDER,
       };
     }
 
@@ -57,7 +57,7 @@ export const getPaginationQuery = (query?: ParsedUrlQuery): Pagination => {
     }
 
     if (isEmpty(sortParams)) {
-      return { ...paginationParams };
+      return { ...paginationParams, order: DEFAULT_ORDER };
     }
 
     return {
@@ -71,7 +71,7 @@ export const getPaginationQuery = (query?: ParsedUrlQuery): Pagination => {
     return {
       after: '',
       first: DEFAULT_PAGE_SIZE,
-      // order: DEFAULT_ORDER,
+      order: DEFAULT_ORDER,
     };
   }
 };

@@ -73,20 +73,20 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
     >
       <Box display="flex" alignItems="center" gap="s24">
         <Box display="flex" alignItems="center" gap="s8">
-          {paths.map((path, index) => (
+          {paths?.map((path, index) => (
             <Fragment key={path?.label}>
               <Text
-                variant={router.pathname === path.link ? 'pageHeader' : 'bodyLarge'}
+                variant={router.pathname === path?.link ? 'pageHeader' : 'bodyLarge'}
                 cursor="pointer"
                 onClick={() => {
-                  if (path.link) {
-                    router.push(path.link);
+                  if (path?.link) {
+                    router.push(path?.link);
                   }
                 }}
               >
-                {path.label}
+                {path?.label}
               </Text>
-              {paths.length !== index + 1 && (
+              {paths?.length !== index + 1 && (
                 <Icon
                   as={IoChevronForward}
                   size="lg"
@@ -216,7 +216,7 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
               });
             }}
           >
-            Save Report{' '}
+            Save Report
           </Button>
         </Box>
       </Modal>
