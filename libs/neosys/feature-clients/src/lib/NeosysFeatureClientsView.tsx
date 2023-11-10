@@ -72,7 +72,8 @@ export const NeosysFeatureClientView = () => {
 
   const { getValues: updateEnvGetValues, handleSubmit: updateEnvHandleSubmit } =
     updateEnvironmentMethods;
-  const { mutateAsync: updateEnvMutateAsync } = useUpdateVersionMutation();
+  const { mutateAsync: updateEnvMutateAsync, isLoading: updateEnvIsLoading } =
+    useUpdateVersionMutation();
 
   const cloneEnvironmentMethods = useForm();
   const { getValues: cloneEnvGetValues, reset: cloneEnvReset } = cloneEnvironmentMethods;
@@ -405,7 +406,7 @@ export const NeosysFeatureClientView = () => {
                 menuPosition="fixed"
               />
 
-              <Button type="submit" w="-webkit-fit-content">
+              <Button isLoading={updateEnvIsLoading} type="submit" w="-webkit-fit-content">
                 Submit
               </Button>
             </Box>
