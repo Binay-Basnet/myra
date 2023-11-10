@@ -8,6 +8,8 @@ import { URLFilter } from '@coop/shared/utils';
 import { useRouter } from 'next/router';
 import { AmountFilter } from '@coop/shared/form';
 
+import omit from 'lodash/omit';
+
 type Condition = '=' | '<' | '>' | '< >';
 
 export interface TableAmountFilterProps {
@@ -124,7 +126,7 @@ export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
                   router.push(
                     {
                       query: {
-                        ...router.query,
+                        ...omit(router.query, 'paginate'),
                         filter: queryString,
                       },
                     },
