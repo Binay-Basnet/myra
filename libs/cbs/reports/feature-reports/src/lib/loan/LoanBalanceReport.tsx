@@ -15,6 +15,7 @@ import {
   useGetMultipleSubProductsQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
+import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import {
@@ -379,6 +380,9 @@ const ReportFilter = () => {
       </Report.Filter>
       <Report.Filter title="Outstanding Balance">
         <FormAmountFilter name="filter.outstandingBalance" />
+      </Report.Filter>
+      <Report.Filter title="End Date">
+        <ReportDateRange name="filter.endDate" />
       </Report.Filter>
     </>
   );

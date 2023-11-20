@@ -14759,6 +14759,7 @@ export const LoanApproveOrCancel = {
 export type LoanApproveOrCancel = typeof LoanApproveOrCancel[keyof typeof LoanApproveOrCancel];
 export type LoanBalanceFilter = {
   age?: InputMaybe<Scalars['Int']>;
+  endDate?: InputMaybe<LocalizedDateFilter>;
   gender?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   outstandingBalance?: InputMaybe<MinMaxFilter>;
   productNameIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
