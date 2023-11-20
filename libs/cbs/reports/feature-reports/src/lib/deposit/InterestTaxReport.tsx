@@ -135,14 +135,14 @@ export const InterestTaxReport = () => {
                 header: 'Remarks',
                 accessorKey: 'remarks',
               },
-              {
-                header: 'Opening Balance',
-                accessorKey: 'savingBalance',
-                cell: (props) => amountConverter(props.getValue() as string),
-                meta: {
-                  isNumeric: true,
-                },
-              },
+              // {
+              //   header: 'Opening Balance',
+              //   accessorKey: 'savingBalance',
+              //   cell: (props) => amountConverter(props.getValue() as string),
+              //   meta: {
+              //     isNumeric: true,
+              //   },
+              // },
               {
                 header: 'Interest Amount',
                 accessorKey: 'interest',
@@ -159,14 +159,14 @@ export const InterestTaxReport = () => {
                   isNumeric: true,
                 },
               },
-              {
-                header: 'Closing Balance',
-                accessorKey: 'closingBalance',
-                cell: (props) => amountConverter(props.getValue() as string),
-                meta: {
-                  isNumeric: true,
-                },
-              },
+              // {
+              //   header: 'Closing Balance',
+              //   accessorKey: 'closingBalance',
+              //   cell: (props) => amountConverter(props.getValue() as string),
+              //   meta: {
+              //     isNumeric: true,
+              //   },
+              // },
             ]}
           />
         </Report.Content>
