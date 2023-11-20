@@ -1,7 +1,8 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { IoChevronBackOutline } from 'react-icons/io5';
+import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -42,6 +43,7 @@ import {
 import { amountConverter } from '@coop/shared/utils';
 
 import CBSLoanDetails from './CbsLoanFeatureDetails';
+import LoanApplicationPrintContent from './LoanApplicationPrintContent';
 import {
   LoanDetails,
   LoanDetailsHeader,
@@ -73,12 +75,21 @@ const RequiredSideBarLayout = (props: { children: React.ReactNode }) => {
 };
 
 export const CBSLoanDisburse = () => {
+  const router = useRouter();
   const { loanPreview } = useLoanDetails();
   const [mode, setMode] = useState<'details' | 'payment' | 'success'>('details');
+
+  const printComponentRef = useRef<HTMLInputElement>(null);
 
   const continueToPayment = () => {
     setMode('payment');
   };
+
+  const handlePrint = useReactToPrint({
+    content: () => printComponentRef.current,
+    onAfterPrint: () => {},
+    documentTitle: `${router.query?.['id']}.pdf`,
+  });
 
   if (mode === 'success') {
     return <CBSLoanDisburseSuccess />;
@@ -86,20 +97,26 @@ export const CBSLoanDisburse = () => {
 
   if (mode === 'details') {
     return (
-      <RequiredSideBarLayout>
-        <LoanDetailsHeader title="Loan Application List" />
-        <CBSLoanDetails />
-        <Box position="fixed" bottom="0" zIndex={10} w="calc(100% - 260px)">
-          <FormFooter
-            mainButtonLabel="Disburse Loan"
-            mainButtonHandler={continueToPayment}
-            status={`Total Disbursed Amount: ${
-              Number(loanPreview?.loanDetails?.totalSanctionedAmount ?? 0) -
-              Number(loanPreview?.loanDetails?.totalProcessingChargesValuation ?? 0)
-            }`}
+      <>
+        <RequiredSideBarLayout>
+          <LoanDetailsHeader
+            title="Loan Application List"
+            options={[{ label: 'Print ', handler: () => handlePrint() }]}
           />
-        </Box>
-      </RequiredSideBarLayout>
+          <CBSLoanDetails />
+          <Box position="fixed" bottom="0" zIndex={10} w="calc(100% - 260px)">
+            <FormFooter
+              mainButtonLabel="Disburse Loan"
+              mainButtonHandler={continueToPayment}
+              status={`Total Disbursed Amount: ${
+                Number(loanPreview?.loanDetails?.totalSanctionedAmount ?? 0) -
+                Number(loanPreview?.loanDetails?.totalProcessingChargesValuation ?? 0)
+              }`}
+            />
+          </Box>
+        </RequiredSideBarLayout>
+        <LoanApplicationPrintContent ref={printComponentRef} />
+      </>
     );
   }
 

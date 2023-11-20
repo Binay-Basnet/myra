@@ -14759,6 +14759,7 @@ export const LoanApproveOrCancel = {
 export type LoanApproveOrCancel = typeof LoanApproveOrCancel[keyof typeof LoanApproveOrCancel];
 export type LoanBalanceFilter = {
   age?: InputMaybe<Scalars['Int']>;
+  endDate?: InputMaybe<LocalizedDateFilter>;
   gender?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   outstandingBalance?: InputMaybe<MinMaxFilter>;
   productNameIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -14776,6 +14777,7 @@ export type LoanBalanceReport = {
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
   disbursedBalance?: Maybe<Scalars['String']>;
+  disbursedDate?: Maybe<Scalars['Localized']>;
   interestRate?: Maybe<Scalars['Float']>;
   isClosed?: Maybe<Scalars['Boolean']>;
   isInactive?: Maybe<Scalars['Boolean']>;
@@ -21059,6 +21061,7 @@ export type SavingsBalanceFilter = {
   memberIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   memberType?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
   minorWise?: InputMaybe<MinorWiseFilter>;
+  productId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   productTypes?: InputMaybe<Array<InputMaybe<NatureOfDepositProduct>>>;
 };
 
