@@ -52,6 +52,7 @@ import {
   LoanProductCard,
 } from '../components';
 import { useLoanDetails } from '../hooks/useLoanDetails';
+import { IoMdPrint } from 'react-icons/io';
 
 const paymentModes = [
   {
@@ -129,6 +130,14 @@ export const CBSLoanDisburse = () => {
 
 export const CBSLoanDisburseSuccess = () => {
   const router = useRouter();
+  const printComponentRef = useRef<HTMLInputElement>(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => printComponentRef.current,
+    onAfterPrint: () => {},
+    documentTitle: `${router.query?.['id']}.pdf`,
+  });
+  
   return (
     <Container minW="container.lg" p="0" bg="white" pt="3.125rem">
       <Box display="flex" flexDirection="column" gap="s32" p="s16" minH="calc(100vh - 220px)">
@@ -149,8 +158,17 @@ export const CBSLoanDisburseSuccess = () => {
         <FormFooter
           mainButtonLabel="Done"
           mainButtonHandler={() => router.push(ROUTES.CBS_LOAN_ACCOUNTS_LIST)}
+          draftButton={
+              <Button onClick={handlePrint} variant="ghost" shade="neutral">
+                <Icon as={IoMdPrint} />
+                <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
+                  Print
+                </Text>
+              </Button>
+            }
         />
       </Box>
+      <LoanApplicationPrintContent ref={printComponentRef} />
     </Container>
   );
 };
