@@ -15017,6 +15017,7 @@ export type LoanGeneralInformation = {
   interestEarned?: Maybe<Scalars['String']>;
   interestGracePeriod?: Maybe<Scalars['Int']>;
   interestRate: Scalars['Float'];
+  lastPaymentDate?: Maybe<Scalars['Localized']>;
   linkedAccountId?: Maybe<Scalars['String']>;
   linkedAccountName?: Maybe<Scalars['String']>;
   loanAccountOpenBranchId: Scalars['String'];
@@ -37799,6 +37800,7 @@ export type GetLoanAccountDetailsQuery = {
           linkedAccountName?: string | null;
           installmentFrequency?: InstallmentFrequency | null;
           disbursedAmount?: string | null;
+          lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
         } | null;
         loanSchedule?: {
           total: string;
@@ -40421,6 +40423,7 @@ export type GetLoanBalanceReportQuery = {
           interestRate?: number | null;
           loanType?: AllLoanType | null;
           remainingInterestType?: BalanceType | null;
+          disbursedDate?: Record<'local' | 'en' | 'np', string> | null;
         } | null> | null;
       };
     };
@@ -66492,6 +66495,7 @@ export const GetLoanAccountDetailsDocument = `
           linkedAccountName
           installmentFrequency
           disbursedAmount
+          lastPaymentDate
         }
         loanSchedule {
           installments {
@@ -69958,6 +69962,7 @@ export const GetLoanBalanceReportDocument = `
           interestRate
           loanType
           remainingInterestType
+          disbursedDate
         }
         totalOutstandingBalance
         totalRemainingDrBalance

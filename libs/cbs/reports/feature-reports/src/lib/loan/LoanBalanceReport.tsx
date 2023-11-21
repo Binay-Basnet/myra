@@ -280,6 +280,14 @@ export const LoanBalanceReport = () => {
                 },
               },
               {
+                header: 'Disbursed Date',
+                accessorKey: 'disbursedDate',
+                accessorFn: (row) => localizedDate(row?.disbursedDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
+              },
+              {
                 header: 'Loan End Date',
 
                 accessorFn: (row) => localizedDate(row?.loanEndDate),
@@ -292,7 +300,6 @@ export const LoanBalanceReport = () => {
                 accessorKey: 'lastPaymentDate',
                 accessorFn: (row) => localizedDate(row?.lastPaymentDate),
                 meta: {
-                  isNumeric: true,
                   skipExcelFormatting: true,
                 },
               },

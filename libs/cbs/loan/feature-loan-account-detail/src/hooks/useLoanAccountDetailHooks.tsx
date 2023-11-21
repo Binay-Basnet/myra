@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 
 import {
   EbankingTransaction,
+  useGetEndOfDayDateDataQuery,
   useGetLoanAccountCollateralDetailsQuery,
   useGetLoanAccountDetailsQuery,
   useGetLoanAccountGuaranteeDetailsQuery,
@@ -53,17 +55,30 @@ export const useLoanAccountDetailHooks = () => {
   const length = paymentsListInfo?.installments?.length ?? 0;
   const isLocAccount = generalInfo?.repaymentScheme === 'LOC';
 
+  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+
+  const closingDate = endOfDayData?.transaction?.endOfDayDate?.value;
+
   const generalInfoCardData = [
     { label: 'Account Name', value: generalInfo?.accountName ?? 'N/A' },
     { label: 'Product Name', value: generalInfo?.productName ?? 'N/A' },
     { label: 'Account Open Date', value: generalInfo?.accountOpenDate?.local ?? 'N/A' },
     { label: 'Loan Account Open Branch', value: generalInfo?.loanAccountOpenBranchName ?? 'N/A' },
+    {
+      label: 'Sanctioned Amount',
+      value: amountConverter(generalInfo?.sanctionedAmount as string) ?? 'N/A',
+    },
     { label: 'Payment Scheme', value: generalInfo?.repaymentScheme ?? 'N/A' },
     { label: 'Interest Rate', value: `${generalInfo?.interestRate.toFixed(2)}%` ?? 'N/A' },
     { label: 'Interest Accrued', value: generalInfo?.interestAccrued ?? 'N/A' },
     {
-      label: 'Sanctioned Amount',
-      value: amountConverter(generalInfo?.sanctionedAmount as string) ?? 'N/A',
+      label: 'Last Payment Date',
+      value: generalInfo?.lastPaymentDate?.en
+        ? `${localizedDate(generalInfo?.lastPaymentDate)} [${differenceInCalendarDays(
+            new Date(closingDate?.en as string),
+            new Date(generalInfo?.lastPaymentDate.en)
+          )} days ago]`
+        : 'N/A',
     },
     { label: 'Interest Grace Period', value: generalInfo?.interestGracePeriod ?? 'N/A' },
     { label: 'Principal Grace Period', value: generalInfo?.principalGracePeriod ?? 'N/A' },
