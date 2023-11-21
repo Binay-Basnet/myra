@@ -15016,6 +15016,7 @@ export type LoanGeneralInformation = {
   interestEarned?: Maybe<Scalars['String']>;
   interestGracePeriod?: Maybe<Scalars['Int']>;
   interestRate: Scalars['Float'];
+  lastPaymentDate?: Maybe<Scalars['Localized']>;
   linkedAccountId?: Maybe<Scalars['String']>;
   linkedAccountName?: Maybe<Scalars['String']>;
   loanAccountOpenBranchId: Scalars['String'];
@@ -37798,6 +37799,7 @@ export type GetLoanAccountDetailsQuery = {
           linkedAccountName?: string | null;
           installmentFrequency?: InstallmentFrequency | null;
           disbursedAmount?: string | null;
+          lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
         } | null;
         loanSchedule?: {
           total: string;
@@ -66480,6 +66482,7 @@ export const GetLoanAccountDetailsDocument = `
           linkedAccountName
           installmentFrequency
           disbursedAmount
+          lastPaymentDate
         }
         loanSchedule {
           installments {
