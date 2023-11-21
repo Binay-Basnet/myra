@@ -30,6 +30,7 @@ export const LoanApplicationPrintContent = React.forwardRef<any>((_, ref) => {
       display="none"
       sx={{
         '@media print': {
+          p: 2,
           display: 'flex',
           flexDir: 'column',
           bg: 'white',

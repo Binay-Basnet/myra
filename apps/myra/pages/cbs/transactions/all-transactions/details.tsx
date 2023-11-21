@@ -12,6 +12,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
+import { AccountOpenDetailsPrintContent } from 'libs/cbs/transactions/feature-deposit/src/components';
 
 import {
   asyncToast,
@@ -56,6 +57,7 @@ const ROUTESOBJTRANS: Partial<Record<AllTransactionType, string>> = {
 };
 
 const objKeys = Object.keys(ROUTESOBJTRANS);
+
 const DepositDetailsPage = () => {
   const [isVoucherPrintable, setIsVoucherPrintable] = useState(false);
   const router = useRouter();
@@ -77,6 +79,7 @@ const DepositDetailsPage = () => {
   );
 
   const allTransactionsData = allTransactionsDetails?.transaction?.viewTransactionDetail?.data;
+
   const loanDisbursmentPrintData =
     allTransactionsDetails?.transaction?.viewTransactionDetail?.data?.loanDisbursementData;
 
@@ -127,6 +130,8 @@ const DepositDetailsPage = () => {
   const printComponentRef = useRef<HTMLInputElement | null>(null);
 
   const voucherPrintRef = useRef<HTMLInputElement | null>(null);
+
+  const accountOpenPrintRef = useRef<HTMLInputElement | null>(null);
 
   const [printType, setPrintType] = useState<PrintType | null>();
 
@@ -578,6 +583,13 @@ const DepositDetailsPage = () => {
     documentTitle: `${txnTypefromRouter}-${memberDetail?.code ?? ''}-${id}.pdf`,
   });
 
+  const handlePrintAccountOpen = useReactToPrint({
+    content: () => accountOpenPrintRef.current,
+    onAfterPrint: () => setPrintType(null),
+    documentTitle: `${txnTypefromRouter}-${memberDetail?.code ?? ''}-${id}.pdf`,
+  });
+
+  /* eslint-disable no-nested-ternary */
   const options =
     isCurrentFiscalYear && !allTransactionsData?.isYearEndAdjustment && isVoucherPrintable
       ? [
@@ -605,6 +617,24 @@ const DepositDetailsPage = () => {
           { label: 'Print ', handler: handleCustomerPrint },
           { label: 'Print Voucher', handler: handleOfficeVoucherPrint },
         ]
+      : isCurrentFiscalYear &&
+        !allTransactionsData?.isYearEndAdjustment &&
+        router?.query?.['txnType'] === 'ACCOUNT_OPEN'
+      ? [
+          {
+            label: allTransactionsData?.isYearEndAdjustment
+              ? 'Remove Year End Adjustment'
+              : 'Year End Adjustment',
+            handler: () => onToggle(),
+          },
+          {
+            label: 'Revert Transaction',
+            handler: () => setIsRevertTransactionModalOpen(true),
+          },
+          { label: 'Print', handler: handlePrintAccountOpen },
+          { label: 'Print Voucher', handler: handlePrintVoucher },
+          // here
+        ]
       : isCurrentFiscalYear && !allTransactionsData?.isYearEndAdjustment
       ? [
           {
@@ -617,8 +647,7 @@ const DepositDetailsPage = () => {
             label: 'Revert Transaction',
             handler: () => setIsRevertTransactionModalOpen(true),
           },
-
-          { label: 'Print', handler: handlePrintVoucher },
+          { label: 'Print Voucher', handler: handlePrintVoucher },
         ]
       : [
           {
@@ -741,6 +770,12 @@ const DepositDetailsPage = () => {
           ref={voucherPrintRef}
         />
       )}
+      <AccountOpenDetailsPrintContent
+        ref={accountOpenPrintRef}
+        accountOpenDetails={
+          allTransactionsDetails?.transaction?.viewTransactionDetail?.data?.accountOpenSuccessCard
+        }
+      />
     </>
   );
 };

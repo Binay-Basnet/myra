@@ -464,6 +464,18 @@ query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
         }
         totalDebit
         totalCredit
+        accountOpenSuccessCard {
+          accountId
+          transactionId
+          accOpenedDate
+          accountName
+          accountType
+          linkedAccountId
+          linkedAccountName
+          initialDepositAmount
+          charges
+          paymentMode
+        }
       }
     }
   }

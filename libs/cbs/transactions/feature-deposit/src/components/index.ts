@@ -1,3 +1,4 @@
+export * from './AccountOpenDetailsPrintContent';
 export * from './AdjustedTransactionsList';
 export * from './AllTransactionsList';
 export * from './BulkDepositAccountsSummary';
