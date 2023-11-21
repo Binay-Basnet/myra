@@ -106,6 +106,7 @@ export const MemberListPage = () => {
         meta: {
           width: '100px',
         },
+        enableSorting: !(objState === 'DRAFT' || objState === 'VALIDATED'),
       },
       {
         id: 'id',

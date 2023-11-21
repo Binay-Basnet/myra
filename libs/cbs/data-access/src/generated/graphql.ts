@@ -15812,6 +15812,7 @@ export type LoanRepaymentDetail = {
   memberProfilePicId?: Maybe<Scalars['String']>;
   memberProfilePicUrl?: Maybe<Scalars['String']>;
   paymentDate: Scalars['Localized'];
+  repaymentId: Scalars['String'];
 };
 
 export type LoanRepaymentEdge = {
