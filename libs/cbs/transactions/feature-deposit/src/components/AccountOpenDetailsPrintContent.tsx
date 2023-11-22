@@ -5,7 +5,7 @@ import { Avatar, Box, Divider, Text } from '@myra-ui';
 
 import { AccountSuccessCardData, useAppSelector } from '@coop/cbs/data-access';
 import { formatAddress } from '@coop/cbs/utils';
-import { amountToWordsConverter } from '@coop/shared/utils';
+import { amountConverter, amountToWordsConverter } from '@coop/shared/utils';
 
 const AccountOpenDetailsPrint = (props: { accountOpenDetails: AccountSuccessCardData }) => {
   const { accountOpenDetails } = props;
@@ -16,8 +16,11 @@ const AccountOpenDetailsPrint = (props: { accountOpenDetails: AccountSuccessCard
     { key: 'Account Type', value: accountOpenDetails?.accountType || '-' },
     { key: 'Account Open Date', value: accountOpenDetails?.accOpenedDate?.local || '-' },
     { key: 'Linked Account', value: accountOpenDetails?.linkedAccountName || '-' },
-    { key: 'Initial Deposit Amount', value: accountOpenDetails?.initialDepositAmount || '-' },
-    { key: 'Charges', value: accountOpenDetails?.charges || '-' },
+    {
+      key: 'Initial Deposit Amount',
+      value: amountConverter(accountOpenDetails?.initialDepositAmount) || '-',
+    },
+    { key: 'Charges', value: amountConverter(accountOpenDetails?.charges) || '-' },
     { key: 'Payment Mode', value: accountOpenDetails?.paymentMode || '-' },
   ];
 
@@ -122,8 +125,10 @@ const AccountOpenDetailsPrint = (props: { accountOpenDetails: AccountSuccessCard
             </Text>
             <Text fontSize="r2" color="primary.500" fontWeight="500" lineHeight="125%">
               Rs.{' '}
-              {Number(accountOpenDetails?.initialDepositAmount) +
-                Number(accountOpenDetails?.charges)}
+              {amountConverter(
+                Number(accountOpenDetails?.initialDepositAmount) +
+                  Number(accountOpenDetails?.charges)
+              )}
             </Text>
             <Text fontSize="r2" color="primary.500" fontWeight="500" lineHeight="125%">
               {amountToWordsConverter(
@@ -181,7 +186,6 @@ export const AccountOpenDetailsPrintContent = React.forwardRef<
       display="none"
       sx={{
         '@media print': {
-          pageBreakAfter: 'always',
           p: 2,
           display: 'flex',
           flexDir: 'column',
