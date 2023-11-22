@@ -181,6 +181,7 @@ export const AccountOpenDetailsPrintContent = React.forwardRef<
       display="none"
       sx={{
         '@media print': {
+          pageBreakAfter: 'always',
           p: 2,
           display: 'flex',
           flexDir: 'column',
