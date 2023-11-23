@@ -23,6 +23,7 @@ export interface SavingsOrganizationRateProps {}
 
 export const SavingsOrganizationRate = () => {
   const queryClient = useQueryClient();
+  const [isConfirmationModalOpen, setIsConfirmatioModalOpen] = useState(false);
 
   const [selectedRateId, setSelectedRateId] = useState('');
 
@@ -71,6 +72,7 @@ export const SavingsOrganizationRate = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['getSavingsOrganizationRateList']);
         handleUpdateModalClose();
+        handleConfirmationModalClose();
       },
       promise: setOrganizationRate({
         data: { ...methods.getValues() } as InterestRateSetupInput,
@@ -90,6 +92,7 @@ export const SavingsOrganizationRate = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['getSavingsOrganizationRateList']);
         handleUpdateModalClose();
+        handleConfirmationModalClose();
       },
       promise: editOrganizationRate({
         id: selectedRateId,
@@ -166,6 +169,11 @@ export const SavingsOrganizationRate = () => {
 
     setSelectedRateId('');
     onUpdateModalClose();
+    handleConfirmationModalClose();
+  };
+
+  const handleConfirmationModalClose = () => {
+    setIsConfirmatioModalOpen(false);
   };
 
   return (
@@ -228,6 +236,10 @@ export const SavingsOrganizationRate = () => {
           onClose={handleUpdateModalClose}
           onSave={handleSaveInterestRate}
           onEdit={handleEditInterestRate}
+          isConfirmationModalOpen={isConfirmationModalOpen}
+          setIsConfirmationModalOpen={setIsConfirmatioModalOpen}
+          handleConfirmationModalClose={handleConfirmationModalClose}
+          type="saving"
           methods={methods}
           rate={
             selectedRateId

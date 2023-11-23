@@ -175,7 +175,7 @@ const AccountOpenDetailsPrint = (props: { accountOpenDetails: AccountSuccessCard
 };
 
 export const AccountOpenDetailsPrintContent = React.forwardRef<
-  any,
+  HTMLInputElement,
   { accountOpenDetails: AccountSuccessCardData }
 >((props, ref) => {
   const { accountOpenDetails } = props;

@@ -11,7 +11,7 @@ import { amountConverter } from '@coop/shared/utils';
 import { LoanDetails, LoanPaymentScheduleTable } from '../components';
 import { useLoanDetails } from '../hooks/useLoanDetails';
 
-export const LoanApplicationPrintContent = React.forwardRef<any>((_, ref) => {
+export const LoanApplicationPrintContent = React.forwardRef<HTMLInputElement>((_, ref) => {
   const router = useRouter();
   const user = useAppSelector((state) => state.auth.user);
 
