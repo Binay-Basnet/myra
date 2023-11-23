@@ -996,6 +996,11 @@ export type SaccosAmountSetupResult = {
   error?: Maybe<MutationError>;
 };
 
+export type SaccosAndSmsCountToBeCredited = {
+  count: Scalars['String'];
+  slug: Scalars['String'];
+};
+
 export type SaccosAvailableAmountConnection = {
   edges?: Maybe<Array<Maybe<SaccosAvailableAmountEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -1565,10 +1570,15 @@ export type VersionInput = {
 
 export type SmsMutation = {
   addSaccosSmsCount: SaccosSmsSetupResult;
+  addSaccosSmsCredit: SaccosSmsSetupResult;
 };
 
 export type SmsMutationAddSaccosSmsCountArgs = {
   input: Array<SaccosSmsSetup>;
+};
+
+export type SmsMutationAddSaccosSmsCreditArgs = {
+  input?: InputMaybe<Array<InputMaybe<SaccosAndSmsCountToBeCredited>>>;
 };
 
 export type UtilityMutation = {
@@ -1917,6 +1927,27 @@ export type AddSaccosAmountMutation = {
         | MutationError_ValidationError_Fragment
         | null;
     } | null;
+  };
+};
+
+export type AddSaccosSmsCreditMutationVariables = Exact<{
+  input?: InputMaybe<
+    Array<InputMaybe<SaccosAndSmsCountToBeCredited>> | InputMaybe<SaccosAndSmsCountToBeCredited>
+  >;
+}>;
+
+export type AddSaccosSmsCreditMutation = {
+  sms: {
+    addSaccosSmsCredit: {
+      ID?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
   };
 };
 
@@ -2722,6 +2753,24 @@ export type GetUtilityClientBalanceListQuery = {
   };
 };
 
+export type ListSaccosAvailableSmsCountQueryVariables = Exact<{
+  paginate: Pagination;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type ListSaccosAvailableSmsCountQuery = {
+  sms: {
+    listSaccosAvailableSmsCount?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor?: string | null;
+        node?: { id: string; slug: string; messageCount: string; saccossName: string } | null;
+      } | null> | null;
+      pageInfo?: PaginationFragment | null;
+    } | null;
+  };
+};
+
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
   ... on BadRequestError {
@@ -3202,6 +3251,33 @@ export const useAddSaccosAmountMutation = <TError = unknown, TContext = unknown>
   useMutation<AddSaccosAmountMutation, TError, AddSaccosAmountMutationVariables, TContext>(
     ['addSaccosAmount'],
     useAxios<AddSaccosAmountMutation, AddSaccosAmountMutationVariables>(AddSaccosAmountDocument),
+    options
+  );
+export const AddSaccosSmsCreditDocument = `
+    mutation addSaccosSMSCredit($input: [SaccosAndSmsCountToBeCredited]) {
+  sms {
+    addSaccosSmsCredit(input: $input) {
+      ID
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddSaccosSmsCreditMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddSaccosSmsCreditMutation,
+    TError,
+    AddSaccosSmsCreditMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddSaccosSmsCreditMutation, TError, AddSaccosSmsCreditMutationVariables, TContext>(
+    ['addSaccosSMSCredit'],
+    useAxios<AddSaccosSmsCreditMutation, AddSaccosSmsCreditMutationVariables>(
+      AddSaccosSmsCreditDocument
+    ),
     options
   );
 export const AllAdministrationDocument = `
@@ -4318,6 +4394,41 @@ export const useGetUtilityClientBalanceListQuery = <
     ['getUtilityClientBalanceList', variables],
     useAxios<GetUtilityClientBalanceListQuery, GetUtilityClientBalanceListQueryVariables>(
       GetUtilityClientBalanceListDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListSaccosAvailableSmsCountDocument = `
+    query listSaccosAvailableSmsCount($paginate: Pagination!, $filter: Filter) {
+  sms {
+    listSaccosAvailableSmsCount(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          id
+          slug
+          messageCount
+          saccossName
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useListSaccosAvailableSmsCountQuery = <
+  TData = ListSaccosAvailableSmsCountQuery,
+  TError = unknown
+>(
+  variables: ListSaccosAvailableSmsCountQueryVariables,
+  options?: UseQueryOptions<ListSaccosAvailableSmsCountQuery, TError, TData>
+) =>
+  useQuery<ListSaccosAvailableSmsCountQuery, TError, TData>(
+    ['listSaccosAvailableSmsCount', variables],
+    useAxios<ListSaccosAvailableSmsCountQuery, ListSaccosAvailableSmsCountQueryVariables>(
+      ListSaccosAvailableSmsCountDocument
     ).bind(null, variables),
     options
   );
