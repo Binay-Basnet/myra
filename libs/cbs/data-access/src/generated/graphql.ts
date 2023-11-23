@@ -23625,6 +23625,7 @@ export type TrialSheetReportData = {
 
 export type TrialSheetReportDataEntry = {
   balance?: Maybe<Scalars['Map']>;
+  isLeaf?: Maybe<Scalars['Boolean']>;
   ledgerId?: Maybe<Scalars['String']>;
   ledgerName?: Maybe<Scalars['Localized']>;
   under?: Maybe<Scalars['String']>;
@@ -42426,36 +42427,42 @@ export type GetAdjustedCharKhataReportQuery = {
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               balance?: Record<string, unknown> | null;
               under?: string | null;
+              isLeaf?: boolean | null;
             } | null> | null;
             assets?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               balance?: Record<string, unknown> | null;
               under?: string | null;
+              isLeaf?: boolean | null;
             } | null> | null;
             expenses?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               balance?: Record<string, unknown> | null;
               under?: string | null;
+              isLeaf?: boolean | null;
             } | null> | null;
             income?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               balance?: Record<string, unknown> | null;
               under?: string | null;
+              isLeaf?: boolean | null;
             } | null> | null;
             offBalance?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               balance?: Record<string, unknown> | null;
               under?: string | null;
+              isLeaf?: boolean | null;
             } | null> | null;
             orphanEntries?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               balance?: Record<string, unknown> | null;
               under?: string | null;
+              isLeaf?: boolean | null;
             } | null> | null;
           } | null;
         };
@@ -72506,6 +72513,7 @@ export const GetAdjustedCharKhataReportDocument = `
               ledgerName
               balance
               under
+              isLeaf
             }
             equityAndLiablitiesTotal
             assets {
@@ -72513,6 +72521,7 @@ export const GetAdjustedCharKhataReportDocument = `
               ledgerName
               balance
               under
+              isLeaf
             }
             assetsTotal
             expenses {
@@ -72520,6 +72529,7 @@ export const GetAdjustedCharKhataReportDocument = `
               ledgerName
               balance
               under
+              isLeaf
             }
             expenseTotal
             income {
@@ -72527,6 +72537,7 @@ export const GetAdjustedCharKhataReportDocument = `
               ledgerName
               balance
               under
+              isLeaf
             }
             incomeTotal
             offBalance {
@@ -72534,6 +72545,7 @@ export const GetAdjustedCharKhataReportDocument = `
               ledgerName
               balance
               under
+              isLeaf
             }
             offBalanceTotal
             orphanEntries {
@@ -72541,6 +72553,7 @@ export const GetAdjustedCharKhataReportDocument = `
               ledgerName
               balance
               under
+              isLeaf
             }
             orphanTotal
             totalProfitLoss

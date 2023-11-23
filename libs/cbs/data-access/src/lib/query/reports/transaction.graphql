@@ -388,6 +388,7 @@ query getAdjustedCharKhataReport($data: CharKhataReportFilter!) {
               ledgerName
               balance
               under
+              isLeaf
             }
             equityAndLiablitiesTotal
             assets {
@@ -395,6 +396,7 @@ query getAdjustedCharKhataReport($data: CharKhataReportFilter!) {
               ledgerName
               balance
               under
+              isLeaf
             }
             assetsTotal
             expenses {
@@ -402,6 +404,7 @@ query getAdjustedCharKhataReport($data: CharKhataReportFilter!) {
               ledgerName
               balance
               under
+              isLeaf
             }
             expenseTotal
             income {
@@ -409,6 +412,7 @@ query getAdjustedCharKhataReport($data: CharKhataReportFilter!) {
               ledgerName
               balance
               under
+              isLeaf
             }
             incomeTotal
             offBalance {
@@ -416,6 +420,7 @@ query getAdjustedCharKhataReport($data: CharKhataReportFilter!) {
               ledgerName
               balance
               under
+              isLeaf
             }
             offBalanceTotal
             orphanEntries {
@@ -423,6 +428,7 @@ query getAdjustedCharKhataReport($data: CharKhataReportFilter!) {
               ledgerName
               balance
               under
+              isLeaf
             }
             orphanTotal
             totalProfitLoss

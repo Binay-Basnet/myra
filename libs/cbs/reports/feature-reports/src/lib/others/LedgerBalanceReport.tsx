@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
-import { Box, GridItem } from '@myra-ui';
+import { GridItem } from '@myra-ui';
 
 import {
   LedgerBalanceReportData,
@@ -62,7 +63,7 @@ export const LedgerBalanceReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Other Report', link: '/reports/cbs/others' },
+            { label: 'Other Report', link: '/cbs/reports/cbs-reports/others' },
             {
               label: 'Ledger Balance Report',
               link: '/cbs/reports/cbs-reports/others/ledger-balance/new',
@@ -165,22 +166,26 @@ const AdjustedLedgerInputs = () => {
     ? (JSON?.parse(branch as string) as unknown as string[])
     : null;
 
-  const redirectBranchesIDs = redirectBranchesArray?.map((b) => ({ value: b })) as unknown as {
-    label: string;
-    value: string;
-  }[];
+  const redirectBranchesIDs = useMemo(
+    () =>
+      redirectBranchesArray?.map((b) => ({ value: b })) as unknown as {
+        label: string;
+        value: string;
+      }[],
+    [redirectBranchesArray]
+  );
 
-  useEffect(() => {
-    if (redirectBranchesArray) {
+  useDeepCompareEffect(() => {
+    if (redirectBranchesIDs?.length) {
       methods.setValue('branchId', redirectBranchesIDs);
     }
     if (redirectCoaHeads) {
-      methods.setValue('coaHead', redirectCoaHeads);
+      methods.setValue('coaHead', [redirectCoaHeads]);
     }
     if (redirectDate) {
       methods.setValue('period', redirectDate);
     }
-  }, [redirectCoaHeads, redirectDate, branch]);
+  }, [redirectCoaHeads, redirectDate, redirectBranchesIDs]);
 
   return (
     <>
@@ -190,7 +195,7 @@ const AdjustedLedgerInputs = () => {
           isMulti
           name="branchId"
           label="Service Center"
-          isDisabled={!!branch}
+          // isDisabled={!!branch}
         />
       </GridItem>
 
@@ -198,11 +203,12 @@ const AdjustedLedgerInputs = () => {
         name="coaHead"
         label="COA Head"
         isMulti
-        isDisabled={!!redirectCoaHeads}
+        // isDisabled={!!redirectCoaHeads}
       />
-      <Box pointerEvents={dateFrom ? 'none' : 'auto'} cursor={dateFrom ? 'not-allowed' : 'pointer'}>
-        <ReportDateRange name="period" label="Date" />
-      </Box>
+
+      {/* <Box pointerEvents={dateFrom ? 'none' : 'auto'} cursor={dateFrom ? 'not-allowed' : 'pointer'}> */}
+      <ReportDateRange name="period" label="Date" />
+      {/* </Box> */}
     </>
   );
 };
