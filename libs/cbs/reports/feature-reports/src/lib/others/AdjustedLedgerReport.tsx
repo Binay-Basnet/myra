@@ -95,8 +95,12 @@ export const AdjustedLedgersReport = () => {
                     color="primary.500"
                     onClick={() =>
                       window.open(
-                        `/cbs/reports/cbs-reports/others/ledger/new?id=${props.row?.original?.ledgerId}&branch=${props?.row?.original?.branchId}&dateFromen=${datePeriod?.from?.en}&dateToen=${datePeriod?.to?.en}&dateFromnp=${datePeriod?.from?.np}&dateTonp=${datePeriod?.to?.np}&isAdjusted=true`,
-
+                        `/cbs/reports/cbs-reports/others/ledger/new?id=${JSON.stringify({
+                          label: props?.row?.original?.ledgerName,
+                          value: props.row?.original?.ledgerId,
+                        })}&branch=${props?.row?.original?.branchId}&dateFrom=${JSON.stringify(
+                          datePeriod?.from
+                        )}&dateTo=${JSON.stringify(datePeriod?.to)}`,
                         '_blank'
                       )
                     }
