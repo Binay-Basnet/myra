@@ -15,12 +15,15 @@ import {
   useGetLoanProductInterestRateListQuery,
   useUpdateLoanProductInterestRateMutation,
 } from '@coop/cbs/data-access';
+import { UpdateRateModal } from '@coop/cbs/settings/ui-components';
 import { CustomInterestRateSetupInput, localizedDate } from '@coop/cbs/utils';
 
-import { AccountInterestDetailModal, AccountInterestUpdateModal, SideBar } from '../components';
+import { AccountInterestDetailModal, SideBar } from '../components';
 
 export const InterestUpdatePage = () => {
   const router = useRouter();
+  const [isConfirmationModalOpen, setIsConfirmatioModalOpen] = useState(false);
+
   const { id } = router.query;
 
   const [selectedRateId, setSelectedRateId] = useState('');
@@ -135,6 +138,7 @@ export const InterestUpdatePage = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['getLoanProductInterestRateList']);
         handleUpdateModalClose();
+        handleConfirmationModalClose();
       },
       promise: updateLoanProductInterestRate({
         productId: id as string,
@@ -154,6 +158,7 @@ export const InterestUpdatePage = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['getLoanProductInterestRateList']);
         handleUpdateModalClose();
+        handleConfirmationModalClose();
       },
       promise: editInterestRate({
         id: selectedRateId,
@@ -168,6 +173,11 @@ export const InterestUpdatePage = () => {
 
     setSelectedRateId('');
     onUpdateModalClose();
+    handleConfirmationModalClose();
+  };
+
+  const handleConfirmationModalClose = () => {
+    setIsConfirmatioModalOpen(false);
   };
 
   return (
@@ -212,11 +222,14 @@ export const InterestUpdatePage = () => {
       </Scrollable>
 
       {!isRateDetailFetching && (
-        <AccountInterestUpdateModal
+        <UpdateRateModal
           isOpen={isUpdateModalOpen}
           onClose={handleUpdateModalClose}
           onSave={handleSaveInterestRate}
           onEdit={handleEditInterestRate}
+          isConfirmationModalOpen={isConfirmationModalOpen}
+          setIsConfirmationModalOpen={setIsConfirmatioModalOpen}
+          handleConfirmationModalClose={handleConfirmationModalClose}
           methods={methods}
           rate={
             selectedRateId

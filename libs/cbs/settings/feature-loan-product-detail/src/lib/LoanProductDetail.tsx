@@ -31,9 +31,9 @@ export const LoanProductDetail = () => {
       />
       {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <OverviewPage />}
       {tabQuery === 'account list' && <AccountListPage />}
-      {tabQuery === 'product premium' && <InterestUpdatePage />}
       {tabQuery === 'active accounts' && <AccountListPage />}
       {tabQuery === 'inactive accounts' && <InactiveLoanAccountListPage />}
+      {tabQuery === 'product premium' && <InterestUpdatePage />}
       {tabQuery === 'penalty update' && <LoanPenaltyUpdatePage />}
       {tabQuery === 'rebate update' && <LoanRebateUpdatePage />}
       {tabQuery === 'fee and charges update' && <LoanFeesAndChargesUpdatePage />}
