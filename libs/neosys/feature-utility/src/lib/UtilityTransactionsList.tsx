@@ -25,7 +25,7 @@ export const UtilityTransactionsList = () => {
     () => [
       {
         header: 'SACCOS',
-        accessorFn: (row) => row?.node?.saccossName,
+        accessorFn: (row) => `${row?.node?.slug} [${row?.node?.saccossName}]`,
         meta: {
           width: 'auto',
         },

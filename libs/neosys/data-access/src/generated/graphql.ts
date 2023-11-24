@@ -1037,6 +1037,24 @@ export type SaccosAvailableSmsCountInfo = {
   slug: Scalars['String'];
 };
 
+export type SaccosDetails = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<SaccosDetailsNode>;
+};
+
+export type SaccosDetailsConnection = {
+  edges?: Maybe<Array<Maybe<SaccosDetails>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SaccosDetailsNode = {
+  RemainingCredits?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  saccosName?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
 export type SaccosSetup = {
   amount: Scalars['String'];
   slug: Scalars['String'];
@@ -1571,6 +1589,7 @@ export type VersionInput = {
 export type SmsMutation = {
   addSaccosSmsCount: SaccosSmsSetupResult;
   addSaccosSmsCredit: SaccosSmsSetupResult;
+  listSaccosRemainingCredit: SaccosDetailsConnection;
 };
 
 export type SmsMutationAddSaccosSmsCountArgs = {
@@ -1579,6 +1598,11 @@ export type SmsMutationAddSaccosSmsCountArgs = {
 
 export type SmsMutationAddSaccosSmsCreditArgs = {
   input?: InputMaybe<Array<InputMaybe<SaccosAndSmsCountToBeCredited>>>;
+};
+
+export type SmsMutationListSaccosRemainingCreditArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type UtilityMutation = {

@@ -30,7 +30,10 @@ export const AddSMSCreditModal = ({ isOpen, onClose }: IAddSMSCreditModalProps) 
 
     data?.neosys?.client?.list?.forEach((client) => {
       if (client?.slug) {
-        temp.push({ label: client?.clientName as string, value: client.slug as string });
+        temp.push({
+          label: `${client?.slug} [${client?.clientName}]`,
+          value: client.slug as string,
+        });
       }
     });
 
