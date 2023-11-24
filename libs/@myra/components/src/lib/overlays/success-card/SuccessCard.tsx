@@ -3,6 +3,7 @@ import { AiOutlinePlus, AiOutlinePrinter } from 'react-icons/ai';
 import ReactToPrint from 'react-to-print';
 import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
+import { isEmpty } from 'lodash';
 
 import { Avatar, Box, Button, Divider, Icon, Text } from '@myra-ui/foundations';
 
@@ -125,7 +126,6 @@ export const SuccessCard = ({
             </Box>
           ))}
         </Box>
-
         {total && (
           <Box display="flex" py="s8" justifyContent="space-between">
             <Box />
@@ -271,6 +271,7 @@ interface SuccessPrintProps {
     accountId?: string | null;
   };
   details: Record<string, React.ReactNode>;
+  extraDetails?: Record<string, React.ReactNode>;
   total: string;
   totalWords: string;
 
@@ -296,6 +297,7 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
   (
     {
       details,
+      extraDetails,
       total,
       meta,
       showSignatures,
@@ -519,6 +521,22 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
               </Box>
             </Box>
           )}
+          {/* here */}
+          {!isEmpty(extraDetails) &&
+            Object?.entries(extraDetails)?.map((extraDetail) => (
+              <Box display="flex" alignItems="center" justifyContent="space-between">
+                <Box color="gray.600" fontSize="s2" fontWeight="500">
+                  {extraDetail[0]}
+                </Box>
+                {typeof extraDetail[1] === 'string' ? (
+                  <Box color="gray.700" fontSize="s3" fontWeight="600" textTransform="capitalize">
+                    {extraDetail[1]?.toString()?.replace(/_/g, ' ')?.toLowerCase()}
+                  </Box>
+                ) : (
+                  extraDetail[1]
+                )}
+              </Box>
+            ))}
         </Box>
 
         {showSignatures && (
@@ -762,6 +780,36 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                   </Box>
                 </Box>
               )}
+              {/* here */}
+              <Box
+                borderBottom={total ? '1px' : 'none'}
+                borderBottomColor="border.layout"
+                display="flex"
+                flexDir="column"
+                gap={dublicate ? 's4' : 's10'}
+                py="s8"
+              >
+                {!isEmpty(extraDetails) &&
+                  Object?.entries(extraDetails)?.map((extraDetail) => (
+                    <Box display="flex" alignItems="center" justifyContent="space-between">
+                      <Box color="gray.600" fontSize="s2" fontWeight="500">
+                        {extraDetail[0]}
+                      </Box>
+                      {typeof extraDetail[1] === 'string' ? (
+                        <Box
+                          color="gray.700"
+                          fontSize="s3"
+                          fontWeight="600"
+                          textTransform="capitalize"
+                        >
+                          {extraDetail[1]?.toString()?.replace(/_/g, ' ')?.toLowerCase()}
+                        </Box>
+                      ) : (
+                        extraDetail[1]
+                      )}
+                    </Box>
+                  ))}
+              </Box>
             </Box>
             {showSignatures && (
               <Box

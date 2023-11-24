@@ -107,6 +107,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
     accountName,
     total,
     details,
+    extraDetails,
     dublicate,
     voucherDetails,
     showSignatures,
@@ -118,6 +119,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
     let tempAccountId = '';
 
     let tempDetails = {};
+    let tempExtraDetails = {};
 
     let tempVoucherDetails = {};
 
@@ -320,6 +322,11 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         'Rebate Amount': amountConverter(loanRepaymentDetailData?.rebate || 0),
 
         'Payment Mode': loanRepaymentDetailData?.paymentMode,
+        // 'Remaining Principal': loanRepaymentDetailData?.totalRemainingPrincipal,
+        // 'Remaining Interest': loanRepaymentDetailData?.totalRemainingInterest,
+      };
+
+      tempExtraDetails = {
         'Remaining Principal': loanRepaymentDetailData?.totalRemainingPrincipal,
         'Remaining Interest': loanRepaymentDetailData?.totalRemainingInterest,
       };
@@ -354,6 +361,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       accountName: tempAccountName,
       total: tempTotal,
       details: tempDetails,
+      extraDetails: tempExtraDetails,
       voucherDetails: tempVoucherDetails,
       showSignatures: tempShowSignatures,
       jvDetails: tempJVDetails,
@@ -423,6 +431,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
             total={amountConverter(total)}
             totalWords={amountToWordsConverter(Number(total || '0'))}
             details={details}
+            extraDetails={extraDetails}
             dublicate={dublicate}
             showSignatures={showSignatures}
             count={printCount}
