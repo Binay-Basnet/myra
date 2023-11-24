@@ -23,13 +23,15 @@ export const LedgerReport = () => {
 
   const isAdjusted = router?.query['isAdjusted'] === 'true';
 
+  const ledgerId = filters?.ledgerId || {};
+
   const { data, isFetching } = useGetLedgerReportQuery(
     {
       data: {
         ledgerId:
-          filters?.ledgerId && typeof filters?.ledgerId === 'object' && 'value' in filters.ledgerId
-            ? filters.ledgerId?.['value']
-            : filters?.ledgerId,
+          ledgerId && typeof ledgerId === 'object' && 'value' in ledgerId
+            ? ledgerId?.['value']
+            : ledgerId,
         period: filters?.period,
         inculdeAdjustment: isAdjusted,
       } as GeneralLedgerFilter,
