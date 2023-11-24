@@ -25,7 +25,7 @@ export const UtilityClientSMSBalanceList = () => {
     () => [
       {
         header: 'SACCOS',
-        accessorFn: (row) => row?.node?.saccossName,
+        accessorFn: (row) => `${row?.node?.slug} [${row?.node?.saccossName}]`,
         meta: {
           width: 'auto',
         },
