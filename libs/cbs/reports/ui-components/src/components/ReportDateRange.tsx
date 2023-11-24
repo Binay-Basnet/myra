@@ -17,7 +17,7 @@ export const ReportDateRange = ({
   name = 'period',
   setInitialDate = true,
 }: IReportDateRange) => {
-  const { control, setValue } = useFormContext();
+  const { control, setValue, watch } = useFormContext();
   const { locale } = useRouter();
   const { data } = useGetEndOfDayDateDataQuery();
 
@@ -28,11 +28,13 @@ export const ReportDateRange = ({
 
   const organizationStartDate = user?.organization?.basicDetails?.organizationStartDate;
 
+  const dateField = watch(name ?? 'period');
+
   useEffect(() => {
-    if (setInitialDate) {
+    if (setInitialDate && !dateField?.from && !dateField?.to) {
       setValue(name, { from: transactionDate, to: transactionDate });
     }
-  }, [name, setValue, transactionDate]);
+  }, [name, setValue, transactionDate, dateField]);
 
   return (
     <Controller

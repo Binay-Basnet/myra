@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
-import { GridItem } from '@myra-ui';
+import { Button, GridItem } from '@myra-ui';
 
 import {
   LedgerBalanceReportData,
@@ -37,6 +37,8 @@ export const LedgerBalanceReport = () => {
 
   const coaHeads =
     filters?.coaHead && filters?.coaHead.length !== 0 ? filters?.coaHead?.map((t) => t.value) : [];
+
+  const datePeriod = filters?.period;
 
   const { data, isFetching } = useGetLedgerBalanceReportQuery(
     {
@@ -89,6 +91,26 @@ export const LedgerBalanceReport = () => {
               {
                 header: 'Ledger Id',
                 accessorKey: 'ledgerName',
+                cell: (props) => (
+                  <Button
+                    variant="link"
+                    color="primary.500"
+                    padding={0}
+                    onClick={() =>
+                      window.open(
+                        `/cbs/reports/cbs-reports/others/ledger/new?id=${JSON.stringify({
+                          label: props?.row?.original?.ledgerName,
+                          value: props?.row?.original?.ledgerId,
+                        })}&branch=${props?.row?.original?.branchId}&dateFrom=${JSON.stringify(
+                          datePeriod?.from
+                        )}&dateTo=${JSON.stringify(datePeriod?.to)}`,
+                        '_blank'
+                      )
+                    }
+                  >
+                    {props?.row?.original?.ledgerName}
+                  </Button>
+                ),
               },
               {
                 header: 'Opening Balance',
