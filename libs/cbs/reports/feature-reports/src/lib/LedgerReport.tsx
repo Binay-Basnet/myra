@@ -38,8 +38,9 @@ export const LedgerReport = () => {
   );
   const ledgerReport = data?.report?.otherReport?.generalLedgerReport
     ?.data as GeneralLedgerReportEntry[];
-  const adjustedReport = data?.report?.otherReport?.generalLedgerReport
-    ?.adjustedEntries as GeneralLedgerReportEntry[];
+  const adjustedReport =
+    (data?.report?.otherReport?.generalLedgerReport
+      ?.adjustedEntries as GeneralLedgerReportEntry[]) ?? [];
   const ledgerName = data?.report?.otherReport?.generalLedgerReport?.ledgerName;
   const openingBalance = data?.report?.otherReport?.generalLedgerReport?.summary?.openingBalance;
   const closingBalance = data?.report?.otherReport?.generalLedgerReport?.summary?.closingBalance;
