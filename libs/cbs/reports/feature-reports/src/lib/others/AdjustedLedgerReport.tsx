@@ -100,7 +100,7 @@ export const AdjustedLedgersReport = () => {
                           value: props.row?.original?.ledgerId,
                         })}&branch=${props?.row?.original?.branchId}&dateFrom=${JSON.stringify(
                           datePeriod?.from
-                        )}&dateTo=${JSON.stringify(datePeriod?.to)}`,
+                        )}&dateTo=${JSON.stringify(datePeriod?.to)}&isAdjusted=true`,
                         '_blank'
                       )
                     }
