@@ -33,12 +33,10 @@ export const CbsSettingsSavingsDetailPage = () => {
       </Box>
       {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <OverviewPage />}
       {/* {tabQuery === 'account list' && <AccountListPage />} */}
-      {tabQuery === 'product premium' && <InterestUpdatePage />}
       {tabQuery === 'dormant accounts' && <DormantAccountListPage />}
       {tabQuery === 'inactive accounts' && <InactiveAccountListPage />}
-
       {tabQuery === 'active accounts' && <AccountListPage />}
-
+      {tabQuery === 'product premium' && <InterestUpdatePage />}
       {tabQuery === 'penalty update' && <PenaltyUpdatePage />}
       {tabQuery === 'fee and charges update' && <FeesAndChargesUpdatePage />}
       {tabQuery === 'general updates' && <GeneralUpdatesPage />}
