@@ -171,7 +171,9 @@ export const AddSMSTemplateModal = ({ isOpen, onClose, id }: IAddSMSTemplateModa
                 />
 
                 <Box display="flex" justifyContent="flex-end" alignItems="center" gap="s4">
-                  <Text>Characters: ~{content?.length}</Text>
+                  <Text>
+                    Characters: ~{content?.length} [{Math.ceil((content?.length || 0) / 160)} sms]
+                  </Text>
 
                   <Tooltip title="Total characters may vary because of dynamic fields.">
                     <Box cursor="pointer">

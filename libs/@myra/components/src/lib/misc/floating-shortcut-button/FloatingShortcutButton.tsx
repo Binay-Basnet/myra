@@ -30,16 +30,31 @@ interface WhatsNewModalProps {
 const whatsNewData = {
   features: {
     title: 'New Features',
-    data: ['Utility usage report.'],
+    data: [
+      'Sorting option in date column of all dashboards consisting of date [Transaction, transfer and member pages',
+      "Reprint for 'Account Open' type transactions.",
+      'Disburse date in Loan balance report.',
+      'Savings Balance Report to have product wise filter rather than savings product nature.',
+      'Read-Only Myra User.',
+      'Confirmation popup when updating organization rate.',
+      'Loan Disbursed Card Print.',
+      'Data range filter in Loan Call sheet.',
+      'Expired/Unexpired filter in loan balance report.',
+      'SMS implementation in the deposit, withdraw and loan repayment section.',
+    ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Share balance report fixes related to unequal amount with trial balance report.',
-      'Organization date is not saved in organization details.',
-      'Some accounts are unfetchable due to deposit frequency issue in MR app.',
-      'Pagination issues in all transactions list page.',
-      'Remove amount column from the mr template.',
+      "Search not working in assigned members list of MR's assign member page.",
+      "Pagination in 'All transactions' dashboard.",
+      'Automatic ledger disable on account close, loan close etc',
+      "Reprint for 'Account Open' type transactLoan repayment: remaining Principal and interest in separate section in success card (also in reprint with all transactions.",
+      'Redirection with filter in adjusted charkhata to Ledger balance & GL report flow.',
+      'Darker font color added while print the report.',
+      'Balance in Saving Product > Active accounts list.',
+      'Products missing in Saving Product wise report.',
+      'Edit/Update KYM page header text change.',
     ],
   },
 };
@@ -78,8 +93,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.99</Text>
-          <Text fontSize="s3">November 8, 2023</Text>
+          <Text fontSize="r2">Version 1.0.100</Text>
+          <Text fontSize="s3">November 27, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>

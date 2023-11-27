@@ -322,13 +322,13 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         'Rebate Amount': amountConverter(loanRepaymentDetailData?.rebate || 0),
 
         'Payment Mode': loanRepaymentDetailData?.paymentMode,
-        // 'Remaining Principal': loanRepaymentDetailData?.totalRemainingPrincipal,
-        // 'Remaining Interest': loanRepaymentDetailData?.totalRemainingInterest,
       };
 
       tempExtraDetails = {
-        'Remaining Principal': loanRepaymentDetailData?.totalRemainingPrincipal,
-        'Remaining Interest': loanRepaymentDetailData?.totalRemainingInterest,
+        'Remaining Principal': amountConverter(
+          loanRepaymentDetailData?.totalRemainingPrincipal || 0
+        ),
+        'Remaining Interest': amountConverter(loanRepaymentDetailData?.totalRemainingInterest || 0),
       };
 
       tempTotal = Number(loanRepaymentDetailData?.totalRepaymentAmount).toFixed(2);

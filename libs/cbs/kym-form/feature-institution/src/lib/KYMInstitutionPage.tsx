@@ -201,7 +201,11 @@ export const KYMInstitutionPage = () => {
     >
       <FormLayout methods={methods} hasSidebar>
         <FormHeader
-          title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberInstitution}`}
+          title={
+            action === 'edit'
+              ? `Update Member - ${featureCode?.newMemberInstitution}`
+              : `Add New Member - ${featureCode?.newMemberInstitution}`
+          }
           closeLink={ROUTES.CBS_MEMBER_LIST}
         />
 

@@ -231,7 +231,11 @@ export const KYMCooperativePage = () => {
     >
       <FormLayout methods={methods} hasSidebar>
         <FormHeader
-          title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberCooperative}`}
+          title={
+            action === 'edit'
+              ? `Update Member - ${featureCode?.newMemberCooperative}`
+              : `Add New Member - ${featureCode?.newMemberCooperative}`
+          }
           closeLink={ROUTES.CBS_MEMBER_LIST}
         />
 
