@@ -14761,7 +14761,6 @@ export type LoanApproveOrCancel = typeof LoanApproveOrCancel[keyof typeof LoanAp
 export type LoanBalanceFilter = {
   age?: InputMaybe<Scalars['Int']>;
   endDate?: InputMaybe<LocalizedDateFilter>;
-  expiredFilter?: InputMaybe<LoanExpiredFilter>;
   gender?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   outstandingBalance?: InputMaybe<MinMaxFilter>;
   productNameIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -15001,13 +15000,6 @@ export type LoanDisbursementResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
-export const LoanExpiredFilter = {
-  All: 'ALL',
-  Expired: 'EXPIRED',
-  NotExpired: 'NOT_EXPIRED',
-} as const;
-
-export type LoanExpiredFilter = typeof LoanExpiredFilter[keyof typeof LoanExpiredFilter];
 export type LoanFilters = {
   amountRange?: InputMaybe<SavingAmountRange>;
   service?: InputMaybe<SavingServiceType>;

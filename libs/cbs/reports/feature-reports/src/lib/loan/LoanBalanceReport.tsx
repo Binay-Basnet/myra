@@ -317,9 +317,9 @@ export const LoanBalanceReport = () => {
 };
 
 const LOAN_EXPIRY_OPTIONS = [
-  { label: 'Expired', value: LoanExpiredFilter.Expired },
-  { label: 'Not Expired', value: LoanExpiredFilter.NotExpired },
-  { label: 'All', value: LoanExpiredFilter.All },
+  { label: 'Expired', value: LoanExpiredFilter?.Expired },
+  { label: 'Not Expired', value: LoanExpiredFilter?.NotExpired },
+  { label: 'All', value: LoanExpiredFilter?.All },
 ];
 
 const ReportFilter = () => {

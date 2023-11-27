@@ -27,6 +27,11 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
           px={0}
           fontSize="s3"
           onClick={() => window.open(`${ROUTES.CBS_LOAN_PRODUCTS_DETAILS}?id=${id}`, '_blank')}
+          sx={{
+            '@media print': {
+              color: '#000',
+            },
+          }}
         >
           {label}{' '}
         </Button>
@@ -44,6 +49,11 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
           onClick={() =>
             window.open(`${ROUTES.CBS_ACCOUNT_SAVING_PRODUCT_DETAILS}?id=${id}`, '_blank')
           }
+          sx={{
+            '@media print': {
+              color: '#000',
+            },
+          }}
         >
           {label}{' '}
         </Button>
@@ -59,6 +69,11 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
           px={0}
           fontSize="s3"
           onClick={() => window.open(`${ROUTES.CBS_MEMBER_DETAILS}?id=${id}`, '_blank')}
+          sx={{
+            '@media print': {
+              color: '#000',
+            },
+          }}
         >
           {label}
         </Button>
@@ -74,6 +89,11 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
           px={0}
           fontSize="s3"
           onClick={() => window.open(`${ROUTES.CBS_LOAN_ACCOUNTS_DETAILS}?id=${id}`, '_blank')}
+          sx={{
+            '@media print': {
+              color: '#000',
+            },
+          }}
         >
           {label}{' '}
         </Button>
@@ -89,6 +109,11 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
           px={0}
           fontSize="s3"
           onClick={() => window.open(`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${id}`, '_blank')}
+          sx={{
+            '@media print': {
+              color: '#000',
+            },
+          }}
         >
           {label}{' '}
         </Button>
@@ -106,6 +131,11 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
           onClick={() =>
             window.open(`${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${id}`, '_blank')
           }
+          sx={{
+            '@media print': {
+              color: '#000',
+            },
+          }}
         >
           {label}{' '}
         </Button>
@@ -121,6 +151,11 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
           px={0}
           fontSize="s3"
           onClick={() => window.open(`${ROUTES.CBS_ACCOUNT_CLOSED_DETAILS}?id=${id}`, '_blank')}
+          sx={{
+            '@media print': {
+              color: '#000',
+            },
+          }}
         >
           {label}{' '}
         </Button>
@@ -135,6 +170,11 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
           color="primary.500"
           fontSize="s3"
           onClick={() => window.open(`${ROUTES.CBS_ACCOUNT_CLOSED_DETAILS}?id=${id}`, '_blank')}
+          sx={{
+            '@media print': {
+              color: '#000',
+            },
+          }}
         >
           {label}{' '}
         </Button>
