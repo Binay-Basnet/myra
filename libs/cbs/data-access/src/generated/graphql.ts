@@ -22447,6 +22447,7 @@ export type SmsSettingsQuery = {
   listAnnouncementGroup?: Maybe<AnnouncementGroupConnection>;
   listSmsSetting: SmsSettingResult;
   listSmsTemplate?: Maybe<SmsTemplateConnection>;
+  listSmsTemplateDynamicFieldForSmsType: SmsTemplateFieldFetchResult;
   listSmsTemplateField: SmsTemplateFieldFetchResult;
   smsTemplateDetail: SmsTemplateDetailResult;
 };
@@ -22463,6 +22464,10 @@ export type SmsSettingsQueryListSmsSettingArgs = {
 export type SmsSettingsQueryListSmsTemplateArgs = {
   filter?: InputMaybe<Filter>;
   paginate: Pagination;
+};
+
+export type SmsSettingsQueryListSmsTemplateDynamicFieldForSmsTypeArgs = {
+  smsType?: InputMaybe<Scalars['String']>;
 };
 
 export type SmsSettingsQuerySmsTemplateDetailArgs = {
@@ -43228,6 +43233,18 @@ export type GetSmsMinimumTxnAmountQueryVariables = Exact<{ [key: string]: never 
 
 export type GetSmsMinimumTxnAmountQuery = {
   settings: { sms?: { getMinimunTxnAmount: { amount?: string | null } } | null };
+};
+
+export type ListSmsTemplateDynamicFieldForSmsTypeQueryVariables = Exact<{
+  smsType?: InputMaybe<Scalars['String']>;
+}>;
+
+export type ListSmsTemplateDynamicFieldForSmsTypeQuery = {
+  settings: {
+    sms?: {
+      listSmsTemplateDynamicFieldForSmsType: { data?: Array<{ id: string; name: string }> | null };
+    } | null;
+  };
 };
 
 export type GetAuditLogListQueryVariables = Exact<{
@@ -73645,6 +73662,37 @@ export const useGetSmsMinimumTxnAmountQuery = <
     useAxios<GetSmsMinimumTxnAmountQuery, GetSmsMinimumTxnAmountQueryVariables>(
       GetSmsMinimumTxnAmountDocument
     ).bind(null, variables),
+    options
+  );
+export const ListSmsTemplateDynamicFieldForSmsTypeDocument = `
+    query listSmsTemplateDynamicFieldForSmsType($smsType: String) {
+  settings {
+    sms {
+      listSmsTemplateDynamicFieldForSmsType(smsType: $smsType) {
+        data {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListSmsTemplateDynamicFieldForSmsTypeQuery = <
+  TData = ListSmsTemplateDynamicFieldForSmsTypeQuery,
+  TError = unknown
+>(
+  variables?: ListSmsTemplateDynamicFieldForSmsTypeQueryVariables,
+  options?: UseQueryOptions<ListSmsTemplateDynamicFieldForSmsTypeQuery, TError, TData>
+) =>
+  useQuery<ListSmsTemplateDynamicFieldForSmsTypeQuery, TError, TData>(
+    variables === undefined
+      ? ['listSmsTemplateDynamicFieldForSmsType']
+      : ['listSmsTemplateDynamicFieldForSmsType', variables],
+    useAxios<
+      ListSmsTemplateDynamicFieldForSmsTypeQuery,
+      ListSmsTemplateDynamicFieldForSmsTypeQueryVariables
+    >(ListSmsTemplateDynamicFieldForSmsTypeDocument).bind(null, variables),
     options
   );
 export const GetAuditLogListDocument = `
