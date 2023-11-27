@@ -7,6 +7,7 @@ import {
   FormFieldSearchTerm,
   LoanBalanceFilterData,
   LoanBalanceReport as LoanBalanceReportType,
+  LoanExpiredFilter,
   LocalizedDateFilter,
   useGetIndividualKymOptionsQuery,
   useGetLoanBalanceReportQuery,
@@ -15,7 +16,6 @@ import {
   useGetMultipleSubProductsQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import {
@@ -24,6 +24,7 @@ import {
   FormCheckboxGroup,
   FormDatePicker,
   FormInput,
+  FormRadioGroup,
 } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -315,6 +316,12 @@ export const LoanBalanceReport = () => {
   );
 };
 
+const LOAN_EXPIRY_OPTIONS = [
+  { label: 'Expired', value: LoanExpiredFilter.Expired },
+  { label: 'Not Expired', value: LoanExpiredFilter.NotExpired },
+  { label: 'All', value: LoanExpiredFilter.All },
+];
+
 const ReportFilter = () => {
   const { watch } = useFormContext<LoanBalanceFilterData>();
   const productTypeIds = watch('filter.productTypes');
@@ -388,8 +395,8 @@ const ReportFilter = () => {
       <Report.Filter title="Outstanding Balance">
         <FormAmountFilter name="filter.outstandingBalance" />
       </Report.Filter>
-      <Report.Filter title="End Date">
-        <ReportDateRange name="filter.endDate" />
+      <Report.Filter title="Loan Expiry">
+        <FormRadioGroup name="filter.expiredFilter" options={LOAN_EXPIRY_OPTIONS} />
       </Report.Filter>
     </>
   );
