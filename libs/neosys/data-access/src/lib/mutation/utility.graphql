@@ -8,3 +8,14 @@ mutation addSaccosAmount($input: [SaccosSetup!]!) {
     }
   }
 }
+
+mutation addSaccosSMSCredit($input: [SaccosAndSmsCountToBeCredited]) {
+  sms {
+    addSaccosSmsCredit(input: $input) {
+      ID
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

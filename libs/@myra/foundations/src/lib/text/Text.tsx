@@ -106,6 +106,11 @@ export const Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
         cursor="pointer"
         _hover={{ textDecoration: 'underline' }}
         {...rest}
+        sx={{
+          '@media print': {
+            color: '#000',
+          },
+        }}
       >
         {children}
       </Text>
@@ -113,7 +118,16 @@ export const Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
   }
 
   return (
-    <ChakraText {...rest} {...defaultConfig[variant || 'default']} ref={ref}>
+    <ChakraText
+      {...rest}
+      {...defaultConfig[variant || 'default']}
+      ref={ref}
+      sx={{
+        '@media print': {
+          color: '#000',
+        },
+      }}
+    >
       {children}
     </ChakraText>
   );

@@ -7,6 +7,7 @@ import {
   FormFieldSearchTerm,
   LoanBalanceFilterData,
   LoanBalanceReport as LoanBalanceReportType,
+  LoanExpiredFilter,
   LocalizedDateFilter,
   useGetIndividualKymOptionsQuery,
   useGetLoanBalanceReportQuery,
@@ -23,6 +24,7 @@ import {
   FormCheckboxGroup,
   FormDatePicker,
   FormInput,
+  FormRadioGroup,
 } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -279,6 +281,14 @@ export const LoanBalanceReport = () => {
                 },
               },
               {
+                header: 'Disbursed Date',
+                accessorKey: 'disbursedDate',
+                accessorFn: (row) => localizedDate(row?.disbursedDate),
+                meta: {
+                  skipExcelFormatting: true,
+                },
+              },
+              {
                 header: 'Loan End Date',
 
                 accessorFn: (row) => localizedDate(row?.loanEndDate),
@@ -291,7 +301,6 @@ export const LoanBalanceReport = () => {
                 accessorKey: 'lastPaymentDate',
                 accessorFn: (row) => localizedDate(row?.lastPaymentDate),
                 meta: {
-                  isNumeric: true,
                   skipExcelFormatting: true,
                 },
               },
@@ -306,6 +315,12 @@ export const LoanBalanceReport = () => {
     </Report>
   );
 };
+
+const LOAN_EXPIRY_OPTIONS = [
+  { label: 'Expired', value: LoanExpiredFilter?.Expired },
+  { label: 'Not Expired', value: LoanExpiredFilter?.NotExpired },
+  { label: 'All', value: LoanExpiredFilter?.All },
+];
 
 const ReportFilter = () => {
   const { watch } = useFormContext<LoanBalanceFilterData>();
@@ -379,6 +394,9 @@ const ReportFilter = () => {
       </Report.Filter>
       <Report.Filter title="Outstanding Balance">
         <FormAmountFilter name="filter.outstandingBalance" />
+      </Report.Filter>
+      <Report.Filter title="Loan Expiry">
+        <FormRadioGroup name="filter.expiredFilter" options={LOAN_EXPIRY_OPTIONS} />
       </Report.Filter>
     </>
   );

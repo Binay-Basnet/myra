@@ -26,6 +26,7 @@ import {
   Spacer,
   Text,
 } from '@chakra-ui/react';
+import omit from 'lodash/omit';
 import qs from 'qs';
 
 import { URLFilter } from '@coop/shared/utils';
@@ -104,7 +105,7 @@ export const TableListFilter = ({ data, column, comparator }: TableListFilterPro
                       router.push(
                         {
                           query: {
-                            ...router.query,
+                            ...omit(router.query, 'paginate'),
                             filter: queryString,
                           },
                         },
@@ -115,7 +116,7 @@ export const TableListFilter = ({ data, column, comparator }: TableListFilterPro
                       router.push(
                         {
                           query: {
-                            ...router.query,
+                            ...omit(router.query, 'paginate'),
                             filter: [],
                           },
                         },

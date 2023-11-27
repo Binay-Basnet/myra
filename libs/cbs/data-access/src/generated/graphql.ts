@@ -1422,6 +1422,7 @@ export const AllLoanType = {
 export type AllLoanType = typeof AllLoanType[keyof typeof AllLoanType];
 export type AllTransactionResult = {
   accountCloseData?: Maybe<AccountCloseSuccessCard>;
+  accountOpenSuccessCard?: Maybe<AccountSuccessCardData>;
   amount?: Maybe<Scalars['String']>;
   branch?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
@@ -14759,6 +14760,8 @@ export const LoanApproveOrCancel = {
 export type LoanApproveOrCancel = typeof LoanApproveOrCancel[keyof typeof LoanApproveOrCancel];
 export type LoanBalanceFilter = {
   age?: InputMaybe<Scalars['Int']>;
+  endDate?: InputMaybe<LocalizedDateFilter>;
+  expiredFilter?: InputMaybe<LoanExpiredFilter>;
   gender?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   outstandingBalance?: InputMaybe<MinMaxFilter>;
   productNameIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -14776,6 +14779,7 @@ export type LoanBalanceReport = {
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
   disbursedBalance?: Maybe<Scalars['String']>;
+  disbursedDate?: Maybe<Scalars['Localized']>;
   interestRate?: Maybe<Scalars['Float']>;
   isClosed?: Maybe<Scalars['Boolean']>;
   isInactive?: Maybe<Scalars['Boolean']>;
@@ -14997,6 +15001,13 @@ export type LoanDisbursementResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export const LoanExpiredFilter = {
+  All: 'ALL',
+  Expired: 'EXPIRED',
+  NotExpired: 'NOT_EXPIRED',
+} as const;
+
+export type LoanExpiredFilter = typeof LoanExpiredFilter[keyof typeof LoanExpiredFilter];
 export type LoanFilters = {
   amountRange?: InputMaybe<SavingAmountRange>;
   service?: InputMaybe<SavingServiceType>;
@@ -15014,6 +15025,7 @@ export type LoanGeneralInformation = {
   interestEarned?: Maybe<Scalars['String']>;
   interestGracePeriod?: Maybe<Scalars['Int']>;
   interestRate: Scalars['Float'];
+  lastPaymentDate?: Maybe<Scalars['Localized']>;
   linkedAccountId?: Maybe<Scalars['String']>;
   linkedAccountName?: Maybe<Scalars['String']>;
   loanAccountOpenBranchId: Scalars['String'];
@@ -15810,6 +15822,7 @@ export type LoanRepaymentDetail = {
   memberProfilePicId?: Maybe<Scalars['String']>;
   memberProfilePicUrl?: Maybe<Scalars['String']>;
   paymentDate: Scalars['Localized'];
+  repaymentId: Scalars['String'];
 };
 
 export type LoanRepaymentEdge = {
@@ -19791,6 +19804,8 @@ export const Resource = {
   ReportsTxnTrialBalance: 'REPORTS_TXN_TRIAL_BALANCE',
   ReportsTxnVaultBalance: 'REPORTS_TXN_VAULT_BALANCE',
   ReportsUtilityUsage: 'REPORTS_UTILITY_USAGE',
+  RootMutation: 'ROOT_MUTATION',
+  RootQuery: 'ROOT_QUERY',
   SettingsAlternativeChannels: 'SETTINGS_ALTERNATIVE_CHANNELS',
   SettingsAuditLog: 'SETTINGS_AUDIT_LOG',
   SettingsBank: 'SETTINGS_BANK',
@@ -19959,6 +19974,7 @@ export type ReportQuery = {
   pearlsReport?: Maybe<PearlsReportResult>;
   printReport: CertificatePrint;
   shareReport: ShareReport;
+  smsReport?: Maybe<SmsReportResultWithError>;
   transactionReport: TransactionReport;
   utilityReport: UtilityReport;
 };
@@ -19979,6 +19995,10 @@ export type ReportQueryListReportsArgs = {
 
 export type ReportQueryPearlsReportArgs = {
   data: PearlsReportInput;
+};
+
+export type ReportQuerySmsReportArgs = {
+  data?: InputMaybe<SmsReportFilter>;
 };
 
 export type ReportResult = {
@@ -21059,6 +21079,7 @@ export type SavingsBalanceFilter = {
   memberIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   memberType?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
   minorWise?: InputMaybe<MinorWiseFilter>;
+  productId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   productTypes?: InputMaybe<Array<InputMaybe<NatureOfDepositProduct>>>;
 };
 
@@ -22344,6 +22365,27 @@ export type SmsAnnouncementGroupMember = {
   phoneNumber: Scalars['String'];
 };
 
+export type SmsReportFilter = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  filter?: InputMaybe<SmsUsageReportFilter>;
+  period: LocalizedDateFilter;
+};
+
+export type SmsReportResult = {
+  branchCode?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  memberNo?: Maybe<Scalars['String']>;
+  messageSent?: Maybe<SmsStatusSent>;
+  smsSentDate?: Maybe<Scalars['Localized']>;
+  smsSentMobileNumber?: Maybe<Scalars['String']>;
+  smsType?: Maybe<Scalars['String']>;
+};
+
+export type SmsReportResultWithError = {
+  data?: Maybe<Array<Maybe<SmsReportResult>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type SmsSettingData = {
   activeStatus: Scalars['Boolean'];
   category: SmsCategory;
@@ -22405,6 +22447,7 @@ export type SmsSettingsQuery = {
   listAnnouncementGroup?: Maybe<AnnouncementGroupConnection>;
   listSmsSetting: SmsSettingResult;
   listSmsTemplate?: Maybe<SmsTemplateConnection>;
+  listSmsTemplateDynamicFieldForSmsType: SmsTemplateFieldFetchResult;
   listSmsTemplateField: SmsTemplateFieldFetchResult;
   smsTemplateDetail: SmsTemplateDetailResult;
 };
@@ -22423,10 +22466,21 @@ export type SmsSettingsQueryListSmsTemplateArgs = {
   paginate: Pagination;
 };
 
+export type SmsSettingsQueryListSmsTemplateDynamicFieldForSmsTypeArgs = {
+  smsType?: InputMaybe<Scalars['String']>;
+};
+
 export type SmsSettingsQuerySmsTemplateDetailArgs = {
   id: Scalars['ID'];
 };
 
+export const SmsStatusSent = {
+  All: 'ALL',
+  Cancelled: 'CANCELLED',
+  Sent: 'SENT',
+} as const;
+
+export type SmsStatusSent = typeof SmsStatusSent[keyof typeof SmsStatusSent];
 export type SmsTemplateConnection = {
   edges?: Maybe<Array<Maybe<SmsTemplateEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -22474,6 +22528,12 @@ export type SmsTemplateInput = {
   id?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   smsType: Scalars['String'];
+};
+
+export type SmsUsageReportFilter = {
+  memberId?: InputMaybe<Array<Scalars['String']>>;
+  smsSent?: InputMaybe<SmsStatusSent>;
+  smsType?: InputMaybe<Scalars['ID']>;
 };
 
 export const SourceOfHire = {
@@ -23619,6 +23679,7 @@ export type TrialSheetReportData = {
 
 export type TrialSheetReportDataEntry = {
   balance?: Maybe<Scalars['Map']>;
+  isLeaf?: Maybe<Scalars['Boolean']>;
   ledgerId?: Maybe<Scalars['String']>;
   ledgerName?: Maybe<Scalars['Localized']>;
   under?: Maybe<Scalars['String']>;
@@ -37794,6 +37855,7 @@ export type GetLoanAccountDetailsQuery = {
           linkedAccountName?: string | null;
           installmentFrequency?: InstallmentFrequency | null;
           disbursedAmount?: string | null;
+          lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
         } | null;
         loanSchedule?: {
           total: string;
@@ -40416,6 +40478,7 @@ export type GetLoanBalanceReportQuery = {
           interestRate?: number | null;
           loanType?: AllLoanType | null;
           remainingInterestType?: BalanceType | null;
+          disbursedDate?: Record<'local' | 'en' | 'np', string> | null;
         } | null> | null;
       };
     };
@@ -42418,36 +42481,42 @@ export type GetAdjustedCharKhataReportQuery = {
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               balance?: Record<string, unknown> | null;
               under?: string | null;
+              isLeaf?: boolean | null;
             } | null> | null;
             assets?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               balance?: Record<string, unknown> | null;
               under?: string | null;
+              isLeaf?: boolean | null;
             } | null> | null;
             expenses?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               balance?: Record<string, unknown> | null;
               under?: string | null;
+              isLeaf?: boolean | null;
             } | null> | null;
             income?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               balance?: Record<string, unknown> | null;
               under?: string | null;
+              isLeaf?: boolean | null;
             } | null> | null;
             offBalance?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               balance?: Record<string, unknown> | null;
               under?: string | null;
+              isLeaf?: boolean | null;
             } | null> | null;
             orphanEntries?: Array<{
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
               balance?: Record<string, unknown> | null;
               under?: string | null;
+              isLeaf?: boolean | null;
             } | null> | null;
           } | null;
         };
@@ -43164,6 +43233,18 @@ export type GetSmsMinimumTxnAmountQueryVariables = Exact<{ [key: string]: never 
 
 export type GetSmsMinimumTxnAmountQuery = {
   settings: { sms?: { getMinimunTxnAmount: { amount?: string | null } } | null };
+};
+
+export type ListSmsTemplateDynamicFieldForSmsTypeQueryVariables = Exact<{
+  smsType?: InputMaybe<Scalars['String']>;
+}>;
+
+export type ListSmsTemplateDynamicFieldForSmsTypeQuery = {
+  settings: {
+    sms?: {
+      listSmsTemplateDynamicFieldForSmsType: { data?: Array<{ id: string; name: string }> | null };
+    } | null;
+  };
 };
 
 export type GetAuditLogListQueryVariables = Exact<{
@@ -47684,6 +47765,18 @@ export type GetAllTransactionsDetailQuery = {
           balance?: string | null;
           balanceType?: BalanceType | null;
         } | null> | null;
+        accountOpenSuccessCard?: {
+          accountId: string;
+          transactionId: string;
+          accOpenedDate?: Record<'local' | 'en' | 'np', string> | null;
+          accountName?: string | null;
+          accountType?: string | null;
+          linkedAccountId?: string | null;
+          linkedAccountName?: string | null;
+          initialDepositAmount?: string | null;
+          charges?: string | null;
+          paymentMode?: string | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -66475,6 +66568,7 @@ export const GetLoanAccountDetailsDocument = `
           linkedAccountName
           installmentFrequency
           disbursedAmount
+          lastPaymentDate
         }
         loanSchedule {
           installments {
@@ -69941,6 +70035,7 @@ export const GetLoanBalanceReportDocument = `
           interestRate
           loanType
           remainingInterestType
+          disbursedDate
         }
         totalOutstandingBalance
         totalRemainingDrBalance
@@ -72484,6 +72579,7 @@ export const GetAdjustedCharKhataReportDocument = `
               ledgerName
               balance
               under
+              isLeaf
             }
             equityAndLiablitiesTotal
             assets {
@@ -72491,6 +72587,7 @@ export const GetAdjustedCharKhataReportDocument = `
               ledgerName
               balance
               under
+              isLeaf
             }
             assetsTotal
             expenses {
@@ -72498,6 +72595,7 @@ export const GetAdjustedCharKhataReportDocument = `
               ledgerName
               balance
               under
+              isLeaf
             }
             expenseTotal
             income {
@@ -72505,6 +72603,7 @@ export const GetAdjustedCharKhataReportDocument = `
               ledgerName
               balance
               under
+              isLeaf
             }
             incomeTotal
             offBalance {
@@ -72512,6 +72611,7 @@ export const GetAdjustedCharKhataReportDocument = `
               ledgerName
               balance
               under
+              isLeaf
             }
             offBalanceTotal
             orphanEntries {
@@ -72519,6 +72619,7 @@ export const GetAdjustedCharKhataReportDocument = `
               ledgerName
               balance
               under
+              isLeaf
             }
             orphanTotal
             totalProfitLoss
@@ -73561,6 +73662,37 @@ export const useGetSmsMinimumTxnAmountQuery = <
     useAxios<GetSmsMinimumTxnAmountQuery, GetSmsMinimumTxnAmountQueryVariables>(
       GetSmsMinimumTxnAmountDocument
     ).bind(null, variables),
+    options
+  );
+export const ListSmsTemplateDynamicFieldForSmsTypeDocument = `
+    query listSmsTemplateDynamicFieldForSmsType($smsType: String) {
+  settings {
+    sms {
+      listSmsTemplateDynamicFieldForSmsType(smsType: $smsType) {
+        data {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListSmsTemplateDynamicFieldForSmsTypeQuery = <
+  TData = ListSmsTemplateDynamicFieldForSmsTypeQuery,
+  TError = unknown
+>(
+  variables?: ListSmsTemplateDynamicFieldForSmsTypeQueryVariables,
+  options?: UseQueryOptions<ListSmsTemplateDynamicFieldForSmsTypeQuery, TError, TData>
+) =>
+  useQuery<ListSmsTemplateDynamicFieldForSmsTypeQuery, TError, TData>(
+    variables === undefined
+      ? ['listSmsTemplateDynamicFieldForSmsType']
+      : ['listSmsTemplateDynamicFieldForSmsType', variables],
+    useAxios<
+      ListSmsTemplateDynamicFieldForSmsTypeQuery,
+      ListSmsTemplateDynamicFieldForSmsTypeQueryVariables
+    >(ListSmsTemplateDynamicFieldForSmsTypeDocument).bind(null, variables),
     options
   );
 export const GetAuditLogListDocument = `
@@ -79719,6 +79851,18 @@ export const GetAllTransactionsDetailDocument = `
         }
         totalDebit
         totalCredit
+        accountOpenSuccessCard {
+          accountId
+          transactionId
+          accOpenedDate
+          accountName
+          accountType
+          linkedAccountId
+          linkedAccountName
+          initialDepositAmount
+          charges
+          paymentMode
+        }
       }
     }
   }

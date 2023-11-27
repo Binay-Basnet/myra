@@ -23,6 +23,7 @@ export interface LoanOrganizationRateProps {}
 
 export const LoanOrganizationRate = () => {
   const queryClient = useQueryClient();
+  const [isConfirmationModalOpen, setIsConfirmatioModalOpen] = useState(false);
 
   const [selectedRateId, setSelectedRateId] = useState('');
 
@@ -71,6 +72,7 @@ export const LoanOrganizationRate = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['getLoanOrganizationRateList']);
         handleUpdateModalClose();
+        handleConfirmationModalClose();
       },
       promise: setOrganizationRate({
         data: { ...methods.getValues() } as InterestRateSetupInput,
@@ -90,6 +92,7 @@ export const LoanOrganizationRate = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['getLoanOrganizationRateList']);
         handleUpdateModalClose();
+        handleConfirmationModalClose();
       },
       promise: editOrganizationRate({
         id: selectedRateId,
@@ -163,6 +166,11 @@ export const LoanOrganizationRate = () => {
 
     setSelectedRateId('');
     onUpdateModalClose();
+    handleConfirmationModalClose();
+  };
+
+  const handleConfirmationModalClose = () => {
+    setIsConfirmatioModalOpen(false);
   };
 
   return (
@@ -224,6 +232,10 @@ export const LoanOrganizationRate = () => {
           isOpen={isUpdateModalOpen}
           onClose={handleUpdateModalClose}
           onSave={handleSaveInterestRate}
+          isConfirmationModalOpen={isConfirmationModalOpen}
+          setIsConfirmationModalOpen={setIsConfirmatioModalOpen}
+          handleConfirmationModalClose={handleConfirmationModalClose}
+          type="loan"
           methods={methods}
           rate={
             selectedRateId

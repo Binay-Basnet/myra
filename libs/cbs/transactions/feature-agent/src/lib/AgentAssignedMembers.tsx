@@ -28,6 +28,8 @@ export const AgentAssignedMembers = () => {
 
   const id = router?.query?.['id'];
 
+  const search = router?.query?.['search'];
+
   const { mutateAsync: removeMemberAccount } = useRemoveMemberAccountAgentMutation();
 
   const {
@@ -49,6 +51,7 @@ export const AgentAssignedMembers = () => {
             ],
           },
         ],
+        query: search as string,
       },
       // filter: {
       //   objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,

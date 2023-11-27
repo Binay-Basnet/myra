@@ -10,9 +10,10 @@ import {
   useGetLoanProductTypeQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
+import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, localizedText, RouteToDetailsPage } from '@coop/cbs/utils';
-import { FormAmountFilter, FormBranchSelect, FormDatePicker, FormSelect } from '@coop/shared/form';
+import { FormAmountFilter, FormBranchSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type LoanCallFilters = Omit<LoanCallReportFilter, 'branchId' | 'accountTypeId'> & {
@@ -45,7 +46,7 @@ export const LoanCallSheetReport = () => {
         branchId: branchIds,
         period: {
           from: filters?.period?.from,
-          to: filters?.period?.from,
+          to: filters?.period?.to,
         } as LocalizedDateFilter,
         accountTypeId: accountIds,
       } as LoanCallReportFilter,
@@ -97,7 +98,7 @@ export const LoanCallSheetReport = () => {
             />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Select Date" />
+            <ReportDateRange label="Date" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

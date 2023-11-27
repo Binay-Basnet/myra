@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
 import { Box, GridItem, Text } from '@myra-ui';
@@ -22,10 +23,15 @@ export const LedgerReport = () => {
 
   const isAdjusted = router?.query['isAdjusted'] === 'true';
 
+  const ledgerId = filters?.ledgerId || {};
+
   const { data, isFetching } = useGetLedgerReportQuery(
     {
       data: {
-        ledgerId: filters?.ledgerId,
+        ledgerId:
+          ledgerId && typeof ledgerId === 'object' && 'value' in ledgerId
+            ? ledgerId?.['value']
+            : ledgerId,
         period: filters?.period,
         inculdeAdjustment: isAdjusted,
       } as GeneralLedgerFilter,
@@ -34,8 +40,9 @@ export const LedgerReport = () => {
   );
   const ledgerReport = data?.report?.otherReport?.generalLedgerReport
     ?.data as GeneralLedgerReportEntry[];
-  const adjustedReport = data?.report?.otherReport?.generalLedgerReport
-    ?.adjustedEntries as GeneralLedgerReportEntry[];
+  const adjustedReport =
+    (data?.report?.otherReport?.generalLedgerReport
+      ?.adjustedEntries as GeneralLedgerReportEntry[]) ?? [];
   const ledgerName = data?.report?.otherReport?.generalLedgerReport?.ledgerName;
   const openingBalance = data?.report?.otherReport?.generalLedgerReport?.summary?.openingBalance;
   const closingBalance = data?.report?.otherReport?.generalLedgerReport?.summary?.closingBalance;
@@ -383,32 +390,22 @@ export const LedgerReport = () => {
 };
 
 const LedgerReportInputs = () => {
-  const [triggerReset, setTriggerReset] = useState(false);
   const methods = useFormContext();
   const { watch } = useFormContext();
   const router = useRouter();
 
   const branchId = watch('branchId') as string;
-  const { id, dateFromen, branch } = router.query;
-  const redirectDateFromEn = router.query['dateFromen'] as string;
-  const redirectDateFromNp = router.query['dateFromnp'] as string;
+  const { id, dateFrom, dateTo, branch } = router.query;
 
-  const redirectDateToEn = router.query['dateToen'] as string;
+  const redirectDate =
+    dateFrom && dateTo
+      ? {
+          from: JSON.parse(dateFrom as string),
+          to: JSON.parse(dateTo as string),
+        }
+      : null;
 
-  const redirectDateToNp = router.query['dateTonp'] as string;
-
-  const redirectDate = {
-    from: {
-      en: redirectDateFromEn,
-      np: redirectDateFromNp,
-    },
-    to: {
-      en: redirectDateToEn,
-      np: redirectDateToNp,
-    },
-  };
-
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (branch) {
       methods.setValue('branchId', branch);
     }
@@ -416,16 +413,11 @@ const LedgerReportInputs = () => {
     if (redirectDate) {
       methods.setValue('period', redirectDate);
     }
-    if (id) {
-      setTriggerReset(true);
-    }
-  }, [id, dateFromen, branch, branchId]);
 
-  useEffect(() => {
-    if (triggerReset) {
-      methods.setValue('ledgerId', id);
+    if (id) {
+      methods.setValue('ledgerId', JSON.parse(id as string));
     }
-  }, [triggerReset]);
+  }, [id, redirectDate, branch, branchId]);
 
   return (
     <Report.Inputs>
@@ -444,8 +436,8 @@ const LedgerReportInputs = () => {
 
       <GridItem colSpan={1}>
         <Box
-          pointerEvents={dateFromen ? 'none' : 'auto'}
-          cursor={dateFromen ? 'not-allowed' : 'pointer'}
+          pointerEvents={redirectDate ? 'none' : 'auto'}
+          cursor={redirectDate ? 'not-allowed' : 'pointer'}
         >
           <ReportDateRange setInitialDate={false} />
         </Box>

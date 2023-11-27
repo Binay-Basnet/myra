@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Control, Controller, FieldValues, useFormContext } from 'react-hook-form';
 import { ControllerRenderProps, UseControllerProps } from 'react-hook-form/dist/types/controller';
 import { MultiValue, SingleValue } from 'chakra-react-select';
@@ -78,11 +78,25 @@ const FormControl = <T extends Record<string, unknown>>({
     }
   }, []);
 
+  const appendedOptions = useMemo(() => {
+    const temp = options;
+
+    if (rest.isMulti && Array.isArray(value)) {
+      value?.forEach((val) => {
+        if (!temp?.find((opt) => opt?.value === val?.value)) {
+          temp?.unshift(val);
+        }
+      });
+    }
+
+    return temp;
+  }, [options, value, rest.isMulti]);
+
   return (
     <Select
       data-testid={name}
       errorText={name ? (get(errors, name)?.message as string) : undefined}
-      options={options}
+      options={appendedOptions}
       name={name}
       value={rest.isMulti ? value : foundValue}
       inputId={name}

@@ -495,6 +495,7 @@ export type Municipality = {
 export type Mutation = {
   neosys: NeosysMutation;
   presignedUrl: PresignedUrlMutation;
+  sms: SmsMutation;
   utility: UtilityMutation;
 };
 
@@ -549,7 +550,9 @@ export type NeosysClientDetails = {
   logoUrl?: Maybe<Scalars['String']>;
   organizationCode: Scalars['String'];
   organizationName: Scalars['String'];
+  organizationStartDate?: Maybe<Scalars['Localized']>;
   organizationType?: Maybe<OrganizationType>;
+  slogan?: Maybe<Scalars['String']>;
 };
 
 export type NeosysClientFilter = {
@@ -568,7 +571,9 @@ export type NeosysClientMinimalInfo = {
   localGovernmentId?: Maybe<Scalars['String']>;
   locality?: Maybe<Scalars['String']>;
   organizationCode?: Maybe<Scalars['String']>;
+  organizationStartDate?: Maybe<Scalars['Localized']>;
   provinceId?: Maybe<Scalars['String']>;
+  slogan?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
   wardNo?: Maybe<Scalars['Int']>;
 };
@@ -969,6 +974,7 @@ export type Province = {
 export type Query = {
   administration: AdministrationQuery;
   neosys: NeosysQuery;
+  sms: SmsQuery;
   utility: UtilityQuery;
 };
 
@@ -990,6 +996,11 @@ export type SaccosAmountSetupResult = {
   error?: Maybe<MutationError>;
 };
 
+export type SaccosAndSmsCountToBeCredited = {
+  count: Scalars['String'];
+  slug: Scalars['String'];
+};
+
 export type SaccosAvailableAmountConnection = {
   edges?: Maybe<Array<Maybe<SaccosAvailableAmountEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -1008,10 +1019,57 @@ export type SaccosAvailableAmountInfo = {
   slug: Scalars['String'];
 };
 
+export type SaccosAvailableSmsCountConnection = {
+  edges?: Maybe<Array<Maybe<SaccosAvailableSmsCountEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SaccosAvailableSmsCountEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<SaccosAvailableSmsCountInfo>;
+};
+
+export type SaccosAvailableSmsCountInfo = {
+  id: Scalars['String'];
+  messageCount: Scalars['String'];
+  saccossName: Scalars['String'];
+  slug: Scalars['String'];
+};
+
+export type SaccosDetails = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<SaccosDetailsNode>;
+};
+
+export type SaccosDetailsConnection = {
+  edges?: Maybe<Array<Maybe<SaccosDetails>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SaccosDetailsNode = {
+  RemainingCredits?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  saccosName?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
 export type SaccosSetup = {
   amount: Scalars['String'];
   slug: Scalars['String'];
   txnType: UtilityTxnTypeAtNeosys;
+};
+
+export type SaccosSmsSetup = {
+  count: Scalars['String'];
+  slug: Scalars['String'];
+  txnType: SmsTxnTypeAtNeosys;
+};
+
+export type SaccosSmsSetupResult = {
+  ID?: Maybe<Scalars['ID']>;
+  error?: Maybe<MutationError>;
 };
 
 export type ServerError = {
@@ -1019,6 +1077,56 @@ export type ServerError = {
   message: Scalars['String'];
 };
 
+export type SmsQuery = {
+  listSaccosAvailableSmsCount?: Maybe<SaccosAvailableSmsCountConnection>;
+  listSmsRecords?: Maybe<SmsRecordsConnection>;
+};
+
+export type SmsQueryListSaccosAvailableSmsCountArgs = {
+  filter?: InputMaybe<Filter>;
+  paginate: Pagination;
+};
+
+export type SmsQueryListSmsRecordsArgs = {
+  filter?: InputMaybe<Filter>;
+  paginate: Pagination;
+};
+
+export type SmsRecordsConnection = {
+  edges?: Maybe<Array<Maybe<SmsRecordsEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SmsRecordsEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<SmsRecordsInfo>;
+};
+
+export type SmsRecordsInfo = {
+  count?: Maybe<Scalars['String']>;
+  crAmount: Scalars['String'];
+  drAmount: Scalars['String'];
+  id: Scalars['String'];
+  messageCount: Scalars['String'];
+  saccossName: Scalars['String'];
+  slug: Scalars['String'];
+  smsType: Scalars['String'];
+  txnStatus: SmsUsageObjStateType;
+};
+
+export const SmsTxnTypeAtNeosys = {
+  Credit: 'CREDIT',
+  Debit: 'DEBIT',
+} as const;
+
+export type SmsTxnTypeAtNeosys = typeof SmsTxnTypeAtNeosys[keyof typeof SmsTxnTypeAtNeosys];
+export const SmsUsageObjStateType = {
+  Cancelled: 'CANCELLED',
+  Sent: 'SENT',
+} as const;
+
+export type SmsUsageObjStateType = typeof SmsUsageObjStateType[keyof typeof SmsUsageObjStateType];
 export const Transaction_Direction = {
   Purchased: 'PURCHASED',
   Sold: 'SOLD',
@@ -1478,6 +1586,25 @@ export type VersionInput = {
   version: Scalars['String'];
 };
 
+export type SmsMutation = {
+  addSaccosSmsCount: SaccosSmsSetupResult;
+  addSaccosSmsCredit: SaccosSmsSetupResult;
+  listSaccosRemainingCredit: SaccosDetailsConnection;
+};
+
+export type SmsMutationAddSaccosSmsCountArgs = {
+  input: Array<SaccosSmsSetup>;
+};
+
+export type SmsMutationAddSaccosSmsCreditArgs = {
+  input?: InputMaybe<Array<InputMaybe<SaccosAndSmsCountToBeCredited>>>;
+};
+
+export type SmsMutationListSaccosRemainingCreditArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type UtilityMutation = {
   addSaccosAmount?: Maybe<SaccosAmountSetupResult>;
 };
@@ -1824,6 +1951,27 @@ export type AddSaccosAmountMutation = {
         | MutationError_ValidationError_Fragment
         | null;
     } | null;
+  };
+};
+
+export type AddSaccosSmsCreditMutationVariables = Exact<{
+  input?: InputMaybe<
+    Array<InputMaybe<SaccosAndSmsCountToBeCredited>> | InputMaybe<SaccosAndSmsCountToBeCredited>
+  >;
+}>;
+
+export type AddSaccosSmsCreditMutation = {
+  sms: {
+    addSaccosSmsCredit: {
+      ID?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
   };
 };
 
@@ -2629,6 +2777,24 @@ export type GetUtilityClientBalanceListQuery = {
   };
 };
 
+export type ListSaccosAvailableSmsCountQueryVariables = Exact<{
+  paginate: Pagination;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type ListSaccosAvailableSmsCountQuery = {
+  sms: {
+    listSaccosAvailableSmsCount?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor?: string | null;
+        node?: { id: string; slug: string; messageCount: string; saccossName: string } | null;
+      } | null> | null;
+      pageInfo?: PaginationFragment | null;
+    } | null;
+  };
+};
+
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
   ... on BadRequestError {
@@ -3109,6 +3275,33 @@ export const useAddSaccosAmountMutation = <TError = unknown, TContext = unknown>
   useMutation<AddSaccosAmountMutation, TError, AddSaccosAmountMutationVariables, TContext>(
     ['addSaccosAmount'],
     useAxios<AddSaccosAmountMutation, AddSaccosAmountMutationVariables>(AddSaccosAmountDocument),
+    options
+  );
+export const AddSaccosSmsCreditDocument = `
+    mutation addSaccosSMSCredit($input: [SaccosAndSmsCountToBeCredited]) {
+  sms {
+    addSaccosSmsCredit(input: $input) {
+      ID
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddSaccosSmsCreditMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddSaccosSmsCreditMutation,
+    TError,
+    AddSaccosSmsCreditMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddSaccosSmsCreditMutation, TError, AddSaccosSmsCreditMutationVariables, TContext>(
+    ['addSaccosSMSCredit'],
+    useAxios<AddSaccosSmsCreditMutation, AddSaccosSmsCreditMutationVariables>(
+      AddSaccosSmsCreditDocument
+    ),
     options
   );
 export const AllAdministrationDocument = `
@@ -4225,6 +4418,41 @@ export const useGetUtilityClientBalanceListQuery = <
     ['getUtilityClientBalanceList', variables],
     useAxios<GetUtilityClientBalanceListQuery, GetUtilityClientBalanceListQueryVariables>(
       GetUtilityClientBalanceListDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListSaccosAvailableSmsCountDocument = `
+    query listSaccosAvailableSmsCount($paginate: Pagination!, $filter: Filter) {
+  sms {
+    listSaccosAvailableSmsCount(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          id
+          slug
+          messageCount
+          saccossName
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useListSaccosAvailableSmsCountQuery = <
+  TData = ListSaccosAvailableSmsCountQuery,
+  TError = unknown
+>(
+  variables: ListSaccosAvailableSmsCountQueryVariables,
+  options?: UseQueryOptions<ListSaccosAvailableSmsCountQuery, TError, TData>
+) =>
+  useQuery<ListSaccosAvailableSmsCountQuery, TError, TData>(
+    ['listSaccosAvailableSmsCount', variables],
+    useAxios<ListSaccosAvailableSmsCountQuery, ListSaccosAvailableSmsCountQueryVariables>(
+      ListSaccosAvailableSmsCountDocument
     ).bind(null, variables),
     options
   );

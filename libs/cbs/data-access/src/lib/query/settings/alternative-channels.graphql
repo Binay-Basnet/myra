@@ -228,3 +228,16 @@ query getSMSMinimumTxnAmount {
     }
   }
 }
+
+query listSmsTemplateDynamicFieldForSmsType($smsType: String) {
+  settings {
+    sms {
+      listSmsTemplateDynamicFieldForSmsType(smsType: $smsType) {
+        data {
+          id
+          name
+        }
+      }
+    }
+  }
+}
