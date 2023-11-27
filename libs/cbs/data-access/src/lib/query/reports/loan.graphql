@@ -22,6 +22,7 @@ query getLoanBalanceReport($data: LoanBalanceFilterData!) {
           loanType
 
           remainingInterestType
+          disbursedDate
         }
         totalOutstandingBalance
         totalRemainingDrBalance

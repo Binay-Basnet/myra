@@ -399,7 +399,18 @@ export const TableBodyCell = <T,>({ cell, freezeFirstColumn, ...props }: TableBo
     {...(cell.column.columnDef.meta?.skipExcelFormatting ? { 'data-t': 's' } : {})}
     {...props}
   >
-    <Text as="div" textOverflow="ellipsis" overflow="hidden" color="gray.800" whiteSpace="nowrap">
+    <Text
+      as="div"
+      textOverflow="ellipsis"
+      overflow="hidden"
+      color="gray.800"
+      whiteSpace="nowrap"
+      sx={{
+        '@media print': {
+          color: '#000',
+        },
+      }}
+    >
       {flexRender(cell.column.columnDef.cell, cell.getContext())}
     </Text>
   </ChakraTable.Td>

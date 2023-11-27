@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Box, Column, Text } from '@myra-ui';
+import { Box, Button, Column, Text } from '@myra-ui';
 
 import {
   CharKhataReportFilter,
@@ -52,6 +52,7 @@ type TrialSheetReportDataEntry = {
   ledgerId?: Maybe<Scalars['String']>;
   ledgerName?: Maybe<Scalars['Localized']>;
   under?: Maybe<Scalars['String']>;
+  isLeaf?: boolean;
 };
 
 export const AdjustedCharKhataReport = () => {
@@ -312,7 +313,7 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
   const { getValues } = useFormContext<TrialSheetReportFilters>();
   const branchIDs = getValues()?.branchId?.map((a) => a.value);
 
-  //   const datePeriod = getValues()?.period;
+  const datePeriod = getValues()?.period;
 
   const { data: branchListQueryData } = useGetBranchListQuery({
     paginate: {
@@ -342,23 +343,34 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
       accessorKey: 'ledgerName',
       accessorFn: (row) =>
         `${row?.ledgerId} ${row?.ledgerName ? '-' : ''} ${localizedText(row?.ledgerName)}`,
-      //   cell: (props) => (
-      //     <Button
-      //       variant="link"
-      //       color="primary.500"
-      //       onClick={() =>
-      //         window.open(
-      //           `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
-      //             props.row?.original?.ledgerId
-      //           }&branch=${JSON.stringify(branchIDs)}&date=${datePeriod.to.en}`,
-      //           '_blank'
-      //         )
-      //       }
-      //     >
-      //       {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
-      //       {localizedText(props?.row?.original?.ledgerName)}
-      //     </Button>
-      //   ),
+      cell: (props) =>
+        props?.row?.original?.isLeaf ? (
+          <Button
+            variant="link"
+            color="primary.500"
+            padding={0}
+            onClick={() =>
+              window.open(
+                `/cbs/reports/cbs-reports/others/ledger-balance/new?coaHead=${JSON.stringify({
+                  label: `${props.row.original.ledgerId} ${
+                    props?.row?.original?.ledgerName ? '-' : ''
+                  } ${localizedText(props?.row?.original?.ledgerName)}`,
+                  value: props?.row?.original?.ledgerId,
+                })}&branch=${JSON.stringify(branchIDs)}&dateFrom=${JSON.stringify(
+                  datePeriod.from
+                )}&dateTo=${JSON.stringify(datePeriod.to)}`,
+                '_blank'
+              )
+            }
+          >
+            {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+            {localizedText(props?.row?.original?.ledgerName)}
+          </Button>
+        ) : (
+          `${props?.row?.original?.ledgerId} ${
+            props?.row?.original?.ledgerName ? '-' : ''
+          } ${localizedText(props?.row?.original?.ledgerName)}`
+        ),
       meta: {
         width: '80%',
       },

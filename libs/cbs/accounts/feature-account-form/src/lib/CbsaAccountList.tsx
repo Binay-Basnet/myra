@@ -67,6 +67,7 @@ export const CBSAccountList = () => {
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.accountOpenedDate)}</Text>,
         filterFn: 'dateTime',
         enableColumnFilter: true,
+        enableSorting: true,
       },
       {
         id: 'memberCode',

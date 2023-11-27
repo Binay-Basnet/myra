@@ -1,6 +1,7 @@
 import { BsFilter } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import { Box, Icon } from '@chakra-ui/react';
+import omit from 'lodash/omit';
 import qs from 'qs';
 
 import { RangedDatePicker } from '@myra-ui/date-picker';
@@ -79,7 +80,7 @@ export const TableDateFilter = ({ column }: TableDateFilterProps) => {
           router.push(
             {
               query: {
-                ...router.query,
+                ...omit(router.query, 'paginate'),
                 filter: queryString,
               },
             },

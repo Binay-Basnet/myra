@@ -706,6 +706,7 @@ query getLoanAccountDetails(
           linkedAccountName
           installmentFrequency
           disbursedAmount
+          lastPaymentDate
         }
         loanSchedule {
           installments {

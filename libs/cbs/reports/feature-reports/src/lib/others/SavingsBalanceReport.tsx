@@ -12,6 +12,7 @@ import {
   SavingsBalanceFilterData,
   SavingsBalanceReport,
   SavingsBalanceReportResult,
+  useGetDepositProductSettingsListQuery,
   useGetIndividualKymOptionsQuery,
   useGetSavingsBalanceReportQuery,
 } from '@coop/cbs/data-access';
@@ -26,6 +27,7 @@ import {
   FormInput,
   FormMemberSelect,
   FormRadioGroup,
+  FormSelect,
 } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -55,6 +57,7 @@ type Filter = {
     amount?: MinMaxFilter;
     age?: number;
     gender?: string[];
+    productId?: string[];
   };
 };
 export const SavingBalanceReport = () => {
@@ -65,6 +68,11 @@ export const SavingBalanceReport = () => {
       ? filters?.branchId?.map((t) => t.value)
       : null;
   const genderIds = filters?.filter?.gender ?? null;
+
+  const productIds =
+    filters?.filter?.productId && filters?.filter?.productId?.length !== 0
+      ? filters?.filter?.productId?.map((t) => (t as unknown as { value: string }).value)
+      : null;
 
   const { data: genderFields } = useGetIndividualKymOptionsQuery({
     searchTerm: FormFieldSearchTerm.Gender,
@@ -80,6 +88,7 @@ export const SavingBalanceReport = () => {
         filter: {
           ...filters?.filter,
           gender: genderIds,
+          productId: productIds,
         },
         branchId: branchIds,
         period: {
@@ -97,6 +106,19 @@ export const SavingBalanceReport = () => {
   const totalDRBalance = data?.report?.otherReport?.savingsBalanceReport?.totalDrBalance;
   const totalInterest = data?.report?.otherReport?.savingsBalanceReport?.totalInterest;
   const totalInterestType = data?.report?.otherReport?.savingsBalanceReport?.interestType;
+
+  const { data: savingProductsListData } = useGetDepositProductSettingsListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+
+  const productOptions =
+    savingProductsListData?.settings?.general?.depositProduct?.list?.edges?.map((item) => ({
+      label: item?.node?.productName as string,
+      value: item?.node?.id as string,
+    }));
 
   return (
     <Report
@@ -372,15 +394,11 @@ export const SavingBalanceReport = () => {
             <FormRadioGroup name="filter.minorWise" options={minorOptions} orientation="vertical" />
           </Report.Filter>
           <Report.Filter title="Product Wise">
-            <FormCheckboxGroup
-              name="filter.productTypes"
-              list={[
-                { label: 'Recurring Saving', value: NatureOfDepositProduct?.RecurringSaving },
-                { label: 'Saving', value: NatureOfDepositProduct?.Saving },
-                { label: 'Current', value: NatureOfDepositProduct?.Current },
-                { label: 'Term Saving', value: NatureOfDepositProduct?.TermSavingOrFd },
-              ]}
-              orientation="column"
+            <FormSelect
+              name="filter.productId"
+              label="Product Name"
+              isMulti
+              options={productOptions}
             />
           </Report.Filter>
           <Report.Filter title="Gender">

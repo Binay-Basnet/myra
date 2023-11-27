@@ -21,6 +21,7 @@ import { CustomInterestRateSetupInput, localizedDate } from '@coop/cbs/utils';
 import { SideBar } from '../components';
 
 export const InterestUpdatePage = () => {
+  const [isConfirmationModalOpen, setIsConfirmatioModalOpen] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
@@ -134,6 +135,7 @@ export const InterestUpdatePage = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['getSavingProductInterestRateList']);
         handleUpdateModalClose();
+        handleConfirmationModalClose();
       },
       promise: updateSavingInterestRate({
         productId: id as string,
@@ -154,6 +156,7 @@ export const InterestUpdatePage = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['getSavingProductInterestRateList']);
         handleUpdateModalClose();
+        handleConfirmationModalClose();
       },
       promise: editInterestRate({
         id: selectedRateId,
@@ -168,6 +171,10 @@ export const InterestUpdatePage = () => {
 
     setSelectedRateId('');
     onUpdateModalClose();
+  };
+
+  const handleConfirmationModalClose = () => {
+    setIsConfirmatioModalOpen(false);
   };
 
   return (
@@ -217,6 +224,9 @@ export const InterestUpdatePage = () => {
           onClose={handleUpdateModalClose}
           onSave={handleSaveInterestRate}
           onEdit={handleEditInterestRate}
+          isConfirmationModalOpen={isConfirmationModalOpen}
+          setIsConfirmationModalOpen={setIsConfirmatioModalOpen}
+          handleConfirmationModalClose={handleConfirmationModalClose}
           methods={methods}
           rate={
             selectedRateId

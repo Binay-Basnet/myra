@@ -21,7 +21,7 @@ import {
   useAddSmsTemplateMutation,
   useListSmsSettingQuery,
   useListSmsTemplateDetailQuery,
-  useListSmsTemplateFieldQuery,
+  useListSmsTemplateDynamicFieldForSmsTypeQuery,
 } from '@coop/cbs/data-access';
 import { FormCheckbox, FormInput, FormSelect, FormTextAreaWithMentions } from '@coop/shared/form';
 
@@ -84,15 +84,25 @@ export const AddSMSTemplateModal = ({ isOpen, onClose, id }: IAddSMSTemplateModa
     }
   };
 
-  const { data: smsTemplateFieldData } = useListSmsTemplateFieldQuery();
+  // const { data: smsTemplateFieldData } = useListSmsTemplateFieldQuery();
+
+  const smsType = methods.watch('smsType');
+
+  useEffect(() => {
+    methods.resetField('content');
+  }, [smsType]);
+
+  const { data: smsTemplateFieldData } = useListSmsTemplateDynamicFieldForSmsTypeQuery({ smsType });
 
   const smsTemplateFields = useMemo(
     () =>
-      smsTemplateFieldData?.settings?.sms?.listSmsTemplateField?.data?.map((field) => ({
-        id: field?.id,
-        display: field?.name,
-      })) ?? [],
-    []
+      smsTemplateFieldData?.settings?.sms?.listSmsTemplateDynamicFieldForSmsType?.data?.map(
+        (field) => ({
+          id: field?.id,
+          display: field?.name,
+        })
+      ) ?? [],
+    [smsTemplateFieldData]
   );
 
   const { data: smsTemplateDetailData, isFetching } = useListSmsTemplateDetailQuery(
@@ -140,7 +150,12 @@ export const AddSMSTemplateModal = ({ isOpen, onClose, id }: IAddSMSTemplateModa
                 <FormInput name="name" label="Title" />
               </GridItem>
 
-              <FormSelect name="smsType" label="SMS Type" options={smsTypeOptions} />
+              <FormSelect
+                name="smsType"
+                label="SMS Type"
+                options={smsTypeOptions}
+                isDisabled={!!id}
+              />
             </FormSection>
 
             <Box display="flex" flexDirection="column" gap="s16" p="s20">
@@ -156,7 +171,9 @@ export const AddSMSTemplateModal = ({ isOpen, onClose, id }: IAddSMSTemplateModa
                 />
 
                 <Box display="flex" justifyContent="flex-end" alignItems="center" gap="s4">
-                  <Text>Characters: ~{content?.length}</Text>
+                  <Text>
+                    Characters: ~{content?.length} [{Math.ceil((content?.length || 0) / 160)} sms]
+                  </Text>
 
                   <Tooltip title="Total characters may vary because of dynamic fields.">
                     <Box cursor="pointer">

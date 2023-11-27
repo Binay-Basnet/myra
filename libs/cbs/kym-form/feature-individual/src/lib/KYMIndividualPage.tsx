@@ -204,7 +204,11 @@ export const KYMIndividualPage = () => {
     >
       <FormLayout methods={methods} hasSidebar>
         <FormHeader
-          title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberIndiviual}`}
+          title={
+            action === 'edit'
+              ? `Update Member - ${featureCode?.newMemberIndiviual}`
+              : `Add New Member - ${featureCode?.newMemberIndiviual}`
+          }
           closeLink={ROUTES.CBS_MEMBER_LIST}
         />
 

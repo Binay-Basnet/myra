@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
-import { Box, GridItem } from '@myra-ui';
+import { Button, GridItem } from '@myra-ui';
 
 import {
   LedgerBalanceReportData,
@@ -37,6 +38,8 @@ export const LedgerBalanceReport = () => {
   const coaHeads =
     filters?.coaHead && filters?.coaHead.length !== 0 ? filters?.coaHead?.map((t) => t.value) : [];
 
+  const datePeriod = filters?.period;
+
   const { data, isFetching } = useGetLedgerBalanceReportQuery(
     {
       data: {
@@ -62,7 +65,7 @@ export const LedgerBalanceReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Other Report', link: '/reports/cbs/others' },
+            { label: 'Other Report', link: '/cbs/reports/cbs-reports/others' },
             {
               label: 'Ledger Balance Report',
               link: '/cbs/reports/cbs-reports/others/ledger-balance/new',
@@ -88,6 +91,26 @@ export const LedgerBalanceReport = () => {
               {
                 header: 'Ledger Id',
                 accessorKey: 'ledgerName',
+                cell: (props) => (
+                  <Button
+                    variant="link"
+                    color="primary.500"
+                    padding={0}
+                    onClick={() =>
+                      window.open(
+                        `/cbs/reports/cbs-reports/others/ledger/new?id=${JSON.stringify({
+                          label: props?.row?.original?.ledgerName,
+                          value: props?.row?.original?.ledgerId,
+                        })}&branch=${props?.row?.original?.branchId}&dateFrom=${JSON.stringify(
+                          datePeriod?.from
+                        )}&dateTo=${JSON.stringify(datePeriod?.to)}`,
+                        '_blank'
+                      )
+                    }
+                  >
+                    {props?.row?.original?.ledgerName}
+                  </Button>
+                ),
               },
               {
                 header: 'Opening Balance',
@@ -149,49 +172,42 @@ export const LedgerBalanceReport = () => {
 const AdjustedLedgerInputs = () => {
   const router = useRouter();
   const methods = useFormContext();
-  const { id, dateFromen, branch } = router.query;
-  const ledgerId = router.query['id'] as string[];
-  const redirectDateFromEn = router.query['dateFromen'] as string;
-  const redirectDateFromNp = router.query['dateFromnp'] as string;
+  const { branch, coaHead, dateFrom, dateTo } = router.query;
 
-  const redirectDateToEn = router.query['dateToen'] as string;
+  const redirectDate =
+    dateFrom && dateTo
+      ? {
+          from: JSON.parse(dateFrom as string),
+          to: JSON.parse(dateTo as string),
+        }
+      : null;
 
-  const redirectDateToNp = router.query['dateTonp'] as string;
+  const redirectCoaHeads = coaHead ? JSON?.parse(router?.query['coaHead'] as string) : null;
 
-  const redirectDate = {
-    from: {
-      en: redirectDateFromEn,
-      np: redirectDateFromNp,
-    },
-    to: {
-      en: redirectDateToEn,
-      np: redirectDateToNp,
-    },
-  };
   const redirectBranchesArray = branch
-    ? (JSON?.parse(router?.query['branch'] as string) as unknown as string[])
+    ? (JSON?.parse(branch as string) as unknown as string[])
     : null;
-  const redirectBranchesIDs = redirectBranchesArray?.map((b) => ({ value: b })) as unknown as {
-    label: string;
-    value: string;
-  }[];
-  const ledgerArray = [ledgerId];
-  const ledgerIDs = ledgerArray?.map((b) => ({ value: b })) as unknown as {
-    label: string;
-    value: string;
-  }[];
 
-  useEffect(() => {
-    if (redirectBranchesArray) {
+  const redirectBranchesIDs = useMemo(
+    () =>
+      redirectBranchesArray?.map((b) => ({ value: b })) as unknown as {
+        label: string;
+        value: string;
+      }[],
+    [redirectBranchesArray]
+  );
+
+  useDeepCompareEffect(() => {
+    if (redirectBranchesIDs?.length) {
       methods.setValue('branchId', redirectBranchesIDs);
     }
-    if (ledgerId) {
-      methods.setValue('coaHead', ledgerIDs);
+    if (redirectCoaHeads) {
+      methods.setValue('coaHead', [redirectCoaHeads]);
     }
     if (redirectDate) {
       methods.setValue('period', redirectDate);
     }
-  }, [id, dateFromen, branch]);
+  }, [redirectCoaHeads, redirectDate, redirectBranchesIDs]);
 
   return (
     <>
@@ -201,17 +217,20 @@ const AdjustedLedgerInputs = () => {
           isMulti
           name="branchId"
           label="Service Center"
-          isDisabled={!!branch}
+          // isDisabled={!!branch}
         />
       </GridItem>
 
-      <FormLeafCoaHeadSelect name="coaHead" label="COA Head" isMulti isDisabled={!!id} />
-      <Box
-        pointerEvents={dateFromen ? 'none' : 'auto'}
-        cursor={dateFromen ? 'not-allowed' : 'pointer'}
-      >
-        <ReportDateRange name="period" label="Date" />
-      </Box>
+      <FormLeafCoaHeadSelect
+        name="coaHead"
+        label="COA Head"
+        isMulti
+        // isDisabled={!!redirectCoaHeads}
+      />
+
+      {/* <Box pointerEvents={dateFrom ? 'none' : 'auto'} cursor={dateFrom ? 'not-allowed' : 'pointer'}> */}
+      <ReportDateRange name="period" label="Date" />
+      {/* </Box> */}
     </>
   );
 };

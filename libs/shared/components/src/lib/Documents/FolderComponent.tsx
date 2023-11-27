@@ -43,7 +43,7 @@ export const FolderComponent = () => (
   <Box p="s16" borderRadius="8" bg="white" height={180} width={170}>
     <Box display="flex" justifyContent="space-between">
       <Checkbox />
-      <Popover isLazy placement="right" colorScheme="primary" closeOnBlur={false}>
+      <Popover isLazy placement="right" colorScheme="primary">
         {() => (
           <>
             <PopoverTrigger>
@@ -65,19 +65,17 @@ export const FolderComponent = () => (
                           <Icon as={AiOutlineRight} size="sm" />
                         </Box>
                       </PopoverTrigger>
-                      <Portal>
-                        <CustomPopoverContent>
-                          {catPopoverList?.map((item) => (
-                            <Box display="flex" gap="s16" alignItems="center">
-                              <Checkbox />
-                              <Box display="flex" gap="s8" alignItems="center">
-                                <Icon as={BsTag} size="sm" />
-                                <Text>{item}</Text>
-                              </Box>
+                      <CustomPopoverContent>
+                        {catPopoverList?.map((item) => (
+                          <Box display="flex" gap="s16" alignItems="center">
+                            <Checkbox />
+                            <Box display="flex" gap="s8" alignItems="center">
+                              <Icon as={BsTag} size="sm" />
+                              <Text>{item}</Text>
                             </Box>
-                          ))}
-                        </CustomPopoverContent>
-                      </Portal>
+                          </Box>
+                        ))}
+                      </CustomPopoverContent>
                     </>
                   )}
                 </Popover>

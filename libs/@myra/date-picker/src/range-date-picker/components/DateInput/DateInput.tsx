@@ -49,6 +49,7 @@ export const DateInput = ({
         borderColor: isOpen ? 'primary.500' : 'gray.300',
         boxShadow: isOpen ? `0 0 0 2px var(--myra-colors-primary-300)` : 'none',
       }}
+      color="gray.800"
       placeholder="YYYY-MM-DD - YYYY-MM-DD"
     />
     {value && value?.from?.en && (

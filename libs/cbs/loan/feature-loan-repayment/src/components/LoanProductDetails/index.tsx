@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 
 import { Box, Text } from '@myra-ui';
 
 import {
   LoanProductInstallment,
   PenaltyType,
+  useGetEndOfDayDateDataQuery,
   useGetLoanAccountDetailsQuery,
   useGetLoanPreviewQuery,
 } from '@coop/cbs/data-access';
@@ -96,6 +98,10 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
       },
     ];
   }, [loanData]);
+
+  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+
+  const closingDate = endOfDayData?.transaction?.endOfDayDate?.value;
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">
@@ -224,7 +230,12 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
             </Text>
             <Text fontSize="s3" fontWeight="600">
               {loanData?.repaymentDetails?.lastPaymentDate?.local
-                ? localizedDate(loanData?.repaymentDetails?.lastPaymentDate)
+                ? `${localizedDate(
+                    loanData?.repaymentDetails?.lastPaymentDate
+                  )} [${differenceInCalendarDays(
+                    new Date(closingDate?.en as string),
+                    new Date(loanData?.repaymentDetails?.lastPaymentDate?.en)
+                  )} days ago]`
                 : '-'}
             </Text>
           </Box>
