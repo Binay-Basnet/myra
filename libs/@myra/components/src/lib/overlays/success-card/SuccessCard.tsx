@@ -522,21 +522,24 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
             </Box>
           )}
           {/* here */}
-          {!isEmpty(extraDetails) &&
-            Object?.entries(extraDetails)?.map((extraDetail) => (
-              <Box display="flex" alignItems="center" justifyContent="space-between">
-                <Box color="gray.600" fontSize="s2" fontWeight="500">
-                  {extraDetail[0]}
-                </Box>
-                {typeof extraDetail[1] === 'string' ? (
-                  <Box color="gray.700" fontSize="s3" fontWeight="600" textTransform="capitalize">
-                    {extraDetail[1]?.toString()?.replace(/_/g, ' ')?.toLowerCase()}
+          {!isEmpty(extraDetails) && (
+            <Box mt="s16">
+              {Object?.entries(extraDetails)?.map((extraDetail) => (
+                <Box display="flex" alignItems="center" justifyContent="space-between">
+                  <Box color="gray.600" fontSize="s2" fontWeight="500">
+                    {extraDetail[0]}
                   </Box>
-                ) : (
-                  extraDetail[1]
-                )}
-              </Box>
-            ))}
+                  {typeof extraDetail[1] === 'string' ? (
+                    <Box color="gray.700" fontSize="s3" fontWeight="600" textTransform="capitalize">
+                      {extraDetail[1]?.toString()?.replace(/_/g, ' ')?.toLowerCase()}
+                    </Box>
+                  ) : (
+                    extraDetail[1]
+                  )}
+                </Box>
+              ))}
+            </Box>
+          )}
         </Box>
 
         {showSignatures && (
@@ -780,17 +783,10 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                   </Box>
                 </Box>
               )}
-              {/* here */}
-              <Box
-                borderBottom={total ? '1px' : 'none'}
-                borderBottomColor="border.layout"
-                display="flex"
-                flexDir="column"
-                gap={dublicate ? 's4' : 's10'}
-                py="s8"
-              >
-                {!isEmpty(extraDetails) &&
-                  Object?.entries(extraDetails)?.map((extraDetail) => (
+
+              {!isEmpty(extraDetails) && (
+                <Box mt="s16">
+                  {Object?.entries(extraDetails)?.map((extraDetail) => (
                     <Box display="flex" alignItems="center" justifyContent="space-between">
                       <Box color="gray.600" fontSize="s2" fontWeight="500">
                         {extraDetail[0]}
@@ -809,7 +805,8 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                       )}
                     </Box>
                   ))}
-              </Box>
+                </Box>
+              )}
             </Box>
             {showSignatures && (
               <Box

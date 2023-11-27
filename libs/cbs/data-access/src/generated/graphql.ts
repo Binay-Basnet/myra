@@ -19796,6 +19796,8 @@ export const Resource = {
   ReportsTxnTrialBalance: 'REPORTS_TXN_TRIAL_BALANCE',
   ReportsTxnVaultBalance: 'REPORTS_TXN_VAULT_BALANCE',
   ReportsUtilityUsage: 'REPORTS_UTILITY_USAGE',
+  RootMutation: 'ROOT_MUTATION',
+  RootQuery: 'ROOT_QUERY',
   SettingsAlternativeChannels: 'SETTINGS_ALTERNATIVE_CHANNELS',
   SettingsAuditLog: 'SETTINGS_AUDIT_LOG',
   SettingsBank: 'SETTINGS_BANK',
@@ -19964,6 +19966,7 @@ export type ReportQuery = {
   pearlsReport?: Maybe<PearlsReportResult>;
   printReport: CertificatePrint;
   shareReport: ShareReport;
+  smsReport?: Maybe<SmsReportResultWithError>;
   transactionReport: TransactionReport;
   utilityReport: UtilityReport;
 };
@@ -19984,6 +19987,10 @@ export type ReportQueryListReportsArgs = {
 
 export type ReportQueryPearlsReportArgs = {
   data: PearlsReportInput;
+};
+
+export type ReportQuerySmsReportArgs = {
+  data?: InputMaybe<SmsReportFilter>;
 };
 
 export type ReportResult = {
@@ -22350,6 +22357,27 @@ export type SmsAnnouncementGroupMember = {
   phoneNumber: Scalars['String'];
 };
 
+export type SmsReportFilter = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  filter?: InputMaybe<SmsUsageReportFilter>;
+  period: LocalizedDateFilter;
+};
+
+export type SmsReportResult = {
+  branchCode?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  memberNo?: Maybe<Scalars['String']>;
+  messageSent?: Maybe<SmsStatusSent>;
+  smsSentDate?: Maybe<Scalars['Localized']>;
+  smsSentMobileNumber?: Maybe<Scalars['String']>;
+  smsType?: Maybe<Scalars['String']>;
+};
+
+export type SmsReportResultWithError = {
+  data?: Maybe<Array<Maybe<SmsReportResult>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type SmsSettingData = {
   activeStatus: Scalars['Boolean'];
   category: SmsCategory;
@@ -22433,6 +22461,13 @@ export type SmsSettingsQuerySmsTemplateDetailArgs = {
   id: Scalars['ID'];
 };
 
+export const SmsStatusSent = {
+  All: 'ALL',
+  Cancelled: 'CANCELLED',
+  Sent: 'SENT',
+} as const;
+
+export type SmsStatusSent = typeof SmsStatusSent[keyof typeof SmsStatusSent];
 export type SmsTemplateConnection = {
   edges?: Maybe<Array<Maybe<SmsTemplateEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -22480,6 +22515,12 @@ export type SmsTemplateInput = {
   id?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   smsType: Scalars['String'];
+};
+
+export type SmsUsageReportFilter = {
+  memberId?: InputMaybe<Array<Scalars['String']>>;
+  smsSent?: InputMaybe<SmsStatusSent>;
+  smsType?: InputMaybe<Scalars['ID']>;
 };
 
 export const SourceOfHire = {
