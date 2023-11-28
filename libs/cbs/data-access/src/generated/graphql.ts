@@ -366,6 +366,19 @@ export type AccountPremium = {
   minRate?: InputMaybe<Scalars['Float']>;
 };
 
+export type AccountServiceActivation = {
+  error?: Maybe<MutationError>;
+  result?: Maybe<Scalars['Boolean']>;
+};
+
+export type AccountServiceActivationInput = {
+  accountList: Array<Scalars['String']>;
+  autoRenew: Scalars['Boolean'];
+  id: Scalars['String'];
+  service: AlternativeChannelServiceType;
+  serviceStatus: AlternativeChannelStatus;
+};
+
 export type AccountSuccessCardData = {
   accOpenedDate?: Maybe<Scalars['Localized']>;
   accountId: Scalars['ID'];
@@ -1575,7 +1588,12 @@ export type AlternativeChannelMemberActivations = {
 };
 
 export type AlternativeChannelMutation = {
+  accountServiceActivation: AccountServiceActivation;
   serviceActivation?: Maybe<AlternativeChannelServiceActivationResult>;
+};
+
+export type AlternativeChannelMutationAccountServiceActivationArgs = {
+  input: AccountServiceActivationInput;
 };
 
 export type AlternativeChannelMutationServiceActivationArgs = {
@@ -1593,6 +1611,7 @@ export type AlternativeChannelPaymentMode =
 export type AlternativeChannelQuery = {
   list?: Maybe<AlternativeChannelConnection>;
   memberActivations?: Maybe<AlternativeChannelMemberActivations>;
+  userDetails?: Maybe<EbankingUserDetailsResult>;
 };
 
 export type AlternativeChannelQueryListArgs = {
@@ -1604,8 +1623,13 @@ export type AlternativeChannelQueryMemberActivationsArgs = {
   memberId: Scalars['String'];
 };
 
+export type AlternativeChannelQueryUserDetailsArgs = {
+  input: EbankingUserDetailsInput;
+};
+
 export type AlternativeChannelServiceActivationInput = {
   accountTransfer?: InputMaybe<AccountTransferPaymentForAlternativeChannel>;
+  autoRenew?: InputMaybe<Scalars['Boolean']>;
   bankCheque?: InputMaybe<BankChequePaymentForAlternativeChannel>;
   cash?: InputMaybe<DepositCash>;
   email?: InputMaybe<Scalars['String']>;
@@ -6900,6 +6924,36 @@ export type EbankingTransactionFilter = {
   accounts?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   date?: InputMaybe<DateFilter>;
   transactionDirection?: InputMaybe<EbankingTransactionCrOrDr>;
+};
+
+export type EbankingUserAccountsStatus = {
+  accountId: Scalars['String'];
+  accountName?: Maybe<Scalars['String']>;
+  accountNature: Scalars['String'];
+  productName?: Maybe<Scalars['String']>;
+  status: Scalars['Boolean'];
+};
+
+export type EbankingUserDetailsData = {
+  accounts?: Maybe<Array<EbankingUserAccountsStatus>>;
+  autoRenew?: Maybe<Scalars['Boolean']>;
+  coopConnection?: Maybe<Scalars['Boolean']>;
+  lastActive?: Maybe<Scalars['String']>;
+  lastRenewDate?: Maybe<Scalars['Localized']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  serviceStatus?: Maybe<AlternativeChannelStatus>;
+};
+
+export type EbankingUserDetailsInput = {
+  id: Scalars['String'];
+  serviceType: AlternativeChannelServiceType;
+};
+
+export type EbankingUserDetailsResult = {
+  data?: Maybe<EbankingUserDetailsData>;
+  error?: Maybe<QueryError>;
 };
 
 export const EmployeeClass = {
@@ -25581,6 +25635,25 @@ export type SetAgentTemplateMutation = {
   };
 };
 
+export type AccountServiceActivationMutationVariables = Exact<{
+  input: AccountServiceActivationInput;
+}>;
+
+export type AccountServiceActivationMutation = {
+  alternativeChannel?: {
+    accountServiceActivation: {
+      result?: boolean | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  } | null;
+};
+
 export type ResetPasswordMutationVariables = Exact<{
   userId: Scalars['String'];
   newPassword: Scalars['String'];
@@ -33096,6 +33169,39 @@ export type ListAgentTemplateQuery = {
         } | null;
         account?: { id: string; installmentAmount?: string | null } | null;
       } | null> | null;
+    } | null;
+  };
+};
+
+export type GetUserDetailsQueryVariables = Exact<{
+  input: EbankingUserDetailsInput;
+}>;
+
+export type GetUserDetailsQuery = {
+  alternativeChannel: {
+    userDetails?: {
+      data?: {
+        memberId?: string | null;
+        memberName?: string | null;
+        serviceStatus?: AlternativeChannelStatus | null;
+        phoneNumber?: string | null;
+        coopConnection?: boolean | null;
+        lastActive?: string | null;
+        autoRenew?: boolean | null;
+        accounts?: Array<{
+          accountId: string;
+          accountName?: string | null;
+          productName?: string | null;
+          accountNature: string;
+          status: boolean;
+        }> | null;
+      } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | null;
     } | null;
   };
 };
@@ -49938,6 +50044,38 @@ export const useSetAgentTemplateMutation = <TError = unknown, TContext = unknown
     useAxios<SetAgentTemplateMutation, SetAgentTemplateMutationVariables>(SetAgentTemplateDocument),
     options
   );
+export const AccountServiceActivationDocument = `
+    mutation accountServiceActivation($input: AccountServiceActivationInput!) {
+  alternativeChannel {
+    accountServiceActivation(input: $input) {
+      result
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAccountServiceActivationMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AccountServiceActivationMutation,
+    TError,
+    AccountServiceActivationMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    AccountServiceActivationMutation,
+    TError,
+    AccountServiceActivationMutationVariables,
+    TContext
+  >(
+    ['accountServiceActivation'],
+    useAxios<AccountServiceActivationMutation, AccountServiceActivationMutationVariables>(
+      AccountServiceActivationDocument
+    ),
+    options
+  );
 export const ResetPasswordDocument = `
     mutation resetPassword($userId: String!, $newPassword: String!, $oldPassword: String!) {
   user {
@@ -60533,6 +60671,45 @@ export const useListAgentTemplateQuery = <TData = ListAgentTemplateQuery, TError
     useAxios<ListAgentTemplateQuery, ListAgentTemplateQueryVariables>(
       ListAgentTemplateDocument
     ).bind(null, variables),
+    options
+  );
+export const GetUserDetailsDocument = `
+    query getUserDetails($input: EbankingUserDetailsInput!) {
+  alternativeChannel {
+    userDetails(input: $input) {
+      data {
+        memberId
+        memberName
+        serviceStatus
+        phoneNumber
+        coopConnection
+        lastActive
+        accounts {
+          accountId
+          accountName
+          productName
+          accountNature
+          status
+        }
+        autoRenew
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetUserDetailsQuery = <TData = GetUserDetailsQuery, TError = unknown>(
+  variables: GetUserDetailsQueryVariables,
+  options?: UseQueryOptions<GetUserDetailsQuery, TError, TData>
+) =>
+  useQuery<GetUserDetailsQuery, TError, TData>(
+    ['getUserDetails', variables],
+    useAxios<GetUserDetailsQuery, GetUserDetailsQueryVariables>(GetUserDetailsDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetMeDocument = `
