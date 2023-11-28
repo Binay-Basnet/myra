@@ -27,7 +27,10 @@ export const CoopPinResetPage = () => {
 
   const selectedCoop = useAppSelector((state) => state?.auth?.selectedCoop);
 
-  const selectedCoopPhone = cooperativesList?.find((c) => c?.id === selectedCoop)?.mobileNo;
+  const mobileNumber = router?.query?.['mobileNumber'];
+
+  const selectedCoopPhone =
+    mobileNumber || cooperativesList?.find((c) => c?.id === selectedCoop)?.mobileNo;
 
   const [status, setStatus] = useState<'generate' | 'otp'>('generate');
 
