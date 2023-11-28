@@ -35,6 +35,7 @@ query getDepositProductSettingsList($paginate: Pagination, $filter: DepositProdu
                 username
                 userType
               }
+              isMandatorySaving
             }
           }
           totalCount

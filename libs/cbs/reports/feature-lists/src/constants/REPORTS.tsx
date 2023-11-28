@@ -50,6 +50,7 @@ export enum Report {
   CLOSED_SAVING_ACCOUNT_STATEMENT = 'Closed Saving Account Statement',
   SAVING_ACCOUNT_ACCRUED_INTEREST_REPORT = 'Saving Account Accrued Interest Report',
   E_TDS_REPORT = 'e-TDS Report',
+  REGULAR_RECURRING_SAVING_INSTALLMENT_REPORT = 'Regular/Recurring Saving Installment Report',
 
   LOAN_INDIVIDUAL_STATEMENT = 'Loan Account Statement',
   LOAN_AGING_REPORT = 'Loan Aging Report',
@@ -358,6 +359,13 @@ export const REPORTS: ReportType = {
       link: 'e-tds',
       component: <Reports.ETDSReport />,
       acl: 'REPORTS_SAVINGS_E_TDS',
+    },
+    {
+      id: '5.21',
+      report: Report.REGULAR_RECURRING_SAVING_INSTALLMENT_REPORT,
+      link: 'regular-recurring-saving-installment',
+      component: <Reports.RegularRecurringSavingInstallmentReport />,
+      acl: 'REPORTS_RECURRING_SAVING_INSTALLMENT',
     },
   ],
 

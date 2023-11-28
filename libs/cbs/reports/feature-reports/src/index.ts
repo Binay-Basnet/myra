@@ -11,6 +11,7 @@ export * from './lib/deposit/FixedDepositReport';
 export * from './lib/deposit/InterestPostingReport';
 export * from './lib/deposit/InterestTaxReport';
 export * from './lib/deposit/MinorSavingBalanceReport';
+export * from './lib/deposit/RegularRecurringSavingInstallmentReport';
 export * from './lib/deposit/SavingAccountAccruedInterestReport';
 export * from './lib/deposit/SavingProductBalanceReport';
 export * from './lib/deposit/SavingStatementReport';

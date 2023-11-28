@@ -6098,6 +6098,7 @@ export type DepositReport = {
   fixedDepositReport?: Maybe<FixedDepositReportResult>;
   interestStatementReport: InterestPostingReportResult;
   interestTaxReport: InterestTaxReportResult;
+  recurringSavingInstallmentReport: RecurringSavingInstallmentResult;
   savingAccruedInterestReport: SavingAccruedInterestResult;
   savingProductBalanceReport: SavingProductBalanceResult;
   savingStatementReport?: Maybe<ReportResult>;
@@ -6139,6 +6140,10 @@ export type DepositReportInterestStatementReportArgs = {
 
 export type DepositReportInterestTaxReportArgs = {
   data: InterestTaxReportFilter;
+};
+
+export type DepositReportRecurringSavingInstallmentReportArgs = {
+  data: RecurringSavingInstallmentInput;
 };
 
 export type DepositReportSavingAccruedInterestReportArgs = {
@@ -19760,6 +19765,7 @@ export const Resource = {
   ReportsOthersPearlsReport: 'REPORTS_OTHERS_PEARLS_REPORT',
   ReportsOthersShareCertificate: 'REPORTS_OTHERS_SHARE_CERTIFICATE',
   ReportsOthersUserList: 'REPORTS_OTHERS_USER_LIST',
+  ReportsRecurringSavingInstallment: 'REPORTS_RECURRING_SAVING_INSTALLMENT',
   ReportsSavingsAccountLockedStatus: 'REPORTS_SAVINGS_ACCOUNT_LOCKED_STATUS',
   ReportsSavingsClosedAccount: 'REPORTS_SAVINGS_CLOSED_ACCOUNT',
   ReportsSavingsClosedSavingAccount: 'REPORTS_SAVINGS_CLOSED_SAVING_ACCOUNT',
@@ -19885,6 +19891,41 @@ export type RebateTypeInput = {
   rebateAmount?: InputMaybe<Scalars['Amount']>;
   rebateLedgerMapping?: InputMaybe<Scalars['String']>;
   rebateRate?: InputMaybe<Scalars['Float']>;
+};
+
+export const RecurringSavingDepositFrequency = {
+  Daily: 'DAILY',
+  Monthly: 'MONTHLY',
+  Weekly: 'WEEKLY',
+  Yearly: 'YEARLY',
+} as const;
+
+export type RecurringSavingDepositFrequency =
+  typeof RecurringSavingDepositFrequency[keyof typeof RecurringSavingDepositFrequency];
+export type RecurringSavingInstallmentInput = {
+  branchId: Array<Scalars['String']>;
+  productName: Array<Scalars['String']>;
+};
+
+export type RecurringSavingInstallmentResult = {
+  data?: Maybe<Array<Maybe<RecurringSavingInstallmentResultData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type RecurringSavingInstallmentResultData = {
+  depositFrequency?: Maybe<RecurringSavingDepositFrequency>;
+  duesInstallment?: Maybe<Scalars['Int']>;
+  fineAmount?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  installmentAmount?: Maybe<Scalars['String']>;
+  installmentPaidUpto?: Maybe<Scalars['Localized']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
+  savingAccountNumber?: Maybe<Scalars['String']>;
+  savingBalance?: Maybe<Scalars['String']>;
+  serviceCenter?: Maybe<Scalars['String']>;
 };
 
 export type ReleaseGuaranteeInput = {
@@ -40143,6 +40184,34 @@ export type GetAccountLockStatusReportQuery = {
   };
 };
 
+export type GetRecurringSavingInstallmentReportQueryVariables = Exact<{
+  data: RecurringSavingInstallmentInput;
+}>;
+
+export type GetRecurringSavingInstallmentReportQuery = {
+  report: {
+    depositReport: {
+      recurringSavingInstallmentReport: {
+        data?: Array<{
+          id?: string | null;
+          memberId?: string | null;
+          memberName?: string | null;
+          memberCode?: string | null;
+          savingAccountNumber?: string | null;
+          productName?: string | null;
+          savingBalance?: string | null;
+          depositFrequency?: RecurringSavingDepositFrequency | null;
+          installmentAmount?: string | null;
+          installmentPaidUpto?: Record<'local' | 'en' | 'np', string> | null;
+          duesInstallment?: number | null;
+          fineAmount?: string | null;
+          serviceCenter?: string | null;
+        } | null> | null;
+      };
+    };
+  };
+};
+
 export type GetUserReportQueryVariables = Exact<{
   data?: InputMaybe<UserReportFilter>;
 }>;
@@ -45910,6 +45979,7 @@ export type GetDepositProductSettingsListQuery = {
               typeOfMember?: Array<KymMemberTypesEnum | null> | null;
               createdAt: Record<'local' | 'en' | 'np', string>;
               modifiedAt: string;
+              isMandatorySaving?: boolean | null;
               createdBy: { id: string; name: string; username: string; userType: UserType };
               modifiedBy: { id: string; name: string; username: string; userType: UserType };
             };
@@ -69630,6 +69700,46 @@ export const useGetAccountLockStatusReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetRecurringSavingInstallmentReportDocument = `
+    query getRecurringSavingInstallmentReport($data: RecurringSavingInstallmentInput!) {
+  report {
+    depositReport {
+      recurringSavingInstallmentReport(data: $data) {
+        data {
+          id
+          memberId
+          memberName
+          memberCode
+          savingAccountNumber
+          productName
+          savingBalance
+          depositFrequency
+          installmentAmount
+          installmentPaidUpto
+          duesInstallment
+          fineAmount
+          serviceCenter
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetRecurringSavingInstallmentReportQuery = <
+  TData = GetRecurringSavingInstallmentReportQuery,
+  TError = unknown
+>(
+  variables: GetRecurringSavingInstallmentReportQueryVariables,
+  options?: UseQueryOptions<GetRecurringSavingInstallmentReportQuery, TError, TData>
+) =>
+  useQuery<GetRecurringSavingInstallmentReportQuery, TError, TData>(
+    ['getRecurringSavingInstallmentReport', variables],
+    useAxios<
+      GetRecurringSavingInstallmentReportQuery,
+      GetRecurringSavingInstallmentReportQueryVariables
+    >(GetRecurringSavingInstallmentReportDocument).bind(null, variables),
+    options
+  );
 export const GetUserReportDocument = `
     query getUserReport($data: UserReportFilter) {
   report {
@@ -77329,6 +77439,7 @@ export const GetDepositProductSettingsListDocument = `
                 username
                 userType
               }
+              isMandatorySaving
             }
           }
           totalCount
