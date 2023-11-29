@@ -353,7 +353,7 @@ export const InstallmentData = ({
         </>
       )}
 
-      {totalRebate && mode === '0' ? (
+      {mode === '0' ? (
         <>
           <Box display="flex" justifyContent="space-between">
             <Text fontSize="s3" fontWeight={500} color="gray.700">
