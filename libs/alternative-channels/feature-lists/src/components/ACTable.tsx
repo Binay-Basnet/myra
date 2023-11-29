@@ -100,7 +100,7 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
 
   useEffect(() => {
     setIsServiceActive(userData?.serviceStatus);
-    setIsAutoRenew(userData?.autoRenew);
+    setIsAutoRenew(userData?.autoRenew ? 'true' : 'false');
     setAccounts(accountsList);
   }, [JSON.stringify(userData), JSON.stringify(accountsList)]);
 
@@ -349,7 +349,7 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
                   { label: 'No', value: false },
                 ]}
                 label="Auto Renew"
-                onChange={(e) => setIsAutoRenew(e as unknown as boolean)}
+                onChange={(e) => setIsAutoRenew(e as 'true' | 'false')}
               />
             </Box>
           </>
