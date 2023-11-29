@@ -22468,6 +22468,8 @@ export type SmsReportFilter = {
 
 export type SmsReportResult = {
   branchCode?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['String']>;
   memberNo?: Maybe<Scalars['String']>;
   messageSent?: Maybe<SmsStatusSent>;
@@ -42950,6 +42952,28 @@ export type GetUtilityUsageReportQuery = {
         }> | null;
       };
     };
+  };
+};
+
+export type GetSmsUsageReportQueryVariables = Exact<{
+  data?: InputMaybe<SmsReportFilter>;
+}>;
+
+export type GetSmsUsageReportQuery = {
+  report: {
+    smsReport?: {
+      data?: Array<{
+        branchCode?: string | null;
+        branchName?: string | null;
+        memberName?: string | null;
+        memberNo?: string | null;
+        memberId?: string | null;
+        smsType?: string | null;
+        messageSent?: SmsStatusSent | null;
+        smsSentDate?: Record<'local' | 'en' | 'np', string> | null;
+        smsSentMobileNumber?: string | null;
+      } | null> | null;
+    } | null;
   };
 };
 
@@ -73261,6 +73285,36 @@ export const useGetUtilityUsageReportQuery = <TData = GetUtilityUsageReportQuery
     ['getUtilityUsageReport', variables],
     useAxios<GetUtilityUsageReportQuery, GetUtilityUsageReportQueryVariables>(
       GetUtilityUsageReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSmsUsageReportDocument = `
+    query getSMSUsageReport($data: SmsReportFilter) {
+  report {
+    smsReport(data: $data) {
+      data {
+        branchCode
+        branchName
+        memberName
+        memberNo
+        memberId
+        smsType
+        messageSent
+        smsSentDate
+        smsSentMobileNumber
+      }
+    }
+  }
+}
+    `;
+export const useGetSmsUsageReportQuery = <TData = GetSmsUsageReportQuery, TError = unknown>(
+  variables?: GetSmsUsageReportQueryVariables,
+  options?: UseQueryOptions<GetSmsUsageReportQuery, TError, TData>
+) =>
+  useQuery<GetSmsUsageReportQuery, TError, TData>(
+    variables === undefined ? ['getSMSUsageReport'] : ['getSMSUsageReport', variables],
+    useAxios<GetSmsUsageReportQuery, GetSmsUsageReportQueryVariables>(
+      GetSmsUsageReportDocument
     ).bind(null, variables),
     options
   );
