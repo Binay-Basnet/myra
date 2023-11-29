@@ -353,31 +353,29 @@ export const InstallmentData = ({
         </>
       )}
 
-      {mode === '0' ? (
-        <>
-          <Box display="flex" justifyContent="space-between">
+      <Box display={mode === '0' ? 'block' : 'none'}>
+        <Box display="flex" justifyContent="space-between">
+          <Text fontSize="s3" fontWeight={500} color="gray.700">
+            Rebate Available
+          </Text>
+
+          <Box display="flex" gap="s4" alignItems="center">
             <Text fontSize="s3" fontWeight={500} color="gray.700">
-              Rebate Available
+              {amountConverter(totalRebate)}
             </Text>
 
-            <Box display="flex" gap="s4" alignItems="center">
-              <Text fontSize="s3" fontWeight={500} color="gray.700">
-                {amountConverter(totalRebate)}
-              </Text>
-
-              {hasPartialInstallment && (
-                <Tooltip title="This rebate includes for the payment that is paid partially. Please proceed accordingly.">
-                  <Box cursor="pointer" display="flex">
-                    <Icon as={IoWarning} color="warning.500" />
-                  </Box>
-                </Tooltip>
-              )}
-            </Box>
+            {hasPartialInstallment && (
+              <Tooltip title="This rebate includes for the payment that is paid partially. Please proceed accordingly.">
+                <Box cursor="pointer" display="flex">
+                  <Icon as={IoWarning} color="warning.500" />
+                </Box>
+              </Tooltip>
+            )}
           </Box>
+        </Box>
 
-          <Rebate />
-        </>
-      ) : null}
+        <Rebate />
+      </Box>
 
       <Divider />
 
