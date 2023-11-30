@@ -26,6 +26,7 @@ export const IBTCompleteModal = ({ transfer, approveModal }: IIBTCompleteModalPr
       query: {
         redirectFrom: 'IBT',
         requestId: transfer?.id,
+        senderBranch: transfer?.sender,
         entries: JSON.stringify([
           {
             accountId: transfer?.ibtAccount,
