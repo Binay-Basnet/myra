@@ -212,6 +212,16 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
     });
   };
 
+  const updateStatus = (accountId: string, newStatus: boolean) => {
+    const newArray = accounts.map((item) => {
+      if (item.accountId === accountId) {
+        return { ...item, status: newStatus };
+      }
+      return item;
+    });
+    return newArray;
+  };
+
   return (
     <Box>
       <Table
@@ -269,19 +279,8 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
               accountNature={item?.accountNature}
               status={item?.status}
               onChange={(e) => {
-                let tempArray = [...accounts];
-                tempArray = tempArray?.filter((account) => account.accountId !== item?.accountId);
-                tempArray = [
-                  ...tempArray,
-                  {
-                    accountId: item?.accountId,
-                    accountName: item?.accountName,
-                    productName: item?.productName,
-                    accountNature: item?.accountNature,
-                    status: e?.target?.checked,
-                  },
-                ];
-                setAccounts(tempArray);
+                const newArray = updateStatus(item?.accountId, e.target.checked);
+                setAccounts(newArray);
               }}
             />
           ))
