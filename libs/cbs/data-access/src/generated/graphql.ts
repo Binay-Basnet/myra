@@ -15237,6 +15237,12 @@ export type LoanInsuranceSchemeInput = {
   schemeName?: InputMaybe<Scalars['String']>;
 };
 
+export type LoanInterest = {
+  accountNo?: Maybe<Scalars['String']>;
+  finePaid?: Maybe<Scalars['String']>;
+  interestIncome?: Maybe<Scalars['String']>;
+};
+
 export const LoanInterestMethod = {
   Diminishing: 'DIMINISHING',
   Straight: 'STRAIGHT',
@@ -18740,11 +18746,16 @@ export type OrganizationStatisticsInput = {
 
 export type OtherReport = {
   generalLedgerReport: GenderLedgerReportResult;
+  savingLoanInterestReport: SavingLoanInterestReportResult;
   savingsBalanceReport: SavingsBalanceReportResult;
 };
 
 export type OtherReportGeneralLedgerReportArgs = {
   data: GeneralLedgerFilter;
+};
+
+export type OtherReportSavingLoanInterestReportArgs = {
+  data: SavingLoanInterestReport;
 };
 
 export type OtherReportSavingsBalanceReportArgs = {
@@ -21057,6 +21068,12 @@ export type SavingFilters = {
   transactionType?: InputMaybe<SavingTransactionType>;
 };
 
+export type SavingInterest = {
+  accountNo?: Maybe<Scalars['String']>;
+  interestPaid?: Maybe<Scalars['String']>;
+  tdsDeducted?: Maybe<Scalars['String']>;
+};
+
 export type SavingInterestPostingResult = {
   error?: Maybe<MutationError>;
 };
@@ -21085,6 +21102,32 @@ export const SavingInvestmentType = {
 } as const;
 
 export type SavingInvestmentType = typeof SavingInvestmentType[keyof typeof SavingInvestmentType];
+export type SavingLoanInterest = {
+  loanAccountEntry?: Maybe<Array<LoanInterest>>;
+  memberCode: Scalars['String'];
+  memberId: Scalars['ID'];
+  memberName: Scalars['String'];
+  savingAccountEntry?: Maybe<Array<SavingInterest>>;
+};
+
+export type SavingLoanInterestReport = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
+};
+
+export type SavingLoanInterestReportResult = {
+  data?: Maybe<Array<Maybe<SavingLoanInterest>>>;
+  error?: Maybe<QueryError>;
+  grandTotalFinePaid?: Maybe<Scalars['String']>;
+  grandTotalInterestIncome?: Maybe<Scalars['String']>;
+  grandTotalInterestPaid?: Maybe<Scalars['String']>;
+  grandTotalTds?: Maybe<Scalars['String']>;
+  totalFinePaid?: Maybe<Scalars['Any']>;
+  totalInterestIncome?: Maybe<Scalars['Any']>;
+  totalInterestPaid?: Maybe<Scalars['Any']>;
+  totalTds?: Maybe<Scalars['Any']>;
+};
+
 export type SavingProductBalanceData = {
   accountTotal?: Maybe<Scalars['Any']>;
   balanceTotal?: Maybe<Scalars['Any']>;

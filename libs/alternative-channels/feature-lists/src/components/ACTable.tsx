@@ -58,7 +58,7 @@ const AccountCard = (props: AccountCardType) => {
         <Text fontSize="r1">{accountName}</Text>
         <Text fontSize="s3">{accountId}</Text>
         <Text fontSize="s3">
-          {productName}`[${accountNature}]`
+          {productName}[{accountNature}]
         </Text>
       </Box>
       <Box display="flex" alignItems="center" gap="s8">
