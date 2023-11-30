@@ -91,7 +91,11 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
 
   const alternativeList = data?.alternativeChannel?.list?.edges ?? [];
 
-  const { data: userDetails, isFetching } = useGetUserDetailsQuery({
+  const {
+    data: userDetails,
+    isFetching,
+    refetch,
+  } = useGetUserDetailsQuery({
     input: { id: router?.query?.['id'] as string, serviceType },
   });
 
@@ -203,6 +207,7 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
       onSuccess: () => {
         onClose();
         setIsUpdateAccountState(false);
+        refetch();
       },
     });
   };
