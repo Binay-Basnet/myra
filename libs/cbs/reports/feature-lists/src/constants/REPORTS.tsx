@@ -121,6 +121,7 @@ export enum Report {
   OTHERS_SHARE_CERTIFICATE_PRINT_REPORT = 'Share Certificate Report',
   OTHERS_FD_CERTIFICATE_PRINT_REPORT = 'FD-Certificate Report',
   OTHERS_LEDGER_BALANCE_REPORT = 'Ledger Balance Report',
+  OTHERS_SAVING_LOAN_INTEREST_REPORT = 'Saving and Loan Interest Report',
 
   INVENTORY_REGISTER_REPORT = 'Inventory Register Report',
   INVENTORY_SALES_REPORT = 'Inventory Item Sales Report',
@@ -743,6 +744,13 @@ export const REPORTS: ReportType = {
       component: <Reports.LedgerBalanceReport />,
       report: Report.OTHERS_LEDGER_BALANCE_REPORT,
       link: 'ledger-balance',
+    },
+    {
+      id: '9',
+      report: Report.OTHERS_SAVING_LOAN_INTEREST_REPORT,
+      link: 'saving-loan-interest',
+      component: <Reports.SavingLoanInterestReport />,
+      acl: 'REPORTS_OTHERS_GENERAL_LEDGER',
     },
   ],
   [ReportGroup.EXCEPTION]: [

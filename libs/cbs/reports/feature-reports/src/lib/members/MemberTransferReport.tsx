@@ -332,7 +332,7 @@ function combineArrays(array1: ArrayType[], loanArray: ArrayType[]): CombinedArr
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < maxLength; i++) {
     const mergedObject = {
-      ...array1[i],
+      ...safeArray1[i],
       looanaccNo: safeArray2[i].accNo,
       loanBalance: safeArray2[i].balance,
       loanInterestAccured: safeArray2[i].interestAccured,

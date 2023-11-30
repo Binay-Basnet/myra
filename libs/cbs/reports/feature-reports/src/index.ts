@@ -57,6 +57,7 @@ export * from './lib/others/FDCertificatePrintReport';
 export * from './lib/others/LedgerBalanceReport';
 export * from './lib/others/OrganizationalProfileReport';
 export * from './lib/others/PearlsReport';
+export * from './lib/others/SavingLoanInterestReport';
 export * from './lib/others/SavingsBalanceReport';
 export * from './lib/others/ShareCertificatePrintReport';
 export * from './lib/service-center/BranchReadinessReport';

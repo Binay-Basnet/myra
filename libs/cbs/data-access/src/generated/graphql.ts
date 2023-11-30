@@ -42081,6 +42081,42 @@ export type GetCopomisFinancialReportQuery = {
   };
 };
 
+export type GetSavingLoanInterestReportQueryVariables = Exact<{
+  data: SavingLoanInterestReport;
+}>;
+
+export type GetSavingLoanInterestReportQuery = {
+  report: {
+    otherReport: {
+      savingLoanInterestReport: {
+        totalInterestPaid?: unknown | null;
+        totalTds?: unknown | null;
+        totalInterestIncome?: unknown | null;
+        totalFinePaid?: unknown | null;
+        grandTotalInterestPaid?: string | null;
+        grandTotalTds?: string | null;
+        grandTotalInterestIncome?: string | null;
+        grandTotalFinePaid?: string | null;
+        data?: Array<{
+          memberId: string;
+          memberCode: string;
+          memberName: string;
+          savingAccountEntry?: Array<{
+            accountNo?: string | null;
+            interestPaid?: string | null;
+            tdsDeducted?: string | null;
+          }> | null;
+          loanAccountEntry?: Array<{
+            accountNo?: string | null;
+            interestIncome?: string | null;
+            finePaid?: string | null;
+          }> | null;
+        } | null> | null;
+      };
+    };
+  };
+};
+
 export type GetAllSavedReportsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -72163,6 +72199,53 @@ export const useGetCopomisFinancialReportQuery = <
     ['getCopomisFinancialReport', variables],
     useAxios<GetCopomisFinancialReportQuery, GetCopomisFinancialReportQueryVariables>(
       GetCopomisFinancialReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSavingLoanInterestReportDocument = `
+    query getSavingLoanInterestReport($data: SavingLoanInterestReport!) {
+  report {
+    otherReport {
+      savingLoanInterestReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          memberName
+          savingAccountEntry {
+            accountNo
+            interestPaid
+            tdsDeducted
+          }
+          loanAccountEntry {
+            accountNo
+            interestIncome
+            finePaid
+          }
+        }
+        totalInterestPaid
+        totalTds
+        totalInterestIncome
+        totalFinePaid
+        grandTotalInterestPaid
+        grandTotalTds
+        grandTotalInterestIncome
+        grandTotalFinePaid
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingLoanInterestReportQuery = <
+  TData = GetSavingLoanInterestReportQuery,
+  TError = unknown
+>(
+  variables: GetSavingLoanInterestReportQueryVariables,
+  options?: UseQueryOptions<GetSavingLoanInterestReportQuery, TError, TData>
+) =>
+  useQuery<GetSavingLoanInterestReportQuery, TError, TData>(
+    ['getSavingLoanInterestReport', variables],
+    useAxios<GetSavingLoanInterestReportQuery, GetSavingLoanInterestReportQueryVariables>(
+      GetSavingLoanInterestReportDocument
     ).bind(null, variables),
     options
   );
