@@ -1173,6 +1173,7 @@ export type EbankingMemberProfileData = {
 };
 
 export type EbankingOtpInput = {
+  birthDate: Scalars['Localized'];
   mobile: Scalars['String'];
   otp: Scalars['String'];
   otpFor: OtpFor;
@@ -1184,7 +1185,7 @@ export type EbankingOtpResult = {
 };
 
 export type EbankingPasswordInput = {
-  dob: Scalars['String'];
+  dob: Scalars['Localized'];
   name: Scalars['String'];
   password: Scalars['String'];
 };
@@ -1339,7 +1340,7 @@ export type EbankingTransactionEdge = {
 
 export type EbankingTransactionFilter = {
   accounts?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  date?: InputMaybe<DateFilter>;
+  date: LocalizedDateFilter;
   transactionDirection?: InputMaybe<EbankingTransactionCrOrDr>;
 };
 
@@ -1921,7 +1922,7 @@ export type MemberFamilyDetails = {
 };
 
 export type MembershipRequestInput = {
-  dateOfBirth?: InputMaybe<Scalars['String']>;
+  dateOfBirth: Scalars['Localized'];
   email?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
   gender?: InputMaybe<Scalars['String']>;

@@ -11,7 +11,7 @@ import {
   useGetKymGenderQuery,
   useNewMembershipRequestMutation,
 } from '@coop/ebanking/data-access';
-import { FormAddress, FormInput, FormSelect } from '@coop/shared/form';
+import { FormAddress, FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 
 export const CoopKYMPage = () => {
   const router = useRouter();
@@ -56,7 +56,7 @@ export const CoopKYMPage = () => {
               />
             </GridItem>
             <GridItem colSpan={3}>
-              <FormInput type="date" name="dateOfBirth" label="Date of Birth" />
+              <FormDatePicker name="dateOfBirth" label="Date of Birth" />
             </GridItem>
           </FormSection>
           <FormSection header="Contact Details">
