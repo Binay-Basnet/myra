@@ -2106,6 +2106,11 @@ export const ObjState = {
 } as const;
 
 export type ObjState = typeof ObjState[keyof typeof ObjState];
+export type OfficeCodes = {
+  office: Scalars['String'];
+  officeCode: Scalars['String'];
+};
+
 export type OrConditions = {
   andConditions: Array<Condition>;
 };
@@ -2601,6 +2606,7 @@ export type UtilityPayments = {
 
 export type UtilityQuery = {
   getCashBackCharges: CashBackInfoResult;
+  getNeaOffice?: Maybe<Array<Maybe<OfficeCodes>>>;
   getUtility: UtilityInfoResult;
   listCashBack: UtilitiesChargesConnection;
   listServiceType: ServiceTypeResult;
@@ -2609,6 +2615,10 @@ export type UtilityQuery = {
 
 export type UtilityQueryGetCashBackChargesArgs = {
   input?: InputMaybe<CheckCashBackInfo>;
+};
+
+export type UtilityQueryGetNeaOfficeArgs = {
+  vendor?: InputMaybe<Scalars['String']>;
 };
 
 export type UtilityQueryGetUtilityArgs = {

@@ -7,6 +7,7 @@ import { FormSection } from '@myra-ui/templates';
 
 import { InfoCard } from '@coop/ebanking/cards';
 import {
+  MembershipRequestInput,
   useGetCoopListQuery,
   useGetKymGenderQuery,
   useNewMembershipRequestMutation,
@@ -75,7 +76,7 @@ export const CoopKYMPage = () => {
                 await asyncToast({
                   id: 'request-member',
                   promise: requestMember({
-                    data: methods.getValues(),
+                    data: methods.getValues() as MembershipRequestInput,
                     cooperativeId: id,
                   }),
                   msgs: {

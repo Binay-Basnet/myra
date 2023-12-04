@@ -21,6 +21,7 @@ import {
   Text,
 } from '@myra-ui';
 
+import { LocalizedDateFilter } from '@coop/cbs/data-access';
 import { InfoCard, TransactionCard, TransactionHeaderCard } from '@coop/ebanking/cards';
 import {
   DateFilter,
@@ -156,10 +157,10 @@ const TransactionHistoryPage = () => {
                           date:
                             Object.keys(values?.date).length === 0
                               ? null
-                              : {
+                              : ({
                                   from: values?.date?.from,
                                   to: values?.date?.to,
-                                },
+                                } as unknown as LocalizedDateFilter),
                           transactionDirection:
                             values?.transactionDirection === 'All'
                               ? null

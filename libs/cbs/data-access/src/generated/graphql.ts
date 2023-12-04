@@ -10944,6 +10944,8 @@ export type InterestTaxReportFilter = {
 export type InterestTaxReportResult = {
   data?: Maybe<Array<Maybe<InterestTaxReportEntry>>>;
   error?: Maybe<QueryError>;
+  interestTotal?: Maybe<Scalars['String']>;
+  taxTotal?: Maybe<Scalars['String']>;
 };
 
 export type InternationalTourDetailsInput = {
