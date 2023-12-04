@@ -190,6 +190,18 @@ export const ElectricityBill = ({
             <Table isStatic showFooter data={dueBills} columns={columns} noDataTitle="Due Bills" />
           </GridItem>
 
+          <GridItem
+            colSpan={3}
+            display="flex"
+            gap="s8"
+            fontSize="s3"
+            color="gray.800"
+            fontWeight={500}
+          >
+            <Text>Total Payable Amount:</Text>
+            <Text>{amountConverter(response?.['1']?.['totalPayable'] || 0)}</Text>
+          </GridItem>
+
           <FormAmountInput
             name="amount"
             label="Amount"
