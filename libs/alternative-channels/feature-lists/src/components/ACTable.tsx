@@ -296,40 +296,43 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
               <DetailCardContent title={t['acLastActive']} subtitle={userData?.lastActive} />
             </Grid>
             <Divider my="s16" />
-            <Box display="flex" flexDir="column" gap="s8">
-              <Box display="flex">
-                <Box>
-                  <Text fontSize="r1" fontWeight="medium">
-                    Accounts
-                  </Text>
-                  <Text fontSize="s3">
-                    Enabled Transactions are listed below, by default all accounts persists Read
-                    Only property. Press “Edit” to update accounts.
-                  </Text>
+            {!(serviceType === 'SMS_BANKING') && (
+              <Box display="flex" flexDir="column" gap="s8">
+                <Box display="flex">
+                  <Box>
+                    <Text fontSize="r1" fontWeight="medium">
+                      Accounts
+                    </Text>
+                    <Text fontSize="s3">
+                      Enabled Transactions are listed below, by default all accounts persists Read
+                      Only property. Press “Edit” to update accounts.
+                    </Text>
+                  </Box>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    gap="s8"
+                    color="primary.500"
+                    cursor="pointer"
+                    onClick={() => setIsUpdateAccountState(true)}
+                  >
+                    <Icon as={IoSettingsOutline} size="sm" />
+                    <Text fontSize="s3" fontWeight="medium">
+                      Edit
+                    </Text>
+                  </Box>
                 </Box>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  gap="s8"
-                  color="primary.500"
-                  cursor="pointer"
-                  onClick={() => setIsUpdateAccountState(true)}
-                >
-                  <Icon as={IoSettingsOutline} size="sm" />
-                  <Text fontSize="s3" fontWeight="medium">
-                    Edit
-                  </Text>
-                </Box>
+                <Table
+                  data={accountListRowData}
+                  columns={accountListColumns}
+                  variant="report"
+                  size="report"
+                  isStatic
+                  isLoading={isFetching}
+                />
               </Box>
-              <Table
-                data={accountListRowData}
-                columns={accountListColumns}
-                variant="report"
-                size="report"
-                isStatic
-                isLoading={isFetching}
-              />
-            </Box>
+            )}
+
             <Divider my="s16" />
             <SwitchTabs
               value={
