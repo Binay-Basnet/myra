@@ -1,12 +1,13 @@
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 
 import { asyncToast, Box, Button, Grid, Icon } from '@myra-ui';
 
 import { InfoCard } from '@coop/ebanking/cards';
 import { EbankingFormField } from '@coop/ebanking/components';
-import { useUseUtilityMutation, Utility } from '@coop/ebanking/data-access';
+import { useListNeaOfficeQuery, useUseUtilityMutation, Utility } from '@coop/ebanking/data-access';
 import { CardContent } from '@coop/ebanking/ui-layout';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'pending';
@@ -30,6 +31,8 @@ export const InternetPaymentForm = ({
   setPaymentStatus,
   setIsLoading,
 }: InternetPaymentFormProps) => {
+  const router = useRouter();
+
   const methods = useFormContext();
 
   // const [isActionDisabled, setIsActionDisabled] = useState(true);
@@ -139,9 +142,20 @@ export const InternetPaymentForm = ({
   //   return () => subscription.unsubscribe();
   // }, [watch, currentSequenceObj]);
 
+  const { data: neaOfficeData } = useListNeaOfficeQuery();
+
+  const neaOfficeList = useMemo(
+    () =>
+      neaOfficeData?.eBanking?.utility?.getNeaOffice?.map((office) => ({
+        label: office?.office as string,
+        value: office?.officeCode as string,
+      })) ?? [],
+    [neaOfficeData]
+  );
+
   return (
     <InfoCard
-      title="Internet Payment"
+      title={router?.asPath?.includes('electricity') ? 'Electricity' : 'Internet Payment'}
       btn={
         <Button variant="ghost" gap="s4">
           <Icon as={AiOutlinePlus} color="priamry.500" />
@@ -183,7 +197,7 @@ export const InternetPaymentForm = ({
           return (
             <EbankingFormField
               {...field}
-              options={options}
+              options={field?.fieldName === 'consumerId' ? options : neaOfficeList}
               schema={schema}
               currentSequence={currentSequence}
               response={response}

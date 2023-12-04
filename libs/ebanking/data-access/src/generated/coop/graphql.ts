@@ -2061,3 +2061,26 @@ export const useListEbankingUtilitiesQuery = <
     ).bind(null, variables),
     options
   );
+export const ListNeaOfficeDocument = `
+    query listNeaOffice($vendor: String) {
+  eBanking {
+    utility {
+      getNeaOffice(vendor: $vendor) {
+        officeCode
+        office
+      }
+    }
+  }
+}
+    `;
+export const useListNeaOfficeQuery = <TData = Types.ListNeaOfficeQuery, TError = unknown>(
+  variables?: Types.ListNeaOfficeQueryVariables,
+  options?: UseQueryOptions<Types.ListNeaOfficeQuery, TError, TData>
+) =>
+  useQuery<Types.ListNeaOfficeQuery, TError, TData>(
+    variables === undefined ? ['listNeaOffice'] : ['listNeaOffice', variables],
+    useAxios<Types.ListNeaOfficeQuery, Types.ListNeaOfficeQueryVariables>(
+      ListNeaOfficeDocument
+    ).bind(null, variables),
+    options
+  );

@@ -49,7 +49,6 @@ fragment QueryError on QueryError {
   }
 }
 
-
 fragment Pagination on PageInfo {
   startCursor
   endCursor

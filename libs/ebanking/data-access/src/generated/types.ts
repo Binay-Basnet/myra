@@ -4089,6 +4089,16 @@ export type ListEbankingUtilitiesQuery = {
   };
 };
 
+export type ListNeaOfficeQueryVariables = Exact<{
+  vendor?: InputMaybe<Scalars['String']>;
+}>;
+
+export type ListNeaOfficeQuery = {
+  eBanking: {
+    utility: { getNeaOffice?: Array<{ officeCode: string; office: string } | null> | null };
+  };
+};
+
 export type SignUpMutationVariables = Exact<{
   mobileNo: Scalars['String'];
 }>;
