@@ -1,14 +1,14 @@
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { useRouter } from 'next/router';
 
-import { asyncToast, Box, Button, Grid, Icon } from '@myra-ui';
+import { asyncToast, Box, Button, Column, Grid, GridItem, Icon, Table, Text } from '@myra-ui';
 
 import { InfoCard } from '@coop/ebanking/cards';
-import { EbankingFormField } from '@coop/ebanking/components';
-import { useListNeaOfficeQuery, useUseUtilityMutation, Utility } from '@coop/ebanking/data-access';
+import { useUseUtilityMutation, Utility } from '@coop/ebanking/data-access';
 import { CardContent } from '@coop/ebanking/ui-layout';
+import { FormAmountInput } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'pending';
 
@@ -22,7 +22,9 @@ interface InternetPaymentFormProps {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const InternetPaymentForm = ({
+type BILL = { billAmount: string; dueBillOf: string; payableAmount: string };
+
+export const ElectricityBill = ({
   currentSequence,
   setCurrentSequence,
   schema,
@@ -31,11 +33,7 @@ export const InternetPaymentForm = ({
   setPaymentStatus,
   setIsLoading,
 }: InternetPaymentFormProps) => {
-  const router = useRouter();
-
   const methods = useFormContext();
-
-  // const [isActionDisabled, setIsActionDisabled] = useState(true);
 
   const { handleSubmit } = methods;
 
@@ -126,36 +124,49 @@ export const InternetPaymentForm = ({
     });
   };
 
-  // useEffect(() => {
-  //   const subscription = watch((data) => {
-  //     let temp = false;
+  const { dueBills, totalBillAmount, totalPayableAmount } = useMemo(() => {
+    const bills: BILL[] =
+      (currentSequenceInfo?.find((seq) => seq?.label === 'BillDetail')
+        ?.value as unknown as BILL[]) ?? [];
 
-  //     currentSequenceObj?.requiredFields?.forEach((field) => {
-  //       if (!data?.[field?.fieldName as string]) {
-  //         temp = true;
-  //       }
-  //     });
+    const tempBill =
+      bills?.reduce(
+        (accumulator, current) => accumulator + Number(current.billAmount),
+        0 as number
+      ) ?? 0;
 
-  //     setIsActionDisabled(temp);
-  //   });
+    const tempPayable =
+      bills?.reduce(
+        (accumulator, current) => accumulator + Number(current.payableAmount),
+        0 as number
+      ) ?? 0;
+    return { dueBills: bills, totalBillAmount: tempBill, totalPayableAmount: tempPayable };
+  }, [currentSequenceInfo]);
 
-  //   return () => subscription.unsubscribe();
-  // }, [watch, currentSequenceObj]);
-
-  const { data: neaOfficeData } = useListNeaOfficeQuery();
-
-  const neaOfficeList = useMemo(
-    () =>
-      neaOfficeData?.eBanking?.utility?.getNeaOffice?.map((office) => ({
-        label: office?.office as string,
-        value: office?.officeCode as string,
-      })) ?? [],
-    [neaOfficeData]
+  const columns = useMemo<Column<typeof dueBills[0]>[]>(
+    () => [
+      {
+        header: 'Due Bill Of',
+        accessorKey: 'dueBillOf',
+        footer: () => 'Total',
+      },
+      {
+        header: 'Bill Amount',
+        accessorKey: 'billAmount',
+        footer: () => amountConverter(totalBillAmount),
+      },
+      {
+        header: 'Payable Amount',
+        accessorKey: 'payableAmount',
+        footer: () => amountConverter(totalPayableAmount),
+      },
+    ],
+    []
   );
 
   return (
     <InfoCard
-      title={router?.asPath?.includes('electricity') ? 'Electricity' : 'Internet Payment'}
+      title="Electricity"
       btn={
         <Button variant="ghost" gap="s4">
           <Icon as={AiOutlinePlus} color="priamry.500" />
@@ -171,39 +182,21 @@ export const InternetPaymentForm = ({
                 <CardContent title={info.label} subtitle={info.value} />
               )
           )}
+
+          <GridItem colSpan={3} gap="s8">
+            <Text fontSize="s3" fontWeight={500} color="gray.800">
+              Bill Detail
+            </Text>
+            <Table isStatic showFooter data={dueBills} columns={columns} noDataTitle="Due Bills" />
+          </GridItem>
+
+          <FormAmountInput
+            name="amount"
+            label="Amount"
+            isRequired
+            rules={{ required: 'Amount is required' }}
+          />
         </Grid>
-
-        {currentSequenceObj?.requiredFields?.map((field) => {
-          if (!field?.fieldLabel) return null;
-
-          const options: { label: string; value: string }[] = [];
-
-          if (field?.fieldType === 'OPTION') {
-            const prevField = schema?.sequence?.[currentSequence - 2]?.responseFieldMapping?.find(
-              (prev) => prev?.mapField === field?.fieldName
-            );
-
-            const responseOptions =
-              response?.[currentSequence - 1]?.[prevField?.fieldName as string];
-
-            (responseOptions as unknown as [])?.forEach((opt) => {
-              options?.push({
-                label: opt?.[prevField?.options?.value as string],
-                value: opt?.[prevField?.options?.key as string],
-              });
-            });
-          }
-
-          return (
-            <EbankingFormField
-              {...field}
-              options={field?.fieldName === 'consumerId' ? options : neaOfficeList}
-              schema={schema}
-              currentSequence={currentSequence}
-              response={response}
-            />
-          );
-        })}
 
         <Box display="flex" gap="s16">
           <Button
