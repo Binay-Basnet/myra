@@ -17,7 +17,9 @@ query getDepositProductSettingsList($paginate: Pagination, $filter: DepositProdu
               productCode
               productName
               nature
-              interest
+              organizationPremium
+              productPremium
+              accountPremium
               interest
               createdDate
               typeOfMember

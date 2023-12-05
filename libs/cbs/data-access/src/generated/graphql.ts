@@ -5653,6 +5653,7 @@ export const DepositPaymentType = {
 export type DepositPaymentType = typeof DepositPaymentType[keyof typeof DepositPaymentType];
 export type DepositProduct = {
   accountClosingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
+  accountPremium?: Maybe<Scalars['Float']>;
   createdAt: Scalars['Localized'];
   createdBy: Identity;
   createdDate?: Maybe<Scalars['String']>;
@@ -5665,8 +5666,10 @@ export type DepositProduct = {
   modifiedBy: Identity;
   nature: NatureOfDepositProduct;
   objState: ObjState;
+  organizationPremium?: Maybe<Scalars['Float']>;
   productCode: Scalars['String'];
   productName: Scalars['String'];
+  productPremium?: Maybe<Scalars['Float']>;
   typeOfMember?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
   withdrawPenalty?: Maybe<WithdrawPenaltyFormState>;
   withdrawRestricted?: Maybe<Scalars['Boolean']>;
@@ -46185,6 +46188,9 @@ export type GetDepositProductSettingsListQuery = {
               productCode: string;
               productName: string;
               nature: NatureOfDepositProduct;
+              organizationPremium?: number | null;
+              productPremium?: number | null;
+              accountPremium?: number | null;
               interest?: number | null;
               createdDate?: string | null;
               typeOfMember?: Array<KymMemberTypesEnum | null> | null;
@@ -77780,7 +77786,9 @@ export const GetDepositProductSettingsListDocument = `
               productCode
               productName
               nature
-              interest
+              organizationPremium
+              productPremium
+              accountPremium
               interest
               createdDate
               typeOfMember
