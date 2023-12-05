@@ -11,6 +11,7 @@ import {
   FiTrendingUp,
   FiUser,
 } from 'react-icons/fi';
+import { TbMoneybag } from 'react-icons/tb';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
@@ -95,6 +96,14 @@ const cbsTabs: {
     match: ['withdraw'],
     aclKey: 'CBS_WITHDRAW_SLIPS',
     navMenu: 'WITHDRAW_SLIP',
+  },
+  {
+    title: 'microfinance',
+    icon: TbMoneybag,
+    link: ROUTES.CBS_MICRO_FINANCE_CENTER_LIST,
+    match: ['microfinance'],
+    aclKey: 'CBS_WITHDRAW_SLIPS',
+    navMenu: 'MICROFINANCE',
   },
   {
     title: 'reports',

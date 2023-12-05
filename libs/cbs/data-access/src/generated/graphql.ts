@@ -27738,6 +27738,131 @@ export type ActivateMemberWithoutSharePurchaseMutation = {
   };
 };
 
+export type AddMfCenterMutationVariables = Exact<{
+  input: MfCenterInput;
+}>;
+
+export type AddMfCenterMutation = {
+  microFinance: {
+    center?: {
+      addMFCenter: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type AddMfGroupMutationVariables = Exact<{
+  input: MfGroupInput;
+}>;
+
+export type AddMfGroupMutation = {
+  microFinance: {
+    group?: {
+      addMFGroup: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type AddMembersMutationVariables = Exact<{
+  input: MfGroupMembersInput;
+}>;
+
+export type AddMembersMutation = {
+  microFinance: {
+    group?: {
+      addMembers: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type UpsertMeetingMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  data: MfMeetingInput;
+}>;
+
+export type UpsertMeetingMutation = {
+  microFinance: {
+    groupMeeting: {
+      upsertMeeting?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type AddAttendanceMutationVariables = Exact<{
+  data: MfMeetingInput;
+}>;
+
+export type AddAttendanceMutation = {
+  microFinance: {
+    groupMeeting: {
+      upsertMeeting?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type UpsertDecisionMutationVariables = Exact<{
+  meetingId: Scalars['ID'];
+  data: MfMeetingDecision;
+}>;
+
+export type UpsertDecisionMutation = {
+  microFinance: {
+    groupMeeting: {
+      upsertDecision?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
 export type SetOrganizationDataMutationVariables = Exact<{
   data: OrganizationInput;
 }>;
@@ -39597,6 +39722,250 @@ export type GetMemberKymDetailsReportQuery = {
         } | null;
       } | null;
     } | null;
+  };
+};
+
+export type ListMfCenterQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type ListMfCenterQuery = {
+  microFinance: {
+    center: {
+      listMFCenter: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id: string;
+            code: string;
+            name: string;
+            totalgroups: string;
+            totalMembers: string;
+            createdDate: Record<'local' | 'en' | 'np', string>;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      };
+    };
+  };
+};
+
+export type CenterDetailsQueryVariables = Exact<{
+  centerId: Scalars['ID'];
+}>;
+
+export type CenterDetailsQuery = {
+  microFinance: {
+    center: {
+      centerDetail: {
+        overview?: {
+          totalMembers?: number | null;
+          totalGroups?: number | null;
+          toalLoan?: string | null;
+          totalSaving?: string | null;
+          centerName?: string | null;
+          centerId?: string | null;
+          centerCoordinator?: {
+            id: string;
+            objState: ObjState;
+            createdAt: Record<'local' | 'en' | 'np', string>;
+            modifiedAt: Record<'local' | 'en' | 'np', string>;
+            name?: string | null;
+            email?: string | null;
+            contactNo?: string | null;
+            gender?: UserGender | null;
+            dob?: string | null;
+            isCoreEmployee?: boolean | null;
+            empCode?: string | null;
+            lastActiveDate?: Record<'local' | 'en' | 'np', string> | null;
+            profilePic?: string | null;
+            profilePicUrl?: string | null;
+            createdBy: { id: string; name: string; username: string; userType: UserType };
+            modifiedBy: { id: string; name: string; username: string; userType: UserType };
+            role?: Array<{ id: string; name: string } | null> | null;
+            linkedBranches?: Array<{
+              id: string;
+              branchCode?: string | null;
+              name: string;
+            } | null> | null;
+            branch?: {
+              id: string;
+              branchCode?: string | null;
+              name?: string | null;
+              category?: BranchCategory | null;
+              estDate?: string | null;
+              managerName?: string | null;
+              serviceCenterPhone?: string | null;
+              contactNumber?: string | null;
+              email?: string | null;
+              plTransferId?: string | null;
+              tdsTransaferId?: string | null;
+              branchStatus?: boolean | null;
+              eodReady?: boolean | null;
+              address?: {
+                state?: Record<'local' | 'en' | 'np', string> | null;
+                district?: Record<'local' | 'en' | 'np', string> | null;
+                localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                wardNo?: string | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+              } | null;
+              branchBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+              location?: { longitude?: number | null; latitude?: number | null } | null;
+              abbsTransaction?: {
+                abbsStatus?: boolean | null;
+                receivableAccountId?: string | null;
+                payableAccountId?: string | null;
+              } | null;
+            } | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+          } | null;
+          groupList?: Array<{
+            newMemberCount?: number | null;
+            totalMeeting?: number | null;
+            totalMember?: number | null;
+            totalBalance?: string | null;
+            groupName?: string | null;
+            groupId?: string | null;
+            createdDate?: Record<'local' | 'en' | 'np', string> | null;
+            groupCoordinator?: {
+              id: string;
+              objState: ObjState;
+              createdAt: string;
+              modifiedAt: string;
+              code: string;
+              type: KymMemberTypesEnum;
+              name?: Record<'local' | 'en' | 'np', string> | null;
+              contact?: string | null;
+              panVatNo?: string | null;
+              dateJoined?: Record<'local' | 'en' | 'np', string> | null;
+              activeDate?: Record<'local' | 'en' | 'np', string> | null;
+              inactiveDate?: Record<'local' | 'en' | 'np', string> | null;
+              email?: string | null;
+              branch?: string | null;
+              profilePic?: string | null;
+              signaturePicUrl?: string | null;
+              profilePicUrl?: string | null;
+              citizenshipPicUrl?: string | null;
+              gender?: string | null;
+              age?: number | null;
+              maritalStatus?: string | null;
+              createdBy: { id: string; name: string; username: string; userType: UserType };
+              modifiedBy: { id: string; name: string; username: string; userType: UserType };
+              address?: {
+                state?: Record<'local' | 'en' | 'np', string> | null;
+                district?: Record<'local' | 'en' | 'np', string> | null;
+                localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                wardNo?: string | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+              } | null;
+            } | null;
+            balanceHistory?: {
+              totalDeposit?: string | null;
+              totalWithdraw?: string | null;
+              avgBalance?: string | null;
+              trend?: Array<number | null> | null;
+            } | null;
+          } | null> | null;
+          address?: {
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            wardNo?: string | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+        } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type ListGroupQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type ListGroupQuery = {
+  microFinance: {
+    group: {
+      listGroup: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id: string;
+            groupName?: string | null;
+            groupId?: string | null;
+            totalMembers?: number | null;
+            createdDate?: Record<'local' | 'en' | 'np', string> | null;
+            groupCoordinator?: { name?: Record<'local' | 'en' | 'np', string> | null } | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      };
+    };
+  };
+};
+
+export type ListMfMeetingsQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type ListMfMeetingsQuery = {
+  microFinance: {
+    groupMeeting: {
+      listMFMeetings: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            groupId: string;
+            groupName?: string | null;
+            groupCode?: string | null;
+            agenda?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            startTime?: string | null;
+            endTime?: string | null;
+            membersInvited?: number | null;
+            presentMembers?: number | null;
+            status?: GroupMeetingStatus | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      };
+    };
   };
 };
 
@@ -53035,6 +53404,153 @@ export const useActivateMemberWithoutSharePurchaseMutation = <TError = unknown, 
       ActivateMemberWithoutSharePurchaseMutation,
       ActivateMemberWithoutSharePurchaseMutationVariables
     >(ActivateMemberWithoutSharePurchaseDocument),
+    options
+  );
+export const AddMfCenterDocument = `
+    mutation addMFCenter($input: MFCenterInput!) {
+  microFinance {
+    center {
+      addMFCenter(input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddMfCenterMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<AddMfCenterMutation, TError, AddMfCenterMutationVariables, TContext>
+) =>
+  useMutation<AddMfCenterMutation, TError, AddMfCenterMutationVariables, TContext>(
+    ['addMFCenter'],
+    useAxios<AddMfCenterMutation, AddMfCenterMutationVariables>(AddMfCenterDocument),
+    options
+  );
+export const AddMfGroupDocument = `
+    mutation addMFGroup($input: MFGroupInput!) {
+  microFinance {
+    group {
+      addMFGroup(input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddMfGroupMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<AddMfGroupMutation, TError, AddMfGroupMutationVariables, TContext>
+) =>
+  useMutation<AddMfGroupMutation, TError, AddMfGroupMutationVariables, TContext>(
+    ['addMFGroup'],
+    useAxios<AddMfGroupMutation, AddMfGroupMutationVariables>(AddMfGroupDocument),
+    options
+  );
+export const AddMembersDocument = `
+    mutation addMembers($input: MFGroupMembersInput!) {
+  microFinance {
+    group {
+      addMembers(input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddMembersMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<AddMembersMutation, TError, AddMembersMutationVariables, TContext>
+) =>
+  useMutation<AddMembersMutation, TError, AddMembersMutationVariables, TContext>(
+    ['addMembers'],
+    useAxios<AddMembersMutation, AddMembersMutationVariables>(AddMembersDocument),
+    options
+  );
+export const UpsertMeetingDocument = `
+    mutation upsertMeeting($id: ID, $data: MFMeetingInput!) {
+  microFinance {
+    groupMeeting {
+      upsertMeeting(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpsertMeetingMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpsertMeetingMutation,
+    TError,
+    UpsertMeetingMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpsertMeetingMutation, TError, UpsertMeetingMutationVariables, TContext>(
+    ['upsertMeeting'],
+    useAxios<UpsertMeetingMutation, UpsertMeetingMutationVariables>(UpsertMeetingDocument),
+    options
+  );
+export const AddAttendanceDocument = `
+    mutation addAttendance($data: MFMeetingInput!) {
+  microFinance {
+    groupMeeting {
+      upsertMeeting(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddAttendanceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddAttendanceMutation,
+    TError,
+    AddAttendanceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddAttendanceMutation, TError, AddAttendanceMutationVariables, TContext>(
+    ['addAttendance'],
+    useAxios<AddAttendanceMutation, AddAttendanceMutationVariables>(AddAttendanceDocument),
+    options
+  );
+export const UpsertDecisionDocument = `
+    mutation upsertDecision($meetingId: ID!, $data: MFMeetingDecision!) {
+  microFinance {
+    groupMeeting {
+      upsertDecision(meetingId: $meetingId, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpsertDecisionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpsertDecisionMutation,
+    TError,
+    UpsertDecisionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpsertDecisionMutation, TError, UpsertDecisionMutationVariables, TContext>(
+    ['upsertDecision'],
+    useAxios<UpsertDecisionMutation, UpsertDecisionMutationVariables>(UpsertDecisionDocument),
     options
   );
 export const SetOrganizationDataDocument = `
@@ -68968,6 +69484,330 @@ export const useGetMemberKymDetailsReportQuery = <
     useAxios<GetMemberKymDetailsReportQuery, GetMemberKymDetailsReportQueryVariables>(
       GetMemberKymDetailsReportDocument
     ).bind(null, variables),
+    options
+  );
+export const ListMfCenterDocument = `
+    query listMFCenter($pagination: Pagination, $filter: Filter) {
+  microFinance {
+    center {
+      listMFCenter(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            code
+            name
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            totalgroups
+            totalMembers
+            createdDate
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useListMfCenterQuery = <TData = ListMfCenterQuery, TError = unknown>(
+  variables?: ListMfCenterQueryVariables,
+  options?: UseQueryOptions<ListMfCenterQuery, TError, TData>
+) =>
+  useQuery<ListMfCenterQuery, TError, TData>(
+    variables === undefined ? ['listMFCenter'] : ['listMFCenter', variables],
+    useAxios<ListMfCenterQuery, ListMfCenterQueryVariables>(ListMfCenterDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const CenterDetailsDocument = `
+    query centerDetails($centerId: ID!) {
+  microFinance {
+    center {
+      centerDetail(centerId: $centerId) {
+        overview {
+          totalMembers
+          totalGroups
+          toalLoan
+          totalSaving
+          centerName
+          centerId
+          centerCoordinator {
+            id
+            objState
+            createdAt
+            createdBy {
+              id
+              name
+              username
+              userType
+            }
+            modifiedAt
+            modifiedBy {
+              id
+              name
+              username
+              userType
+            }
+            name
+            email
+            contactNo
+            gender
+            dob
+            role {
+              id
+              name
+            }
+            linkedBranches {
+              id
+              branchCode
+              name
+            }
+            isCoreEmployee
+            empCode
+            lastActiveDate
+            branch {
+              id
+              branchCode
+              name
+              category
+              estDate
+              managerName
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              branchBalance {
+                amount
+                amountType
+              }
+              location {
+                longitude
+                latitude
+              }
+              serviceCenterPhone
+              contactNumber
+              email
+              abbsTransaction {
+                abbsStatus
+                receivableAccountId
+                payableAccountId
+              }
+              plTransferId
+              tdsTransaferId
+              branchStatus
+              eodReady
+            }
+            profilePic
+            profilePicUrl
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+          }
+          groupList {
+            newMemberCount
+            totalMeeting
+            totalMember
+            totalBalance
+            groupName
+            groupId
+            groupCoordinator {
+              id
+              objState
+              createdAt
+              createdBy {
+                id
+                name
+                username
+                userType
+              }
+              modifiedAt
+              modifiedBy {
+                id
+                name
+                username
+                userType
+              }
+              code
+              type
+              name
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              contact
+              panVatNo
+              dateJoined
+              activeDate
+              inactiveDate
+              email
+              branch
+              profilePic
+              signaturePicUrl
+              profilePicUrl
+              signaturePicUrl
+              citizenshipPicUrl
+              gender
+              age
+              maritalStatus
+            }
+            createdDate
+            balanceHistory {
+              totalDeposit
+              totalWithdraw
+              avgBalance
+              trend
+            }
+          }
+          address {
+            state
+            district
+            localGovernment
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useCenterDetailsQuery = <TData = CenterDetailsQuery, TError = unknown>(
+  variables: CenterDetailsQueryVariables,
+  options?: UseQueryOptions<CenterDetailsQuery, TError, TData>
+) =>
+  useQuery<CenterDetailsQuery, TError, TData>(
+    ['centerDetails', variables],
+    useAxios<CenterDetailsQuery, CenterDetailsQueryVariables>(CenterDetailsDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const ListGroupDocument = `
+    query listGroup($pagination: Pagination, $filter: Filter) {
+  microFinance {
+    group {
+      listGroup(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            groupName
+            groupId
+            totalMembers
+            createdDate
+            groupCoordinator {
+              name
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useListGroupQuery = <TData = ListGroupQuery, TError = unknown>(
+  variables?: ListGroupQueryVariables,
+  options?: UseQueryOptions<ListGroupQuery, TError, TData>
+) =>
+  useQuery<ListGroupQuery, TError, TData>(
+    variables === undefined ? ['listGroup'] : ['listGroup', variables],
+    useAxios<ListGroupQuery, ListGroupQueryVariables>(ListGroupDocument).bind(null, variables),
+    options
+  );
+export const ListMfMeetingsDocument = `
+    query listMFMeetings($pagination: Pagination, $filter: Filter) {
+  microFinance {
+    groupMeeting {
+      listMFMeetings(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            groupId
+            groupName
+            groupCode
+            agenda
+            date
+            startTime
+            endTime
+            membersInvited
+            presentMembers
+            status
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useListMfMeetingsQuery = <TData = ListMfMeetingsQuery, TError = unknown>(
+  variables?: ListMfMeetingsQueryVariables,
+  options?: UseQueryOptions<ListMfMeetingsQuery, TError, TData>
+) =>
+  useQuery<ListMfMeetingsQuery, TError, TData>(
+    variables === undefined ? ['listMFMeetings'] : ['listMFMeetings', variables],
+    useAxios<ListMfMeetingsQuery, ListMfMeetingsQueryVariables>(ListMfMeetingsDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetMemberPdfDocument = `

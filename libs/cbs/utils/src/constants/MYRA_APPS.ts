@@ -49,10 +49,10 @@ export const MYRA_APPS = [
     img: '/rvn.svg',
     link: ROUTES?.FAM_ASSETS_LIST,
   },
-  {
-    key: 'MICROFINANCE',
-    title: 'microfinance',
-    img: '/cbs.svg',
-    link: ROUTES.MICRO_FINANCE_GROUPS_LIST,
-  },
+  // {
+  //   key: 'MICROFINANCE',
+  //   title: 'microfinance',
+  //   img: '/cbs.svg',
+  //   link: ROUTES.MICRO_FINANCE_GROUPS_LIST,
+  // },
 ] as const;
