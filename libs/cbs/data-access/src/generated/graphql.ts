@@ -10380,7 +10380,6 @@ export type HumanizeAuditLog = {
 };
 
 export const IbtStatus = {
-  Cancelled: 'CANCELLED',
   Completed: 'COMPLETED',
   Pending: 'PENDING',
 } as const;
@@ -15375,6 +15374,7 @@ export type LoanPreviewStatistics = {
 };
 
 export type LoanProduct = Base & {
+  accountPremiumInterest?: Maybe<Scalars['Float']>;
   allowGurantee?: Maybe<Scalars['Boolean']>;
   allowPartialInstallment?: Maybe<Scalars['Boolean']>;
   collateralTypes?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -15423,6 +15423,7 @@ export type LoanProduct = Base & {
   noOfaccount?: Maybe<Scalars['Int']>;
   objState: ObjState;
   occupation?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  organizationPremiumInterest?: Maybe<Scalars['Float']>;
   penalty?: Maybe<LoanPenalty>;
   penaltyAmount?: Maybe<Scalars['Amount']>;
   penaltyDayAfterInstallmentDate?: Maybe<Scalars['Int']>;
@@ -45452,6 +45453,9 @@ export type GetLoanProductListQuery = {
               productCodeString?: string | null;
               productType: string;
               productSubType: string;
+              productPremiumInterest?: number | null;
+              accountPremiumInterest?: number | null;
+              organizationPremiumInterest?: number | null;
               createdBy: { id: string; name: string; username: string; userType: UserType };
               modifiedBy: { id: string; name: string; username: string; userType: UserType };
               productCode?: { prefix: string; initialNo: string } | null;
@@ -77131,6 +77135,9 @@ export const GetLoanProductListDocument = `
                 ceoAuthority
                 boardAuthority
               }
+              productPremiumInterest
+              accountPremiumInterest
+              organizationPremiumInterest
             }
           }
           totalCount

@@ -42,6 +42,9 @@ query getLoanProductList($paginate: Pagination, $filter: LoanProductSearchFilter
                 ceoAuthority
                 boardAuthority
               }
+              productPremiumInterest
+              accountPremiumInterest
+              organizationPremiumInterest
             }
           }
           totalCount
