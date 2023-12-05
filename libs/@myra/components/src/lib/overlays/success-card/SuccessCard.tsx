@@ -18,7 +18,7 @@ export interface SuccessCardProps {
   title: string;
   subTitle: string;
   details: Record<string, React.ReactNode>;
-  extraDetails: Record<string, React.ReactNode>;
+  extraDetails?: Record<string, React.ReactNode>;
   dublicate?: boolean;
   total?: string;
   totalWords?: string;
