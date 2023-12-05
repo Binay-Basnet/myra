@@ -35,6 +35,7 @@ const IBT_TABS = [
 const ibtStatusVariant: Record<IbtStatus, 'success' | 'failure' | 'pending'> = {
   COMPLETED: 'success',
   PENDING: 'pending',
+  CANCELLED: 'failure',
 };
 
 /* eslint-disable-next-line */

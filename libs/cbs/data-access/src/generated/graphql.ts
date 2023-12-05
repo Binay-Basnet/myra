@@ -3546,6 +3546,11 @@ export const CalculationTypeEnum = {
 } as const;
 
 export type CalculationTypeEnum = typeof CalculationTypeEnum[keyof typeof CalculationTypeEnum];
+export type CancelIbtResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type CashBack = {
   cashBackAmount?: InputMaybe<Scalars['String']>;
   cashBackPercent?: InputMaybe<Scalars['String']>;
@@ -10375,6 +10380,7 @@ export type HumanizeAuditLog = {
 };
 
 export const IbtStatus = {
+  Cancelled: 'CANCELLED',
   Completed: 'COMPLETED',
   Pending: 'PENDING',
 } as const;
@@ -23453,6 +23459,7 @@ export type TransactionMutation = {
   approveIBT?: Maybe<ApproveIbtResult>;
   bulkDeposit: BulkDepositResult;
   bulkTransfer?: Maybe<BulkTransferResult>;
+  cancelServiceCentreCashTransfer: CancelIbtResult;
   cashInTransit?: Maybe<CashInTransitMutation>;
   deposit: DepositResult;
   endOfDay?: Maybe<EodResult>;
@@ -23482,6 +23489,10 @@ export type TransactionMutationBulkDepositArgs = {
 
 export type TransactionMutationBulkTransferArgs = {
   data: BulkTransferInput;
+};
+
+export type TransactionMutationCancelServiceCentreCashTransferArgs = {
+  requestId: Scalars['ID'];
 };
 
 export type TransactionMutationDepositArgs = {
@@ -31282,6 +31293,25 @@ export type SwitchTransactionYearEndFlagMutation = {
         | MutationError_ValidationError_Fragment
         | null;
     } | null;
+  };
+};
+
+export type CancelServiceCentreCashTransferMutationVariables = Exact<{
+  requestId: Scalars['ID'];
+}>;
+
+export type CancelServiceCentreCashTransferMutation = {
+  transaction: {
+    cancelServiceCentreCashTransfer: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
   };
 };
 
@@ -58515,6 +58545,39 @@ export const useSwitchTransactionYearEndFlagMutation = <TError = unknown, TConte
     useAxios<SwitchTransactionYearEndFlagMutation, SwitchTransactionYearEndFlagMutationVariables>(
       SwitchTransactionYearEndFlagDocument
     ),
+    options
+  );
+export const CancelServiceCentreCashTransferDocument = `
+    mutation cancelServiceCentreCashTransfer($requestId: ID!) {
+  transaction {
+    cancelServiceCentreCashTransfer(requestId: $requestId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useCancelServiceCentreCashTransferMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CancelServiceCentreCashTransferMutation,
+    TError,
+    CancelServiceCentreCashTransferMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    CancelServiceCentreCashTransferMutation,
+    TError,
+    CancelServiceCentreCashTransferMutationVariables,
+    TContext
+  >(
+    ['cancelServiceCentreCashTransfer'],
+    useAxios<
+      CancelServiceCentreCashTransferMutation,
+      CancelServiceCentreCashTransferMutationVariables
+    >(CancelServiceCentreCashTransferDocument),
     options
   );
 export const GetAccountMemberListDocument = `
