@@ -30,7 +30,7 @@ import {
   useGetTransactionListsQuery,
 } from '@coop/ebanking/data-access';
 import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { FormDatePicker, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type TransactionFormFilters = {
@@ -140,8 +140,8 @@ const TransactionHistoryPage = () => {
                           },
                         ]}
                       />
-                      <FormInput name="date.from" type="date" label="From Date" />
-                      <FormInput name="date.to" type="date" label="To Date" />
+                      <FormDatePicker name="date.from" label="From Date" />
+                      <FormDatePicker name="date.to" label="To Date" />
                     </Grid>
                   </FormProvider>
                   <Box display="flex" gap="s8" pt="s32">
