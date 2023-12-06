@@ -3794,6 +3794,7 @@ export const CashValue = {
 export type CashValue = typeof CashValue[keyof typeof CashValue];
 export type CenterOverview = {
   address?: Maybe<Address>;
+  allowedBranches?: Maybe<Array<Maybe<Scalars['String']>>>;
   centerCoordinator?: Maybe<MyraUser>;
   centerId?: Maybe<Scalars['String']>;
   centerName?: Maybe<Scalars['String']>;
@@ -5249,6 +5250,8 @@ export type DepositAccount = Base & {
   createdAt: Scalars['Time'];
   createdBy: Identity;
   dues?: Maybe<Dues>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   guaranteedAmount?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   installmentAmount?: Maybe<Scalars['String']>;
@@ -5503,6 +5506,7 @@ export type DepositLoanAccountMutation = {
 
 export type DepositLoanAccountMutationAddArgs = {
   data?: InputMaybe<DepositLoanAccountInput>;
+  groupId?: InputMaybe<Scalars['ID']>;
   id: Scalars['ID'];
 };
 
@@ -10380,6 +10384,7 @@ export type HumanizeAuditLog = {
 };
 
 export const IbtStatus = {
+  Cancelled: 'CANCELLED',
   Completed: 'COMPLETED',
   Pending: 'PENDING',
 } as const;
@@ -16400,7 +16405,6 @@ export type MfCenterInput = {
   coordinatorServiceCenter?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   documents?: InputMaybe<Array<DocumentInsertInput>>;
-  serviceCenterChoice?: InputMaybe<ServiceCenterChoice>;
   serviceCenterIds?: InputMaybe<Array<Scalars['String']>>;
 };
 
@@ -16465,6 +16469,26 @@ export type MfGroupListEdges = {
   node?: Maybe<MfGroupEntry>;
 };
 
+export type MfGroupMemberConnection = {
+  edges?: Maybe<Array<Maybe<MfGroupMemberEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type MfGroupMemberEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<MfGroupMemberEntry>;
+};
+
+export type MfGroupMemberEntry = {
+  groupName: Scalars['String'];
+  id: Scalars['ID'];
+  memberCode: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['String'];
+  objState?: Maybe<ObjState>;
+};
+
 export type MfGroupMembersInput = {
   groupId: Scalars['ID'];
   memberIds?: InputMaybe<Array<Scalars['String']>>;
@@ -16514,6 +16538,24 @@ export type MfMeetingDetails = {
   decision?: Maybe<MfDecisions>;
   error?: Maybe<QueryError>;
   oveview?: Maybe<MfMeetingOverview>;
+};
+
+export type MfMeetingDocumentData = {
+  description?: Maybe<Scalars['String']>;
+  docData: Array<Maybe<UploadedDocumentData>>;
+  fieldId?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+export type MfMeetingDocumentResult = {
+  data?: Maybe<Array<Maybe<MfMeetingDocumentData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type MfMeetingDocumentsInput = {
+  description?: InputMaybe<Scalars['String']>;
+  files: Array<Scalars['String']>;
+  title: Scalars['String'];
 };
 
 export type MfMeetingInput = {
@@ -17832,12 +17874,18 @@ export type MicroFinanceCenterQueryListMfCenterArgs = {
 
 export type MicroFinanceGroupMeetingMutation = {
   addAttendance?: Maybe<MfMeetingResult>;
+  addDocuments?: Maybe<MfMeetingResult>;
   upsertDecision?: Maybe<MfMeetingResult>;
   upsertMeeting?: Maybe<MfMeetingResult>;
 };
 
 export type MicroFinanceGroupMeetingMutationAddAttendanceArgs = {
   data: MfMeetingAttendanceInput;
+};
+
+export type MicroFinanceGroupMeetingMutationAddDocumentsArgs = {
+  input: MfMeetingDocumentsInput;
+  meetingId: Scalars['ID'];
 };
 
 export type MicroFinanceGroupMeetingMutationUpsertDecisionArgs = {
@@ -17851,8 +17899,13 @@ export type MicroFinanceGroupMeetingMutationUpsertMeetingArgs = {
 };
 
 export type MicroFinanceGroupMeetingQuery = {
+  listDocuments: MfMeetingDocumentResult;
   listMFMeetings: MfMeetingConnection;
   mfMeetingDetail?: Maybe<MfMeetingDetails>;
+};
+
+export type MicroFinanceGroupMeetingQueryListDocumentsArgs = {
+  meetingId: Scalars['ID'];
 };
 
 export type MicroFinanceGroupMeetingQueryListMfMeetingsArgs = {
@@ -17880,6 +17933,7 @@ export type MicroFinanceGroupMutationAddMembersArgs = {
 export type MicroFinanceGroupQuery = {
   groupDetails?: Maybe<MfGroupDetails>;
   listGroup: MfGroupListConnection;
+  listGroupMembers: MfGroupMemberConnection;
 };
 
 export type MicroFinanceGroupQueryGroupDetailsArgs = {
@@ -17887,6 +17941,11 @@ export type MicroFinanceGroupQueryGroupDetailsArgs = {
 };
 
 export type MicroFinanceGroupQueryListGroupArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type MicroFinanceGroupQueryListGroupMembersArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -21466,13 +21525,6 @@ export type ServiceCenterCashTransferView = {
   userProfileUrl?: Maybe<Scalars['String']>;
 };
 
-export const ServiceCenterChoice = {
-  All: 'ALL',
-  Current: 'CURRENT',
-  Selected: 'SELECTED',
-} as const;
-
-export type ServiceCenterChoice = typeof ServiceCenterChoice[keyof typeof ServiceCenterChoice];
 export type ServiceCenterTransactionFilter = {
   transactionId?: InputMaybe<Scalars['String']>;
 };
