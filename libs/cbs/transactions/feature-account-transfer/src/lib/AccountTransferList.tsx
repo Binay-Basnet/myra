@@ -36,7 +36,7 @@ export const AccountTransferList = () => {
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
   const { data, isFetching } = useGetAccountTransferListDataQuery({
-    pagination: { ...getPaginationQuery(), order: { column: 'id', arrange: 'DESC' } },
+    pagination: getPaginationQuery(),
     filter: getFilterQuery(),
   });
 
@@ -51,8 +51,10 @@ export const AccountTransferList = () => {
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.date)}</Text>,
         enableColumnFilter: true,
         filterFn: 'dateTime',
+        enableSorting: true,
         meta: {
           width: '200px',
+          orderId: 'id',
         },
       },
       {
