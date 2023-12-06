@@ -26,10 +26,13 @@ export const CBSLoanRepaymentList = () => {
   const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
+  const sortParams = router.query['sort'] as string;
+
   const { data, isFetching } = useGetLoanRepaymentListQuery(
     {
-      paginate: { ...getPaginationQuery(), order: { column: 'repaymentid', arrange: 'DESC' } },
-      // paginate: getPaginationQuery(),
+      paginate: sortParams
+        ? getPaginationQuery()
+        : { ...getPaginationQuery(), order: { column: 'repaymentid', arrange: 'DESC' } },
       filter: getFilterQuery(),
     },
     {
@@ -49,6 +52,10 @@ export const CBSLoanRepaymentList = () => {
         cell: (props) => localizedDate(props?.row?.original?.node?.paymentDate),
         enableColumnFilter: true,
         filterFn: 'dateTime',
+        enableSorting: true,
+        meta: {
+          orderId: 'repaymentid',
+        },
       },
       {
         header: 'Transaction Id',

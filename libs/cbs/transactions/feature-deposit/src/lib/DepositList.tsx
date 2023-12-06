@@ -36,7 +36,7 @@ export const DepositList = () => {
   const { data: depositFilterMapping } = useGetDepositFilterMappingQuery();
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
   const { data, isFetching } = useGetDepositListDataQuery({
-    pagination: { ...getPaginationQuery(), order: { column: 'id', arrange: 'DESC' } },
+    pagination: getPaginationQuery(),
     filter: getFilterQuery(),
   });
 
@@ -51,6 +51,10 @@ export const DepositList = () => {
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.date)}</Text>,
         enableColumnFilter: true,
         filterFn: 'dateTime',
+        enableSorting: true,
+        meta: {
+          orderId: 'id',
+        },
       },
       {
         header: t['depositListTransactionId'],
