@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -8,11 +7,11 @@ import {
   DocumentInsertInput,
   MfCenterInput,
   useAddMfCenterMutation,
-  useGetLeaveQuery,
   useGetSettingsUserListDataQuery,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import {
+  FormAddress,
   FormBranchSelect,
   FormFileInput,
   FormInput,
@@ -32,7 +31,7 @@ const documentMap = [
 export const CenterAdd = () => {
   const methods = useForm();
   const router = useRouter();
-  const { getValues, reset, watch } = methods;
+  const { getValues, watch } = methods;
 
   const allowedServiceCenterWatch = watch('serviceCenterIds');
   const coordinatorServiceCenterWatch = watch('coordinatorServiceCenter');
@@ -51,20 +50,6 @@ export const CenterAdd = () => {
   });
 
   const { mutateAsync } = useAddMfCenterMutation();
-  const { data: leaveData } = useGetLeaveQuery(
-    {
-      id: router?.query?.['id'] as string,
-    },
-    { enabled: !!router?.query?.['id'] }
-  );
-
-  const leaveEditData = leaveData?.hr?.employee?.leave?.getLeave?.record;
-
-  useEffect(() => {
-    if (leaveEditData) {
-      reset(leaveEditData);
-    }
-  }, [JSON.stringify(leaveEditData)]);
 
   const submitForm = () => {
     const values = getValues();
@@ -100,11 +85,12 @@ export const CenterAdd = () => {
       <FormLayout.Header title="New Microfinance Center" />
       <FormLayout.Content>
         <FormLayout.Form>
-          <FormSection templateColumns={3} divider={false}>
+          <FormSection templateColumns={3} divider>
             <GridItem colSpan={2}>
               <FormInput label="MF Center Name" name="centerName" />
             </GridItem>
             <FormInput label="MF Center ID" name="centerCode" />
+
             <FormBranchSelect label="Allowed Service Center" name="serviceCenterIds" isMulti />
             <FormSelect
               label="Coordinator Service Center"
@@ -124,6 +110,9 @@ export const CenterAdd = () => {
             <GridItem colSpan={3}>
               <FormTextArea label="Description" name="description" />
             </GridItem>
+          </FormSection>
+          <FormSection header="Address">
+            <FormAddress name="address" />
           </FormSection>
           <FormSection templateColumns={2} header="Document Declarations">
             <FormFileInput name="documents.0.identifiers" label="AGM/BOD Decision Document" />

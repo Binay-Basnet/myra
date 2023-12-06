@@ -27,7 +27,7 @@ export const GroupList = () => {
       },
       {
         header: 'Group Coordinator Name',
-        accessorFn: (row) => row?.node?.groupCoordinator?.name,
+        accessorFn: (row) => row?.node?.groupCoordinator?.name?.local,
       },
       {
         header: 'Total Members',
@@ -35,7 +35,7 @@ export const GroupList = () => {
       },
       {
         header: 'Created Date',
-        accessorFn: (row) => row?.node?.createdDate,
+        accessorFn: (row) => row?.node?.createdDate?.local,
       },
       {
         id: '_actions',

@@ -30,7 +30,7 @@ const documentMap = [
   'minute-of-central-rep',
 ];
 
-export const GroupAdd = () => {
+export const GroupMeetingsAdd = () => {
   const methods = useForm();
   const router = useRouter();
   const { getValues } = methods;
@@ -108,4 +108,4 @@ export const GroupAdd = () => {
   );
 };
 
-export default GroupAdd;
+export default GroupMeetingsAdd;

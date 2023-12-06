@@ -39,7 +39,7 @@ export const CenterList = () => {
       },
       {
         header: 'Created Date',
-        accessorFn: (row) => row?.node?.createdDate,
+        accessorFn: (row) => row?.node?.createdDate?.local,
       },
       {
         id: '_actions',
