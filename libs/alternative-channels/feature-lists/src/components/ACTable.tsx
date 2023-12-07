@@ -1,15 +1,29 @@
-import { useMemo } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { IoMdArrowBack } from 'react-icons/io';
+import { IoCheckmarkDoneOutline, IoSettingsOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
-import dayjs from 'dayjs';
 
-import { Box, DetailCardContent, Grid, Modal, SwitchTabs } from '@myra-ui';
+import {
+  asyncToast,
+  Box,
+  Checkbox,
+  DetailCardContent,
+  Divider,
+  Grid,
+  Icon,
+  Modal,
+  SwitchTabs,
+  Text,
+} from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import {
   AlternativeChannelServiceType,
   AlternativeChannelStatus,
+  useAccountServiceActivationMutation,
   useGetAlternativeChannelListQuery,
+  useGetUserDetailsQuery,
 } from '@coop/cbs/data-access';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
@@ -17,10 +31,56 @@ interface ACTableProps {
   serviceType: AlternativeChannelServiceType;
 }
 
+interface AccountCardType {
+  accountName?: string;
+  accountId?: string;
+  productName?: string;
+  accountNature?: string;
+  status?: boolean;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const AccountCard = (props: AccountCardType) => {
+  const { accountName, accountId, productName, accountNature, status, onChange } = props;
+  return (
+    <Box
+      m="s4"
+      mt="s16"
+      p="s12"
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      border="1px"
+      borderColor="border.layout"
+      borderRadius={5}
+    >
+      <Box>
+        <Text fontSize="r1">{accountName}</Text>
+        <Text fontSize="s3">{accountId}</Text>
+        <Text fontSize="s3">
+          {productName}[{accountNature}]
+        </Text>
+      </Box>
+      <Box display="flex" alignItems="center" gap="s8">
+        <Checkbox defaultChecked={status} onChange={onChange} />
+        <Text fontSize="r1">Enable Transaction</Text>
+      </Box>
+    </Box>
+  );
+};
+
 export const ACTable = ({ serviceType }: ACTableProps) => {
   const { t } = useTranslation();
   const { isOpen, onClose, onToggle } = useDisclosure();
+  const [isUpdateAccountState, setIsUpdateAccountState] = useState(false);
+  const [isServiceActive, setIsServiceActive] = useState('ACTIVE' || 'INACTIVE');
+  const [isAutoRenew, setIsAutoRenew] = useState<'true' | 'false'>('false');
+
+  const [accounts, setAccounts] = useState([]);
+
   const router = useRouter();
+
+  const { mutateAsync } = useAccountServiceActivationMutation();
 
   const { data, isLoading } = useGetAlternativeChannelListQuery({
     filter: {
@@ -31,7 +91,54 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
 
   const alternativeList = data?.alternativeChannel?.list?.edges ?? [];
 
-  const selectedMember = alternativeList?.find((member) => member?.data?.id === router.query['id']);
+  const {
+    data: userDetails,
+    isFetching,
+    refetch,
+  } = useGetUserDetailsQuery({
+    input: { id: router?.query?.['id'] as string, serviceType },
+  });
+
+  const userData = userDetails?.alternativeChannel?.userDetails?.data;
+  const accountsList = userDetails?.alternativeChannel?.userDetails?.data?.accounts || [];
+
+  useEffect(() => {
+    setIsServiceActive(userData?.serviceStatus);
+    setIsAutoRenew(userData?.autoRenew ? 'true' : 'false');
+    setAccounts(accountsList);
+  }, [JSON.stringify(userData), JSON.stringify(accountsList)]);
+
+  // let accounts = [...accountsList];
+
+  const accountListRowData = useMemo(
+    () => accounts?.filter((item) => item?.status) ?? [],
+    [JSON.stringify(accounts)]
+  );
+
+  const accountListColumns = useMemo<Column<typeof accountListRowData[0]>[]>(
+    () => [
+      {
+        header: 'SN',
+        accessorFn: (row, index) => index + 1,
+        meta: {
+          width: '5%',
+        },
+      },
+      {
+        header: 'Account',
+        accessorFn: (row) => row?.accountName,
+      },
+      {
+        header: 'Status',
+        cell: () => (
+          <Box display="flex" gap="s4" alignItems="center">
+            <Icon as={IoCheckmarkDoneOutline} /> <Text>Transaction Enabled</Text>
+          </Box>
+        ),
+      },
+    ],
+    []
+  );
 
   const columns = useMemo<Column<typeof alternativeList[0]>[]>(
     () => [
@@ -81,6 +188,40 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
     [t]
   );
 
+  const updateUser = async () => {
+    await asyncToast({
+      id: 'update-user',
+      promise: mutateAsync({
+        input: {
+          service: serviceType,
+          serviceStatus: isServiceActive as AlternativeChannelStatus,
+          autoRenew: isAutoRenew === 'true',
+          accountList: accounts?.filter((item) => item?.status)?.map((item) => item?.accountId),
+          id: router?.query?.['id'] as string,
+        },
+      }),
+      msgs: {
+        loading: 'Updating user',
+        success: 'User Updated',
+      },
+      onSuccess: () => {
+        onClose();
+        setIsUpdateAccountState(false);
+        refetch();
+      },
+    });
+  };
+
+  const updateStatus = (accountId: string, newStatus: boolean) => {
+    const newArray = accounts.map((item) => {
+      if (item.accountId === accountId) {
+        return { ...item, status: newStatus };
+      }
+      return item;
+    });
+    return newArray;
+  };
+
   return (
     <Box>
       <Table
@@ -107,36 +248,119 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
 
       <Modal
         width="2xl"
-        primaryButtonLabel={t['saveChanges']}
-        secondaryButtonLabel={t['discardChanges']}
+        primaryButtonLabel={isUpdateAccountState ? '' : t['saveChanges']}
+        secondaryButtonLabel={isUpdateAccountState ? '' : t['discardChanges']}
+        primaryButtonHandler={updateUser}
+        secondaryButtonHandler={onClose}
         isSecondaryDanger
         onClose={onClose}
-        title="acUpdateUser"
+        title={
+          isUpdateAccountState ? (
+            <Box display="flex" gap="s4" alignItems="center">
+              <Icon
+                as={IoMdArrowBack}
+                cursor="pointer"
+                onClick={() => setIsUpdateAccountState(false)}
+              />
+              Update Account
+            </Box>
+          ) : (
+            'Update User'
+          )
+        }
         open={isOpen}
       >
-        <Grid templateColumns="repeat(2, 1fr)" gap="s32">
-          <DetailCardContent title={t['acName']} subtitle={selectedMember?.data?.name?.local} />
-          <DetailCardContent
-            title={t['acPhoneNumber']}
-            subtitle={selectedMember?.data?.phoneNumber}
-          />
-          <DetailCardContent
-            title={t['acCoopConnection']}
-            subtitle={selectedMember?.data?.coopConnection ? t['yes'] : t['no']}
-          />
-          <DetailCardContent
-            title={t['acLastActive']}
-            subtitle={dayjs(selectedMember?.data?.lastActive).format('DD MMM YYYY [at] hh:mm A')}
-          />
-          <SwitchTabs
-            value={selectedMember?.data?.serviceStatus ?? AlternativeChannelStatus?.Inactive}
-            options={[
-              { label: 'Active', value: AlternativeChannelStatus?.Active },
-              { label: 'Inactive', value: AlternativeChannelStatus?.Inactive },
-            ]}
-            label={t['acServiceStatus']}
-          />
-        </Grid>
+        {isUpdateAccountState ? (
+          accounts?.map((item) => (
+            <AccountCard
+              accountName={item?.accountName}
+              accountId={item?.accountId}
+              productName={item?.productName}
+              accountNature={item?.accountNature}
+              status={item?.status}
+              onChange={(e) => {
+                const newArray = updateStatus(item?.accountId, e.target.checked);
+                setAccounts(newArray);
+              }}
+            />
+          ))
+        ) : (
+          <>
+            <Grid templateColumns="repeat(2, 1fr)" gap="s32">
+              <DetailCardContent title={t['acName']} subtitle={userData?.memberName} />
+              <DetailCardContent title={t['acPhoneNumber']} subtitle={userData?.phoneNumber} />
+              <DetailCardContent
+                title={t['acCoopConnection']}
+                subtitle={userData?.coopConnection ? t['yes'] : t['no']}
+              />
+              <DetailCardContent title={t['acLastActive']} subtitle={userData?.lastActive} />
+            </Grid>
+            <Divider my="s16" />
+            {!(serviceType === 'SMS_BANKING') && (
+              <Box display="flex" flexDir="column" gap="s8">
+                <Box display="flex">
+                  <Box>
+                    <Text fontSize="r1" fontWeight="medium">
+                      Accounts
+                    </Text>
+                    <Text fontSize="s3">
+                      Enabled Transactions are listed below, by default all accounts persists Read
+                      Only property. Press “Edit” to update accounts.
+                    </Text>
+                  </Box>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    gap="s8"
+                    color="primary.500"
+                    cursor="pointer"
+                    onClick={() => setIsUpdateAccountState(true)}
+                  >
+                    <Icon as={IoSettingsOutline} size="sm" />
+                    <Text fontSize="s3" fontWeight="medium">
+                      Edit
+                    </Text>
+                  </Box>
+                </Box>
+                <Table
+                  data={accountListRowData}
+                  columns={accountListColumns}
+                  variant="report"
+                  size="report"
+                  isStatic
+                  isLoading={isFetching}
+                />
+              </Box>
+            )}
+
+            <Divider my="s16" />
+            <SwitchTabs
+              value={
+                userDetails?.alternativeChannel?.userDetails?.data
+                  ?.serviceStatus as unknown as string
+              }
+              options={[
+                { label: 'Active', value: AlternativeChannelStatus?.Active },
+                { label: 'Inactive', value: AlternativeChannelStatus?.Inactive },
+              ]}
+              label={t['acServiceStatus']}
+              onChange={(e) => setIsServiceActive(e as AlternativeChannelStatus)}
+            />
+            <Box mt="s16">
+              <SwitchTabs
+                value={
+                  userDetails?.alternativeChannel?.userDetails?.data?.autoRenew ? 'true' : 'false'
+                }
+                options={[
+                  { label: 'Yes', value: true },
+                  { label: 'No', value: false },
+                ]}
+                label="Auto Renew"
+                onChange={(e) => setIsAutoRenew(e as 'true' | 'false')}
+              />
+            </Box>
+          </>
+        )}
       </Modal>
     </Box>
   );

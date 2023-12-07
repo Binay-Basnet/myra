@@ -20,3 +20,21 @@ query getUtilityUsageReport($data: UtilityUsageFilter!) {
     }
   }
 }
+
+query getSMSUsageReport($data: SmsReportFilter) {
+  report {
+    smsReport(data: $data) {
+      data {
+        branchCode
+        branchName
+        memberName
+        memberNo
+        memberId
+        smsType
+        messageSent
+        smsSentDate
+        smsSentMobileNumber
+      }
+    }
+  }
+}

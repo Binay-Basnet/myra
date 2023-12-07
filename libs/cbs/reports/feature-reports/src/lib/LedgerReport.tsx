@@ -373,7 +373,7 @@ export const LedgerReport = () => {
                 <Box display="flex" flexDirection="column">
                   <Text>
                     {' '}
-                    Closing Settlemet Balance:{' '}
+                    Closing Settlemets Balance:{' '}
                     {debitCreditConverter(
                       settlementClosingBalance?.amount as string,
                       settlementClosingBalance?.amountType as string

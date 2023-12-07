@@ -50,6 +50,7 @@ export enum Report {
   CLOSED_SAVING_ACCOUNT_STATEMENT = 'Closed Saving Account Statement',
   SAVING_ACCOUNT_ACCRUED_INTEREST_REPORT = 'Saving Account Accrued Interest Report',
   E_TDS_REPORT = 'e-TDS Report',
+  REGULAR_RECURRING_SAVING_INSTALLMENT_REPORT = 'Regular/Recurring Saving Installment Report',
 
   LOAN_INDIVIDUAL_STATEMENT = 'Loan Account Statement',
   LOAN_AGING_REPORT = 'Loan Aging Report',
@@ -98,6 +99,7 @@ export enum Report {
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
   MB_CHANNEL_TRANSACTION_REPORT = 'Mobile Banking Channel Transaction Report',
   MB_UTILITY_USAGE_REPORT = 'Utility Usage Report',
+  MB_SMS_USAGE_REPORT = 'SMS Usage Report',
 
   SERVICE_CENTER_LIST_REPORT = 'Service Center List Report',
   BRANCH_READINESS_REPORT = 'Branch Readiness Report',
@@ -119,6 +121,7 @@ export enum Report {
   OTHERS_SHARE_CERTIFICATE_PRINT_REPORT = 'Share Certificate Report',
   OTHERS_FD_CERTIFICATE_PRINT_REPORT = 'FD-Certificate Report',
   OTHERS_LEDGER_BALANCE_REPORT = 'Ledger Balance Report',
+  OTHERS_SAVING_LOAN_INTEREST_REPORT = 'Saving and Loan Interest Report',
 
   INVENTORY_REGISTER_REPORT = 'Inventory Register Report',
   INVENTORY_SALES_REPORT = 'Inventory Item Sales Report',
@@ -359,6 +362,13 @@ export const REPORTS: ReportType = {
       component: <Reports.ETDSReport />,
       acl: 'REPORTS_SAVINGS_E_TDS',
     },
+    {
+      id: '5.21',
+      report: Report.REGULAR_RECURRING_SAVING_INSTALLMENT_REPORT,
+      link: 'regular-recurring-saving-installment',
+      component: <Reports.RegularRecurringSavingInstallmentReport />,
+      acl: 'REPORTS_RECURRING_SAVING_INSTALLMENT',
+    },
   ],
 
   [ReportGroup.LOAN]: [
@@ -485,6 +495,13 @@ export const REPORTS: ReportType = {
       component: <Reports.UtilityUsageReport />,
       report: Report.MB_UTILITY_USAGE_REPORT,
       link: 'utility-usage',
+    },
+    {
+      id: '4.9',
+      acl: 'REPORTS_UTILITY_USAGE',
+      component: <Reports.SMSUsageReport />,
+      report: Report.MB_SMS_USAGE_REPORT,
+      link: 'sms-usage',
     },
   ],
 
@@ -727,6 +744,13 @@ export const REPORTS: ReportType = {
       component: <Reports.LedgerBalanceReport />,
       report: Report.OTHERS_LEDGER_BALANCE_REPORT,
       link: 'ledger-balance',
+    },
+    {
+      id: '9',
+      report: Report.OTHERS_SAVING_LOAN_INTEREST_REPORT,
+      link: 'saving-loan-interest',
+      component: <Reports.SavingLoanInterestReport />,
+      acl: 'REPORTS_OTHERS_GENERAL_LEDGER',
     },
   ],
   [ReportGroup.EXCEPTION]: [

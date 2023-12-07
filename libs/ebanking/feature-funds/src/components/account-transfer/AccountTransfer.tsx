@@ -16,12 +16,26 @@ interface AccountTransferFormProps {
 
 export const AccountTransferForm = ({ setPaymentStatus }: AccountTransferFormProps) => {
   const user = useAppSelector((state) => state.auth.cooperative.user);
-  const { data } = useGetAccountListQuery({
+  const { data: destinationAccountsData } = useGetAccountListQuery({
     listFilter: { allowedAccount: false },
     transactionPagination: { after: '', first: 1 },
   });
 
-  const accounts = data?.eBanking?.account?.list?.accounts?.map((account) => ({
+  const destintationAccounts = destinationAccountsData?.eBanking?.account?.list?.accounts?.map(
+    (account) => ({
+      label: `${account?.name} - ${account?.accountNumber} ${
+        user?.defaultAccount === account?.id ? '( Default Account )' : ''
+      }`,
+      value: account?.id as string,
+    })
+  );
+
+  const { data: sourceAccountsData } = useGetAccountListQuery({
+    listFilter: { allowedAccount: true },
+    transactionPagination: { after: '', first: 1 },
+  });
+
+  const sourceAccounts = sourceAccountsData?.eBanking?.account?.list?.accounts?.map((account) => ({
     label: `${account?.name} - ${account?.accountNumber} ${
       user?.defaultAccount === account?.id ? '( Default Account )' : ''
     }`,
@@ -43,14 +57,14 @@ export const AccountTransferForm = ({ setPaymentStatus }: AccountTransferFormPro
       <Box p="s16" display="flex" flexDir="column" gap="s32">
         <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap="s16">
           <GridItem colSpan={2}>
-            <FormSelect name="sourceAccount" label="Source Account" options={accounts} />
+            <FormSelect name="sourceAccount" label="Source Account" options={sourceAccounts} />
           </GridItem>
 
           <GridItem colSpan={2}>
             <FormSelect
               name="destinationAccount"
               label="Destination Account"
-              options={accounts}
+              options={destintationAccounts}
               rules={{ required: 'Destination Account is Required.' }}
             />
           </GridItem>

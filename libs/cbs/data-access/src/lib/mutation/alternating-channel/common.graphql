@@ -1,0 +1,10 @@
+mutation accountServiceActivation($input: AccountServiceActivationInput!) {
+  alternativeChannel {
+    accountServiceActivation(input: $input) {
+      result
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

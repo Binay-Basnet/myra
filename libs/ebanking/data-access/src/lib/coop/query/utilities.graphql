@@ -128,3 +128,14 @@ query listEbankingUtilities($pagination: Pagination, $filter: Filter) {
     }
   }
 }
+
+query listNeaOffice($vendor: String) {
+  eBanking {
+    utility {
+      getNeaOffice(vendor: $vendor) {
+        officeCode
+        office
+      }
+    }
+  }
+}

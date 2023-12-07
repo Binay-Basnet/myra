@@ -243,7 +243,7 @@ export const KYMCooperativeUnionPage = () => {
         <FormLayout methods={methods} hasSidebar>
           <FormLayout.Header
             title={
-              action === 'edit'
+              action === 'edit' || action === 'update'
                 ? `Update Member - ${featureCode?.newMemberCooperativeUnion}`
                 : `Add New Member - ${featureCode?.newMemberCooperativeUnion}`
             }

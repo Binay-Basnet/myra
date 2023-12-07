@@ -18,6 +18,7 @@ export interface SuccessCardProps {
   title: string;
   subTitle: string;
   details: Record<string, React.ReactNode>;
+  extraDetails?: Record<string, React.ReactNode>;
   dublicate?: boolean;
   total?: string;
   totalWords?: string;
@@ -60,6 +61,7 @@ export const SuccessCard = ({
   title,
   subTitle,
   details,
+  extraDetails,
   total,
   totalWords,
   type,
@@ -138,6 +140,24 @@ export const SuccessCard = ({
                 Rs. {total}
               </Text>
             </Box>
+          </Box>
+        )}
+        {!isEmpty(extraDetails) && (
+          <Box mt="s16">
+            {Object?.entries(extraDetails)?.map((extraDetail) => (
+              <Box display="flex" alignItems="center" justifyContent="space-between">
+                <Box color="gray.600" fontSize="s2" fontWeight="500">
+                  {extraDetail[0]}
+                </Box>
+                {typeof extraDetail[1] === 'string' ? (
+                  <Box color="gray.700" fontSize="s3" fontWeight="600" textTransform="capitalize">
+                    {extraDetail[1]?.toString()?.replace(/_/g, ' ')?.toLowerCase()}
+                  </Box>
+                ) : (
+                  extraDetail[1]
+                )}
+              </Box>
+            ))}
           </Box>
         )}
       </Box>
@@ -234,6 +254,7 @@ export const SuccessCard = ({
           totalWords={totalWords as string}
           dublicate={dublicate}
           details={details}
+          extraDetails={extraDetails}
           ref={componentRef}
         />
       )}

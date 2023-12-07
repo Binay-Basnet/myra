@@ -5,5 +5,4 @@ export * from './CBS';
 export * from './FAM';
 export * from './HRMODULE';
 export * from './INVENTORY';
-export * from './MICROFINANCE';
 export * from './SETTINGS';

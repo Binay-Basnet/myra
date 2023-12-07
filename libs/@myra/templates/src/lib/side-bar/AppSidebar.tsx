@@ -48,6 +48,8 @@ export const AppSidebar = ({ module = 'CBS', menu, forms }: ISidebarProps) => {
     'CREATE'
   );
 
+  console.log({ sidebarForms, isNewButtonAllowed });
+
   const { link } = useMenuLink(menu);
 
   return (

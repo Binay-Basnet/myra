@@ -40,6 +40,10 @@ export const ShareRegisterTable = () => {
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.transactionDate)}</Text>,
         filterFn: 'dateTime',
         enableColumnFilter: true,
+        enableSorting: true,
+        meta: {
+          orderId: 'id',
+        },
       },
 
       {

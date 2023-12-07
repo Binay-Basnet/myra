@@ -436,6 +436,7 @@ export const LoanRepayment = () => {
                     totalWithCalculation ? Number(totalWithCalculation) : 0
                   ),
                   title: 'Loan Repayment Successful',
+
                   details: {
                     'Loan Repayment Id': (
                       <Text fontSize="s3" color="primary.500" fontWeight="600">
@@ -449,11 +450,14 @@ export const LoanRepayment = () => {
                     'Interest Amount': amountConverter(result?.interestAmount ?? '0'),
                     'Penalty Amount': amountConverter(result?.penaltyAmount ?? '0'),
                     'Rebate Amount': amountConverter(result?.rebateAmount || '0'),
-                    'Remaining Principal': amountConverter(result?.totalRemainingPrincipal || '0'),
-                    'Remaining Interest': amountConverter(result?.totalRemainingInterest || '0'),
 
                     'Payment Mode': result?.paymentMethod,
                   },
+                  extraDetails: {
+                    'Remaining Principal': amountConverter(result?.totalRemainingPrincipal || '0'),
+                    'Remaining Interest': amountConverter(result?.totalRemainingInterest || '0'),
+                  },
+
                   subTitle:
                     'Loan amount has been repayed successfully. Details of the transaction is listed below.',
                   meta: {

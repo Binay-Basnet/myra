@@ -21,6 +21,7 @@ import {
   Text,
 } from '@myra-ui';
 
+import { LocalizedDateFilter } from '@coop/cbs/data-access';
 import { InfoCard, TransactionCard, TransactionHeaderCard } from '@coop/ebanking/cards';
 import {
   DateFilter,
@@ -29,7 +30,7 @@ import {
   useGetTransactionListsQuery,
 } from '@coop/ebanking/data-access';
 import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { FormDatePicker, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type TransactionFormFilters = {
@@ -139,8 +140,8 @@ const TransactionHistoryPage = () => {
                           },
                         ]}
                       />
-                      <FormInput name="date.from" type="date" label="From Date" />
-                      <FormInput name="date.to" type="date" label="To Date" />
+                      <FormDatePicker name="date.from" label="From Date" />
+                      <FormDatePicker name="date.to" label="To Date" />
                     </Grid>
                   </FormProvider>
                   <Box display="flex" gap="s8" pt="s32">
@@ -156,10 +157,10 @@ const TransactionHistoryPage = () => {
                           date:
                             Object.keys(values?.date).length === 0
                               ? null
-                              : {
+                              : ({
                                   from: values?.date?.from,
                                   to: values?.date?.to,
-                                },
+                                } as unknown as LocalizedDateFilter),
                           transactionDirection:
                             values?.transactionDirection === 'All'
                               ? null

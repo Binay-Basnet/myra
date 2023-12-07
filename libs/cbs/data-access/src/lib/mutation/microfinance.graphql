@@ -1,0 +1,77 @@
+mutation addMFCenter($input: MFCenterInput!) {
+  microFinance {
+    center {
+      addMFCenter(input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation addMFGroup($input: MFGroupInput!) {
+  microFinance {
+    group {
+      addMFGroup(input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation addMembers($input: MFGroupMembersInput!) {
+  microFinance {
+    group {
+      addMembers(input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation upsertMeeting($id: ID, $data: MFMeetingInput!) {
+  microFinance {
+    groupMeeting {
+      upsertMeeting(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation addAttendance($data: MFMeetingInput!) {
+  microFinance {
+    groupMeeting {
+      upsertMeeting(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation upsertDecision($meetingId: ID!, $data: MFMeetingDecision!) {
+  microFinance {
+    groupMeeting {
+      upsertDecision(meetingId: $meetingId, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

@@ -414,3 +414,27 @@ query getAccountLockStatusReport($data: AccountLockStatusInput!) {
     }
   }
 }
+
+query getRecurringSavingInstallmentReport($data: RecurringSavingInstallmentInput!) {
+  report {
+    depositReport {
+      recurringSavingInstallmentReport(data: $data) {
+        data {
+          id
+          memberId
+          memberName
+          memberCode
+          savingAccountNumber
+          productName
+          savingBalance
+          depositFrequency
+          installmentAmount
+          installmentPaidUpto
+          duesInstallment
+          fineAmount
+          serviceCenter
+        }
+      }
+    }
+  }
+}

@@ -38,7 +38,11 @@ export const AccountingFeatureAddJournalVoucher = () => {
   const requestId = router?.query['requestId'];
 
   const methods = useForm<CustomJournalVoucherInput>({
-    defaultValues: { paymentMode: JournalVoucherPaymentMode.Cash },
+    defaultValues: {
+      paymentMode: JournalVoucherPaymentMode.Cash,
+      notes:
+        redirectFrom === 'IBT' ? `IBT TRANSFER FROM ${router?.query?.['senderBranch']} BRANCH` : '',
+    },
   });
 
   const { getValues, setValue } = methods;

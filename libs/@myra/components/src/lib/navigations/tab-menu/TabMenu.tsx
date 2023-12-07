@@ -11,23 +11,28 @@ import {
   FiTrendingUp,
   FiUser,
 } from 'react-icons/fi';
+import { TbMoneybag } from 'react-icons/tb';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
 
 import { Icon } from '@myra-ui/foundations';
 
-import { AclKey, Can, MenuType, ModuleType, ROUTES, Subjects, useMenuLink } from '@coop/cbs/utils';
+import { Can, MenuType, ModuleType, ROUTES, Subjects, useMenuLink } from '@coop/cbs/utils';
 import { en, useTranslation } from '@coop/shared/utils';
 
-const cbsTabs: {
+type TAB = {
   title: keyof typeof en;
   icon: IconType;
   link: string;
   match: string[];
   aclKey: Subjects;
   navMenu: MenuType;
-}[] = [
+  prod?: boolean;
+  dev?: boolean;
+};
+
+const cbsTabs: TAB[] = [
   {
     title: 'members',
     icon: FiUser,
@@ -97,6 +102,15 @@ const cbsTabs: {
     navMenu: 'WITHDRAW_SLIP',
   },
   {
+    title: 'microfinance',
+    icon: TbMoneybag,
+    link: ROUTES.CBS_MICRO_FINANCE_CENTER_LIST,
+    match: ['microfinance'],
+    aclKey: 'CBS_WITHDRAW_SLIPS',
+    navMenu: 'MICROFINANCE',
+    prod: false,
+  },
+  {
     title: 'reports',
     icon: FiFileText,
     link: ROUTES.CBS_REPORT_LIST,
@@ -115,22 +129,19 @@ const cbsTabs: {
 ];
 
 interface ITabMenuProps {
-  tabs?: {
-    title: string;
-    icon: IconType;
-    link: string;
-    // Match refers to array of string that needs to match with given route
-    match: string[];
-    // Key Mapped to Permission Related Info
-    aclKey: AclKey;
-    navMenu: MenuType;
-  }[];
+  tabs?: TAB[];
 
   // Route Index is the index of the router?.asPath.split('/cbs/') that needs to be matched
   routeIndex?: number;
 
   module: ModuleType;
 }
+
+export const checkMenuAccess = (item: TAB) => {
+  const appEnv = (process.env['NX_APP_ENV'] || 'dev') as 'dev' | 'prod';
+
+  return item[appEnv];
+};
 
 export const TabMenu = ({ tabs = cbsTabs, routeIndex = 2, module }: ITabMenuProps) => (
   <Box
@@ -153,9 +164,12 @@ export const TabMenu = ({ tabs = cbsTabs, routeIndex = 2, module }: ITabMenuProp
   >
     <Tabs size="md" height="100%" variant="enclosed">
       <TabList border="none" height="100%" display="flex" gap="s8">
-        {tabs.map((tabProps) => (
-          <MenuTab {...tabProps} module={module} routeIndex={routeIndex} />
-        ))}
+        {tabs.map(
+          (tabProps) =>
+            checkMenuAccess(tabProps) !== false && (
+              <MenuTab {...tabProps} module={module} routeIndex={routeIndex} />
+            )
+        )}
       </TabList>
     </Tabs>
   </Box>

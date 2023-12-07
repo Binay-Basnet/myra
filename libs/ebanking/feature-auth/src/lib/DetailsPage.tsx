@@ -10,6 +10,7 @@ import * as yup from 'yup';
 import { Box, Button, Icon, Input, Modal, PasswordInput, Text } from '@myra-ui';
 
 import { axiosAgent } from '@coop/ebanking/data-access';
+import { FormDatePicker } from '@coop/shared/form';
 import { getAPIUrl } from '@coop/shared/utils';
 
 import { AuthContainer } from '../components/AuthContainer';
@@ -44,7 +45,7 @@ const setPassword = async (body: SetPasswordBody) => {
 
 const validationSchema = yup.object({
   name: yup.string().required('Name is Required.'),
-  dob: yup.string().required('Date of Birth is Required.'),
+  // dob: yup.string().required('Date of Birth is Required.'),
   password: yup
     .string()
     .required('No password provided')
@@ -87,13 +88,14 @@ export const DetailsPage = ({ setStatus }: IDetailsPageProps) => {
   const { getValues } = useFormContext<{
     id: string;
     otp: string;
+    dob: string;
   }>();
 
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
         await mutateAsync({
-          dob: data.dob,
+          dob: getValues()['dob'],
           password: data.password,
           name: data.name,
           userId: getValues()['id'],
@@ -109,7 +111,7 @@ export const DetailsPage = ({ setStatus }: IDetailsPageProps) => {
             errorText={errors.name?.message}
             {...register('name')}
           />
-          <Input
+          <FormDatePicker
             type="date"
             label="Date of Birth (BS)"
             errorText={errors.dob?.message}

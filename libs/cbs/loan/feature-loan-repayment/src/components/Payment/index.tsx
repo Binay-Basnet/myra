@@ -166,172 +166,178 @@ export const Payment = ({
           id="payment-mode"
         />
 
-        {selectedPaymentMode === LoanRepaymentMethod?.Account && (
-          <Grid templateColumns="repeat(2,1fr)" gap="s20">
-            <GridItem colSpan={2}>
-              <FormAccountSelect
-                isRequired
-                name="account.destination_account"
-                label="Source Account"
-                memberId={memberId}
-                filterBy={ObjState.Active}
-                includeLoc
-              />
-            </GridItem>
-            <FormInput name="account.amount" value={loanTotal} isDisabled label="Amount" />
+        <Grid
+          templateColumns="repeat(2,1fr)"
+          gap="s20"
+          display={selectedPaymentMode === LoanRepaymentMethod?.Account ? 'grid' : 'none'}
+        >
+          <GridItem colSpan={2}>
+            <FormAccountSelect
+              isRequired
+              name="account.destination_account"
+              label="Source Account"
+              memberId={memberId}
+              filterBy={ObjState.Active}
+              includeLoc
+            />
+          </GridItem>
+          <FormInput name="account.amount" value={loanTotal} isDisabled label="Amount" />
 
-            <GridItem colSpan={2}>
-              <Divider />
-            </GridItem>
-
-            <GridItem colSpan={2}>
-              <InstallmentData
-                loanAccountId={loanAccountId}
-                totalPayableAmount={totalPayableAmount}
-                setTotalPayableAmount={setTotalPayableAmount}
-              />
-            </GridItem>
-
-            <GridItem colSpan={2}>
-              <Divider />
-            </GridItem>
-
-            <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
-              <FormTextArea name="account.note" label="Note" />
-            </GridItem>
-          </Grid>
-        )}
-
-        {selectedPaymentMode === LoanRepaymentMethod?.BankVoucher && (
-          <Grid templateColumns="repeat(2,1fr)" gap="s20">
-            <GridItem colSpan={2}>
-              <FormBankSelect
-                isRequired
-                name="bankVoucher.bank"
-                label="Bank Name"
-                currentBranchOnly
-              />
-            </GridItem>
-            <FormInput isRequired name="bankVoucher.voucher_no" label="Voucher Number" />
-            <FormInput name="bankVoucher.amount" value={loanTotal} isDisabled label="Amount" />
-
-            <GridItem colSpan={2}>
-              <Divider />
-            </GridItem>
-
-            <GridItem colSpan={2}>
-              <InstallmentData
-                loanAccountId={loanAccountId}
-                totalPayableAmount={totalPayableAmount}
-                setTotalPayableAmount={setTotalPayableAmount}
-              />
-            </GridItem>
-
-            <GridItem colSpan={2}>
-              <Divider />
-            </GridItem>
-
-            <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
-              <FormTextArea name="bankVoucher.note" label="Note" />
-            </GridItem>
-          </Grid>
-        )}
-
-        {selectedPaymentMode === LoanRepaymentMethod?.Cash && (
-          <>
-            <Grid templateColumns="repeat(2,1fr)" gap="s20">
-              <FormAmountInput isRequired name="cash.cashPaid" label="Cash" />
-            </Grid>
-
-            <FormSwitch name="cash.disableDenomination" label="Disable Denomination" />
-
-            {!disableDenomination && (
-              <FormEditableTable<PaymentTableType>
-                name="cash.denominations"
-                columns={[
-                  {
-                    accessor: 'value',
-                    header: 'Denomination',
-                    cellWidth: 'auto',
-                    fieldType: 'search',
-                    searchOptions: denominationsOptions,
-                  },
-                  {
-                    accessor: 'quantity',
-                    header: 'Quantity',
-                    isNumeric: true,
-                  },
-                  {
-                    accessor: 'amount',
-                    header: 'Amount',
-                    isNumeric: true,
-                    accessorFn: (row) =>
-                      row.value === 'PAISA'
-                        ? Number(row.quantity) / 100
-                        : row.quantity
-                        ? Number(row.value) * Number(row.quantity)
-                        : '0',
-                  },
-                ]}
-                canDeleteRow={false}
-                canAddRow={false}
-              />
-            )}
-
-            <Box
-              display="flex"
-              flexDirection="column"
-              gap="s20"
-              px="s8"
-              py="s10"
-              border="1px"
-              borderColor="border.layout"
-              borderRadius="br2"
-            >
-              <Box display="flex" justifyContent="space-between">
-                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  Total
-                </Text>
-                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {amountConverter(totalCashPaid)}
-                </Text>
-              </Box>
-
-              <Box display="flex" justifyContent="space-between">
-                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  Return
-                </Text>
-
-                <Box>
-                  <FormAmountInput name="cash.returned_amount" />
-                </Box>
-              </Box>
-
-              <Box display="flex" justifyContent="space-between">
-                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  Grand Total
-                </Text>
-                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {amountConverter(totalCashPaid - returnAmount)}
-                </Text>
-              </Box>
-            </Box>
-
+          <GridItem colSpan={2}>
             <Divider />
+          </GridItem>
 
+          <GridItem colSpan={2}>
             <InstallmentData
               loanAccountId={loanAccountId}
               totalPayableAmount={totalPayableAmount}
               setTotalPayableAmount={setTotalPayableAmount}
             />
+          </GridItem>
 
+          <GridItem colSpan={2}>
             <Divider />
+          </GridItem>
 
-            <Box display="flex" flexDirection="column" gap="s4">
-              <FormTextArea name="cash.note" label="Note" rows={5} />
+          <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
+            <FormTextArea name="account.note" label="Note" />
+          </GridItem>
+        </Grid>
+
+        <Grid
+          templateColumns="repeat(2,1fr)"
+          gap="s20"
+          display={selectedPaymentMode === LoanRepaymentMethod?.BankVoucher ? 'grid' : 'none'}
+        >
+          <GridItem colSpan={2}>
+            <FormBankSelect
+              isRequired
+              name="bankVoucher.bank"
+              label="Bank Name"
+              currentBranchOnly
+            />
+          </GridItem>
+          <FormInput isRequired name="bankVoucher.voucher_no" label="Voucher Number" />
+          <FormInput name="bankVoucher.amount" value={loanTotal} isDisabled label="Amount" />
+
+          <GridItem colSpan={2}>
+            <Divider />
+          </GridItem>
+
+          <GridItem colSpan={2}>
+            <InstallmentData
+              loanAccountId={loanAccountId}
+              totalPayableAmount={totalPayableAmount}
+              setTotalPayableAmount={setTotalPayableAmount}
+            />
+          </GridItem>
+
+          <GridItem colSpan={2}>
+            <Divider />
+          </GridItem>
+
+          <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
+            <FormTextArea name="bankVoucher.note" label="Note" />
+          </GridItem>
+        </Grid>
+
+        <Box
+          display={selectedPaymentMode === LoanRepaymentMethod?.Cash ? 'flex' : 'none'}
+          flexDirection="column"
+          gap="s16"
+        >
+          <Grid templateColumns="repeat(2,1fr)" gap="s20">
+            <FormAmountInput isRequired name="cash.cashPaid" label="Cash" />
+          </Grid>
+
+          <FormSwitch name="cash.disableDenomination" label="Disable Denomination" />
+
+          {!disableDenomination && (
+            <FormEditableTable<PaymentTableType>
+              name="cash.denominations"
+              columns={[
+                {
+                  accessor: 'value',
+                  header: 'Denomination',
+                  cellWidth: 'auto',
+                  fieldType: 'search',
+                  searchOptions: denominationsOptions,
+                },
+                {
+                  accessor: 'quantity',
+                  header: 'Quantity',
+                  isNumeric: true,
+                },
+                {
+                  accessor: 'amount',
+                  header: 'Amount',
+                  isNumeric: true,
+                  accessorFn: (row) =>
+                    row.value === 'PAISA'
+                      ? Number(row.quantity) / 100
+                      : row.quantity
+                      ? Number(row.value) * Number(row.quantity)
+                      : '0',
+                },
+              ]}
+              canDeleteRow={false}
+              canAddRow={false}
+            />
+          )}
+
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap="s20"
+            px="s8"
+            py="s10"
+            border="1px"
+            borderColor="border.layout"
+            borderRadius="br2"
+          >
+            <Box display="flex" justifyContent="space-between">
+              <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+                Total
+              </Text>
+              <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+                {amountConverter(totalCashPaid)}
+              </Text>
             </Box>
-          </>
-        )}
+
+            <Box display="flex" justifyContent="space-between">
+              <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+                Return
+              </Text>
+
+              <Box>
+                <FormAmountInput name="cash.returned_amount" />
+              </Box>
+            </Box>
+
+            <Box display="flex" justifyContent="space-between">
+              <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+                Grand Total
+              </Text>
+              <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+                {amountConverter(totalCashPaid - returnAmount)}
+              </Text>
+            </Box>
+          </Box>
+
+          <Divider />
+
+          <InstallmentData
+            loanAccountId={loanAccountId}
+            totalPayableAmount={totalPayableAmount}
+            setTotalPayableAmount={setTotalPayableAmount}
+          />
+
+          <Divider />
+
+          <Box display="flex" flexDirection="column" gap="s4">
+            <FormTextArea name="cash.note" label="Note" rows={5} />
+          </Box>
+        </Box>
 
         {selectedPaymentMode === LoanRepaymentMethod?.WriteOff && (
           <Grid templateColumns="repeat(2,1fr)" gap="s20">

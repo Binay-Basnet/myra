@@ -34,7 +34,7 @@ export const WithdrawList = () => {
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
   const { data, isFetching } = useGetWithdrawListDataQuery({
-    pagination: { ...getPaginationQuery(), order: { column: 'id', arrange: 'DESC' } },
+    pagination: getPaginationQuery(),
     filter: getFilterQuery(),
   });
 
@@ -49,6 +49,10 @@ export const WithdrawList = () => {
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.date)}</Text>,
         enableColumnFilter: true,
         filterFn: 'dateTime',
+        enableSorting: true,
+        meta: {
+          orderId: 'id',
+        },
       },
       {
         header: t['withdrawListTransactionId'],

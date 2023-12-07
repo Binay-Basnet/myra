@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 
 import { Box, GridItem } from '@myra-ui';
 
@@ -9,6 +10,7 @@ import {
   LoanBalanceReport as LoanBalanceReportType,
   LoanExpiredFilter,
   LocalizedDateFilter,
+  useGetEndOfDayDateDataQuery,
   useGetIndividualKymOptionsQuery,
   useGetLoanBalanceReportQuery,
   useGetLoanProductsFromSubTypeQuery,
@@ -71,6 +73,10 @@ export const LoanBalanceReport = () => {
     data?.report?.loanReport?.loanBalanceReport?.totalRemainingInterest;
   const totalRemainingInterestType =
     data?.report?.loanReport?.loanBalanceReport?.totalRemainingInterestType;
+
+  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+
+  const closingDate = endOfDayData?.transaction?.endOfDayDate?.value;
 
   return (
     <Report
@@ -303,6 +309,25 @@ export const LoanBalanceReport = () => {
                 meta: {
                   skipExcelFormatting: true,
                 },
+              },
+              {
+                id: 'daysSincePayment',
+                header: 'Days Since Payment',
+                cell: (props) =>
+                  props?.row?.original?.lastPaymentDate?.local
+                    ? differenceInCalendarDays(
+                        new Date(closingDate?.en as string),
+                        new Date(props?.row?.original?.lastPaymentDate?.en)
+                      ) === 1
+                      ? `${differenceInCalendarDays(
+                          new Date(closingDate?.en as string),
+                          new Date(props?.row?.original?.lastPaymentDate?.en)
+                        )} day`
+                      : `${differenceInCalendarDays(
+                          new Date(closingDate?.en as string),
+                          new Date(props?.row?.original?.lastPaymentDate?.en)
+                        )} days`
+                    : '-',
               },
             ]}
           />

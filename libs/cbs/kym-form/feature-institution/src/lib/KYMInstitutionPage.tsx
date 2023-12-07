@@ -202,7 +202,7 @@ export const KYMInstitutionPage = () => {
       <FormLayout methods={methods} hasSidebar>
         <FormHeader
           title={
-            action === 'edit'
+            action === 'edit' || action === 'update'
               ? `Update Member - ${featureCode?.newMemberInstitution}`
               : `Add New Member - ${featureCode?.newMemberInstitution}`
           }
