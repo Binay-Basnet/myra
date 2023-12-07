@@ -56,8 +56,10 @@ export const useCoopInit = ({ isMeEnabled }: IUseCoopInitProps) => {
     }
 
     if (!isMyra) {
+      setIsLoading(true);
       refreshToken()
         .then((res) => {
+          setIsLoading(false);
           if (res) {
             setTriggerQuery(true);
           }
