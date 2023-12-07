@@ -12,7 +12,6 @@ import { GoBack } from '@coop/ebanking/components';
 import {
   authenticate,
   logoutCooperative,
-  setSelectedCoop,
   switchCooperative,
   useAppDispatch,
   useCheckAccountMutation,
@@ -93,8 +92,8 @@ const SetupConnectPage = () => {
   //   },
   // });
 
-  const selectedCoop = methods.watch('id');
-  const mobileNumber = methods.watch('mobileNumber');
+  // const selectedCoop = methods.watch('id');
+  // const mobileNumber = methods.watch('mobileNumber');
 
   return (
     <FormProvider {...methods}>
@@ -157,7 +156,7 @@ const SetupConnectPage = () => {
         Check for account
       </Button>
 
-      {selectedCoop && mobileNumber ? (
+      {/* {selectedCoop && mobileNumber ? (
         <Box display="flex" justifyContent="flex-end">
           <Box
             color="primary.500"
@@ -171,7 +170,7 @@ const SetupConnectPage = () => {
             Reset Pin?
           </Box>
         </Box>
-      ) : null}
+      ) : null} */}
 
       <Modal
         width="sm"

@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import { Avatar, Box, Button, Input, Text, toast } from '@myra-ui';
+import { Avatar, Box, Button, getError, MutationError, PasswordInput, Text, toast } from '@myra-ui';
 
 import { GoBack } from '@coop/ebanking/components';
 import {
@@ -41,9 +41,11 @@ export const CoopConnectPage = () => {
 
     const errors = response?.eBanking?.auth?.loginToCooperative?.error;
 
+    const errMsg = getError(errors as unknown as MutationError);
+
     if (errors) {
       methods.setError('pin', {
-        message: 'Invalid Pin',
+        message: errMsg as string,
       });
       return;
     }
@@ -159,9 +161,9 @@ export const CoopConnectPage = () => {
                 </Box>
                 <FormProvider {...methods}>
                   <Box display="flex" flexDir="column" gap="s20">
-                    <Input
+                    <PasswordInput
                       label="Pin"
-                      type="password"
+                      // type="password"
                       errorText={methods?.formState?.errors?.['pin']?.message as string}
                       {...methods.register('pin')}
                     />
