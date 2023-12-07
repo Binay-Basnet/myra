@@ -58,7 +58,7 @@ export const WithdrawSlipBookPrintPreviewCard = ({
       },
       '@page': {
         resolution: '360dpi',
-        size: 'A4 auto !important',
+        size: 'auto !important',
       },
     }}
   >

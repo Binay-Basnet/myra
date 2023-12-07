@@ -391,7 +391,7 @@ export const AccountOpenNew = () => {
           ...values,
           openingPayment: {
             ...omit(values?.openingPayment, ['cash', 'bankVoucher']),
-            withdrawSlip: { ...values.openingPayment.withdrawSlip },
+            withdrawSlip: { ...values.openingPayment.withdrawSlip, withdrawType: 'WITHDRAW_SLIP' },
           },
         };
       }
