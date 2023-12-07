@@ -38,6 +38,7 @@ export const LoanDeclinedTable = ({ data, isLoading, type, viewLink }: ILoanDecl
         cell: (props) => localizedDate(props?.row?.original?.node?.appliedDate),
         enableColumnFilter: true,
         filterFn: 'dateTime',
+        enableSorting: true,
       },
       {
         header: 'Loan ID',

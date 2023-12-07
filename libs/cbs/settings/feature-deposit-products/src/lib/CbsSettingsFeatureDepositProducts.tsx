@@ -82,11 +82,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
 
   const { data, isLoading, refetch } = useGetDepositProductSettingsListQuery(
     {
-      paginate: {
-        ...getPaginationQuery(),
-
-        order: null,
-      },
+      paginate: getPaginationQuery(),
       filter: {
         id: searchTerm,
         productName: searchTerm,
@@ -106,9 +102,11 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'createdAt',
         header: t['depositCreatedDate'],
         accessorFn: (row) => row?.node?.createdAt,
         cell: (props) => localizedDate(props.cell.row.original.node.createdAt),
+        enableSorting: true,
       },
       {
         header: t['depositProductCode'],

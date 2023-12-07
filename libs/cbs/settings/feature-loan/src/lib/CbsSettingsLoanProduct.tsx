@@ -72,39 +72,17 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
   const searchTerm = router?.query['search'] as string;
 
   const { data, isLoading, refetch } = useGetLoanProductListQuery(
-    router.query['before']
-      ? {
-          paginate: {
-            ...getPaginationQuery(),
-
-            order: null,
-          },
-          filter: {
-            id: searchTerm,
-            productName: searchTerm,
-            productCode: searchTerm,
-            productSubType: searchTerm,
-            objState: (router.query['objState'] ??
-              DepositProductStatus.Active) as DepositProductStatus,
-            filterMode: Filter_Mode.Or,
-          },
-        }
-      : {
-          paginate: {
-            ...getPaginationQuery(),
-
-            order: null,
-          },
-          filter: {
-            id: searchTerm,
-            productName: searchTerm,
-            productSubType: searchTerm,
-            productCode: searchTerm,
-            objState: (router.query['objState'] ??
-              DepositProductStatus.Active) as DepositProductStatus,
-            filterMode: Filter_Mode.Or,
-          },
-        },
+    {
+      paginate: getPaginationQuery(),
+      filter: {
+        id: searchTerm,
+        productName: searchTerm,
+        productCode: searchTerm,
+        productSubType: searchTerm,
+        objState: (router.query['objState'] ?? DepositProductStatus.Active) as DepositProductStatus,
+        filterMode: Filter_Mode.Or,
+      },
+    },
     {
       staleTime: 0,
     }
@@ -115,9 +93,11 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'createdDate',
         header: t['loanProductsCreatedDate'],
         accessorFn: (row) => row?.node.createdDate,
         cell: (props) => props?.row?.original?.node.createdDate,
+        enableSorting: true,
       },
       {
         header: t['loanProductsProductCode'],

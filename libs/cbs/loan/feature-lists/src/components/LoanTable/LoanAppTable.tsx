@@ -40,6 +40,7 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
         cell: (props) => localizedDate(props?.row?.original?.node?.appliedDate),
         enableColumnFilter: true,
         filterFn: 'dateTime',
+        enableSorting: true,
       },
       {
         header: 'Loan Account ID',
