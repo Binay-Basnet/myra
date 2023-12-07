@@ -41,9 +41,9 @@ export const CoopConnectPage = () => {
 
     const errors = response?.eBanking?.auth?.loginToCooperative?.error;
 
-    const errMsg = getError(errors as unknown as MutationError);
-
     if (errors) {
+      const errMsg = getError(errors as unknown as MutationError);
+
       methods.setError('pin', {
         message: errMsg as string,
       });
