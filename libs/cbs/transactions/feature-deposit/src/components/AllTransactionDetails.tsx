@@ -176,6 +176,7 @@ export const AllTransactionDetails = () => {
     accountName,
     total,
     details,
+    extraDetails,
     dublicate,
     voucherDetails,
     showSignatures,
@@ -187,6 +188,7 @@ export const AllTransactionDetails = () => {
     let tempAccountId = '';
 
     let tempDetails = {};
+    let tempExtraDetails = {};
 
     let tempVoucherDetails = {};
 
@@ -397,8 +399,10 @@ export const AllTransactionDetails = () => {
         'Rebate Amount': amountConverter(loanRepaymentDetailData?.rebate || 0),
 
         'Payment Mode': loanRepaymentDetailData?.paymentMode,
-        'Remaining Principal': loanRepaymentDetailData?.totalRemainingPrincipal,
-        'Remaining Interest': loanRepaymentDetailData?.totalRemainingInterest,
+      };
+      tempExtraDetails = {
+        'Remaining Principal': amountConverter(loanRepaymentDetailData?.totalRemainingPrincipal),
+        'Remaining Interest': amountConverter(loanRepaymentDetailData?.totalRemainingInterest),
       };
 
       tempTotal = Number(loanRepaymentDetailData?.totalRepaymentAmount).toFixed(2);
@@ -553,6 +557,7 @@ export const AllTransactionDetails = () => {
       accountName: tempAccountName,
       total: tempTotal,
       details: tempDetails,
+      extraDetails: tempExtraDetails,
       voucherDetails: tempVoucherDetails,
       showSignatures: tempShowSignatures,
       jvDetails: tempJVDetails,
@@ -727,6 +732,7 @@ export const AllTransactionDetails = () => {
             total={amountConverter(total)}
             totalWords={amountToWordsConverter(Number(total || '0'))}
             details={details}
+            extraDetails={extraDetails}
             dublicate={dublicate}
             showSignatures={showSignatures}
             count={printCount}
