@@ -137,11 +137,44 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
         },
       },
       {
+        header: 'Organization Premium',
+        accessorFn: (row) => row?.node?.organizationPremium,
+        cell: (props) => (
+          <span>{Number(props?.row?.original?.node?.organizationPremium || 0).toFixed(2)} %</span>
+        ),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Product Premium',
+        accessorFn: (row) => row?.node?.productPremium,
+        cell: (props) => (
+          <span>{Number(props?.row?.original?.node?.productPremium || 0).toFixed(2)} %</span>
+        ),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Account Premium',
+        accessorFn: (row) => row?.node?.accountPremium,
+        cell: (props) => (
+          <span>{Number(props?.row?.original?.node?.accountPremium || 0).toFixed(2)} %</span>
+        ),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
         header: t['depositInterest'],
         accessorFn: (row) => row?.node?.interest,
         cell: (props) => (
           <span>{Number(props?.row?.original?.node?.interest || 0).toFixed(2)} %</span>
         ),
+        meta: {
+          isNumeric: true,
+        },
       },
 
       {

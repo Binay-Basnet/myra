@@ -232,7 +232,7 @@ export const KYMCooperativePage = () => {
       <FormLayout methods={methods} hasSidebar>
         <FormHeader
           title={
-            action === 'edit'
+            action === 'edit' || action === 'update'
               ? `Update Member - ${featureCode?.newMemberCooperative}`
               : `Add New Member - ${featureCode?.newMemberCooperative}`
           }

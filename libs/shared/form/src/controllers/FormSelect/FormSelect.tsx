@@ -83,7 +83,11 @@ const FormControl = <T extends Record<string, unknown>>({
 
     if (rest.isMulti && Array.isArray(value)) {
       value?.forEach((val) => {
-        if (!temp?.find((opt) => opt?.value === val?.value)) {
+        if (
+          typeof val === 'object' &&
+          'value' in val &&
+          !temp?.find((opt) => opt?.value === val?.value)
+        ) {
           temp?.unshift(val);
         }
       });

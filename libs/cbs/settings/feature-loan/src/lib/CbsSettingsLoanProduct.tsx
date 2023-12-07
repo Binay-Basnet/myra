@@ -151,9 +151,36 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
         // cell: (props) => productSubTypes(props?.row?.original?.node?.productSubType),
       },
       {
+        header: 'Organization Premium',
+        accessorFn: (row) => row?.node.organizationPremiumInterest,
+        cell: (props) => <span>{props?.row?.original?.node?.organizationPremiumInterest} %</span>,
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Product Premium',
+        accessorFn: (row) => row?.node.productPremiumInterest,
+        cell: (props) => <span>{props?.row?.original?.node?.productPremiumInterest} %</span>,
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Account Premium',
+        accessorFn: (row) => row?.node.accountPremiumInterest,
+        cell: (props) => <span>{props?.row?.original?.node?.accountPremiumInterest} %</span>,
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
         header: t['loanProductsInterest'],
         accessorFn: (row) => row?.node.interest?.defaultRate,
         cell: (props) => <span>{props?.row?.original?.node?.interest?.defaultRate} %</span>,
+        meta: {
+          isNumeric: true,
+        },
       },
 
       {

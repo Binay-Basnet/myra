@@ -1,0 +1,25 @@
+query getUserDetails($input: EbankingUserDetailsInput!) {
+  alternativeChannel {
+    userDetails(input: $input) {
+      data {
+        memberId
+        memberName
+        serviceStatus
+        phoneNumber
+        coopConnection
+        lastActive
+        accounts {
+          accountId
+          accountName
+          productName
+          accountNature
+          status
+        }
+        autoRenew
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

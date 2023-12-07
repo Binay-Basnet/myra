@@ -22,6 +22,7 @@
     "paths": {
       "@bpm/feature-requests": ["libs/bpm/feature-request/src/index.ts"],
       "@bpm/feature-tasks": ["libs/bpm/feature-tasks/src/index.ts"],
+      "@cbs/microfinance": ["libs/cbs/microfinance/src/index.ts"],
       "@coop/ac/activation-form": [
         "libs/alternative-channels/feature-activation-form/src/index.ts"
       ],

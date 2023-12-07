@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { GridItem } from '@myra-ui/components';
 
@@ -42,6 +42,22 @@ export const InterestTaxReport = () => {
   );
   const interestTaxReport = interestTaxReportData?.report?.depositReport?.interestTaxReport?.data;
 
+  const { totalInterest, totalTax } = useMemo(
+    () => ({
+      totalInterest:
+        interestTaxReport?.reduce(
+          (accumulator, current) => accumulator + Number(current?.interest),
+          0 as number
+        ) ?? 0,
+      totalTax:
+        interestTaxReport?.reduce(
+          (accumulator, current) => accumulator + Number(current?.tax),
+          0 as number
+        ) ?? 0,
+    }),
+    [interestTaxReport]
+  );
+
   return (
     <Report
       defaultFilters={null}
@@ -76,6 +92,7 @@ export const InterestTaxReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization />
           <Report.Table<InterestTaxReportEntry & { index: number }>
+            showFooter={(interestTaxReport?.length || 0) > 1}
             columns={[
               {
                 header: 'S.No.',
@@ -83,9 +100,10 @@ export const InterestTaxReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 4,
+                    colspan: 8,
                   },
                 },
+                footer: () => 'Total',
               },
               {
                 header: 'Member ID',
@@ -97,20 +115,38 @@ export const InterestTaxReport = () => {
                     label={props?.row?.original?.memberCode as string}
                   />
                 ),
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
               },
               {
                 header: 'Member Name',
                 accessorFn: (row) => row?.name?.local,
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
               },
               {
                 header: 'Address',
                 accessorFn: (row) => row?.address?.district?.local,
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
               },
               {
                 header: 'PAN NO.',
                 accessorFn: (row) => row?.panNo,
                 meta: {
                   skipExcelFormatting: true,
+                  Footer: {
+                    display: 'none',
+                  },
                 },
               },
               {
@@ -123,17 +159,30 @@ export const InterestTaxReport = () => {
                     label={props?.row?.original?.accountNo as string}
                   />
                 ),
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
               },
               {
                 header: 'Tax Deduct Date',
                 accessorFn: (row) => localizedDate(row?.date),
                 meta: {
                   skipExcelFormatting: true,
+                  Footer: {
+                    display: 'none',
+                  },
                 },
               },
               {
                 header: 'Remarks',
                 accessorKey: 'remarks',
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
               },
               // {
               //   header: 'Opening Balance',
@@ -150,6 +199,7 @@ export const InterestTaxReport = () => {
                 meta: {
                   isNumeric: true,
                 },
+                footer: () => amountConverter(totalInterest),
               },
               {
                 header: 'Tax Amount',
@@ -158,6 +208,7 @@ export const InterestTaxReport = () => {
                 meta: {
                   isNumeric: true,
                 },
+                footer: () => amountConverter(totalTax),
               },
               // {
               //   header: 'Closing Balance',

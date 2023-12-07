@@ -21,6 +21,8 @@ export const LoanProvisionList = () => {
       {
         header: 'Provision Date',
         accessorFn: (row) => localizedDate(row?.node?.date),
+        enableSorting: true,
+        meta: { orderId: 'id' },
       },
       {
         header: 'Provision ID',

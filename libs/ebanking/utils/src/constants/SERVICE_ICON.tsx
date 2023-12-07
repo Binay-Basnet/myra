@@ -48,7 +48,7 @@ export const UTILITY_ICON_DICT: Record<string, IconType> = {
 
 export const UTILITY_LINK_DICT: Record<string, string> = {
   topup: '/utility-payments/mobile-topup',
-  electricity: '',
+  electricity: '/utility-payments/electricity',
   internet: '/utility-payments/internet-payment',
   tv: '',
   KHANEPANI: '',

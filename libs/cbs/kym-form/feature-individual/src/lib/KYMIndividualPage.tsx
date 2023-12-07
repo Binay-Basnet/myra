@@ -205,7 +205,7 @@ export const KYMIndividualPage = () => {
       <FormLayout methods={methods} hasSidebar>
         <FormHeader
           title={
-            action === 'edit'
+            action === 'edit' || action === 'update'
               ? `Update Member - ${featureCode?.newMemberIndiviual}`
               : `Add New Member - ${featureCode?.newMemberIndiviual}`
           }

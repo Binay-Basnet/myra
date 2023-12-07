@@ -345,3 +345,35 @@ query getCopomisFinancialReport($data: CopomisFinancialInput!) {
     }
   }
 }
+
+query getSavingLoanInterestReport($data: SavingLoanInterestReport!) {
+  report {
+    otherReport {
+      savingLoanInterestReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          memberName
+          savingAccountEntry {
+            accountNo
+            interestPaid
+            tdsDeducted
+          }
+          loanAccountEntry {
+            accountNo
+            interestIncome
+            finePaid
+          }
+        }
+        totalInterestPaid
+        totalTds
+        totalInterestIncome
+        totalFinePaid
+        grandTotalInterestPaid
+        grandTotalTds
+        grandTotalInterestIncome
+        grandTotalFinePaid
+      }
+    }
+  }
+}

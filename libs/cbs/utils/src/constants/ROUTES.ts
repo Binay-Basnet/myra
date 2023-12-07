@@ -596,19 +596,16 @@ export const ROUTES = {
 
   BPM_REQUESTS_LOAN_REQUESTS_ADD: '/bpm/requests/loan/add',
 
-  MICRO_FINANCE_GROUPS_LIST: '/micro-finance/groups/list',
-  MICRO_FINANCE_GROUPS_ADD: '/micro-finance/groups/add',
-  MICRO_FINANCE_GROUPS_MEETINGS_LIST: '/micro-finance/groups/groups-meetings/list',
-  MICRO_FINANCE_GROUPS_MEETINGS_ADD: '/micro-finance/groups/groups-meetings/add',
+  // Microfinance
 
-  MICRO_FINANCE_SAVING_ACCOUNTS_LIST: '/micro-finance/savings/accounts/list',
-  MICRO_FINANCE_SAVING_ACCOUNTS_ADD: '/micro-finance/savings/accounts/add',
-  MICRO_FINANCE_DEPOSIT_LIST: '/micro-finance/savings/deposit/list',
-  MICRO_FINANCE_DEPOSIT_ADD: '/micro-finance/savings/deposit/add',
-  MICRO_FINANCE_WITHDRAW_LIST: '/micro-finance/savings/withdraw/list',
-  MICRO_FINANCE_WITHDRAW_ADD: '/micro-finance/savings/withdraw/add',
-  MICRO_FINANCE_SAVING_PRODUCTS_LIST: '/micro-finance/savings/products/list',
-  MICRO_FINANCE_SAVING_PRODUCTS_ADD: '/micro-finance/savings/products--/add',
+  CBS_MICRO_FINANCE_GROUP_LIST: '/cbs/microfinance/group/list',
+  CBS_MICRO_FINANCE_GROUP_ADD: '/cbs/microfinance/group/add',
+
+  CBS_MICRO_FINANCE_GROUP_MEETINGS_LIST: '/cbs/microfinance/group-meetings/list',
+  CBS_MICRO_FINANCE_GROUP_MEETINGS_ADD: '/cbs/microfinance/group-meetings/add',
+
+  CBS_MICRO_FINANCE_CENTER_LIST: '/cbs/microfinance/center/list',
+  CBS_MICRO_FINANCE_CENTER_ADD: '/cbs/microfinance/center/add',
 
   // FAM
   // Assets

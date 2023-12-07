@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { FormProvider, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 
+import { Box, Button, GridItem, Icon, toast } from '@myra-ui';
+
 import { InfoCard } from '@coop/ebanking/cards';
 import {
   EbankingSendMoneyInput,
@@ -10,7 +12,6 @@ import {
   useGetAccountListQuery,
 } from '@coop/ebanking/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, GridItem, Icon, toast } from '@myra-ui';
 
 const purposes = [
   {
@@ -39,6 +40,9 @@ interface SendMoneyProps {
 
 export const SendMoneyForm = ({ setPaymentStatus }: SendMoneyProps) => {
   const { data: accountData } = useGetAccountListQuery({
+    listFilter: {
+      allowedAccount: true,
+    },
     transactionPagination: { after: '', first: 1 },
   });
 

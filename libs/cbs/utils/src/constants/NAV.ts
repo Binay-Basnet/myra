@@ -12,7 +12,7 @@ import {
   FAM,
   HRMODULE,
   INVENTORY,
-  MICROFINANCE,
+  // MICROFINANCE,
   SETTINGS,
 } from './navigations';
 
@@ -24,8 +24,8 @@ export type ModuleType =
   | 'INVENTORY'
   | 'HRMODULE'
   | 'BPM'
-  | 'FAM'
-  | 'MICROFINANCE';
+  | 'FAM';
+// | 'MICROFINANCE';
 
 export type MenuType =
   | 'MEMBERS'
@@ -65,7 +65,8 @@ export type MenuType =
   | 'GLOBAL'
   | 'ASSETS'
   | 'OPERATIONS'
-  | 'PURCHASE';
+  | 'PURCHASE'
+  | 'MICROFINANCE';
 
 export type Page = {
   label: string;
@@ -107,7 +108,7 @@ export const APP_NAVS = {
   INVENTORY,
   HRMODULE,
   BPM,
-  MICROFINANCE,
+  // MICROFINANCE,
   FAM,
 };
 

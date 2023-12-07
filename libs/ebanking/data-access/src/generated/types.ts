@@ -1173,6 +1173,7 @@ export type EbankingMemberProfileData = {
 };
 
 export type EbankingOtpInput = {
+  birthDate: Scalars['Localized'];
   mobile: Scalars['String'];
   otp: Scalars['String'];
   otpFor: OtpFor;
@@ -1184,7 +1185,7 @@ export type EbankingOtpResult = {
 };
 
 export type EbankingPasswordInput = {
-  dob: Scalars['String'];
+  dob: Scalars['Localized'];
   name: Scalars['String'];
   password: Scalars['String'];
 };
@@ -1339,7 +1340,7 @@ export type EbankingTransactionEdge = {
 
 export type EbankingTransactionFilter = {
   accounts?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  date?: InputMaybe<DateFilter>;
+  date: LocalizedDateFilter;
   transactionDirection?: InputMaybe<EbankingTransactionCrOrDr>;
 };
 
@@ -1921,7 +1922,7 @@ export type MemberFamilyDetails = {
 };
 
 export type MembershipRequestInput = {
-  dateOfBirth?: InputMaybe<Scalars['String']>;
+  dateOfBirth: Scalars['Localized'];
   email?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
   gender?: InputMaybe<Scalars['String']>;
@@ -2105,6 +2106,11 @@ export const ObjState = {
 } as const;
 
 export type ObjState = typeof ObjState[keyof typeof ObjState];
+export type OfficeCodes = {
+  office: Scalars['String'];
+  officeCode: Scalars['String'];
+};
+
 export type OrConditions = {
   andConditions: Array<Condition>;
 };
@@ -2600,6 +2606,7 @@ export type UtilityPayments = {
 
 export type UtilityQuery = {
   getCashBackCharges: CashBackInfoResult;
+  getNeaOffice?: Maybe<Array<Maybe<OfficeCodes>>>;
   getUtility: UtilityInfoResult;
   listCashBack: UtilitiesChargesConnection;
   listServiceType: ServiceTypeResult;
@@ -2608,6 +2615,10 @@ export type UtilityQuery = {
 
 export type UtilityQueryGetCashBackChargesArgs = {
   input?: InputMaybe<CheckCashBackInfo>;
+};
+
+export type UtilityQueryGetNeaOfficeArgs = {
+  vendor?: InputMaybe<Scalars['String']>;
 };
 
 export type UtilityQueryGetUtilityArgs = {
@@ -4075,6 +4086,16 @@ export type ListEbankingUtilitiesQuery = {
         } | null> | null;
       };
     };
+  };
+};
+
+export type ListNeaOfficeQueryVariables = Exact<{
+  vendor?: InputMaybe<Scalars['String']>;
+}>;
+
+export type ListNeaOfficeQuery = {
+  eBanking: {
+    utility: { getNeaOffice?: Array<{ officeCode: string; office: string } | null> | null };
   };
 };
 

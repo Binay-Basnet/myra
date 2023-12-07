@@ -7,11 +7,12 @@ import { FormSection } from '@myra-ui/templates';
 
 import { InfoCard } from '@coop/ebanking/cards';
 import {
+  MembershipRequestInput,
   useGetCoopListQuery,
   useGetKymGenderQuery,
   useNewMembershipRequestMutation,
 } from '@coop/ebanking/data-access';
-import { FormAddress, FormInput, FormSelect } from '@coop/shared/form';
+import { FormAddress, FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 
 export const CoopKYMPage = () => {
   const router = useRouter();
@@ -56,7 +57,7 @@ export const CoopKYMPage = () => {
               />
             </GridItem>
             <GridItem colSpan={3}>
-              <FormInput type="date" name="dateOfBirth" label="Date of Birth" />
+              <FormDatePicker name="dateOfBirth" label="Date of Birth" />
             </GridItem>
           </FormSection>
           <FormSection header="Contact Details">
@@ -75,7 +76,7 @@ export const CoopKYMPage = () => {
                 await asyncToast({
                   id: 'request-member',
                   promise: requestMember({
-                    data: methods.getValues(),
+                    data: methods.getValues() as MembershipRequestInput,
                     cooperativeId: id,
                   }),
                   msgs: {

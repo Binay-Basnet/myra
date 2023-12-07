@@ -21,7 +21,7 @@ export type Scalars = {
   Date: string;
   Email: any;
   InvalidData: Record<string, Array<string>>;
-  Localized: Record<'local' | 'en' | 'np', string>;
+  Localized: Record<"local"|"en"|"np",string>;
   Map: Record<string, string>;
   Time: string;
 };
@@ -44,14 +44,17 @@ export type AdministrationQuery = {
   wards: Array<Scalars['Int']>;
 };
 
+
 export type AdministrationQueryDistrictsArgs = {
   provinceId?: InputMaybe<Scalars['Int']>;
 };
+
 
 export type AdministrationQueryMunicipalitiesArgs = {
   districtId?: InputMaybe<Scalars['Int']>;
   provinceId?: InputMaybe<Scalars['Int']>;
 };
+
 
 export type AdministrationQueryWardsArgs = {
   districtId: Scalars['Int'];
@@ -80,7 +83,7 @@ export const AllModules = {
   HrManagement: 'HR_MANAGEMENT',
   InventoryManagement: 'INVENTORY_MANAGEMENT',
   MemberAndShareManagement: 'MEMBER_AND_SHARE_MANAGEMENT',
-  QualityAssuranceForNefscun: 'QUALITY_ASSURANCE_FOR_NEFSCUN',
+  QualityAssuranceForNefscun: 'QUALITY_ASSURANCE_FOR_NEFSCUN'
 } as const;
 
 export type AllModules = typeof AllModules[keyof typeof AllModules];
@@ -91,7 +94,7 @@ export type ApplicationVersion = {
 
 export const Arrange = {
   Asc: 'ASC',
-  Desc: 'DESC',
+  Desc: 'DESC'
 } as const;
 
 export type Arrange = typeof Arrange[keyof typeof Arrange];
@@ -120,7 +123,7 @@ export const BranchCategory = {
   ExtensionCounter: 'EXTENSION_COUNTER',
   HeadOffice: 'HEAD_OFFICE',
   RegionalOffice: 'REGIONAL_OFFICE',
-  ServiceCenter: 'SERVICE_CENTER',
+  ServiceCenter: 'SERVICE_CENTER'
 } as const;
 
 export type BranchCategory = typeof BranchCategory[keyof typeof BranchCategory];
@@ -146,42 +149,51 @@ export type ClientEnvironmentMutation = {
   updateVersion?: Maybe<ClientEnvironment>;
 };
 
+
 export type ClientEnvironmentMutationCloneArgs = {
   clientId: Scalars['ID'];
   data: CloneClientEnvironmentInput;
 };
+
 
 export type ClientEnvironmentMutationCloneFromDevArgs = {
   clientId: Scalars['ID'];
   data: CloneEnvironmentFromDevInput;
 };
 
+
 export type ClientEnvironmentMutationCreateDbArgs = {
   clientId: Scalars['ID'];
   environmentId: Scalars['ID'];
 };
 
+
 export type ClientEnvironmentMutationDeleteArgs = {
   environmentId: Scalars['String'];
 };
+
 
 export type ClientEnvironmentMutationDeleteVersionArgs = {
   version: Scalars['String'];
 };
 
+
 export type ClientEnvironmentMutationInsertVersionArgs = {
   data: VersionInput;
 };
+
 
 export type ClientEnvironmentMutationNewArgs = {
   clientId: Scalars['ID'];
   data: NewClientEnvironmentInput;
 };
 
+
 export type ClientEnvironmentMutationSeedDbWithCsvArgs = {
   environmentId: Scalars['String'];
   fileURL: Scalars['String'];
 };
+
 
 export type ClientEnvironmentMutationUpdateVersionArgs = {
   environmentId: Scalars['String'];
@@ -212,7 +224,7 @@ export const ComparatorType = {
   HasNoValue: 'HasNoValue',
   HasValue: 'HasValue',
   In: 'IN',
-  LessThan: 'LessThan',
+  LessThan: 'LessThan'
 } as const;
 
 export type ComparatorType = typeof ComparatorType[keyof typeof ComparatorType];
@@ -284,7 +296,7 @@ export type Filter = {
 export const Gender = {
   Female: 'FEMALE',
   Male: 'MALE',
-  Other: 'OTHER',
+  Other: 'OTHER'
 } as const;
 
 export type Gender = typeof Gender[keyof typeof Gender];
@@ -347,7 +359,7 @@ export const Id_Type = {
   Sharenumbers: 'SHARENUMBERS',
   Shareregister: 'SHAREREGISTER',
   User: 'USER',
-  Userpreference: 'USERPREFERENCE',
+  Userpreference: 'USERPREFERENCE'
 } as const;
 
 export type Id_Type = typeof Id_Type[keyof typeof Id_Type];
@@ -499,19 +511,14 @@ export type Mutation = {
   utility: UtilityMutation;
 };
 
-export type MutationError =
-  | AuthorizationError
-  | BadRequestError
-  | NotFoundError
-  | ServerError
-  | ValidationError;
+export type MutationError = AuthorizationError | BadRequestError | NotFoundError | ServerError | ValidationError;
 
 export const NatureOfCooperative = {
   AgricultureCooperative: 'AGRICULTURE_COOPERATIVE',
   HealthCooperative: 'HEALTH_COOPERATIVE',
   MultipurposeCooperative: 'MULTIPURPOSE_COOPERATIVE',
   Others: 'OTHERS',
-  SavingAndCredit: 'SAVING_AND_CREDIT',
+  SavingAndCredit: 'SAVING_AND_CREDIT'
 } as const;
 
 export type NatureOfCooperative = typeof NatureOfCooperative[keyof typeof NatureOfCooperative];
@@ -520,9 +527,11 @@ export type NeosysAuthMutation = {
   token?: Maybe<NeosysAuthTokenResult>;
 };
 
+
 export type NeosysAuthMutationLoginArgs = {
   data: NeosysLoginInput;
 };
+
 
 export type NeosysAuthMutationTokenArgs = {
   refreshToken: Scalars['String'];
@@ -584,9 +593,11 @@ export type NeosysClientMutation = {
   environment?: Maybe<ClientEnvironmentMutation>;
 };
 
+
 export type NeosysClientMutationAddArgs = {
   data?: InputMaybe<OrganizationClientInput>;
 };
+
 
 export type NeosysClientMutationCreateDbArgs = {
   saccosId: Scalars['ID'];
@@ -597,9 +608,11 @@ export type NeosysClientQuery = {
   list?: Maybe<Array<Maybe<NeosysClientMinimalInfo>>>;
 };
 
+
 export type NeosysClientQueryDetailsArgs = {
   clientId: Scalars['ID'];
 };
+
 
 export type NeosysClientQueryListArgs = {
   filter?: InputMaybe<NeosysClientFilter>;
@@ -699,10 +712,12 @@ export type NeosysUserMutation = {
   changePassword?: Maybe<NeosysUserMutationResult>;
 };
 
+
 export type NeosysUserMutationAddArgs = {
   data?: InputMaybe<NeosysUserInput>;
   id?: InputMaybe<Scalars['ID']>;
 };
+
 
 export type NeosysUserMutationChangePasswordArgs = {
   data?: InputMaybe<NeosysUserPasswordInput>;
@@ -726,9 +741,11 @@ export type NeosysUserQuery = {
   list?: Maybe<NeosysUserConnection>;
 };
 
+
 export type NeosysUserQueryGetArgs = {
   id: Scalars['ID'];
 };
+
 
 export type NeosysUserQueryListArgs = {
   filter?: InputMaybe<NeosysUserSearchFilter>;
@@ -773,7 +790,7 @@ export const ObjState = {
   Draft: 'DRAFT',
   Inactive: 'INACTIVE',
   Submitted: 'SUBMITTED',
-  Validated: 'VALIDATED',
+  Validated: 'VALIDATED'
 } as const;
 
 export type ObjState = typeof ObjState[keyof typeof ObjState];
@@ -900,11 +917,10 @@ export type OrganizationContactDetailsInput = {
 export const OrganizationInstallmentLicense = {
   Basic: 'BASIC',
   Professional: 'PROFESSIONAL',
-  Standard: 'STANDARD',
+  Standard: 'STANDARD'
 } as const;
 
-export type OrganizationInstallmentLicense =
-  typeof OrganizationInstallmentLicense[keyof typeof OrganizationInstallmentLicense];
+export type OrganizationInstallmentLicense = typeof OrganizationInstallmentLicense[keyof typeof OrganizationInstallmentLicense];
 export type OrganizationRegistrationDetails = {
   panOrVat?: Maybe<Scalars['String']>;
   regdAddress?: Maybe<Scalars['String']>;
@@ -922,16 +938,15 @@ export type OrganizationRegistrationDetailsInput = {
 
 export const OrganizationSecuritySetup = {
   PureSass: 'PURE_SASS',
-  Vpn: 'VPN',
+  Vpn: 'VPN'
 } as const;
 
-export type OrganizationSecuritySetup =
-  typeof OrganizationSecuritySetup[keyof typeof OrganizationSecuritySetup];
+export type OrganizationSecuritySetup = typeof OrganizationSecuritySetup[keyof typeof OrganizationSecuritySetup];
 export const OrganizationType = {
   CooperativeUnion: 'COOPERATIVE_UNION',
   DistrictUnion: 'DISTRICT_UNION',
   Preliminary: 'PRELIMINARY',
-  ProvinceUnion: 'PROVINCE_UNION',
+  ProvinceUnion: 'PROVINCE_UNION'
 } as const;
 
 export type OrganizationType = typeof OrganizationType[keyof typeof OrganizationType];
@@ -953,6 +968,7 @@ export type Pagination = {
 export type PresignedUrlMutation = {
   upload?: Maybe<PresignedUrlOutput>;
 };
+
 
 export type PresignedUrlMutationUploadArgs = {
   contentType?: InputMaybe<Scalars['String']>;
@@ -987,7 +1003,7 @@ export type Result = {
 };
 
 export const Role = {
-  Superadmin: 'SUPERADMIN',
+  Superadmin: 'SUPERADMIN'
 } as const;
 
 export type Role = typeof Role[keyof typeof Role];
@@ -1082,10 +1098,12 @@ export type SmsQuery = {
   listSmsRecords?: Maybe<SmsRecordsConnection>;
 };
 
+
 export type SmsQueryListSaccosAvailableSmsCountArgs = {
   filter?: InputMaybe<Filter>;
   paginate: Pagination;
 };
+
 
 export type SmsQueryListSmsRecordsArgs = {
   filter?: InputMaybe<Filter>;
@@ -1117,23 +1135,22 @@ export type SmsRecordsInfo = {
 
 export const SmsTxnTypeAtNeosys = {
   Credit: 'CREDIT',
-  Debit: 'DEBIT',
+  Debit: 'DEBIT'
 } as const;
 
 export type SmsTxnTypeAtNeosys = typeof SmsTxnTypeAtNeosys[keyof typeof SmsTxnTypeAtNeosys];
 export const SmsUsageObjStateType = {
   Cancelled: 'CANCELLED',
-  Sent: 'SENT',
+  Sent: 'SENT'
 } as const;
 
 export type SmsUsageObjStateType = typeof SmsUsageObjStateType[keyof typeof SmsUsageObjStateType];
 export const Transaction_Direction = {
   Purchased: 'PURCHASED',
-  Sold: 'SOLD',
+  Sold: 'SOLD'
 } as const;
 
-export type Transaction_Direction =
-  typeof Transaction_Direction[keyof typeof Transaction_Direction];
+export type Transaction_Direction = typeof Transaction_Direction[keyof typeof Transaction_Direction];
 export type Task = {
   id: Scalars['ID'];
   message: Scalars['String'];
@@ -1145,7 +1162,7 @@ export type Task = {
 export const TaskStatus = {
   Completed: 'COMPLETED',
   Failed: 'FAILED',
-  Running: 'RUNNING',
+  Running: 'RUNNING'
 } as const;
 
 export type TaskStatus = typeof TaskStatus[keyof typeof TaskStatus];
@@ -1153,14 +1170,14 @@ export const TaskType = {
   CloneEnv: 'CLONE_ENV',
   CreateDatabase: 'CREATE_DATABASE',
   DeleteEnv: 'DELETE_ENV',
-  UpgradeEnvVersion: 'UPGRADE_ENV_VERSION',
+  UpgradeEnvVersion: 'UPGRADE_ENV_VERSION'
 } as const;
 
 export type TaskType = typeof TaskType[keyof typeof TaskType];
 export const TextFormat = {
   Email: 'EMAIL',
   IPv4: 'IPv4',
-  IPv6: 'IPv6',
+  IPv6: 'IPv6'
 } as const;
 
 export type TextFormat = typeof TextFormat[keyof typeof TextFormat];
@@ -1198,6 +1215,7 @@ export type ThreadAccessLogCounterQuery = {
   listAccessLogCounter?: Maybe<ThreadAccessLogCounterListConnection>;
 };
 
+
 export type ThreadAccessLogCounterQueryListAccessLogCounterArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -1232,6 +1250,7 @@ export type ThreadClosingDayQuery = {
   listClosingDay?: Maybe<ThreadClosingDayListConnection>;
 };
 
+
 export type ThreadClosingDayQueryListClosingDayArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -1252,6 +1271,7 @@ export type ThreadDatabaseSizeQuery = {
   fetchDatabaseSize?: Maybe<ThreadDatabaseSizeNodeAll>;
   listDBSize?: Maybe<ThreadDbSizeListConnection>;
 };
+
 
 export type ThreadDatabaseSizeQueryListDbSizeArgs = {
   filter?: InputMaybe<Filter>;
@@ -1307,6 +1327,7 @@ export type ThreadErrorLogQuery = {
   listErrorLog?: Maybe<ThreadErrorLogListConnection>;
 };
 
+
 export type ThreadErrorLogQueryListErrorLogArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -1343,6 +1364,7 @@ export type ThreadLoanAccountCounterQuery = {
   listLoanAccountCounter?: Maybe<ThreadLoanAccountCounterListConnection>;
 };
 
+
 export type ThreadLoanAccountCounterQueryListLoanAccountCounterArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -1378,6 +1400,7 @@ export type ThreadMemberCounterQuery = {
   listMemberCounter?: Maybe<ThreadMemberCounterListConnection>;
 };
 
+
 export type ThreadMemberCounterQueryListMemberCounterArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -1411,6 +1434,7 @@ export type ThreadMoneyLedgerCounterQuery = {
   fetchMoneyLedgerCounter?: Maybe<ThreadMoneyLedgerCounterNodeAll>;
   listMoneyLedgerCounter?: Maybe<ThreadMoneyLedgerCounterListConnection>;
 };
+
 
 export type ThreadMoneyLedgerCounterQueryListMoneyLedgerCounterArgs = {
   filter?: InputMaybe<Filter>;
@@ -1447,6 +1471,7 @@ export type ThreadSavingAccountCounterQuery = {
   listSavingAccountCounter?: Maybe<ThreadSavingAccountCounterListConnection>;
 };
 
+
 export type ThreadSavingAccountCounterQueryListSavingAccountCounterArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -1481,6 +1506,7 @@ export type ThreadTransactionCounterQuery = {
   fetchTransactionCounter?: Maybe<ThreadTransactionCounterNodeAll>;
   listTransactionCounter?: Maybe<ThreadTransactionCounterListConnection>;
 };
+
 
 export type ThreadTransactionCounterQueryListTransactionCounterArgs = {
   filter?: InputMaybe<Filter>;
@@ -1517,6 +1543,7 @@ export type ThreadUserCounterQuery = {
   listUserCounter?: Maybe<ThreadUserCounterListConnection>;
 };
 
+
 export type ThreadUserCounterQueryListUserCounterArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -1534,7 +1561,7 @@ export type UploadedDocumentData = {
 
 export const UserType = {
   Human: 'HUMAN',
-  System: 'SYSTEM',
+  System: 'SYSTEM'
 } as const;
 
 export type UserType = typeof UserType[keyof typeof UserType];
@@ -1563,19 +1590,17 @@ export type UtilityRecordsInfo = {
 
 export const UtilityTxnTypeAtNeosys = {
   Credit: 'CREDIT',
-  Debit: 'DEBIT',
+  Debit: 'DEBIT'
 } as const;
 
-export type UtilityTxnTypeAtNeosys =
-  typeof UtilityTxnTypeAtNeosys[keyof typeof UtilityTxnTypeAtNeosys];
+export type UtilityTxnTypeAtNeosys = typeof UtilityTxnTypeAtNeosys[keyof typeof UtilityTxnTypeAtNeosys];
 export const UtilityUsageObjStateType = {
   Cancelled: 'CANCELLED',
   Pending: 'PENDING',
-  Success: 'SUCCESS',
+  Success: 'SUCCESS'
 } as const;
 
-export type UtilityUsageObjStateType =
-  typeof UtilityUsageObjStateType[keyof typeof UtilityUsageObjStateType];
+export type UtilityUsageObjStateType = typeof UtilityUsageObjStateType[keyof typeof UtilityUsageObjStateType];
 export type ValidationError = {
   code: Scalars['Int'];
   message: Scalars['InvalidData'];
@@ -1592,13 +1617,16 @@ export type SmsMutation = {
   listSaccosRemainingCredit: SaccosDetailsConnection;
 };
 
+
 export type SmsMutationAddSaccosSmsCountArgs = {
   input: Array<SaccosSmsSetup>;
 };
 
+
 export type SmsMutationAddSaccosSmsCreditArgs = {
   input?: InputMaybe<Array<InputMaybe<SaccosAndSmsCountToBeCredited>>>;
 };
+
 
 export type SmsMutationListSaccosRemainingCreditArgs = {
   filter?: InputMaybe<Filter>;
@@ -1609,6 +1637,7 @@ export type UtilityMutation = {
   addSaccosAmount?: Maybe<SaccosAmountSetupResult>;
 };
 
+
 export type UtilityMutationAddSaccosAmountArgs = {
   input: Array<SaccosSetup>;
 };
@@ -1618,10 +1647,12 @@ export type UtilityQuery = {
   listUtilityRecords?: Maybe<UtilityRecordsConnection>;
 };
 
+
 export type UtilityQueryListSaccosAvailableAmountArgs = {
   filter?: InputMaybe<Filter>;
   paginate: Pagination;
 };
+
 
 export type UtilityQueryListUtilityRecordsArgs = {
   filter?: InputMaybe<Filter>;
@@ -1632,1168 +1663,360 @@ export type LoginMutationVariables = Exact<{
   data: NeosysLoginInput;
 }>;
 
-export type LoginMutation = {
-  neosys: {
-    auth?: {
-      login?: {
-        recordId?: string | null;
-        record?: {
-          token: { access: string; refresh: string };
-          user: {
-            id: string;
-            objState: ObjState;
-            username: string;
-            firstName: Record<'local' | 'en' | 'np', string>;
-            middleName: Record<'local' | 'en' | 'np', string>;
-            lastName: Record<'local' | 'en' | 'np', string>;
-          };
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type LoginMutation = { neosys: { auth?: { login?: { recordId?: string | null, record?: { token: { access: string, refresh: string }, user: { id: string, objState: ObjState, username: string, firstName: Record<"local"|"en"|"np",string>, middleName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string> } } | null } | null } | null } };
 
 export type RefreshMutationVariables = Exact<{
   refreshToken: Scalars['String'];
 }>;
 
-export type RefreshMutation = {
-  neosys: {
-    auth?: {
-      token?: {
-        token?: { access: string; refresh: string } | null;
-        error?:
-          | MutationError_AuthorizationError_Fragment
-          | MutationError_BadRequestError_Fragment
-          | MutationError_NotFoundError_Fragment
-          | MutationError_ServerError_Fragment
-          | MutationError_ValidationError_Fragment
-          | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type RefreshMutation = { neosys: { auth?: { token?: { token?: { access: string, refresh: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
 
 export type ChangePasswordMutationVariables = Exact<{
   data?: InputMaybe<NeosysUserPasswordInput>;
 }>;
 
-export type ChangePasswordMutation = {
-  neosys: {
-    user?: {
-      changePassword?: {
-        recordId?: string | null;
-        error?:
-          | MutationError_AuthorizationError_Fragment
-          | MutationError_BadRequestError_Fragment
-          | MutationError_NotFoundError_Fragment
-          | MutationError_ServerError_Fragment
-          | MutationError_ValidationError_Fragment
-          | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type ChangePasswordMutation = { neosys: { user?: { changePassword?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
 
 export type AddNewClientMutationVariables = Exact<{
   data?: InputMaybe<OrganizationClientInput>;
 }>;
 
-export type AddNewClientMutation = {
-  neosys: {
-    client?: {
-      add?: {
-        recordId?: string | null;
-        error?:
-          | MutationError_AuthorizationError_Fragment
-          | MutationError_BadRequestError_Fragment
-          | MutationError_NotFoundError_Fragment
-          | MutationError_ServerError_Fragment
-          | MutationError_ValidationError_Fragment
-          | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type AddNewClientMutation = { neosys: { client?: { add?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
 
 export type CreateDbMutationVariables = Exact<{
   saccosID: Scalars['ID'];
 }>;
 
-export type CreateDbMutation = {
-  neosys: {
-    client?: {
-      createDB?: {
-        recordId?: string | null;
-        error?:
-          | MutationError_AuthorizationError_Fragment
-          | MutationError_BadRequestError_Fragment
-          | MutationError_NotFoundError_Fragment
-          | MutationError_ServerError_Fragment
-          | MutationError_ValidationError_Fragment
-          | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type CreateDbMutation = { neosys: { client?: { createDB?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
 
 export type CloneEnvironmentMutationVariables = Exact<{
   clientId: Scalars['ID'];
   data: CloneClientEnvironmentInput;
 }>;
 
-export type CloneEnvironmentMutation = {
-  neosys: {
-    client?: {
-      environment?: {
-        clone: {
-          recordId?: string | null;
-          error?:
-            | MutationError_AuthorizationError_Fragment
-            | MutationError_BadRequestError_Fragment
-            | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment
-            | MutationError_ValidationError_Fragment
-            | null;
-        };
-      } | null;
-    } | null;
-  };
-};
+
+export type CloneEnvironmentMutation = { neosys: { client?: { environment?: { clone: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
 
 export type CloneEnvFromDevMutationVariables = Exact<{
   clientId: Scalars['ID'];
   data: CloneEnvironmentFromDevInput;
 }>;
 
-export type CloneEnvFromDevMutation = {
-  neosys: {
-    client?: {
-      environment?: {
-        cloneFromDev: {
-          recordId?: string | null;
-          error?:
-            | MutationError_AuthorizationError_Fragment
-            | MutationError_BadRequestError_Fragment
-            | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment
-            | MutationError_ValidationError_Fragment
-            | null;
-        };
-      } | null;
-    } | null;
-  };
-};
+
+export type CloneEnvFromDevMutation = { neosys: { client?: { environment?: { cloneFromDev: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
 
 export type SetEnvironementMutationVariables = Exact<{
   clientId: Scalars['ID'];
   data: NewClientEnvironmentInput;
 }>;
 
-export type SetEnvironementMutation = {
-  neosys: {
-    client?: {
-      environment?: {
-        new: {
-          recordId?: string | null;
-          error?:
-            | MutationError_AuthorizationError_Fragment
-            | MutationError_BadRequestError_Fragment
-            | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment
-            | MutationError_ValidationError_Fragment
-            | null;
-        };
-      } | null;
-    } | null;
-  };
-};
+
+export type SetEnvironementMutation = { neosys: { client?: { environment?: { new: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
 
 export type DeleteEnvironementMutationVariables = Exact<{
   environmentId: Scalars['String'];
 }>;
 
-export type DeleteEnvironementMutation = {
-  neosys: {
-    client?: {
-      environment?: {
-        delete: {
-          success: boolean;
-          error?:
-            | MutationError_AuthorizationError_Fragment
-            | MutationError_BadRequestError_Fragment
-            | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment
-            | MutationError_ValidationError_Fragment
-            | null;
-        };
-      } | null;
-    } | null;
-  };
-};
+
+export type DeleteEnvironementMutation = { neosys: { client?: { environment?: { delete: { success: boolean, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
 
 export type SetUpEnvironmentDatabaseMutationVariables = Exact<{
   environmentId: Scalars['ID'];
   clientId: Scalars['ID'];
 }>;
 
-export type SetUpEnvironmentDatabaseMutation = {
-  neosys: {
-    client?: {
-      environment?: {
-        createDB?: {
-          recordId?: string | null;
-          error?:
-            | MutationError_AuthorizationError_Fragment
-            | MutationError_BadRequestError_Fragment
-            | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment
-            | MutationError_ValidationError_Fragment
-            | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type SetUpEnvironmentDatabaseMutation = { neosys: { client?: { environment?: { createDB?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
 
 export type UpdateVersionMutationVariables = Exact<{
   environmentId: Scalars['String'];
   version: Scalars['String'];
 }>;
 
-export type UpdateVersionMutation = {
-  neosys: {
-    client?: {
-      environment?: {
-        updateVersion?: {
-          id: string;
-          environmentName: string;
-          environmentSlug: string;
-          otpToken?: string | null;
-          description?: string | null;
-          isForProduction?: boolean | null;
-          version?: string | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type UpdateVersionMutation = { neosys: { client?: { environment?: { updateVersion?: { id: string, environmentName: string, environmentSlug: string, otpToken?: string | null, description?: string | null, isForProduction?: boolean | null, version?: string | null } | null } | null } | null } };
 
 export type SeedDbWithCsvMutationVariables = Exact<{
   environmentId: Scalars['String'];
   fileURL: Scalars['String'];
 }>;
 
-export type SeedDbWithCsvMutation = {
-  neosys: {
-    client?: {
-      environment?: {
-        seedDBWithCSV?: {
-          recordId?: string | null;
-          error?:
-            | MutationError_AuthorizationError_Fragment
-            | MutationError_BadRequestError_Fragment
-            | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment
-            | MutationError_ValidationError_Fragment
-            | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type SeedDbWithCsvMutation = { neosys: { client?: { environment?: { seedDBWithCSV?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
 
 export type GetPreSignedUrlMutationVariables = Exact<{
   contentType?: InputMaybe<Scalars['String']>;
 }>;
 
-export type GetPreSignedUrlMutation = {
-  presignedUrl: {
-    upload?: { filename?: string | null; getUrl?: string | null; putUrl?: string | null } | null;
-  };
-};
+
+export type GetPreSignedUrlMutation = { presignedUrl: { upload?: { filename?: string | null, getUrl?: string | null, putUrl?: string | null } | null } };
 
 export type SetUserMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data?: InputMaybe<NeosysUserInput>;
 }>;
 
-export type SetUserMutation = {
-  neosys: {
-    user?: {
-      add?: {
-        recordId?: string | null;
-        error?:
-          | MutationError_AuthorizationError_Fragment
-          | MutationError_BadRequestError_Fragment
-          | MutationError_NotFoundError_Fragment
-          | MutationError_ServerError_Fragment
-          | MutationError_ValidationError_Fragment
-          | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type SetUserMutation = { neosys: { user?: { add?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
 
 export type AddSaccosAmountMutationVariables = Exact<{
   input: Array<SaccosSetup> | SaccosSetup;
 }>;
 
-export type AddSaccosAmountMutation = {
-  utility: {
-    addSaccosAmount?: {
-      ID?: string | null;
-      error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | MutationError_ValidationError_Fragment
-        | null;
-    } | null;
-  };
-};
+
+export type AddSaccosAmountMutation = { utility: { addSaccosAmount?: { ID?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
 
 export type AddSaccosSmsCreditMutationVariables = Exact<{
-  input?: InputMaybe<
-    Array<InputMaybe<SaccosAndSmsCountToBeCredited>> | InputMaybe<SaccosAndSmsCountToBeCredited>
-  >;
+  input?: InputMaybe<Array<InputMaybe<SaccosAndSmsCountToBeCredited>> | InputMaybe<SaccosAndSmsCountToBeCredited>>;
 }>;
 
-export type AddSaccosSmsCreditMutation = {
-  sms: {
-    addSaccosSmsCredit: {
-      ID?: string | null;
-      error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | MutationError_ValidationError_Fragment
-        | null;
-    };
-  };
-};
 
-export type AllAdministrationQueryVariables = Exact<{ [key: string]: never }>;
+export type AddSaccosSmsCreditMutation = { sms: { addSaccosSmsCredit: { ID?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
 
-export type AllAdministrationQuery = {
-  administration: {
-    all: Array<{
-      id: number;
-      name: string;
-      districts: Array<{
-        id: number;
-        name: string;
-        municipalities: Array<{ id: number; name: string; wards: Array<number> }>;
-      }>;
-    }>;
-  };
-};
+export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetAllProvinceQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetAllProvinceQuery = {
-  administration: { provinces: Array<{ id: number; name: string }> };
-};
+export type AllAdministrationQuery = { administration: { all: Array<{ id: number, name: string, districts: Array<{ id: number, name: string, municipalities: Array<{ id: number, name: string, wards: Array<number> }> }> }> } };
 
-export type GetAllDistrictsQueryVariables = Exact<{ [key: string]: never }>;
+export type GetAllProvinceQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetAllDistrictsQuery = {
-  administration: { districts: Array<{ id: number; name: string }> };
-};
 
-export type GetAllLocalGovernmentQueryVariables = Exact<{ [key: string]: never }>;
+export type GetAllProvinceQuery = { administration: { provinces: Array<{ id: number, name: string }> } };
 
-export type GetAllLocalGovernmentQuery = {
-  administration: { municipalities: Array<{ id: number; name: string }> };
-};
+export type GetAllDistrictsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllDistrictsQuery = { administration: { districts: Array<{ id: number, name: string }> } };
+
+export type GetAllLocalGovernmentQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllLocalGovernmentQuery = { administration: { municipalities: Array<{ id: number, name: string }> } };
 
 export type GetClosingDayListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
 }>;
 
-export type GetClosingDayListQuery = {
-  neosys: {
-    thread?: {
-      closingDay?: {
-        listClosingDay?: {
-          totalCount: number;
-          edges?: Array<{
-            cursor: string;
-            node: {
-              id?: number | null;
-              createdAt?: string | null;
-              transactionDate?: Record<'local' | 'en' | 'np', string> | null;
-              slug?: string | null;
-              queryID?: number | null;
-              queryDate?: Record<'local' | 'en' | 'np', string> | null;
-            };
-          } | null> | null;
-          pageInfo?: PaginationFragment | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type GetClosingDayListQuery = { neosys: { thread?: { closingDay?: { listClosingDay?: { totalCount: number, edges?: Array<{ cursor: string, node: { id?: number | null, createdAt?: string | null, transactionDate?: Record<"local"|"en"|"np",string> | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } } | null> | null, pageInfo?: PaginationFragment | null } | null } | null } | null } };
 
 export type GetDatabaseSizeListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
 }>;
 
-export type GetDatabaseSizeListQuery = {
-  neosys: {
-    thread?: {
-      databaseSize?: {
-        listDBSize?: {
-          totalCount: number;
-          edges?: Array<{
-            cursor: string;
-            node: {
-              id?: number | null;
-              createdAt?: string | null;
-              databaseSize?: string | null;
-              slug?: string | null;
-              queryID?: number | null;
-              queryDate?: Record<'local' | 'en' | 'np', string> | null;
-            };
-          } | null> | null;
-          pageInfo?: PaginationFragment | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type GetDatabaseSizeListQuery = { neosys: { thread?: { databaseSize?: { listDBSize?: { totalCount: number, edges?: Array<{ cursor: string, node: { id?: number | null, createdAt?: string | null, databaseSize?: string | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } } | null> | null, pageInfo?: PaginationFragment | null } | null } | null } | null } };
 
 export type GetAccessLogCounterListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
 }>;
 
-export type GetAccessLogCounterListQuery = {
-  neosys: {
-    thread?: {
-      accessLogCounter?: {
-        listAccessLogCounter?: {
-          totalCount: number;
-          edges?: Array<{
-            cursor: string;
-            node: {
-              id?: number | null;
-              createdAt?: string | null;
-              querySuccess?: string | null;
-              queryFailed?: string | null;
-              mutationSuccess?: string | null;
-              mutationFailed?: string | null;
-              otherSuccess?: string | null;
-              otherFailed?: string | null;
-              slug?: string | null;
-              queryID?: number | null;
-              queryDate?: Record<'local' | 'en' | 'np', string> | null;
-            };
-          } | null> | null;
-          pageInfo?: PaginationFragment | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type GetAccessLogCounterListQuery = { neosys: { thread?: { accessLogCounter?: { listAccessLogCounter?: { totalCount: number, edges?: Array<{ cursor: string, node: { id?: number | null, createdAt?: string | null, querySuccess?: string | null, queryFailed?: string | null, mutationSuccess?: string | null, mutationFailed?: string | null, otherSuccess?: string | null, otherFailed?: string | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } } | null> | null, pageInfo?: PaginationFragment | null } | null } | null } | null } };
 
 export type GeterrorLogListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
 }>;
 
-export type GeterrorLogListQuery = {
-  neosys: {
-    thread?: {
-      errorLog?: {
-        listErrorLog?: {
-          totalCount: number;
-          edges?: Array<{
-            cursor: string;
-            node: {
-              id?: number | null;
-              createdAt?: string | null;
-              saccosName?: string | null;
-              logMessage?: string | null;
-              queryID?: number | null;
-            };
-          } | null> | null;
-          pageInfo?: PaginationFragment | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type GeterrorLogListQuery = { neosys: { thread?: { errorLog?: { listErrorLog?: { totalCount: number, edges?: Array<{ cursor: string, node: { id?: number | null, createdAt?: string | null, saccosName?: string | null, logMessage?: string | null, queryID?: number | null } } | null> | null, pageInfo?: PaginationFragment | null } | null } | null } | null } };
 
 export type GetLoanAccountCounterQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
 }>;
 
-export type GetLoanAccountCounterQuery = {
-  neosys: {
-    thread?: {
-      loanAccountCounter?: {
-        listLoanAccountCounter?: {
-          totalCount: number;
-          edges?: Array<{
-            cursor: string;
-            node: {
-              id?: number | null;
-              createdAt?: string | null;
-              approvedAccount?: number | null;
-              disbursedAccount?: number | null;
-              canceledAccount?: number | null;
-              slug?: string | null;
-              queryID?: number | null;
-              queryDate?: Record<'local' | 'en' | 'np', string> | null;
-            };
-          } | null> | null;
-          pageInfo?: PaginationFragment | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type GetLoanAccountCounterQuery = { neosys: { thread?: { loanAccountCounter?: { listLoanAccountCounter?: { totalCount: number, edges?: Array<{ cursor: string, node: { id?: number | null, createdAt?: string | null, approvedAccount?: number | null, disbursedAccount?: number | null, canceledAccount?: number | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } } | null> | null, pageInfo?: PaginationFragment | null } | null } | null } | null } };
 
 export type GetMemberCounterQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
 }>;
 
-export type GetMemberCounterQuery = {
-  neosys: {
-    thread?: {
-      memberCounter?: {
-        listMemberCounter?: {
-          totalCount: number;
-          edges?: Array<{
-            cursor: string;
-            node: {
-              id?: number | null;
-              createdAt?: string | null;
-              approvedMember?: number | null;
-              inactiveMember?: number | null;
-              slug?: string | null;
-              queryID?: number | null;
-              queryDate?: Record<'local' | 'en' | 'np', string> | null;
-            };
-          } | null> | null;
-          pageInfo?: PaginationFragment | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type GetMemberCounterQuery = { neosys: { thread?: { memberCounter?: { listMemberCounter?: { totalCount: number, edges?: Array<{ cursor: string, node: { id?: number | null, createdAt?: string | null, approvedMember?: number | null, inactiveMember?: number | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } } | null> | null, pageInfo?: PaginationFragment | null } | null } | null } | null } };
 
 export type GetMoneyLedgerCounterQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
 }>;
 
-export type GetMoneyLedgerCounterQuery = {
-  neosys: {
-    thread?: {
-      moneyLedgerCounter?: {
-        listMoneyLedgerCounter?: {
-          totalCount: number;
-          edges?: Array<{
-            cursor: string;
-            node: {
-              id?: number | null;
-              createdAt?: string | null;
-              moneyLedgerCount?: number | null;
-              slug?: string | null;
-              queryID?: number | null;
-              queryDate?: Record<'local' | 'en' | 'np', string> | null;
-            };
-          } | null> | null;
-          pageInfo?: PaginationFragment | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type GetMoneyLedgerCounterQuery = { neosys: { thread?: { moneyLedgerCounter?: { listMoneyLedgerCounter?: { totalCount: number, edges?: Array<{ cursor: string, node: { id?: number | null, createdAt?: string | null, moneyLedgerCount?: number | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } } | null> | null, pageInfo?: PaginationFragment | null } | null } | null } | null } };
 
 export type GetSavingAccountCounterQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
 }>;
 
-export type GetSavingAccountCounterQuery = {
-  neosys: {
-    thread?: {
-      savingAccountCounter?: {
-        listSavingAccountCounter?: {
-          totalCount: number;
-          edges?: Array<{
-            cursor: string;
-            node: {
-              id?: number | null;
-              createdAt?: string | null;
-              activeAccount?: number | null;
-              inactiveAccount?: number | null;
-              slug?: string | null;
-              queryID?: number | null;
-              queryDate?: Record<'local' | 'en' | 'np', string> | null;
-            };
-          } | null> | null;
-          pageInfo?: PaginationFragment | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type GetSavingAccountCounterQuery = { neosys: { thread?: { savingAccountCounter?: { listSavingAccountCounter?: { totalCount: number, edges?: Array<{ cursor: string, node: { id?: number | null, createdAt?: string | null, activeAccount?: number | null, inactiveAccount?: number | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } } | null> | null, pageInfo?: PaginationFragment | null } | null } | null } | null } };
 
 export type GetTransactionCounterQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
 }>;
 
-export type GetTransactionCounterQuery = {
-  neosys: {
-    thread?: {
-      transactionCounter?: {
-        listTransactionCounter?: {
-          totalCount: number;
-          edges?: Array<{
-            cursor: string;
-            node: {
-              id?: number | null;
-              createdAt?: string | null;
-              txnCount?: number | null;
-              txnTypeCount?: unknown | null;
-              slug?: string | null;
-              queryID?: number | null;
-              queryDate?: Record<'local' | 'en' | 'np', string> | null;
-            };
-          } | null> | null;
-          pageInfo?: PaginationFragment | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type GetTransactionCounterQuery = { neosys: { thread?: { transactionCounter?: { listTransactionCounter?: { totalCount: number, edges?: Array<{ cursor: string, node: { id?: number | null, createdAt?: string | null, txnCount?: number | null, txnTypeCount?: unknown | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } } | null> | null, pageInfo?: PaginationFragment | null } | null } | null } | null } };
 
 export type GetUserCounterQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
 }>;
 
-export type GetUserCounterQuery = {
-  neosys: {
-    thread?: {
-      userCounter?: {
-        listUserCounter?: {
-          totalCount: number;
-          edges?: Array<{
-            cursor: string;
-            node: {
-              id?: number | null;
-              createdAt?: string | null;
-              approvedUser?: number | null;
-              inactiveUser?: number | null;
-              slug?: string | null;
-              queryID?: number | null;
-              queryDate?: Record<'local' | 'en' | 'np', string> | null;
-            };
-          } | null> | null;
-          pageInfo?: PaginationFragment | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
 
-export type GetAllClosingDayListQueryVariables = Exact<{ [key: string]: never }>;
+export type GetUserCounterQuery = { neosys: { thread?: { userCounter?: { listUserCounter?: { totalCount: number, edges?: Array<{ cursor: string, node: { id?: number | null, createdAt?: string | null, approvedUser?: number | null, inactiveUser?: number | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } } | null> | null, pageInfo?: PaginationFragment | null } | null } | null } | null } };
 
-export type GetAllClosingDayListQuery = {
-  neosys: {
-    thread?: {
-      closingDay?: {
-        fetchClosingDay?: {
-          records?: Array<{
-            id?: number | null;
-            createdAt?: string | null;
-            transactionDate?: Record<'local' | 'en' | 'np', string> | null;
-            slug?: string | null;
-            queryID?: number | null;
-            queryDate?: Record<'local' | 'en' | 'np', string> | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+export type GetAllClosingDayListQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetAllMemberCounterQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetAllMemberCounterQuery = {
-  neosys: {
-    thread?: {
-      memberCounter?: {
-        fetchMemberCounter?: {
-          records?: Array<{
-            id?: number | null;
-            createdAt?: string | null;
-            approvedMember?: number | null;
-            inactiveMember?: number | null;
-            slug?: string | null;
-            queryID?: number | null;
-            queryDate?: Record<'local' | 'en' | 'np', string> | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+export type GetAllClosingDayListQuery = { neosys: { thread?: { closingDay?: { fetchClosingDay?: { records?: Array<{ id?: number | null, createdAt?: string | null, transactionDate?: Record<"local"|"en"|"np",string> | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } | null> | null } | null } | null } | null } };
 
-export type GetAllMoneyLedgerCounterQueryVariables = Exact<{ [key: string]: never }>;
+export type GetAllMemberCounterQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetAllMoneyLedgerCounterQuery = {
-  neosys: {
-    thread?: {
-      moneyLedgerCounter?: {
-        fetchMoneyLedgerCounter?: {
-          records?: Array<{
-            id?: number | null;
-            createdAt?: string | null;
-            moneyLedgerCount?: number | null;
-            slug?: string | null;
-            queryID?: number | null;
-            queryDate?: Record<'local' | 'en' | 'np', string> | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
 
-export type GetAllLoanAccountCounterQueryVariables = Exact<{ [key: string]: never }>;
+export type GetAllMemberCounterQuery = { neosys: { thread?: { memberCounter?: { fetchMemberCounter?: { records?: Array<{ id?: number | null, createdAt?: string | null, approvedMember?: number | null, inactiveMember?: number | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } | null> | null } | null } | null } | null } };
 
-export type GetAllLoanAccountCounterQuery = {
-  neosys: {
-    thread?: {
-      loanAccountCounter?: {
-        fetchLoanAccountCounter?: {
-          records?: Array<{
-            id?: number | null;
-            createdAt?: string | null;
-            approvedAccount?: number | null;
-            disbursedAccount?: number | null;
-            canceledAccount?: number | null;
-            slug?: string | null;
-            queryID?: number | null;
-            queryDate?: Record<'local' | 'en' | 'np', string> | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+export type GetAllMoneyLedgerCounterQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetAllSavingAccountCounterQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetAllSavingAccountCounterQuery = {
-  neosys: {
-    thread?: {
-      savingAccountCounter?: {
-        fetchSavingAccountCounter?: {
-          records?: Array<{
-            id?: number | null;
-            createdAt?: string | null;
-            activeAccount?: number | null;
-            inactiveAccount?: number | null;
-            slug?: string | null;
-            queryID?: number | null;
-            queryDate?: Record<'local' | 'en' | 'np', string> | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+export type GetAllMoneyLedgerCounterQuery = { neosys: { thread?: { moneyLedgerCounter?: { fetchMoneyLedgerCounter?: { records?: Array<{ id?: number | null, createdAt?: string | null, moneyLedgerCount?: number | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } | null> | null } | null } | null } | null } };
 
-export type GetAllDatabaseSizeListQueryVariables = Exact<{ [key: string]: never }>;
+export type GetAllLoanAccountCounterQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetAllDatabaseSizeListQuery = {
-  neosys: {
-    thread?: {
-      databaseSize?: {
-        fetchDatabaseSize?: {
-          records?: Array<{
-            id?: number | null;
-            createdAt?: string | null;
-            databaseSize?: string | null;
-            slug?: string | null;
-            queryID?: number | null;
-            queryDate?: Record<'local' | 'en' | 'np', string> | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
 
-export type GetAllAccessLogCounterListQueryVariables = Exact<{ [key: string]: never }>;
+export type GetAllLoanAccountCounterQuery = { neosys: { thread?: { loanAccountCounter?: { fetchLoanAccountCounter?: { records?: Array<{ id?: number | null, createdAt?: string | null, approvedAccount?: number | null, disbursedAccount?: number | null, canceledAccount?: number | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } | null> | null } | null } | null } | null } };
 
-export type GetAllAccessLogCounterListQuery = {
-  neosys: {
-    thread?: {
-      accessLogCounter?: {
-        fetchAccessLogCounter?: {
-          records?: Array<{
-            id?: number | null;
-            createdAt?: string | null;
-            querySuccess?: string | null;
-            queryFailed?: string | null;
-            mutationSuccess?: string | null;
-            mutationFailed?: string | null;
-            otherSuccess?: string | null;
-            otherFailed?: string | null;
-            slug?: string | null;
-            queryID?: number | null;
-            queryDate?: Record<'local' | 'en' | 'np', string> | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+export type GetAllSavingAccountCounterQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetAllErrorLogListQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetAllErrorLogListQuery = {
-  neosys: {
-    thread?: {
-      errorLog?: {
-        fetchErrorLog?: {
-          records?: Array<{
-            id?: number | null;
-            createdAt?: string | null;
-            saccosName?: string | null;
-            logMessage?: string | null;
-            queryID?: number | null;
-            queryDate?: Record<'local' | 'en' | 'np', string> | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+export type GetAllSavingAccountCounterQuery = { neosys: { thread?: { savingAccountCounter?: { fetchSavingAccountCounter?: { records?: Array<{ id?: number | null, createdAt?: string | null, activeAccount?: number | null, inactiveAccount?: number | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } | null> | null } | null } | null } | null } };
 
-export type GetAllTransactionCounterQueryVariables = Exact<{ [key: string]: never }>;
+export type GetAllDatabaseSizeListQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetAllTransactionCounterQuery = {
-  neosys: {
-    thread?: {
-      transactionCounter?: {
-        fetchTransactionCounter?: {
-          records?: Array<{
-            id?: number | null;
-            createdAt?: string | null;
-            txnCount?: number | null;
-            txnTypeCount?: unknown | null;
-            slug?: string | null;
-            queryID?: number | null;
-            queryDate?: Record<'local' | 'en' | 'np', string> | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
 
-export type GetAllUserCounterQueryVariables = Exact<{ [key: string]: never }>;
+export type GetAllDatabaseSizeListQuery = { neosys: { thread?: { databaseSize?: { fetchDatabaseSize?: { records?: Array<{ id?: number | null, createdAt?: string | null, databaseSize?: string | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } | null> | null } | null } | null } | null } };
 
-export type GetAllUserCounterQuery = {
-  neosys: {
-    thread?: {
-      userCounter?: {
-        fetchUserCounter?: {
-          records?: Array<{
-            id?: number | null;
-            createdAt?: string | null;
-            approvedUser?: number | null;
-            inactiveUser?: number | null;
-            slug?: string | null;
-            queryID?: number | null;
-            queryDate?: Record<'local' | 'en' | 'np', string> | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+export type GetAllAccessLogCounterListQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetMeQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetMeQuery = {
-  neosys: {
-    auth?: {
-      me: {
-        data?: { id: string; username: string; email?: string | null } | null;
-        error?:
-          | MutationError_AuthorizationError_Fragment
-          | MutationError_BadRequestError_Fragment
-          | MutationError_NotFoundError_Fragment
-          | MutationError_ServerError_Fragment
-          | null;
-      };
-    } | null;
-  };
-};
+export type GetAllAccessLogCounterListQuery = { neosys: { thread?: { accessLogCounter?: { fetchAccessLogCounter?: { records?: Array<{ id?: number | null, createdAt?: string | null, querySuccess?: string | null, queryFailed?: string | null, mutationSuccess?: string | null, mutationFailed?: string | null, otherSuccess?: string | null, otherFailed?: string | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } | null> | null } | null } | null } | null } };
 
-export type GetClientsListQueryVariables = Exact<{ [key: string]: never }>;
+export type GetAllErrorLogListQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetClientsListQuery = {
-  neosys: {
-    client?: {
-      list?: Array<{
-        id?: string | null;
-        clientName?: string | null;
-        provinceId?: string | null;
-        districtId?: string | null;
-        localGovernmentId?: string | null;
-        locality?: string | null;
-        houseNo?: string | null;
-        wardNo?: number | null;
-        dateJoined?: string | null;
-        dbCreated?: boolean | null;
-        slug?: string | null;
-      } | null> | null;
-    } | null;
-  };
-};
+
+export type GetAllErrorLogListQuery = { neosys: { thread?: { errorLog?: { fetchErrorLog?: { records?: Array<{ id?: number | null, createdAt?: string | null, saccosName?: string | null, logMessage?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } | null> | null } | null } | null } | null } };
+
+export type GetAllTransactionCounterQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllTransactionCounterQuery = { neosys: { thread?: { transactionCounter?: { fetchTransactionCounter?: { records?: Array<{ id?: number | null, createdAt?: string | null, txnCount?: number | null, txnTypeCount?: unknown | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } | null> | null } | null } | null } | null } };
+
+export type GetAllUserCounterQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllUserCounterQuery = { neosys: { thread?: { userCounter?: { fetchUserCounter?: { records?: Array<{ id?: number | null, createdAt?: string | null, approvedUser?: number | null, inactiveUser?: number | null, slug?: string | null, queryID?: number | null, queryDate?: Record<"local"|"en"|"np",string> | null } | null> | null } | null } | null } | null } };
+
+export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMeQuery = { neosys: { auth?: { me: { data?: { id: string, username: string, email?: string | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } } | null } };
+
+export type GetClientsListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetClientsListQuery = { neosys: { client?: { list?: Array<{ id?: string | null, clientName?: string | null, provinceId?: string | null, districtId?: string | null, localGovernmentId?: string | null, locality?: string | null, houseNo?: string | null, wardNo?: number | null, dateJoined?: string | null, dbCreated?: boolean | null, slug?: string | null } | null> | null } | null } };
 
 export type GetClientDetailsQueryVariables = Exact<{
   clientId: Scalars['ID'];
 }>;
 
-export type GetClientDetailsQuery = {
-  neosys: {
-    client?: {
-      details?: {
-        organizationName: string;
-        environments?: Array<{
-          id: string;
-          environmentName: string;
-          environmentSlug: string;
-          otpToken?: string | null;
-          description?: string | null;
-          isForProduction?: boolean | null;
-          version?: string | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  };
-};
 
-export type GetVersionQueryVariables = Exact<{ [key: string]: never }>;
+export type GetClientDetailsQuery = { neosys: { client?: { details?: { organizationName: string, environments?: Array<{ id: string, environmentName: string, environmentSlug: string, otpToken?: string | null, description?: string | null, isForProduction?: boolean | null, version?: string | null } | null> | null } | null } | null } };
+
+export type GetVersionQueryVariables = Exact<{ [key: string]: never; }>;
+
 
 export type GetVersionQuery = { neosys: { versions?: Array<{ id: string } | null> | null } };
 
-type MutationError_AuthorizationError_Fragment = {
-  __typename: 'AuthorizationError';
-  code: number;
-  authorizationErrorMsg: string;
-};
+type MutationError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string };
 
-type MutationError_BadRequestError_Fragment = {
-  __typename: 'BadRequestError';
-  code: number;
-  badRequestErrorMessage: string;
-};
+type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string };
 
-type MutationError_NotFoundError_Fragment = {
-  __typename: 'NotFoundError';
-  code: number;
-  notFoundErrorMsg: string;
-};
+type MutationError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string };
 
-type MutationError_ServerError_Fragment = {
-  __typename: 'ServerError';
-  code: number;
-  serverErrorMessage: string;
-};
+type MutationError_ServerError_Fragment = { __typename: 'ServerError', code: number, serverErrorMessage: string };
 
-type MutationError_ValidationError_Fragment = {
-  __typename: 'ValidationError';
-  code: number;
-  validationErrorMsg: Record<string, Array<string>>;
-};
+type MutationError_ValidationError_Fragment = { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> };
 
-export type MutationErrorFragment =
-  | MutationError_AuthorizationError_Fragment
-  | MutationError_BadRequestError_Fragment
-  | MutationError_NotFoundError_Fragment
-  | MutationError_ServerError_Fragment
-  | MutationError_ValidationError_Fragment;
+export type MutationErrorFragment = MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment;
 
-type QueryError_AuthorizationError_Fragment = {
-  __typename: 'AuthorizationError';
-  code: number;
-  authorizationErrorMsg: string;
-};
+type QueryError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string };
 
-type QueryError_BadRequestError_Fragment = {
-  __typename: 'BadRequestError';
-  code: number;
-  badRequestErrorMessage: string;
-};
+type QueryError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string };
 
-type QueryError_NotFoundError_Fragment = {
-  __typename: 'NotFoundError';
-  code: number;
-  notFoundErrorMsg: string;
-};
+type QueryError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string };
 
-type QueryError_ServerError_Fragment = {
-  __typename: 'ServerError';
-  code: number;
-  serverErrorMessage: string;
-};
+type QueryError_ServerError_Fragment = { __typename: 'ServerError', code: number, serverErrorMessage: string };
 
-export type QueryErrorFragment =
-  | QueryError_AuthorizationError_Fragment
-  | QueryError_BadRequestError_Fragment
-  | QueryError_NotFoundError_Fragment
-  | QueryError_ServerError_Fragment;
+export type QueryErrorFragment = QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment;
 
-export type PaginationFragment = {
-  startCursor?: string | null;
-  endCursor?: string | null;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-};
+export type PaginationFragment = { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean };
 
-export type GetTasksQueryVariables = Exact<{ [key: string]: never }>;
+export type GetTasksQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetTasksQuery = {
-  neosys: {
-    tasks?: Array<{
-      id: string;
-      type: TaskType;
-      slug: string;
-      status: TaskStatus;
-      message: string;
-    } | null> | null;
-  };
-};
+
+export type GetTasksQuery = { neosys: { tasks?: Array<{ id: string, type: TaskType, slug: string, status: TaskStatus, message: string } | null> | null } };
 
 export type GetUserListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<NeosysUserSearchFilter>;
 }>;
 
-export type GetUserListQuery = {
-  neosys: {
-    user?: {
-      list?: {
-        totalCount: number;
-        edges?: Array<{
-          cursor: string;
-          node: { id: string; username: string; role?: Role | null; contactNo?: string | null };
-        }> | null;
-        pageInfo: PaginationFragment;
-      } | null;
-    } | null;
-  };
-};
+
+export type GetUserListQuery = { neosys: { user?: { list?: { totalCount: number, edges?: Array<{ cursor: string, node: { id: string, username: string, role?: Role | null, contactNo?: string | null } }> | null, pageInfo: PaginationFragment } | null } | null } };
 
 export type GetUserEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-export type GetUserEditDataQuery = {
-  neosys: {
-    user?: {
-      get?: {
-        data?: {
-          name: string;
-          gender?: Gender | null;
-          dob?: Record<'local' | 'en' | 'np', string> | null;
-          contactNo?: string | null;
-          email?: string | null;
-          role?: Role | null;
-        } | null;
-        error?:
-          | MutationError_AuthorizationError_Fragment
-          | MutationError_BadRequestError_Fragment
-          | MutationError_NotFoundError_Fragment
-          | MutationError_ServerError_Fragment
-          | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type GetUserEditDataQuery = { neosys: { user?: { get?: { data?: { name: string, gender?: Gender | null, dob?: Record<"local"|"en"|"np",string> | null, contactNo?: string | null, email?: string | null, role?: Role | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } | null } | null } };
 
 export type GetUtilityTransactionListQueryVariables = Exact<{
   paginate: Pagination;
   filter?: InputMaybe<Filter>;
 }>;
 
-export type GetUtilityTransactionListQuery = {
-  utility: {
-    listUtilityRecords?: {
-      totalCount: number;
-      edges?: Array<{
-        cursor?: string | null;
-        node?: {
-          id: string;
-          slug: string;
-          saccossName: string;
-          drAmount: string;
-          crAmount: string;
-          utility: string;
-          txnStatus: UtilityUsageObjStateType;
-          amount: string;
-        } | null;
-      } | null> | null;
-      pageInfo?: PaginationFragment | null;
-    } | null;
-  };
-};
+
+export type GetUtilityTransactionListQuery = { utility: { listUtilityRecords?: { totalCount: number, edges?: Array<{ cursor?: string | null, node?: { id: string, slug: string, saccossName: string, drAmount: string, crAmount: string, utility: string, txnStatus: UtilityUsageObjStateType, amount: string } | null } | null> | null, pageInfo?: PaginationFragment | null } | null } };
 
 export type GetUtilityClientBalanceListQueryVariables = Exact<{
   paginate: Pagination;
   filter?: InputMaybe<Filter>;
 }>;
 
-export type GetUtilityClientBalanceListQuery = {
-  utility: {
-    listSaccosAvailableAmount?: {
-      totalCount: number;
-      edges?: Array<{
-        cursor?: string | null;
-        node?: { id: string; slug: string; Amount: string; saccossName: string } | null;
-      } | null> | null;
-      pageInfo?: PaginationFragment | null;
-    } | null;
-  };
-};
+
+export type GetUtilityClientBalanceListQuery = { utility: { listSaccosAvailableAmount?: { totalCount: number, edges?: Array<{ cursor?: string | null, node?: { id: string, slug: string, Amount: string, saccossName: string } | null } | null> | null, pageInfo?: PaginationFragment | null } | null } };
 
 export type ListSaccosAvailableSmsCountQueryVariables = Exact<{
   paginate: Pagination;
   filter?: InputMaybe<Filter>;
 }>;
 
-export type ListSaccosAvailableSmsCountQuery = {
-  sms: {
-    listSaccosAvailableSmsCount?: {
-      totalCount: number;
-      edges?: Array<{
-        cursor?: string | null;
-        node?: { id: string; slug: string; messageCount: string; saccossName: string } | null;
-      } | null> | null;
-      pageInfo?: PaginationFragment | null;
-    } | null;
-  };
-};
+
+export type ListSaccosAvailableSmsCountQuery = { sms: { listSaccosAvailableSmsCount?: { totalCount: number, edges?: Array<{ cursor?: string | null, node?: { id: string, slug: string, messageCount: string, saccossName: string } | null } | null> | null, pageInfo?: PaginationFragment | null } | null } };
 
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
@@ -2881,14 +2104,15 @@ export const LoginDocument = `
   }
 }
     `;
-export const useLoginMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>
-) =>
-  useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
-    ['login'],
-    useAxios<LoginMutation, LoginMutationVariables>(LoginDocument),
-    options
-  );
+export const useLoginMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>) =>
+    useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
+      ['login'],
+      useAxios<LoginMutation, LoginMutationVariables>(LoginDocument),
+      options
+    );
 export const RefreshDocument = `
     mutation refresh($refreshToken: String!) {
   neosys {
@@ -2906,14 +2130,15 @@ export const RefreshDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useRefreshMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<RefreshMutation, TError, RefreshMutationVariables, TContext>
-) =>
-  useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
-    ['refresh'],
-    useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
-    options
-  );
+export const useRefreshMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<RefreshMutation, TError, RefreshMutationVariables, TContext>) =>
+    useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
+      ['refresh'],
+      useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
+      options
+    );
 export const ChangePasswordDocument = `
     mutation changePassword($data: NeosysUserPasswordInput) {
   neosys {
@@ -2928,19 +2153,15 @@ export const ChangePasswordDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useChangePasswordMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    ChangePasswordMutation,
-    TError,
-    ChangePasswordMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<ChangePasswordMutation, TError, ChangePasswordMutationVariables, TContext>(
-    ['changePassword'],
-    useAxios<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument),
-    options
-  );
+export const useChangePasswordMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<ChangePasswordMutation, TError, ChangePasswordMutationVariables, TContext>) =>
+    useMutation<ChangePasswordMutation, TError, ChangePasswordMutationVariables, TContext>(
+      ['changePassword'],
+      useAxios<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument),
+      options
+    );
 export const AddNewClientDocument = `
     mutation addNewClient($data: OrganizationClientInput) {
   neosys {
@@ -2955,19 +2176,15 @@ export const AddNewClientDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useAddNewClientMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    AddNewClientMutation,
-    TError,
-    AddNewClientMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<AddNewClientMutation, TError, AddNewClientMutationVariables, TContext>(
-    ['addNewClient'],
-    useAxios<AddNewClientMutation, AddNewClientMutationVariables>(AddNewClientDocument),
-    options
-  );
+export const useAddNewClientMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<AddNewClientMutation, TError, AddNewClientMutationVariables, TContext>) =>
+    useMutation<AddNewClientMutation, TError, AddNewClientMutationVariables, TContext>(
+      ['addNewClient'],
+      useAxios<AddNewClientMutation, AddNewClientMutationVariables>(AddNewClientDocument),
+      options
+    );
 export const CreateDbDocument = `
     mutation createDB($saccosID: ID!) {
   neosys {
@@ -2982,14 +2199,15 @@ export const CreateDbDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useCreateDbMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<CreateDbMutation, TError, CreateDbMutationVariables, TContext>
-) =>
-  useMutation<CreateDbMutation, TError, CreateDbMutationVariables, TContext>(
-    ['createDB'],
-    useAxios<CreateDbMutation, CreateDbMutationVariables>(CreateDbDocument),
-    options
-  );
+export const useCreateDbMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateDbMutation, TError, CreateDbMutationVariables, TContext>) =>
+    useMutation<CreateDbMutation, TError, CreateDbMutationVariables, TContext>(
+      ['createDB'],
+      useAxios<CreateDbMutation, CreateDbMutationVariables>(CreateDbDocument),
+      options
+    );
 export const CloneEnvironmentDocument = `
     mutation cloneEnvironment($clientId: ID!, $data: CloneClientEnvironmentInput!) {
   neosys {
@@ -3006,19 +2224,15 @@ export const CloneEnvironmentDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useCloneEnvironmentMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    CloneEnvironmentMutation,
-    TError,
-    CloneEnvironmentMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<CloneEnvironmentMutation, TError, CloneEnvironmentMutationVariables, TContext>(
-    ['cloneEnvironment'],
-    useAxios<CloneEnvironmentMutation, CloneEnvironmentMutationVariables>(CloneEnvironmentDocument),
-    options
-  );
+export const useCloneEnvironmentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CloneEnvironmentMutation, TError, CloneEnvironmentMutationVariables, TContext>) =>
+    useMutation<CloneEnvironmentMutation, TError, CloneEnvironmentMutationVariables, TContext>(
+      ['cloneEnvironment'],
+      useAxios<CloneEnvironmentMutation, CloneEnvironmentMutationVariables>(CloneEnvironmentDocument),
+      options
+    );
 export const CloneEnvFromDevDocument = `
     mutation cloneEnvFromDev($clientId: ID!, $data: CloneEnvironmentFromDevInput!) {
   neosys {
@@ -3035,19 +2249,15 @@ export const CloneEnvFromDevDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useCloneEnvFromDevMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    CloneEnvFromDevMutation,
-    TError,
-    CloneEnvFromDevMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<CloneEnvFromDevMutation, TError, CloneEnvFromDevMutationVariables, TContext>(
-    ['cloneEnvFromDev'],
-    useAxios<CloneEnvFromDevMutation, CloneEnvFromDevMutationVariables>(CloneEnvFromDevDocument),
-    options
-  );
+export const useCloneEnvFromDevMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CloneEnvFromDevMutation, TError, CloneEnvFromDevMutationVariables, TContext>) =>
+    useMutation<CloneEnvFromDevMutation, TError, CloneEnvFromDevMutationVariables, TContext>(
+      ['cloneEnvFromDev'],
+      useAxios<CloneEnvFromDevMutation, CloneEnvFromDevMutationVariables>(CloneEnvFromDevDocument),
+      options
+    );
 export const SetEnvironementDocument = `
     mutation setEnvironement($clientId: ID!, $data: NewClientEnvironmentInput!) {
   neosys {
@@ -3064,19 +2274,15 @@ export const SetEnvironementDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetEnvironementMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    SetEnvironementMutation,
-    TError,
-    SetEnvironementMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<SetEnvironementMutation, TError, SetEnvironementMutationVariables, TContext>(
-    ['setEnvironement'],
-    useAxios<SetEnvironementMutation, SetEnvironementMutationVariables>(SetEnvironementDocument),
-    options
-  );
+export const useSetEnvironementMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetEnvironementMutation, TError, SetEnvironementMutationVariables, TContext>) =>
+    useMutation<SetEnvironementMutation, TError, SetEnvironementMutationVariables, TContext>(
+      ['setEnvironement'],
+      useAxios<SetEnvironementMutation, SetEnvironementMutationVariables>(SetEnvironementDocument),
+      options
+    );
 export const DeleteEnvironementDocument = `
     mutation deleteEnvironement($environmentId: String!) {
   neosys {
@@ -3093,21 +2299,15 @@ export const DeleteEnvironementDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useDeleteEnvironementMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    DeleteEnvironementMutation,
-    TError,
-    DeleteEnvironementMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<DeleteEnvironementMutation, TError, DeleteEnvironementMutationVariables, TContext>(
-    ['deleteEnvironement'],
-    useAxios<DeleteEnvironementMutation, DeleteEnvironementMutationVariables>(
-      DeleteEnvironementDocument
-    ),
-    options
-  );
+export const useDeleteEnvironementMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteEnvironementMutation, TError, DeleteEnvironementMutationVariables, TContext>) =>
+    useMutation<DeleteEnvironementMutation, TError, DeleteEnvironementMutationVariables, TContext>(
+      ['deleteEnvironement'],
+      useAxios<DeleteEnvironementMutation, DeleteEnvironementMutationVariables>(DeleteEnvironementDocument),
+      options
+    );
 export const SetUpEnvironmentDatabaseDocument = `
     mutation setUpEnvironmentDatabase($environmentId: ID!, $clientId: ID!) {
   neosys {
@@ -3124,26 +2324,15 @@ export const SetUpEnvironmentDatabaseDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetUpEnvironmentDatabaseMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    SetUpEnvironmentDatabaseMutation,
-    TError,
-    SetUpEnvironmentDatabaseMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    SetUpEnvironmentDatabaseMutation,
-    TError,
-    SetUpEnvironmentDatabaseMutationVariables,
-    TContext
-  >(
-    ['setUpEnvironmentDatabase'],
-    useAxios<SetUpEnvironmentDatabaseMutation, SetUpEnvironmentDatabaseMutationVariables>(
-      SetUpEnvironmentDatabaseDocument
-    ),
-    options
-  );
+export const useSetUpEnvironmentDatabaseMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetUpEnvironmentDatabaseMutation, TError, SetUpEnvironmentDatabaseMutationVariables, TContext>) =>
+    useMutation<SetUpEnvironmentDatabaseMutation, TError, SetUpEnvironmentDatabaseMutationVariables, TContext>(
+      ['setUpEnvironmentDatabase'],
+      useAxios<SetUpEnvironmentDatabaseMutation, SetUpEnvironmentDatabaseMutationVariables>(SetUpEnvironmentDatabaseDocument),
+      options
+    );
 export const UpdateVersionDocument = `
     mutation updateVersion($environmentId: String!, $version: String!) {
   neosys {
@@ -3163,19 +2352,15 @@ export const UpdateVersionDocument = `
   }
 }
     `;
-export const useUpdateVersionMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    UpdateVersionMutation,
-    TError,
-    UpdateVersionMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<UpdateVersionMutation, TError, UpdateVersionMutationVariables, TContext>(
-    ['updateVersion'],
-    useAxios<UpdateVersionMutation, UpdateVersionMutationVariables>(UpdateVersionDocument),
-    options
-  );
+export const useUpdateVersionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateVersionMutation, TError, UpdateVersionMutationVariables, TContext>) =>
+    useMutation<UpdateVersionMutation, TError, UpdateVersionMutationVariables, TContext>(
+      ['updateVersion'],
+      useAxios<UpdateVersionMutation, UpdateVersionMutationVariables>(UpdateVersionDocument),
+      options
+    );
 export const SeedDbWithCsvDocument = `
     mutation seedDBWithCSV($environmentId: String!, $fileURL: String!) {
   neosys {
@@ -3192,19 +2377,15 @@ export const SeedDbWithCsvDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSeedDbWithCsvMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    SeedDbWithCsvMutation,
-    TError,
-    SeedDbWithCsvMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<SeedDbWithCsvMutation, TError, SeedDbWithCsvMutationVariables, TContext>(
-    ['seedDBWithCSV'],
-    useAxios<SeedDbWithCsvMutation, SeedDbWithCsvMutationVariables>(SeedDbWithCsvDocument),
-    options
-  );
+export const useSeedDbWithCsvMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SeedDbWithCsvMutation, TError, SeedDbWithCsvMutationVariables, TContext>) =>
+    useMutation<SeedDbWithCsvMutation, TError, SeedDbWithCsvMutationVariables, TContext>(
+      ['seedDBWithCSV'],
+      useAxios<SeedDbWithCsvMutation, SeedDbWithCsvMutationVariables>(SeedDbWithCsvDocument),
+      options
+    );
 export const GetPreSignedUrlDocument = `
     mutation getPreSignedUrl($contentType: String) {
   presignedUrl {
@@ -3216,19 +2397,15 @@ export const GetPreSignedUrlDocument = `
   }
 }
     `;
-export const useGetPreSignedUrlMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    GetPreSignedUrlMutation,
-    TError,
-    GetPreSignedUrlMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<GetPreSignedUrlMutation, TError, GetPreSignedUrlMutationVariables, TContext>(
-    ['getPreSignedUrl'],
-    useAxios<GetPreSignedUrlMutation, GetPreSignedUrlMutationVariables>(GetPreSignedUrlDocument),
-    options
-  );
+export const useGetPreSignedUrlMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<GetPreSignedUrlMutation, TError, GetPreSignedUrlMutationVariables, TContext>) =>
+    useMutation<GetPreSignedUrlMutation, TError, GetPreSignedUrlMutationVariables, TContext>(
+      ['getPreSignedUrl'],
+      useAxios<GetPreSignedUrlMutation, GetPreSignedUrlMutationVariables>(GetPreSignedUrlDocument),
+      options
+    );
 export const SetUserDocument = `
     mutation setUser($id: ID, $data: NeosysUserInput) {
   neosys {
@@ -3244,14 +2421,15 @@ export const SetUserDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetUserMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<SetUserMutation, TError, SetUserMutationVariables, TContext>
-) =>
-  useMutation<SetUserMutation, TError, SetUserMutationVariables, TContext>(
-    ['setUser'],
-    useAxios<SetUserMutation, SetUserMutationVariables>(SetUserDocument),
-    options
-  );
+export const useSetUserMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetUserMutation, TError, SetUserMutationVariables, TContext>) =>
+    useMutation<SetUserMutation, TError, SetUserMutationVariables, TContext>(
+      ['setUser'],
+      useAxios<SetUserMutation, SetUserMutationVariables>(SetUserDocument),
+      options
+    );
 export const AddSaccosAmountDocument = `
     mutation addSaccosAmount($input: [SaccosSetup!]!) {
   utility {
@@ -3264,19 +2442,15 @@ export const AddSaccosAmountDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useAddSaccosAmountMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    AddSaccosAmountMutation,
-    TError,
-    AddSaccosAmountMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<AddSaccosAmountMutation, TError, AddSaccosAmountMutationVariables, TContext>(
-    ['addSaccosAmount'],
-    useAxios<AddSaccosAmountMutation, AddSaccosAmountMutationVariables>(AddSaccosAmountDocument),
-    options
-  );
+export const useAddSaccosAmountMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<AddSaccosAmountMutation, TError, AddSaccosAmountMutationVariables, TContext>) =>
+    useMutation<AddSaccosAmountMutation, TError, AddSaccosAmountMutationVariables, TContext>(
+      ['addSaccosAmount'],
+      useAxios<AddSaccosAmountMutation, AddSaccosAmountMutationVariables>(AddSaccosAmountDocument),
+      options
+    );
 export const AddSaccosSmsCreditDocument = `
     mutation addSaccosSMSCredit($input: [SaccosAndSmsCountToBeCredited]) {
   sms {
@@ -3289,21 +2463,15 @@ export const AddSaccosSmsCreditDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useAddSaccosSmsCreditMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    AddSaccosSmsCreditMutation,
-    TError,
-    AddSaccosSmsCreditMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<AddSaccosSmsCreditMutation, TError, AddSaccosSmsCreditMutationVariables, TContext>(
-    ['addSaccosSMSCredit'],
-    useAxios<AddSaccosSmsCreditMutation, AddSaccosSmsCreditMutationVariables>(
-      AddSaccosSmsCreditDocument
-    ),
-    options
-  );
+export const useAddSaccosSmsCreditMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<AddSaccosSmsCreditMutation, TError, AddSaccosSmsCreditMutationVariables, TContext>) =>
+    useMutation<AddSaccosSmsCreditMutation, TError, AddSaccosSmsCreditMutationVariables, TContext>(
+      ['addSaccosSMSCredit'],
+      useAxios<AddSaccosSmsCreditMutation, AddSaccosSmsCreditMutationVariables>(AddSaccosSmsCreditDocument),
+      options
+    );
 export const AllAdministrationDocument = `
     query allAdministration {
   administration {
@@ -3323,17 +2491,18 @@ export const AllAdministrationDocument = `
   }
 }
     `;
-export const useAllAdministrationQuery = <TData = AllAdministrationQuery, TError = unknown>(
-  variables?: AllAdministrationQueryVariables,
-  options?: UseQueryOptions<AllAdministrationQuery, TError, TData>
-) =>
-  useQuery<AllAdministrationQuery, TError, TData>(
-    variables === undefined ? ['allAdministration'] : ['allAdministration', variables],
-    useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(
-      AllAdministrationDocument
-    ).bind(null, variables),
-    options
-  );
+export const useAllAdministrationQuery = <
+      TData = AllAdministrationQuery,
+      TError = unknown
+    >(
+      variables?: AllAdministrationQueryVariables,
+      options?: UseQueryOptions<AllAdministrationQuery, TError, TData>
+    ) =>
+    useQuery<AllAdministrationQuery, TError, TData>(
+      variables === undefined ? ['allAdministration'] : ['allAdministration', variables],
+      useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(AllAdministrationDocument).bind(null, variables),
+      options
+    );
 export const GetAllProvinceDocument = `
     query getAllProvince {
   administration {
@@ -3344,18 +2513,18 @@ export const GetAllProvinceDocument = `
   }
 }
     `;
-export const useGetAllProvinceQuery = <TData = GetAllProvinceQuery, TError = unknown>(
-  variables?: GetAllProvinceQueryVariables,
-  options?: UseQueryOptions<GetAllProvinceQuery, TError, TData>
-) =>
-  useQuery<GetAllProvinceQuery, TError, TData>(
-    variables === undefined ? ['getAllProvince'] : ['getAllProvince', variables],
-    useAxios<GetAllProvinceQuery, GetAllProvinceQueryVariables>(GetAllProvinceDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetAllProvinceQuery = <
+      TData = GetAllProvinceQuery,
+      TError = unknown
+    >(
+      variables?: GetAllProvinceQueryVariables,
+      options?: UseQueryOptions<GetAllProvinceQuery, TError, TData>
+    ) =>
+    useQuery<GetAllProvinceQuery, TError, TData>(
+      variables === undefined ? ['getAllProvince'] : ['getAllProvince', variables],
+      useAxios<GetAllProvinceQuery, GetAllProvinceQueryVariables>(GetAllProvinceDocument).bind(null, variables),
+      options
+    );
 export const GetAllDistrictsDocument = `
     query getAllDistricts {
   administration {
@@ -3366,18 +2535,18 @@ export const GetAllDistrictsDocument = `
   }
 }
     `;
-export const useGetAllDistrictsQuery = <TData = GetAllDistrictsQuery, TError = unknown>(
-  variables?: GetAllDistrictsQueryVariables,
-  options?: UseQueryOptions<GetAllDistrictsQuery, TError, TData>
-) =>
-  useQuery<GetAllDistrictsQuery, TError, TData>(
-    variables === undefined ? ['getAllDistricts'] : ['getAllDistricts', variables],
-    useAxios<GetAllDistrictsQuery, GetAllDistrictsQueryVariables>(GetAllDistrictsDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetAllDistrictsQuery = <
+      TData = GetAllDistrictsQuery,
+      TError = unknown
+    >(
+      variables?: GetAllDistrictsQueryVariables,
+      options?: UseQueryOptions<GetAllDistrictsQuery, TError, TData>
+    ) =>
+    useQuery<GetAllDistrictsQuery, TError, TData>(
+      variables === undefined ? ['getAllDistricts'] : ['getAllDistricts', variables],
+      useAxios<GetAllDistrictsQuery, GetAllDistrictsQueryVariables>(GetAllDistrictsDocument).bind(null, variables),
+      options
+    );
 export const GetAllLocalGovernmentDocument = `
     query getAllLocalGovernment {
   administration {
@@ -3388,17 +2557,18 @@ export const GetAllLocalGovernmentDocument = `
   }
 }
     `;
-export const useGetAllLocalGovernmentQuery = <TData = GetAllLocalGovernmentQuery, TError = unknown>(
-  variables?: GetAllLocalGovernmentQueryVariables,
-  options?: UseQueryOptions<GetAllLocalGovernmentQuery, TError, TData>
-) =>
-  useQuery<GetAllLocalGovernmentQuery, TError, TData>(
-    variables === undefined ? ['getAllLocalGovernment'] : ['getAllLocalGovernment', variables],
-    useAxios<GetAllLocalGovernmentQuery, GetAllLocalGovernmentQueryVariables>(
-      GetAllLocalGovernmentDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetAllLocalGovernmentQuery = <
+      TData = GetAllLocalGovernmentQuery,
+      TError = unknown
+    >(
+      variables?: GetAllLocalGovernmentQueryVariables,
+      options?: UseQueryOptions<GetAllLocalGovernmentQuery, TError, TData>
+    ) =>
+    useQuery<GetAllLocalGovernmentQuery, TError, TData>(
+      variables === undefined ? ['getAllLocalGovernment'] : ['getAllLocalGovernment', variables],
+      useAxios<GetAllLocalGovernmentQuery, GetAllLocalGovernmentQueryVariables>(GetAllLocalGovernmentDocument).bind(null, variables),
+      options
+    );
 export const GetClosingDayListDocument = `
     query getClosingDayList($pagination: Pagination, $filter: Filter) {
   neosys {
@@ -3426,17 +2596,18 @@ export const GetClosingDayListDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetClosingDayListQuery = <TData = GetClosingDayListQuery, TError = unknown>(
-  variables?: GetClosingDayListQueryVariables,
-  options?: UseQueryOptions<GetClosingDayListQuery, TError, TData>
-) =>
-  useQuery<GetClosingDayListQuery, TError, TData>(
-    variables === undefined ? ['getClosingDayList'] : ['getClosingDayList', variables],
-    useAxios<GetClosingDayListQuery, GetClosingDayListQueryVariables>(
-      GetClosingDayListDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetClosingDayListQuery = <
+      TData = GetClosingDayListQuery,
+      TError = unknown
+    >(
+      variables?: GetClosingDayListQueryVariables,
+      options?: UseQueryOptions<GetClosingDayListQuery, TError, TData>
+    ) =>
+    useQuery<GetClosingDayListQuery, TError, TData>(
+      variables === undefined ? ['getClosingDayList'] : ['getClosingDayList', variables],
+      useAxios<GetClosingDayListQuery, GetClosingDayListQueryVariables>(GetClosingDayListDocument).bind(null, variables),
+      options
+    );
 export const GetDatabaseSizeListDocument = `
     query getDatabaseSizeList($pagination: Pagination, $filter: Filter) {
   neosys {
@@ -3464,17 +2635,18 @@ export const GetDatabaseSizeListDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetDatabaseSizeListQuery = <TData = GetDatabaseSizeListQuery, TError = unknown>(
-  variables?: GetDatabaseSizeListQueryVariables,
-  options?: UseQueryOptions<GetDatabaseSizeListQuery, TError, TData>
-) =>
-  useQuery<GetDatabaseSizeListQuery, TError, TData>(
-    variables === undefined ? ['getDatabaseSizeList'] : ['getDatabaseSizeList', variables],
-    useAxios<GetDatabaseSizeListQuery, GetDatabaseSizeListQueryVariables>(
-      GetDatabaseSizeListDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetDatabaseSizeListQuery = <
+      TData = GetDatabaseSizeListQuery,
+      TError = unknown
+    >(
+      variables?: GetDatabaseSizeListQueryVariables,
+      options?: UseQueryOptions<GetDatabaseSizeListQuery, TError, TData>
+    ) =>
+    useQuery<GetDatabaseSizeListQuery, TError, TData>(
+      variables === undefined ? ['getDatabaseSizeList'] : ['getDatabaseSizeList', variables],
+      useAxios<GetDatabaseSizeListQuery, GetDatabaseSizeListQueryVariables>(GetDatabaseSizeListDocument).bind(null, variables),
+      options
+    );
 export const GetAccessLogCounterListDocument = `
     query getAccessLogCounterList($pagination: Pagination, $filter: Filter) {
   neosys {
@@ -3508,19 +2680,17 @@ export const GetAccessLogCounterListDocument = `
 }
     ${PaginationFragmentDoc}`;
 export const useGetAccessLogCounterListQuery = <
-  TData = GetAccessLogCounterListQuery,
-  TError = unknown
->(
-  variables?: GetAccessLogCounterListQueryVariables,
-  options?: UseQueryOptions<GetAccessLogCounterListQuery, TError, TData>
-) =>
-  useQuery<GetAccessLogCounterListQuery, TError, TData>(
-    variables === undefined ? ['getAccessLogCounterList'] : ['getAccessLogCounterList', variables],
-    useAxios<GetAccessLogCounterListQuery, GetAccessLogCounterListQueryVariables>(
-      GetAccessLogCounterListDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = GetAccessLogCounterListQuery,
+      TError = unknown
+    >(
+      variables?: GetAccessLogCounterListQueryVariables,
+      options?: UseQueryOptions<GetAccessLogCounterListQuery, TError, TData>
+    ) =>
+    useQuery<GetAccessLogCounterListQuery, TError, TData>(
+      variables === undefined ? ['getAccessLogCounterList'] : ['getAccessLogCounterList', variables],
+      useAxios<GetAccessLogCounterListQuery, GetAccessLogCounterListQueryVariables>(GetAccessLogCounterListDocument).bind(null, variables),
+      options
+    );
 export const GeterrorLogListDocument = `
     query geterrorLogList($pagination: Pagination, $filter: Filter) {
   neosys {
@@ -3547,18 +2717,18 @@ export const GeterrorLogListDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGeterrorLogListQuery = <TData = GeterrorLogListQuery, TError = unknown>(
-  variables?: GeterrorLogListQueryVariables,
-  options?: UseQueryOptions<GeterrorLogListQuery, TError, TData>
-) =>
-  useQuery<GeterrorLogListQuery, TError, TData>(
-    variables === undefined ? ['geterrorLogList'] : ['geterrorLogList', variables],
-    useAxios<GeterrorLogListQuery, GeterrorLogListQueryVariables>(GeterrorLogListDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGeterrorLogListQuery = <
+      TData = GeterrorLogListQuery,
+      TError = unknown
+    >(
+      variables?: GeterrorLogListQueryVariables,
+      options?: UseQueryOptions<GeterrorLogListQuery, TError, TData>
+    ) =>
+    useQuery<GeterrorLogListQuery, TError, TData>(
+      variables === undefined ? ['geterrorLogList'] : ['geterrorLogList', variables],
+      useAxios<GeterrorLogListQuery, GeterrorLogListQueryVariables>(GeterrorLogListDocument).bind(null, variables),
+      options
+    );
 export const GetLoanAccountCounterDocument = `
     query getLoanAccountCounter($pagination: Pagination, $filter: Filter) {
   neosys {
@@ -3588,17 +2758,18 @@ export const GetLoanAccountCounterDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetLoanAccountCounterQuery = <TData = GetLoanAccountCounterQuery, TError = unknown>(
-  variables?: GetLoanAccountCounterQueryVariables,
-  options?: UseQueryOptions<GetLoanAccountCounterQuery, TError, TData>
-) =>
-  useQuery<GetLoanAccountCounterQuery, TError, TData>(
-    variables === undefined ? ['getLoanAccountCounter'] : ['getLoanAccountCounter', variables],
-    useAxios<GetLoanAccountCounterQuery, GetLoanAccountCounterQueryVariables>(
-      GetLoanAccountCounterDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetLoanAccountCounterQuery = <
+      TData = GetLoanAccountCounterQuery,
+      TError = unknown
+    >(
+      variables?: GetLoanAccountCounterQueryVariables,
+      options?: UseQueryOptions<GetLoanAccountCounterQuery, TError, TData>
+    ) =>
+    useQuery<GetLoanAccountCounterQuery, TError, TData>(
+      variables === undefined ? ['getLoanAccountCounter'] : ['getLoanAccountCounter', variables],
+      useAxios<GetLoanAccountCounterQuery, GetLoanAccountCounterQueryVariables>(GetLoanAccountCounterDocument).bind(null, variables),
+      options
+    );
 export const GetMemberCounterDocument = `
     query getMemberCounter($pagination: Pagination, $filter: Filter) {
   neosys {
@@ -3627,18 +2798,18 @@ export const GetMemberCounterDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetMemberCounterQuery = <TData = GetMemberCounterQuery, TError = unknown>(
-  variables?: GetMemberCounterQueryVariables,
-  options?: UseQueryOptions<GetMemberCounterQuery, TError, TData>
-) =>
-  useQuery<GetMemberCounterQuery, TError, TData>(
-    variables === undefined ? ['getMemberCounter'] : ['getMemberCounter', variables],
-    useAxios<GetMemberCounterQuery, GetMemberCounterQueryVariables>(GetMemberCounterDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetMemberCounterQuery = <
+      TData = GetMemberCounterQuery,
+      TError = unknown
+    >(
+      variables?: GetMemberCounterQueryVariables,
+      options?: UseQueryOptions<GetMemberCounterQuery, TError, TData>
+    ) =>
+    useQuery<GetMemberCounterQuery, TError, TData>(
+      variables === undefined ? ['getMemberCounter'] : ['getMemberCounter', variables],
+      useAxios<GetMemberCounterQuery, GetMemberCounterQueryVariables>(GetMemberCounterDocument).bind(null, variables),
+      options
+    );
 export const GetMoneyLedgerCounterDocument = `
     query getMoneyLedgerCounter($pagination: Pagination, $filter: Filter) {
   neosys {
@@ -3666,17 +2837,18 @@ export const GetMoneyLedgerCounterDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetMoneyLedgerCounterQuery = <TData = GetMoneyLedgerCounterQuery, TError = unknown>(
-  variables?: GetMoneyLedgerCounterQueryVariables,
-  options?: UseQueryOptions<GetMoneyLedgerCounterQuery, TError, TData>
-) =>
-  useQuery<GetMoneyLedgerCounterQuery, TError, TData>(
-    variables === undefined ? ['getMoneyLedgerCounter'] : ['getMoneyLedgerCounter', variables],
-    useAxios<GetMoneyLedgerCounterQuery, GetMoneyLedgerCounterQueryVariables>(
-      GetMoneyLedgerCounterDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetMoneyLedgerCounterQuery = <
+      TData = GetMoneyLedgerCounterQuery,
+      TError = unknown
+    >(
+      variables?: GetMoneyLedgerCounterQueryVariables,
+      options?: UseQueryOptions<GetMoneyLedgerCounterQuery, TError, TData>
+    ) =>
+    useQuery<GetMoneyLedgerCounterQuery, TError, TData>(
+      variables === undefined ? ['getMoneyLedgerCounter'] : ['getMoneyLedgerCounter', variables],
+      useAxios<GetMoneyLedgerCounterQuery, GetMoneyLedgerCounterQueryVariables>(GetMoneyLedgerCounterDocument).bind(null, variables),
+      options
+    );
 export const GetSavingAccountCounterDocument = `
     query getSavingAccountCounter($pagination: Pagination, $filter: Filter) {
   neosys {
@@ -3706,19 +2878,17 @@ export const GetSavingAccountCounterDocument = `
 }
     ${PaginationFragmentDoc}`;
 export const useGetSavingAccountCounterQuery = <
-  TData = GetSavingAccountCounterQuery,
-  TError = unknown
->(
-  variables?: GetSavingAccountCounterQueryVariables,
-  options?: UseQueryOptions<GetSavingAccountCounterQuery, TError, TData>
-) =>
-  useQuery<GetSavingAccountCounterQuery, TError, TData>(
-    variables === undefined ? ['getSavingAccountCounter'] : ['getSavingAccountCounter', variables],
-    useAxios<GetSavingAccountCounterQuery, GetSavingAccountCounterQueryVariables>(
-      GetSavingAccountCounterDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = GetSavingAccountCounterQuery,
+      TError = unknown
+    >(
+      variables?: GetSavingAccountCounterQueryVariables,
+      options?: UseQueryOptions<GetSavingAccountCounterQuery, TError, TData>
+    ) =>
+    useQuery<GetSavingAccountCounterQuery, TError, TData>(
+      variables === undefined ? ['getSavingAccountCounter'] : ['getSavingAccountCounter', variables],
+      useAxios<GetSavingAccountCounterQuery, GetSavingAccountCounterQueryVariables>(GetSavingAccountCounterDocument).bind(null, variables),
+      options
+    );
 export const GetTransactionCounterDocument = `
     query getTransactionCounter($pagination: Pagination, $filter: Filter) {
   neosys {
@@ -3747,17 +2917,18 @@ export const GetTransactionCounterDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetTransactionCounterQuery = <TData = GetTransactionCounterQuery, TError = unknown>(
-  variables?: GetTransactionCounterQueryVariables,
-  options?: UseQueryOptions<GetTransactionCounterQuery, TError, TData>
-) =>
-  useQuery<GetTransactionCounterQuery, TError, TData>(
-    variables === undefined ? ['getTransactionCounter'] : ['getTransactionCounter', variables],
-    useAxios<GetTransactionCounterQuery, GetTransactionCounterQueryVariables>(
-      GetTransactionCounterDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetTransactionCounterQuery = <
+      TData = GetTransactionCounterQuery,
+      TError = unknown
+    >(
+      variables?: GetTransactionCounterQueryVariables,
+      options?: UseQueryOptions<GetTransactionCounterQuery, TError, TData>
+    ) =>
+    useQuery<GetTransactionCounterQuery, TError, TData>(
+      variables === undefined ? ['getTransactionCounter'] : ['getTransactionCounter', variables],
+      useAxios<GetTransactionCounterQuery, GetTransactionCounterQueryVariables>(GetTransactionCounterDocument).bind(null, variables),
+      options
+    );
 export const GetUserCounterDocument = `
     query getUserCounter($pagination: Pagination, $filter: Filter) {
   neosys {
@@ -3786,18 +2957,18 @@ export const GetUserCounterDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetUserCounterQuery = <TData = GetUserCounterQuery, TError = unknown>(
-  variables?: GetUserCounterQueryVariables,
-  options?: UseQueryOptions<GetUserCounterQuery, TError, TData>
-) =>
-  useQuery<GetUserCounterQuery, TError, TData>(
-    variables === undefined ? ['getUserCounter'] : ['getUserCounter', variables],
-    useAxios<GetUserCounterQuery, GetUserCounterQueryVariables>(GetUserCounterDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetUserCounterQuery = <
+      TData = GetUserCounterQuery,
+      TError = unknown
+    >(
+      variables?: GetUserCounterQueryVariables,
+      options?: UseQueryOptions<GetUserCounterQuery, TError, TData>
+    ) =>
+    useQuery<GetUserCounterQuery, TError, TData>(
+      variables === undefined ? ['getUserCounter'] : ['getUserCounter', variables],
+      useAxios<GetUserCounterQuery, GetUserCounterQueryVariables>(GetUserCounterDocument).bind(null, variables),
+      options
+    );
 export const GetAllClosingDayListDocument = `
     query getAllClosingDayList {
   neosys {
@@ -3818,17 +2989,18 @@ export const GetAllClosingDayListDocument = `
   }
 }
     `;
-export const useGetAllClosingDayListQuery = <TData = GetAllClosingDayListQuery, TError = unknown>(
-  variables?: GetAllClosingDayListQueryVariables,
-  options?: UseQueryOptions<GetAllClosingDayListQuery, TError, TData>
-) =>
-  useQuery<GetAllClosingDayListQuery, TError, TData>(
-    variables === undefined ? ['getAllClosingDayList'] : ['getAllClosingDayList', variables],
-    useAxios<GetAllClosingDayListQuery, GetAllClosingDayListQueryVariables>(
-      GetAllClosingDayListDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetAllClosingDayListQuery = <
+      TData = GetAllClosingDayListQuery,
+      TError = unknown
+    >(
+      variables?: GetAllClosingDayListQueryVariables,
+      options?: UseQueryOptions<GetAllClosingDayListQuery, TError, TData>
+    ) =>
+    useQuery<GetAllClosingDayListQuery, TError, TData>(
+      variables === undefined ? ['getAllClosingDayList'] : ['getAllClosingDayList', variables],
+      useAxios<GetAllClosingDayListQuery, GetAllClosingDayListQueryVariables>(GetAllClosingDayListDocument).bind(null, variables),
+      options
+    );
 export const GetAllMemberCounterDocument = `
     query getAllMemberCounter {
   neosys {
@@ -3850,17 +3022,18 @@ export const GetAllMemberCounterDocument = `
   }
 }
     `;
-export const useGetAllMemberCounterQuery = <TData = GetAllMemberCounterQuery, TError = unknown>(
-  variables?: GetAllMemberCounterQueryVariables,
-  options?: UseQueryOptions<GetAllMemberCounterQuery, TError, TData>
-) =>
-  useQuery<GetAllMemberCounterQuery, TError, TData>(
-    variables === undefined ? ['getAllMemberCounter'] : ['getAllMemberCounter', variables],
-    useAxios<GetAllMemberCounterQuery, GetAllMemberCounterQueryVariables>(
-      GetAllMemberCounterDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetAllMemberCounterQuery = <
+      TData = GetAllMemberCounterQuery,
+      TError = unknown
+    >(
+      variables?: GetAllMemberCounterQueryVariables,
+      options?: UseQueryOptions<GetAllMemberCounterQuery, TError, TData>
+    ) =>
+    useQuery<GetAllMemberCounterQuery, TError, TData>(
+      variables === undefined ? ['getAllMemberCounter'] : ['getAllMemberCounter', variables],
+      useAxios<GetAllMemberCounterQuery, GetAllMemberCounterQueryVariables>(GetAllMemberCounterDocument).bind(null, variables),
+      options
+    );
 export const GetAllMoneyLedgerCounterDocument = `
     query getAllMoneyLedgerCounter {
   neosys {
@@ -3882,21 +3055,17 @@ export const GetAllMoneyLedgerCounterDocument = `
 }
     `;
 export const useGetAllMoneyLedgerCounterQuery = <
-  TData = GetAllMoneyLedgerCounterQuery,
-  TError = unknown
->(
-  variables?: GetAllMoneyLedgerCounterQueryVariables,
-  options?: UseQueryOptions<GetAllMoneyLedgerCounterQuery, TError, TData>
-) =>
-  useQuery<GetAllMoneyLedgerCounterQuery, TError, TData>(
-    variables === undefined
-      ? ['getAllMoneyLedgerCounter']
-      : ['getAllMoneyLedgerCounter', variables],
-    useAxios<GetAllMoneyLedgerCounterQuery, GetAllMoneyLedgerCounterQueryVariables>(
-      GetAllMoneyLedgerCounterDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = GetAllMoneyLedgerCounterQuery,
+      TError = unknown
+    >(
+      variables?: GetAllMoneyLedgerCounterQueryVariables,
+      options?: UseQueryOptions<GetAllMoneyLedgerCounterQuery, TError, TData>
+    ) =>
+    useQuery<GetAllMoneyLedgerCounterQuery, TError, TData>(
+      variables === undefined ? ['getAllMoneyLedgerCounter'] : ['getAllMoneyLedgerCounter', variables],
+      useAxios<GetAllMoneyLedgerCounterQuery, GetAllMoneyLedgerCounterQueryVariables>(GetAllMoneyLedgerCounterDocument).bind(null, variables),
+      options
+    );
 export const GetAllLoanAccountCounterDocument = `
     query getAllLoanAccountCounter {
   neosys {
@@ -3920,21 +3089,17 @@ export const GetAllLoanAccountCounterDocument = `
 }
     `;
 export const useGetAllLoanAccountCounterQuery = <
-  TData = GetAllLoanAccountCounterQuery,
-  TError = unknown
->(
-  variables?: GetAllLoanAccountCounterQueryVariables,
-  options?: UseQueryOptions<GetAllLoanAccountCounterQuery, TError, TData>
-) =>
-  useQuery<GetAllLoanAccountCounterQuery, TError, TData>(
-    variables === undefined
-      ? ['getAllLoanAccountCounter']
-      : ['getAllLoanAccountCounter', variables],
-    useAxios<GetAllLoanAccountCounterQuery, GetAllLoanAccountCounterQueryVariables>(
-      GetAllLoanAccountCounterDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = GetAllLoanAccountCounterQuery,
+      TError = unknown
+    >(
+      variables?: GetAllLoanAccountCounterQueryVariables,
+      options?: UseQueryOptions<GetAllLoanAccountCounterQuery, TError, TData>
+    ) =>
+    useQuery<GetAllLoanAccountCounterQuery, TError, TData>(
+      variables === undefined ? ['getAllLoanAccountCounter'] : ['getAllLoanAccountCounter', variables],
+      useAxios<GetAllLoanAccountCounterQuery, GetAllLoanAccountCounterQueryVariables>(GetAllLoanAccountCounterDocument).bind(null, variables),
+      options
+    );
 export const GetAllSavingAccountCounterDocument = `
     query getAllSavingAccountCounter {
   neosys {
@@ -3957,21 +3122,17 @@ export const GetAllSavingAccountCounterDocument = `
 }
     `;
 export const useGetAllSavingAccountCounterQuery = <
-  TData = GetAllSavingAccountCounterQuery,
-  TError = unknown
->(
-  variables?: GetAllSavingAccountCounterQueryVariables,
-  options?: UseQueryOptions<GetAllSavingAccountCounterQuery, TError, TData>
-) =>
-  useQuery<GetAllSavingAccountCounterQuery, TError, TData>(
-    variables === undefined
-      ? ['getAllSavingAccountCounter']
-      : ['getAllSavingAccountCounter', variables],
-    useAxios<GetAllSavingAccountCounterQuery, GetAllSavingAccountCounterQueryVariables>(
-      GetAllSavingAccountCounterDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = GetAllSavingAccountCounterQuery,
+      TError = unknown
+    >(
+      variables?: GetAllSavingAccountCounterQueryVariables,
+      options?: UseQueryOptions<GetAllSavingAccountCounterQuery, TError, TData>
+    ) =>
+    useQuery<GetAllSavingAccountCounterQuery, TError, TData>(
+      variables === undefined ? ['getAllSavingAccountCounter'] : ['getAllSavingAccountCounter', variables],
+      useAxios<GetAllSavingAccountCounterQuery, GetAllSavingAccountCounterQueryVariables>(GetAllSavingAccountCounterDocument).bind(null, variables),
+      options
+    );
 export const GetAllDatabaseSizeListDocument = `
     query getAllDatabaseSizeList {
   neosys {
@@ -3993,19 +3154,17 @@ export const GetAllDatabaseSizeListDocument = `
 }
     `;
 export const useGetAllDatabaseSizeListQuery = <
-  TData = GetAllDatabaseSizeListQuery,
-  TError = unknown
->(
-  variables?: GetAllDatabaseSizeListQueryVariables,
-  options?: UseQueryOptions<GetAllDatabaseSizeListQuery, TError, TData>
-) =>
-  useQuery<GetAllDatabaseSizeListQuery, TError, TData>(
-    variables === undefined ? ['getAllDatabaseSizeList'] : ['getAllDatabaseSizeList', variables],
-    useAxios<GetAllDatabaseSizeListQuery, GetAllDatabaseSizeListQueryVariables>(
-      GetAllDatabaseSizeListDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = GetAllDatabaseSizeListQuery,
+      TError = unknown
+    >(
+      variables?: GetAllDatabaseSizeListQueryVariables,
+      options?: UseQueryOptions<GetAllDatabaseSizeListQuery, TError, TData>
+    ) =>
+    useQuery<GetAllDatabaseSizeListQuery, TError, TData>(
+      variables === undefined ? ['getAllDatabaseSizeList'] : ['getAllDatabaseSizeList', variables],
+      useAxios<GetAllDatabaseSizeListQuery, GetAllDatabaseSizeListQueryVariables>(GetAllDatabaseSizeListDocument).bind(null, variables),
+      options
+    );
 export const GetAllAccessLogCounterListDocument = `
     query getAllAccessLogCounterList {
   neosys {
@@ -4032,21 +3191,17 @@ export const GetAllAccessLogCounterListDocument = `
 }
     `;
 export const useGetAllAccessLogCounterListQuery = <
-  TData = GetAllAccessLogCounterListQuery,
-  TError = unknown
->(
-  variables?: GetAllAccessLogCounterListQueryVariables,
-  options?: UseQueryOptions<GetAllAccessLogCounterListQuery, TError, TData>
-) =>
-  useQuery<GetAllAccessLogCounterListQuery, TError, TData>(
-    variables === undefined
-      ? ['getAllAccessLogCounterList']
-      : ['getAllAccessLogCounterList', variables],
-    useAxios<GetAllAccessLogCounterListQuery, GetAllAccessLogCounterListQueryVariables>(
-      GetAllAccessLogCounterListDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = GetAllAccessLogCounterListQuery,
+      TError = unknown
+    >(
+      variables?: GetAllAccessLogCounterListQueryVariables,
+      options?: UseQueryOptions<GetAllAccessLogCounterListQuery, TError, TData>
+    ) =>
+    useQuery<GetAllAccessLogCounterListQuery, TError, TData>(
+      variables === undefined ? ['getAllAccessLogCounterList'] : ['getAllAccessLogCounterList', variables],
+      useAxios<GetAllAccessLogCounterListQuery, GetAllAccessLogCounterListQueryVariables>(GetAllAccessLogCounterListDocument).bind(null, variables),
+      options
+    );
 export const GetAllErrorLogListDocument = `
     query getAllErrorLogList {
   neosys {
@@ -4067,17 +3222,18 @@ export const GetAllErrorLogListDocument = `
   }
 }
     `;
-export const useGetAllErrorLogListQuery = <TData = GetAllErrorLogListQuery, TError = unknown>(
-  variables?: GetAllErrorLogListQueryVariables,
-  options?: UseQueryOptions<GetAllErrorLogListQuery, TError, TData>
-) =>
-  useQuery<GetAllErrorLogListQuery, TError, TData>(
-    variables === undefined ? ['getAllErrorLogList'] : ['getAllErrorLogList', variables],
-    useAxios<GetAllErrorLogListQuery, GetAllErrorLogListQueryVariables>(
-      GetAllErrorLogListDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetAllErrorLogListQuery = <
+      TData = GetAllErrorLogListQuery,
+      TError = unknown
+    >(
+      variables?: GetAllErrorLogListQueryVariables,
+      options?: UseQueryOptions<GetAllErrorLogListQuery, TError, TData>
+    ) =>
+    useQuery<GetAllErrorLogListQuery, TError, TData>(
+      variables === undefined ? ['getAllErrorLogList'] : ['getAllErrorLogList', variables],
+      useAxios<GetAllErrorLogListQuery, GetAllErrorLogListQueryVariables>(GetAllErrorLogListDocument).bind(null, variables),
+      options
+    );
 export const GetAllTransactionCounterDocument = `
     query getAllTransactionCounter {
   neosys {
@@ -4100,21 +3256,17 @@ export const GetAllTransactionCounterDocument = `
 }
     `;
 export const useGetAllTransactionCounterQuery = <
-  TData = GetAllTransactionCounterQuery,
-  TError = unknown
->(
-  variables?: GetAllTransactionCounterQueryVariables,
-  options?: UseQueryOptions<GetAllTransactionCounterQuery, TError, TData>
-) =>
-  useQuery<GetAllTransactionCounterQuery, TError, TData>(
-    variables === undefined
-      ? ['getAllTransactionCounter']
-      : ['getAllTransactionCounter', variables],
-    useAxios<GetAllTransactionCounterQuery, GetAllTransactionCounterQueryVariables>(
-      GetAllTransactionCounterDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = GetAllTransactionCounterQuery,
+      TError = unknown
+    >(
+      variables?: GetAllTransactionCounterQueryVariables,
+      options?: UseQueryOptions<GetAllTransactionCounterQuery, TError, TData>
+    ) =>
+    useQuery<GetAllTransactionCounterQuery, TError, TData>(
+      variables === undefined ? ['getAllTransactionCounter'] : ['getAllTransactionCounter', variables],
+      useAxios<GetAllTransactionCounterQuery, GetAllTransactionCounterQueryVariables>(GetAllTransactionCounterDocument).bind(null, variables),
+      options
+    );
 export const GetAllUserCounterDocument = `
     query getAllUserCounter {
   neosys {
@@ -4136,17 +3288,18 @@ export const GetAllUserCounterDocument = `
   }
 }
     `;
-export const useGetAllUserCounterQuery = <TData = GetAllUserCounterQuery, TError = unknown>(
-  variables?: GetAllUserCounterQueryVariables,
-  options?: UseQueryOptions<GetAllUserCounterQuery, TError, TData>
-) =>
-  useQuery<GetAllUserCounterQuery, TError, TData>(
-    variables === undefined ? ['getAllUserCounter'] : ['getAllUserCounter', variables],
-    useAxios<GetAllUserCounterQuery, GetAllUserCounterQueryVariables>(
-      GetAllUserCounterDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetAllUserCounterQuery = <
+      TData = GetAllUserCounterQuery,
+      TError = unknown
+    >(
+      variables?: GetAllUserCounterQueryVariables,
+      options?: UseQueryOptions<GetAllUserCounterQuery, TError, TData>
+    ) =>
+    useQuery<GetAllUserCounterQuery, TError, TData>(
+      variables === undefined ? ['getAllUserCounter'] : ['getAllUserCounter', variables],
+      useAxios<GetAllUserCounterQuery, GetAllUserCounterQueryVariables>(GetAllUserCounterDocument).bind(null, variables),
+      options
+    );
 export const GetMeDocument = `
     query getMe {
   neosys {
@@ -4165,15 +3318,18 @@ export const GetMeDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useGetMeQuery = <TData = GetMeQuery, TError = unknown>(
-  variables?: GetMeQueryVariables,
-  options?: UseQueryOptions<GetMeQuery, TError, TData>
-) =>
-  useQuery<GetMeQuery, TError, TData>(
-    variables === undefined ? ['getMe'] : ['getMe', variables],
-    useAxios<GetMeQuery, GetMeQueryVariables>(GetMeDocument).bind(null, variables),
-    options
-  );
+export const useGetMeQuery = <
+      TData = GetMeQuery,
+      TError = unknown
+    >(
+      variables?: GetMeQueryVariables,
+      options?: UseQueryOptions<GetMeQuery, TError, TData>
+    ) =>
+    useQuery<GetMeQuery, TError, TData>(
+      variables === undefined ? ['getMe'] : ['getMe', variables],
+      useAxios<GetMeQuery, GetMeQueryVariables>(GetMeDocument).bind(null, variables),
+      options
+    );
 export const GetClientsListDocument = `
     query getClientsList {
   neosys {
@@ -4195,18 +3351,18 @@ export const GetClientsListDocument = `
   }
 }
     `;
-export const useGetClientsListQuery = <TData = GetClientsListQuery, TError = unknown>(
-  variables?: GetClientsListQueryVariables,
-  options?: UseQueryOptions<GetClientsListQuery, TError, TData>
-) =>
-  useQuery<GetClientsListQuery, TError, TData>(
-    variables === undefined ? ['getClientsList'] : ['getClientsList', variables],
-    useAxios<GetClientsListQuery, GetClientsListQueryVariables>(GetClientsListDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetClientsListQuery = <
+      TData = GetClientsListQuery,
+      TError = unknown
+    >(
+      variables?: GetClientsListQueryVariables,
+      options?: UseQueryOptions<GetClientsListQuery, TError, TData>
+    ) =>
+    useQuery<GetClientsListQuery, TError, TData>(
+      variables === undefined ? ['getClientsList'] : ['getClientsList', variables],
+      useAxios<GetClientsListQuery, GetClientsListQueryVariables>(GetClientsListDocument).bind(null, variables),
+      options
+    );
 export const GetClientDetailsDocument = `
     query getClientDetails($clientId: ID!) {
   neosys {
@@ -4227,18 +3383,18 @@ export const GetClientDetailsDocument = `
   }
 }
     `;
-export const useGetClientDetailsQuery = <TData = GetClientDetailsQuery, TError = unknown>(
-  variables: GetClientDetailsQueryVariables,
-  options?: UseQueryOptions<GetClientDetailsQuery, TError, TData>
-) =>
-  useQuery<GetClientDetailsQuery, TError, TData>(
-    ['getClientDetails', variables],
-    useAxios<GetClientDetailsQuery, GetClientDetailsQueryVariables>(GetClientDetailsDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetClientDetailsQuery = <
+      TData = GetClientDetailsQuery,
+      TError = unknown
+    >(
+      variables: GetClientDetailsQueryVariables,
+      options?: UseQueryOptions<GetClientDetailsQuery, TError, TData>
+    ) =>
+    useQuery<GetClientDetailsQuery, TError, TData>(
+      ['getClientDetails', variables],
+      useAxios<GetClientDetailsQuery, GetClientDetailsQueryVariables>(GetClientDetailsDocument).bind(null, variables),
+      options
+    );
 export const GetVersionDocument = `
     query getVersion {
   neosys {
@@ -4248,15 +3404,18 @@ export const GetVersionDocument = `
   }
 }
     `;
-export const useGetVersionQuery = <TData = GetVersionQuery, TError = unknown>(
-  variables?: GetVersionQueryVariables,
-  options?: UseQueryOptions<GetVersionQuery, TError, TData>
-) =>
-  useQuery<GetVersionQuery, TError, TData>(
-    variables === undefined ? ['getVersion'] : ['getVersion', variables],
-    useAxios<GetVersionQuery, GetVersionQueryVariables>(GetVersionDocument).bind(null, variables),
-    options
-  );
+export const useGetVersionQuery = <
+      TData = GetVersionQuery,
+      TError = unknown
+    >(
+      variables?: GetVersionQueryVariables,
+      options?: UseQueryOptions<GetVersionQuery, TError, TData>
+    ) =>
+    useQuery<GetVersionQuery, TError, TData>(
+      variables === undefined ? ['getVersion'] : ['getVersion', variables],
+      useAxios<GetVersionQuery, GetVersionQueryVariables>(GetVersionDocument).bind(null, variables),
+      options
+    );
 export const GetTasksDocument = `
     query getTasks {
   neosys {
@@ -4270,15 +3429,18 @@ export const GetTasksDocument = `
   }
 }
     `;
-export const useGetTasksQuery = <TData = GetTasksQuery, TError = unknown>(
-  variables?: GetTasksQueryVariables,
-  options?: UseQueryOptions<GetTasksQuery, TError, TData>
-) =>
-  useQuery<GetTasksQuery, TError, TData>(
-    variables === undefined ? ['getTasks'] : ['getTasks', variables],
-    useAxios<GetTasksQuery, GetTasksQueryVariables>(GetTasksDocument).bind(null, variables),
-    options
-  );
+export const useGetTasksQuery = <
+      TData = GetTasksQuery,
+      TError = unknown
+    >(
+      variables?: GetTasksQueryVariables,
+      options?: UseQueryOptions<GetTasksQuery, TError, TData>
+    ) =>
+    useQuery<GetTasksQuery, TError, TData>(
+      variables === undefined ? ['getTasks'] : ['getTasks', variables],
+      useAxios<GetTasksQuery, GetTasksQueryVariables>(GetTasksDocument).bind(null, variables),
+      options
+    );
 export const GetUserListDocument = `
     query getUserList($paginate: Pagination, $filter: NeosysUserSearchFilter) {
   neosys {
@@ -4302,18 +3464,18 @@ export const GetUserListDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetUserListQuery = <TData = GetUserListQuery, TError = unknown>(
-  variables?: GetUserListQueryVariables,
-  options?: UseQueryOptions<GetUserListQuery, TError, TData>
-) =>
-  useQuery<GetUserListQuery, TError, TData>(
-    variables === undefined ? ['getUserList'] : ['getUserList', variables],
-    useAxios<GetUserListQuery, GetUserListQueryVariables>(GetUserListDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetUserListQuery = <
+      TData = GetUserListQuery,
+      TError = unknown
+    >(
+      variables?: GetUserListQueryVariables,
+      options?: UseQueryOptions<GetUserListQuery, TError, TData>
+    ) =>
+    useQuery<GetUserListQuery, TError, TData>(
+      variables === undefined ? ['getUserList'] : ['getUserList', variables],
+      useAxios<GetUserListQuery, GetUserListQueryVariables>(GetUserListDocument).bind(null, variables),
+      options
+    );
 export const GetUserEditDataDocument = `
     query getUserEditData($id: ID!) {
   neosys {
@@ -4335,18 +3497,18 @@ export const GetUserEditDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useGetUserEditDataQuery = <TData = GetUserEditDataQuery, TError = unknown>(
-  variables: GetUserEditDataQueryVariables,
-  options?: UseQueryOptions<GetUserEditDataQuery, TError, TData>
-) =>
-  useQuery<GetUserEditDataQuery, TError, TData>(
-    ['getUserEditData', variables],
-    useAxios<GetUserEditDataQuery, GetUserEditDataQueryVariables>(GetUserEditDataDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetUserEditDataQuery = <
+      TData = GetUserEditDataQuery,
+      TError = unknown
+    >(
+      variables: GetUserEditDataQueryVariables,
+      options?: UseQueryOptions<GetUserEditDataQuery, TError, TData>
+    ) =>
+    useQuery<GetUserEditDataQuery, TError, TData>(
+      ['getUserEditData', variables],
+      useAxios<GetUserEditDataQuery, GetUserEditDataQueryVariables>(GetUserEditDataDocument).bind(null, variables),
+      options
+    );
 export const GetUtilityTransactionListDocument = `
     query getUtilityTransactionList($paginate: Pagination!, $filter: Filter) {
   utility {
@@ -4373,19 +3535,17 @@ export const GetUtilityTransactionListDocument = `
 }
     ${PaginationFragmentDoc}`;
 export const useGetUtilityTransactionListQuery = <
-  TData = GetUtilityTransactionListQuery,
-  TError = unknown
->(
-  variables: GetUtilityTransactionListQueryVariables,
-  options?: UseQueryOptions<GetUtilityTransactionListQuery, TError, TData>
-) =>
-  useQuery<GetUtilityTransactionListQuery, TError, TData>(
-    ['getUtilityTransactionList', variables],
-    useAxios<GetUtilityTransactionListQuery, GetUtilityTransactionListQueryVariables>(
-      GetUtilityTransactionListDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = GetUtilityTransactionListQuery,
+      TError = unknown
+    >(
+      variables: GetUtilityTransactionListQueryVariables,
+      options?: UseQueryOptions<GetUtilityTransactionListQuery, TError, TData>
+    ) =>
+    useQuery<GetUtilityTransactionListQuery, TError, TData>(
+      ['getUtilityTransactionList', variables],
+      useAxios<GetUtilityTransactionListQuery, GetUtilityTransactionListQueryVariables>(GetUtilityTransactionListDocument).bind(null, variables),
+      options
+    );
 export const GetUtilityClientBalanceListDocument = `
     query getUtilityClientBalanceList($paginate: Pagination!, $filter: Filter) {
   utility {
@@ -4408,19 +3568,17 @@ export const GetUtilityClientBalanceListDocument = `
 }
     ${PaginationFragmentDoc}`;
 export const useGetUtilityClientBalanceListQuery = <
-  TData = GetUtilityClientBalanceListQuery,
-  TError = unknown
->(
-  variables: GetUtilityClientBalanceListQueryVariables,
-  options?: UseQueryOptions<GetUtilityClientBalanceListQuery, TError, TData>
-) =>
-  useQuery<GetUtilityClientBalanceListQuery, TError, TData>(
-    ['getUtilityClientBalanceList', variables],
-    useAxios<GetUtilityClientBalanceListQuery, GetUtilityClientBalanceListQueryVariables>(
-      GetUtilityClientBalanceListDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = GetUtilityClientBalanceListQuery,
+      TError = unknown
+    >(
+      variables: GetUtilityClientBalanceListQueryVariables,
+      options?: UseQueryOptions<GetUtilityClientBalanceListQuery, TError, TData>
+    ) =>
+    useQuery<GetUtilityClientBalanceListQuery, TError, TData>(
+      ['getUtilityClientBalanceList', variables],
+      useAxios<GetUtilityClientBalanceListQuery, GetUtilityClientBalanceListQueryVariables>(GetUtilityClientBalanceListDocument).bind(null, variables),
+      options
+    );
 export const ListSaccosAvailableSmsCountDocument = `
     query listSaccosAvailableSmsCount($paginate: Pagination!, $filter: Filter) {
   sms {
@@ -4443,16 +3601,14 @@ export const ListSaccosAvailableSmsCountDocument = `
 }
     ${PaginationFragmentDoc}`;
 export const useListSaccosAvailableSmsCountQuery = <
-  TData = ListSaccosAvailableSmsCountQuery,
-  TError = unknown
->(
-  variables: ListSaccosAvailableSmsCountQueryVariables,
-  options?: UseQueryOptions<ListSaccosAvailableSmsCountQuery, TError, TData>
-) =>
-  useQuery<ListSaccosAvailableSmsCountQuery, TError, TData>(
-    ['listSaccosAvailableSmsCount', variables],
-    useAxios<ListSaccosAvailableSmsCountQuery, ListSaccosAvailableSmsCountQueryVariables>(
-      ListSaccosAvailableSmsCountDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = ListSaccosAvailableSmsCountQuery,
+      TError = unknown
+    >(
+      variables: ListSaccosAvailableSmsCountQueryVariables,
+      options?: UseQueryOptions<ListSaccosAvailableSmsCountQuery, TError, TData>
+    ) =>
+    useQuery<ListSaccosAvailableSmsCountQuery, TError, TData>(
+      ['listSaccosAvailableSmsCount', variables],
+      useAxios<ListSaccosAvailableSmsCountQuery, ListSaccosAvailableSmsCountQueryVariables>(ListSaccosAvailableSmsCountDocument).bind(null, variables),
+      options
+    );

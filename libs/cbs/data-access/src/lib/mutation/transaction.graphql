@@ -291,3 +291,14 @@ mutation switchTransactionYearEndFlag($journalId: ID!, $yearEndSettlement: Boole
     }
   }
 }
+
+mutation cancelServiceCentreCashTransfer($requestId: ID!) {
+  transaction {
+    cancelServiceCentreCashTransfer(requestId: $requestId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
