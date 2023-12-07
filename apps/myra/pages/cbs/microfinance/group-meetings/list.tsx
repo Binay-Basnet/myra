@@ -1,18 +1,18 @@
 import { ReactElement } from 'react';
-import { GroupMeetingsAdd } from '@cbs/microfinance';
+import { GroupMeetingsList } from '@cbs/microfinance';
 import { MicrofinanceLayout } from '@micro-finance';
 
 import { MainLayout } from '@myra-ui';
 
 import { Can } from '@coop/cbs/utils';
 
-export const CenterListPage = () => {
+export const GroupMeetingsListPage = () => (
   <Can I="SHOW_IN_MENU" a="CBS_SHARE_SHARE_BALANCE" showError>
-    <GroupMeetingsAdd />
-  </Can>;
-};
+    <GroupMeetingsList />
+  </Can>
+);
 
-CenterListPage.getLayout = function getLayout(page: ReactElement) {
+GroupMeetingsListPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
       <MicrofinanceLayout>{page}</MicrofinanceLayout>{' '}
@@ -20,4 +20,4 @@ CenterListPage.getLayout = function getLayout(page: ReactElement) {
   );
 };
 
-export default CenterListPage;
+export default GroupMeetingsListPage;

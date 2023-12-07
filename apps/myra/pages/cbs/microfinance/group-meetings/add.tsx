@@ -5,11 +5,11 @@ import { MainLayout } from '@myra-ui';
 
 import { Can } from '@coop/cbs/utils';
 
-export const GroupMeetingsAddPage = () => {
+export const GroupMeetingsAddPage = () => (
   <Can I="SHOW_IN_MENU" a="CBS_SHARE_SHARE_BALANCE" showError>
     <GroupMeetingsAdd />
-  </Can>;
-};
+  </Can>
+);
 
 GroupMeetingsAddPage.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;

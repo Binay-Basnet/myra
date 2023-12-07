@@ -1,64 +1,94 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import {
-  DocumentInsertInput,
-  MfGroupInput,
-  useAddMfGroupMutation,
+  MfMeetingInput,
+  useListGroupMemberQuery,
+  useListGroupQuery,
   useListMfCenterQuery,
+  useUpsertMeetingMutation,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { advancedTimeConvertor, ROUTES } from '@coop/cbs/utils';
 import {
-  FormFileInput,
+  FormDatePicker,
+  FormEditableTable,
   FormInput,
   FormLayout,
-  FormMemberSelect,
   FormSelect,
+  FormTextArea,
 } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
-
-const documentMap = [
-  'agm/bod-decision-document',
-  'registered-certificate',
-  'moa/aoa',
-  'pan-certificate',
-  'tax-clearance',
-  'latest-audit-report',
-  'logo',
-  'minute-of-central-rep',
-];
 
 export const GroupMeetingsAdd = () => {
   const methods = useForm();
   const router = useRouter();
-  const { getValues } = methods;
-  const { mutateAsync } = useAddMfGroupMutation();
+  const { getValues, watch, setValue } = methods;
+
+  const centerIdWatch = watch('centerId');
+
+  const { mutateAsync } = useUpsertMeetingMutation();
 
   const { data: centerListData } = useListMfCenterQuery({
     pagination: getPaginationQuery(),
   });
 
+  const { data: groupListData } = useListGroupQuery({
+    pagination: getPaginationQuery(),
+    filter: {
+      orConditions: [
+        {
+          andConditions: [{ column: 'centerId', comparator: 'EqualTo', value: centerIdWatch }],
+        },
+      ],
+    },
+  });
+
+  const groupIdWatch = watch('groupId');
+
+  const { data: groupMembersData } = useListGroupMemberQuery({
+    pagination: getPaginationQuery(),
+    filter: {
+      orConditions: [
+        {
+          andConditions: [{ column: 'groupId', comparator: 'EqualTo', value: groupIdWatch }],
+        },
+      ],
+    },
+  });
+  const groupMember = groupMembersData?.microFinance?.group?.listGroupMembers?.edges;
+
+  useEffect(() => {
+    setValue(
+      'memberIds',
+      groupMember?.map((item) => item?.node)
+    );
+  }, [groupMember]);
+
   const submitForm = () => {
     const values = getValues();
     asyncToast({
-      id: 'add-group',
+      id: 'add-group-meetings',
       msgs: {
-        success: 'new group added succesfully',
-        loading: 'adding new group',
+        success: 'new group meetings added succesfully',
+        loading: 'adding new group meetings',
       },
       onSuccess: () => {
-        router.push(ROUTES?.CBS_MICRO_FINANCE_GROUP_LIST);
+        router.push(ROUTES?.CBS_MICRO_FINANCE_GROUP_MEETINGS_LIST);
       },
       promise: mutateAsync({
-        input: {
+        id: null,
+        data: {
           ...values,
-          documents: values?.documents?.map((item: DocumentInsertInput, index: number) => ({
-            fieldId: documentMap[index],
-            identifiers: item?.identifiers || [],
+          startTime: advancedTimeConvertor(values?.startTime),
+          endTime: advancedTimeConvertor(values?.endTime),
+          memberIds: values?.memberIds?.map((item: { id: string; invited: boolean }) => ({
+            id: item?.id,
+            invited: item?.invited || false,
           })),
-        } as MfGroupInput,
+        } as MfMeetingInput,
       }),
     });
   };
@@ -68,10 +98,10 @@ export const GroupMeetingsAdd = () => {
       <FormLayout.Header title="New Microfinance Group" />
       <FormLayout.Content>
         <FormLayout.Form>
-          <FormSection templateColumns={2}>
+          <FormSection templateColumns={2} divider={false}>
             <GridItem colSpan={2}>
               <FormSelect
-                label="Service Center"
+                label="Select Center"
                 name="centerId"
                 options={
                   centerListData?.microFinance?.center?.listMFCenter?.edges?.map((item) => ({
@@ -81,25 +111,52 @@ export const GroupMeetingsAdd = () => {
                 }
               />
             </GridItem>
-            <FormInput label="MF Group Name" name="groupName" />
-            <FormInput label="MF Group ID" name="groupCode" />
-            <FormInput type="number" label="Minimum No of Members Allowed" name="minMembers" />
-            <FormInput type="number" label="Maximum No. of Members Allowed" name="maxMembers" />
-          </FormSection>
-          <FormSection header="MF Group Coordinator" divider={false}>
-            <GridItem colSpan={3}>
-              <FormMemberSelect label="Select Member" name="memberId" />
+            <GridItem colSpan={2}>
+              <FormSelect
+                label="Select Group"
+                name="groupId"
+                options={
+                  groupListData?.microFinance?.group?.listGroup?.edges.map((item) => ({
+                    label: item?.node?.groupName,
+                    value: item?.node?.id,
+                  })) as { value: string; label: string }[]
+                }
+              />
             </GridItem>
           </FormSection>
-          <FormSection templateColumns={2} header="Document Declarations">
-            <FormFileInput name="documents.0.identifiers" label="AGM/BOD Decision Document" />
-            <FormFileInput name="documents.1.identifiers" label="Registered Certificate" />
-            <FormFileInput name="documents.2.identifiers" label="MOA/AOA" />
-            <FormFileInput name="documents.3.identifiers" label="PAN Certificate" />
-            <FormFileInput name="documents.3.identifiers" label="Tax Clearance" />
-            <FormFileInput name="documents.3.identifiers" label="Latest Audit Report" />
-            <FormFileInput name="documents.3.identifiers" label="Logo" />
-            <FormFileInput name="documents.3.identifiers" label="Minute of Central Rep" />
+          <FormSection templateColumns={2}>
+            <GridItem colSpan={2}>
+              {' '}
+              <FormEditableTable
+                name="memberIds"
+                label="Employee"
+                canAddRow={false}
+                hideSN
+                canDeleteRow={false}
+                columns={[
+                  {
+                    accessor: 'memberName',
+                    header: 'Member Name',
+                    getDisabled: () => true,
+                    cellWidth: 'auto',
+                  },
+                  {
+                    accessor: 'invited',
+                    header: 'Invite',
+                    fieldType: 'checkbox',
+                  },
+                ]}
+              />
+            </GridItem>
+          </FormSection>
+          <FormSection templateColumns={2}>
+            <FormInput label="Agenda" name="agenda" />
+            <FormDatePicker label="Date" name="date" />
+            <FormInput type="time" label="Start Time" name="startTime" />
+            <FormInput type="time" label="End Time" name="endTime" />
+          </FormSection>
+          <FormSection templateColumns={1}>
+            <FormTextArea label="Description" name="notes" />
           </FormSection>
         </FormLayout.Form>{' '}
       </FormLayout.Content>
