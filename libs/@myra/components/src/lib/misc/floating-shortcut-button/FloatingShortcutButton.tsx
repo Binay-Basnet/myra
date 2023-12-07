@@ -31,31 +31,35 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Sorting option in date column of all dashboards consisting of date [Transaction, transfer and member pages',
-      "Reprint for 'Account Open' type transactions.",
-      'Disburse date in Loan balance report.',
-      'Savings Balance Report to have product wise filter rather than savings product nature.',
-      'Read-Only Myra User.',
-      'Confirmation popup when updating organization rate.',
-      'Loan Disbursed Card Print.',
-      'Data range filter in Loan Call sheet.',
-      'Expired/Unexpired filter in loan balance report.',
-      'SMS implementation in the deposit, withdraw and loan repayment section.',
+      'IBT receive transaction type to be set as "IBT transfer" as well (to be handled in transaction narration).',
+      'Loan Interest accrued no of days to be available somewhere (Days since last interest payment) in loan balance report.',
+      'Interest tax report - total column added in the interest section.',
+      'Recurring/regular saving installments report.',
+      'Sms utility usage report',
+      'Saving and loan interest report.',
+      'NEA : utility payment implementation.',
+      'Force logout after day close.',
+      'Alternative Channel allow/disallow change in account update.',
+      'Add all kind of interest in the saving and loan product list. ( organization rate , account premium, product premium, effective interest rate).',
+      'Option to decline IBT transaction.',
+      'Sms variables added - branch name, memberID, loan repayment variables(Principal+Interest+Fine, rebate).',
+      'Sorting as ascending/descending ( loan repayment, account transfer, deposit, withdraw, share register).',
+      'Active/ inactive service  in alternative channel.',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      "Search not working in assigned members list of MR's assign member page.",
-      "Pagination in 'All transactions' dashboard.",
-      'Automatic ledger disable on account close, loan close etc',
-      "Reprint for 'Account Open' type transactLoan",
-      'Loan repayment: remaining Principal and interest in separate section in success card (also in reprint with all transactions.',
-      'Redirection with filter in adjusted charkhata to Ledger balance & GL report flow.',
-      'Darker font color added while print the report.',
-      'Balance in Saving Product > Active accounts list.',
-      'Products missing in Saving Product wise report.',
       'Edit/Update KYM page header text change.',
+      'Check interest in loan account statement report and loan overview page ( effective interest rate ).',
+      'DOB AD/BS set in the apply for member request coop (e-banking).',
+      'DOB picker during New Myra account on e-banking portal.',
+      'Ledger report (others) - adjusted and settlement section were added in the report.',
+      'Role edit and assign issue.',
+      'Rebate in loan repayment = x% of interest accrued.',
+      'E-banking: AD/BS date picker in transaction history.',
+      'Loan repayment: remaining Principal and interest (if exists) in separate section in success card.',
+      'Account number added in the account list of a member in MR app.',
     ],
   },
 };
@@ -94,8 +98,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.100</Text>
-          <Text fontSize="s3">November 27, 2023</Text>
+          <Text fontSize="r2">Version 1.0.101</Text>
+          <Text fontSize="s3">December 7, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>

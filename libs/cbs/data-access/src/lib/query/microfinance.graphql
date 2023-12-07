@@ -45,158 +45,158 @@ query centerDetails($centerId: ID!) {
           totalSaving
           centerName
           centerId
-          centerCoordinator {
-            id
-            objState
-            createdAt
-            createdBy {
-              id
-              name
-              username
-              userType
-            }
-            modifiedAt
-            modifiedBy {
-              id
-              name
-              username
-              userType
-            }
-            name
-            email
-            contactNo
-            gender
-            dob
-            role {
-              id
-              name
-            }
-            linkedBranches {
-              id
-              branchCode
-              name
-            }
-            isCoreEmployee
-            empCode
-            lastActiveDate
-            branch {
-              id
-              branchCode
-              name
-              category
-              estDate
-              managerName
-              address {
-                state
-                district
-                localGovernment
-                wardNo
-                locality
-                houseNo
-                coordinates {
-                  longitude
-                  latitude
-                }
-              }
-              branchBalance {
-                amount
-                amountType
-              }
-              location {
-                longitude
-                latitude
-              }
-              serviceCenterPhone
-              contactNumber
-              email
-              abbsTransaction {
-                abbsStatus
-                receivableAccountId
-                payableAccountId
-              }
-              plTransferId
-              tdsTransaferId
-              branchStatus
-              eodReady
-            }
-            profilePic
-            profilePicUrl
-            address {
-              state
-              district
-              localGovernment
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-          }
-          groupList {
-            newMemberCount
-            totalMeeting
-            totalMember
-            totalBalance
-            groupName
-            groupId
-            groupCoordinator {
-              id
-              objState
-              createdAt
-              createdBy {
-                id
-                name
-                username
-                userType
-              }
-              modifiedAt
-              modifiedBy {
-                id
-                name
-                username
-                userType
-              }
-              code
-              type
-              name
-              address {
-                state
-                district
-                localGovernment
-                wardNo
-                locality
-                houseNo
-                coordinates {
-                  longitude
-                  latitude
-                }
-              }
-              contact
-              panVatNo
-              dateJoined
-              activeDate
-              inactiveDate
-              email
-              branch
-              profilePic
-              signaturePicUrl
-              profilePicUrl
-              signaturePicUrl
-              citizenshipPicUrl
-              gender
-              age
-              maritalStatus
-            }
-            createdDate
-            balanceHistory {
-              totalDeposit
-              totalWithdraw
-              avgBalance
-              trend
-            }
-          }
+          # centerCoordinator {
+          #   id
+          #   objState
+          #   createdAt
+          #   createdBy {
+          #     id
+          #     name
+          #     username
+          #     userType
+          #   }
+          #   modifiedAt
+          #   modifiedBy {
+          #     id
+          #     name
+          #     username
+          #     userType
+          #   }
+          #   name
+          #   email
+          #   contactNo
+          #   gender
+          #   dob
+          #   role {
+          #     id
+          #     name
+          #   }
+          #   linkedBranches {
+          #     id
+          #     branchCode
+          #     name
+          #   }
+          #   isCoreEmployee
+          #   empCode
+          #   lastActiveDate
+          #   branch {
+          #     id
+          #     branchCode
+          #     name
+          #     category
+          #     estDate
+          #     managerName
+          #     address {
+          #       state
+          #       district
+          #       localGovernment
+          #       wardNo
+          #       locality
+          #       houseNo
+          #       coordinates {
+          #         longitude
+          #         latitude
+          #       }
+          #     }
+          #     branchBalance {
+          #       amount
+          #       amountType
+          #     }
+          #     location {
+          #       longitude
+          #       latitude
+          #     }
+          #     serviceCenterPhone
+          #     contactNumber
+          #     email
+          #     abbsTransaction {
+          #       abbsStatus
+          #       receivableAccountId
+          #       payableAccountId
+          #     }
+          #     plTransferId
+          #     tdsTransaferId
+          #     branchStatus
+          #     eodReady
+          #   }
+          #   profilePic
+          #   profilePicUrl
+          #   address {
+          #     state
+          #     district
+          #     localGovernment
+          #     wardNo
+          #     locality
+          #     houseNo
+          #     coordinates {
+          #       longitude
+          #       latitude
+          #     }
+          #   }
+          # }
+          # groupList {
+          #   newMemberCount
+          #   totalMeeting
+          #   totalMember
+          #   totalBalance
+          #   groupName
+          #   groupId
+          #   groupCoordinator {
+          #     id
+          #     objState
+          #     createdAt
+          #     createdBy {
+          #       id
+          #       name
+          #       username
+          #       userType
+          #     }
+          #     modifiedAt
+          #     modifiedBy {
+          #       id
+          #       name
+          #       username
+          #       userType
+          #     }
+          #     code
+          #     type
+          #     name
+          #     address {
+          #       state
+          #       district
+          #       localGovernment
+          #       wardNo
+          #       locality
+          #       houseNo
+          #       coordinates {
+          #         longitude
+          #         latitude
+          #       }
+          #     }
+          #     contact
+          #     panVatNo
+          #     dateJoined
+          #     activeDate
+          #     inactiveDate
+          #     email
+          #     branch
+          #     profilePic
+          #     signaturePicUrl
+          #     profilePicUrl
+          #     signaturePicUrl
+          #     citizenshipPicUrl
+          #     gender
+          #     age
+          #     maritalStatus
+          #   }
+          #   createdDate
+          #   balanceHistory {
+          #     totalDeposit
+          #     totalWithdraw
+          #     avgBalance
+          #     trend
+          #   }
+          # }
           address {
             state
             district
@@ -209,6 +209,7 @@ query centerDetails($centerId: ID!) {
               latitude
             }
           }
+          allowedBranches
         }
         error {
           ...MutationError
@@ -262,6 +263,30 @@ query listMFMeetings($pagination: Pagination, $filter: Filter) {
             membersInvited
             presentMembers
             status
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query listGroupMember($pagination: Pagination, $filter: Filter) {
+  microFinance {
+    group {
+      listGroupMembers(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            memberId
+            objState
+            memberCode
+            memberName
+            memberId
           }
           cursor
         }

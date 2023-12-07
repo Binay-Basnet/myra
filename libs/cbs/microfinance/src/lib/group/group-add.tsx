@@ -7,16 +7,12 @@ import {
   DocumentInsertInput,
   MfGroupInput,
   useAddMfGroupMutation,
+  useCenterDetailsQuery,
+  useGetMemberListQuery,
   useListMfCenterQuery,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import {
-  FormFileInput,
-  FormInput,
-  FormLayout,
-  FormMemberSelect,
-  FormSelect,
-} from '@coop/shared/form';
+import { FormFileInput, FormInput, FormLayout, FormSelect } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 const documentMap = [
@@ -33,12 +29,40 @@ const documentMap = [
 export const GroupAdd = () => {
   const methods = useForm();
   const router = useRouter();
-  const { getValues } = methods;
+  const { getValues, watch } = methods;
   const { mutateAsync } = useAddMfGroupMutation();
 
   const { data: centerListData } = useListMfCenterQuery({
     pagination: getPaginationQuery(),
   });
+
+  const centerIdWatch = watch('centerId');
+  const { data: centerDetails } = useCenterDetailsQuery(
+    { centerId: centerIdWatch },
+    { enabled: !!centerIdWatch }
+  );
+  const allowedBranches =
+    centerDetails?.microFinance?.center?.centerDetail?.overview?.allowedBranches;
+  const { data: memberData } = useGetMemberListQuery(
+    {
+      pagination: getPaginationQuery(),
+      filter: {
+        orConditions: [
+          {
+            andConditions: [
+              { column: 'serviceCenter', comparator: 'IN', value: allowedBranches },
+              {
+                column: 'objState',
+                comparator: 'EqualTo',
+                value: 'APPROVED',
+              },
+            ],
+          },
+        ],
+      },
+    },
+    { enabled: !!allowedBranches }
+  );
 
   const submitForm = () => {
     const values = getValues();
@@ -71,7 +95,7 @@ export const GroupAdd = () => {
           <FormSection templateColumns={2}>
             <GridItem colSpan={2}>
               <FormSelect
-                label="Service Center"
+                label="Select Center"
                 name="centerId"
                 options={
                   centerListData?.microFinance?.center?.listMFCenter?.edges?.map((item) => ({
@@ -88,7 +112,16 @@ export const GroupAdd = () => {
           </FormSection>
           <FormSection header="MF Group Coordinator" divider={false}>
             <GridItem colSpan={3}>
-              <FormMemberSelect label="Select Member" name="memberId" />
+              <FormSelect
+                label="Select Member"
+                name="coordinatorId"
+                options={
+                  memberData?.members?.list?.edges?.map((item) => ({
+                    label: item?.node?.name?.local,
+                    value: item?.node?.id,
+                  })) as { label: string; value: string }[]
+                }
+              />
             </GridItem>
           </FormSection>
           <FormSection templateColumns={2} header="Document Declarations">
