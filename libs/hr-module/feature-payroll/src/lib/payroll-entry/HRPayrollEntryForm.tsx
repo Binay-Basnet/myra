@@ -118,7 +118,7 @@ export const HrPayrollEntryUpsert = () => {
       },
       promise: payrollRunApproveMutateAsync({
         id: router?.query?.['id'] as string,
-        input: PayrollStatus?.Paid,
+        input: PayrollStatus?.Approved,
       }),
     });
   };
