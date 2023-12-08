@@ -302,3 +302,13 @@ mutation cancelServiceCentreCashTransfer($requestId: ID!) {
     }
   }
 }
+
+mutation savingInterestPosting {
+  transaction {
+    savingInterestPosting {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

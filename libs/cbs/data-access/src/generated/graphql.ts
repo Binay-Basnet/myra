@@ -31401,6 +31401,22 @@ export type CancelServiceCentreCashTransferMutation = {
   };
 };
 
+export type SavingInterestPostingMutationVariables = Exact<{ [key: string]: never }>;
+
+export type SavingInterestPostingMutation = {
+  transaction: {
+    savingInterestPosting?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type GetAccountMemberListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -58584,6 +58600,37 @@ export const useCancelServiceCentreCashTransferMutation = <TError = unknown, TCo
       CancelServiceCentreCashTransferMutation,
       CancelServiceCentreCashTransferMutationVariables
     >(CancelServiceCentreCashTransferDocument),
+    options
+  );
+export const SavingInterestPostingDocument = `
+    mutation savingInterestPosting {
+  transaction {
+    savingInterestPosting {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSavingInterestPostingMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SavingInterestPostingMutation,
+    TError,
+    SavingInterestPostingMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SavingInterestPostingMutation,
+    TError,
+    SavingInterestPostingMutationVariables,
+    TContext
+  >(
+    ['savingInterestPosting'],
+    useAxios<SavingInterestPostingMutation, SavingInterestPostingMutationVariables>(
+      SavingInterestPostingDocument
+    ),
     options
   );
 export const GetAccountMemberListDocument = `

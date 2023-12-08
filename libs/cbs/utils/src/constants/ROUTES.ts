@@ -431,6 +431,7 @@ export const ROUTES = {
   SETTINGS_EOD_HISTORY_DETAILS: '/settings/global/eod/list/details',
   SETTINGS_GENERAL_COMMITTEE: '/settings/global/committee/list',
   SETTINGS_GENERAL_COMMITTEE_DETAILS: '/settings/global/committee/details',
+  SETTINGS_EOD_ACTIONS: '/settings/global/eod/actions',
 
   DAY_CLOSE: '/day-close',
 
