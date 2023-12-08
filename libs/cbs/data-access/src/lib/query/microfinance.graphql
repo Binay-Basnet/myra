@@ -297,3 +297,44 @@ query listGroupMember($pagination: Pagination, $filter: Filter) {
     }
   }
 }
+
+query groupDetails($groupId: ID!) {
+  microFinance {
+    group {
+      groupDetails(groupId: $groupId) {
+        overview {
+          newMemberCount
+          totalMeeting
+          totalMember
+          totalBalance
+          groupName
+          groupId
+          createdDate
+        }
+        groupMembers {
+          name
+          id
+        }
+        meetings {
+          upcomingMeetingCount
+          pastMeetingCount
+          totalMeetings
+          upcomingMeeting {
+            date
+            agenda
+            totalMember
+            startTime
+            endTime
+          }
+          pastMeetings {
+            date
+            agenda
+            totalMember
+            startTime
+            endTime
+          }
+        }
+      }
+    }
+  }
+}
