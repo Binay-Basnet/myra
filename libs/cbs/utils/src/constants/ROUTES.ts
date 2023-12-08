@@ -600,12 +600,15 @@ export const ROUTES = {
 
   CBS_MICRO_FINANCE_GROUP_LIST: '/cbs/microfinance/group/list',
   CBS_MICRO_FINANCE_GROUP_ADD: '/cbs/microfinance/group/add',
+  CBS_MICRO_FINANCE_GROUP_DETAILS: '/cbs/microfinance/group/details',
 
   CBS_MICRO_FINANCE_GROUP_MEETINGS_LIST: '/cbs/microfinance/group-meetings/list',
   CBS_MICRO_FINANCE_GROUP_MEETINGS_ADD: '/cbs/microfinance/group-meetings/add',
+  CBS_MICRO_FINANCE_GROUP_METTINGS_DETAILS: '/cbs/microfinance/group-meetings/details',
 
   CBS_MICRO_FINANCE_CENTER_LIST: '/cbs/microfinance/center/list',
   CBS_MICRO_FINANCE_CENTER_ADD: '/cbs/microfinance/center/add',
+  CBS_MICRO_FINANCE_CENTER_DETAILS: '/cbs/microfinance/center/details',
 
   // FAM
   // Assets

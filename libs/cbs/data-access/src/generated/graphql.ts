@@ -155,6 +155,8 @@ export type AccountActivityEntry = {
   branchId: Scalars['String'];
   branchName: Scalars['String'];
   date?: Maybe<Scalars['Localized']>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<Scalars['String']>;
   processedBy?: Maybe<Scalars['String']>;
@@ -14180,6 +14182,8 @@ export type LoanAccount = {
   closedDate?: Maybe<Scalars['Localized']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   installmentFrequency?: Maybe<InstallmentFrequency>;
   intrestRate?: Maybe<Scalars['Float']>;
@@ -14448,6 +14452,7 @@ export type LoanAccountInput = {
   disbursementDate?: InputMaybe<Scalars['Localized']>;
   fingerprintDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
+  groupId?: InputMaybe<Scalars['String']>;
   gurantee_details?: InputMaybe<Array<InputMaybe<LoanAccountGuranteeInput>>>;
   installmentBeginDate?: InputMaybe<Scalars['Localized']>;
   installmentFrequency?: InputMaybe<InstallmentFrequency>;
@@ -39998,6 +40003,51 @@ export type ListGroupMemberQuery = {
         } | null> | null;
         pageInfo?: PaginationFragment | null;
       };
+    };
+  };
+};
+
+export type GroupDetailsQueryVariables = Exact<{
+  groupId: Scalars['ID'];
+}>;
+
+export type GroupDetailsQuery = {
+  microFinance: {
+    group: {
+      groupDetails?: {
+        overview?: {
+          newMemberCount?: number | null;
+          totalMeeting?: number | null;
+          totalMember?: number | null;
+          totalBalance?: string | null;
+          groupName?: string | null;
+          groupId?: string | null;
+          createdDate?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+        groupMembers?: Array<{
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          id: string;
+        } | null> | null;
+        meetings?: {
+          upcomingMeetingCount?: number | null;
+          pastMeetingCount?: number | null;
+          totalMeetings?: number | null;
+          upcomingMeeting?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            agenda?: string | null;
+            totalMember?: number | null;
+            startTime?: string | null;
+            endTime?: string | null;
+          } | null> | null;
+          pastMeetings?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            agenda?: string | null;
+            totalMember?: number | null;
+            startTime?: string | null;
+            endTime?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
     };
   };
 };
@@ -69763,6 +69813,60 @@ export const useListGroupMemberQuery = <TData = ListGroupMemberQuery, TError = u
   useQuery<ListGroupMemberQuery, TError, TData>(
     variables === undefined ? ['listGroupMember'] : ['listGroupMember', variables],
     useAxios<ListGroupMemberQuery, ListGroupMemberQueryVariables>(ListGroupMemberDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GroupDetailsDocument = `
+    query groupDetails($groupId: ID!) {
+  microFinance {
+    group {
+      groupDetails(groupId: $groupId) {
+        overview {
+          newMemberCount
+          totalMeeting
+          totalMember
+          totalBalance
+          groupName
+          groupId
+          createdDate
+        }
+        groupMembers {
+          name
+          id
+        }
+        meetings {
+          upcomingMeetingCount
+          pastMeetingCount
+          totalMeetings
+          upcomingMeeting {
+            date
+            agenda
+            totalMember
+            startTime
+            endTime
+          }
+          pastMeetings {
+            date
+            agenda
+            totalMember
+            startTime
+            endTime
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGroupDetailsQuery = <TData = GroupDetailsQuery, TError = unknown>(
+  variables: GroupDetailsQueryVariables,
+  options?: UseQueryOptions<GroupDetailsQuery, TError, TData>
+) =>
+  useQuery<GroupDetailsQuery, TError, TData>(
+    ['groupDetails', variables],
+    useAxios<GroupDetailsQuery, GroupDetailsQueryVariables>(GroupDetailsDocument).bind(
       null,
       variables
     ),

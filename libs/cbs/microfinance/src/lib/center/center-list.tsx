@@ -61,7 +61,7 @@ export const CenterList = () => {
           pageInfo: data?.microFinance?.center?.listMFCenter?.pageInfo,
         }}
         rowOnClick={(row) =>
-          router.push(`${ROUTES?.HRMODULE_EMPLOYEES_DETAIL}?id=${row?.node?.id}`)
+          router.push(`${ROUTES?.CBS_MICRO_FINANCE_CENTER_DETAILS}?id=${row?.node?.id}`)
         }
       />
     </>

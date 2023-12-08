@@ -57,7 +57,7 @@ export const GroupList = () => {
           pageInfo: data?.microFinance?.group?.listGroup?.pageInfo,
         }}
         rowOnClick={(row) =>
-          router.push(`${ROUTES?.HRMODULE_EMPLOYEES_DETAIL}?id=${row?.node?.id}`)
+          router.push(`${ROUTES?.CBS_MICRO_FINANCE_GROUP_DETAILS}?id=${row?.node?.id}`)
         }
       />
     </>
