@@ -45,6 +45,8 @@ const whatsNewData = {
       'Sms variables added - branch name, memberID, loan repayment variables(Principal+Interest+Fine, rebate).',
       'Sorting as ascending/descending ( loan repayment, account transfer, deposit, withdraw, share register).',
       'Active/ inactive service  in alternative channel.',
+      'sorting added - ( loan sections, saving products).',
+      'ledger balance transfer reprint added.',
     ],
   },
   bugsSquashed: {
@@ -99,7 +101,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
           <Text fontSize="r2">Version 1.0.101</Text>
-          <Text fontSize="s3">December 7, 2023</Text>
+          <Text fontSize="s3">December 8, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>

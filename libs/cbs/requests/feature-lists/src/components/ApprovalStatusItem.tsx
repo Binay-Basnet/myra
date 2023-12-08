@@ -28,7 +28,6 @@ export const ApprovalStatusItem = ({
       rounded="100%"
       bg={
         status === RequestStatus.Approved ||
-        status === PayrollStatus.Paid ||
         status === StatusOfTask?.Completed ||
         status === AttendanceStatus?.Present
           ? 'green.300'

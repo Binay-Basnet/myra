@@ -53,6 +53,7 @@ const ROUTESOBJTRANS: Partial<Record<AllTransactionType, string>> = {
   [AllTransactionType.JournalVoucher]: 'JOURNAL_VOUCHER',
   [AllTransactionType.LoanDisbursment]: 'LOAN_DISBURSEMENT',
   [AllTransactionType.AccountClose]: 'ACCOUNT_CLOSE',
+  [AllTransactionType.LedgerBalanceTransfer]: 'LEDGER_BALANCE_TRANSFER',
 };
 
 const objKeys = Object.keys(ROUTESOBJTRANS);
@@ -541,6 +542,7 @@ export const AllTransactionDetails = () => {
       tempTotal = voucherData?.amount as string;
 
       tempShowSignatures = true;
+      tempDublicate = false;
 
       tempJVDetails = {
         glTransactions: voucherData?.glTransaction,
@@ -550,6 +552,54 @@ export const AllTransactionDetails = () => {
         totalDebit: voucherData?.amount,
         transactionId: voucherData?.transactionCode,
       };
+    }
+    if (
+      router?.asPath?.includes(AllTransactionType?.LedgerBalanceTransfer) ||
+      txnTypefromRouter?.includes(AllTransactionType?.LedgerBalanceTransfer)
+    ) {
+      tempTotal = allTransactionsData?.amount as string;
+
+      tempShowSignatures = true;
+
+      tempDublicate = true;
+
+      let tempSrcAccounts = 0;
+
+      let destinationLedger = '';
+
+      allTransactionsData?.glTransaction?.forEach((gl) => {
+        if (gl?.debit) {
+          tempSrcAccounts += 1;
+        }
+
+        if (gl?.credit) {
+          destinationLedger = gl?.account;
+        }
+      });
+
+      tempDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {allTransactionsData?.id}
+          </Text>
+        ),
+        'Total Source Ledger Accounts': tempSrcAccounts,
+        'Destination Ledger': destinationLedger,
+        'Total Transfer Balance': amountConverter(allTransactionsData?.amount || 0),
+      };
+
+      tempVoucherDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {allTransactionsData?.id}
+          </Text>
+        ),
+        'Total Source Ledger Accounts': tempSrcAccounts,
+        'Destination Ledger': destinationLedger,
+        'Total Transfer Balance': amountConverter(allTransactionsData?.amount || 0),
+      };
+
+      tempGLTransactions = allTransactionsData?.glTransaction;
     }
 
     return {
@@ -573,6 +623,7 @@ export const AllTransactionDetails = () => {
     voucherData,
     router?.asPath,
     txnTypefromRouter,
+    allTransactionsData,
   ]);
 
   const handlePrint = useReactToPrint({

@@ -184,7 +184,7 @@ export const InternetPaymentForm = ({
             );
 
             const responseOptions =
-              response?.[currentSequence - 1]?.[prevField?.fieldName as string];
+              response?.[currentSequence - 1]?.[prevField?.fieldName as string] || [];
 
             (responseOptions as unknown as [])?.forEach((opt) => {
               options?.push({
@@ -197,7 +197,7 @@ export const InternetPaymentForm = ({
           return (
             <EbankingFormField
               {...field}
-              options={field?.fieldName === 'consumerId' ? options : neaOfficeList}
+              options={field?.fieldName === 'officeCode' ? neaOfficeList : options}
               schema={schema}
               currentSequence={currentSequence}
               response={response}

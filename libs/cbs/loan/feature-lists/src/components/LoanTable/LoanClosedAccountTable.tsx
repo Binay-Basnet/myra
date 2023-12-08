@@ -43,6 +43,7 @@ export const LoanClosedAccountTable = ({
         cell: (props) => localizedDate(props.row?.original?.node?.closedDate),
         enableColumnFilter: true,
         filterFn: 'dateTime',
+        enableSorting: true,
       },
       {
         header: 'Member Code',

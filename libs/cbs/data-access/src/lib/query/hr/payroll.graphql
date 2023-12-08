@@ -89,15 +89,18 @@ query getPayrollRun($id: ID!) {
       payrollRun {
         getPayrollRun(id: $id) {
           data {
-            payrollPeriod {
-              from
-              to
-            }
-            payDay
-            salaryAssignments
-            branchId
-            departmentId
-            designationId
+            id
+            nepaliMonth
+            year
+            paygroupId
+            employeeId
+            grossSalary
+            preTaxDeductionAmount
+            taxableIncome
+            tax
+            taxReceivedPaid
+            postTaxDeduction
+            netPay
           }
           error {
             ...MutationError

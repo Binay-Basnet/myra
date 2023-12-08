@@ -41,6 +41,7 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
         cell: (row) => localizedDate(row?.row?.original?.node?.approvedDate),
         enableColumnFilter: true,
         filterFn: 'dateTime',
+        enableSorting: true,
       },
       {
         id: 'memberCode',

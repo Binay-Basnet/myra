@@ -75,7 +75,7 @@ export const GroupMeetingsList = () => {
           pageInfo: data?.microFinance?.groupMeeting?.listMFMeetings?.pageInfo,
         }}
         rowOnClick={(row) =>
-          router.push(`${ROUTES?.HRMODULE_EMPLOYEES_DETAIL}?id=${row?.node?.id}`)
+          router.push(`${ROUTES?.CBS_MICRO_FINANCE_GROUP_METTINGS_DETAILS}?id=${row?.node?.id}`)
         }
       />
     </>

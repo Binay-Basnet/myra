@@ -105,10 +105,10 @@ export const PearlsReportIndTable = ({ title, data }: PearlsReportIndTableProps)
       header: 'This Month Result',
       accessorKey: 'thisMonth',
     },
-    {
-      header: 'Last Month Result',
-      accessorKey: 'lastMonth',
-    },
+    // {
+    //   header: 'Last Month Result',
+    //   accessorKey: 'lastMonth',
+    // },
   ];
 
   return (
