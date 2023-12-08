@@ -587,6 +587,19 @@ export const AllTransactionDetails = () => {
         'Destination Ledger': destinationLedger,
         'Total Transfer Balance': amountConverter(allTransactionsData?.amount || 0),
       };
+
+      tempVoucherDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {allTransactionsData?.id}
+          </Text>
+        ),
+        'Total Source Ledger Accounts': tempSrcAccounts,
+        'Destination Ledger': destinationLedger,
+        'Total Transfer Balance': amountConverter(allTransactionsData?.amount || 0),
+      };
+
+      tempGLTransactions = allTransactionsData?.glTransaction;
     }
 
     return {
