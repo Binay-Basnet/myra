@@ -50,10 +50,10 @@ mutation upsertMeeting($id: ID, $data: MFMeetingInput!) {
   }
 }
 
-mutation addAttendance($data: MFMeetingInput!) {
+mutation addAttendance($data: MFMeetingAttendanceInput!) {
   microFinance {
     groupMeeting {
-      upsertMeeting(data: $data) {
+      addAttendance(data: $data) {
         recordId
         error {
           ...MutationError

@@ -107,8 +107,8 @@ export const GroupAdd = () => {
             </GridItem>
             <FormInput label="MF Group Name" name="groupName" />
             <FormInput label="MF Group ID" name="groupCode" />
-            <FormInput type="number" label="Minimum No of Members Allowed" name="minMembers" />
-            <FormInput type="number" label="Maximum No. of Members Allowed" name="maxMembers" />
+            {/* <FormInput type="number" label="Minimum No of Members Allowed" name="minMembers" />
+            <FormInput type="number" label="Maximum No. of Members Allowed" name="maxMembers" /> */}
           </FormSection>
           <FormSection header="MF Group Coordinator" divider={false}>
             <GridItem colSpan={3}>

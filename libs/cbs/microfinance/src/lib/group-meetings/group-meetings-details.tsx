@@ -2,17 +2,21 @@ import { useRouter } from 'next/router';
 
 import { Box, DetailPageHeader, DetailPageTabs, Divider, Scrollable, Text } from '@myra-ui';
 
-import { useCenterDetailsQuery } from '@coop/cbs/data-access';
+import { useMfMeetingsDetailsQuery } from '@coop/cbs/data-access';
+
+import Attendance from './components/Attendance';
+import Decision from './components/Decision';
+import Overview from './components/Overview';
 
 export const GroupMeetingsDetails = () => {
   const router = useRouter();
   const tabQuery = router.query['tab'] as string;
 
-  const { data } = useCenterDetailsQuery(
-    { centerId: router?.query?.['id'] as string },
+  const { data } = useMfMeetingsDetailsQuery(
+    { meetingID: router?.query?.['id'] as string },
     { enabled: !!router?.query?.['id'] }
   );
-  const centerDetailsData = data?.microFinance?.center?.centerDetail?.overview;
+  const meetingsDetailsData = data?.microFinance?.groupMeeting?.mfMeetingDetail;
 
   return (
     <>
@@ -20,7 +24,7 @@ export const GroupMeetingsDetails = () => {
         <DetailPageHeader
           title="Microfinance Group Meetings Details"
           member={{
-            name: centerDetailsData?.centerName as string,
+            name: meetingsDetailsData?.oveview?.agenda as string,
           }}
         />
       </Box>
@@ -38,20 +42,27 @@ export const GroupMeetingsDetails = () => {
         >
           <Box p="s16">
             <Text fontSize="r1" fontWeight="semibold" color="primary.500">
-              {centerDetailsData?.centerName}
+              {meetingsDetailsData?.oveview?.agenda}
             </Text>
-            <Text fontSize="s3">{centerDetailsData?.centerId}</Text>
+            <Text fontSize="s3">{meetingsDetailsData?.oveview?.id}</Text>
             <Text fontSize="s3" color="gray.600">
-              {centerDetailsData?.totalGroups} groups | {centerDetailsData?.totalMembers} members
+              {meetingsDetailsData?.oveview?.presentMembers} members
             </Text>
           </Box>
           <Divider />
-          <DetailPageTabs tabs={['Overview']} />
+          <DetailPageTabs tabs={['Overview', 'Attendance', 'Decision']} />
         </Box>
 
         <Scrollable detailPage>
           <Box display="flex" flexDir="column" gap="s16" bg="background.500" minH="100vh">
-            {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <>Overview</>}
+            {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && (
+              <Overview
+                data={meetingsDetailsData?.oveview}
+                decision={meetingsDetailsData?.decision}
+              />
+            )}
+            {tabQuery === 'attendance' && <Attendance data={meetingsDetailsData?.attendance} />}
+            {tabQuery === 'decision' && <Decision data={meetingsDetailsData?.decision} />}
           </Box>
         </Scrollable>
       </Box>

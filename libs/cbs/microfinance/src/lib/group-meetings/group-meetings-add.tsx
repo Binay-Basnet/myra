@@ -129,7 +129,7 @@ export const GroupMeetingsAdd = () => {
               {' '}
               <FormEditableTable
                 name="memberIds"
-                label="Employee"
+                label="Members"
                 canAddRow={false}
                 hideSN
                 canDeleteRow={false}
@@ -155,7 +155,7 @@ export const GroupMeetingsAdd = () => {
             <FormInput type="time" label="Start Time" name="startTime" />
             <FormInput type="time" label="End Time" name="endTime" />
           </FormSection>
-          <FormSection templateColumns={1}>
+          <FormSection templateColumns={1} divider={false}>
             <FormTextArea label="Description" name="notes" />
           </FormSection>
         </FormLayout.Form>{' '}

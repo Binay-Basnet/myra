@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { asyncToast, Box, Button, FormSection } from '@myra-ui';
+import { asyncToast, Box, Button, Text } from '@myra-ui';
 
 import { Member, useAddMembersMutation } from '@coop/cbs/data-access';
 import { DetailsPageHeaderBox } from '@coop/shared/components';
-import { FormEditableTable, FormLayout } from '@coop/shared/form';
+import { FormEditableTable } from '@coop/shared/form';
 
 export const GroupMembers = (props: { data: Member[] }) => {
   const router = useRouter();
@@ -45,33 +45,29 @@ export const GroupMembers = (props: { data: Member[] }) => {
     <>
       <DetailsPageHeaderBox title="Group Members" />
       <Box m="s24" p="s12" bg="white" borderRadius={5}>
-        <FormLayout methods={methods}>
-          <FormLayout.Header title="Group Member List" />
-          <FormLayout.Content>
-            <FormLayout.Form>
-              <FormSection templateColumns={1} divider={false}>
-                <FormEditableTable
-                  name="memberIds"
-                  label=""
-                  canAddRow={false}
-                  hideSN
-                  canDeleteRow
-                  columns={[
-                    {
-                      accessor: 'memberName',
-                      header: 'Member Name',
-                      getDisabled: () => true,
-                      cellWidth: 'auto',
-                    },
-                  ]}
-                />
-                <Box display="flex" justifyContent="flex-end">
-                  <Button onClick={onSubmit}>Save Changes</Button>
-                </Box>
-              </FormSection>
-            </FormLayout.Form>
-          </FormLayout.Content>
-        </FormLayout>
+        <FormProvider {...methods}>
+          <Box display="flex" flexDir="column" gap="s8">
+            <Text>Group Members</Text>
+            <FormEditableTable
+              name="memberIds"
+              label=""
+              canAddRow={false}
+              hideSN
+              canDeleteRow
+              columns={[
+                {
+                  accessor: 'memberName',
+                  header: 'Member Name',
+                  getDisabled: () => true,
+                  cellWidth: 'auto',
+                },
+              ]}
+            />
+            <Box display="flex" justifyContent="flex-end">
+              <Button onClick={onSubmit}>Save Changes</Button>
+            </Box>
+          </Box>
+        </FormProvider>
       </Box>
     </>
   );

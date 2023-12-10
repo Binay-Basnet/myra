@@ -334,6 +334,46 @@ query groupDetails($groupId: ID!) {
             endTime
           }
         }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+query mfMeetingsDetails($meetingID: ID!) {
+  microFinance {
+    groupMeeting {
+      mfMeetingDetail(meetingID: $meetingID) {
+        oveview {
+          id
+          groupId
+          groupName
+          groupCode
+          agenda
+          date
+          startTime
+          endTime
+          membersInvited
+          presentMembers
+          status
+        }
+        attendance {
+          id
+          name
+          isPresent
+        }
+        decision {
+          note
+          files {
+            identifier
+            url
+          }
+        }
+        error {
+          ...MutationError
+        }
       }
     }
   }

@@ -155,8 +155,6 @@ export type AccountActivityEntry = {
   branchId: Scalars['String'];
   branchName: Scalars['String'];
   date?: Maybe<Scalars['Localized']>;
-  groupId?: Maybe<Scalars['String']>;
-  groupName?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<Scalars['String']>;
   processedBy?: Maybe<Scalars['String']>;
@@ -14182,8 +14180,6 @@ export type LoanAccount = {
   closedDate?: Maybe<Scalars['Localized']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
-  groupId?: Maybe<Scalars['String']>;
-  groupName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   installmentFrequency?: Maybe<InstallmentFrequency>;
   intrestRate?: Maybe<Scalars['Float']>;
@@ -14452,7 +14448,6 @@ export type LoanAccountInput = {
   disbursementDate?: InputMaybe<Scalars['Localized']>;
   fingerprintDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
-  groupId?: InputMaybe<Scalars['String']>;
   gurantee_details?: InputMaybe<Array<InputMaybe<LoanAccountGuranteeInput>>>;
   installmentBeginDate?: InputMaybe<Scalars['Localized']>;
   installmentFrequency?: InputMaybe<InstallmentFrequency>;
@@ -23521,10 +23516,13 @@ export type TransactionInfo = {
   amount: Scalars['String'];
   branchId: Scalars['String'];
   branchName: Scalars['String'];
+  createdDate?: Maybe<Scalars['Localized']>;
   date: Scalars['Localized'];
   id: Scalars['String'];
   narration: Scalars['String'];
   transactionType: AllTransactionType;
+  userId?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
   yearEndAdjustment?: Maybe<Scalars['String']>;
 };
 
@@ -27925,13 +27923,13 @@ export type UpsertMeetingMutation = {
 };
 
 export type AddAttendanceMutationVariables = Exact<{
-  data: MfMeetingInput;
+  data: MfMeetingAttendanceInput;
 }>;
 
 export type AddAttendanceMutation = {
   microFinance: {
     groupMeeting: {
-      upsertMeeting?: {
+      addAttendance?: {
         recordId?: string | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -40063,6 +40061,53 @@ export type GroupDetailsQuery = {
             endTime?: string | null;
           } | null> | null;
         } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type MfMeetingsDetailsQueryVariables = Exact<{
+  meetingID: Scalars['ID'];
+}>;
+
+export type MfMeetingsDetailsQuery = {
+  microFinance: {
+    groupMeeting: {
+      mfMeetingDetail?: {
+        oveview?: {
+          id: string;
+          groupId: string;
+          groupName?: string | null;
+          groupCode?: string | null;
+          agenda?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          startTime?: string | null;
+          endTime?: string | null;
+          membersInvited?: number | null;
+          presentMembers?: number | null;
+          status?: GroupMeetingStatus | null;
+        } | null;
+        attendance?: Array<{
+          id: string;
+          name?: string | null;
+          isPresent?: boolean | null;
+        } | null> | null;
+        decision?: {
+          note?: string | null;
+          files?: Array<{ identifier: string; url: string }> | null;
+        } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
       } | null;
     };
   };
@@ -53602,10 +53647,10 @@ export const useUpsertMeetingMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const AddAttendanceDocument = `
-    mutation addAttendance($data: MFMeetingInput!) {
+    mutation addAttendance($data: MFMeetingAttendanceInput!) {
   microFinance {
     groupMeeting {
-      upsertMeeting(data: $data) {
+      addAttendance(data: $data) {
         recordId
         error {
           ...MutationError
@@ -69902,11 +69947,14 @@ export const GroupDetailsDocument = `
             endTime
           }
         }
+        error {
+          ...MutationError
+        }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useGroupDetailsQuery = <TData = GroupDetailsQuery, TError = unknown>(
   variables: GroupDetailsQueryVariables,
   options?: UseQueryOptions<GroupDetailsQuery, TError, TData>
@@ -69917,6 +69965,55 @@ export const useGroupDetailsQuery = <TData = GroupDetailsQuery, TError = unknown
       null,
       variables
     ),
+    options
+  );
+export const MfMeetingsDetailsDocument = `
+    query mfMeetingsDetails($meetingID: ID!) {
+  microFinance {
+    groupMeeting {
+      mfMeetingDetail(meetingID: $meetingID) {
+        oveview {
+          id
+          groupId
+          groupName
+          groupCode
+          agenda
+          date
+          startTime
+          endTime
+          membersInvited
+          presentMembers
+          status
+        }
+        attendance {
+          id
+          name
+          isPresent
+        }
+        decision {
+          note
+          files {
+            identifier
+            url
+          }
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useMfMeetingsDetailsQuery = <TData = MfMeetingsDetailsQuery, TError = unknown>(
+  variables: MfMeetingsDetailsQueryVariables,
+  options?: UseQueryOptions<MfMeetingsDetailsQuery, TError, TData>
+) =>
+  useQuery<MfMeetingsDetailsQuery, TError, TData>(
+    ['mfMeetingsDetails', variables],
+    useAxios<MfMeetingsDetailsQuery, MfMeetingsDetailsQueryVariables>(
+      MfMeetingsDetailsDocument
+    ).bind(null, variables),
     options
   );
 export const GetMemberPdfDocument = `
