@@ -48551,6 +48551,8 @@ export type GetAllTransactionsListQuery = {
           date: Record<'local' | 'en' | 'np', string>;
           branchName: string;
           yearEndAdjustment?: string | null;
+          userId?: string | null;
+          userName?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -81351,6 +81353,8 @@ export const GetAllTransactionsListDocument = `
           date
           branchName
           yearEndAdjustment
+          userId
+          userName
         }
         cursor
       }

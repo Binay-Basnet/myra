@@ -392,6 +392,8 @@ query getAllTransactionsList($filter: Filter, $pagination: Pagination) {
           date
           branchName
           yearEndAdjustment
+          userId
+          userName
         }
         cursor
       }
