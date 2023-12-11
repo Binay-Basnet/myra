@@ -3,13 +3,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Button, Modal, Text } from '@myra-ui';
+import { asyncToast, Box, Button, FileViewer, Modal, Text } from '@myra-ui';
 
-import { DocumentInsertInput, MfDecisions, useUpsertDecisionMutation } from '@coop/cbs/data-access';
+import { MfDecisions, useUpsertDecisionMutation } from '@coop/cbs/data-access';
 import { DetailsPageHeaderBox } from '@coop/shared/components';
 import { FormFileInput, FormTextArea } from '@coop/shared/form';
-
-const documentMap = ['attachment'];
 
 export const Decision = (props: { data: MfDecisions }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +23,7 @@ export const Decision = (props: { data: MfDecisions }) => {
       setValue('note', data?.note);
       setValue(
         'files',
-        data?.files?.map((item) => item?.identifier)
+        data?.files?.map((item) => item?.url)
       );
     }
   }, [data]);
@@ -39,10 +37,10 @@ export const Decision = (props: { data: MfDecisions }) => {
   const onSave = () => {
     const values = getValues();
     asyncToast({
-      id: 'add-center',
+      id: 'add-decision',
       msgs: {
-        success: 'new center added succesfully',
-        loading: 'adding new center',
+        success: 'new decision added succesfully',
+        loading: 'adding new decision',
       },
       onSuccess: () => {
         onClose();
@@ -51,11 +49,7 @@ export const Decision = (props: { data: MfDecisions }) => {
       promise: mutateAsync({
         meetingId: router?.query?.['id'] as string,
         data: {
-          note: values?.note,
-          files: values?.files?.map((item: DocumentInsertInput, index: number) => ({
-            fieldId: documentMap[index],
-            identifiers: item?.identifiers || [],
-          })),
+          ...values,
         },
       }),
     });
@@ -77,6 +71,11 @@ export const Decision = (props: { data: MfDecisions }) => {
         <Text fontSize="r1" fontWeight="medium">
           {data?.note || '-'}
         </Text>
+        <Box>
+          {data?.files?.map((item) => (
+            <FileViewer fileUrl={item?.url} />
+          ))}
+        </Box>
       </Box>
       <Modal
         title="Add Decision"

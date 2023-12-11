@@ -315,6 +315,7 @@ query groupDetails($groupId: ID!) {
           name
           id
         }
+        allowableServiceCenters
         meetings {
           upcomingMeetingCount
           pastMeetingCount

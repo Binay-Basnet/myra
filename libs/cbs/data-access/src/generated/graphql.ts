@@ -155,6 +155,8 @@ export type AccountActivityEntry = {
   branchId: Scalars['String'];
   branchName: Scalars['String'];
   date?: Maybe<Scalars['Localized']>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<Scalars['String']>;
   processedBy?: Maybe<Scalars['String']>;
@@ -14180,6 +14182,8 @@ export type LoanAccount = {
   closedDate?: Maybe<Scalars['Localized']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   installmentFrequency?: Maybe<InstallmentFrequency>;
   intrestRate?: Maybe<Scalars['Float']>;
@@ -14448,6 +14452,7 @@ export type LoanAccountInput = {
   disbursementDate?: InputMaybe<Scalars['Localized']>;
   fingerprintDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
+  groupId?: InputMaybe<Scalars['String']>;
   gurantee_details?: InputMaybe<Array<InputMaybe<LoanAccountGuranteeInput>>>;
   installmentBeginDate?: InputMaybe<Scalars['Localized']>;
   installmentFrequency?: InputMaybe<InstallmentFrequency>;
@@ -16387,6 +16392,50 @@ export type MBankingTransactionResult = {
   error?: Maybe<QueryError>;
 };
 
+export type MfBulkDepositData = {
+  accountId?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+};
+
+export type MfBulkDepositInput = {
+  accounts?: InputMaybe<Array<BulkDepositInstanceInput>>;
+  agentId?: InputMaybe<Scalars['String']>;
+  bankVoucher?: InputMaybe<DepositBankVoucher>;
+  cash?: InputMaybe<DepositCash>;
+  depositedBy: DepositedBy;
+  doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  groupId: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  other_doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  other_name?: InputMaybe<Scalars['String']>;
+  payment_type: DepositPaymentType;
+  sourceOfFund?: InputMaybe<Scalars['String']>;
+  withdrawSlip?: InputMaybe<WithdrawSlip>;
+};
+
+export type MfBulkDepositRecord = {
+  accounts?: Maybe<Array<Maybe<MfBulkDepositData>>>;
+  amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Localized']>;
+  date?: Maybe<Scalars['Localized']>;
+  depositedBy?: Maybe<DepositedBy>;
+  depositedOther?: Maybe<Scalars['String']>;
+  discount?: Maybe<Scalars['String']>;
+  fine?: Maybe<Scalars['String']>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<DepositPaymentType>;
+  rebate?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+};
+
+export type MfBulkDepositResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<MfBulkDepositRecord>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type MfCenterDetail = {
   error?: Maybe<QueryError>;
   overview?: Maybe<CenterOverview>;
@@ -17975,12 +18024,21 @@ export type MicroFinanceMutation = {
   center?: Maybe<MicroFinanceCenterMutation>;
   group?: Maybe<MicroFinanceGroupMutation>;
   groupMeeting: MicroFinanceGroupMeetingMutation;
+  transaction: MicroFinanceTransactionMutation;
 };
 
 export type MicroFinanceQuery = {
   center: MicroFinanceCenterQuery;
   group: MicroFinanceGroupQuery;
   groupMeeting: MicroFinanceGroupMeetingQuery;
+};
+
+export type MicroFinanceTransactionMutation = {
+  bulkDeposit: MfBulkDepositResult;
+};
+
+export type MicroFinanceTransactionMutationBulkDepositArgs = {
+  data: MfBulkDepositInput;
 };
 
 export type MinMaxFilter = {
@@ -40029,6 +40087,7 @@ export type GroupDetailsQuery = {
   microFinance: {
     group: {
       groupDetails?: {
+        allowableServiceCenters?: Array<string | null> | null;
         overview?: {
           newMemberCount?: number | null;
           totalMeeting?: number | null;
@@ -69928,6 +69987,7 @@ export const GroupDetailsDocument = `
           name
           id
         }
+        allowableServiceCenters
         meetings {
           upcomingMeetingCount
           pastMeetingCount

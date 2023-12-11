@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Alert, Box, DetailPageQuickLinks } from '@myra-ui';
 
 import { MfDecisions, MfMeetingOverview } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { readableTimeParser, ROUTES } from '@coop/cbs/utils';
 import {
   DetailsKeyValueCard,
   DetailsKeyValueCards,
@@ -57,8 +57,8 @@ export const Overview = (props: { data: MfMeetingOverview; decision: MfDecisions
           { label: 'Group', value: data?.groupName },
           { label: 'Agenda', value: data?.agenda },
           { label: 'Date', value: data?.date?.local },
-          { label: 'Start Time', value: data?.startTime },
-          { label: 'End time', value: data?.endTime },
+          { label: 'Start Time', value: readableTimeParser(data?.startTime) },
+          { label: 'End time', value: readableTimeParser(data?.endTime) },
         ]}
       />
     </>
