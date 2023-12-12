@@ -3393,6 +3393,7 @@ export type CoaDetailsMeta = {
   isLoanAccount?: Maybe<Scalars['Boolean']>;
   isSavingAccount?: Maybe<Scalars['Boolean']>;
   parentId?: Maybe<Scalars['String']>;
+  systemCreatedDate?: Maybe<Scalars['Localized']>;
 };
 
 export type CoaDetailsMinOverview = {
@@ -13896,6 +13897,7 @@ export const LedgerAmountTransferType = {
 export type LedgerAmountTransferType =
   typeof LedgerAmountTransferType[keyof typeof LedgerAmountTransferType];
 export type LedgerBalanceEntry = {
+  balanceAt: BalanceValue;
   currentBalance: BalanceValue;
   ledgerId: Scalars['String'];
   ledgerName: Scalars['String'];
@@ -19141,16 +19143,18 @@ export type PayrollRunListed = {
 
 export type PayrollRunRecord = {
   employeeId?: Maybe<Scalars['String']>;
-  grossSalary?: Maybe<Scalars['String']>;
+  employeeName?: Maybe<Scalars['String']>;
+  grossPay?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   nepaliMonth?: Maybe<NepaliMonths>;
   netPay?: Maybe<Scalars['String']>;
   paygroupId?: Maybe<Scalars['String']>;
-  postTaxDeduction?: Maybe<Scalars['String']>;
-  preTaxDeductionAmount?: Maybe<Scalars['String']>;
-  tax?: Maybe<Scalars['String']>;
+  postTaxDeductions?: Maybe<Scalars['String']>;
+  preTaxDeductions?: Maybe<Scalars['String']>;
   taxReceivedPaid?: Maybe<Scalars['String']>;
   taxableIncome?: Maybe<Scalars['String']>;
+  totalTax?: Maybe<Scalars['String']>;
+  unpaidDays?: Maybe<Scalars['Int']>;
   year?: Maybe<Scalars['Int']>;
 };
 
@@ -19161,6 +19165,7 @@ export type PayrollRuns = {
 
 export const PayrollStatus = {
   Approved: 'APPROVED',
+  Completed: 'COMPLETED',
   Pending: 'PENDING',
   Rejected: 'REJECTED',
 } as const;
@@ -35586,12 +35591,14 @@ export type GetPayrollRunQuery = {
             year?: number | null;
             paygroupId?: string | null;
             employeeId?: string | null;
-            grossSalary?: string | null;
-            preTaxDeductionAmount?: string | null;
+            employeeName?: string | null;
+            unpaidDays?: number | null;
+            grossPay?: string | null;
+            preTaxDeductions?: string | null;
+            postTaxDeductions?: string | null;
+            totalTax?: string | null;
             taxableIncome?: string | null;
-            tax?: string | null;
             taxReceivedPaid?: string | null;
-            postTaxDeduction?: string | null;
             netPay?: string | null;
           } | null> | null;
           error?:
@@ -64132,12 +64139,14 @@ export const GetPayrollRunDocument = `
             year
             paygroupId
             employeeId
-            grossSalary
-            preTaxDeductionAmount
+            employeeName
+            unpaidDays
+            grossPay
+            preTaxDeductions
+            postTaxDeductions
+            totalTax
             taxableIncome
-            tax
             taxReceivedPaid
-            postTaxDeduction
             netPay
           }
           error {
