@@ -3,19 +3,20 @@ import { useRouter } from 'next/router';
 
 import { Box, Button, Divider, Drawer, Grid, Icon, Text } from '@myra-ui';
 
-import { PayrollStatus } from '@coop/cbs/data-access';
+import { NepaliMonths, PayrollStatus } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 
 interface PayrollRunDrawerProps {
   isDrawerOpen?: boolean;
   onCloseDrawer?: () => void;
   selectedPayroll?: {
+    cursor?: string;
     node?: {
-      employee?: number;
       id?: string;
-      payMonth?: string;
+      payMonth?: NepaliMonths;
       payYear?: number;
-      paygroup: string;
+      paygroup?: string;
+      employees?: number;
       payableCost?: number;
       status?: PayrollStatus;
     };

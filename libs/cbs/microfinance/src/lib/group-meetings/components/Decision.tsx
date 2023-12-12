@@ -36,6 +36,7 @@ export const Decision = (props: { data: MfDecisions }) => {
 
   const onSave = () => {
     const values = getValues();
+
     asyncToast({
       id: 'add-decision',
       msgs: {
@@ -59,15 +60,15 @@ export const Decision = (props: { data: MfDecisions }) => {
     <>
       <DetailsPageHeaderBox title="Decision" />
       <Box m="s24" p="s12" bg="white" borderRadius={5}>
-        <Box display="flex" justifyContent="flex-end">
+        <Box display="flex" justifyContent="space-between">
+          <Text fontSize="r1" fontWeight="semibold">
+            Decision
+          </Text>
           <Button onClick={() => setIsOpen(true)}>
             {data?.note ? 'Edit Decision' : 'Add Decision'}
           </Button>
         </Box>
 
-        <Text fontSize="r1" fontWeight="semibold">
-          Decision
-        </Text>
         <Text fontSize="r1" fontWeight="medium">
           {data?.note || '-'}
         </Text>
