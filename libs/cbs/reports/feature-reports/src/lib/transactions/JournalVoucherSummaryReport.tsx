@@ -32,6 +32,7 @@ type JournalVoucherSummaryEntry = {
   credit?: string | null;
   balance?: string | null;
   balanceType?: string | null;
+  notes?: string | null;
 };
 
 export const JournalVoucherSummary = () => {
