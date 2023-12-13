@@ -128,6 +128,10 @@ export const CBSAccountList = () => {
         ),
       },
       {
+        header: 'Group',
+        accessorFn: (row) => row?.node?.groupName,
+      },
+      {
         id: '_actions',
         header: '',
         cell: (props) =>

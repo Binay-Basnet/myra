@@ -28,6 +28,7 @@ import {
   FormInput,
   FormLayout,
   FormMemberSelect,
+  FormMFGroupSelect,
   FormSelect,
   FormSwitchTab,
 } from '@coop/shared/form';
@@ -52,6 +53,8 @@ type WithdrawFormInput = Omit<WithdrawInput, 'cash'> & {
     | undefined
     | null;
   withdrawBy?: string;
+  memberOrGroup: 'member' | 'group';
+  groupId: string;
 };
 
 const withdranByObj: Record<WithdrawBy, string> = {
@@ -84,6 +87,7 @@ export const AddWithdraw = () => {
 
   const methods = useForm<WithdrawFormInput>({
     defaultValues: {
+      memberOrGroup: 'member',
       payment_type: WithdrawPaymentType.Cash,
       cash: { disableDenomination: true },
       withdrawnBy: WithdrawBy.Self,
@@ -192,7 +196,13 @@ export const AddWithdraw = () => {
     let filteredValues;
 
     if (values.payment_type === WithdrawPaymentType.Cash) {
-      filteredValues = omit({ ...values }, ['bankCheque', 'file', 'withdrawBy']);
+      filteredValues = omit({ ...values }, [
+        'bankCheque',
+        'file',
+        'withdrawBy',
+        'groupId',
+        'memberOrGroup',
+      ]);
 
       filteredValues['cash'] = {
         ...values['cash'],
@@ -226,7 +236,13 @@ export const AddWithdraw = () => {
     }
 
     if (values.payment_type === WithdrawPaymentType.BankCheque) {
-      filteredValues = omit({ ...values }, ['cash', 'file', 'withdrawBy']);
+      filteredValues = omit({ ...values }, [
+        'cash',
+        'file',
+        'withdrawBy',
+        'groupId',
+        'memberOrGroup',
+      ]);
 
       // asyncToast({
       //   id: 'add-new-withdraw',
@@ -305,6 +321,16 @@ export const AddWithdraw = () => {
     return false;
   };
 
+  const memberOrGroup = watch('memberOrGroup');
+
+  const groupId = watch('groupId');
+
+  useEffect(() => {
+    methods.setValue('groupId', '');
+    methods.setValue('memberId', '');
+    methods.setValue('accountId', '');
+  }, [memberOrGroup]);
+
   return (
     <FormLayout methods={methods} hasSidebar={Boolean(memberId && mode === 0)}>
       <FormLayout.Header title={`${t['addWithdrawNewWithdraw']} - ${featureCode?.newWithdraw}`} />
@@ -313,12 +339,31 @@ export const AddWithdraw = () => {
         <FormLayout.Form>
           <Box display={mode === 0 ? 'flex' : 'none'}>
             <Box p="s16" width="100%" display="flex" flexDirection="column" gap="s24">
-              <FormMemberSelect
-                isRequired
-                name="memberId"
-                label={t['addWithdrawMember']}
-                isDisabled={!!redirectMemberId}
+              <FormSwitchTab
+                name="memberOrGroup"
+                options={[
+                  { label: 'Member', value: 'member' },
+                  { label: 'Group', value: 'group' },
+                ]}
               />
+
+              {memberOrGroup === 'group' && (
+                <>
+                  <FormMFGroupSelect name="groupId" label="Group" isRequired />
+
+                  <FormMemberSelect isRequired name="memberId" label="Member" groupId={groupId} />
+                </>
+              )}
+
+              {memberOrGroup === 'member' && (
+                <FormMemberSelect
+                  isRequired
+                  name="memberId"
+                  label={t['addWithdrawMember']}
+                  isDisabled={!!redirectMemberId}
+                />
+              )}
+
               {memberId && (
                 <FormAccountSelect
                   isRequired
@@ -333,6 +378,7 @@ export const AddWithdraw = () => {
                   filterBy={AccountObjState?.Active}
                   includeLoc
                   isDisabled={!!redirectAccountId}
+                  groupId={groupId}
                 />
               )}
               {selectedAccount?.product?.withdrawRestricted && (

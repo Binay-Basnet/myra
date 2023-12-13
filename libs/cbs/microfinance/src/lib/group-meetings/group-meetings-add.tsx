@@ -84,8 +84,8 @@ export const GroupMeetingsAdd = () => {
           ...values,
           startTime: advancedTimeConvertor(values?.startTime),
           endTime: advancedTimeConvertor(values?.endTime),
-          memberIds: values?.memberIds?.map((item: { memberId: string; invited: boolean }) => ({
-            id: item?.memberId,
+          memberIds: values?.memberIds?.map((item: { id: string; invited: boolean }) => ({
+            id: item?.id,
             invited: item?.invited || false,
           })),
         } as MfMeetingInput,

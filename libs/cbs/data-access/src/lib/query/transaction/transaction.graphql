@@ -17,6 +17,7 @@ query getDepositListData($filter: Filter, $pagination: Pagination) {
           profilePicUrl
           agentPicUrl
           branchName
+          groupName
         }
         cursor
       }
@@ -46,6 +47,7 @@ query getWithdrawListData($filter: Filter, $pagination: Pagination) {
           date
           profilePicUrl
           branchName
+          groupName
         }
         cursor
       }

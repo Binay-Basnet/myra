@@ -65,7 +65,7 @@ export const AccountListPage = () => {
       },
       {
         header: 'Balance',
-        accessorFn: (row) => amountConverter(row?.node?.balance ?? 0),
+        accessorFn: (row) => amountConverter(row?.node?.availableBalance ?? 0),
       },
       {
         header: 'Open Date',
@@ -82,7 +82,7 @@ export const AccountListPage = () => {
       //     },
       //   },
     ],
-    [router]
+    []
   );
 
   return (

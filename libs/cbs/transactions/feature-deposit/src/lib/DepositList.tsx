@@ -13,7 +13,6 @@ import {
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
-  amountConverter,
   featureCode,
   getFilterQuery,
   getPaginationQuery,
@@ -130,17 +129,9 @@ export const DepositList = () => {
         },
       },
       {
-        id: 'amount',
-        header: t['depositListAmount'],
-
-        accessorFn: (row) => amountConverter(row?.node?.amount as string),
-        enableColumnFilter: true,
-        filterFn: 'amount',
-        meta: {
-          isNumeric: true,
-        },
+        header: 'Group',
+        accessorFn: (row) => row?.node?.groupName,
       },
-
       {
         id: '_actions',
         header: '',

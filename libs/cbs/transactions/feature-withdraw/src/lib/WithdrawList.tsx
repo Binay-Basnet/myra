@@ -120,6 +120,10 @@ export const WithdrawList = () => {
         },
       },
       {
+        header: 'Group',
+        accessorFn: (row) => row?.node?.groupName,
+      },
+      {
         id: 'amount',
         header: t['withdrawListAmount'],
         filterFn: 'amount',
