@@ -75,3 +75,16 @@ mutation upsertDecision($meetingId: ID!, $data: MFMeetingDecision!) {
     }
   }
 }
+
+mutation addMFDocuments($meetingId: ID!, $input: MFMeetingDocumentsInput!) {
+  microFinance {
+    groupMeeting {
+      addDocuments(meetingId: $meetingId, input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

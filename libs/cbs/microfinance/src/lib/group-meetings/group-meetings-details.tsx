@@ -6,6 +6,7 @@ import { useMfMeetingsDetailsQuery } from '@coop/cbs/data-access';
 
 import Attendance from './components/Attendance';
 import Decision from './components/Decision';
+import Documents from './components/Documents';
 import Overview from './components/Overview';
 
 export const GroupMeetingsDetails = () => {
@@ -50,7 +51,7 @@ export const GroupMeetingsDetails = () => {
             </Text>
           </Box>
           <Divider />
-          <DetailPageTabs tabs={['Overview', 'Attendance', 'Decision']} />
+          <DetailPageTabs tabs={['Overview', 'Attendance', 'Decision', 'Documents']} />
         </Box>
 
         <Scrollable detailPage>
@@ -63,6 +64,7 @@ export const GroupMeetingsDetails = () => {
             )}
             {tabQuery === 'attendance' && <Attendance data={meetingsDetailsData?.attendance} />}
             {tabQuery === 'decision' && <Decision data={meetingsDetailsData?.decision} />}
+            {tabQuery === 'documents' && <Documents />}
           </Box>
         </Scrollable>
       </Box>
