@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { debounce } from 'lodash';
 
 import { MemberSelect, MemberSelectProps, Option } from '@myra-ui/forms';
 
@@ -283,11 +284,11 @@ export const FormMemberSelect = ({
               onChange(newVal);
             }
           }}
-          // onInputChange={debounce((id) => {
-          //   // if (id) {
-          //   setIDMember(id);
-          //   // }
-          // }, 800)}
+          onInputChange={debounce((id) => {
+            // if (id) {
+            setIDMember(id);
+            // }
+          }, 800)}
           options={memberOptions}
           filterOption={() => true}
           {...rest}

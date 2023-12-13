@@ -1,9 +1,10 @@
+import { FiArrowRight, FiPlay } from 'react-icons/fi';
 import { IoIosCheckmarkCircle } from 'react-icons/io';
 import { useRouter } from 'next/router';
 
-import { Box, Button, Divider, Drawer, Grid, Icon, Text } from '@myra-ui';
+import { asyncToast, Box, Button, Divider, Drawer, Grid, Icon, Text } from '@myra-ui';
 
-import { NepaliMonths, PayrollStatus } from '@coop/cbs/data-access';
+import { NepaliMonths, PayrollStatus, useCompletePayrollRunMutation } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 
 interface PayrollRunDrawerProps {
@@ -26,6 +27,24 @@ interface PayrollRunDrawerProps {
 export const PayrollRunDrawer = (props: PayrollRunDrawerProps) => {
   const router = useRouter();
   const { isDrawerOpen, onCloseDrawer, selectedPayroll } = props;
+
+  const { mutateAsync } = useCompletePayrollRunMutation();
+
+  const completePayroll = () => {
+    asyncToast({
+      id: 'complete-payroll-run',
+      msgs: {
+        success: 'Payroll run completed',
+        loading: 'completing payroll run',
+      },
+      onSuccess: () => {
+        onCloseDrawer();
+      },
+      promise: mutateAsync({
+        payrollRunId: selectedPayroll?.node?.id,
+      }),
+    });
+  };
 
   return (
     <Drawer
@@ -88,6 +107,7 @@ export const PayrollRunDrawer = (props: PayrollRunDrawerProps) => {
             </Box>
           )}
           <Button
+            rightIcon={<Icon as={FiArrowRight} />}
             variant="outline"
             width="-webkit-fit-content"
             onClick={() =>
@@ -101,6 +121,29 @@ export const PayrollRunDrawer = (props: PayrollRunDrawerProps) => {
           </Button>
         </Box>
       </Box>
+      {selectedPayroll?.node?.status === PayrollStatus?.Approved && (
+        <Box border="1px" borderColor="border.layout" borderRadius={5} mt="s24">
+          <Text p="s8" fontSize="r1" bg="background.500">
+            Payroll Dispatch
+          </Text>
+          <Divider />
+          <Box p="s8" display="flex" flexDir="column" gap="s8">
+            <Box display="flex" alignItems="center" gap="s4">
+              <Icon as={IoIosCheckmarkCircle} color="yellow.400" />
+              <Text fontSize="r1" fontWeight="medium">
+                Ready for Payroll Dispatch
+              </Text>
+            </Box>
+            <Button
+              leftIcon={<Icon as={FiPlay} />}
+              width="-webkit-fit-content"
+              onClick={completePayroll}
+            >
+              Dispatch Payroll
+            </Button>
+          </Box>
+        </Box>
+      )}
     </Drawer>
   );
 };

@@ -8010,6 +8010,7 @@ export type FianancialTransactionReport = {
   dailyBalanceReport: DailyBalanceReportResult;
   dayBookReport: DayBookReportResult;
   fiscalTrialSheetReport: TrialSheetReportResult;
+  journerVoucherReport: JournalVoucherReportOutput;
   ledgerBalanceReport: LedgerBalanceReport;
   ledgerCumulativeBalanceReport: LedgerCumulativeBalanceReport;
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
@@ -8055,6 +8056,10 @@ export type FianancialTransactionReportDayBookReportArgs = {
 
 export type FianancialTransactionReportFiscalTrialSheetReportArgs = {
   data: TrialSheetReportFilter;
+};
+
+export type FianancialTransactionReportJournerVoucherReportArgs = {
+  data: JournalVoucherReportInput;
 };
 
 export type FianancialTransactionReportLedgerBalanceReportArgs = {
@@ -12120,6 +12125,10 @@ export type JournalVoucherFilter = {
   transactionId?: InputMaybe<Scalars['String']>;
 };
 
+export type JournalVoucherFilterData = {
+  userId?: InputMaybe<Scalars['String']>;
+};
+
 export type JournalVoucherInput = {
   chequeNo?: InputMaybe<Scalars['String']>;
   date?: InputMaybe<Scalars['Localized']>;
@@ -12175,6 +12184,34 @@ export type JournalVoucherRecord = {
   reference?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['String']>;
   transactionId?: Maybe<Scalars['ID']>;
+};
+
+export type JournalVoucherReportInput = {
+  branchId: Array<Scalars['String']>;
+  filter?: InputMaybe<JournalVoucherFilterData>;
+  period: LocalizedDateFilter;
+};
+
+export type JournalVoucherReportOutput = {
+  data?: Maybe<JournalVoucherReportOutputData>;
+  error?: Maybe<QueryError>;
+};
+
+export type JournalVoucherReportOutputData = {
+  journalVoucherReportList?: Maybe<Array<Maybe<JournalVoucherReportOutputList>>>;
+  metaData?: Maybe<JournalVoucherReportOutputMetaData>;
+};
+
+export type JournalVoucherReportOutputList = {
+  nodeData?: Maybe<Array<Maybe<GlTransaction>>>;
+  notes?: Maybe<Scalars['String']>;
+  voucherDate?: Maybe<Scalars['String']>;
+  voucherId?: Maybe<Scalars['String']>;
+};
+
+export type JournalVoucherReportOutputMetaData = {
+  printedDate?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
 };
 
 export type JournalVoucherResult = {
@@ -20020,6 +20057,7 @@ export const Resource = {
   ReportsTxnDaybook: 'REPORTS_TXN_DAYBOOK',
   ReportsTxnFiscalYearEndAdjustmentTrialBalance:
     'REPORTS_TXN_FISCAL_YEAR_END_ADJUSTMENT_TRIAL_BALANCE',
+  ReportsTxnJournalVoucher: 'REPORTS_TXN_JOURNAL_VOUCHER',
   ReportsTxnLedgerBalance: 'REPORTS_TXN_LEDGER_BALANCE',
   ReportsTxnLedgerGroup: 'REPORTS_TXN_LEDGER_GROUP',
   ReportsTxnMarketRepresentativeTxn: 'REPORTS_TXN_MARKET_REPRESENTATIVE_TXN',
@@ -26852,6 +26890,29 @@ export type SetSalAdjustmentRevisionMutation = {
       salStrucAdjustRevision: {
         upsertSalAdjustmentRevision: {
           id?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type CompletePayrollRunMutationVariables = Exact<{
+  payrollRunId: Scalars['ID'];
+}>;
+
+export type CompletePayrollRunMutation = {
+  hr: {
+    payroll: {
+      payrollRun: {
+        completePayrollRun: {
+          completedOrNot?: boolean | null;
           error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
@@ -52189,6 +52250,37 @@ export const useSetSalAdjustmentRevisionMutation = <TError = unknown, TContext =
     ['setSalAdjustmentRevision'],
     useAxios<SetSalAdjustmentRevisionMutation, SetSalAdjustmentRevisionMutationVariables>(
       SetSalAdjustmentRevisionDocument
+    ),
+    options
+  );
+export const CompletePayrollRunDocument = `
+    mutation completePayrollRun($payrollRunId: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        completePayrollRun(payrollRunId: $payrollRunId) {
+          completedOrNot
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useCompletePayrollRunMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CompletePayrollRunMutation,
+    TError,
+    CompletePayrollRunMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<CompletePayrollRunMutation, TError, CompletePayrollRunMutationVariables, TContext>(
+    ['completePayrollRun'],
+    useAxios<CompletePayrollRunMutation, CompletePayrollRunMutationVariables>(
+      CompletePayrollRunDocument
     ),
     options
   );
