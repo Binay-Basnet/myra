@@ -27,6 +27,7 @@ import {
   DateFilter,
   EbankingTransactionCrOrDr,
   EbankingTransactionFilter,
+  useGetAccountListQuery,
   useGetTransactionListsQuery,
 } from '@coop/ebanking/data-access';
 import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
@@ -68,7 +69,12 @@ const TransactionHistoryPage = () => {
     filter,
   });
 
-  const accountOptions = data?.eBanking?.account?.list?.accounts?.map((account) => ({
+  const { data: accountListData } = useGetAccountListQuery({
+    listFilter: { allowedAccount: false },
+    transactionPagination: { after: '', first: 1 },
+  });
+
+  const accountOptions = accountListData?.eBanking?.account?.list?.accounts?.map((account) => ({
     label: `${account?.name} - ${account.accountNumber.slice(0, 12)}`,
     value: account?.id,
   }));
