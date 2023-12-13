@@ -36,7 +36,6 @@ export const Decision = (props: { data: MfDecisions }) => {
 
   const onSave = () => {
     const values = getValues();
-
     asyncToast({
       id: 'add-decision',
       msgs: {
@@ -69,12 +68,12 @@ export const Decision = (props: { data: MfDecisions }) => {
           </Button>
         </Box>
 
-        <Text fontSize="r1" fontWeight="medium">
+        <Text fontSize="r1" fontWeight="medium" mb="s8">
           {data?.note || '-'}
         </Text>
-        <Box>
+        <Box w="-webkit-fit-content">
           {data?.files?.map((item) => (
-            <FileViewer fileUrl={item?.url} />
+            <FileViewer fileName={item?.identifier} fileUrl={item?.url} />
           ))}
         </Box>
       </Box>

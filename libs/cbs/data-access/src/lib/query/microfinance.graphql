@@ -388,3 +388,24 @@ query mfMeetingsDetails($meetingID: ID!) {
     }
   }
 }
+
+query listDocuments($meetingId: ID!) {
+  microFinance {
+    groupMeeting {
+      listDocuments(meetingId: $meetingId) {
+        data {
+          fieldId
+          title
+          description
+          docData {
+            identifier
+            url
+          }
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

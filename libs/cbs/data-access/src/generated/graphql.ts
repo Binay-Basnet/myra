@@ -28020,6 +28020,27 @@ export type UpsertDecisionMutation = {
   };
 };
 
+export type AddMfDocumentsMutationVariables = Exact<{
+  meetingId: Scalars['ID'];
+  input: MfMeetingDocumentsInput;
+}>;
+
+export type AddMfDocumentsMutation = {
+  microFinance: {
+    groupMeeting: {
+      addDocuments?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
 export type SetOrganizationDataMutationVariables = Exact<{
   data: OrganizationInput;
 }>;
@@ -40181,6 +40202,31 @@ export type MfMeetingsDetailsQuery = {
           | MutationError_ServerError_Fragment
           | null;
       } | null;
+    };
+  };
+};
+
+export type ListDocumentsQueryVariables = Exact<{
+  meetingId: Scalars['ID'];
+}>;
+
+export type ListDocumentsQuery = {
+  microFinance: {
+    groupMeeting: {
+      listDocuments: {
+        data?: Array<{
+          fieldId?: string | null;
+          title?: string | null;
+          description?: string | null;
+          docData: Array<{ identifier: string; url: string } | null>;
+        } | null> | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      };
     };
   };
 };
@@ -53774,6 +53820,33 @@ export const useUpsertDecisionMutation = <TError = unknown, TContext = unknown>(
   useMutation<UpsertDecisionMutation, TError, UpsertDecisionMutationVariables, TContext>(
     ['upsertDecision'],
     useAxios<UpsertDecisionMutation, UpsertDecisionMutationVariables>(UpsertDecisionDocument),
+    options
+  );
+export const AddMfDocumentsDocument = `
+    mutation addMFDocuments($meetingId: ID!, $input: MFMeetingDocumentsInput!) {
+  microFinance {
+    groupMeeting {
+      addDocuments(meetingId: $meetingId, input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddMfDocumentsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddMfDocumentsMutation,
+    TError,
+    AddMfDocumentsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddMfDocumentsMutation, TError, AddMfDocumentsMutationVariables, TContext>(
+    ['addMFDocuments'],
+    useAxios<AddMfDocumentsMutation, AddMfDocumentsMutationVariables>(AddMfDocumentsDocument),
     options
   );
 export const SetOrganizationDataDocument = `
@@ -70107,6 +70180,40 @@ export const useMfMeetingsDetailsQuery = <TData = MfMeetingsDetailsQuery, TError
     useAxios<MfMeetingsDetailsQuery, MfMeetingsDetailsQueryVariables>(
       MfMeetingsDetailsDocument
     ).bind(null, variables),
+    options
+  );
+export const ListDocumentsDocument = `
+    query listDocuments($meetingId: ID!) {
+  microFinance {
+    groupMeeting {
+      listDocuments(meetingId: $meetingId) {
+        data {
+          fieldId
+          title
+          description
+          docData {
+            identifier
+            url
+          }
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useListDocumentsQuery = <TData = ListDocumentsQuery, TError = unknown>(
+  variables: ListDocumentsQueryVariables,
+  options?: UseQueryOptions<ListDocumentsQuery, TError, TData>
+) =>
+  useQuery<ListDocumentsQuery, TError, TData>(
+    ['listDocuments', variables],
+    useAxios<ListDocumentsQuery, ListDocumentsQueryVariables>(ListDocumentsDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetMemberPdfDocument = `
