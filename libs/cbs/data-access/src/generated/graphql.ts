@@ -5636,6 +5636,7 @@ export type DepositLoanAccountQueryListAssociatedGuaranteeAccountsArgs = {
 };
 
 export type DepositLoanAccountQueryListDefaultAccountsArgs = {
+  groupId?: InputMaybe<Scalars['String']>;
   memberId: Scalars['ID'];
   productId: Scalars['ID'];
 };
@@ -16533,16 +16534,7 @@ export type MfGroupMemberConnection = {
 
 export type MfGroupMemberEdges = {
   cursor?: Maybe<Scalars['Cursor']>;
-  node?: Maybe<MfGroupMemberEntry>;
-};
-
-export type MfGroupMemberEntry = {
-  groupName: Scalars['String'];
-  id: Scalars['ID'];
-  memberCode: Scalars['String'];
-  memberId: Scalars['String'];
-  memberName: Scalars['String'];
-  objState?: Maybe<ObjState>;
+  node?: Maybe<Member>;
 };
 
 export type MfGroupMembersInput = {
@@ -18013,6 +18005,7 @@ export type MicroFinanceGroupQueryGroupDetailsArgs = {
 };
 
 export type MicroFinanceGroupQueryListGroupArgs = {
+  branchId?: InputMaybe<Scalars['ID']>;
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -25501,6 +25494,7 @@ export type SetAccountCloseDataMutation = {
 export type SetAccountOpenDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: DepositLoanAccountInput;
+  groupId?: InputMaybe<Scalars['ID']>;
 }>;
 
 export type SetAccountOpenDataMutation = {
@@ -31844,6 +31838,7 @@ export type GetAccountTableListMinimalQuery = {
           accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
           closedAt?: string | null;
           installmentAmount?: string | null;
+          groupName?: string | null;
           member?: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
@@ -32019,6 +32014,7 @@ export type GetBulkInstallmentsDataQuery = {
 export type GetDefaultAccountListQueryVariables = Exact<{
   productId: Scalars['ID'];
   memberId: Scalars['ID'];
+  groupId?: InputMaybe<Scalars['String']>;
 }>;
 
 export type GetDefaultAccountListQuery = {
@@ -40095,10 +40091,20 @@ export type ListGroupMemberQuery = {
           cursor?: string | null;
           node?: {
             id: string;
-            memberId: string;
-            objState?: ObjState | null;
-            memberCode: string;
-            memberName: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            code: string;
+            branch?: string | null;
+            profilePicUrl?: string | null;
+            gender?: string | null;
+            age?: number | null;
+            maritalStatus?: string | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+            } | null;
           } | null;
         } | null> | null;
         pageInfo?: PaginationFragment | null;
@@ -48203,6 +48209,7 @@ export type GetDepositListDataQuery = {
           profilePicUrl?: string | null;
           agentPicUrl?: string | null;
           branchName: string;
+          groupName?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -48237,6 +48244,7 @@ export type GetWithdrawListDataQuery = {
           date?: Record<'local' | 'en' | 'np', string> | null;
           profilePicUrl?: string | null;
           branchName: string;
+          groupName?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -50222,9 +50230,9 @@ export const useSetAccountCloseDataMutation = <TError = unknown, TContext = unkn
     options
   );
 export const SetAccountOpenDataDocument = `
-    mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!) {
+    mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!, $groupId: ID) {
   account {
-    add(id: $id, data: $data) {
+    add(id: $id, data: $data, groupId: $groupId) {
       recordId
       record {
         accountId
@@ -59291,6 +59299,7 @@ export const GetAccountTableListMinimalDocument = `
             isMandatorySaving
           }
           installmentAmount
+          groupName
         }
       }
     }
@@ -59528,9 +59537,13 @@ export const useGetBulkInstallmentsDataQuery = <
     options
   );
 export const GetDefaultAccountListDocument = `
-    query getDefaultAccountList($productId: ID!, $memberId: ID!) {
+    query getDefaultAccountList($productId: ID!, $memberId: ID!, $groupId: String) {
   account {
-    listDefaultAccounts(memberId: $memberId, productId: $productId) {
+    listDefaultAccounts(
+      memberId: $memberId
+      productId: $productId
+      groupId: $groupId
+    ) {
       data {
         id
         accountName
@@ -70025,11 +70038,20 @@ export const ListGroupMemberDocument = `
         edges {
           node {
             id
-            memberId
-            objState
-            memberCode
-            memberName
-            memberId
+            name
+            code
+            branch
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+            }
+            profilePicUrl
+            gender
+            age
+            maritalStatus
           }
           cursor
         }
@@ -80957,6 +80979,7 @@ export const GetDepositListDataDocument = `
           profilePicUrl
           agentPicUrl
           branchName
+          groupName
         }
         cursor
       }
@@ -80998,6 +81021,7 @@ export const GetWithdrawListDataDocument = `
           date
           profilePicUrl
           branchName
+          groupName
         }
         cursor
       }

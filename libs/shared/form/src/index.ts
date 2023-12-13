@@ -30,6 +30,7 @@ export * from './controllers/FormLedgerTagSelect/FormLedgerTagSelect';
 export * from './controllers/FormMap/FormMap';
 export * from './controllers/FormMemberSelect/FormMemberSelect';
 export * from './controllers/FormMemberSelect/useMemberSelect';
+export * from './controllers/FormMFGroupSelect/FormMFGroupSelect';
 export * from './controllers/FormNumberInput/FormNumberInput';
 export * from './controllers/FormOrganizationSelect/FormOrganizationSelect';
 export * from './controllers/FormPasswordInput/FormPasswordInput';

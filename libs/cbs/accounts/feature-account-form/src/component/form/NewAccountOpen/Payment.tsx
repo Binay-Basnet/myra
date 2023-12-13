@@ -139,6 +139,8 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
       setValue('openingPayment.cash.disableDenomination', true);
   });
 
+  const groupId = watch('groupId');
+
   return (
     <ContainerWithDivider
       borderRight="1px"
@@ -203,7 +205,11 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
 
             {isDiffMember && (
               <GridItem colSpan={3}>
-                <FormMemberSelect name="openingPayment.withdrawSlip.memberId" label="Member" />
+                <FormMemberSelect
+                  name="openingPayment.withdrawSlip.memberId"
+                  label="Member"
+                  groupId={groupId}
+                />
               </GridItem>
             )}
 
@@ -214,6 +220,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
                 memberId={isDiffMember ? dmemberId : memberId}
                 label="Account Name"
                 filterBy={ObjState.Active}
+                groupId={groupId}
               />
             </GridItem>
             <GridItem colSpan={1}>

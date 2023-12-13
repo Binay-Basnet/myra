@@ -282,11 +282,20 @@ query listGroupMember($pagination: Pagination, $filter: Filter) {
         edges {
           node {
             id
-            memberId
-            objState
-            memberCode
-            memberName
-            memberId
+            name
+            code
+            branch
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+            }
+            profilePicUrl
+            gender
+            age
+            maritalStatus
           }
           cursor
         }

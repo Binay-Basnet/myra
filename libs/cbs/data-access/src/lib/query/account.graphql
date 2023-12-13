@@ -367,6 +367,7 @@ query getAccountTableListMinimal($paginate: Pagination, $filter: Filter) {
             isMandatorySaving
           }
           installmentAmount
+          groupName
         }
       }
     }
@@ -497,9 +498,9 @@ query getBulkInstallmentsData($ids: [ID]!) {
   }
 }
 
-query getDefaultAccountList($productId: ID!, $memberId: ID!) {
+query getDefaultAccountList($productId: ID!, $memberId: ID!, $groupId: String) {
   account {
-    listDefaultAccounts(memberId: $memberId, productId: $productId) {
+    listDefaultAccounts(memberId: $memberId, productId: $productId, groupId: $groupId) {
       data {
         id
         accountName
