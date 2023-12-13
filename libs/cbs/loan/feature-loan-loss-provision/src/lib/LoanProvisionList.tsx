@@ -19,10 +19,10 @@ export const LoanProvisionList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'date',
         header: 'Provision Date',
         accessorFn: (row) => localizedDate(row?.node?.date),
         enableSorting: true,
-        meta: { orderId: 'id' },
       },
       {
         header: 'Provision ID',
