@@ -78,6 +78,7 @@ export * from './lib/transactions/CharaKhataReport';
 export * from './lib/transactions/DailyBalanceReport';
 export * from './lib/transactions/DayBookReport';
 export * from './lib/transactions/FiscalYearReport';
+export * from './lib/transactions/JournalVoucherSummaryReport';
 export * from './lib/transactions/ProfitAndLossReport';
 export * from './lib/transactions/ServiceCenterBalanceReport';
 export * from './lib/transactions/ServiceCenterBalanceReportCOA';

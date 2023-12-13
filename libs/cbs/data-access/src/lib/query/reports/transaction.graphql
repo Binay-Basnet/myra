@@ -665,3 +665,33 @@ query getLedgerBalanceReport($data: LedgerBalanceReportInput!) {
     }
   }
 }
+
+query getJournalVoucherSummaryReport($data: JournalVoucherReportInput!) {
+  report {
+    transactionReport {
+      financial {
+        journerVoucherReport(data: $data) {
+          data {
+            journalVoucherReportList {
+              voucherId
+              voucherDate
+              notes
+              totalDebit
+              totalCredit
+              nodeData {
+                ledgerId
+                account
+                serviceCentreId
+                serviceCenter
+                debit
+                credit
+                balance
+                balanceType
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

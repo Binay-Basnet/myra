@@ -94,6 +94,7 @@ export enum Report {
   TRANSACTION_MRTRANSACTION_REPORT = 'Market Representative Transaction Report',
   TRANSACTION_TAG_KHATA_REPORT = 'Ledger Group Report',
   TRANSACTION_DAILY_BALANCE_REPORT = 'Daily Balance Report',
+  TRANSACTION_JOURNAL_VOUCHER_SUMMARY = 'Journal Voucher Summary',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -626,6 +627,13 @@ export const REPORTS: ReportType = {
       link: 'daily-balance',
       component: <Reports.DailyBalanceReport />,
       acl: 'REPORTS_TXN_DAILY_BALANCE',
+    },
+    {
+      id: '7.7.2',
+      report: Report.TRANSACTION_JOURNAL_VOUCHER_SUMMARY,
+      link: 'journal-voucher-summary',
+      component: <Reports.JournalVoucherSummary />,
+      acl: 'REPORTS_TXN_JOURNAL_VOUCHER',
     },
   ],
 

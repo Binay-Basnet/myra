@@ -1635,11 +1635,11 @@ export type AlternativeChannelServiceActivationInput = {
   bankCheque?: InputMaybe<BankChequePaymentForAlternativeChannel>;
   cash?: InputMaybe<DepositCash>;
   email?: InputMaybe<Scalars['String']>;
-  memberId?: InputMaybe<Scalars['String']>;
+  memberId: Scalars['String'];
   paymentMode: AlternativeChannelPaymentMode;
-  phoneNumber?: InputMaybe<Scalars['String']>;
+  phoneNumber: Scalars['String'];
   pin?: InputMaybe<Scalars['Int']>;
-  service?: InputMaybe<Array<InputMaybe<AlternativeChannelServiceType>>>;
+  service: Array<AlternativeChannelServiceType>;
   totalAmount?: InputMaybe<Scalars['String']>;
 };
 
@@ -5673,6 +5673,7 @@ export type DepositProduct = {
   depositFrequency?: Maybe<Frequency>;
   id: Scalars['ID'];
   interest?: Maybe<Scalars['Float']>;
+  interestPostingFrequency?: Maybe<Frequency>;
   isMandatorySaving?: Maybe<Scalars['Boolean']>;
   minimumBalance?: Maybe<Scalars['String']>;
   modifiedAt: Scalars['Time'];
@@ -12204,7 +12205,10 @@ export type JournalVoucherReportOutputData = {
 
 export type JournalVoucherReportOutputList = {
   nodeData?: Maybe<Array<Maybe<GlTransaction>>>;
-  voucherDate?: Maybe<Scalars['String']>;
+  notes?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
+  voucherDate?: Maybe<Scalars['Localized']>;
   voucherId?: Maybe<Scalars['String']>;
 };
 
@@ -17186,6 +17190,7 @@ export type MemberInactiveResult = {
 
 export type MemberIndividualData = {
   SpouseName?: Maybe<Scalars['String']>;
+  activeDate?: Maybe<Scalars['Localized']>;
   address?: Maybe<Address>;
   contactNo?: Maybe<Scalars['String']>;
   dob?: Maybe<Scalars['Localized']>;
@@ -17307,6 +17312,7 @@ export type MemberMutationUpdateKymArgs = {
 };
 
 export type MemberOtherData = {
+  activeDate?: Maybe<Scalars['Localized']>;
   address?: Maybe<Address>;
   authPersonName?: Maybe<Scalars['String']>;
   balanceSheet?: Maybe<Scalars['String']>;
@@ -20056,6 +20062,7 @@ export const Resource = {
   ReportsTxnDaybook: 'REPORTS_TXN_DAYBOOK',
   ReportsTxnFiscalYearEndAdjustmentTrialBalance:
     'REPORTS_TXN_FISCAL_YEAR_END_ADJUSTMENT_TRIAL_BALANCE',
+  ReportsTxnJournalVoucher: 'REPORTS_TXN_JOURNAL_VOUCHER',
   ReportsTxnLedgerBalance: 'REPORTS_TXN_LEDGER_BALANCE',
   ReportsTxnLedgerGroup: 'REPORTS_TXN_LEDGER_GROUP',
   ReportsTxnMarketRepresentativeTxn: 'REPORTS_TXN_MARKET_REPRESENTATIVE_TXN',
@@ -43712,6 +43719,40 @@ export type GetLedgerBalanceReportQuery = {
             balance?: { amount?: string | null; amountType?: BalanceType | null } | null;
             settledBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
           } | null> | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetJournalVoucherSummaryReportQueryVariables = Exact<{
+  data: JournalVoucherReportInput;
+}>;
+
+export type GetJournalVoucherSummaryReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        journerVoucherReport: {
+          data?: {
+            journalVoucherReportList?: Array<{
+              voucherId?: string | null;
+              voucherDate?: Record<'local' | 'en' | 'np', string> | null;
+              notes?: string | null;
+              totalDebit?: string | null;
+              totalCredit?: string | null;
+              nodeData?: Array<{
+                ledgerId?: string | null;
+                account: string;
+                serviceCentreId?: string | null;
+                serviceCenter?: string | null;
+                debit?: string | null;
+                credit?: string | null;
+                balance?: string | null;
+                balanceType?: BalanceType | null;
+              } | null> | null;
+            } | null> | null;
+          } | null;
         };
       };
     };
@@ -74754,6 +74795,51 @@ export const useGetLedgerBalanceReportQuery = <
     ['getLedgerBalanceReport', variables],
     useAxios<GetLedgerBalanceReportQuery, GetLedgerBalanceReportQueryVariables>(
       GetLedgerBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetJournalVoucherSummaryReportDocument = `
+    query getJournalVoucherSummaryReport($data: JournalVoucherReportInput!) {
+  report {
+    transactionReport {
+      financial {
+        journerVoucherReport(data: $data) {
+          data {
+            journalVoucherReportList {
+              voucherId
+              voucherDate
+              notes
+              totalDebit
+              totalCredit
+              nodeData {
+                ledgerId
+                account
+                serviceCentreId
+                serviceCenter
+                debit
+                credit
+                balance
+                balanceType
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetJournalVoucherSummaryReportQuery = <
+  TData = GetJournalVoucherSummaryReportQuery,
+  TError = unknown
+>(
+  variables: GetJournalVoucherSummaryReportQueryVariables,
+  options?: UseQueryOptions<GetJournalVoucherSummaryReportQuery, TError, TData>
+) =>
+  useQuery<GetJournalVoucherSummaryReportQuery, TError, TData>(
+    ['getJournalVoucherSummaryReport', variables],
+    useAxios<GetJournalVoucherSummaryReportQuery, GetJournalVoucherSummaryReportQueryVariables>(
+      GetJournalVoucherSummaryReportDocument
     ).bind(null, variables),
     options
   );
