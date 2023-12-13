@@ -12204,7 +12204,6 @@ export type JournalVoucherReportOutputData = {
 
 export type JournalVoucherReportOutputList = {
   nodeData?: Maybe<Array<Maybe<GlTransaction>>>;
-  notes?: Maybe<Scalars['String']>;
   voucherDate?: Maybe<Scalars['String']>;
   voucherId?: Maybe<Scalars['String']>;
 };
@@ -20057,7 +20056,6 @@ export const Resource = {
   ReportsTxnDaybook: 'REPORTS_TXN_DAYBOOK',
   ReportsTxnFiscalYearEndAdjustmentTrialBalance:
     'REPORTS_TXN_FISCAL_YEAR_END_ADJUSTMENT_TRIAL_BALANCE',
-  ReportsTxnJournalVoucher: 'REPORTS_TXN_JOURNAL_VOUCHER',
   ReportsTxnLedgerBalance: 'REPORTS_TXN_LEDGER_BALANCE',
   ReportsTxnLedgerGroup: 'REPORTS_TXN_LEDGER_GROUP',
   ReportsTxnMarketRepresentativeTxn: 'REPORTS_TXN_MARKET_REPRESENTATIVE_TXN',
@@ -22706,6 +22704,7 @@ export type SmsReportResult = {
   memberName?: Maybe<Scalars['String']>;
   memberNo?: Maybe<Scalars['String']>;
   messageSent?: Maybe<SmsStatusSent>;
+  smsConsumed?: Maybe<Scalars['Int']>;
   smsSentDate?: Maybe<Scalars['Localized']>;
   smsSentMobileNumber?: Maybe<Scalars['String']>;
   smsType?: Maybe<Scalars['String']>;
@@ -40058,6 +40057,21 @@ export type CenterDetailsQuery = {
           centerName?: string | null;
           centerId?: string | null;
           allowedBranches?: Array<string | null> | null;
+          centerCoordinator?: {
+            id?: string | null;
+            name?: string | null;
+            contactNo?: string | null;
+            email?: string | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+          } | null;
           address?: {
             state?: Record<'local' | 'en' | 'np', string> | null;
             district?: Record<'local' | 'en' | 'np', string> | null;
@@ -70009,6 +70023,24 @@ export const CenterDetailsDocument = `
           totalSaving
           centerName
           centerId
+          centerCoordinator {
+            id
+            name
+            contactNo
+            email
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+          }
           address {
             state
             district
