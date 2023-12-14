@@ -49,9 +49,6 @@ export const AllTransactionsList = () => {
         enableColumnFilter: true,
         filterFn: 'dateTime',
         enableSorting: true,
-        meta: {
-          orderId: 'createddate',
-        },
       },
       {
         header: 'Transaction Id',

@@ -50,6 +50,7 @@ export const AdjustedTransactionsList = () => {
         accessorKey: 'node.date.local',
         enableColumnFilter: true,
         filterFn: 'dateTime',
+        enableSorting: true,
       },
       {
         header: 'Fiscal Year',
