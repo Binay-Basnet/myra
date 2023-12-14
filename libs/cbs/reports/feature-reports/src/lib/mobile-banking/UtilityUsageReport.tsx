@@ -83,6 +83,9 @@ export const UtilityUsageReport = () => {
                 header: 'Date',
                 accessorKey: 'date',
                 cell: (props) => localizedDate(props?.row?.original?.date),
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Utility Type',

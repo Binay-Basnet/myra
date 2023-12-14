@@ -138,6 +138,9 @@ export const JournalVoucherSummary = () => {
                   props?.row?.original?.voucherDate?.local
                     ? localizedDate(props?.row?.original?.voucherDate)
                     : '',
+                meta: {
+                  skipExcelFormatting: true,
+                },
               },
               {
                 header: 'Ledger',

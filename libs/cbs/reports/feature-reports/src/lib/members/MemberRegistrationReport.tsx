@@ -201,6 +201,13 @@ export const MemberRegisterReport = () => {
                       header: 'Other',
                       accessorKey: 'other',
                     },
+                    {
+                      header: 'Membership Date',
+                      accessorFn: (row) => localizedDate(row?.activeDate),
+                      meta: {
+                        skipExcelFormatting: true,
+                      },
+                    },
                   ]}
                   tableTitle="Individual"
                 />
@@ -315,6 +322,13 @@ export const MemberRegisterReport = () => {
                     {
                       header: 'Other',
                       accessorKey: 'other',
+                    },
+                    {
+                      header: 'Membership Date',
+                      accessorFn: (row) => localizedDate(row?.activeDate),
+                      meta: {
+                        skipExcelFormatting: true,
+                      },
                     },
                   ]}
                   tableTitle="Other"

@@ -32737,6 +32737,7 @@ export type GetLedgerAccountsForTransferQuery = {
           transferBalance: string;
           currentBalance: { amount?: string | null; amountType?: BalanceType | null };
           newBalance: { amount?: string | null; amountType?: BalanceType | null };
+          balanceAt: { amount?: string | null; amountType?: BalanceType | null };
         } | null> | null;
       };
     };
@@ -42137,6 +42138,7 @@ export type GetMemberRegistrationReportQuery = {
             email?: string | null;
             other?: string | null;
             panVatNo?: string | null;
+            activeDate?: Record<'local' | 'en' | 'np', string> | null;
             address?: AddressFragment | null;
             shareInfo?: {
               perShareAmount?: string | null;
@@ -42161,6 +42163,7 @@ export type GetMemberRegistrationReportQuery = {
             email?: string | null;
             other?: string | null;
             panVatNo?: string | null;
+            activeDate?: Record<'local' | 'en' | 'np', string> | null;
             address?: AddressFragment | null;
             shareInfo?: {
               perShareAmount?: string | null;
@@ -60573,6 +60576,10 @@ export const GetLedgerAccountsForTransferDocument = `
             amount
             amountType
           }
+          balanceAt {
+            amount
+            amountType
+          }
         }
       }
     }
@@ -72760,6 +72767,7 @@ export const GetMemberRegistrationReportDocument = `
             email
             other
             panVatNo
+            activeDate
           }
           other {
             memberId
@@ -72786,6 +72794,7 @@ export const GetMemberRegistrationReportDocument = `
             email
             other
             panVatNo
+            activeDate
           }
         }
       }

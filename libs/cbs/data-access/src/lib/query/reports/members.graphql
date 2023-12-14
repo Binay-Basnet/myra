@@ -142,6 +142,7 @@ query getMemberRegistrationReport($data: MemberRegistrationReportData) {
             email
             other
             panVatNo
+            activeDate
           }
           other {
             memberId
@@ -168,6 +169,7 @@ query getMemberRegistrationReport($data: MemberRegistrationReportData) {
             email
             other
             panVatNo
+            activeDate
           }
         }
       }
