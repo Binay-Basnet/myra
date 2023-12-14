@@ -32169,6 +32169,7 @@ export type GetAccountDetailsDataQuery = {
           withdrawRestricted?: boolean | null;
           interest?: number | null;
           depositFrequency?: Frequency | null;
+          interestPostingFrequency?: Frequency | null;
           accountClosingCharge?: Array<{
             serviceName?: string | null;
             ledgerName?: string | null;
@@ -59794,6 +59795,7 @@ export const GetAccountDetailsDataDocument = `
           }
           interest
           depositFrequency
+          interestPostingFrequency
         }
         dues {
           fine

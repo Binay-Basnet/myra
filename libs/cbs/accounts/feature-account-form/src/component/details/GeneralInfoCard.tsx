@@ -29,6 +29,7 @@ interface IGeneralInfoCardProps {
     installmentAmount?: string | null;
     signaturePicUrl?: string | null;
     minorName: string | null | undefined;
+    interestPostingFrequency?: string | null;
   };
   // accountTypes?: {
   //   SAVING: string;
@@ -89,6 +90,10 @@ export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => {
               ? null
               : `${Number(data?.interestRate || 0)?.toFixed(2)} %`
           }
+        />
+        <DetailCardContent
+          title="Interest Posting Frequency"
+          subtitle={data?.interestPostingFrequency || '-'}
         />
         <DetailCardContent title="Guarantee Amount" subtitle={data?.guaranteedAmount ?? '0'} />
         <DetailCardContent title="Tenure" subtitle={data?.accountTenure ?? '-'} />

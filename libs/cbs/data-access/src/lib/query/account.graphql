@@ -591,6 +591,7 @@ query getAccountDetailsData($id: ID!) {
           }
           interest
           depositFrequency
+          interestPostingFrequency
         }
         dues {
           fine
