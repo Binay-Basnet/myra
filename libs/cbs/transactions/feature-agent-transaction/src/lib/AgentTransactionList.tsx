@@ -29,9 +29,11 @@ export const AgentTransactionList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'date',
         header: 'Date',
         accessorFn: (row) => row?.node?.date?.local,
         cell: (props) => localizedDate(props?.row?.original?.node?.date),
+        enableSorting: true,
       },
       {
         header: 'MR Transaction ID',
