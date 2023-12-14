@@ -1,5 +1,6 @@
 import { AiOutlineEye } from 'react-icons/ai';
 import { RiFile3Fill } from 'react-icons/ri';
+import Image from 'next/image';
 import {
   Modal,
   ModalCloseButton,
@@ -35,7 +36,12 @@ export const FileViewer = ({ fileName, fileUrl, type }: FileViewerProps) => {
       gap="s8"
     >
       <Box display="flex" px="s16" py="s8" gap="s20" alignItems="center" flex={1}>
-        <Icon as={RiFile3Fill} size="lg" color="primary.500" />
+        {fileUrl ? (
+          <Image src={fileUrl as string} alt="fileUrl" width="50" height="50" />
+        ) : (
+          <Icon as={RiFile3Fill} size="lg" color="primary.500" />
+        )}
+
         <Box display="flex" flexDirection="column" gap="s4" maxW="250px">
           <Text fontSize="r1" fontWeight="500" noOfLines={1} wordBreak="break-all">
             {fileName}
@@ -56,7 +62,7 @@ export const FileViewer = ({ fileName, fileUrl, type }: FileViewerProps) => {
 
         <ModalContent display="flex" alignItems="center" justifyContent="center" minHeight="300px">
           <ModalCloseButton _focus={{ boxShadow: 'none' }} />
-          <img src={fileUrl} alt="fileUrl" />
+          <Image src={fileUrl as string} alt="fileUrl" width="600" height="600" />
         </ModalContent>
       </Modal>
     </Box>

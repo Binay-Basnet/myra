@@ -51,6 +51,13 @@ export const GroupMeetingsDetails = () => {
             </Text>
           </Box>
           <Divider />
+          <Box p="s16">
+            <Text fontSize="r1" fontWeight="semibold" color="primary.500">
+              {meetingsDetailsData?.oveview?.groupName}
+            </Text>
+            <Text fontSize="s3">{meetingsDetailsData?.oveview?.groupCode}</Text>
+          </Box>
+          <Divider />
           <DetailPageTabs tabs={['Overview', 'Attendance', 'Decision', 'Documents']} />
         </Box>
 

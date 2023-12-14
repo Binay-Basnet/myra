@@ -59,12 +59,13 @@ export const GroupMeetingsAdd = () => {
     },
   });
   const groupMember = groupMembersData?.microFinance?.group?.listGroupMembers?.edges;
-
   useEffect(() => {
-    setValue(
-      'memberIds',
-      groupMember?.map((item) => item?.node)
-    );
+    const groupMembersArray = groupMember?.map((item) => ({
+      id: item?.node?.id,
+      memberName: item?.node?.name?.local,
+    }));
+
+    setValue('memberIds', groupMembersArray);
   }, [groupMember]);
 
   const submitForm = () => {
