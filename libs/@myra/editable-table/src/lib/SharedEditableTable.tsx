@@ -597,6 +597,7 @@ const EditableSearch = <T extends RecordWithId & Record<string, EditableValue>>(
           debouncedSearch(e);
         }}
         variant="filled"
+        isDisabled={searchColumn?.getDisabled && searchColumn?.getDisabled({} as T)}
       />
 
       <AutoCompleteList
