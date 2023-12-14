@@ -19,6 +19,10 @@ query getLedgerAccountsForTransfer($input: LedgerBalanceTransferRequestInput!) {
             amount
             amountType
           }
+          balanceAt {
+            amount
+            amountType
+          }
         }
       }
     }
