@@ -106,7 +106,7 @@ export const FormAccountSelect = ({
     }
 
     return temp;
-  }, [filterBy, natureOfDepositProduct, groupId]);
+  }, [filterBy, natureOfDepositProduct, groupId, memberId]);
 
   const { data: groupAccountList } = useGetAccountTableListQuery(
     {
@@ -121,7 +121,7 @@ export const FormAccountSelect = ({
           }
         : null,
     },
-    { enabled: !!groupId }
+    { enabled: !!groupId && !!memberId }
   );
 
   const linkedAccountsOptions: Option[] =
