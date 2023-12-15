@@ -88,6 +88,8 @@ export const GroupMeetingsAdd = () => {
           memberIds: values?.memberIds?.map((item: { id: string; invited: boolean }) => ({
             id: item?.id,
             invited: item?.invited || false,
+            attended: false,
+            sendSms: false,
           })),
         } as MfMeetingInput,
       }),

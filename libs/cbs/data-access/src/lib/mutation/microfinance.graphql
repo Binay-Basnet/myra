@@ -88,3 +88,16 @@ mutation addMFDocuments($meetingId: ID!, $input: MFMeetingDocumentsInput!) {
     }
   }
 }
+
+mutation changeMeetingStatus($meetingID: ID!, $input: MFMeetingStatus!) {
+  microFinance {
+    groupMeeting {
+      changeStatus(meetingID: $meetingID, input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

@@ -9231,13 +9231,6 @@ export type GroupBalanceHistory = {
   trend?: Maybe<Array<Maybe<Scalars['Int']>>>;
 };
 
-export const GroupMeetingStatus = {
-  AttendancePending: 'ATTENDANCE_PENDING',
-  Completed: 'COMPLETED',
-  DecisionPending: 'DECISION_PENDING',
-} as const;
-
-export type GroupMeetingStatus = typeof GroupMeetingStatus[keyof typeof GroupMeetingStatus];
 export type GuaranteeAccountsMinView = {
   loanAccountName?: Maybe<Scalars['String']>;
   loanId?: Maybe<Scalars['String']>;
@@ -16606,7 +16599,7 @@ export type MfGroupResult = {
 };
 
 export type MfMeetingAttendanceInput = {
-  attendedMembers?: InputMaybe<Array<InputMaybe<MembersAttended>>>;
+  attendedMembers?: InputMaybe<Array<InputMaybe<MembersInvited>>>;
   meetingId: Scalars['ID'];
 };
 
@@ -16658,10 +16651,12 @@ export type MfMeetingInput = {
 };
 
 export type MfMeetingMembers = {
+  attended?: Maybe<Scalars['Boolean']>;
   code?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
-  isPresent?: Maybe<Scalars['Boolean']>;
+  invited?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
+  sendSms?: Maybe<Scalars['Boolean']>;
 };
 
 export type MfMeetingNode = {
@@ -16680,7 +16675,7 @@ export type MfMeetingOverview = {
   membersInvited?: Maybe<Scalars['Int']>;
   presentMembers?: Maybe<Scalars['Int']>;
   startTime?: Maybe<Scalars['Time']>;
-  status?: Maybe<GroupMeetingStatus>;
+  status?: Maybe<MfMeetingStatus>;
 };
 
 export type MfMeetingResult = {
@@ -16688,6 +16683,12 @@ export type MfMeetingResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export const MfMeetingStatus = {
+  Completed: 'COMPLETED',
+  Pending: 'PENDING',
+} as const;
+
+export type MfMeetingStatus = typeof MfMeetingStatus[keyof typeof MfMeetingStatus];
 export const MfObjectState = {
   Active: 'ACTIVE',
   Inactive: 'INACTIVE',
@@ -16823,7 +16824,7 @@ export type Meetings = {
   date?: Maybe<Scalars['Localized']>;
   endTime?: Maybe<Scalars['Time']>;
   startTime?: Maybe<Scalars['Time']>;
-  status?: Maybe<GroupMeetingStatus>;
+  status?: Maybe<MfMeetingStatus>;
   totalMember?: Maybe<Scalars['Int']>;
 };
 
@@ -17869,14 +17870,11 @@ export type MemberWithDrawSlipIssueStatus = {
   type?: Maybe<Scalars['String']>;
 };
 
-export type MembersAttended = {
+export type MembersInvited = {
   attended: Scalars['Boolean'];
   id: Scalars['String'];
-};
-
-export type MembersInvited = {
-  id: Scalars['String'];
   invited: Scalars['Boolean'];
+  sendSms: Scalars['Boolean'];
 };
 
 export type MembershipFeeLedgers = {
@@ -17976,6 +17974,7 @@ export type MicroFinanceGroupMeetingMutation = {
   addAttendance?: Maybe<MfMeetingResult>;
   addDocuments?: Maybe<MfMeetingResult>;
   addMembers?: Maybe<MfMeetingResult>;
+  changeStatus?: Maybe<MfMeetingResult>;
   upsertDecision?: Maybe<MfMeetingResult>;
   upsertMeeting?: Maybe<MfMeetingResult>;
 };
@@ -17991,7 +17990,12 @@ export type MicroFinanceGroupMeetingMutationAddDocumentsArgs = {
 
 export type MicroFinanceGroupMeetingMutationAddMembersArgs = {
   meetingId: Scalars['ID'];
-  members?: InputMaybe<Array<InputMaybe<MembersAttended>>>;
+  members?: InputMaybe<Array<InputMaybe<MembersInvited>>>;
+};
+
+export type MicroFinanceGroupMeetingMutationChangeStatusArgs = {
+  input: MfMeetingStatus;
+  meetingID: Scalars['ID'];
 };
 
 export type MicroFinanceGroupMeetingMutationUpsertDecisionArgs = {
@@ -18054,6 +18058,7 @@ export type MicroFinanceGroupQueryListGroupArgs = {
 
 export type MicroFinanceGroupQueryListGroupMembersArgs = {
   filter?: InputMaybe<Filter>;
+  groupID: Scalars['String'];
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -19190,6 +19195,8 @@ export type PayrollRunRecord = {
   taxableIncome?: Maybe<Scalars['String']>;
   totalTax?: Maybe<Scalars['String']>;
   unpaidDays?: Maybe<Scalars['Int']>;
+  usedType?: Maybe<Scalars['String']>;
+  usedTypeId?: Maybe<Scalars['String']>;
   year?: Maybe<Scalars['Int']>;
 };
 
@@ -28096,6 +28103,27 @@ export type AddMfDocumentsMutation = {
   microFinance: {
     groupMeeting: {
       addDocuments?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type ChangeMeetingStatusMutationVariables = Exact<{
+  meetingID: Scalars['ID'];
+  input: MfMeetingStatus;
+}>;
+
+export type ChangeMeetingStatusMutation = {
+  microFinance: {
+    groupMeeting: {
+      changeStatus?: {
         recordId?: string | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -40152,7 +40180,7 @@ export type ListMfMeetingsQuery = {
             endTime?: string | null;
             membersInvited?: number | null;
             presentMembers?: number | null;
-            status?: GroupMeetingStatus | null;
+            status?: MfMeetingStatus | null;
           } | null;
         } | null> | null;
         pageInfo?: PaginationFragment | null;
@@ -40164,6 +40192,7 @@ export type ListMfMeetingsQuery = {
 export type ListGroupMemberQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
+  groupID: Scalars['String'];
 }>;
 
 export type ListGroupMemberQuery = {
@@ -40268,12 +40297,14 @@ export type MfMeetingsDetailsQuery = {
           endTime?: string | null;
           membersInvited?: number | null;
           presentMembers?: number | null;
-          status?: GroupMeetingStatus | null;
+          status?: MfMeetingStatus | null;
         } | null;
         attendance?: Array<{
           id: string;
           name?: string | null;
-          isPresent?: boolean | null;
+          attended?: boolean | null;
+          invited?: boolean | null;
+          sendSms?: boolean | null;
         } | null> | null;
         decision?: {
           note?: string | null;
@@ -53998,6 +54029,35 @@ export const useAddMfDocumentsMutation = <TError = unknown, TContext = unknown>(
   useMutation<AddMfDocumentsMutation, TError, AddMfDocumentsMutationVariables, TContext>(
     ['addMFDocuments'],
     useAxios<AddMfDocumentsMutation, AddMfDocumentsMutationVariables>(AddMfDocumentsDocument),
+    options
+  );
+export const ChangeMeetingStatusDocument = `
+    mutation changeMeetingStatus($meetingID: ID!, $input: MFMeetingStatus!) {
+  microFinance {
+    groupMeeting {
+      changeStatus(meetingID: $meetingID, input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useChangeMeetingStatusMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ChangeMeetingStatusMutation,
+    TError,
+    ChangeMeetingStatusMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ChangeMeetingStatusMutation, TError, ChangeMeetingStatusMutationVariables, TContext>(
+    ['changeMeetingStatus'],
+    useAxios<ChangeMeetingStatusMutation, ChangeMeetingStatusMutationVariables>(
+      ChangeMeetingStatusDocument
+    ),
     options
   );
 export const SetOrganizationDataDocument = `
@@ -70204,10 +70264,10 @@ export const useListMfMeetingsQuery = <TData = ListMfMeetingsQuery, TError = unk
     options
   );
 export const ListGroupMemberDocument = `
-    query listGroupMember($pagination: Pagination, $filter: Filter) {
+    query listGroupMember($pagination: Pagination, $filter: Filter, $groupID: String!) {
   microFinance {
     group {
-      listGroupMembers(pagination: $pagination, filter: $filter) {
+      listGroupMembers(pagination: $pagination, filter: $filter, groupID: $groupID) {
         totalCount
         edges {
           node {
@@ -70238,11 +70298,11 @@ export const ListGroupMemberDocument = `
 }
     ${PaginationFragmentDoc}`;
 export const useListGroupMemberQuery = <TData = ListGroupMemberQuery, TError = unknown>(
-  variables?: ListGroupMemberQueryVariables,
+  variables: ListGroupMemberQueryVariables,
   options?: UseQueryOptions<ListGroupMemberQuery, TError, TData>
 ) =>
   useQuery<ListGroupMemberQuery, TError, TData>(
-    variables === undefined ? ['listGroupMember'] : ['listGroupMember', variables],
+    ['listGroupMember', variables],
     useAxios<ListGroupMemberQuery, ListGroupMemberQueryVariables>(ListGroupMemberDocument).bind(
       null,
       variables
@@ -70328,7 +70388,9 @@ export const MfMeetingsDetailsDocument = `
         attendance {
           id
           name
-          isPresent
+          attended
+          invited
+          sendSms
         }
         decision {
           note

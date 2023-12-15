@@ -1,14 +1,30 @@
+import { IoIosArrowDown } from 'react-icons/io';
 import { useRouter } from 'next/router';
+import { PopoverContent, Portal } from '@chakra-ui/react';
+import { ApprovalStatusItem } from 'libs/cbs/requests/feature-lists/src/components/ApprovalStatusItem';
 
-import { Alert, Box, DetailPageQuickLinks } from '@myra-ui';
+import { Alert, Box, DetailPageQuickLinks, Icon, Popover, PopoverTrigger } from '@myra-ui';
 
-import { MfDecisions, MfMeetingOverview } from '@coop/cbs/data-access';
+import { MfDecisions, MfMeetingOverview, MfMeetingStatus } from '@coop/cbs/data-access';
 import { readableTimeParser, ROUTES } from '@coop/cbs/utils';
 import {
   DetailsKeyValueCard,
   DetailsKeyValueCards,
   DetailsPageHeaderBox,
 } from '@coop/shared/components';
+
+import PopoverItem from './sub-components/PopoverItem';
+
+const popOverItemData = [
+  {
+    itemColor: 'yellow.500',
+    itemText: 'Pending',
+  },
+  {
+    itemColor: 'green.300',
+    itemText: 'Completed',
+  },
+];
 
 export const Overview = (props: { data: MfMeetingOverview; decision: MfDecisions }) => {
   const { data, decision } = props;
@@ -24,7 +40,35 @@ export const Overview = (props: { data: MfMeetingOverview; decision: MfDecisions
 
   return (
     <>
-      <DetailsPageHeaderBox title="Overview" />
+      <DetailsPageHeaderBox title="Overview">
+        <Box display="flex" alignItems="center" gap="s8">
+          <ApprovalStatusItem status={data?.status as MfMeetingStatus} />
+
+          <Popover isLazy placement="bottom-start" colorScheme="primary">
+            {({ onClose }) => (
+              <>
+                <PopoverTrigger>
+                  <Box as="button" display="flex" alignItems="center">
+                    <Icon size="sm" as={IoIosArrowDown} />
+                  </Box>
+                </PopoverTrigger>
+                <Portal>
+                  <PopoverContent w="100%" boxShadow="E2" border="none" borderRadius="br2">
+                    {popOverItemData?.map((item) => (
+                      <PopoverItem
+                        itemColor={item?.itemColor}
+                        itemText={item?.itemText}
+                        id={router?.query?.['id'] as string}
+                        onClose={onClose}
+                      />
+                    ))}
+                  </PopoverContent>
+                </Portal>
+              </>
+            )}
+          </Popover>
+        </Box>
+      </DetailsPageHeaderBox>
       <Box px="s24">
         {' '}
         <DetailPageQuickLinks links={links} />

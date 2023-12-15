@@ -92,7 +92,10 @@ export const FormAccountSelect = ({
   const linkedAccounts = linkedAccountData?.members?.getAllAccounts?.data?.depositAccount;
 
   const groupConditions: Condition[] = useMemo(() => {
-    const temp: Condition[] = [{ column: 'groupId', comparator: 'EqualTo', value: groupId }];
+    const temp: Condition[] = [
+      { column: 'groupId', comparator: 'EqualTo', value: groupId },
+      { column: 'memberId', comparator: 'EqualTo', value: memberId },
+    ];
 
     if (filterBy) {
       temp.push({ column: 'objState', comparator: 'EqualTo', value: filterBy });

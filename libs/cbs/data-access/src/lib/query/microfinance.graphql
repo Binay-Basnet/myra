@@ -140,10 +140,10 @@ query listMFMeetings($pagination: Pagination, $filter: Filter) {
   }
 }
 
-query listGroupMember($pagination: Pagination, $filter: Filter) {
+query listGroupMember($pagination: Pagination, $filter: Filter, $groupID: String!) {
   microFinance {
     group {
-      listGroupMembers(pagination: $pagination, filter: $filter) {
+      listGroupMembers(pagination: $pagination, filter: $filter, groupID: $groupID) {
         totalCount
         edges {
           node {
@@ -238,7 +238,9 @@ query mfMeetingsDetails($meetingID: ID!) {
         attendance {
           id
           name
-          isPresent
+          attended
+          invited
+          sendSms
         }
         decision {
           note

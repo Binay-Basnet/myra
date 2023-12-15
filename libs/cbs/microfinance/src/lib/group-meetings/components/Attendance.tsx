@@ -37,9 +37,11 @@ export const Attendance = (props: { data: MfMeetingMembers[] }) => {
         data: {
           meetingId: router?.query?.['id'] as string,
           attendedMembers: values?.attendedMembers?.map(
-            (item: { id: string; invited: boolean }) => ({
+            (item: { id: string; invited: boolean; attended: boolean; sendSms: boolean }) => ({
               id: item?.id,
-              attended: item?.invited || false,
+              invited: item?.invited || false,
+              attended: item?.attended || false,
+              sendSms: item?.sendSms || false,
             })
           ),
         },
@@ -69,6 +71,16 @@ export const Attendance = (props: { data: MfMeetingMembers[] }) => {
                 {
                   accessor: 'invited',
                   header: 'Invite',
+                  fieldType: 'checkbox',
+                },
+                {
+                  accessor: 'attended',
+                  header: 'Attended',
+                  fieldType: 'checkbox',
+                },
+                {
+                  accessor: 'sendSms',
+                  header: 'Send SMS',
                   fieldType: 'checkbox',
                 },
               ]}

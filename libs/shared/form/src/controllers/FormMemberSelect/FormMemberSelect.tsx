@@ -178,11 +178,9 @@ export const FormMemberSelect = ({
   const { data: groupMembersData, isFetching: isGroupMemberFetching } = useListGroupMemberQuery(
     {
       pagination: { ...getPaginationQuery(), first: 20 },
+      groupID: groupId as string,
       filter: {
         query: IDMember,
-        orConditions: [
-          { andConditions: [{ column: 'groupId', comparator: 'EqualTo', value: groupId }] },
-        ],
       },
     },
     { enabled: !!groupId }
