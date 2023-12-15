@@ -48,16 +48,13 @@ export const GroupMeetingsAdd = () => {
 
   const groupIdWatch = watch('groupId');
 
-  const { data: groupMembersData } = useListGroupMemberQuery({
-    pagination: getPaginationQuery(),
-    filter: {
-      orConditions: [
-        {
-          andConditions: [{ column: 'groupId', comparator: 'EqualTo', value: groupIdWatch }],
-        },
-      ],
+  const { data: groupMembersData } = useListGroupMemberQuery(
+    {
+      pagination: getPaginationQuery(),
+      groupID: groupIdWatch,
     },
-  });
+    { enabled: !!groupIdWatch }
+  );
   const groupMember = groupMembersData?.microFinance?.group?.listGroupMembers?.edges;
   useEffect(() => {
     const groupMembersArray = groupMember?.map((item) => ({
