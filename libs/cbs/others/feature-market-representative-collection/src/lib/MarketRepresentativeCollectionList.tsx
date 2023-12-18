@@ -28,6 +28,10 @@ export const MarketRepresentativeCollectionList = () => {
         header: 'Date',
         accessorFn: (row) => row?.node?.date?.local,
         cell: (props) => localizedDate(props?.row?.original?.node?.date),
+        meta: {
+          orderId: 'id',
+        },
+        enableSorting: true,
       },
       {
         header: 'MR Transaction ID',

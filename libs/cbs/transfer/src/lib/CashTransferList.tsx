@@ -70,6 +70,10 @@ export const CashTransferList = () => {
         accessorFn: (row) => localizedDate(row?.node?.transactionDate),
         cell: (props) => localizedDate(props?.row?.original?.node?.transactionDate),
         enableColumnFilter: true,
+        enableSorting: true,
+        meta: {
+          orderId: 'id',
+        },
         filterFn: 'dateTime',
       },
       {

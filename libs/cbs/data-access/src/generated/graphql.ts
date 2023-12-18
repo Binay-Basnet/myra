@@ -60,6 +60,7 @@ export type AllTransactionFilterMapping = {
   branchId: Array<LabelValueArray>;
   fiscalYear: Array<LabelValueArray>;
   txnType: Array<LabelValueArray>;
+  userId: Array<LabelValueArray>;
 };
 
 export type AbbsTransaction = {
@@ -49051,6 +49052,7 @@ export type GetAllTransactionFilterMappingQuery = {
       allTransaction?: {
         branchId: Array<OptionTypeFragment>;
         txnType: Array<OptionTypeFragment>;
+        userId: Array<OptionTypeFragment>;
       } | null;
     } | null;
   };
@@ -82194,6 +82196,9 @@ export const GetAllTransactionFilterMappingDocument = `
           ...OptionType
         }
         txnType {
+          ...OptionType
+        }
+        userId {
           ...OptionType
         }
       }

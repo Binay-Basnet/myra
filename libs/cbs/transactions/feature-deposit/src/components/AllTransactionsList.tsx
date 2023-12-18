@@ -90,8 +90,15 @@ export const AllTransactionsList = () => {
         },
       },
       {
+        id: 'userId',
         header: 'User',
         accessorFn: (row) => row?.node?.userName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.userId,
+          },
+        },
       },
 
       {

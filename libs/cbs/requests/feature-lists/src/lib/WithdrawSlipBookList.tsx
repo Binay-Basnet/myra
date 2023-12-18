@@ -51,9 +51,11 @@ export const WithdrawSlipBookList = () => {
   const columns = React.useMemo<Column<typeof chequeBookRequests[0]>[]>(
     () => [
       {
+        id: 'requestedDate',
         header: 'Issued Date',
         accessorFn: (row) => localizedDate(row?.node?.requestedDate),
         cell: (props) => localizedDate(props?.row?.original?.node?.requestedDate),
+        enableSorting: true,
       },
       {
         header: 'ID',

@@ -51,6 +51,7 @@ export const VaultTransferList = () => {
         cell: (props) => localizedDate(props?.row?.original?.node?.date),
         filterFn: 'dateTime',
         enableColumnFilter: true,
+        enableSorting: true,
       },
       {
         header: 'Transfer Code',

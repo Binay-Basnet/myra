@@ -691,6 +691,9 @@ query getAllTransactionFilterMapping {
         txnType {
           ...OptionType
         }
+        userId {
+          ...OptionType
+        }
       }
     }
   }

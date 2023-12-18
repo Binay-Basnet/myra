@@ -64,6 +64,7 @@ export const TellerTransferList = () => {
         accessorFn: (row) => localizedDate(row?.node?.date),
         cell: (props) => localizedDate(props?.row?.original?.node?.date),
         enableColumnFilter: true,
+        enableSorting: true,
         filterFn: 'dateTime',
       },
       {

@@ -34,7 +34,11 @@ export const LoanRequestList = () => {
         accessorFn: (row) => row?.node?.lastModifiedDate,
         cell: (props) => props?.row?.original?.node?.lastModifiedDate,
         enableColumnFilter: true,
+        enableSorting: true,
         filterFn: 'dateTime',
+        meta: {
+          orderId: 'id',
+        },
       },
       {
         header: 'Request ID',

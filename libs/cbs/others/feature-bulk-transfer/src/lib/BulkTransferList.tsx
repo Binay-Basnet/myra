@@ -22,6 +22,10 @@ export const BulkTransferList = () => {
         id: 'transferDate',
         header: () => 'Transfer Date',
         accessorFn: (row) => localizedDate(row?.node?.transferDate),
+        meta: {
+          orderId: 'id',
+        },
+        enableSorting: true,
       },
       {
         id: 'transferType',

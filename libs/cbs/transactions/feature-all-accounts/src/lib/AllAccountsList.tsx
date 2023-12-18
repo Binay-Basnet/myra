@@ -31,6 +31,10 @@ export const AllAccountsList = () => {
         cell: (props) => localizedDate(props?.row?.original?.node?.accountOpenDate),
         enableColumnFilter: true,
         filterFn: 'dateTime',
+        meta: {
+          orderId: 'id',
+        },
+        enableSorting: true,
       },
       {
         header: 'Account Id',

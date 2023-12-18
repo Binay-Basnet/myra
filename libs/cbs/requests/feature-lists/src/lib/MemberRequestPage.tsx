@@ -36,7 +36,11 @@ export const MemberRequestPage = () => {
         accessorFn: (row) => localizedDate(row?.node?.requestedDate),
         cell: (props) => localizedDate(props?.row?.original?.node?.requestedDate),
         enableColumnFilter: true,
+        enableSorting: true,
         filterFn: 'dateTime',
+        meta: {
+          orderId: 'id',
+        },
       },
       {
         header: 'Request ID',

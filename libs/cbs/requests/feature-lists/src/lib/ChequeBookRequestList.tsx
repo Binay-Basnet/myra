@@ -55,6 +55,7 @@ export const ChequeBookRequestList = () => {
         accessorFn: (row) => localizedDate(row?.node?.requestedDate),
         cell: (props) => localizedDate(props?.row?.original?.node?.requestedDate),
         enableColumnFilter: true,
+        enableSorting: true,
         filterFn: 'dateTime',
       },
       {
