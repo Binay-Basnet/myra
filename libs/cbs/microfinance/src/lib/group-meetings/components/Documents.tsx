@@ -17,7 +17,7 @@ export const Documents = () => {
   const router = useRouter();
 
   const methods = useForm();
-  const { getValues } = methods;
+  const { getValues, reset } = methods;
 
   const { data, refetch } = useListDocumentsQuery({ meetingId: router?.query?.['id'] as string });
   const documentData = data?.microFinance?.groupMeeting?.listDocuments?.data;
@@ -38,6 +38,11 @@ export const Documents = () => {
       onSuccess: () => {
         refetch();
         onClose();
+        reset({
+          title: '',
+          description: '',
+          files: null,
+        });
       },
       promise: mutateAsync({
         meetingId: router?.query?.['id'] as string,

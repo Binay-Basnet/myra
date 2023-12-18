@@ -95,7 +95,7 @@ export const GroupMeetingsAdd = () => {
 
   return (
     <FormLayout methods={methods}>
-      <FormLayout.Header title="New Microfinance Group" />
+      <FormLayout.Header title="New Microfinance Group Meetings" />
       <FormLayout.Content>
         <FormLayout.Form>
           <FormSection templateColumns={2} divider={false}>
