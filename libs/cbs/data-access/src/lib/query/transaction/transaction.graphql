@@ -155,6 +155,7 @@ query transactionDepositDetail($transactionId: ID!) {
           profilePic
           profilePicUrl
         }
+
         transactionDate
         accountId
         accountName
@@ -185,6 +186,10 @@ query transactionDepositDetail($transactionId: ID!) {
         totalCredit
         note
         txnUserName
+        groupName
+        groupId
+        centerName
+        centerId
       }
     }
   }
@@ -233,6 +238,10 @@ query transactionWithdrawDetail($transactionId: ID!) {
         totalCredit
         note
         txnUserName
+        groupName
+        groupId
+        centerName
+        centerId
       }
     }
   }
@@ -343,6 +352,10 @@ query loanRepaymentDetail($paymentId: ID!) {
           id
           url
         }
+        groupName
+        groupId
+        centerName
+        centerId
       }
     }
   }

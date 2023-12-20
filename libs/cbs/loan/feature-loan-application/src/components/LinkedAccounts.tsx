@@ -9,6 +9,7 @@ export const LinkedAccounts = () => {
   const { t } = useTranslation();
   const { watch } = useFormContext();
   const memberId = watch('memberId');
+  const groupIdWatch = watch('groupId');
 
   return (
     <Box display="flex" flexDirection="column" gap="s4">
@@ -20,6 +21,7 @@ export const LinkedAccounts = () => {
         name="linkedAccountId"
         label={t['loanProductListofallthesavingaccounts']}
         memberId={memberId as string}
+        groupId={groupIdWatch}
         isLinkedAccounts
       />
     </Box>

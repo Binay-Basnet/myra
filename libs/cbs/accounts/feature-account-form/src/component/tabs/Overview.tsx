@@ -106,6 +106,8 @@ export const Overview = () => {
     installmentAmount: accountDetails?.installmentAmount,
     minorName: accountDetails?.minorName,
     interestPostingFrequency: accountDetails?.product?.interestPostingFrequency,
+    group: accountDetails?.groupName,
+    center: accountDetails?.centerName,
   };
 
   const { lockedTransaction, from, to } = useMemo(() => {

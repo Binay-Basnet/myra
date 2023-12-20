@@ -6289,10 +6289,14 @@ export type DepositTransactionView = {
   accountId?: Maybe<Scalars['ID']>;
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
+  centerId?: Maybe<Scalars['String']>;
+  centerName?: Maybe<Scalars['String']>;
   depositedBy?: Maybe<DepositedBy>;
   depositedDate?: Maybe<Scalars['Localized']>;
   fine?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
@@ -14710,6 +14714,7 @@ export type LoanAccountQueryLoanProvisionListArgs = {
 };
 
 export type LoanAccountQueryMemberDisbursedLoanAccountsArgs = {
+  groupId?: InputMaybe<Scalars['ID']>;
   memberId: Scalars['ID'];
 };
 
@@ -14831,6 +14836,7 @@ export type LoanAgingStatementReport = {
   goodAmount?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
   installmentLateDays?: Maybe<Scalars['Int']>;
+  interestRate?: Maybe<Scalars['Float']>;
   issueDate?: Maybe<Scalars['Localized']>;
   lastInterestPaidDate?: Maybe<Scalars['Localized']>;
   lastPrincipalPaidDate?: Maybe<Scalars['Localized']>;
@@ -15139,7 +15145,11 @@ export type LoanGeneralInformation = {
   accountId: Scalars['String'];
   accountName: Scalars['String'];
   accountOpenDate: Scalars['Localized'];
+  centerId?: Maybe<Scalars['String']>;
+  centerName?: Maybe<Scalars['String']>;
   disbursedAmount?: Maybe<Scalars['String']>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   installmentBeginDate: Scalars['Localized'];
   installmentFrequency?: Maybe<InstallmentFrequency>;
   interestAccrued?: Maybe<Scalars['String']>;
@@ -15369,6 +15379,10 @@ export type LoanPreviewAdditionalFeatures = {
 };
 
 export type LoanPreviewGeneralInformation = {
+  centerID?: Maybe<Scalars['String']>;
+  centerName?: Maybe<Scalars['String']>;
+  groupID?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   installmentFrequency?: Maybe<InstallmentFrequency>;
   loanName?: Maybe<Scalars['String']>;
   loanProduct?: Maybe<Scalars['String']>;
@@ -15940,6 +15954,8 @@ export type LoanRepaymentDetail = {
   amount: Scalars['String'];
   branchId: Scalars['String'];
   branchName: Scalars['String'];
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   loanAccountId: Scalars['String'];
   loanAccountName: Scalars['String'];
@@ -16022,6 +16038,8 @@ export const LoanRepaymentScheme = {
 
 export type LoanRepaymentScheme = typeof LoanRepaymentScheme[keyof typeof LoanRepaymentScheme];
 export type LoanRepaymentView = {
+  centerId?: Maybe<Scalars['String']>;
+  centerName?: Maybe<Scalars['String']>;
   depositedBy?: Maybe<Scalars['String']>;
   depositedDate?: Maybe<Scalars['Localized']>;
   discount?: Maybe<Scalars['String']>;
@@ -16029,6 +16047,8 @@ export type LoanRepaymentView = {
   discountDocs?: Maybe<Array<Maybe<DocumentInfo>>>;
   fine?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
   installmentDetails?: Maybe<Array<Maybe<InstallmentDetailsView>>>;
   installmentNo?: Maybe<Scalars['String']>;
@@ -16862,6 +16882,7 @@ export type Member = Base & {
 
 export type MemberAccountData = {
   depositAccount?: Maybe<Array<Maybe<DepositAccount>>>;
+  groupId?: Maybe<Scalars['String']>;
   loanAccount?: Maybe<Array<Maybe<LoanAccount>>>;
   memberId?: Maybe<Scalars['String']>;
 };
@@ -16887,10 +16908,14 @@ export type MemberAccountDetails = {
   atmFacility?: Maybe<Scalars['Boolean']>;
   autoOpen?: Maybe<Scalars['Boolean']>;
   availableBalance?: Maybe<Scalars['String']>;
+  centerId?: Maybe<Scalars['String']>;
+  centerName?: Maybe<Scalars['String']>;
   chequeIssue?: Maybe<Scalars['Boolean']>;
   closedAt?: Maybe<Scalars['Localized']>;
   defaultAccountType?: Maybe<DefaultAccountType>;
   dues?: Maybe<Dues>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   guaranteedAmount?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
   insurance?: Maybe<Scalars['Boolean']>;
@@ -16940,6 +16965,7 @@ export type MemberAccountMinView = {
 export type MemberAccountResult = {
   data?: Maybe<MemberAccountData>;
   error?: Maybe<QueryError>;
+  groupId?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
 };
 
@@ -17515,6 +17541,7 @@ export type MemberQueryEntryArgs = {
 };
 
 export type MemberQueryGetAllAccountsArgs = {
+  groupID?: InputMaybe<Scalars['ID']>;
   memberId: Scalars['ID'];
 };
 
@@ -24953,9 +24980,13 @@ export type WithdrawSlipQueryListPastSlipsArgs = {
 export type WithdrawTransactionView = {
   accountId?: Maybe<Scalars['ID']>;
   accountName?: Maybe<Scalars['String']>;
+  centerId?: Maybe<Scalars['String']>;
+  centerName?: Maybe<Scalars['String']>;
   chequeNo?: Maybe<Scalars['String']>;
   fine?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   marketRepId?: Maybe<Scalars['String']>;
   marketRepName?: Maybe<Scalars['String']>;
@@ -32169,6 +32200,10 @@ export type GetAccountDetailsDataQuery = {
         accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
         closedAt?: Record<'local' | 'en' | 'np', string> | null;
         lastInstallmentUpdatedDate?: Record<'local' | 'en' | 'np', string> | null;
+        groupId?: string | null;
+        groupName?: string | null;
+        centerId?: string | null;
+        centerName?: string | null;
         member?: {
           id: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
@@ -38029,6 +38064,7 @@ export type GetLoanListQuery = {
           closedDate?: Record<'local' | 'en' | 'np', string> | null;
           appliedDate?: Record<'local' | 'en' | 'np', string> | null;
           approvedDate?: Record<'local' | 'en' | 'np', string> | null;
+          groupName?: string | null;
           member: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
@@ -38176,6 +38212,7 @@ export type GetLoanApplicationDetailsQuery = {
 
 export type GetMemberLoanAccountsQueryVariables = Exact<{
   memberId: Scalars['ID'];
+  groupId?: InputMaybe<Scalars['ID']>;
 }>;
 
 export type GetMemberLoanAccountsQuery = {
@@ -38241,6 +38278,10 @@ export type GetLoanPreviewQuery = {
           natureOfLoanProduct?: NatureOfLoanProduct | null;
           loanName?: string | null;
           productCode?: string | null;
+          groupID?: string | null;
+          groupName?: string | null;
+          centerID?: string | null;
+          centerName?: string | null;
           penalty?: {
             penaltyType?: PenaltyType | null;
             penaltyDayAfterInstallmentDate?: number | null;
@@ -38372,6 +38413,8 @@ export type GetLoanRepaymentListQuery = {
           amount: string;
           paymentDate: Record<'local' | 'en' | 'np', string>;
           branchName: string;
+          groupId?: string | null;
+          groupName?: string | null;
         } | null;
       }> | null;
       pageInfo?: {
@@ -38386,6 +38429,7 @@ export type GetLoanRepaymentListQuery = {
 
 export type GetMemberLinkedAccountsQueryVariables = Exact<{
   memberId: Scalars['ID'];
+  groupID?: InputMaybe<Scalars['ID']>;
   filter?: InputMaybe<
     Array<InputMaybe<NatureOfDepositProduct>> | InputMaybe<NatureOfDepositProduct>
   >;
@@ -48528,6 +48572,10 @@ export type TransactionDepositDetailQuery = {
         totalCredit?: string | null;
         note?: string | null;
         txnUserName?: string | null;
+        groupName?: string | null;
+        groupId?: string | null;
+        centerName?: string | null;
+        centerId?: string | null;
         member?: {
           id: string;
           code: string;
@@ -48583,6 +48631,10 @@ export type TransactionWithdrawDetailQuery = {
         totalCredit?: string | null;
         note?: string | null;
         txnUserName?: string | null;
+        groupName?: string | null;
+        groupId?: string | null;
+        centerName?: string | null;
+        centerId?: string | null;
         member?: {
           id: string;
           code: string;
@@ -48683,6 +48735,10 @@ export type LoanRepaymentDetailQuery = {
         totalRemainingInterest?: string | null;
         note?: string | null;
         discount?: string | null;
+        groupName?: string | null;
+        groupId?: string | null;
+        centerName?: string | null;
+        centerId?: string | null;
         member?: {
           id: string;
           code: string;
@@ -59877,6 +59933,10 @@ export const GetAccountDetailsDataDocument = `
           effectiveTill
         }
         lastInstallmentUpdatedDate
+        groupId
+        groupName
+        centerId
+        centerName
       }
     }
   }
@@ -67459,6 +67519,7 @@ export const GetLoanListDocument = `
           closedDate
           appliedDate
           approvedDate
+          groupName
         }
       }
       pageInfo {
@@ -67629,9 +67690,9 @@ export const useGetLoanApplicationDetailsQuery = <
     options
   );
 export const GetMemberLoanAccountsDocument = `
-    query getMemberLoanAccounts($memberId: ID!) {
+    query getMemberLoanAccounts($memberId: ID!, $groupId: ID) {
   loanAccount {
-    memberDisbursedLoanAccounts(memberId: $memberId) {
+    memberDisbursedLoanAccounts(memberId: $memberId, groupId: $groupId) {
       id
       name
     }
@@ -67730,6 +67791,10 @@ export const GetLoanPreviewDocument = `
             rebateRate
             rebateAmount
           }
+          groupID
+          groupName
+          centerID
+          centerName
         }
         loanDetails {
           appliedLoanAmount
@@ -67862,6 +67927,8 @@ export const GetLoanRepaymentListDocument = `
           amount
           paymentDate
           branchName
+          groupId
+          groupName
         }
         cursor
       }
@@ -67887,9 +67954,9 @@ export const useGetLoanRepaymentListQuery = <TData = GetLoanRepaymentListQuery, 
     options
   );
 export const GetMemberLinkedAccountsDocument = `
-    query getMemberLinkedAccounts($memberId: ID!, $filter: [NatureOfDepositProduct], $objState: AccountObjState, $includeLoc: Boolean) {
+    query getMemberLinkedAccounts($memberId: ID!, $groupID: ID, $filter: [NatureOfDepositProduct], $objState: AccountObjState, $includeLoc: Boolean) {
   members {
-    getAllAccounts(memberId: $memberId) {
+    getAllAccounts(memberId: $memberId, groupID: $groupID) {
       data {
         depositAccount(filter: $filter, objState: $objState, includeLoc: $includeLoc) {
           id
@@ -81501,6 +81568,10 @@ export const TransactionDepositDetailDocument = `
         totalCredit
         note
         txnUserName
+        groupName
+        groupId
+        centerName
+        centerId
       }
     }
   }
@@ -81564,6 +81635,10 @@ export const TransactionWithdrawDetailDocument = `
         totalCredit
         note
         txnUserName
+        groupName
+        groupId
+        centerName
+        centerId
       }
     }
   }
@@ -81702,6 +81777,10 @@ export const LoanRepaymentDetailDocument = `
           id
           url
         }
+        groupName
+        groupId
+        centerName
+        centerId
       }
     }
   }

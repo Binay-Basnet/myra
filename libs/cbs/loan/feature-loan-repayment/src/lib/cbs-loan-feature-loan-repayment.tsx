@@ -20,7 +20,14 @@ import {
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
 import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
-import { FormAmountInput, FormLayout, FormMemberSelect, FormSelect } from '@coop/shared/form';
+import {
+  FormAmountInput,
+  FormLayout,
+  FormMemberSelect,
+  FormMFGroupSelect,
+  FormSelect,
+  FormSwitchTab,
+} from '@coop/shared/form';
 import {
   amountConverter,
   amountToWordsConverter,
@@ -47,7 +54,10 @@ export type LoanRepaymentInputType = Omit<LoanRepaymentInput, 'cash'> & {
       }
     | undefined
     | null;
+  memberOrGroup?: 'member' | 'group';
+  groupId?: string;
 };
+
 const cashOptions: Record<string, string> = {
   '1000': CashValue.Cash_1000,
   '500': CashValue.Cash_500,
@@ -82,6 +92,7 @@ export const LoanRepayment = () => {
 
   const methods = useForm<LoanRepaymentInputType>({
     defaultValues: {
+      memberOrGroup: 'member',
       paymentMethod: LoanRepaymentMethod?.Cash,
       cash: {
         disableDenomination: true,
@@ -133,14 +144,17 @@ export const LoanRepayment = () => {
 
   const totalCashPaid = isDisableDenomination ? cashPaid : denominationTotal;
   const returnAmount = watch('cash.returned_amount');
+  const memberOrGroupWatch = watch('memberOrGroup');
+  const groupIdWatch = watch('groupId');
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
     useGetIndividualMemberDetails({ memberId });
   const { data, isFetching } = useGetMemberLoanAccountsQuery(
     {
       memberId,
+      groupId: groupIdWatch,
     },
-    { enabled: triggerQuery }
+    { enabled: triggerQuery && !!groupIdWatch }
   );
   useEffect(() => {
     if (memberId) {
@@ -166,7 +180,12 @@ export const LoanRepayment = () => {
   const handleSubmit = () => {
     const values = getValues();
 
-    let filteredValues = omit(values, ['isFinePaid', 'isRebateApplied']);
+    let filteredValues = omit(values, [
+      'isFinePaid',
+      'isRebateApplied',
+      'memberOrGroup',
+      'groupId',
+    ]);
 
     if (!values?.penalty?.amount) {
       filteredValues = omit(filteredValues, ['penalty']);
@@ -305,12 +324,34 @@ export const LoanRepayment = () => {
             w="100%"
             display={mode === '0' ? 'flex' : 'none'}
           >
-            <FormMemberSelect
-              isRequired
-              name="memberId"
-              label="Member"
-              isDisabled={!!redirectMemberId}
+            <FormSwitchTab
+              name="memberOrGroup"
+              options={[
+                { label: 'Member', value: 'member' },
+                { label: 'Group', value: 'group' },
+              ]}
             />
+
+            {memberOrGroupWatch === 'group' && (
+              <>
+                <FormMFGroupSelect name="groupId" label="Group" isRequired />
+
+                <FormMemberSelect
+                  isRequired
+                  name="memberId"
+                  label="Member"
+                  groupId={groupIdWatch}
+                />
+              </>
+            )}
+            {memberOrGroupWatch === 'member' && (
+              <FormMemberSelect
+                isRequired
+                name="memberId"
+                label="Member"
+                isDisabled={!!redirectMemberId}
+              />
+            )}
             {memberId && (
               <FormSelect
                 name="loanAccountId"

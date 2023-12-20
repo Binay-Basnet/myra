@@ -611,6 +611,10 @@ query getAccountDetailsData($id: ID!) {
           effectiveTill
         }
         lastInstallmentUpdatedDate
+        groupId
+        groupName
+        centerId
+        centerName
       }
     }
   }

@@ -27,7 +27,9 @@ import {
   FormInput,
   FormLayout,
   FormMemberSelect,
+  FormMFGroupSelect,
   FormSelect,
+  FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
 import { amountConverter, featureCode } from '@coop/shared/utils';
@@ -64,6 +66,7 @@ type CustomLoanAccountInput = Omit<LoanAccountInput, 'interestAuthority'> & {
   // tenure?: FrequencyTenure | null | undefined;
 
   interestAuthority?: InterestAuthority;
+  memberOrGroup?: 'member' | 'group';
 };
 
 export const NewLoanApplication = () => {
@@ -79,6 +82,7 @@ export const NewLoanApplication = () => {
     mode: 'onChange',
     defaultValues: {
       interestAuthority: InterestAuthority?.Default,
+      memberOrGroup: 'member',
     },
   });
   const { watch, resetField, setValue } = methods;
@@ -112,6 +116,10 @@ export const NewLoanApplication = () => {
   );
 
   const sendForApprovalHandler = useCallback(async () => {
+    const values = methods.getValues();
+    const filteredValues = {
+      ...omit(values, ['memberOrGroup']),
+    };
     const promise = async () => {
       if (!id) {
         const responseId = await getId({});
@@ -119,12 +127,10 @@ export const NewLoanApplication = () => {
           const response = await applyLoan({
             id: responseId.newId,
             data: {
-              ...methods.getValues(),
+              ...filteredValues,
 
-              gurantee_details: methods
-                .getValues()
-                ?.gurantee_details?.map((col) => omit(col, 'index')),
-              collateralData: methods.getValues()?.collateralData?.map((col) =>
+              gurantee_details: values?.gurantee_details?.map((col) => omit(col, 'index')),
+              collateralData: values?.collateralData?.map((col) =>
                 omit(
                   {
                     ...col,
@@ -146,12 +152,10 @@ export const NewLoanApplication = () => {
         const response = await applyLoan({
           id: id as string,
           data: {
-            ...methods.getValues(),
+            ...filteredValues,
 
-            gurantee_details: methods
-              .getValues()
-              ?.gurantee_details?.map((col) => omit(col, 'index')),
-            collateralData: methods.getValues()?.collateralData?.map((col) =>
+            gurantee_details: values?.gurantee_details?.map((col) => omit(col, 'index')),
+            collateralData: values?.collateralData?.map((col) =>
               omit(
                 {
                   ...col,
@@ -254,17 +258,20 @@ export const NewLoanApplication = () => {
     }
   }, [redirectMemberId]);
 
+  const groupIdWatch = watch('groupId');
+
   // saving accounts check list
   const { data: linkedAccountData, isFetching: isLinkAccDataFetching } =
     useGetMemberLinkedAccountsQuery(
       {
         memberId: String(memberId),
+        groupID: groupIdWatch as string,
 
         filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
         objState: 'ACTIVE',
       },
       {
-        enabled: triggerAccountlist,
+        enabled: triggerAccountlist && !!groupIdWatch,
       }
     );
   const loanLinkedData = linkedAccountData?.members?.getAllAccounts?.data?.depositAccount;
@@ -293,6 +300,8 @@ export const NewLoanApplication = () => {
       });
   }, [disbursedDate, installmentFrequency, setValue]);
 
+  const memberOrGroupWatch = watch('memberOrGroup');
+
   return (
     <FormLayout methods={methods} hasSidebar={!!memberId}>
       <FormLayout.Header title={`New Loan Application - ${featureCode.newLoanApplication} `} />
@@ -301,13 +310,36 @@ export const NewLoanApplication = () => {
         <FormLayout.Form>
           <Box display="flex" flexDirection="column" gap="s32" p="s20" w="100%">
             <Box display="flex" flexDir="column" gap="s16">
-              <FormMemberSelect
-                isRequired
-                name="memberId"
-                label="Member Id"
-                isDisabled={!!id || !!redirectMemberId}
-                isCurrentBranchMember
+              <FormSwitchTab
+                name="memberOrGroup"
+                options={[
+                  { label: 'Member', value: 'member' },
+                  { label: 'Group', value: 'group' },
+                ]}
               />
+              {memberOrGroupWatch === 'group' && (
+                <>
+                  <FormMFGroupSelect name="groupId" label="Group" isRequired />
+                  <FormMemberSelect
+                    isRequired
+                    name="memberId"
+                    label="Member Id"
+                    groupId={groupIdWatch as string}
+                    isCurrentBranchMember
+                  />
+                </>
+              )}
+
+              {memberOrGroupWatch === 'member' && (
+                <FormMemberSelect
+                  isRequired
+                  name="memberId"
+                  label="Member Id"
+                  isDisabled={!!id || !!redirectMemberId}
+                  isCurrentBranchMember
+                />
+              )}
+
               {memberId && !loanLinkedData && !isLinkAccDataFetching && (
                 <Alert status="error"> Member does not have a Saving Account </Alert>
               )}

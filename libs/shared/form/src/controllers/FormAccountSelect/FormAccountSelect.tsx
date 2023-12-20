@@ -58,13 +58,14 @@ export const FormAccountSelect = ({
   const { data: accountListData, isFetching } = useGetMemberLinkedAccountsQuery(
     {
       memberId,
+      groupID: groupId as string,
       objState: filterBy ?? null,
       includeLoc,
       filter: natureOfDepositProduct,
     },
     {
       staleTime: 0,
-      enabled: !!memberId && memberId !== 'undefined' && !isLinkedAccounts,
+      enabled: !!memberId && memberId !== 'undefined' && !isLinkedAccounts && !!groupId,
     }
   );
 
@@ -80,12 +81,13 @@ export const FormAccountSelect = ({
   const { data: linkedAccountData } = useGetMemberLinkedAccountsQuery(
     {
       memberId,
+      groupID: groupId as string,
       objState: 'ACTIVE',
       filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
       includeLoc,
     },
     {
-      enabled: !!memberId && memberId !== 'undefined' && !!isLinkedAccounts,
+      enabled: !!memberId && memberId !== 'undefined' && !!isLinkedAccounts && !!groupId,
     }
   );
 

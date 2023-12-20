@@ -88,7 +88,7 @@ export const Meetings = (props: { data: MpGroupMeetings }) => {
       />
       <Box m="s24" p="s12" bg="white" borderRadius={5}>
         <Text fontSize="r1" fontWeight="semibold">
-          Upcomming Meetings
+          Upcoming Meetings
         </Text>
         <Table
           data={upcomingMeetingsList}

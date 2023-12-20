@@ -27,6 +27,8 @@ export const LoanGeneralInformation = () => {
         title="Nature of Loan Product"
         subtitle={loanPreview?.generalInformation?.natureOfLoanProduct?.toLowerCase()}
       />
+      <DetailCardContent title="Group" subtitle={loanPreview?.generalInformation?.groupName} />
+      <DetailCardContent title="Center" subtitle={loanPreview?.generalInformation?.centerName} />
     </DetailsCard>
   );
 };
