@@ -65,7 +65,7 @@ export const FormAccountSelect = ({
     },
     {
       staleTime: 0,
-      enabled: !!memberId && memberId !== 'undefined' && !isLinkedAccounts && !!groupId,
+      enabled: !!memberId && memberId !== 'undefined' && !isLinkedAccounts,
     }
   );
 
@@ -87,7 +87,7 @@ export const FormAccountSelect = ({
       includeLoc,
     },
     {
-      enabled: !!memberId && memberId !== 'undefined' && !!isLinkedAccounts && !!groupId,
+      enabled: !!memberId && memberId !== 'undefined' && !!isLinkedAccounts,
     }
   );
 
