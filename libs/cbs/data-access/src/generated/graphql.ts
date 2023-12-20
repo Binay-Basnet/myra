@@ -431,6 +431,7 @@ export type AccountTransferPaymentForAlternativeChannel = {
 };
 
 export type AccountTransferView = {
+  destTotalBalance?: Maybe<Scalars['String']>;
   destinationAccount?: Maybe<DepositLoanAccount>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
@@ -439,6 +440,7 @@ export type AccountTransferView = {
   objState?: Maybe<ObjState>;
   recipientMember?: Maybe<Member>;
   sourceAccount?: Maybe<DepositLoanAccount>;
+  srcTotalBalance?: Maybe<Scalars['String']>;
   teller?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
@@ -6306,6 +6308,7 @@ export type DepositTransactionView = {
   sourceOfFund?: Maybe<Scalars['String']>;
   status?: Maybe<ObjState>;
   teller?: Maybe<Scalars['String']>;
+  totalBalance?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
   totalDepositedAmount?: Maybe<Scalars['String']>;
@@ -24996,6 +24999,7 @@ export type WithdrawTransactionView = {
   paymentMode?: Maybe<WithdrawPaymentType>;
   status?: Maybe<ObjState>;
   teller?: Maybe<Scalars['String']>;
+  totalBalance?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
   totalWithdrawnAmount?: Maybe<Scalars['String']>;

@@ -271,7 +271,7 @@ export const NewLoanApplication = () => {
         objState: 'ACTIVE',
       },
       {
-        enabled: triggerAccountlist && !!groupIdWatch,
+        enabled: triggerAccountlist,
       }
     );
   const loanLinkedData = linkedAccountData?.members?.getAllAccounts?.data?.depositAccount;
