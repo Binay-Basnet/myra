@@ -154,7 +154,7 @@ export const LoanRepayment = () => {
       memberId,
       groupId: groupIdWatch,
     },
-    { enabled: triggerQuery && !!groupIdWatch }
+    { enabled: triggerQuery }
   );
   useEffect(() => {
     if (memberId) {
