@@ -220,12 +220,20 @@ export const Chips = forwardRef<HTMLButtonElement, ChipsProps>((props, ref) => {
 
           {type === 'status' && (
             <>
-              <TagLeftIcon
-                mr="s4"
-                color={COLORS.text[theme]}
-                boxSize={SIZE[size].iconSize}
-                as={ICON[type][theme]}
-              />
+              {icon ? (
+                React.cloneElement(icon, {
+                  mr: 's4',
+                  color: COLORS.text[theme],
+                  boxSize: SIZE[size].iconSize,
+                })
+              ) : (
+                <TagLeftIcon
+                  mr="s4"
+                  color={COLORS.text[theme]}
+                  boxSize={SIZE[size].iconSize}
+                  as={ICON[type][theme]}
+                />
+              )}
               <TagLabel color={COLORS.text[theme]} fontSize={SIZE[size].fontSize}>
                 {label}
               </TagLabel>

@@ -7,6 +7,7 @@ export interface IDetailPageContentCard {
   children: React.ReactNode;
   showFooter?: boolean;
   footerButtons?: React.ReactNode;
+  headerButtons?: React.ReactNode;
 }
 
 export const DetailPageContentCard = ({
@@ -16,6 +17,7 @@ export const DetailPageContentCard = ({
   footerButtons,
   headerButtonLabel,
   headerButtonHandler,
+  headerButtons,
 }: IDetailPageContentCard) => (
   <Box display="flex" flexDirection="column" borderRadius="br2" bg="gray.0">
     <Box
@@ -31,7 +33,9 @@ export const DetailPageContentCard = ({
         {header}
       </Text>
 
-      {headerButtonLabel && headerButtonHandler && (
+      {headerButtons}
+
+      {!headerButtons && headerButtonLabel && headerButtonHandler && (
         <Button variant="link" onClick={headerButtonHandler}>
           {headerButtonLabel}
         </Button>

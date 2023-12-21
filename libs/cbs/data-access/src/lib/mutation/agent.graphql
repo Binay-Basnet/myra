@@ -1,13 +1,13 @@
-mutation setAddMemberToAgentData($agentId: String!, $data: [String!]!, $override: Boolean) {
-  agent {
-    addMemberToAgent(agentId: $agentId, data: $data, override: $override) {
-      recordId
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
+# mutation setAddMemberToAgentData($agentId: String!, $memberId: String!, $override: Boolean) {
+#   agent {
+#     addMemberToAgent(agentId: $agentId, memberId: $memberId, override: $override) {
+#       recordId
+#       error {
+#         ...MutationError
+#       }
+#     }
+#   }
+# }
 
 mutation setAgentTodayListData($id: ID!, $data: [AgentTodayListInput]) {
   agent {
@@ -53,6 +53,115 @@ mutation agentTodayCollection($agentId: ID!, $data: [AgentTodayListInput]) {
 mutation setAgentTemplate($agentId: ID!, $data: [AgentTemplateInput]) {
   agent {
     agentTemplate(agentId: $agentId, data: $data) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation addAgentMember($id: ID!, $memberId: ID!, $override: Boolean) {
+  agent {
+    addAgentMember(id: $id, memberid: $memberId, override: $override) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation deleteAgentMember($id: ID!, $memberId: ID!) {
+  agent {
+    deleteAgentMember(id: $id, memberid: $memberId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation createCollection($agentID: ID!, $name: String!, $accountId: [ID!]) {
+  collection {
+    createCollection(agentID: $agentID, name: $name, accountId: $accountId) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation updateCollection($collectionID: ID!, $collectionName: String, $accountId: [ID!]) {
+  collection {
+    updateCollection(
+      collectionID: $collectionID
+      collectionName: $collectionName
+      accountId: $accountId
+    ) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation deleteCollection($collectionID: ID!) {
+  collection {
+    deleteCollection(collectionID: $collectionID) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation addAgentTodayList($id: ID, $input: AgentTodayListInputValue!) {
+  agent {
+    addAgentTodayList(id: $id, input: $input) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation editRejectedTodayList($input: AgentTodayListInputValue!) {
+  agent {
+    editRejectedTodayList(input: $input) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation sendTodayTask($id: ID!) {
+  agent {
+    sentTodayTask(id: $id) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation rejectTodayTask($id: ID!, $remark: String) {
+  agent {
+    rejectTodayTask(id: $id, remark: $remark) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation acceptAgentTodayDeposit($id: ID!) {
+  agent {
+    acceptAgentTodayDeposit(id: $id) {
+      recordId
       error {
         ...MutationError
       }

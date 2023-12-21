@@ -49,19 +49,20 @@ export const FormFooter = ({
       <Box display="flex" gap="s16">
         {draftButton}
 
-        {mainButton || (
-          <Button
-            minWidth="160px"
-            isDisabled={isMainButtonDisabled}
-            onClick={() => {
-              reset({}, { keepValues: true });
-              mainButtonHandler?.();
-            }}
-            shade={dangerButton ? 'danger' : 'primary'}
-          >
-            {`${mainButtonLabel}` ?? t['next']}
-          </Button>
-        )}
+        {mainButton ||
+          (mainButtonLabel ? (
+            <Button
+              minWidth="160px"
+              isDisabled={isMainButtonDisabled}
+              onClick={() => {
+                reset({}, { keepValues: true });
+                mainButtonHandler?.();
+              }}
+              shade={dangerButton ? 'danger' : 'primary'}
+            >
+              {`${mainButtonLabel}` ?? t['next']}
+            </Button>
+          ) : null)}
       </Box>
     </Box>
   );

@@ -1,135 +1,71 @@
-import { useEffect, useMemo, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import { IoAddOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-
-import { asyncToast, Box, Button, DetailPageContentCard, Grid, Icon, Text } from '@myra-ui';
+import { useDisclosure } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
-  useGetAgentAssignedMemberListDataQuery,
-  useListAgentTemplateQuery,
-  useSetAgentTemplateMutation,
-} from '@coop/cbs/data-access';
-import { localizedText } from '@coop/cbs/utils';
-import { FormEditableTable } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
+  asyncToast,
+  Box,
+  Button,
+  Grid,
+  Icon,
+  IconButton,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Text,
+} from '@myra-ui';
 
-type DepositAccountTable = {
-  memberId: string;
-  accountId: string;
-  amount: string;
-};
+import { useDeleteCollectionMutation, useListCollectionQuery } from '@coop/cbs/data-access';
+import { ConfirmationDialog } from '@coop/shared/components';
+
+import { CreateCollectionListModal } from '../components';
 
 export const Templates = () => {
-  const [showTemplateTable, setShowTemplateTable] = useState(false);
-
-  const methods = useForm();
-
-  const { t } = useTranslation();
+  const [selectedCollectionId, setSelectedCollectionId] = useState('');
 
   const router = useRouter();
 
   const id = router?.query?.['id'];
 
-  const { data: agentTemplateData, refetch } = useListAgentTemplateQuery({
-    agentId: id as string,
-  });
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (agentTemplateData?.agent?.listAgentTemplate?.record?.length) {
-      setShowTemplateTable(true);
-    }
-  }, [agentTemplateData]);
+  const {
+    isOpen: isCreateListModalOpen,
+    onClose: onCreateListModalClose,
+    onToggle: onCreateListToggle,
+  } = useDisclosure();
 
-  useEffect(() => {
-    if (agentTemplateData?.agent?.listAgentTemplate?.record?.length) {
-      setShowTemplateTable(true);
+  const {
+    isOpen: isDeleteConfirmOpen,
+    onClose: onDeleteConfirmClose,
+    onToggle: onDeleteConfirmToggle,
+  } = useDisclosure();
 
-      methods.setValue(
-        'accounts',
-        agentTemplateData?.agent?.listAgentTemplate?.record?.map((record) => ({
-          memberId: record?.member?.id,
-          accountId: record?.account?.id,
-        }))
-      );
-    }
-  }, [agentTemplateData]);
+  const { data: collectionListData } = useListCollectionQuery({ agentID: id as string });
 
-  const { data: assignedMemberListQueryData } = useGetAgentAssignedMemberListDataQuery(
-    {
-      pagination: {
-        first: -1,
-        after: '',
-      },
-      filter: {
-        orConditions: [
-          {
-            andConditions: [
-              {
-                column: 'agentId',
-                comparator: 'EqualTo',
-                value: id,
-              },
-            ],
-          },
-        ],
-      },
-    },
-    { enabled: !!id, staleTime: 0 }
-  );
+  const collectionList = collectionListData?.collection?.listCollection?.data ?? [];
 
-  const memberListSearchOptions = useMemo(() => {
-    const tempMembers: { label: string; value: string }[] = [];
-    const tempIds: string[] = [];
+  const { mutateAsync: deleteCollection } = useDeleteCollectionMutation();
 
-    assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.forEach((member) => {
-      if (!tempIds.includes(member?.node?.member?.id as string)) {
-        tempIds.push(member?.node?.member?.id as string);
-        tempMembers.push({
-          label: member?.node?.member?.name?.local as string,
-          value: member?.node?.member?.id as string,
-        });
-      }
-    });
-
-    return tempMembers;
-  }, [assignedMemberListQueryData]);
-
-  const getMemberAccounts = async (mId: string) =>
-    new Promise<{ label: string; value: string }[]>((resolve) => {
-      const tempAccountList: { label: string; value: string }[] = [];
-
-      assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.forEach((member) => {
-        if (member?.node?.member?.id === mId) {
-          tempAccountList.push({
-            label: member?.node?.account?.accountName as string,
-            value: member?.node?.account?.id as string,
-          });
-        }
-      });
-
-      resolve(tempAccountList);
-    });
-
-  const { mutateAsync: setAgentTemplate } = useSetAgentTemplateMutation();
-
-  const handleSaveTodayList = () => {
+  const handleDeleteCollection = () => {
     asyncToast({
-      id: 'set-agent-template',
-      promise: setAgentTemplate({
-        agentId: id as string,
-        data: methods
-          .getValues()
-          ['accounts'].map((account: { memberId: string; accountId: string; amount: string }) => ({
-            memberId: account.memberId,
-            accountId: account.accountId,
-          })),
+      id: 'delete-agent-collection-template',
+      promise: deleteCollection({
+        collectionID: selectedCollectionId,
       }),
       msgs: {
-        loading: 'Setting default template',
-        success: 'Default template set',
+        loading: 'Deleting Collection',
+        success: 'Collection Deleted Successfully',
       },
-      onSuccess: () => refetch(),
+      onSuccess: () => {
+        queryClient.invalidateQueries(['listCollection']);
+        setSelectedCollectionId('');
+        onDeleteConfirmClose();
+      },
     });
   };
 
@@ -139,108 +75,154 @@ export const Templates = () => {
         Collection List
       </Text>
 
-      {!showTemplateTable && (
-        <Grid templateColumns="repeat(3,1fr)" gap="s16">
-          <Box
-            display="flex"
-            justifyContent="flex-start"
-            alignItems="center"
-            bg="white"
-            borderRadius="br2"
-            gap="s12"
-            h="58px"
-            pl="s16"
-            cursor="pointer"
-            boxShadow="E0"
-            onClick={() => setShowTemplateTable(true)}
+      <Box
+        bg="white"
+        border="1px"
+        borderColor="border.layout"
+        borderRadius="br3"
+        p="s16"
+        display="flex"
+        flexDirection="column"
+        gap="s16"
+      >
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Text fontSize="r2" color="gray.700" fontWeight={500}>
+            Collections Lists
+          </Text>
+          <Button
+            rightIcon={<Icon color="gray.600" as={IoAddOutline} />}
+            variant="outline"
+            shade="neutral"
+            onClick={onCreateListToggle}
           >
-            <Icon color="primary.500" as={IoAddOutline} />
+            New Collections
+          </Button>
+        </Box>
 
-            <Text fontWeight="500" fontSize="s3">
-              Create Collection List
-            </Text>
-          </Box>
+        <Grid templateColumns="repeat(2, 1fr)" gap="s16">
+          {collectionList?.map((coll) => (
+            <Box
+              border="1px"
+              borderColor="border.layout"
+              borderRadius="br3"
+              p="s16"
+              display="flex"
+              flexDirection="column"
+              gap="s20"
+            >
+              <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Text fontSize="r1" fontWeight={500} color="primary.500">
+                  {coll?.collectionName}
+                </Text>
+
+                <Actions
+                  items={[
+                    {
+                      title: 'Edit',
+                      onClick: () => {
+                        setSelectedCollectionId(coll?.collectionID as string);
+                        onCreateListToggle();
+                      },
+                    },
+                    {
+                      title: 'Delete',
+                      onClick: () => {
+                        setSelectedCollectionId(coll?.collectionID as string);
+                        onDeleteConfirmToggle();
+                      },
+                    },
+                  ]}
+                />
+              </Box>
+
+              <Box display="flex" gap="s32">
+                <Box display="flex" flexDirection="column" gap="s4">
+                  <Text fontSize="s2" fontWeight={500} color="gray.600">
+                    Members
+                  </Text>
+                  <Text fontSize="r3" fontWeight={600} color="gray.800">
+                    {coll?.memberCount}
+                  </Text>
+                </Box>
+                <Box>
+                  <Text fontSize="s2" fontWeight={500} color="gray.600">
+                    Accounts
+                  </Text>
+                  <Text fontSize="r3" fontWeight={600} color="gray.800">
+                    {coll?.accountCount}
+                  </Text>
+                </Box>
+              </Box>
+            </Box>
+          ))}
         </Grid>
-      )}
+      </Box>
 
-      {showTemplateTable && (
-        <DetailPageContentCard
-          header="Available Template"
-          showFooter
-          footerButtons={<Button onClick={handleSaveTodayList}>Set as Default Template</Button>}
-        >
-          <Box p="s16">
-            <FormProvider {...methods}>
-              <FormEditableTable<DepositAccountTable>
-                name="accounts"
-                columns={[
-                  {
-                    accessor: 'memberId',
-                    header: t['agentOverviewMember'],
-                    cellWidth: 'auto',
-                    fieldType: 'select',
-                    selectOptions: memberListSearchOptions,
-                    cell: (row) => {
-                      const selectedMember =
-                        assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
-                          (member) => member?.node?.member?.id === row?.memberId
-                        )?.node?.member;
+      {isCreateListModalOpen ? (
+        <CreateCollectionListModal
+          isOpen={isCreateListModalOpen}
+          onClose={() => {
+            setSelectedCollectionId('');
+            onCreateListModalClose();
+          }}
+          collectionId={selectedCollectionId}
+        />
+      ) : null}
 
-                      return (
-                        <Box display="flex" flexDirection="column" py="s4">
-                          <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
-                            {localizedText(selectedMember?.name)}
-                          </Text>
-                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
-                            {selectedMember?.code}
-                          </Text>
-                        </Box>
-                      );
-                    },
-                  },
-                  {
-                    accessor: 'accountId',
-                    header: t['agentOverviewAccount'],
-                    loadOptions: (row) => getMemberAccounts(row?.memberId),
-                    fieldType: 'select',
-                    cellWidth: 'auto',
-                    cell: (row) => {
-                      const selectedMember =
-                        assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
-                          (member) => member?.node?.account?.id === row?.accountId
-                        )?.node?.account;
-
-                      return (
-                        <Box display="flex" flexDirection="column" py="s4">
-                          <Text
-                            fontSize="r1"
-                            fontWeight={500}
-                            color="neutralColorLight.Gray-80"
-                            maxW="32ch"
-                            textOverflow="ellipsis"
-                            overflow="hidden"
-                          >
-                            {selectedMember?.accountName}
-                          </Text>
-                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
-                            {selectedMember?.id}
-                          </Text>
-                        </Box>
-                      );
-                    },
-                  },
-                  // {
-                  //   accessor: 'amount',
-                  //   header: 'Amount',
-                  //   isNumeric: true,
-                  // },
-                ]}
-                canDeleteRow
-              />
-            </FormProvider>
-          </Box>
-        </DetailPageContentCard>
-      )}
+      <ConfirmationDialog
+        isOpen={isDeleteConfirmOpen}
+        onClose={() => {
+          setSelectedCollectionId('');
+          onDeleteConfirmClose();
+        }}
+        handleConfirm={handleDeleteCollection}
+        title="Delete Collection"
+        description="This action will delete this collection list. Are you sure you want to continue?"
+      />
     </Box>
   );
 };
+
+const Actions = ({
+  items,
+}: {
+  items: {
+    title: string;
+    onClick?: () => void;
+  }[];
+}) => (
+  <Popover placement="bottom-start">
+    <PopoverTrigger>
+      <IconButton
+        onClick={(e) => e.stopPropagation()}
+        variant="ghost"
+        aria-label="Search database"
+        icon={<BsThreeDotsVertical />}
+      />
+    </PopoverTrigger>
+    <PopoverContent minWidth="180px" w="180px" color="white" _focus={{ boxShadow: 'none' }}>
+      <PopoverBody px="0" py="s8">
+        <Box display="flex" flexDirection="column" alignItems="start">
+          {items.map((item) => (
+            <Box
+              px="s16"
+              py="s10"
+              width="100%"
+              _hover={{ bg: 'gray.100' }}
+              cursor="pointer"
+              onClick={(e) => {
+                e.stopPropagation();
+                item?.onClick && item?.onClick();
+              }}
+              key={item.title}
+            >
+              <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                {item.title}
+              </Text>
+            </Box>
+          ))}
+        </Box>
+      </PopoverBody>
+    </PopoverContent>
+  </Popover>
+);

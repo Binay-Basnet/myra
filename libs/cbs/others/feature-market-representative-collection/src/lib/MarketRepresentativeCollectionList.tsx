@@ -1,26 +1,28 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { PageHeader } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
-import { useListAgentCollectionQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
-import {
-  amountConverter,
-  getFilterQuery,
-  getPaginationQuery,
-  useTranslation,
-} from '@coop/shared/utils';
+import { useAppSelector, useListMrSubmissionListQuery } from '@coop/cbs/data-access';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const MarketRepresentativeCollectionList = () => {
   const { t } = useTranslation();
 
-  const { data, isFetching } = useListAgentCollectionQuery({
+  const userId = useAppSelector((state) => state.auth?.user?.id);
+
+  const router = useRouter();
+
+  const { data, isFetching } = useListMrSubmissionListQuery({
     pagination: getPaginationQuery(),
-    filter: getFilterQuery(),
+    filter: {
+      orConditions: [{ andConditions: [{ column: 'mrId', comparator: 'EqualTo', value: userId }] }],
+    },
   });
 
-  const rowData = useMemo(() => data?.agent?.listAgentCollection?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.agent?.listMRSubmissionList?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -40,60 +42,41 @@ export const MarketRepresentativeCollectionList = () => {
       {
         accessorFn: (row) => row?.node?.mrName,
         header: 'Market Representative Name',
-        // cell: (props) => (
-        //   <Box display="flex" alignItems="center" gap="s12">
-        //     <Avatar
-        //       name={props.getValue() as string}
-        //       src={props?.row?.original?.node?.agentPicUrl ?? ''}
-        //     />
-        //     <Text
-        //       fontSize="s3"
-        //       textTransform="capitalize"
-        //       textOverflow="ellipsis"
-        //       overflow="hidden"
-        //     >
-        //       {props.getValue() as string}
-        //     </Text>
-        //   </Box>
-        // ),
 
         meta: {
           width: '60%',
         },
       },
       {
-        id: 'amount',
-        header: 'Amount',
-        accessorFn: (row) => (row?.node?.amount ? amountConverter(row?.node?.amount) : '-'),
-        filterFn: 'amount',
-        enableColumnFilter: true,
+        header: 'Status',
+        accessorFn: (row) => row?.node?.status,
       },
-      // {
-      //   id: '_actions',
-      //   header: '',
+      {
+        id: '_actions',
+        header: '',
 
-      //   cell: (props) =>
-      //     props?.row?.original?.node && (
-      //       <TablePopover
-      //         node={props?.row?.original?.node}
-      //         items={[
-      //           {
-      //             title: t['transDetailViewDetail'],
-      //             aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
-      //             action: 'VIEW',
-      //             onClick: (row) => {
-      //               router.push(
-      //                 `${ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_DETAILS}?id=${row?.agentId}&date=${row?.date}`
-      //               );
-      //             },
-      //           },
-      //         ]}
-      //       />
-      //     ),
-      //   meta: {
-      //     width: '3.125rem',
-      //   },
-      // },
+        cell: (props) =>
+          props?.row?.original?.node && (
+            <TablePopover
+              node={props?.row?.original?.node}
+              items={[
+                {
+                  title: t['transDetailViewDetail'],
+                  aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
+                  action: 'VIEW',
+                  onClick: (row) => {
+                    router.push(
+                      `${ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_DETAILS}?id=${row?.id}`
+                    );
+                  },
+                },
+              ]}
+            />
+          ),
+        meta: {
+          width: '3.125rem',
+        },
+      },
     ],
     [t]
   );
@@ -116,8 +99,8 @@ export const MarketRepresentativeCollectionList = () => {
         // }
         noDataTitle="Market Representative Collection"
         pagination={{
-          total: data?.agent?.listAgentCollection?.totalCount ?? 'Many',
-          pageInfo: data?.agent?.listAgentCollection?.pageInfo,
+          total: data?.agent?.listMRSubmissionList?.totalCount ?? 'Many',
+          pageInfo: data?.agent?.listMRSubmissionList?.pageInfo,
         }}
       />
     </>

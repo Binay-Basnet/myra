@@ -1234,19 +1234,48 @@ export type AgentFilterMapping = {
   branchId: Array<LabelValueArray>;
 };
 
+export type AgentMember = {
+  memberCode: Scalars['String'];
+  memberID: Scalars['ID'];
+  memberName: Scalars['String'];
+};
+
+export type AgentMemberNode = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AgentMember>;
+};
+
 export type AgentMutation = {
-  addMemberToAgent?: Maybe<MutationResult>;
+  acceptAgentTodayDeposit: AgentTodayDepositResult;
+  addAgentMember: AddAgentMemberResult;
+  addAgentTodayList: AgentTodayListResult;
   agentTemplate?: Maybe<AgentTemplateResult>;
   agentTodayCollection?: Maybe<AgentTodayListResult>;
   agentTodayDeposit?: Maybe<AgentTodayListResult>;
   agentTodayList?: Maybe<AgentTodayListResult>;
+  deleteAgentMember: DeleteAgentMemberResult;
+  deleteTodayTask: RemoveTodayTaskResult;
+  editRejectedTodayList: AgentTodayListResult;
+  modifyPreviousData: DataModificationResult;
+  rejectTodayTask: RemoveTodayTaskResult;
   removeMemberAccountAgent?: Maybe<RemoveMemberResult>;
+  sentTodayTask: RemoveTodayTaskResult;
 };
 
-export type AgentMutationAddMemberToAgentArgs = {
-  agentId: Scalars['String'];
-  data: Array<Scalars['String']>;
+export type AgentMutationAcceptAgentTodayDepositArgs = {
+  id: Scalars['ID'];
+  remark?: InputMaybe<Scalars['String']>;
+};
+
+export type AgentMutationAddAgentMemberArgs = {
+  id: Scalars['ID'];
+  memberid: Scalars['ID'];
   override?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type AgentMutationAddAgentTodayListArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: AgentTodayListInputValue;
 };
 
 export type AgentMutationAgentTemplateArgs = {
@@ -1269,22 +1298,51 @@ export type AgentMutationAgentTodayListArgs = {
   id: Scalars['ID'];
 };
 
+export type AgentMutationDeleteAgentMemberArgs = {
+  id: Scalars['ID'];
+  memberid: Scalars['ID'];
+};
+
+export type AgentMutationDeleteTodayTaskArgs = {
+  id: Scalars['ID'];
+};
+
+export type AgentMutationEditRejectedTodayListArgs = {
+  input: AgentTodayListInputValue;
+};
+
+export type AgentMutationRejectTodayTaskArgs = {
+  id: Scalars['ID'];
+  remark?: InputMaybe<Scalars['String']>;
+};
+
 export type AgentMutationRemoveMemberAccountAgentArgs = {
   accountId: Scalars['ID'];
   agentID: Scalars['ID'];
 };
 
+export type AgentMutationSentTodayTaskArgs = {
+  id: Scalars['ID'];
+};
+
 export type AgentQuery = {
   agentDetail?: Maybe<AgentRecord>;
+  agentTodayTaskDetail: AgentTodayTaskDetailResult;
   assignedMemberList: AssignedMembersListConnection;
   listAgent: AccountAgentListConnection;
   listAgentCollection?: Maybe<AgentCollectionListConnection>;
+  listAgentMember: ListAgentMemberConnection;
   listAgentTask?: Maybe<AgentTodayListData>;
   listAgentTemplate?: Maybe<AgentTemplateData>;
+  listMRSubmissionList?: Maybe<SubmissionListConnection>;
   viewAgentList?: Maybe<AgentTransactionViewResult>;
 };
 
 export type AgentQueryAgentDetailArgs = {
+  id: Scalars['ID'];
+};
+
+export type AgentQueryAgentTodayTaskDetailArgs = {
   id: Scalars['ID'];
 };
 
@@ -1304,12 +1362,22 @@ export type AgentQueryListAgentCollectionArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type AgentQueryListAgentMemberArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type AgentQueryListAgentTaskArgs = {
   id: Scalars['ID'];
 };
 
 export type AgentQueryListAgentTemplateArgs = {
   agentId: Scalars['ID'];
+};
+
+export type AgentQueryListMrSubmissionListArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type AgentQueryViewAgentListArgs = {
@@ -1345,6 +1413,11 @@ export type AgentTemplateResult = {
   record?: Maybe<Array<Maybe<AgentTemplate>>>;
 };
 
+export type AgentTodayDepositResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type AgentTodayList = {
   account?: Maybe<DepositLoanAccount>;
   amount?: Maybe<Scalars['Amount']>;
@@ -1360,6 +1433,7 @@ export type AgentTodayList = {
 export type AgentTodayListData = {
   error?: Maybe<QueryError>;
   record?: Maybe<Array<Maybe<AgentTodayList>>>;
+  submissionId?: Maybe<Scalars['ID']>;
 };
 
 export type AgentTodayListInput = {
@@ -1371,10 +1445,25 @@ export type AgentTodayListInput = {
   paid?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type AgentTodayListInputValue = {
+  agentId: Scalars['String'];
+  data: Array<AgentTodayListInput>;
+  submissionId?: InputMaybe<Scalars['String']>;
+};
+
 export type AgentTodayListResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
   record?: Maybe<Array<Maybe<AgentTodayList>>>;
+};
+
+export type AgentTodayTaskDetailResult = {
+  agent?: Maybe<AgentRecord>;
+  date?: Maybe<Scalars['String']>;
+  error?: Maybe<QueryError>;
+  record?: Maybe<Array<Maybe<AgentTodayList>>>;
+  remark?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
 };
 
 export type AgentTransactionView = {
@@ -4259,6 +4348,41 @@ export const CollateralUpdateType = {
 } as const;
 
 export type CollateralUpdateType = typeof CollateralUpdateType[keyof typeof CollateralUpdateType];
+export type CollectionMutation = {
+  createCollection: CreateCollectionResult;
+  deleteCollection: DeleteCollectionResult;
+  updateCollection: UpdateCollectionResult;
+};
+
+export type CollectionMutationCreateCollectionArgs = {
+  accountId?: InputMaybe<Array<Scalars['ID']>>;
+  agentID: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+export type CollectionMutationDeleteCollectionArgs = {
+  collectionID: Scalars['ID'];
+};
+
+export type CollectionMutationUpdateCollectionArgs = {
+  accountId?: InputMaybe<Array<Scalars['ID']>>;
+  collectionID: Scalars['ID'];
+  collectionName?: InputMaybe<Scalars['String']>;
+};
+
+export type CollectionQuery = {
+  listCollection: ListCollectionResult;
+  listCollectionTemplate: ListCollectionTemplateResult;
+};
+
+export type CollectionQueryListCollectionArgs = {
+  agentID: Scalars['ID'];
+};
+
+export type CollectionQueryListCollectionTemplateArgs = {
+  collectionID: Scalars['ID'];
+};
+
 export type CombinedAccountDetail = {
   accountOpenDate?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['ID']>;
@@ -5007,6 +5131,11 @@ export type DataMigrationPennySweepArgs = {
 
 export type DataMigrationReseedRepaymentArgs = {
   accountId?: InputMaybe<Scalars['String']>;
+};
+
+export type DataModificationResult = {
+  error?: Maybe<MutationError>;
+  success?: Maybe<Scalars['Boolean']>;
 };
 
 export type DateEntry = {
@@ -18304,6 +18433,7 @@ export type Mutation = {
   auth: AuthMutation;
   bank: BankMutation;
   bpm: BpmMutation;
+  collection: CollectionMutation;
   document: DocumentMutation;
   example: ExampleMutation;
   hr: HrMutation;
@@ -19832,6 +19962,7 @@ export type Query = {
   auth: AuthQuery;
   bank: BankQuery;
   bpm: BpmQuery;
+  collection: CollectionQuery;
   config: ConfigQuery;
   dashboard: DashboardQuery;
   document: DocumentQuery;
@@ -19865,6 +19996,7 @@ export type QueryResult = {
 };
 
 export const Resource = {
+  AcceptTodayDeposit: 'ACCEPT_TODAY_DEPOSIT',
   AccountingAccounting: 'ACCOUNTING_ACCOUNTING',
   AccountingInvestment: 'ACCOUNTING_INVESTMENT',
   AccountingLoan: 'ACCOUNTING_LOAN',
@@ -19892,6 +20024,7 @@ export const Resource = {
   AccountingSystemSalesCustomers: 'ACCOUNTING_SYSTEM_SALES_CUSTOMERS',
   AccountingSystemSalesCustomerPayment: 'ACCOUNTING_SYSTEM_SALES_CUSTOMER_PAYMENT',
   AccountingSystemSalesSalesEntry: 'ACCOUNTING_SYSTEM_SALES_SALES_ENTRY',
+  AgentAssignMember: 'AGENT_ASSIGN_MEMBER',
   AlternativeChannelsAtmCardRegistration: 'ALTERNATIVE_CHANNELS_ATM_CARD_REGISTRATION',
   AlternativeChannelsDownloads: 'ALTERNATIVE_CHANNELS_DOWNLOADS',
   AlternativeChannelsEBankingRegistration: 'ALTERNATIVE_CHANNELS_E_BANKING_REGISTRATION',
@@ -19991,6 +20124,8 @@ export const Resource = {
   CbsWithdrawSlipsWithdrawSlipsBlock: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK',
   CbsWithdrawSlipsWithdrawSlipsIssue: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_ISSUE',
   CbsWithdrawSlipsWithdrawSlipsRequests: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_REQUESTS',
+  CollectionList: 'COLLECTION_LIST',
+  CreateCollectionList: 'CREATE_COLLECTION_LIST',
   FundManagement: 'FUND_MANAGEMENT',
   HcmEmployee: 'HCM_EMPLOYEE',
   HcmEmployeeAttendance: 'HCM_EMPLOYEE_ATTENDANCE',
@@ -20018,6 +20153,9 @@ export const Resource = {
   HcmTraining: 'HCM_TRAINING',
   HcmTrainingCourses: 'HCM_TRAINING_COURSES',
   HcmTrainingStudents: 'HCM_TRAINING_STUDENTS',
+  ListAgentTodayTask: 'LIST_AGENT_TODAY_TASK',
+  ListAssignMember: 'LIST_ASSIGN_MEMBER',
+  ListCollection: 'LIST_COLLECTION',
   ReportsAccountingExternalLoan: 'REPORTS_ACCOUNTING_EXTERNAL_LOAN',
   ReportsAccountingExternalLoanStatement: 'REPORTS_ACCOUNTING_EXTERNAL_LOAN_STATEMENT',
   ReportsAccountingFdInvestment: 'REPORTS_ACCOUNTING_FD_INVESTMENT',
@@ -20142,6 +20280,9 @@ export const Resource = {
   SettingsTransactionConstraint: 'SETTINGS_TRANSACTION_CONSTRAINT',
   SettingsUsers: 'SETTINGS_USERS',
   SharedDividend: 'SHARED_DIVIDEND',
+  SubmissionList: 'SUBMISSION_LIST',
+  TodayList: 'TODAY_LIST',
+  TodayTask: 'TODAY_TASK',
   UserUser: 'USER_USER',
   UserUserPassword: 'USER_USER_PASSWORD',
 } as const;
@@ -20234,6 +20375,11 @@ export type ReleaseGuaranteeInput = {
 };
 
 export type RemoveMemberResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export type RemoveTodayTaskResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
 };
@@ -23002,6 +23148,25 @@ export type StrTransactionActionInput = {
   transactionId: Scalars['ID'];
 };
 
+export type SubmissionListConnection = {
+  edges?: Maybe<Array<Maybe<SubmissionListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SubmissionListData = {
+  date: Scalars['Localized'];
+  id: Scalars['String'];
+  mrId: Scalars['String'];
+  mrName: Scalars['String'];
+  status: TodayListStatus;
+};
+
+export type SubmissionListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<SubmissionListData>;
+};
+
 export type SubscriptionMutation = {
   ReferenceKYM: DocumentMutationResult;
   Upsert: DocumentMutationResult;
@@ -25081,6 +25246,11 @@ export type ActivityInput = {
   userName?: InputMaybe<Scalars['String']>;
 };
 
+export type AddAgentMemberResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type AllocationType = {
   leaveId?: Maybe<Scalars['ID']>;
   newLeaveAllocated?: Maybe<Scalars['Int']>;
@@ -25106,6 +25276,21 @@ export type BranchTransferDetails = {
   transferDate?: Maybe<Scalars['Localized']>;
   transferredFrom?: Maybe<Scalars['String']>;
   transferredTo?: Maybe<Scalars['String']>;
+};
+
+export type CreateCollectionResult = {
+  data?: Maybe<Scalars['String']>;
+  error?: Maybe<MutationError>;
+};
+
+export type DeleteAgentMemberResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export type DeleteCollectionResult = {
+  data?: Maybe<Scalars['String']>;
+  error?: Maybe<MutationError>;
 };
 
 export type DepartTransferDetails = {
@@ -25171,6 +25356,48 @@ export const Level = {
 } as const;
 
 export type Level = typeof Level[keyof typeof Level];
+export type ListAgentMemberConnection = {
+  edges?: Maybe<Array<Maybe<AgentMemberNode>>>;
+  error?: Maybe<QueryError>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ListCollectionOutput = {
+  accountCount?: Maybe<Scalars['String']>;
+  collectionID: Scalars['ID'];
+  collectionName: Scalars['String'];
+  memberCount?: Maybe<Scalars['String']>;
+};
+
+export type ListCollectionResult = {
+  data?: Maybe<Array<Maybe<ListCollectionOutput>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type ListCollectionTemplateOutput = {
+  AmountToBeCollected?: Maybe<Scalars['String']>;
+  FineToBeCollected?: Maybe<Scalars['String']>;
+  accountId: Scalars['ID'];
+  accountName: Scalars['String'];
+  memberCode: Scalars['String'];
+  memberID: Scalars['ID'];
+  memberName: Scalars['String'];
+  templateID: Scalars['ID'];
+};
+
+export type ListCollectionTemplateResult = {
+  collectionID: Scalars['ID'];
+  collectionName: Scalars['String'];
+  data?: Maybe<Array<Maybe<ListCollectionTemplateOutput>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type UpdateCollectionResult = {
+  data?: Maybe<Scalars['String']>;
+  error?: Maybe<MutationError>;
+};
+
 export type SetBankAccountsMutationVariables = Exact<{
   data?: InputMaybe<NewBankAccountInput>;
 }>;
@@ -25812,27 +26039,6 @@ export type PrintSlipMutation = {
   };
 };
 
-export type SetAddMemberToAgentDataMutationVariables = Exact<{
-  agentId: Scalars['String'];
-  data: Array<Scalars['String']> | Scalars['String'];
-  override?: InputMaybe<Scalars['Boolean']>;
-}>;
-
-export type SetAddMemberToAgentDataMutation = {
-  agent: {
-    addMemberToAgent?: {
-      recordId?: string | null;
-      error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | MutationError_ValidationError_Fragment
-        | null;
-    } | null;
-  };
-};
-
 export type SetAgentTodayListDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>> | InputMaybe<AgentTodayListInput>>;
@@ -25926,6 +26132,200 @@ export type SetAgentTemplateMutation = {
         | MutationError_ValidationError_Fragment
         | null;
     } | null;
+  };
+};
+
+export type AddAgentMemberMutationVariables = Exact<{
+  id: Scalars['ID'];
+  memberId: Scalars['ID'];
+  override?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type AddAgentMemberMutation = {
+  agent: {
+    addAgentMember: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type DeleteAgentMemberMutationVariables = Exact<{
+  id: Scalars['ID'];
+  memberId: Scalars['ID'];
+}>;
+
+export type DeleteAgentMemberMutation = {
+  agent: {
+    deleteAgentMember: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type CreateCollectionMutationVariables = Exact<{
+  agentID: Scalars['ID'];
+  name: Scalars['String'];
+  accountId?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+}>;
+
+export type CreateCollectionMutation = {
+  collection: {
+    createCollection: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type UpdateCollectionMutationVariables = Exact<{
+  collectionID: Scalars['ID'];
+  collectionName?: InputMaybe<Scalars['String']>;
+  accountId?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+}>;
+
+export type UpdateCollectionMutation = {
+  collection: {
+    updateCollection: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type DeleteCollectionMutationVariables = Exact<{
+  collectionID: Scalars['ID'];
+}>;
+
+export type DeleteCollectionMutation = {
+  collection: {
+    deleteCollection: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type AddAgentTodayListMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: AgentTodayListInputValue;
+}>;
+
+export type AddAgentTodayListMutation = {
+  agent: {
+    addAgentTodayList: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type EditRejectedTodayListMutationVariables = Exact<{
+  input: AgentTodayListInputValue;
+}>;
+
+export type EditRejectedTodayListMutation = {
+  agent: {
+    editRejectedTodayList: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type SendTodayTaskMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type SendTodayTaskMutation = {
+  agent: {
+    sentTodayTask: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type RejectTodayTaskMutationVariables = Exact<{
+  id: Scalars['ID'];
+  remark?: InputMaybe<Scalars['String']>;
+}>;
+
+export type RejectTodayTaskMutation = {
+  agent: {
+    rejectTodayTask: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type AcceptAgentTodayDepositMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type AcceptAgentTodayDepositMutation = {
+  agent: {
+    acceptAgentTodayDeposit: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
   };
 };
 
@@ -33591,6 +33991,7 @@ export type GetAgentTodayListDataQueryVariables = Exact<{
 export type GetAgentTodayListDataQuery = {
   agent: {
     listAgentTask?: {
+      submissionId?: string | null;
       record?: Array<{
         id?: string | null;
         amount?: any | null;
@@ -33604,7 +34005,11 @@ export type GetAgentTodayListDataQuery = {
           code: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
         } | null;
-        account?: { id: string; installmentAmount?: string | null } | null;
+        account?: {
+          id: string;
+          accountName?: string | null;
+          installmentAmount?: string | null;
+        } | null;
       } | null> | null;
     } | null;
   };
@@ -33697,6 +34102,127 @@ export type ListAgentTemplateQuery = {
         account?: { id: string; installmentAmount?: string | null } | null;
       } | null> | null;
     } | null;
+  };
+};
+
+export type ListAgentMemberQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type ListAgentMemberQuery = {
+  agent: {
+    listAgentMember: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: { memberName: string; memberID: string; memberCode: string } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
+
+export type ListCollectionQueryVariables = Exact<{
+  agentID: Scalars['ID'];
+}>;
+
+export type ListCollectionQuery = {
+  collection: {
+    listCollection: {
+      data?: Array<{
+        collectionID: string;
+        collectionName: string;
+        memberCount?: string | null;
+        accountCount?: string | null;
+      } | null> | null;
+    };
+  };
+};
+
+export type ListCollectionTemplateQueryVariables = Exact<{
+  collectionID: Scalars['ID'];
+}>;
+
+export type ListCollectionTemplateQuery = {
+  collection: {
+    listCollectionTemplate: {
+      collectionID: string;
+      collectionName: string;
+      data?: Array<{
+        templateID: string;
+        memberID: string;
+        memberCode: string;
+        memberName: string;
+        accountId: string;
+        accountName: string;
+        AmountToBeCollected?: string | null;
+        FineToBeCollected?: string | null;
+      } | null> | null;
+    };
+  };
+};
+
+export type ListMrSubmissionListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type ListMrSubmissionListQuery = {
+  agent: {
+    listMRSubmissionList?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          mrId: string;
+          mrName: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          status: TodayListStatus;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type AgentTodayTaskDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type AgentTodayTaskDetailQuery = {
+  agent: {
+    agentTodayTaskDetail: {
+      status?: string | null;
+      date?: string | null;
+      remark?: string | null;
+      agent?: { data?: { name?: string | null; profilePicUrl?: string | null } | null } | null;
+      record?: Array<{
+        id?: string | null;
+        amount?: any | null;
+        fine?: string | null;
+        amountToBeCollected?: string | null;
+        fineToBeCollected?: string | null;
+        status?: TodayListStatus | null;
+        member?: {
+          id: string;
+          code: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+        account?: { id: string; accountName?: string | null } | null;
+      } | null> | null;
+    };
   };
 };
 
@@ -50829,38 +51355,6 @@ export const usePrintSlipMutation = <TError = unknown, TContext = unknown>(
     useAxios<PrintSlipMutation, PrintSlipMutationVariables>(PrintSlipDocument),
     options
   );
-export const SetAddMemberToAgentDataDocument = `
-    mutation setAddMemberToAgentData($agentId: String!, $data: [String!]!, $override: Boolean) {
-  agent {
-    addMemberToAgent(agentId: $agentId, data: $data, override: $override) {
-      recordId
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useSetAddMemberToAgentDataMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    SetAddMemberToAgentDataMutation,
-    TError,
-    SetAddMemberToAgentDataMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    SetAddMemberToAgentDataMutation,
-    TError,
-    SetAddMemberToAgentDataMutationVariables,
-    TContext
-  >(
-    ['setAddMemberToAgentData'],
-    useAxios<SetAddMemberToAgentDataMutation, SetAddMemberToAgentDataMutationVariables>(
-      SetAddMemberToAgentDataDocument
-    ),
-    options
-  );
 export const SetAgentTodayListDataDocument = `
     mutation setAgentTodayListData($id: ID!, $data: [AgentTodayListInput]) {
   agent {
@@ -51008,6 +51502,273 @@ export const useSetAgentTemplateMutation = <TError = unknown, TContext = unknown
   useMutation<SetAgentTemplateMutation, TError, SetAgentTemplateMutationVariables, TContext>(
     ['setAgentTemplate'],
     useAxios<SetAgentTemplateMutation, SetAgentTemplateMutationVariables>(SetAgentTemplateDocument),
+    options
+  );
+export const AddAgentMemberDocument = `
+    mutation addAgentMember($id: ID!, $memberId: ID!, $override: Boolean) {
+  agent {
+    addAgentMember(id: $id, memberid: $memberId, override: $override) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddAgentMemberMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddAgentMemberMutation,
+    TError,
+    AddAgentMemberMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddAgentMemberMutation, TError, AddAgentMemberMutationVariables, TContext>(
+    ['addAgentMember'],
+    useAxios<AddAgentMemberMutation, AddAgentMemberMutationVariables>(AddAgentMemberDocument),
+    options
+  );
+export const DeleteAgentMemberDocument = `
+    mutation deleteAgentMember($id: ID!, $memberId: ID!) {
+  agent {
+    deleteAgentMember(id: $id, memberid: $memberId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteAgentMemberMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteAgentMemberMutation,
+    TError,
+    DeleteAgentMemberMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteAgentMemberMutation, TError, DeleteAgentMemberMutationVariables, TContext>(
+    ['deleteAgentMember'],
+    useAxios<DeleteAgentMemberMutation, DeleteAgentMemberMutationVariables>(
+      DeleteAgentMemberDocument
+    ),
+    options
+  );
+export const CreateCollectionDocument = `
+    mutation createCollection($agentID: ID!, $name: String!, $accountId: [ID!]) {
+  collection {
+    createCollection(agentID: $agentID, name: $name, accountId: $accountId) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useCreateCollectionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CreateCollectionMutation,
+    TError,
+    CreateCollectionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<CreateCollectionMutation, TError, CreateCollectionMutationVariables, TContext>(
+    ['createCollection'],
+    useAxios<CreateCollectionMutation, CreateCollectionMutationVariables>(CreateCollectionDocument),
+    options
+  );
+export const UpdateCollectionDocument = `
+    mutation updateCollection($collectionID: ID!, $collectionName: String, $accountId: [ID!]) {
+  collection {
+    updateCollection(
+      collectionID: $collectionID
+      collectionName: $collectionName
+      accountId: $accountId
+    ) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateCollectionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateCollectionMutation,
+    TError,
+    UpdateCollectionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpdateCollectionMutation, TError, UpdateCollectionMutationVariables, TContext>(
+    ['updateCollection'],
+    useAxios<UpdateCollectionMutation, UpdateCollectionMutationVariables>(UpdateCollectionDocument),
+    options
+  );
+export const DeleteCollectionDocument = `
+    mutation deleteCollection($collectionID: ID!) {
+  collection {
+    deleteCollection(collectionID: $collectionID) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteCollectionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteCollectionMutation,
+    TError,
+    DeleteCollectionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteCollectionMutation, TError, DeleteCollectionMutationVariables, TContext>(
+    ['deleteCollection'],
+    useAxios<DeleteCollectionMutation, DeleteCollectionMutationVariables>(DeleteCollectionDocument),
+    options
+  );
+export const AddAgentTodayListDocument = `
+    mutation addAgentTodayList($id: ID, $input: AgentTodayListInputValue!) {
+  agent {
+    addAgentTodayList(id: $id, input: $input) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddAgentTodayListMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddAgentTodayListMutation,
+    TError,
+    AddAgentTodayListMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddAgentTodayListMutation, TError, AddAgentTodayListMutationVariables, TContext>(
+    ['addAgentTodayList'],
+    useAxios<AddAgentTodayListMutation, AddAgentTodayListMutationVariables>(
+      AddAgentTodayListDocument
+    ),
+    options
+  );
+export const EditRejectedTodayListDocument = `
+    mutation editRejectedTodayList($input: AgentTodayListInputValue!) {
+  agent {
+    editRejectedTodayList(input: $input) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useEditRejectedTodayListMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    EditRejectedTodayListMutation,
+    TError,
+    EditRejectedTodayListMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    EditRejectedTodayListMutation,
+    TError,
+    EditRejectedTodayListMutationVariables,
+    TContext
+  >(
+    ['editRejectedTodayList'],
+    useAxios<EditRejectedTodayListMutation, EditRejectedTodayListMutationVariables>(
+      EditRejectedTodayListDocument
+    ),
+    options
+  );
+export const SendTodayTaskDocument = `
+    mutation sendTodayTask($id: ID!) {
+  agent {
+    sentTodayTask(id: $id) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSendTodayTaskMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SendTodayTaskMutation,
+    TError,
+    SendTodayTaskMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SendTodayTaskMutation, TError, SendTodayTaskMutationVariables, TContext>(
+    ['sendTodayTask'],
+    useAxios<SendTodayTaskMutation, SendTodayTaskMutationVariables>(SendTodayTaskDocument),
+    options
+  );
+export const RejectTodayTaskDocument = `
+    mutation rejectTodayTask($id: ID!, $remark: String) {
+  agent {
+    rejectTodayTask(id: $id, remark: $remark) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useRejectTodayTaskMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    RejectTodayTaskMutation,
+    TError,
+    RejectTodayTaskMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<RejectTodayTaskMutation, TError, RejectTodayTaskMutationVariables, TContext>(
+    ['rejectTodayTask'],
+    useAxios<RejectTodayTaskMutation, RejectTodayTaskMutationVariables>(RejectTodayTaskDocument),
+    options
+  );
+export const AcceptAgentTodayDepositDocument = `
+    mutation acceptAgentTodayDeposit($id: ID!) {
+  agent {
+    acceptAgentTodayDeposit(id: $id) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAcceptAgentTodayDepositMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AcceptAgentTodayDepositMutation,
+    TError,
+    AcceptAgentTodayDepositMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    AcceptAgentTodayDepositMutation,
+    TError,
+    AcceptAgentTodayDepositMutationVariables,
+    TContext
+  >(
+    ['acceptAgentTodayDeposit'],
+    useAxios<AcceptAgentTodayDepositMutation, AcceptAgentTodayDepositMutationVariables>(
+      AcceptAgentTodayDepositDocument
+    ),
     options
   );
 export const AccountServiceActivationDocument = `
@@ -61791,6 +62552,7 @@ export const GetAgentTodayListDataDocument = `
     query getAgentTodayListData($id: ID!) {
   agent {
     listAgentTask(id: $id) {
+      submissionId
       record {
         id
         member {
@@ -61800,6 +62562,7 @@ export const GetAgentTodayListDataDocument = `
         }
         account {
           id
+          accountName
           installmentAmount
         }
         amount
@@ -61948,6 +62711,182 @@ export const useListAgentTemplateQuery = <TData = ListAgentTemplateQuery, TError
     ['listAgentTemplate', variables],
     useAxios<ListAgentTemplateQuery, ListAgentTemplateQueryVariables>(
       ListAgentTemplateDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListAgentMemberDocument = `
+    query listAgentMember($filter: Filter, $pagination: Pagination) {
+  agent {
+    listAgentMember(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          memberName
+          memberID
+          memberCode
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useListAgentMemberQuery = <TData = ListAgentMemberQuery, TError = unknown>(
+  variables?: ListAgentMemberQueryVariables,
+  options?: UseQueryOptions<ListAgentMemberQuery, TError, TData>
+) =>
+  useQuery<ListAgentMemberQuery, TError, TData>(
+    variables === undefined ? ['listAgentMember'] : ['listAgentMember', variables],
+    useAxios<ListAgentMemberQuery, ListAgentMemberQueryVariables>(ListAgentMemberDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const ListCollectionDocument = `
+    query listCollection($agentID: ID!) {
+  collection {
+    listCollection(agentID: $agentID) {
+      data {
+        collectionID
+        collectionName
+        memberCount
+        accountCount
+      }
+    }
+  }
+}
+    `;
+export const useListCollectionQuery = <TData = ListCollectionQuery, TError = unknown>(
+  variables: ListCollectionQueryVariables,
+  options?: UseQueryOptions<ListCollectionQuery, TError, TData>
+) =>
+  useQuery<ListCollectionQuery, TError, TData>(
+    ['listCollection', variables],
+    useAxios<ListCollectionQuery, ListCollectionQueryVariables>(ListCollectionDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const ListCollectionTemplateDocument = `
+    query listCollectionTemplate($collectionID: ID!) {
+  collection {
+    listCollectionTemplate(collectionID: $collectionID) {
+      collectionID
+      collectionName
+      data {
+        templateID
+        memberID
+        memberCode
+        memberName
+        accountId
+        accountName
+        AmountToBeCollected
+        FineToBeCollected
+      }
+    }
+  }
+}
+    `;
+export const useListCollectionTemplateQuery = <
+  TData = ListCollectionTemplateQuery,
+  TError = unknown
+>(
+  variables: ListCollectionTemplateQueryVariables,
+  options?: UseQueryOptions<ListCollectionTemplateQuery, TError, TData>
+) =>
+  useQuery<ListCollectionTemplateQuery, TError, TData>(
+    ['listCollectionTemplate', variables],
+    useAxios<ListCollectionTemplateQuery, ListCollectionTemplateQueryVariables>(
+      ListCollectionTemplateDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListMrSubmissionListDocument = `
+    query listMRSubmissionList($filter: Filter, $pagination: Pagination) {
+  agent {
+    listMRSubmissionList(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          mrId
+          mrName
+          date
+          status
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useListMrSubmissionListQuery = <TData = ListMrSubmissionListQuery, TError = unknown>(
+  variables?: ListMrSubmissionListQueryVariables,
+  options?: UseQueryOptions<ListMrSubmissionListQuery, TError, TData>
+) =>
+  useQuery<ListMrSubmissionListQuery, TError, TData>(
+    variables === undefined ? ['listMRSubmissionList'] : ['listMRSubmissionList', variables],
+    useAxios<ListMrSubmissionListQuery, ListMrSubmissionListQueryVariables>(
+      ListMrSubmissionListDocument
+    ).bind(null, variables),
+    options
+  );
+export const AgentTodayTaskDetailDocument = `
+    query agentTodayTaskDetail($id: ID!) {
+  agent {
+    agentTodayTaskDetail(id: $id) {
+      status
+      date
+      agent {
+        data {
+          name
+          profilePicUrl
+        }
+      }
+      remark
+      record {
+        id
+        member {
+          id
+          code
+          name
+        }
+        account {
+          id
+          accountName
+        }
+        amount
+        fine
+        amountToBeCollected
+        fineToBeCollected
+        status
+      }
+    }
+  }
+}
+    `;
+export const useAgentTodayTaskDetailQuery = <TData = AgentTodayTaskDetailQuery, TError = unknown>(
+  variables: AgentTodayTaskDetailQueryVariables,
+  options?: UseQueryOptions<AgentTodayTaskDetailQuery, TError, TData>
+) =>
+  useQuery<AgentTodayTaskDetailQuery, TError, TData>(
+    ['agentTodayTaskDetail', variables],
+    useAxios<AgentTodayTaskDetailQuery, AgentTodayTaskDetailQueryVariables>(
+      AgentTodayTaskDetailDocument
     ).bind(null, variables),
     options
   );

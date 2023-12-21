@@ -260,6 +260,8 @@ export const ROUTES = {
     '/cbs/others/market-representative-collection/list',
   CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_ADD:
     '/cbs/others/market-representative-collection/add',
+  CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_DETAILS:
+    '/cbs/others/market-representative-collection/details',
 
   CBS_ACCOUNT_DEPOSIT_LIST: '/cbs/savings/deposit/list',
   CBS_ACCOUNT_DEPOSIT_ADD: '/cbs/savings/deposit/add',

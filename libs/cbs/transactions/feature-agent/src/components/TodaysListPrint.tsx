@@ -5,7 +5,6 @@ import { Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import {
-  useGetAgentAssignedMemberListDataQuery,
   useGetAgentDetailDataQuery,
   useGetAgentTodayListDataQuery,
   useGetEndOfDayDateDataQuery,
@@ -42,144 +41,97 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
       index: i + 1,
     })) ?? [];
 
-  const { data: assignedMemberListQueryData } = useGetAgentAssignedMemberListDataQuery(
-    {
-      pagination: {
-        first: -1,
-        after: '',
+  const columns = useMemo<Column<typeof todaysListData[0]>[]>(
+    () => [
+      {
+        accessorKey: 'index',
+        header: 'SN',
+        meta: {
+          width: '10px',
+        },
       },
-      filter: {
-        orConditions: [
-          {
-            andConditions: [
-              {
-                column: 'agentId',
-                comparator: 'EqualTo',
-                value: id,
-              },
-            ],
-          },
-        ],
+      {
+        id: 'member',
+        header: 'Member',
+        cell: (cell) => (
+          <Text
+            fontSize="r1"
+            fontWeight={500}
+            color="neutralColorLight.Gray-80"
+            maxW="32ch"
+            wordBreak="break-all"
+            whiteSpace="normal"
+          >
+            {`${localizedText(cell?.row?.original?.member?.name)} [${
+              cell?.row?.original?.member?.code
+            }]`}
+          </Text>
+        ),
+        meta: {
+          width: 'auto',
+        },
       },
-    },
-    { enabled: !!id, staleTime: 0 }
+      {
+        id: 'Account',
+        header: 'Account',
+        cell: (cell) => (
+          <Text
+            fontSize="r1"
+            fontWeight={500}
+            color="neutralColorLight.Gray-80"
+            maxW="32ch"
+            wordBreak="break-all"
+            whiteSpace="normal"
+          >
+            {`${cell?.row?.original?.account?.accountName} [${cell?.row?.original?.account?.id}]`}
+          </Text>
+        ),
+        meta: {
+          width: 'auto',
+        },
+      },
+      {
+        header: 'Amount',
+        accessorFn: (row) => amountConverter(row?.amount || 0),
+        meta: {
+          isNumeric: true,
+          width: '10%',
+        },
+      },
+      {
+        header: 'Fine',
+        accessorFn: (row) => amountConverter(row?.fine || 0),
+        meta: {
+          isNumeric: true,
+          width: '10%',
+        },
+      },
+      {
+        header: 'Amount to be Collected',
+        accessorFn: (row) => amountConverter(row?.amountToBeCollected || 0),
+        meta: {
+          isNumeric: true,
+          width: '10%',
+        },
+      },
+      {
+        header: 'Fine to be Collected',
+        accessorFn: (row) => amountConverter(row?.fineToBeCollected || 0),
+        meta: {
+          isNumeric: true,
+          width: '10%',
+        },
+      },
+      {
+        header: 'Remarks',
+        id: 'remarks',
+        meta: {
+          width: 'auto',
+        },
+      },
+    ],
+    []
   );
-
-  const columns: Column<typeof todaysListData[0]>[] = [
-    {
-      accessorKey: 'index',
-      header: 'SN',
-      meta: {
-        width: '10px',
-      },
-    },
-    {
-      accessorKey: 'member',
-      header: 'Member',
-      accessorFn: (row) => row?.member?.id,
-      cell: (cell) => {
-        const selectedMember = assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
-          (member) => member?.node?.member?.id === cell?.row?.original?.member?.id
-        )?.node?.member;
-
-        return (
-          <Box display="flex" flexDirection="column" py="s4">
-            <Text
-              fontSize="r1"
-              fontWeight={500}
-              color="neutralColorLight.Gray-80"
-              maxW="32ch"
-              wordBreak="break-all"
-              whiteSpace="normal"
-            >
-              {localizedText(selectedMember?.name)}
-            </Text>
-            <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
-              {selectedMember?.code}
-            </Text>
-          </Box>
-        );
-      },
-      meta: {
-        width: 'auto',
-      },
-    },
-    {
-      header: 'Account',
-      accessorFn: (row) => row?.account?.id,
-      cell: (cell) => {
-        const selectedMember = assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
-          (member) => member?.node?.account?.id === cell?.row?.original?.account?.id
-        )?.node?.account;
-
-        return (
-          <Box display="flex" flexDirection="column" py="s4">
-            <Text
-              fontSize="r1"
-              fontWeight={500}
-              color="neutralColorLight.Gray-80"
-              maxW="32ch"
-              wordBreak="break-all"
-              whiteSpace="normal"
-            >
-              {selectedMember?.accountName}
-            </Text>
-            <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
-              {selectedMember?.id}
-            </Text>
-          </Box>
-        );
-      },
-      meta: {
-        width: 'auto',
-      },
-    },
-    {
-      header: 'Due Amount',
-      id: 'amount',
-      cell: (cell) => {
-        const selectedAccount = assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
-          (member) => member?.node?.account?.id === cell?.row?.original?.account?.id
-        )?.node?.account;
-
-        return <Box textAlign="right">{amountConverter(selectedAccount?.dues?.totalDue || 0)}</Box>;
-      },
-      meta: {
-        isNumeric: true,
-        width: '10%',
-      },
-    },
-    {
-      header: 'Installment Amount',
-      accessorFn: (row) => amountConverter(row?.account?.installmentAmount || 0),
-      meta: {
-        isNumeric: true,
-        width: '10%',
-      },
-    },
-    {
-      header: 'Fine',
-      id: 'fine',
-      cell: (cell) => {
-        const selectedAccount = assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
-          (member) => member?.node?.account?.id === cell?.row?.original?.account?.id
-        )?.node?.account;
-
-        return <Box textAlign="right">{amountConverter(selectedAccount?.dues?.fine || 0)}</Box>;
-      },
-      meta: {
-        isNumeric: true,
-        width: '10%',
-      },
-    },
-    {
-      header: 'Remarks',
-      id: 'remarks',
-      meta: {
-        width: 'auto',
-      },
-    },
-  ];
 
   return (
     <Box
