@@ -715,6 +715,10 @@ query getLoanAccountDetails(
           installmentFrequency
           disbursedAmount
           lastPaymentDate
+          groupName
+          groupId
+          centerName
+          centerId
         }
         loanSchedule {
           installments {

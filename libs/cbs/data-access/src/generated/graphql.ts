@@ -38544,6 +38544,10 @@ export type GetLoanAccountDetailsQuery = {
           installmentFrequency?: InstallmentFrequency | null;
           disbursedAmount?: string | null;
           lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
+          groupName?: string | null;
+          groupId?: string | null;
+          centerName?: string | null;
+          centerId?: string | null;
         } | null;
         loanSchedule?: {
           total: string;
@@ -68102,6 +68106,10 @@ export const GetLoanAccountDetailsDocument = `
           installmentFrequency
           disbursedAmount
           lastPaymentDate
+          groupName
+          groupId
+          centerName
+          centerId
         }
         loanSchedule {
           installments {

@@ -96,6 +96,14 @@ export const useLoanAccountDetailHooks = () => {
       label: 'Disbursed Amount',
       value: amountConverter(generalInfo?.sanctionedAmount as string) ?? 'N/A',
     },
+    {
+      label: 'Group',
+      value: generalInfo?.groupName ?? 'N/A',
+    },
+    {
+      label: 'Center',
+      value: generalInfo?.centerName ?? 'N/A',
+    },
   ];
   const productId = generalInfo?.productId;
 
