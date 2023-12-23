@@ -15233,6 +15233,7 @@ export type LoanDisbursementReportData = {
   disbursedDate?: Maybe<Scalars['Localized']>;
   interestRate?: Maybe<Scalars['Float']>;
   loanAccountId?: Maybe<Scalars['String']>;
+  loanDisbursedAmount?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['String']>;
@@ -17082,6 +17083,8 @@ export type MemberAccountMinView = {
   accountNumber?: Maybe<Scalars['String']>;
   balanceType?: Maybe<BalanceType>;
   closedDate?: Maybe<Scalars['Localized']>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   guaranteeAccounts?: Maybe<Array<Maybe<GuaranteeAccountsMinView>>>;
   interestBooked?: Maybe<Scalars['String']>;
   interestEarned?: Maybe<Scalars['String']>;
@@ -28568,6 +28571,40 @@ export type ChangeMeetingStatusMutation = {
           | MutationError_ServerError_Fragment
           | null;
       } | null;
+    };
+  };
+};
+
+export type SetGroupBulkDepositMutationVariables = Exact<{
+  data: MfBulkDepositInput;
+}>;
+
+export type SetGroupBulkDepositMutation = {
+  microFinance: {
+    transaction: {
+      bulkDeposit: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+        record?: {
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          fine?: string | null;
+          rebate?: string | null;
+          discount?: string | null;
+          paymentMode?: DepositPaymentType | null;
+          depositedBy?: DepositedBy | null;
+          createdAt?: Record<'local' | 'en' | 'np', string> | null;
+          totalAmount?: string | null;
+          depositedOther?: string | null;
+          accounts?: Array<{ amount?: string | null } | null> | null;
+        } | null;
+      };
     };
   };
 };
@@ -54884,6 +54921,50 @@ export const useChangeMeetingStatusMutation = <TError = unknown, TContext = unkn
     ['changeMeetingStatus'],
     useAxios<ChangeMeetingStatusMutation, ChangeMeetingStatusMutationVariables>(
       ChangeMeetingStatusDocument
+    ),
+    options
+  );
+export const SetGroupBulkDepositDocument = `
+    mutation setGroupBulkDeposit($data: MFBulkDepositInput!) {
+  microFinance {
+    transaction {
+      bulkDeposit(data: $data) {
+        error {
+          ...MutationError
+        }
+        recordId
+        record {
+          date
+          amount
+          fine
+          rebate
+          discount
+          paymentMode
+          depositedBy
+          createdAt
+          totalAmount
+          accounts {
+            amount
+          }
+          depositedOther
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetGroupBulkDepositMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetGroupBulkDepositMutation,
+    TError,
+    SetGroupBulkDepositMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetGroupBulkDepositMutation, TError, SetGroupBulkDepositMutationVariables, TContext>(
+    ['setGroupBulkDeposit'],
+    useAxios<SetGroupBulkDepositMutation, SetGroupBulkDepositMutationVariables>(
+      SetGroupBulkDepositDocument
     ),
     options
   );

@@ -101,3 +101,33 @@ mutation changeMeetingStatus($meetingID: ID!, $input: MFMeetingStatus!) {
     }
   }
 }
+
+mutation setGroupBulkDeposit($data: MFBulkDepositInput!) {
+  microFinance {
+    transaction {
+      bulkDeposit(data: $data) {
+        error {
+          ...MutationError
+        }
+        recordId
+        record {
+          date
+          amount
+          fine
+          rebate
+          discount
+          paymentMode
+          depositedBy
+          createdAt
+          totalAmount
+          accounts {
+            memberId
+            memberName
+            amount
+          }
+          depositedOther
+        }
+      }
+    }
+  }
+}

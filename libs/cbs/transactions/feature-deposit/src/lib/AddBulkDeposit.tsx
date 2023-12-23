@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
@@ -7,18 +7,31 @@ import omit from 'lodash/omit';
 import { Box, Button, MemberCard, ResponseDialog, Text } from '@myra-ui';
 
 import {
+  BulkDepositAccounts,
   BulkDepositInput,
+  BulkDepositOutput,
   CashValue,
   DepositedBy,
   DepositPaymentType,
+  MfBulkDepositData,
+  MfBulkDepositInput,
+  MfBulkDepositRecord,
+  SetBulkDepositDataMutation,
+  SetGroupBulkDepositMutation,
   useGetIndividualMemberDetails,
   useSetBulkDepositDataMutation,
+  useSetGroupBulkDepositMutation,
 } from '@coop/cbs/data-access';
 import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
-import { FormLayout, FormMemberSelect } from '@coop/shared/form';
+import { FormLayout, FormMemberSelect, FormMFGroupSelect, FormSwitchTab } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
-import { BulkDepositAccountsSummary, BulkDepositAccountsTable, Payment } from '../components';
+import {
+  BulkDepositAccountsSummary,
+  BulkDepositAccountsTable,
+  BulkDepositAccountsTableForGroup,
+  Payment,
+} from '../components';
 
 /* eslint-disable-next-line */
 export interface AddBulkDepositProps {}
@@ -34,6 +47,8 @@ type CustomBulkDepositInput = Omit<BulkDepositInput, 'cash'> & {
       }
     | undefined
     | null;
+  memberOrGroup?: 'member' | 'group';
+  groupId?: string;
 };
 
 const cashOptions: Record<string, string> = {
@@ -56,22 +71,36 @@ export const AddBulkDeposit = () => {
 
   const methods = useForm<CustomBulkDepositInput>({
     defaultValues: {
+      memberOrGroup: 'member',
       payment_type: DepositPaymentType.Cash,
       cash: { disableDenomination: true },
       depositedBy: DepositedBy.Self,
     },
   });
 
-  const { watch, getValues } = methods;
+  const { watch, getValues, setValue } = methods;
 
   const memberId = watch('memberId');
+  const memberOrGroupWatch = watch('memberOrGroup');
+  const groupIdWatch = watch('groupId');
+
+  useEffect(() => {
+    if (memberOrGroupWatch === 'member') {
+      setValue('groupId', '');
+    } else {
+      setValue('memberId', '');
+    }
+  }, [memberOrGroupWatch]);
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
     useGetIndividualMemberDetails({ memberId: String(memberId) });
 
   const [mode, setMode] = useState<number>(0); // 0: form 1: payment
 
-  const { mutateAsync } = useSetBulkDepositDataMutation();
+  const { mutateAsync: setBulkDeposit } = useSetBulkDepositDataMutation();
+  const { mutateAsync: setGroupBulkDeposit } = useSetGroupBulkDepositMutation();
+
+  const mutateAsync = memberOrGroupWatch === 'member' ? setBulkDeposit : setGroupBulkDeposit;
 
   const disableDenomination = watch('cash.disableDenomination');
 
@@ -92,19 +121,26 @@ export const AddBulkDeposit = () => {
 
   const handleSubmit = () => {
     const values = getValues();
-    let filteredValues = {
-      ...omit({ ...values }, ['accounts']),
-      accounts: accounts?.map(
-        (record) =>
-          record && {
-            accountId: record.accountId,
-            noOfInstallments: Number(record.noOfInstallments),
-            amount: String(record.amount),
-            fine: record.fine,
-            rebate: record.rebate,
+    const accountsValues = accounts?.map(
+      (record) =>
+        record && {
+          accountId: record.accountId,
+          noOfInstallments: Number(record.noOfInstallments),
+          amount: String(record.amount),
+          fine: record.fine,
+          rebate: record.rebate,
+        }
+    );
+    let filteredValues =
+      memberOrGroupWatch === 'member'
+        ? {
+            ...omit({ ...values }, ['accounts', 'groupId', 'memberOrGroup']),
+            accounts: accountsValues,
           }
-      ),
-    };
+        : {
+            ...omit({ ...values }, ['accounts', 'memberId', 'memberOrGroup']),
+            accounts: accountsValues,
+          };
 
     if (values['payment_type'] === DepositPaymentType.Cash) {
       filteredValues = omit({ ...filteredValues }, ['withdrawSlip', 'bankVoucher']);
@@ -143,7 +179,7 @@ export const AddBulkDeposit = () => {
     //     router.push(ROUTES.CBS_TRANS_DEPOSIT_LIST);
     //   },
     // });
-    return filteredValues as BulkDepositInput;
+    return filteredValues as BulkDepositInput | MfBulkDepositInput;
   };
 
   const accounts = watch('accounts');
@@ -192,7 +228,18 @@ export const AddBulkDeposit = () => {
         <FormLayout.Form>
           <Box display={mode === 0 ? 'flex' : 'none'} minH="calc(100vh - 170px)">
             <Box p="s16" pb="100px" width="100%" display="flex" flexDirection="column" gap="s24">
-              <FormMemberSelect name="memberId" label="Member" />
+              <FormSwitchTab
+                name="memberOrGroup"
+                options={[
+                  { label: 'Member', value: 'member' },
+                  { label: 'Group', value: 'group' },
+                ]}
+              />
+              {memberOrGroupWatch === 'member' ? (
+                <FormMemberSelect name="memberId" label="Member" />
+              ) : (
+                <FormMFGroupSelect name="groupId" label="Group" />
+              )}
               {memberId && (
                 <MemberCard
                   isInline
@@ -217,6 +264,7 @@ export const AddBulkDeposit = () => {
                 />
               )}
               {memberId && <BulkDepositAccountsTable memberId={memberId} />}
+              {groupIdWatch && <BulkDepositAccountsTableForGroup groupId={groupIdWatch} />}
 
               {accounts?.length && <BulkDepositAccountsSummary memberId={memberId} />}
             </Box>
@@ -256,18 +304,32 @@ export const AddBulkDeposit = () => {
                 queryClient.invalidateQueries(['getDepositListData']);
                 router.push(ROUTES.CBS_TRANS_DEPOSIT_LIST);
               }}
-              promise={() => mutateAsync({ data: handleSubmit() })}
-              successCardProps={(response) => {
-                const result = response?.transaction?.bulkDeposit?.record;
+              promise={() =>
+                mutateAsync({
+                  data: handleSubmit() as BulkDepositInput & MfBulkDepositInput,
+                }) as unknown as
+                  | Promise<SetBulkDepositDataMutation>
+                  | Promise<SetGroupBulkDepositMutation>
+              }
+              successCardProps={(
+                response: SetBulkDepositDataMutation | SetGroupBulkDepositMutation
+              ) => {
+                const result: BulkDepositOutput | MfBulkDepositRecord =
+                  (response as SetBulkDepositDataMutation)?.transaction?.bulkDeposit?.record ||
+                  (response as SetGroupBulkDepositMutation)?.microFinance?.transaction?.bulkDeposit
+                    ?.record;
                 const total = result?.totalAmount;
                 let tempObj: Record<string, string> = {};
 
                 if (result?.accounts?.length) {
                   for (let i = 0; i < result?.accounts?.length; i += 1) {
-                    const item = result?.accounts?.[i];
+                    const item: BulkDepositAccounts | MfBulkDepositData = result?.accounts?.[i];
                     let tempDetails: Record<string, string> = {};
                     tempDetails = {
-                      [`${item?.accountName}`]: String(item?.amount),
+                      [`${
+                        (item as BulkDepositAccounts)?.accountName ||
+                        (item as MfBulkDepositData)?.memberName
+                      }`]: String(item?.amount),
                     };
 
                     tempObj = { ...tempObj, ...tempDetails };
@@ -293,8 +355,8 @@ export const AddBulkDeposit = () => {
                   subTitle:
                     'Bulk Deposit completed successfully. Details of the transaction is listed below.',
                   meta: {
-                    memberId: result?.memberId,
-                    member: result?.memberName,
+                    memberId: (result as BulkDepositOutput)?.memberId,
+                    member: (result as BulkDepositOutput)?.memberName,
                   },
                   dublicate: true,
                   showSignatures: true,

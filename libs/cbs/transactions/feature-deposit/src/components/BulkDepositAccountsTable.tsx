@@ -117,6 +117,11 @@ export const BulkDepositAccountsTable = ({ memberId }: IBulkDepositAccountsTable
                 comparator: 'EqualTo',
                 value: ObjState.Active,
               },
+              {
+                column: 'groupId',
+                comparator: 'HasNoValue',
+                value: '',
+              },
             ],
           },
         ],

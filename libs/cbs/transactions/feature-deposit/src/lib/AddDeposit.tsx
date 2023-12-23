@@ -368,9 +368,11 @@ export const AddDeposit = () => {
   const groupId = watch('groupId');
 
   useEffect(() => {
-    methods.setValue('groupId', '');
-    methods.setValue('memberId', '');
-    methods.resetField('accountId');
+    if (memberOrGroup === 'member') {
+      methods.setValue('groupId', '');
+    } else {
+      methods.setValue('memberId', '');
+    }
   }, [memberOrGroup]);
 
   return (
