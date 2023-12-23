@@ -42629,6 +42629,7 @@ export type GetLoanDisbursmentReportQuery = {
           interestRate?: number | null;
           nomineeAccount?: string | null;
           memberCode?: string | null;
+          loanDisbursedAmount?: string | null;
         } | null> | null;
       } | null;
     };
@@ -73723,6 +73724,7 @@ export const GetLoanDisbursmentReportDocument = `
           interestRate
           nomineeAccount
           memberCode
+          loanDisbursedAmount
         }
       }
     }
