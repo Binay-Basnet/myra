@@ -22,7 +22,7 @@ import {
   AlternativeChannelServiceType,
   AlternativeChannelStatus,
   useAccountServiceActivationMutation,
-  useGetAlternativeChannelListQuery,
+  useGetUpdatedAlternativeChannelListQuery,
   useGetUserDetailsQuery,
 } from '@coop/cbs/data-access';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
@@ -79,17 +79,23 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
   const [accounts, setAccounts] = useState([]);
 
   const router = useRouter();
+  const search = router?.query?.['search'];
 
   const { mutateAsync } = useAccountServiceActivationMutation();
 
-  const { data, isLoading } = useGetAlternativeChannelListQuery({
+  const { data, isLoading } = useGetUpdatedAlternativeChannelListQuery({
     filter: {
-      serviceType,
+      query: search as string,
+      orConditions: [
+        {
+          andConditions: [{ column: 'servicetype', comparator: 'EqualTo', value: serviceType }],
+        },
+      ],
     },
     paginate: getPaginationQuery(),
   });
 
-  const alternativeList = data?.alternativeChannel?.list?.edges ?? [];
+  const alternativeList = data?.alternativeChannel?.listUpdated?.edges ?? [];
 
   const {
     data: userDetails,
@@ -241,8 +247,8 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
         }}
         data={alternativeList}
         pagination={{
-          total: data?.alternativeChannel?.list?.totalCount ?? 'Many',
-          pageInfo: data?.alternativeChannel?.list?.pageInfo,
+          total: data?.alternativeChannel?.listUpdated?.totalCount ?? 'Many',
+          pageInfo: data?.alternativeChannel?.listUpdated?.pageInfo,
         }}
       />
 

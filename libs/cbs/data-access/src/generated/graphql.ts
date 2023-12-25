@@ -1704,12 +1704,18 @@ export type AlternativeChannelPaymentMode =
   typeof AlternativeChannelPaymentMode[keyof typeof AlternativeChannelPaymentMode];
 export type AlternativeChannelQuery = {
   list?: Maybe<AlternativeChannelConnection>;
+  listUpdated?: Maybe<AlternativeChannelConnection>;
   memberActivations?: Maybe<AlternativeChannelMemberActivations>;
   userDetails?: Maybe<EbankingUserDetailsResult>;
 };
 
 export type AlternativeChannelQueryListArgs = {
   filter?: InputMaybe<AlternativeChannelFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type AlternativeChannelQueryListUpdatedArgs = {
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -44727,6 +44733,33 @@ export type GetAlternativeChannelListQuery = {
   };
 };
 
+export type GetUpdatedAlternativeChannelListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  paginate?: InputMaybe<Pagination>;
+}>;
+
+export type GetUpdatedAlternativeChannelListQuery = {
+  alternativeChannel: {
+    listUpdated?: {
+      totalCount: number;
+      pageInfo?: PaginationFragment | null;
+      edges?: Array<{
+        cursor: string;
+        data?: {
+          id?: string | null;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          memberId?: string | null;
+          coopConnection?: boolean | null;
+          lastActive?: string | null;
+          phoneNumber?: string | null;
+          serviceStatus?: AlternativeChannelStatus | null;
+          serviceType?: AlternativeChannelServiceType | null;
+        } | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
 export type GetAcFeeCoaQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAcFeeCoaQuery = {
@@ -76460,6 +76493,47 @@ export const useGetAlternativeChannelListQuery = <
       : ['getAlternativeChannelList', variables],
     useAxios<GetAlternativeChannelListQuery, GetAlternativeChannelListQueryVariables>(
       GetAlternativeChannelListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetUpdatedAlternativeChannelListDocument = `
+    query getUpdatedAlternativeChannelList($filter: Filter, $paginate: Pagination) {
+  alternativeChannel {
+    listUpdated(filter: $filter, paginate: $paginate) {
+      totalCount
+      pageInfo {
+        ...Pagination
+      }
+      edges {
+        cursor
+        data {
+          id
+          name
+          memberId
+          coopConnection
+          lastActive
+          phoneNumber
+          serviceStatus
+          serviceType
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetUpdatedAlternativeChannelListQuery = <
+  TData = GetUpdatedAlternativeChannelListQuery,
+  TError = unknown
+>(
+  variables?: GetUpdatedAlternativeChannelListQueryVariables,
+  options?: UseQueryOptions<GetUpdatedAlternativeChannelListQuery, TError, TData>
+) =>
+  useQuery<GetUpdatedAlternativeChannelListQuery, TError, TData>(
+    variables === undefined
+      ? ['getUpdatedAlternativeChannelList']
+      : ['getUpdatedAlternativeChannelList', variables],
+    useAxios<GetUpdatedAlternativeChannelListQuery, GetUpdatedAlternativeChannelListQueryVariables>(
+      GetUpdatedAlternativeChannelListDocument
     ).bind(null, variables),
     options
   );

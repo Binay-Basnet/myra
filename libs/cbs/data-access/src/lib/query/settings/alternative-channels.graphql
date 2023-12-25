@@ -50,6 +50,30 @@ query getAlternativeChannelList($filter: AlternativeChannelFilter, $paginate: Pa
   }
 }
 
+query getUpdatedAlternativeChannelList($filter: Filter, $paginate: Pagination) {
+  alternativeChannel {
+    listUpdated(filter: $filter, paginate: $paginate) {
+      totalCount
+      pageInfo {
+        ...Pagination
+      }
+      edges {
+        cursor
+        data {
+          id
+          name
+          memberId
+          coopConnection
+          lastActive
+          phoneNumber
+          serviceStatus
+          serviceType
+        }
+      }
+    }
+  }
+}
+
 query getACFeeCOA {
   settings {
     chartsOfAccount {
