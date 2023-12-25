@@ -28602,7 +28602,7 @@ export type SetGroupBulkDepositMutation = {
           createdAt?: Record<'local' | 'en' | 'np', string> | null;
           totalAmount?: string | null;
           depositedOther?: string | null;
-          accounts?: Array<{ amount?: string | null } | null> | null;
+          accounts?: Array<{ memberName?: string | null; amount?: string | null } | null> | null;
         } | null;
       };
     };
@@ -54945,6 +54945,7 @@ export const SetGroupBulkDepositDocument = `
           createdAt
           totalAmount
           accounts {
+            memberName
             amount
           }
           depositedOther
