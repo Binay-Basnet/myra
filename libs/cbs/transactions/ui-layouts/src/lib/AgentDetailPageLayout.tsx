@@ -38,7 +38,7 @@ export const AgentDetailPageLayout = ({ children }: AgentDetailPageLayoutProps) 
   );
   return (
     <Scrollable detailPage>
-      <TransactionDetailPathBar title="Market Representative List" />
+      <TransactionDetailPathBar title="Market Representative" />
       <Box
         w="250px"
         position="fixed"

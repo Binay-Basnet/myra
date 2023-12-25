@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { IoAdd, IoCloseCircleOutline } from 'react-icons/io5';
 import { useDeepCompareEffect } from 'react-use';
@@ -8,7 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { chakraComponents } from 'chakra-react-select';
 import { chakraDefaultStyles } from 'libs/@myra/editable-table/src/utils/ChakraSelectTheme';
 
-import { asyncToast, Box, FormSection, Icon, Modal, Text } from '@myra-ui';
+import { asyncToast, Box, Button, FormSection, Icon, Modal, Text } from '@myra-ui';
 
 import {
   Arrange,
@@ -33,6 +33,8 @@ export const CreateCollectionListModal = ({
   onClose,
   collectionId,
 }: ICreateCollectionListModalProps) => {
+  const [isCloseAlertModalOpen, setIsCloseAlertModalOpen] = useState(false);
+
   const router = useRouter();
 
   const id = router?.query?.['id'];
@@ -160,140 +162,169 @@ export const CreateCollectionListModal = ({
   };
 
   const handleClose = () => {
-    reset({ name: '', collection: [] });
-    onClose();
+    setIsCloseAlertModalOpen(true);
+  };
+
+  const handleCloseAlertModalClose = () => {
+    setIsCloseAlertModalOpen(false);
   };
 
   return (
-    <Modal
-      open={isOpen}
-      onClose={handleClose}
-      title={collectionId ? 'Update Collection' : 'Create Collection'}
-      primaryButtonLabel={collectionId ? 'Update Collection' : 'Create Collection'}
-      primaryButtonHandler={handleSave}
-      width="5xl"
-      hidePadding
-    >
-      <FormProvider {...methods}>
-        <FormSection templateColumns={1} divider={false}>
-          <FormInput name="name" label="Collection List Name" />
+    <>
+      <Modal
+        open={isOpen}
+        closeOnOverlayClick={false}
+        onClose={handleClose}
+        title={collectionId ? 'Update Collection' : 'Create Collection'}
+        primaryButtonLabel={collectionId ? 'Update Collection' : 'Create Collection'}
+        primaryButtonHandler={handleSave}
+        width="5xl"
+        hidePadding
+      >
+        <FormProvider {...methods}>
+          <FormSection templateColumns={1} divider={false}>
+            <FormInput name="name" label="Collection List Name" />
 
-          <Box display="flex" flexDirection="column" gap="s4">
-            <Text variant="formLabel">Collection</Text>
-            <Box display="flex" flexDirection="column">
-              <Box
-                display="flex"
-                w="100%"
-                borderTopRadius="br2"
-                h="40px"
-                alignItems="center"
-                bg="gray.700"
-                color="white"
-              >
-                <Text flexBasis="50%" fontWeight="600" fontSize="r1" px="s8">
-                  Member
-                </Text>
+            <Box display="flex" flexDirection="column" gap="s4">
+              <Text variant="formLabel">Collection</Text>
+              <Box display="flex" flexDirection="column">
+                <Box
+                  display="flex"
+                  w="100%"
+                  borderTopRadius="br2"
+                  h="40px"
+                  alignItems="center"
+                  bg="gray.700"
+                  color="white"
+                >
+                  <Text flexBasis="50%" fontWeight="600" fontSize="r1" px="s8">
+                    Member
+                  </Text>
 
-                <Text flexBasis="50%" fontWeight="600" fontSize="r1" px="s8">
-                  Account
-                </Text>
-              </Box>
+                  <Text flexBasis="50%" fontWeight="600" fontSize="r1" px="s8">
+                    Account
+                  </Text>
+                </Box>
 
-              <Box w="100%" bg="white" borderX="1px" borderColor="border.layout">
-                {fields.map((item, index) => (
-                  <HStack
-                    w="100%"
-                    minH="36px"
-                    alignItems="stretch"
-                    bg="white"
-                    spacing={0}
-                    borderBottom="1px"
-                    borderBottomColor="border.layout"
-                    key={item?.id}
-                  >
-                    <Box flexBasis="50%">
-                      <FormSelect
-                        name={`${'collection'}.${index}.memberId`}
-                        options={memberOptions}
-                        chakraStyles={chakraDefaultStyles}
-                        components={{
-                          SingleValue: (props) => <chakraComponents.SingleValue {...props} />,
-                          DropdownIndicator: () => null,
-                        }}
-                        placeholder="Select Member"
-                        menuPosition="fixed"
-                      />
-                    </Box>
-
-                    <Box flexBasis="50%" borderLeft="1px" borderLeftColor="border.layout">
-                      <AccountSelectCell
-                        memberId={
-                          collection[index]?.memberId &&
-                          typeof collection[index]?.memberId === 'object' &&
-                          'value' in collection[index].memberId
-                            ? collection[index]?.memberId?.['value']
-                            : collection[index]?.memberId
-                        }
-                        index={index}
-                      />
-                    </Box>
-
-                    <Box
-                      as="button"
-                      w="s36"
-                      minH="s36"
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      flexShrink={0}
-                      borderLeft="1px"
-                      borderLeftColor="border.layout"
-                      cursor={router?.asPath?.includes('/view') ? 'not-allowed' : 'pointer'}
-                      pointerEvents={router?.asPath?.includes('/view') ? 'none' : 'auto'}
-                      _focus={{ bg: 'background.500' }}
-                      _focusVisible={{ outline: 'none' }}
-                      _hover={{ bg: 'gray.100' }}
-                      data-testid={`deleteRow-${index}`}
-                      onClick={() => {
-                        remove(index);
-                      }}
-                      flexBasis="5%"
+                <Box w="100%" bg="white" borderX="1px" borderColor="border.layout">
+                  {fields.map((item, index) => (
+                    <HStack
+                      w="100%"
+                      minH="36px"
+                      alignItems="stretch"
+                      bg="white"
+                      spacing={0}
+                      borderBottom="1px"
+                      borderBottomColor="border.layout"
+                      key={item?.id}
                     >
-                      <Icon as={IoCloseCircleOutline} color="danger.500" fontSize="2xl" />
-                    </Box>
-                  </HStack>
-                ))}
-              </Box>
+                      <Box flexBasis="50%">
+                        <FormSelect
+                          name={`${'collection'}.${index}.memberId`}
+                          options={memberOptions}
+                          chakraStyles={chakraDefaultStyles}
+                          components={{
+                            SingleValue: (props) => <chakraComponents.SingleValue {...props} />,
+                            DropdownIndicator: () => null,
+                          }}
+                          placeholder="Select Member"
+                          menuPosition="fixed"
+                        />
+                      </Box>
 
-              <Box
-                w="100%"
-                bg="white"
-                borderBottom="1px"
-                borderX="1px"
-                borderColor="border.layout"
-                borderBottomRadius="br2"
-                h="36px"
-                px="s8"
-                display="flex"
-                alignItems="center"
-                color="gray.600"
-                _hover={{ bg: 'gray.100' }}
-                cursor="pointer"
-                gap="s4"
-                onClick={async () => {
-                  append({});
-                }}
-              >
-                <Icon as={IoAdd} fontSize="xl" color="primary.500" />
-                <Text color="primary.500" fontSize="s3" lineHeight="1.5">
-                  New
-                </Text>
+                      <Box flexBasis="50%" borderLeft="1px" borderLeftColor="border.layout">
+                        <AccountSelectCell
+                          memberId={
+                            collection[index]?.memberId &&
+                            typeof collection[index]?.memberId === 'object' &&
+                            'value' in collection[index].memberId
+                              ? collection[index]?.memberId?.['value']
+                              : collection[index]?.memberId
+                          }
+                          index={index}
+                        />
+                      </Box>
+
+                      <Box
+                        as="button"
+                        w="s36"
+                        minH="s36"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        flexShrink={0}
+                        borderLeft="1px"
+                        borderLeftColor="border.layout"
+                        cursor={router?.asPath?.includes('/view') ? 'not-allowed' : 'pointer'}
+                        pointerEvents={router?.asPath?.includes('/view') ? 'none' : 'auto'}
+                        _focus={{ bg: 'background.500' }}
+                        _focusVisible={{ outline: 'none' }}
+                        _hover={{ bg: 'gray.100' }}
+                        data-testid={`deleteRow-${index}`}
+                        onClick={() => {
+                          remove(index);
+                        }}
+                        flexBasis="5%"
+                      >
+                        <Icon as={IoCloseCircleOutline} color="danger.500" fontSize="2xl" />
+                      </Box>
+                    </HStack>
+                  ))}
+                </Box>
+
+                <Box
+                  w="100%"
+                  bg="white"
+                  borderBottom="1px"
+                  borderX="1px"
+                  borderColor="border.layout"
+                  borderBottomRadius="br2"
+                  h="36px"
+                  px="s8"
+                  display="flex"
+                  alignItems="center"
+                  color="gray.600"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
+                  gap="s4"
+                  onClick={async () => {
+                    append({});
+                  }}
+                >
+                  <Icon as={IoAdd} fontSize="xl" color="primary.500" />
+                  <Text color="primary.500" fontSize="s3" lineHeight="1.5">
+                    New
+                  </Text>
+                </Box>
               </Box>
             </Box>
-          </Box>
-        </FormSection>
-      </FormProvider>
-    </Modal>
+          </FormSection>
+        </FormProvider>
+      </Modal>
+      <Modal open={isCloseAlertModalOpen} onClose={handleCloseAlertModalClose}>
+        <Text my="s16">
+          Are you sure you want to close this modal?. All the progress will be lost
+        </Text>
+        <Box display="flex" justifyContent="flex-end" gap="s8">
+          <Button
+            variant="outline"
+            onClick={() => {
+              handleCloseAlertModalClose();
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              reset({ name: '', collection: [] });
+              onClose();
+            }}
+          >
+            Yes
+          </Button>
+        </Box>
+      </Modal>
+    </>
   );
 };
 

@@ -311,11 +311,11 @@ export const CBS: NavType = {
           aclKey: 'CBS_TRANSACTIONS_LOAN_REPAYMENT',
         },
 
-        {
-          label: 'transactionSidebarNewMarketRepresentativeTransaction',
-          route: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_ADD,
-          aclKey: 'CBS_TRANSACTIONS_MARKET_REPRESENTATIVE_COLLECTION',
-        },
+        // {
+        //   label: 'transactionSidebarNewMarketRepresentativeTransaction',
+        //   route: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_ADD,
+        //   aclKey: 'CBS_TRANSACTIONS_MARKET_REPRESENTATIVE_COLLECTION',
+        // },
         {
           label: 'New Journal Voucher',
           route: ROUTES.CBS_TRANS_JOURNAL_VOUCHER_ADD,
@@ -352,7 +352,7 @@ export const CBS: NavType = {
           route: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_LIST,
           aclKey: 'CBS_TRANSACTIONS_MARKET_REPRESENTATIVE_COLLECTION',
 
-          addRoute: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_ADD,
+          // addRoute: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_ADD,
         },
         {
           label: 'transactionsSidebarAgentList',
