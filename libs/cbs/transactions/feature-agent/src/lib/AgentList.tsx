@@ -5,11 +5,11 @@ import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
 import {
   featureCode,
   getFilterQuery,
   getPaginationQuery,
+  getUrl,
   useTranslation,
 } from '@coop/shared/utils';
 
@@ -82,7 +82,7 @@ export const AgentList = () => {
                 action: 'VIEW',
                 onClick: () => {
                   router.push(
-                    `/${ROUTES?.CBS_TRANS_MARKET_REPRESENTATIVE_DETAILS}?id=${cell?.row?.original?.node?.id}`
+                    `/${getUrl(router.pathname, 3)}/details?id=${cell?.row?.original?.node?.id}`
                   );
                 },
               },
@@ -111,7 +111,7 @@ export const AgentList = () => {
         isLoading={isFetching}
         columns={columns}
         rowOnClick={(row) =>
-          router.push(`/${ROUTES?.CBS_OTHERS_MARKET_REPRESENTATIVE_DETAILS}?id=${row?.node?.id}`)
+          router.push(`/${getUrl(router.pathname, 3)}/details?id=${row?.node?.id}`)
         }
         noDataTitle={t['agentListMarketRepresentative']}
         pagination={{
