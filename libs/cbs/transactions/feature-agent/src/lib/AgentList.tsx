@@ -111,7 +111,7 @@ export const AgentList = () => {
         isLoading={isFetching}
         columns={columns}
         rowOnClick={(row) =>
-          router.push(`/${ROUTES?.CBS_TRANS_MARKET_REPRESENTATIVE_DETAILS}?id=${row?.node?.id}`)
+          router.push(`/${ROUTES?.CBS_OTHERS_MARKET_REPRESENTATIVE_DETAILS}?id=${row?.node?.id}`)
         }
         noDataTitle={t['agentListMarketRepresentative']}
         pagination={{

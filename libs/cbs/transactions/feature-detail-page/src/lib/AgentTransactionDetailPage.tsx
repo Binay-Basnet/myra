@@ -145,7 +145,7 @@ export const AgentTransactionDetailPage = () => {
       promise: rejectTodayTask({ id: id as string, remark: reason }),
       onSuccess: () => {
         queryClient.invalidateQueries(['listMRSubmissionList']);
-        router.push(ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_TRANSACTIONS_LIST);
+        router.push(ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_LIST);
       },
     });
   };
