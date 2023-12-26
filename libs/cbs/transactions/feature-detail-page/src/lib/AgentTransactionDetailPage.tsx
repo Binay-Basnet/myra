@@ -22,11 +22,12 @@ import {
   TodayListStatus,
   useAcceptAgentTodayDepositMutation,
   useAgentTodayTaskDetailQuery,
+  useAppSelector,
   useRejectTodayTaskMutation,
 } from '@coop/cbs/data-access';
-import { localizedText, ROUTES } from '@coop/cbs/utils';
+import { localizedText } from '@coop/cbs/utils';
 import { FormLayout, FormTextArea } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, getUrl } from '@coop/shared/utils';
 
 type AccountsEntry = {
   id?: string;
@@ -46,6 +47,11 @@ type TodaysList = {
 };
 export const AgentTransactionDetailPage = () => {
   const router = useRouter();
+
+  const user = useAppSelector((state) => state?.auth?.user);
+
+  const isTellerOrHeadTeller =
+    user?.currentRole?.name === 'Teller' || user?.currentRole?.name === 'Head Teller';
 
   const id = router?.query?.['id'];
 
@@ -145,7 +151,7 @@ export const AgentTransactionDetailPage = () => {
       promise: rejectTodayTask({ id: id as string, remark: reason }),
       onSuccess: () => {
         queryClient.invalidateQueries(['listMRSubmissionList']);
-        router.push(ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_LIST);
+        router.push(`/${getUrl(router.pathname, 3)}/list`);
       },
     });
   };
@@ -162,7 +168,7 @@ export const AgentTransactionDetailPage = () => {
       promise: acceptTodayTask({ id: id as string }),
       onSuccess: () => {
         queryClient.invalidateQueries(['listMRSubmissionList']);
-        router.push(ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_TRANSACTIONS_LIST);
+        router.push(`/${getUrl(router.pathname, 3)}/list`);
       },
     });
   };
@@ -288,6 +294,7 @@ export const AgentTransactionDetailPage = () => {
                 variant="ghost"
                 shade="danger"
                 minWidth="160px"
+                disabled={!isTellerOrHeadTeller}
               >
                 Decline with a Note
               </Button>
@@ -295,7 +302,11 @@ export const AgentTransactionDetailPage = () => {
           }
           mainButton={
             submissionStatus === TodayListStatus.Pending ? (
-              <Button onClick={handleAcceptRequest} minWidth="160px">
+              <Button
+                onClick={handleAcceptRequest}
+                minWidth="160px"
+                disabled={!isTellerOrHeadTeller}
+              >
                 Approve Transaction
               </Button>
             ) : null

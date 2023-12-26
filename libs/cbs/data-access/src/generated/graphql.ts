@@ -5440,10 +5440,10 @@ export type DepositAccountInstallmentResult = {
 };
 
 export type DepositBankVoucher = {
-  amount?: InputMaybe<Scalars['String']>;
-  bankId?: InputMaybe<Scalars['String']>;
-  depositedAt?: InputMaybe<Scalars['Localized']>;
-  depositedBy?: InputMaybe<Scalars['String']>;
+  amount: Scalars['String'];
+  bankId: Scalars['String'];
+  depositedAt: Scalars['Localized'];
+  depositedBy: Scalars['String'];
   voucherId?: InputMaybe<Scalars['String']>;
 };
 
