@@ -215,6 +215,7 @@ export const TableHeadCell = <T,>({
           : 'start'
       }
       alignItems="center"
+      whiteSpace="normal"
     >
       {header.isPlaceholder ? null : <TableHeaderWithSorting header={header} />}
 
