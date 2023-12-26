@@ -32,6 +32,7 @@ import {
   BulkDepositAccountsTableForGroup,
   Payment,
 } from '../components';
+import { BulkDepositAccountsSummaryForGroup } from '../components/BulkDepositAccountsSummaryForGroup';
 
 /* eslint-disable-next-line */
 export interface AddBulkDepositProps {}
@@ -266,7 +267,10 @@ export const AddBulkDeposit = () => {
               {memberId && <BulkDepositAccountsTable memberId={memberId} />}
               {groupIdWatch && <BulkDepositAccountsTableForGroup groupId={groupIdWatch} />}
 
-              {accounts?.length && <BulkDepositAccountsSummary memberId={memberId} />}
+              {accounts?.length && memberId && <BulkDepositAccountsSummary memberId={memberId} />}
+              {accounts?.length && groupIdWatch && (
+                <BulkDepositAccountsSummaryForGroup groupId={groupIdWatch} />
+              )}
             </Box>
           </Box>
 
@@ -326,10 +330,7 @@ export const AddBulkDeposit = () => {
                     const item: BulkDepositAccounts | MfBulkDepositData = result?.accounts?.[i];
                     let tempDetails: Record<string, string> = {};
                     tempDetails = {
-                      [`${
-                        (item as BulkDepositAccounts)?.accountName ||
-                        (item as MfBulkDepositData)?.memberName
-                      }`]: String(item?.amount),
+                      [`${(item as BulkDepositAccounts)?.accountName}`]: String(item?.amount),
                     };
 
                     tempObj = { ...tempObj, ...tempDetails };
@@ -350,7 +351,7 @@ export const AddBulkDeposit = () => {
                     ...tempObj,
 
                     'Payment Mode': result?.paymentMode,
-                    'Deposited By': result?.depositedOther ?? 'Self',
+                    'Deposited By': result?.depositedOther || 'Self',
                   },
                   subTitle:
                     'Bulk Deposit completed successfully. Details of the transaction is listed below.',

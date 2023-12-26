@@ -125,7 +125,8 @@ export const CreateCollectionListModal = ({
         onSuccess: () => {
           queryClient.invalidateQueries(['listCollection']);
           queryClient.invalidateQueries(['listCollectionTemplate']);
-          handleClose();
+          reset({ name: '', collection: [] });
+          onClose();
         },
         promise: updateCollection({
           collectionID: collectionId as string,
@@ -149,6 +150,8 @@ export const CreateCollectionListModal = ({
         onSuccess: () => {
           queryClient.invalidateQueries(['listCollection']);
           handleClose();
+          reset({ name: '', collection: [] });
+          onClose();
         },
         promise: createCollection({
           agentID: id as string,

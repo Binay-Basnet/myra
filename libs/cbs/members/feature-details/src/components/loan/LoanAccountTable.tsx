@@ -20,6 +20,7 @@ interface ILoanPaymentScheduleTableProps {
         accountNumber: string | null | undefined;
         subscriptionDate: string | null | undefined;
         remainingPrincipal?: string | null | undefined;
+        groupName?: string;
       }[];
   memberName: string;
   contactNo?: string;
@@ -161,6 +162,10 @@ export const LoanTable = ({
         },
       },
       {
+        header: 'Group',
+        accessorFn: (row) => row?.groupName,
+      },
+      {
         header: 'QR',
         accessorKey: 'interestRate',
         cell: (props) => (
@@ -253,6 +258,10 @@ export const LoanTable = ({
         header: 'Closed Date',
         accessorKey: 'subscriptionDate',
         cell: (props) => props?.row?.original?.subscriptionDate,
+      },
+      {
+        header: 'Group',
+        accessorFn: (row) => row?.groupName,
       },
       {
         header: 'QR',

@@ -28,6 +28,7 @@ interface IAccountListProps {
           loanId?: string | null;
           loanAccountName?: string | null;
         } | null)[];
+    groupName?: string;
   }[];
   isClosedAccounts?: boolean;
 }

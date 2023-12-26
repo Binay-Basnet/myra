@@ -121,6 +121,7 @@ mutation setGroupBulkDeposit($data: MFBulkDepositInput!) {
           createdAt
           totalAmount
           accounts {
+            accountName
             memberName
             amount
           }

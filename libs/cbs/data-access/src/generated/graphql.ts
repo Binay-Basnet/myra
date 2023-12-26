@@ -5440,10 +5440,10 @@ export type DepositAccountInstallmentResult = {
 };
 
 export type DepositBankVoucher = {
-  amount: Scalars['String'];
-  bankId: Scalars['String'];
-  depositedAt: Scalars['Localized'];
-  depositedBy: Scalars['String'];
+  amount?: InputMaybe<Scalars['String']>;
+  bankId?: InputMaybe<Scalars['String']>;
+  depositedAt?: InputMaybe<Scalars['Localized']>;
+  depositedBy?: InputMaybe<Scalars['String']>;
   voucherId?: InputMaybe<Scalars['String']>;
 };
 
@@ -28612,7 +28612,11 @@ export type SetGroupBulkDepositMutation = {
           createdAt?: Record<'local' | 'en' | 'np', string> | null;
           totalAmount?: string | null;
           depositedOther?: string | null;
-          accounts?: Array<{ memberName?: string | null; amount?: string | null } | null> | null;
+          accounts?: Array<{
+            accountName?: string | null;
+            memberName?: string | null;
+            amount?: string | null;
+          } | null> | null;
         } | null;
       };
     };
@@ -40015,6 +40019,8 @@ export type GetMemberKymDetailsAccountsQuery = {
             interestRate?: string | null;
             interestEarned?: string | null;
             interestBooked?: string | null;
+            groupId?: string | null;
+            groupName?: string | null;
             guaranteeAccounts?: Array<{
               loanId?: string | null;
               loanAccountName?: string | null;
@@ -40038,6 +40044,8 @@ export type GetMemberKymDetailsAccountsQuery = {
             interestRate?: string | null;
             interestEarned?: string | null;
             interestBooked?: string | null;
+            groupId?: string | null;
+            groupName?: string | null;
             guaranteeAccounts?: Array<{
               loanId?: string | null;
               loanAccountName?: string | null;
@@ -40069,6 +40077,8 @@ export type GetMemberKymDetailsLoanQuery = {
             interestEarned?: string | null;
             interestBooked?: string | null;
             remainingPrincipal?: string | null;
+            groupId?: string | null;
+            groupName?: string | null;
           } | null> | null;
           payments?: Array<{
             date?: Record<'local' | 'en' | 'np', string> | null;
@@ -40092,6 +40102,8 @@ export type GetMemberKymDetailsLoanQuery = {
             interestEarned?: string | null;
             interestBooked?: string | null;
             objState?: ObjState | null;
+            groupId?: string | null;
+            groupName?: string | null;
             guaranteeAccounts?: Array<{
               loanId?: string | null;
               loanAccountName?: string | null;
@@ -54984,6 +54996,7 @@ export const SetGroupBulkDepositDocument = `
           createdAt
           totalAmount
           accounts {
+            accountName
             memberName
             amount
           }
@@ -70444,6 +70457,8 @@ export const GetMemberKymDetailsAccountsDocument = `
               loanId
               loanAccountName
             }
+            groupId
+            groupName
           }
           payments {
             date
@@ -70467,6 +70482,8 @@ export const GetMemberKymDetailsAccountsDocument = `
               loanId
               loanAccountName
             }
+            groupId
+            groupName
           }
         }
       }
@@ -70505,6 +70522,8 @@ export const GetMemberKymDetailsLoanDocument = `
             interestEarned
             interestBooked
             remainingPrincipal
+            groupId
+            groupName
           }
           payments {
             date
@@ -70532,6 +70551,8 @@ export const GetMemberKymDetailsLoanDocument = `
               loanId
               loanAccountName
             }
+            groupId
+            groupName
           }
         }
       }

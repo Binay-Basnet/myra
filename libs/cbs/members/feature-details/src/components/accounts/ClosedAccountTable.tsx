@@ -32,7 +32,9 @@ interface ILoanPaymentScheduleTableProps {
               loanId?: string | null;
               loanAccountName?: string | null;
             } | null)[];
+        groupName?: string;
       }[];
+
   memberName: string;
   contactNo?: string;
 }
@@ -122,6 +124,10 @@ export const ClosedAccountTable = ({
         meta: {
           isNumeric: true,
         },
+      },
+      {
+        header: 'Group',
+        accessorFn: (row) => row?.groupName,
       },
       {
         header: 'QR',
