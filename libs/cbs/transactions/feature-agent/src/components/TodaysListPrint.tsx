@@ -92,7 +92,7 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
       },
       {
         header: 'Amount',
-        accessorFn: (row) => amountConverter(row?.amount || 0),
+        accessorFn: (row) => (row?.amount ? amountConverter(row?.amount || 0) : ''),
         meta: {
           isNumeric: true,
           width: '80px',
@@ -100,7 +100,7 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
       },
       {
         header: 'Fine',
-        accessorFn: (row) => amountConverter(row?.fine || 0),
+        accessorFn: (row) => (row?.fine ? amountConverter(row?.fine || 0) : ''),
         meta: {
           isNumeric: true,
           width: '80px',
