@@ -95,7 +95,7 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
         accessorFn: (row) => amountConverter(row?.amount || 0),
         meta: {
           isNumeric: true,
-          width: '10%',
+          width: '80px',
         },
       },
       {
@@ -103,7 +103,7 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
         accessorFn: (row) => amountConverter(row?.fine || 0),
         meta: {
           isNumeric: true,
-          width: '10%',
+          width: '80px',
         },
       },
       {
@@ -111,7 +111,7 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
         accessorFn: (row) => amountConverter(row?.amountToBeCollected || 0),
         meta: {
           isNumeric: true,
-          width: '10%',
+          width: '80px',
         },
       },
       {
@@ -119,7 +119,7 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
         accessorFn: (row) => amountConverter(row?.fineToBeCollected || 0),
         meta: {
           isNumeric: true,
-          width: '10%',
+          width: '80px',
         },
       },
       {
