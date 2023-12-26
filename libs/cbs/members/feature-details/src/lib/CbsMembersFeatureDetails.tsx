@@ -122,7 +122,7 @@ export const MemberDetails = ({
                   label: 'Update Kym',
                   handler: () => router.push(`/cbs/members/individual/update?id=${memberId}`),
                 },
-                { label: 'Get Certificate', handler: getCertificate },
+                { label: 'Get Share Certificate', handler: getCertificate },
                 {
                   label: 'Transfer Member',
                   handler: () => router.push(`${ROUTES?.CBS_MEMBER_TRANSFER}?memberId=${memberId}`),
@@ -137,7 +137,7 @@ export const MemberDetails = ({
                   label: 'Update Kym',
                   handler: () => router.push(`/cbs/members/${memberType}/update?id=${memberId}`),
                 },
-                { label: 'Get Certificate', handler: getCertificate },
+                { label: 'Get Share Certificate', handler: getCertificate },
                 {
                   label: 'Transfer Member',
                   handler: () => router.push(`${ROUTES?.CBS_MEMBER_TRANSFER}?memberId=${memberId}`),

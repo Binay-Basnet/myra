@@ -14,6 +14,7 @@ import {
   useCreatePayrollRunMutation,
   UsedTypeEnum,
   useGetAllEmployeeSalaryDetailsForThisPayrollRunQuery,
+  useGetPayrollRunQuery,
 } from '@coop/cbs/data-access';
 import { findQueryError, getQueryError, QueryError, ROUTES } from '@coop/cbs/utils';
 import { FormEditableTable, FormInput, FormLayout, FormSelect } from '@coop/shared/form';
@@ -73,10 +74,22 @@ export const HrPayrollEntryUpsert = () => {
       ?.getAllEmployeesSalaryDetailsForThisPayrollRun?.data;
 
   useEffect(() => {
-    if (!isEmpty(employeeSalaryDetails)) {
+    if (!isEmpty(employeeSalaryDetails) && !isApprove) {
       setValue('salaryDetailsOfEmployees', employeeSalaryDetails);
     }
   }, [JSON.stringify(employeeSalaryDetails)]);
+
+  const { data: payrollData } = useGetPayrollRunQuery({ id: router?.query?.['id'] as string });
+  const payrollApproveData = payrollData?.hr?.payroll?.payrollRun?.getPayrollRun?.data;
+
+  useEffect(() => {
+    if (isApprove) {
+      setValue('salaryDetailsOfEmployees', payrollApproveData);
+      setValue('paygroupId', payrollApproveData?.[0]?.paygroupId);
+      setValue('payrollYear', payrollApproveData?.[0]?.year);
+      setValue('payrollMonth', payrollApproveData?.[0]?.nepaliMonth);
+    }
+  }, [payrollApproveData]);
 
   const { mutateAsync } = useCreatePayrollRunMutation();
   const { mutateAsync: payrollRunApproveMutateAsync } = useApprovePayrollRunMutation();
@@ -153,9 +166,24 @@ export const HrPayrollEntryUpsert = () => {
         <FormLayout.Content>
           <FormLayout.Form>
             <FormSection>
-              <FormSelect name="paygroupId" label="Paygroup" options={payGroupOptions} />
-              <FormInput type="number" name="payrollYear" label="Payroll Year" />
-              <FormSelect name="payrollMonth" label="Payroll Month" options={nepaliMonthsOptions} />
+              <FormSelect
+                name="paygroupId"
+                label="Paygroup"
+                options={payGroupOptions}
+                isDisabled={!!isApprove}
+              />
+              <FormInput
+                type="number"
+                name="payrollYear"
+                label="Payroll Year"
+                isDisabled={!!isApprove}
+              />
+              <FormSelect
+                name="payrollMonth"
+                label="Payroll Month"
+                options={nepaliMonthsOptions}
+                isDisabled={!!isApprove}
+              />
             </FormSection>
             <FormSection>
               <GridItem colSpan={3}>
@@ -172,6 +200,7 @@ export const HrPayrollEntryUpsert = () => {
                       header: '',
                       fieldType: 'checkbox',
                       cellWidth: 'sm',
+                      getDisabled: () => !!isApprove,
                     },
                     {
                       accessor: 'employeeName',
@@ -255,7 +284,7 @@ export const HrPayrollEntryUpsert = () => {
         </FormLayout.Content>
         {isApprove && (
           <FormLayout.Footer
-            mainButtonLabel="Approve and Generate Salary Slip"
+            mainButtonLabel="Approve"
             draftButton={
               isApprove && (
                 <Button variant="outline" onClick={rejectHandler}>

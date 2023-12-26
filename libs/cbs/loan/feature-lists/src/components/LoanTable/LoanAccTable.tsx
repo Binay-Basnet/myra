@@ -127,6 +127,10 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
         accessorFn: (row) => amountConverter(row?.node?.totalSanctionedAmount as string),
       },
       {
+        header: 'Group',
+        accessorFn: (row) => row?.node?.groupName,
+      },
+      {
         id: '_actions',
         header: '',
         cell: (props) =>

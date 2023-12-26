@@ -246,6 +246,7 @@ query getLoanList($paginate: Pagination, $filter: Filter) {
           closedDate
           appliedDate
           approvedDate
+          groupName
         }
       }
       pageInfo {
@@ -386,9 +387,9 @@ query getLoanApplicationDetails($id: ID!) {
   }
 }
 
-query getMemberLoanAccounts($memberId: ID!) {
+query getMemberLoanAccounts($memberId: ID!, $groupId: ID) {
   loanAccount {
-    memberDisbursedLoanAccounts(memberId: $memberId) {
+    memberDisbursedLoanAccounts(memberId: $memberId, groupId: $groupId) {
       id
       name
     }
@@ -458,6 +459,10 @@ query getLoanPreview($id: String!) {
             rebateRate
             rebateAmount
           }
+          groupID
+          groupName
+          centerID
+          centerName
         }
         loanDetails {
           appliedLoanAmount
@@ -588,6 +593,8 @@ query getLoanRepaymentList($paginate: Pagination, $filter: Filter) {
           amount
           paymentDate
           branchName
+          groupId
+          groupName
         }
         cursor
       }
@@ -603,12 +610,13 @@ query getLoanRepaymentList($paginate: Pagination, $filter: Filter) {
 
 query getMemberLinkedAccounts(
   $memberId: ID!
+  $groupID: ID
   $filter: [NatureOfDepositProduct]
   $objState: AccountObjState
   $includeLoc: Boolean
 ) {
   members {
-    getAllAccounts(memberId: $memberId) {
+    getAllAccounts(memberId: $memberId, groupID: $groupID) {
       data {
         depositAccount(filter: $filter, objState: $objState, includeLoc: $includeLoc) {
           id
@@ -707,6 +715,10 @@ query getLoanAccountDetails(
           installmentFrequency
           disbursedAmount
           lastPaymentDate
+          groupName
+          groupId
+          centerName
+          centerId
         }
         loanSchedule {
           installments {

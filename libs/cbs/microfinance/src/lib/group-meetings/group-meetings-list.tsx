@@ -5,7 +5,7 @@ import { ApprovalStatusItem } from 'libs/cbs/requests/feature-lists/src/componen
 import { Column, PageHeader, Table } from '@myra-ui';
 
 import { LeaveStatusEnum, useListMfMeetingsQuery } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { readableTimeParser, ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const GroupMeetingsList = () => {
@@ -35,11 +35,11 @@ export const GroupMeetingsList = () => {
       },
       {
         header: 'Start Time',
-        accessorFn: (row) => row?.node?.startTime,
+        accessorFn: (row) => readableTimeParser(row?.node?.startTime),
       },
       {
         header: 'End Time',
-        accessorFn: (row) => row?.node?.endTime,
+        accessorFn: (row) => readableTimeParser(row?.node?.endTime),
       },
       {
         header: 'No of Attendees',

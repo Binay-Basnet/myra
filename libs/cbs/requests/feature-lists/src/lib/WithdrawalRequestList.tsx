@@ -32,6 +32,7 @@ export const WithdrawViaCollectorList = () => {
         accessorFn: (row) => row?.node?.requestedDate,
         cell: (props) => props?.row?.original?.node?.requestedDate,
         enableColumnFilter: true,
+        enableSorting: true,
         filterFn: 'dateTime',
       },
       {

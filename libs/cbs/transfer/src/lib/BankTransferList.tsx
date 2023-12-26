@@ -43,6 +43,10 @@ export const BankTransferList = () => {
         cell: (props) => localizedDate(props?.row?.original?.node?.transactionDate),
         filterFn: 'dateTime',
         enableColumnFilter: true,
+        enableSorting: true,
+        meta: {
+          orderId: 'id',
+        },
       },
       {
         header: 'ID',

@@ -115,6 +115,10 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
         filterFn: 'amount',
       },
       {
+        header: 'Group',
+        accessorFn: (row) => row?.node?.groupName,
+      },
+      {
         id: '_actions',
         header: '',
         cell: (props) =>

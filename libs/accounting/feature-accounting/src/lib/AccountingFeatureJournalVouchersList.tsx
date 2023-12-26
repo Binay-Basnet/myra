@@ -47,6 +47,10 @@ export const AccountingFeatureJournalVouchersList = () => {
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.transactionDate)}</Text>,
         enableColumnFilter: true,
         filterFn: 'dateTime',
+        enableSorting: true,
+        meta: {
+          orderId: 'transactionDate',
+        },
       },
       {
         header: 'Transaction Id',

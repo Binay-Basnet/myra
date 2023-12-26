@@ -4,14 +4,13 @@ import { useRouter } from 'next/router';
 import { Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetMrTransactionsListQuery } from '@coop/cbs/data-access';
+import { TodayListStatus, useListMrSubmissionListQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
   getFilterQuery,
   getPaginationQuery,
-  getUrl,
   useTranslation,
 } from '@coop/shared/utils';
 
@@ -19,23 +18,38 @@ export const AgentTransactionList = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const { data, isFetching } = useGetMrTransactionsListQuery({
+  const { data, isFetching } = useListMrSubmissionListQuery({
     pagination: getPaginationQuery(),
-    filter: getFilterQuery(),
+    filter: {
+      ...getFilterQuery(),
+      orConditions: [
+        {
+          andConditions: [
+            {
+              column: 'status',
+              comparator: 'IN',
+              value: [TodayListStatus.Completed, TodayListStatus.Failed, TodayListStatus.Pending],
+            },
+          ],
+        },
+      ],
+    },
   });
 
-  const rowData = useMemo(() => data?.transaction?.listMrTransaction?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.agent?.listMRSubmissionList?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'date',
         header: 'Date',
-        accessorFn: (row) => row?.node?.date?.local,
-        cell: (props) => localizedDate(props?.row?.original?.node?.date),
+        accessorFn: (row) => row?.node?.submissionDate?.local,
+        cell: (props) => localizedDate(props?.row?.original?.node?.submissionDate),
+        enableSorting: true,
       },
       {
         header: 'MR Transaction ID',
-        accessorFn: (row) => row?.node?.agentId,
+        accessorFn: (row) => row?.node?.mrId,
       },
       {
         accessorFn: (row) => row?.node?.mrName,
@@ -54,12 +68,26 @@ export const AgentTransactionList = () => {
         ),
       },
       {
-        id: 'amount',
-        header: 'Amount',
-        accessorFn: (row) => (row?.node?.amount ? amountConverter(row?.node?.amount) : '-'),
-        filterFn: 'amount',
-        enableColumnFilter: true,
+        id: 'totalAmount',
+        header: 'Amount Collected',
+        cell: (props) => amountConverter(props?.row?.original?.node?.totalAmount || 0),
       },
+      {
+        id: 'totalFine',
+        header: 'Fine Collected',
+        cell: (props) => amountConverter(props?.row?.original?.node?.totalFine || 0),
+      },
+      {
+        header: 'Status',
+        accessorFn: (row) => row?.node?.status,
+      },
+      // {
+      //   id: 'amount',
+      //   header: 'Amount',
+      //   accessorFn: (row) => (row?.node?.amount ? amountConverter(row?.node?.amount) : '-'),
+      //   filterFn: 'amount',
+      //   enableColumnFilter: true,
+      // },
       {
         id: '_actions',
         header: '',
@@ -71,11 +99,11 @@ export const AgentTransactionList = () => {
               items={[
                 {
                   title: t['transDetailViewDetail'],
-                  aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
+                  // aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
                   action: 'VIEW',
                   onClick: (row) => {
                     router.push(
-                      `${ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_DETAILS}?id=${row?.agentId}&date=${row?.date}`
+                      `${ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_DETAILS}?id=${row?.id}`
                     );
                   },
                 },
@@ -102,16 +130,12 @@ export const AgentTransactionList = () => {
         isLoading={isFetching}
         columns={columns}
         rowOnClick={(row) =>
-          router.push(
-            `/${getUrl(router.pathname, 3)}/details?id=${row?.node?.agentId}&date=${
-              row?.node?.date?.local
-            }`
-          )
+          router.push(`${ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_DETAILS}?id=${row?.node?.id}`)
         }
         noDataTitle="Market Representative Transaction"
         pagination={{
-          total: data?.transaction?.listMrTransaction?.totalCount ?? 'Many',
-          pageInfo: data?.transaction?.listMrTransaction?.pageInfo,
+          total: data?.agent?.listMRSubmissionList?.totalCount ?? 'Many',
+          pageInfo: data?.agent?.listMRSubmissionList?.pageInfo,
         }}
         menu="TRANSACTIONS"
       />

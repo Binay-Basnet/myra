@@ -43,7 +43,9 @@ import {
   FormInput,
   FormLayout,
   FormMemberSelect,
+  FormMFGroupSelect,
   FormSelect,
+  FormSwitchTab,
 } from '@coop/shared/form';
 import {
   amountConverter,
@@ -106,6 +108,8 @@ type CustomDepositLoanAccountInput = Omit<
   'openingPayment' | 'interestAuthority'
 > & {
   // tenure?: FrequencyTenure | null | undefined;
+  memberOrGroup: 'member' | 'group';
+  groupId: string;
   openingPayment: CustomDepositInput;
   interestAuthority?: InterestAuthority;
 };
@@ -162,6 +166,7 @@ export const AccountOpenNew = () => {
   const methods = useForm<CustomDepositLoanAccountInput>({
     mode: 'onChange',
     defaultValues: {
+      memberOrGroup: 'member',
       interestAuthority: InterestAuthority?.Default,
       openingPayment: {
         payment_type: DepositPaymentType.Cash,
@@ -263,9 +268,11 @@ export const AccountOpenNew = () => {
     { enabled: triggerQuery }
   );
 
+  const groupId = watch('groupId');
+
   const { data: defaultAccountData, isLoading: defaultAccountLoading } =
     useGetDefaultAccountListQuery(
-      { memberId, productId: productID },
+      { memberId, productId: productID, groupId: groupId || undefined },
       {
         enabled: (triggerQuery || triggerProductQuery) && !!productID,
       }
@@ -411,7 +418,7 @@ export const AccountOpenNew = () => {
     });
 
     updatedData = {
-      ...updatedData,
+      ...omit(updatedData, ['groupId', 'memberOrGroup']),
       tenure: values?.tenure ? values?.tenure : null,
       depositFrequencyMonthly: values?.depositFrequencyMonthly
         ? values?.depositFrequencyMonthly
@@ -508,6 +515,14 @@ export const AccountOpenNew = () => {
     }
   }, [ProductData, minorselectedValue]);
 
+  const memberOrGroup = watch('memberOrGroup');
+
+  useEffect(() => {
+    methods.setValue('groupId', '');
+    methods.setValue('memberId', '');
+    methods.setValue('productId', '');
+  }, [memberOrGroup]);
+
   return (
     <>
       <FormLayout methods={methods} hasSidebar={!!memberId}>
@@ -535,13 +550,36 @@ export const AccountOpenNew = () => {
                   p="s16"
                   w="100%"
                 >
-                  <FormMemberSelect
-                    isRequired
-                    name="memberId"
-                    label="Member"
-                    isDisabled={!!redirectMemberId || !!routeId}
-                    isCurrentBranchMember
+                  <FormSwitchTab
+                    name="memberOrGroup"
+                    options={[
+                      { label: 'Member', value: 'member' },
+                      { label: 'Group', value: 'group' },
+                    ]}
                   />
+
+                  {memberOrGroup === 'group' && (
+                    <>
+                      <FormMFGroupSelect name="groupId" label="Group" isRequired />
+
+                      <FormMemberSelect
+                        isRequired
+                        name="memberId"
+                        label="Member"
+                        groupId={groupId}
+                      />
+                    </>
+                  )}
+
+                  {memberOrGroup === 'member' && (
+                    <FormMemberSelect
+                      isRequired
+                      name="memberId"
+                      label="Member"
+                      isDisabled={!!redirectMemberId || !!routeId}
+                      isCurrentBranchMember
+                    />
+                  )}
                   <FormSelect
                     name="productId"
                     label={t['accProductName']}
@@ -771,7 +809,15 @@ export const AccountOpenNew = () => {
                     router.push(ROUTES.CBS_ACCOUNT_LIST);
                   }
                 }}
-                promise={() => mutateAsync({ id, data: submitForm() as DepositLoanAccountInput })}
+                promise={() =>
+                  getValues()?.['groupId']
+                    ? mutateAsync({
+                        id,
+                        data: submitForm() as DepositLoanAccountInput,
+                        groupId: getValues()?.['groupId'],
+                      })
+                    : mutateAsync({ id, data: submitForm() as DepositLoanAccountInput })
+                }
                 successCardProps={(response) => {
                   const result = response?.account?.add?.record;
 

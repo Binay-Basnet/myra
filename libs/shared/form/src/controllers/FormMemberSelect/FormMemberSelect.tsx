@@ -5,7 +5,12 @@ import { debounce } from 'lodash';
 
 import { MemberSelect, MemberSelectProps, Option } from '@myra-ui/forms';
 
-import { MemberType, useAppSelector, useGetMemberListQuery } from '@coop/cbs/data-access';
+import {
+  MemberType,
+  useAppSelector,
+  useGetMemberListQuery,
+  useListGroupMemberQuery,
+} from '@coop/cbs/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 // import FormCustomSelect from './FormCustomSelect';
@@ -19,6 +24,7 @@ interface IMemberSelectProps extends MemberSelectProps {
   forceEnableAll?: boolean;
   isCurrentBranchMember?: boolean;
   memberType?: MemberType;
+  groupId?: string;
 }
 
 export const FormMemberSelect = ({
@@ -30,6 +36,7 @@ export const FormMemberSelect = ({
   forceEnableAll,
   isCurrentBranchMember,
   memberType,
+  groupId,
   ...rest
 }: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
@@ -64,8 +71,12 @@ export const FormMemberSelect = ({
       return !!IDMember;
     }
 
+    if (groupId) {
+      return false;
+    }
+
     return IDMember !== 'undefined';
-  }, [router?.asPath, IDMember]);
+  }, [router?.asPath, IDMember, groupId]);
 
   const { data: memberList, isFetching } = useGetMemberListQuery(
     {
@@ -164,31 +175,77 @@ export const FormMemberSelect = ({
 
   const memberListData = memberList?.members?.list?.edges;
 
-  const memberOptions: Option[] =
-    memberListData?.reduce((prevVal, curVal) => {
-      if (excludeIds?.includes(curVal?.node?.id as string) || !curVal) {
-        return prevVal;
-      }
+  const { data: groupMembersData, isFetching: isGroupMemberFetching } = useListGroupMemberQuery(
+    {
+      pagination: { ...getPaginationQuery(), first: 20 },
+      groupID: groupId as string,
+      filter: {
+        query: IDMember,
+      },
+    },
+    { enabled: !!groupId }
+  );
 
-      return [
-        ...prevVal,
-        {
-          label: `${curVal?.node?.name?.local} (ID:${curVal?.node?.id})`,
-          value: curVal?.node?.id as string,
-          memberInfo: {
-            address: curVal?.node?.address?.district?.local,
-            memberId: curVal?.node?.id,
-            code: curVal?.node?.code,
-            memberName: curVal?.node?.name?.local,
-            age: curVal?.node?.age,
-            gender: curVal?.node?.gender || 'N/A',
-            maritialStatus: curVal?.node?.maritalStatus || 'N/A',
-            profilePicUrl: curVal?.node?.profilePicUrl,
-            branch: curVal?.node?.branch,
+  const memberOptions: Option[] = useMemo(() => {
+    if (groupMembersData) {
+      return (
+        groupMembersData?.microFinance?.group?.listGroupMembers?.edges?.reduce(
+          (prevVal, curVal) => {
+            if (excludeIds?.includes(curVal?.node?.id as string) || !curVal) {
+              return prevVal;
+            }
+
+            return [
+              ...prevVal,
+              {
+                label: `${curVal?.node?.name?.local} (ID:${curVal?.node?.id})`,
+                value: curVal?.node?.id as string,
+                memberInfo: {
+                  address: curVal?.node?.address?.district?.local,
+                  memberId: curVal?.node?.id,
+                  code: curVal?.node?.code,
+                  memberName: curVal?.node?.name?.local,
+                  age: curVal?.node?.age,
+                  gender: curVal?.node?.gender || 'N/A',
+                  maritialStatus: curVal?.node?.maritalStatus || 'N/A',
+                  profilePicUrl: curVal?.node?.profilePicUrl,
+                  branch: curVal?.node?.branch,
+                },
+              },
+            ];
           },
-        },
-      ];
-    }, [] as Option[]) ?? [];
+          [] as Option[]
+        ) ?? []
+      );
+    }
+
+    return (
+      memberListData?.reduce((prevVal, curVal) => {
+        if (excludeIds?.includes(curVal?.node?.id as string) || !curVal) {
+          return prevVal;
+        }
+
+        return [
+          ...prevVal,
+          {
+            label: `${curVal?.node?.name?.local} (ID:${curVal?.node?.id})`,
+            value: curVal?.node?.id as string,
+            memberInfo: {
+              address: curVal?.node?.address?.district?.local,
+              memberId: curVal?.node?.id,
+              code: curVal?.node?.code,
+              memberName: curVal?.node?.name?.local,
+              age: curVal?.node?.age,
+              gender: curVal?.node?.gender || 'N/A',
+              maritialStatus: curVal?.node?.maritalStatus || 'N/A',
+              profilePicUrl: curVal?.node?.profilePicUrl,
+              branch: curVal?.node?.branch,
+            },
+          },
+        ];
+      }, [] as Option[]) ?? []
+    );
+  }, [memberListData, groupMembersData]);
 
   useEffect(() => {
     if (
@@ -211,7 +268,7 @@ export const FormMemberSelect = ({
           data-testid="member-select"
           value={memberOptions?.find((option) => option.value === value)}
           label={label}
-          isLoading={isFetching}
+          isLoading={groupId ? isGroupMemberFetching : isFetching}
           isDisabled={isDisabledCheck}
           placeholder={placeholder}
           onChange={(newValue: Option | Option[]) => {

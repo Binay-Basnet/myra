@@ -57,3 +57,18 @@ mutation setSalAdjustmentRevision($id: ID, $input: SalAdjustmentRevisionInput) {
     }
   }
 }
+
+mutation completePayrollRun($payrollRunId: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        completePayrollRun(payrollRunId: $payrollRunId) {
+          completedOrNot
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

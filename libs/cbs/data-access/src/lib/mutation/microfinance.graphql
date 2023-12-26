@@ -50,10 +50,10 @@ mutation upsertMeeting($id: ID, $data: MFMeetingInput!) {
   }
 }
 
-mutation addAttendance($data: MFMeetingInput!) {
+mutation addAttendance($data: MFMeetingAttendanceInput!) {
   microFinance {
     groupMeeting {
-      upsertMeeting(data: $data) {
+      addAttendance(data: $data) {
         recordId
         error {
           ...MutationError
@@ -70,6 +70,62 @@ mutation upsertDecision($meetingId: ID!, $data: MFMeetingDecision!) {
         recordId
         error {
           ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation addMFDocuments($meetingId: ID!, $input: MFMeetingDocumentsInput!) {
+  microFinance {
+    groupMeeting {
+      addDocuments(meetingId: $meetingId, input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation changeMeetingStatus($meetingID: ID!, $input: MFMeetingStatus!) {
+  microFinance {
+    groupMeeting {
+      changeStatus(meetingID: $meetingID, input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setGroupBulkDeposit($data: MFBulkDepositInput!) {
+  microFinance {
+    transaction {
+      bulkDeposit(data: $data) {
+        error {
+          ...MutationError
+        }
+        recordId
+        record {
+          date
+          amount
+          fine
+          rebate
+          discount
+          paymentMode
+          depositedBy
+          createdAt
+          totalAmount
+          accounts {
+            accountName
+            memberName
+            amount
+          }
+          depositedOther
         }
       }
     }

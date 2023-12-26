@@ -31,7 +31,11 @@ export const MemberTransferList = () => {
         header: 'Requested Date',
         accessorFn: (props) => props?.node?.requestDate?.local || '-',
         enableColumnFilter: true,
+        enableSorting: true,
         filterFn: 'dateTime',
+        meta: {
+          orderId: 'id',
+        },
       },
       {
         id: 'approvedDate',

@@ -17,6 +17,7 @@ query getDepositListData($filter: Filter, $pagination: Pagination) {
           profilePicUrl
           agentPicUrl
           branchName
+          groupName
         }
         cursor
       }
@@ -46,6 +47,7 @@ query getWithdrawListData($filter: Filter, $pagination: Pagination) {
           date
           profilePicUrl
           branchName
+          groupName
         }
         cursor
       }
@@ -153,6 +155,7 @@ query transactionDepositDetail($transactionId: ID!) {
           profilePic
           profilePicUrl
         }
+
         transactionDate
         accountId
         accountName
@@ -183,6 +186,10 @@ query transactionDepositDetail($transactionId: ID!) {
         totalCredit
         note
         txnUserName
+        groupName
+        groupId
+        centerName
+        centerId
       }
     }
   }
@@ -231,6 +238,10 @@ query transactionWithdrawDetail($transactionId: ID!) {
         totalCredit
         note
         txnUserName
+        groupName
+        groupId
+        centerName
+        centerId
       }
     }
   }
@@ -341,6 +352,10 @@ query loanRepaymentDetail($paymentId: ID!) {
           id
           url
         }
+        groupName
+        groupId
+        centerName
+        centerId
       }
     }
   }
@@ -392,6 +407,8 @@ query getAllTransactionsList($filter: Filter, $pagination: Pagination) {
           date
           branchName
           yearEndAdjustment
+          userId
+          userName
         }
         cursor
       }
@@ -685,6 +702,9 @@ query getAllTransactionFilterMapping {
           ...OptionType
         }
         txnType {
+          ...OptionType
+        }
+        userId {
           ...OptionType
         }
       }

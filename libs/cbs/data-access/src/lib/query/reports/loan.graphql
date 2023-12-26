@@ -557,6 +557,7 @@ query getLoanDisbursmentReport($data: LoanDisbursementReportFilter!) {
           interestRate
           nomineeAccount
           memberCode
+          loanDisbursedAmount
         }
       }
     }

@@ -94,12 +94,14 @@ query getPayrollRun($id: ID!) {
             year
             paygroupId
             employeeId
-            grossSalary
-            preTaxDeductionAmount
+            employeeName
+            unpaidDays
+            grossPay
+            preTaxDeductions
+            postTaxDeductions
+            totalTax
             taxableIncome
-            tax
             taxReceivedPaid
-            postTaxDeduction
             netPay
           }
           error {

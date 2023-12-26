@@ -30,6 +30,18 @@ export const SelectedLedgersTable = ({ data }: ISelectedLedgersTableprops) => {
         },
       },
       {
+        id: 'balanceAt',
+        header: 'Balance At',
+        accessorFn: (row) =>
+          debitCreditConverter(
+            row?.balanceAt?.amount as string,
+            row?.balanceAt?.amountType as string
+          ),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
         header: 'Transfer Balance',
         accessorKey: 'transferBalance',
         accessorFn: (row) => amountConverter(row?.transferBalance),

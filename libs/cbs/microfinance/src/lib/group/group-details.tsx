@@ -59,7 +59,10 @@ export const GroupDetails = () => {
               <Overview data={groupDetailsData?.overview} />
             )}
             {tabQuery === 'group members' && (
-              <GroupMembers data={groupDetailsData?.groupMembers as Member[]} />
+              <GroupMembers
+                data={groupDetailsData?.groupMembers as Member[]}
+                allowableServiceCenters={groupDetailsData?.allowableServiceCenters}
+              />
             )}
             {tabQuery === 'meetings' && <Meetings data={groupDetailsData?.meetings} />}
           </Box>

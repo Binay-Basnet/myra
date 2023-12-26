@@ -311,11 +311,11 @@ export const CBS: NavType = {
           aclKey: 'CBS_TRANSACTIONS_LOAN_REPAYMENT',
         },
 
-        {
-          label: 'transactionSidebarNewMarketRepresentativeTransaction',
-          route: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_ADD,
-          aclKey: 'CBS_TRANSACTIONS_MARKET_REPRESENTATIVE_COLLECTION',
-        },
+        // {
+        //   label: 'transactionSidebarNewMarketRepresentativeTransaction',
+        //   route: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_ADD,
+        //   aclKey: 'CBS_TRANSACTIONS_MARKET_REPRESENTATIVE_COLLECTION',
+        // },
         {
           label: 'New Journal Voucher',
           route: ROUTES.CBS_TRANS_JOURNAL_VOUCHER_ADD,
@@ -352,7 +352,7 @@ export const CBS: NavType = {
           route: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_LIST,
           aclKey: 'CBS_TRANSACTIONS_MARKET_REPRESENTATIVE_COLLECTION',
 
-          addRoute: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_ADD,
+          // addRoute: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_ADD,
         },
         {
           label: 'transactionsSidebarAgentList',
@@ -631,7 +631,7 @@ export const CBS: NavType = {
           label: 'Market Representative Transactions',
           route: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_TRANSACTIONS_LIST,
           aclKey: 'CBS_TRANSACTIONS_MARKET_REPRESENTATIVE_COLLECTION',
-          addRoute: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_TRANSACTIONS_ADD,
+          // addRoute: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_TRANSACTIONS_ADD,
         },
         {
           label: 'Profit to Fund Management',
@@ -655,15 +655,15 @@ export const CBS: NavType = {
           label: 'Market Representative Collection',
           route: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_LIST,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
-          addRoute: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_ADD,
+          // addRoute: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_ADD,
         },
       ],
       forms: [
-        {
-          label: 'New Market Representatives Transaction',
-          route: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_TRANSACTIONS_ADD,
-          aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
-        },
+        // {
+        //   label: 'New Market Representatives Transaction',
+        //   route: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_TRANSACTIONS_ADD,
+        //   aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
+        // },
         {
           label: 'New Profit to Fund Management',
           route: ROUTES.CBS_OTHERS_FUND_MANAGEMENT_ADD,
@@ -681,11 +681,11 @@ export const CBS: NavType = {
           route: ROUTES.CBS_OTHERS_BULK_TRANSFERS_ADD,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
         },
-        {
-          label: 'New Market Representative Collection',
-          route: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_ADD,
-          aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
-        },
+        // {
+        //   label: 'New Market Representative Collection',
+        //   route: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_ADD,
+        //   aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
+        // },
       ],
     },
   },

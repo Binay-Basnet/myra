@@ -16,11 +16,8 @@ export const AgentDetails = () => {
       {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && (
         <AgentDetailOverview />
       )}
-
       {tabQuery === 'assigned members' && <AgentAssignedMembers />}
-
       {tabQuery === 'collection list' && <Templates />}
-
       {/* {tabQuery === 'accounts' && <Account />}
         {tabQuery === 'activity' && <Activity />}
         {tabQuery === 'bio' && <Bio />}

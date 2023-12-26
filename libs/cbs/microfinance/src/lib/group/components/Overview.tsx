@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import { Box, DetailPageQuickLinks } from '@myra-ui';
 
 import { MfGroupOverview } from '@coop/cbs/data-access';
@@ -10,8 +12,14 @@ import {
 
 export const Overview = (props: { data: MfGroupOverview }) => {
   const { data } = props;
+  const router = useRouter();
 
-  const links = [{ title: 'Add new member', link: ROUTES?.CBS_MICRO_FINANCE_GROUP_ADD }];
+  const links = [
+    {
+      title: 'Add new member',
+      link: `${ROUTES?.CBS_MICRO_FINANCE_GROUP_DETAILS}?id=${router?.query?.['id']}&tab=group+members`,
+    },
+  ];
 
   return (
     <>

@@ -29,13 +29,14 @@ interface IGeneralInfoCardProps {
     installmentAmount?: string | null;
     signaturePicUrl?: string | null;
     minorName: string | null | undefined;
+    interestPostingFrequency?: string | null;
+    group?: string | null;
+    center?: string | null;
+    //   RECURRING_SAVING: string;
+    //   TERM_SAVING_OR_FD: string;
+    //   CURRENT: string;
+    // };
   };
-  // accountTypes?: {
-  //   SAVING: string;
-  //   RECURRING_SAVING: string;
-  //   TERM_SAVING_OR_FD: string;
-  //   CURRENT: string;
-  // };
 }
 
 export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => {
@@ -90,6 +91,10 @@ export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => {
               : `${Number(data?.interestRate || 0)?.toFixed(2)} %`
           }
         />
+        <DetailCardContent
+          title="Interest Posting Frequency"
+          subtitle={data?.interestPostingFrequency || '-'}
+        />
         <DetailCardContent title="Guarantee Amount" subtitle={data?.guaranteedAmount ?? '0'} />
         <DetailCardContent title="Tenure" subtitle={data?.accountTenure ?? '-'} />
         <DetailCardContent
@@ -120,6 +125,8 @@ export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => {
               : '-'
           }
         />
+        <DetailCardContent title="Group" subtitle={data?.group} />
+        <DetailCardContent title="Center" subtitle={data?.center} />
         <Text
           fontWeight="500"
           fontSize="r1"

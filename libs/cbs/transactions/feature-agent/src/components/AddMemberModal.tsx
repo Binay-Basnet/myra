@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 
 import { asyncToast, Box, Modal } from '@myra-ui';
 
-import { ObjState, useSetAddMemberToAgentDataMutation } from '@coop/cbs/data-access';
-import { FormAccountSelect, FormMemberSelect } from '@coop/shared/form';
+import { useAddAgentMemberMutation } from '@coop/cbs/data-access';
+import { FormMemberSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { OverrideAlertModal } from './OverrideAlertModal';
@@ -36,11 +36,9 @@ export const AddMemberModal = ({
 
   const methods = useForm<AssignMembersInput>();
 
-  const { watch, getValues, reset } = methods;
+  const { getValues, reset } = methods;
 
-  const memberId = watch('memberId');
-
-  const { mutateAsync: assignMemberToAgent } = useSetAddMemberToAgentDataMutation();
+  const { mutateAsync: assignMemberToAgent } = useAddAgentMemberMutation();
 
   const handleAssignMember = () => {
     const values = getValues();
@@ -48,8 +46,8 @@ export const AddMemberModal = ({
     asyncToast({
       id: 'assign-new-member-to-agent',
       promise: assignMemberToAgent({
-        agentId: id as string,
-        data: values?.accountId?.map((acc) => acc?.value),
+        id: id as string,
+        memberId: values?.memberId,
       }),
       msgs: {
         loading: t['agentAssignedMembersAssigningNewMember'],
@@ -78,8 +76,8 @@ export const AddMemberModal = ({
     asyncToast({
       id: 'assign-new-member-to-agent-override',
       promise: assignMemberToAgent({
-        agentId: id as string,
-        data: values?.accountId?.map((acc) => acc?.value),
+        id: id as string,
+        memberId: values?.memberId,
         override: true,
       }),
       msgs: {
@@ -95,7 +93,7 @@ export const AddMemberModal = ({
   };
 
   const handleClose = () => {
-    reset({ memberId: '', accountId: [] });
+    reset({ memberId: '' });
     onClose();
   };
 
@@ -105,7 +103,7 @@ export const AddMemberModal = ({
         open={isOpen}
         onClose={handleClose}
         title={t['agentAssignedMembersAddMember']}
-        primaryButtonLabel="Save"
+        primaryButtonLabel="Add"
         primaryButtonHandler={handleAssignMember}
       >
         <FormProvider {...methods}>
@@ -114,15 +112,7 @@ export const AddMemberModal = ({
               name="memberId"
               label={t['agentAssignedMembersMember']}
               isCurrentBranchMember
-            />
-
-            <FormAccountSelect
-              name="accountId"
-              label={t['agentAssignedMembersAccount']}
-              memberId={memberId}
-              filterBy={ObjState.Active}
               menuPosition="fixed"
-              isMulti
             />
           </Box>
         </FormProvider>

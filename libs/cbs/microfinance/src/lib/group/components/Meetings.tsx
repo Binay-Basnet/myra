@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { Box, Column, Table, Text } from '@myra-ui';
 
 import { MpGroupMeetings } from '@coop/cbs/data-access';
+import { readableTimeParser } from '@coop/cbs/utils';
 import { DetailsKeyValueCards, DetailsPageHeaderBox } from '@coop/shared/components';
 
 export const Meetings = (props: { data: MpGroupMeetings }) => {
@@ -33,11 +34,11 @@ export const Meetings = (props: { data: MpGroupMeetings }) => {
       },
       {
         header: 'Start Time',
-        accessorFn: (row) => row?.startTime,
+        accessorFn: (row) => readableTimeParser(row?.startTime),
       },
       {
         header: 'End Time',
-        accessorFn: (row) => row?.endTime,
+        accessorFn: (row) => readableTimeParser(row?.endTime),
       },
     ],
     []
@@ -66,11 +67,11 @@ export const Meetings = (props: { data: MpGroupMeetings }) => {
       },
       {
         header: 'Start Time',
-        accessorFn: (row) => row?.startTime,
+        accessorFn: (row) => readableTimeParser(row?.startTime),
       },
       {
         header: 'End Time',
-        accessorFn: (row) => row?.endTime,
+        accessorFn: (row) => readableTimeParser(row?.endTime),
       },
     ],
     []
@@ -87,7 +88,7 @@ export const Meetings = (props: { data: MpGroupMeetings }) => {
       />
       <Box m="s24" p="s12" bg="white" borderRadius={5}>
         <Text fontSize="r1" fontWeight="semibold">
-          Upcomming Meetings
+          Upcoming Meetings
         </Text>
         <Table
           data={upcomingMeetingsList}

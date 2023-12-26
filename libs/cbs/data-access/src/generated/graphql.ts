@@ -60,6 +60,7 @@ export type AllTransactionFilterMapping = {
   branchId: Array<LabelValueArray>;
   fiscalYear: Array<LabelValueArray>;
   txnType: Array<LabelValueArray>;
+  userId: Array<LabelValueArray>;
 };
 
 export type AbbsTransaction = {
@@ -430,6 +431,7 @@ export type AccountTransferPaymentForAlternativeChannel = {
 };
 
 export type AccountTransferView = {
+  destTotalBalance?: Maybe<Scalars['String']>;
   destinationAccount?: Maybe<DepositLoanAccount>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
@@ -438,6 +440,7 @@ export type AccountTransferView = {
   objState?: Maybe<ObjState>;
   recipientMember?: Maybe<Member>;
   sourceAccount?: Maybe<DepositLoanAccount>;
+  srcTotalBalance?: Maybe<Scalars['String']>;
   teller?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
@@ -1231,19 +1234,48 @@ export type AgentFilterMapping = {
   branchId: Array<LabelValueArray>;
 };
 
+export type AgentMember = {
+  memberCode: Scalars['String'];
+  memberID: Scalars['ID'];
+  memberName: Scalars['String'];
+};
+
+export type AgentMemberNode = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AgentMember>;
+};
+
 export type AgentMutation = {
-  addMemberToAgent?: Maybe<MutationResult>;
+  acceptAgentTodayDeposit: AgentTodayDepositResult;
+  addAgentMember: AddAgentMemberResult;
+  addAgentTodayList: AgentTodayListResult;
   agentTemplate?: Maybe<AgentTemplateResult>;
   agentTodayCollection?: Maybe<AgentTodayListResult>;
   agentTodayDeposit?: Maybe<AgentTodayListResult>;
   agentTodayList?: Maybe<AgentTodayListResult>;
+  deleteAgentMember: DeleteAgentMemberResult;
+  deleteTodayTask: RemoveTodayTaskResult;
+  editRejectedTodayList: AgentTodayListResult;
+  modifyPreviousData: DataModificationResult;
+  rejectTodayTask: RemoveTodayTaskResult;
   removeMemberAccountAgent?: Maybe<RemoveMemberResult>;
+  sentTodayTask: RemoveTodayTaskResult;
 };
 
-export type AgentMutationAddMemberToAgentArgs = {
-  agentId: Scalars['String'];
-  data: Array<Scalars['String']>;
+export type AgentMutationAcceptAgentTodayDepositArgs = {
+  id: Scalars['ID'];
+  remark?: InputMaybe<Scalars['String']>;
+};
+
+export type AgentMutationAddAgentMemberArgs = {
+  id: Scalars['ID'];
+  memberid: Scalars['ID'];
   override?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type AgentMutationAddAgentTodayListArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: AgentTodayListInputValue;
 };
 
 export type AgentMutationAgentTemplateArgs = {
@@ -1266,22 +1298,51 @@ export type AgentMutationAgentTodayListArgs = {
   id: Scalars['ID'];
 };
 
+export type AgentMutationDeleteAgentMemberArgs = {
+  id: Scalars['ID'];
+  memberid: Scalars['ID'];
+};
+
+export type AgentMutationDeleteTodayTaskArgs = {
+  id: Scalars['ID'];
+};
+
+export type AgentMutationEditRejectedTodayListArgs = {
+  input: AgentTodayListInputValue;
+};
+
+export type AgentMutationRejectTodayTaskArgs = {
+  id: Scalars['ID'];
+  remark?: InputMaybe<Scalars['String']>;
+};
+
 export type AgentMutationRemoveMemberAccountAgentArgs = {
   accountId: Scalars['ID'];
   agentID: Scalars['ID'];
 };
 
+export type AgentMutationSentTodayTaskArgs = {
+  id: Scalars['ID'];
+};
+
 export type AgentQuery = {
   agentDetail?: Maybe<AgentRecord>;
+  agentTodayTaskDetail: AgentTodayTaskDetailResult;
   assignedMemberList: AssignedMembersListConnection;
   listAgent: AccountAgentListConnection;
   listAgentCollection?: Maybe<AgentCollectionListConnection>;
+  listAgentMember: ListAgentMemberConnection;
   listAgentTask?: Maybe<AgentTodayListData>;
   listAgentTemplate?: Maybe<AgentTemplateData>;
+  listMRSubmissionList?: Maybe<SubmissionListConnection>;
   viewAgentList?: Maybe<AgentTransactionViewResult>;
 };
 
 export type AgentQueryAgentDetailArgs = {
+  id: Scalars['ID'];
+};
+
+export type AgentQueryAgentTodayTaskDetailArgs = {
   id: Scalars['ID'];
 };
 
@@ -1301,12 +1362,22 @@ export type AgentQueryListAgentCollectionArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type AgentQueryListAgentMemberArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type AgentQueryListAgentTaskArgs = {
   id: Scalars['ID'];
 };
 
 export type AgentQueryListAgentTemplateArgs = {
   agentId: Scalars['ID'];
+};
+
+export type AgentQueryListMrSubmissionListArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type AgentQueryViewAgentListArgs = {
@@ -1342,6 +1413,11 @@ export type AgentTemplateResult = {
   record?: Maybe<Array<Maybe<AgentTemplate>>>;
 };
 
+export type AgentTodayDepositResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type AgentTodayList = {
   account?: Maybe<DepositLoanAccount>;
   amount?: Maybe<Scalars['Amount']>;
@@ -1357,6 +1433,7 @@ export type AgentTodayList = {
 export type AgentTodayListData = {
   error?: Maybe<QueryError>;
   record?: Maybe<Array<Maybe<AgentTodayList>>>;
+  submissionId?: Maybe<Scalars['ID']>;
 };
 
 export type AgentTodayListInput = {
@@ -1368,10 +1445,25 @@ export type AgentTodayListInput = {
   paid?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type AgentTodayListInputValue = {
+  agentId: Scalars['String'];
+  data: Array<AgentTodayListInput>;
+  submissionId?: InputMaybe<Scalars['String']>;
+};
+
 export type AgentTodayListResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
   record?: Maybe<Array<Maybe<AgentTodayList>>>;
+};
+
+export type AgentTodayTaskDetailResult = {
+  agent?: Maybe<AgentRecord>;
+  date?: Maybe<Scalars['String']>;
+  error?: Maybe<QueryError>;
+  record?: Maybe<Array<Maybe<AgentTodayList>>>;
+  remark?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
 };
 
 export type AgentTransactionView = {
@@ -1612,12 +1704,18 @@ export type AlternativeChannelPaymentMode =
   typeof AlternativeChannelPaymentMode[keyof typeof AlternativeChannelPaymentMode];
 export type AlternativeChannelQuery = {
   list?: Maybe<AlternativeChannelConnection>;
+  listUpdated?: Maybe<AlternativeChannelConnection>;
   memberActivations?: Maybe<AlternativeChannelMemberActivations>;
   userDetails?: Maybe<EbankingUserDetailsResult>;
 };
 
 export type AlternativeChannelQueryListArgs = {
   filter?: InputMaybe<AlternativeChannelFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type AlternativeChannelQueryListUpdatedArgs = {
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -1635,11 +1733,11 @@ export type AlternativeChannelServiceActivationInput = {
   bankCheque?: InputMaybe<BankChequePaymentForAlternativeChannel>;
   cash?: InputMaybe<DepositCash>;
   email?: InputMaybe<Scalars['String']>;
-  memberId?: InputMaybe<Scalars['String']>;
+  memberId: Scalars['String'];
   paymentMode: AlternativeChannelPaymentMode;
-  phoneNumber?: InputMaybe<Scalars['String']>;
+  phoneNumber: Scalars['String'];
   pin?: InputMaybe<Scalars['Int']>;
-  service?: InputMaybe<Array<InputMaybe<AlternativeChannelServiceType>>>;
+  service: Array<AlternativeChannelServiceType>;
   totalAmount?: InputMaybe<Scalars['String']>;
 };
 
@@ -3393,6 +3491,7 @@ export type CoaDetailsMeta = {
   isLoanAccount?: Maybe<Scalars['Boolean']>;
   isSavingAccount?: Maybe<Scalars['Boolean']>;
   parentId?: Maybe<Scalars['String']>;
+  systemCreatedDate?: Maybe<Scalars['Localized']>;
 };
 
 export type CoaDetailsMinOverview = {
@@ -4255,6 +4354,41 @@ export const CollateralUpdateType = {
 } as const;
 
 export type CollateralUpdateType = typeof CollateralUpdateType[keyof typeof CollateralUpdateType];
+export type CollectionMutation = {
+  createCollection: CreateCollectionResult;
+  deleteCollection: DeleteCollectionResult;
+  updateCollection: UpdateCollectionResult;
+};
+
+export type CollectionMutationCreateCollectionArgs = {
+  accountId: Array<Scalars['ID']>;
+  agentID: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+export type CollectionMutationDeleteCollectionArgs = {
+  collectionID: Scalars['ID'];
+};
+
+export type CollectionMutationUpdateCollectionArgs = {
+  accountId: Array<Scalars['ID']>;
+  collectionID: Scalars['ID'];
+  collectionName?: InputMaybe<Scalars['String']>;
+};
+
+export type CollectionQuery = {
+  listCollection: ListCollectionResult;
+  listCollectionTemplate: ListCollectionTemplateResult;
+};
+
+export type CollectionQueryListCollectionArgs = {
+  agentID: Scalars['ID'];
+};
+
+export type CollectionQueryListCollectionTemplateArgs = {
+  collectionID: Scalars['ID'];
+};
+
 export type CombinedAccountDetail = {
   accountOpenDate?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['ID']>;
@@ -5005,6 +5139,11 @@ export type DataMigrationReseedRepaymentArgs = {
   accountId?: InputMaybe<Scalars['String']>;
 };
 
+export type DataModificationResult = {
+  error?: Maybe<MutationError>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
 export type DateEntry = {
   date?: InputMaybe<Scalars['Localized']>;
   endTime?: InputMaybe<Scalars['Time']>;
@@ -5635,6 +5774,7 @@ export type DepositLoanAccountQueryListAssociatedGuaranteeAccountsArgs = {
 };
 
 export type DepositLoanAccountQueryListDefaultAccountsArgs = {
+  groupId?: InputMaybe<Scalars['String']>;
   memberId: Scalars['ID'];
   productId: Scalars['ID'];
 };
@@ -5671,6 +5811,7 @@ export type DepositProduct = {
   depositFrequency?: Maybe<Frequency>;
   id: Scalars['ID'];
   interest?: Maybe<Scalars['Float']>;
+  interestPostingFrequency?: Maybe<Frequency>;
   isMandatorySaving?: Maybe<Scalars['Boolean']>;
   minimumBalance?: Maybe<Scalars['String']>;
   modifiedAt: Scalars['Time'];
@@ -6285,10 +6426,14 @@ export type DepositTransactionView = {
   accountId?: Maybe<Scalars['ID']>;
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
+  centerId?: Maybe<Scalars['String']>;
+  centerName?: Maybe<Scalars['String']>;
   depositedBy?: Maybe<DepositedBy>;
   depositedDate?: Maybe<Scalars['Localized']>;
   fine?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
@@ -6298,6 +6443,7 @@ export type DepositTransactionView = {
   sourceOfFund?: Maybe<Scalars['String']>;
   status?: Maybe<ObjState>;
   teller?: Maybe<Scalars['String']>;
+  totalBalance?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
   totalDepositedAmount?: Maybe<Scalars['String']>;
@@ -8008,6 +8154,7 @@ export type FianancialTransactionReport = {
   dailyBalanceReport: DailyBalanceReportResult;
   dayBookReport: DayBookReportResult;
   fiscalTrialSheetReport: TrialSheetReportResult;
+  journerVoucherReport: JournalVoucherReportOutput;
   ledgerBalanceReport: LedgerBalanceReport;
   ledgerCumulativeBalanceReport: LedgerCumulativeBalanceReport;
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
@@ -8053,6 +8200,10 @@ export type FianancialTransactionReportDayBookReportArgs = {
 
 export type FianancialTransactionReportFiscalTrialSheetReportArgs = {
   data: TrialSheetReportFilter;
+};
+
+export type FianancialTransactionReportJournerVoucherReportArgs = {
+  data: JournalVoucherReportInput;
 };
 
 export type FianancialTransactionReportLedgerBalanceReportArgs = {
@@ -9223,13 +9374,6 @@ export type GroupBalanceHistory = {
   trend?: Maybe<Array<Maybe<Scalars['Int']>>>;
 };
 
-export const GroupMeetingStatus = {
-  AttendancePending: 'ATTENDANCE_PENDING',
-  Completed: 'COMPLETED',
-  DecisionPending: 'DECISION_PENDING',
-} as const;
-
-export type GroupMeetingStatus = typeof GroupMeetingStatus[keyof typeof GroupMeetingStatus];
 export type GuaranteeAccountsMinView = {
   loanAccountName?: Maybe<Scalars['String']>;
   loanId?: Maybe<Scalars['String']>;
@@ -12118,6 +12262,10 @@ export type JournalVoucherFilter = {
   transactionId?: InputMaybe<Scalars['String']>;
 };
 
+export type JournalVoucherFilterData = {
+  userId?: InputMaybe<Scalars['String']>;
+};
+
 export type JournalVoucherInput = {
   chequeNo?: InputMaybe<Scalars['String']>;
   date?: InputMaybe<Scalars['Localized']>;
@@ -12173,6 +12321,36 @@ export type JournalVoucherRecord = {
   reference?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['String']>;
   transactionId?: Maybe<Scalars['ID']>;
+};
+
+export type JournalVoucherReportInput = {
+  branchId: Array<Scalars['String']>;
+  filter?: InputMaybe<JournalVoucherFilterData>;
+  period: LocalizedDateFilter;
+};
+
+export type JournalVoucherReportOutput = {
+  data?: Maybe<JournalVoucherReportOutputData>;
+  error?: Maybe<QueryError>;
+};
+
+export type JournalVoucherReportOutputData = {
+  journalVoucherReportList?: Maybe<Array<Maybe<JournalVoucherReportOutputList>>>;
+  metaData?: Maybe<JournalVoucherReportOutputMetaData>;
+};
+
+export type JournalVoucherReportOutputList = {
+  nodeData?: Maybe<Array<Maybe<GlTransaction>>>;
+  notes?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
+  voucherDate?: Maybe<Scalars['Localized']>;
+  voucherId?: Maybe<Scalars['String']>;
+};
+
+export type JournalVoucherReportOutputMetaData = {
+  printedDate?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
 };
 
 export type JournalVoucherResult = {
@@ -13896,6 +14074,7 @@ export const LedgerAmountTransferType = {
 export type LedgerAmountTransferType =
   typeof LedgerAmountTransferType[keyof typeof LedgerAmountTransferType];
 export type LedgerBalanceEntry = {
+  balanceAt: BalanceValue;
   currentBalance: BalanceValue;
   ledgerId: Scalars['String'];
   ledgerName: Scalars['String'];
@@ -14673,6 +14852,7 @@ export type LoanAccountQueryLoanProvisionListArgs = {
 };
 
 export type LoanAccountQueryMemberDisbursedLoanAccountsArgs = {
+  groupId?: InputMaybe<Scalars['ID']>;
   memberId: Scalars['ID'];
 };
 
@@ -14794,6 +14974,7 @@ export type LoanAgingStatementReport = {
   goodAmount?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
   installmentLateDays?: Maybe<Scalars['Int']>;
+  interestRate?: Maybe<Scalars['Float']>;
   issueDate?: Maybe<Scalars['Localized']>;
   lastInterestPaidDate?: Maybe<Scalars['Localized']>;
   lastPrincipalPaidDate?: Maybe<Scalars['Localized']>;
@@ -15058,6 +15239,7 @@ export type LoanDisbursementReportData = {
   disbursedDate?: Maybe<Scalars['Localized']>;
   interestRate?: Maybe<Scalars['Float']>;
   loanAccountId?: Maybe<Scalars['String']>;
+  loanDisbursedAmount?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['String']>;
@@ -15102,7 +15284,11 @@ export type LoanGeneralInformation = {
   accountId: Scalars['String'];
   accountName: Scalars['String'];
   accountOpenDate: Scalars['Localized'];
+  centerId?: Maybe<Scalars['String']>;
+  centerName?: Maybe<Scalars['String']>;
   disbursedAmount?: Maybe<Scalars['String']>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   installmentBeginDate: Scalars['Localized'];
   installmentFrequency?: Maybe<InstallmentFrequency>;
   interestAccrued?: Maybe<Scalars['String']>;
@@ -15332,6 +15518,10 @@ export type LoanPreviewAdditionalFeatures = {
 };
 
 export type LoanPreviewGeneralInformation = {
+  centerID?: Maybe<Scalars['String']>;
+  centerName?: Maybe<Scalars['String']>;
+  groupID?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   installmentFrequency?: Maybe<InstallmentFrequency>;
   loanName?: Maybe<Scalars['String']>;
   loanProduct?: Maybe<Scalars['String']>;
@@ -15903,6 +16093,8 @@ export type LoanRepaymentDetail = {
   amount: Scalars['String'];
   branchId: Scalars['String'];
   branchName: Scalars['String'];
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   loanAccountId: Scalars['String'];
   loanAccountName: Scalars['String'];
@@ -15985,6 +16177,8 @@ export const LoanRepaymentScheme = {
 
 export type LoanRepaymentScheme = typeof LoanRepaymentScheme[keyof typeof LoanRepaymentScheme];
 export type LoanRepaymentView = {
+  centerId?: Maybe<Scalars['String']>;
+  centerName?: Maybe<Scalars['String']>;
   depositedBy?: Maybe<Scalars['String']>;
   depositedDate?: Maybe<Scalars['Localized']>;
   discount?: Maybe<Scalars['String']>;
@@ -15992,6 +16186,8 @@ export type LoanRepaymentView = {
   discountDocs?: Maybe<Array<Maybe<DocumentInfo>>>;
   fine?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
   installmentDetails?: Maybe<Array<Maybe<InstallmentDetailsView>>>;
   installmentNo?: Maybe<Scalars['String']>;
@@ -16392,6 +16588,51 @@ export type MBankingTransactionResult = {
   error?: Maybe<QueryError>;
 };
 
+export type MfBulkDepositData = {
+  accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+};
+
+export type MfBulkDepositInput = {
+  accounts?: InputMaybe<Array<BulkDepositInstanceInput>>;
+  agentId?: InputMaybe<Scalars['String']>;
+  bankVoucher?: InputMaybe<DepositBankVoucher>;
+  cash?: InputMaybe<DepositCash>;
+  depositedBy: DepositedBy;
+  doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  groupId: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  other_doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  other_name?: InputMaybe<Scalars['String']>;
+  payment_type: DepositPaymentType;
+  sourceOfFund?: InputMaybe<Scalars['String']>;
+  withdrawSlip?: InputMaybe<WithdrawSlip>;
+};
+
+export type MfBulkDepositRecord = {
+  accounts?: Maybe<Array<Maybe<MfBulkDepositData>>>;
+  amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Localized']>;
+  date?: Maybe<Scalars['Localized']>;
+  depositedBy?: Maybe<DepositedBy>;
+  depositedOther?: Maybe<Scalars['String']>;
+  discount?: Maybe<Scalars['String']>;
+  fine?: Maybe<Scalars['String']>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<DepositPaymentType>;
+  rebate?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+};
+
+export type MfBulkDepositResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<MfBulkDepositRecord>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type MfCenterDetail = {
   error?: Maybe<QueryError>;
   overview?: Maybe<CenterOverview>;
@@ -16487,16 +16728,7 @@ export type MfGroupMemberConnection = {
 
 export type MfGroupMemberEdges = {
   cursor?: Maybe<Scalars['Cursor']>;
-  node?: Maybe<MfGroupMemberEntry>;
-};
-
-export type MfGroupMemberEntry = {
-  groupName: Scalars['String'];
-  id: Scalars['ID'];
-  memberCode: Scalars['String'];
-  memberId: Scalars['String'];
-  memberName: Scalars['String'];
-  objState?: Maybe<ObjState>;
+  node?: Maybe<Member>;
 };
 
 export type MfGroupMembersInput = {
@@ -16528,7 +16760,7 @@ export type MfGroupResult = {
 };
 
 export type MfMeetingAttendanceInput = {
-  attendedMembers?: InputMaybe<Array<InputMaybe<MembersAttended>>>;
+  attendedMembers?: InputMaybe<Array<InputMaybe<MembersInvited>>>;
   meetingId: Scalars['ID'];
 };
 
@@ -16580,10 +16812,12 @@ export type MfMeetingInput = {
 };
 
 export type MfMeetingMembers = {
+  attended?: Maybe<Scalars['Boolean']>;
   code?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
-  isPresent?: Maybe<Scalars['Boolean']>;
+  invited?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
+  sendSms?: Maybe<Scalars['Boolean']>;
 };
 
 export type MfMeetingNode = {
@@ -16602,7 +16836,7 @@ export type MfMeetingOverview = {
   membersInvited?: Maybe<Scalars['Int']>;
   presentMembers?: Maybe<Scalars['Int']>;
   startTime?: Maybe<Scalars['Time']>;
-  status?: Maybe<GroupMeetingStatus>;
+  status?: Maybe<MfMeetingStatus>;
 };
 
 export type MfMeetingResult = {
@@ -16610,6 +16844,12 @@ export type MfMeetingResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export const MfMeetingStatus = {
+  Completed: 'COMPLETED',
+  Pending: 'PENDING',
+} as const;
+
+export type MfMeetingStatus = typeof MfMeetingStatus[keyof typeof MfMeetingStatus];
 export const MfObjectState = {
   Active: 'ACTIVE',
   Inactive: 'INACTIVE',
@@ -16745,7 +16985,7 @@ export type Meetings = {
   date?: Maybe<Scalars['Localized']>;
   endTime?: Maybe<Scalars['Time']>;
   startTime?: Maybe<Scalars['Time']>;
-  status?: Maybe<GroupMeetingStatus>;
+  status?: Maybe<MfMeetingStatus>;
   totalMember?: Maybe<Scalars['Int']>;
 };
 
@@ -16782,6 +17022,7 @@ export type Member = Base & {
 
 export type MemberAccountData = {
   depositAccount?: Maybe<Array<Maybe<DepositAccount>>>;
+  groupId?: Maybe<Scalars['String']>;
   loanAccount?: Maybe<Array<Maybe<LoanAccount>>>;
   memberId?: Maybe<Scalars['String']>;
 };
@@ -16807,10 +17048,14 @@ export type MemberAccountDetails = {
   atmFacility?: Maybe<Scalars['Boolean']>;
   autoOpen?: Maybe<Scalars['Boolean']>;
   availableBalance?: Maybe<Scalars['String']>;
+  centerId?: Maybe<Scalars['String']>;
+  centerName?: Maybe<Scalars['String']>;
   chequeIssue?: Maybe<Scalars['Boolean']>;
   closedAt?: Maybe<Scalars['Localized']>;
   defaultAccountType?: Maybe<DefaultAccountType>;
   dues?: Maybe<Dues>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   guaranteedAmount?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
   insurance?: Maybe<Scalars['Boolean']>;
@@ -16845,6 +17090,8 @@ export type MemberAccountMinView = {
   accountNumber?: Maybe<Scalars['String']>;
   balanceType?: Maybe<BalanceType>;
   closedDate?: Maybe<Scalars['Localized']>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   guaranteeAccounts?: Maybe<Array<Maybe<GuaranteeAccountsMinView>>>;
   interestBooked?: Maybe<Scalars['String']>;
   interestEarned?: Maybe<Scalars['String']>;
@@ -16860,6 +17107,7 @@ export type MemberAccountMinView = {
 export type MemberAccountResult = {
   data?: Maybe<MemberAccountData>;
   error?: Maybe<QueryError>;
+  groupId?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
 };
 
@@ -17112,6 +17360,7 @@ export type MemberInactiveResult = {
 
 export type MemberIndividualData = {
   SpouseName?: Maybe<Scalars['String']>;
+  activeDate?: Maybe<Scalars['Localized']>;
   address?: Maybe<Address>;
   contactNo?: Maybe<Scalars['String']>;
   dob?: Maybe<Scalars['Localized']>;
@@ -17233,6 +17482,7 @@ export type MemberMutationUpdateKymArgs = {
 };
 
 export type MemberOtherData = {
+  activeDate?: Maybe<Scalars['Localized']>;
   address?: Maybe<Address>;
   authPersonName?: Maybe<Scalars['String']>;
   balanceSheet?: Maybe<Scalars['String']>;
@@ -17433,6 +17683,7 @@ export type MemberQueryEntryArgs = {
 };
 
 export type MemberQueryGetAllAccountsArgs = {
+  groupID?: InputMaybe<Scalars['ID']>;
   memberId: Scalars['ID'];
 };
 
@@ -17789,14 +18040,11 @@ export type MemberWithDrawSlipIssueStatus = {
   type?: Maybe<Scalars['String']>;
 };
 
-export type MembersAttended = {
+export type MembersInvited = {
   attended: Scalars['Boolean'];
   id: Scalars['String'];
-};
-
-export type MembersInvited = {
-  id: Scalars['String'];
   invited: Scalars['Boolean'];
+  sendSms: Scalars['Boolean'];
 };
 
 export type MembershipFeeLedgers = {
@@ -17896,6 +18144,7 @@ export type MicroFinanceGroupMeetingMutation = {
   addAttendance?: Maybe<MfMeetingResult>;
   addDocuments?: Maybe<MfMeetingResult>;
   addMembers?: Maybe<MfMeetingResult>;
+  changeStatus?: Maybe<MfMeetingResult>;
   upsertDecision?: Maybe<MfMeetingResult>;
   upsertMeeting?: Maybe<MfMeetingResult>;
 };
@@ -17911,7 +18160,12 @@ export type MicroFinanceGroupMeetingMutationAddDocumentsArgs = {
 
 export type MicroFinanceGroupMeetingMutationAddMembersArgs = {
   meetingId: Scalars['ID'];
-  members?: InputMaybe<Array<InputMaybe<MembersAttended>>>;
+  members?: InputMaybe<Array<InputMaybe<MembersInvited>>>;
+};
+
+export type MicroFinanceGroupMeetingMutationChangeStatusArgs = {
+  input: MfMeetingStatus;
+  meetingID: Scalars['ID'];
 };
 
 export type MicroFinanceGroupMeetingMutationUpsertDecisionArgs = {
@@ -17967,12 +18221,14 @@ export type MicroFinanceGroupQueryGroupDetailsArgs = {
 };
 
 export type MicroFinanceGroupQueryListGroupArgs = {
+  branchId?: InputMaybe<Scalars['ID']>;
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
 export type MicroFinanceGroupQueryListGroupMembersArgs = {
   filter?: InputMaybe<Filter>;
+  groupID: Scalars['String'];
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -17980,12 +18236,21 @@ export type MicroFinanceMutation = {
   center?: Maybe<MicroFinanceCenterMutation>;
   group?: Maybe<MicroFinanceGroupMutation>;
   groupMeeting: MicroFinanceGroupMeetingMutation;
+  transaction: MicroFinanceTransactionMutation;
 };
 
 export type MicroFinanceQuery = {
   center: MicroFinanceCenterQuery;
   group: MicroFinanceGroupQuery;
   groupMeeting: MicroFinanceGroupMeetingQuery;
+};
+
+export type MicroFinanceTransactionMutation = {
+  bulkDeposit: MfBulkDepositResult;
+};
+
+export type MicroFinanceTransactionMutationBulkDepositArgs = {
+  data: MfBulkDepositInput;
 };
 
 export type MinMaxFilter = {
@@ -18178,6 +18443,7 @@ export type Mutation = {
   auth: AuthMutation;
   bank: BankMutation;
   bpm: BpmMutation;
+  collection: CollectionMutation;
   document: DocumentMutation;
   example: ExampleMutation;
   hr: HrMutation;
@@ -19088,16 +19354,20 @@ export type PayrollRunListed = {
 
 export type PayrollRunRecord = {
   employeeId?: Maybe<Scalars['String']>;
-  grossSalary?: Maybe<Scalars['String']>;
+  employeeName?: Maybe<Scalars['String']>;
+  grossPay?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   nepaliMonth?: Maybe<NepaliMonths>;
   netPay?: Maybe<Scalars['String']>;
   paygroupId?: Maybe<Scalars['String']>;
-  postTaxDeduction?: Maybe<Scalars['String']>;
-  preTaxDeductionAmount?: Maybe<Scalars['String']>;
-  tax?: Maybe<Scalars['String']>;
+  postTaxDeductions?: Maybe<Scalars['String']>;
+  preTaxDeductions?: Maybe<Scalars['String']>;
   taxReceivedPaid?: Maybe<Scalars['String']>;
   taxableIncome?: Maybe<Scalars['String']>;
+  totalTax?: Maybe<Scalars['String']>;
+  unpaidDays?: Maybe<Scalars['Int']>;
+  usedType?: Maybe<Scalars['String']>;
+  usedTypeId?: Maybe<Scalars['String']>;
   year?: Maybe<Scalars['Int']>;
 };
 
@@ -19108,6 +19378,7 @@ export type PayrollRuns = {
 
 export const PayrollStatus = {
   Approved: 'APPROVED',
+  Completed: 'COMPLETED',
   Pending: 'PENDING',
   Rejected: 'REJECTED',
 } as const;
@@ -19701,6 +19972,7 @@ export type Query = {
   auth: AuthQuery;
   bank: BankQuery;
   bpm: BpmQuery;
+  collection: CollectionQuery;
   config: ConfigQuery;
   dashboard: DashboardQuery;
   document: DocumentQuery;
@@ -19734,6 +20006,7 @@ export type QueryResult = {
 };
 
 export const Resource = {
+  AcceptTodayDeposit: 'ACCEPT_TODAY_DEPOSIT',
   AccountingAccounting: 'ACCOUNTING_ACCOUNTING',
   AccountingInvestment: 'ACCOUNTING_INVESTMENT',
   AccountingLoan: 'ACCOUNTING_LOAN',
@@ -19761,6 +20034,7 @@ export const Resource = {
   AccountingSystemSalesCustomers: 'ACCOUNTING_SYSTEM_SALES_CUSTOMERS',
   AccountingSystemSalesCustomerPayment: 'ACCOUNTING_SYSTEM_SALES_CUSTOMER_PAYMENT',
   AccountingSystemSalesSalesEntry: 'ACCOUNTING_SYSTEM_SALES_SALES_ENTRY',
+  AgentAssignMember: 'AGENT_ASSIGN_MEMBER',
   AlternativeChannelsAtmCardRegistration: 'ALTERNATIVE_CHANNELS_ATM_CARD_REGISTRATION',
   AlternativeChannelsDownloads: 'ALTERNATIVE_CHANNELS_DOWNLOADS',
   AlternativeChannelsEBankingRegistration: 'ALTERNATIVE_CHANNELS_E_BANKING_REGISTRATION',
@@ -19860,6 +20134,8 @@ export const Resource = {
   CbsWithdrawSlipsWithdrawSlipsBlock: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK',
   CbsWithdrawSlipsWithdrawSlipsIssue: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_ISSUE',
   CbsWithdrawSlipsWithdrawSlipsRequests: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_REQUESTS',
+  CollectionList: 'COLLECTION_LIST',
+  CreateCollectionList: 'CREATE_COLLECTION_LIST',
   FundManagement: 'FUND_MANAGEMENT',
   HcmEmployee: 'HCM_EMPLOYEE',
   HcmEmployeeAttendance: 'HCM_EMPLOYEE_ATTENDANCE',
@@ -19887,6 +20163,9 @@ export const Resource = {
   HcmTraining: 'HCM_TRAINING',
   HcmTrainingCourses: 'HCM_TRAINING_COURSES',
   HcmTrainingStudents: 'HCM_TRAINING_STUDENTS',
+  ListAgentTodayTask: 'LIST_AGENT_TODAY_TASK',
+  ListAssignMember: 'LIST_ASSIGN_MEMBER',
+  ListCollection: 'LIST_COLLECTION',
   ReportsAccountingExternalLoan: 'REPORTS_ACCOUNTING_EXTERNAL_LOAN',
   ReportsAccountingExternalLoanStatement: 'REPORTS_ACCOUNTING_EXTERNAL_LOAN_STATEMENT',
   ReportsAccountingFdInvestment: 'REPORTS_ACCOUNTING_FD_INVESTMENT',
@@ -19969,6 +20248,7 @@ export const Resource = {
   ReportsTxnDaybook: 'REPORTS_TXN_DAYBOOK',
   ReportsTxnFiscalYearEndAdjustmentTrialBalance:
     'REPORTS_TXN_FISCAL_YEAR_END_ADJUSTMENT_TRIAL_BALANCE',
+  ReportsTxnJournalVoucher: 'REPORTS_TXN_JOURNAL_VOUCHER',
   ReportsTxnLedgerBalance: 'REPORTS_TXN_LEDGER_BALANCE',
   ReportsTxnLedgerGroup: 'REPORTS_TXN_LEDGER_GROUP',
   ReportsTxnMarketRepresentativeTxn: 'REPORTS_TXN_MARKET_REPRESENTATIVE_TXN',
@@ -20010,6 +20290,9 @@ export const Resource = {
   SettingsTransactionConstraint: 'SETTINGS_TRANSACTION_CONSTRAINT',
   SettingsUsers: 'SETTINGS_USERS',
   SharedDividend: 'SHARED_DIVIDEND',
+  SubmissionList: 'SUBMISSION_LIST',
+  TodayList: 'TODAY_LIST',
+  TodayTask: 'TODAY_TASK',
   UserUser: 'USER_USER',
   UserUserPassword: 'USER_USER_PASSWORD',
 } as const;
@@ -20102,6 +20385,11 @@ export type ReleaseGuaranteeInput = {
 };
 
 export type RemoveMemberResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export type RemoveTodayTaskResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
 };
@@ -22617,6 +22905,7 @@ export type SmsReportResult = {
   memberName?: Maybe<Scalars['String']>;
   memberNo?: Maybe<Scalars['String']>;
   messageSent?: Maybe<SmsStatusSent>;
+  smsConsumed?: Maybe<Scalars['Int']>;
   smsSentDate?: Maybe<Scalars['Localized']>;
   smsSentMobileNumber?: Maybe<Scalars['String']>;
   smsType?: Maybe<Scalars['String']>;
@@ -22867,6 +23156,28 @@ export type StrTransactionActionInput = {
   declineReason?: InputMaybe<Scalars['String']>;
   isAccepted: Scalars['Boolean'];
   transactionId: Scalars['ID'];
+};
+
+export type SubmissionListConnection = {
+  edges?: Maybe<Array<Maybe<SubmissionListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SubmissionListData = {
+  createdAt: Scalars['Localized'];
+  id: Scalars['String'];
+  mrId: Scalars['String'];
+  mrName: Scalars['String'];
+  status: TodayListStatus;
+  submissionDate: Scalars['Localized'];
+  totalAmount: Scalars['String'];
+  totalFine: Scalars['String'];
+};
+
+export type SubmissionListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<SubmissionListData>;
 };
 
 export type SubscriptionMutation = {
@@ -23521,10 +23832,13 @@ export type TransactionInfo = {
   amount: Scalars['String'];
   branchId: Scalars['String'];
   branchName: Scalars['String'];
+  createdDate?: Maybe<Scalars['Localized']>;
   date: Scalars['Localized'];
   id: Scalars['String'];
   narration: Scalars['String'];
   transactionType: AllTransactionType;
+  userId?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
   yearEndAdjustment?: Maybe<Scalars['String']>;
 };
 
@@ -24847,9 +25161,13 @@ export type WithdrawSlipQueryListPastSlipsArgs = {
 export type WithdrawTransactionView = {
   accountId?: Maybe<Scalars['ID']>;
   accountName?: Maybe<Scalars['String']>;
+  centerId?: Maybe<Scalars['String']>;
+  centerName?: Maybe<Scalars['String']>;
   chequeNo?: Maybe<Scalars['String']>;
   fine?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  groupId?: Maybe<Scalars['String']>;
+  groupName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   marketRepId?: Maybe<Scalars['String']>;
   marketRepName?: Maybe<Scalars['String']>;
@@ -24859,6 +25177,7 @@ export type WithdrawTransactionView = {
   paymentMode?: Maybe<WithdrawPaymentType>;
   status?: Maybe<ObjState>;
   teller?: Maybe<Scalars['String']>;
+  totalBalance?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
   totalWithdrawnAmount?: Maybe<Scalars['String']>;
@@ -24940,6 +25259,11 @@ export type ActivityInput = {
   userName?: InputMaybe<Scalars['String']>;
 };
 
+export type AddAgentMemberResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type AllocationType = {
   leaveId?: Maybe<Scalars['ID']>;
   newLeaveAllocated?: Maybe<Scalars['Int']>;
@@ -24965,6 +25289,21 @@ export type BranchTransferDetails = {
   transferDate?: Maybe<Scalars['Localized']>;
   transferredFrom?: Maybe<Scalars['String']>;
   transferredTo?: Maybe<Scalars['String']>;
+};
+
+export type CreateCollectionResult = {
+  data?: Maybe<Scalars['String']>;
+  error?: Maybe<MutationError>;
+};
+
+export type DeleteAgentMemberResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export type DeleteCollectionResult = {
+  data?: Maybe<Scalars['String']>;
+  error?: Maybe<MutationError>;
 };
 
 export type DepartTransferDetails = {
@@ -25030,6 +25369,48 @@ export const Level = {
 } as const;
 
 export type Level = typeof Level[keyof typeof Level];
+export type ListAgentMemberConnection = {
+  edges?: Maybe<Array<Maybe<AgentMemberNode>>>;
+  error?: Maybe<QueryError>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ListCollectionOutput = {
+  accountCount?: Maybe<Scalars['String']>;
+  collectionID: Scalars['ID'];
+  collectionName: Scalars['String'];
+  memberCount?: Maybe<Scalars['String']>;
+};
+
+export type ListCollectionResult = {
+  data?: Maybe<Array<Maybe<ListCollectionOutput>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type ListCollectionTemplateOutput = {
+  AmountToBeCollected?: Maybe<Scalars['String']>;
+  FineToBeCollected?: Maybe<Scalars['String']>;
+  accountId: Scalars['ID'];
+  accountName: Scalars['String'];
+  memberCode: Scalars['String'];
+  memberID: Scalars['ID'];
+  memberName: Scalars['String'];
+  templateID: Scalars['ID'];
+};
+
+export type ListCollectionTemplateResult = {
+  collectionID: Scalars['ID'];
+  collectionName: Scalars['String'];
+  data?: Maybe<Array<Maybe<ListCollectionTemplateOutput>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type UpdateCollectionResult = {
+  data?: Maybe<Scalars['String']>;
+  error?: Maybe<MutationError>;
+};
+
 export type SetBankAccountsMutationVariables = Exact<{
   data?: InputMaybe<NewBankAccountInput>;
 }>;
@@ -25440,6 +25821,7 @@ export type SetAccountCloseDataMutation = {
 export type SetAccountOpenDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: DepositLoanAccountInput;
+  groupId?: InputMaybe<Scalars['ID']>;
 }>;
 
 export type SetAccountOpenDataMutation = {
@@ -25670,27 +26052,6 @@ export type PrintSlipMutation = {
   };
 };
 
-export type SetAddMemberToAgentDataMutationVariables = Exact<{
-  agentId: Scalars['String'];
-  data: Array<Scalars['String']> | Scalars['String'];
-  override?: InputMaybe<Scalars['Boolean']>;
-}>;
-
-export type SetAddMemberToAgentDataMutation = {
-  agent: {
-    addMemberToAgent?: {
-      recordId?: string | null;
-      error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | MutationError_ValidationError_Fragment
-        | null;
-    } | null;
-  };
-};
-
 export type SetAgentTodayListDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>> | InputMaybe<AgentTodayListInput>>;
@@ -25784,6 +26145,200 @@ export type SetAgentTemplateMutation = {
         | MutationError_ValidationError_Fragment
         | null;
     } | null;
+  };
+};
+
+export type AddAgentMemberMutationVariables = Exact<{
+  id: Scalars['ID'];
+  memberId: Scalars['ID'];
+  override?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type AddAgentMemberMutation = {
+  agent: {
+    addAgentMember: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type DeleteAgentMemberMutationVariables = Exact<{
+  id: Scalars['ID'];
+  memberId: Scalars['ID'];
+}>;
+
+export type DeleteAgentMemberMutation = {
+  agent: {
+    deleteAgentMember: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type CreateCollectionMutationVariables = Exact<{
+  agentID: Scalars['ID'];
+  name: Scalars['String'];
+  accountId: Array<Scalars['ID']> | Scalars['ID'];
+}>;
+
+export type CreateCollectionMutation = {
+  collection: {
+    createCollection: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type UpdateCollectionMutationVariables = Exact<{
+  collectionID: Scalars['ID'];
+  collectionName?: InputMaybe<Scalars['String']>;
+  accountId: Array<Scalars['ID']> | Scalars['ID'];
+}>;
+
+export type UpdateCollectionMutation = {
+  collection: {
+    updateCollection: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type DeleteCollectionMutationVariables = Exact<{
+  collectionID: Scalars['ID'];
+}>;
+
+export type DeleteCollectionMutation = {
+  collection: {
+    deleteCollection: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type AddAgentTodayListMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: AgentTodayListInputValue;
+}>;
+
+export type AddAgentTodayListMutation = {
+  agent: {
+    addAgentTodayList: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type EditRejectedTodayListMutationVariables = Exact<{
+  input: AgentTodayListInputValue;
+}>;
+
+export type EditRejectedTodayListMutation = {
+  agent: {
+    editRejectedTodayList: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type SendTodayTaskMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type SendTodayTaskMutation = {
+  agent: {
+    sentTodayTask: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type RejectTodayTaskMutationVariables = Exact<{
+  id: Scalars['ID'];
+  remark?: InputMaybe<Scalars['String']>;
+}>;
+
+export type RejectTodayTaskMutation = {
+  agent: {
+    rejectTodayTask: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type AcceptAgentTodayDepositMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type AcceptAgentTodayDepositMutation = {
+  agent: {
+    acceptAgentTodayDeposit: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
   };
 };
 
@@ -26797,6 +27352,29 @@ export type SetSalAdjustmentRevisionMutation = {
       salStrucAdjustRevision: {
         upsertSalAdjustmentRevision: {
           id?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type CompletePayrollRunMutationVariables = Exact<{
+  payrollRunId: Scalars['ID'];
+}>;
+
+export type CompletePayrollRunMutation = {
+  hr: {
+    payroll: {
+      payrollRun: {
+        completePayrollRun: {
+          completedOrNot?: boolean | null;
           error?:
             | MutationError_AuthorizationError_Fragment
             | MutationError_BadRequestError_Fragment
@@ -27925,13 +28503,13 @@ export type UpsertMeetingMutation = {
 };
 
 export type AddAttendanceMutationVariables = Exact<{
-  data: MfMeetingInput;
+  data: MfMeetingAttendanceInput;
 }>;
 
 export type AddAttendanceMutation = {
   microFinance: {
     groupMeeting: {
-      upsertMeeting?: {
+      addAttendance?: {
         recordId?: string | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -27961,6 +28539,86 @@ export type UpsertDecisionMutation = {
           | MutationError_ServerError_Fragment
           | null;
       } | null;
+    };
+  };
+};
+
+export type AddMfDocumentsMutationVariables = Exact<{
+  meetingId: Scalars['ID'];
+  input: MfMeetingDocumentsInput;
+}>;
+
+export type AddMfDocumentsMutation = {
+  microFinance: {
+    groupMeeting: {
+      addDocuments?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type ChangeMeetingStatusMutationVariables = Exact<{
+  meetingID: Scalars['ID'];
+  input: MfMeetingStatus;
+}>;
+
+export type ChangeMeetingStatusMutation = {
+  microFinance: {
+    groupMeeting: {
+      changeStatus?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type SetGroupBulkDepositMutationVariables = Exact<{
+  data: MfBulkDepositInput;
+}>;
+
+export type SetGroupBulkDepositMutation = {
+  microFinance: {
+    transaction: {
+      bulkDeposit: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+        record?: {
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          fine?: string | null;
+          rebate?: string | null;
+          discount?: string | null;
+          paymentMode?: DepositPaymentType | null;
+          depositedBy?: DepositedBy | null;
+          createdAt?: Record<'local' | 'en' | 'np', string> | null;
+          totalAmount?: string | null;
+          depositedOther?: string | null;
+          accounts?: Array<{
+            accountName?: string | null;
+            memberName?: string | null;
+            amount?: string | null;
+          } | null> | null;
+        } | null;
+      };
     };
   };
 };
@@ -31406,6 +32064,22 @@ export type CancelServiceCentreCashTransferMutation = {
   };
 };
 
+export type SavingInterestPostingMutationVariables = Exact<{ [key: string]: never }>;
+
+export type SavingInterestPostingMutation = {
+  transaction: {
+    savingInterestPosting?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type GetAccountMemberListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -31746,6 +32420,7 @@ export type GetAccountTableListMinimalQuery = {
           accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
           closedAt?: string | null;
           installmentAmount?: string | null;
+          groupName?: string | null;
           member?: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
@@ -31921,6 +32596,7 @@ export type GetBulkInstallmentsDataQuery = {
 export type GetDefaultAccountListQueryVariables = Exact<{
   productId: Scalars['ID'];
   memberId: Scalars['ID'];
+  groupId?: InputMaybe<Scalars['String']>;
 }>;
 
 export type GetDefaultAccountListQuery = {
@@ -31979,6 +32655,10 @@ export type GetAccountDetailsDataQuery = {
         accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
         closedAt?: Record<'local' | 'en' | 'np', string> | null;
         lastInstallmentUpdatedDate?: Record<'local' | 'en' | 'np', string> | null;
+        groupId?: string | null;
+        groupName?: string | null;
+        centerId?: string | null;
+        centerName?: string | null;
         member?: {
           id: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
@@ -32008,6 +32688,7 @@ export type GetAccountDetailsDataQuery = {
           withdrawRestricted?: boolean | null;
           interest?: number | null;
           depositFrequency?: Frequency | null;
+          interestPostingFrequency?: Frequency | null;
           accountClosingCharge?: Array<{
             serviceName?: string | null;
             ledgerName?: string | null;
@@ -32576,6 +33257,7 @@ export type GetLedgerAccountsForTransferQuery = {
           transferBalance: string;
           currentBalance: { amount?: string | null; amountType?: BalanceType | null };
           newBalance: { amount?: string | null; amountType?: BalanceType | null };
+          balanceAt: { amount?: string | null; amountType?: BalanceType | null };
         } | null> | null;
       };
     };
@@ -33360,6 +34042,7 @@ export type GetAgentTodayListDataQueryVariables = Exact<{
 export type GetAgentTodayListDataQuery = {
   agent: {
     listAgentTask?: {
+      submissionId?: string | null;
       record?: Array<{
         id?: string | null;
         amount?: any | null;
@@ -33373,7 +34056,11 @@ export type GetAgentTodayListDataQuery = {
           code: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
         } | null;
-        account?: { id: string; installmentAmount?: string | null } | null;
+        account?: {
+          id: string;
+          accountName?: string | null;
+          installmentAmount?: string | null;
+        } | null;
       } | null> | null;
     } | null;
   };
@@ -33466,6 +34153,129 @@ export type ListAgentTemplateQuery = {
         account?: { id: string; installmentAmount?: string | null } | null;
       } | null> | null;
     } | null;
+  };
+};
+
+export type ListAgentMemberQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type ListAgentMemberQuery = {
+  agent: {
+    listAgentMember: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: { memberName: string; memberID: string; memberCode: string } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
+
+export type ListCollectionQueryVariables = Exact<{
+  agentID: Scalars['ID'];
+}>;
+
+export type ListCollectionQuery = {
+  collection: {
+    listCollection: {
+      data?: Array<{
+        collectionID: string;
+        collectionName: string;
+        memberCount?: string | null;
+        accountCount?: string | null;
+      } | null> | null;
+    };
+  };
+};
+
+export type ListCollectionTemplateQueryVariables = Exact<{
+  collectionID: Scalars['ID'];
+}>;
+
+export type ListCollectionTemplateQuery = {
+  collection: {
+    listCollectionTemplate: {
+      collectionID: string;
+      collectionName: string;
+      data?: Array<{
+        templateID: string;
+        memberID: string;
+        memberCode: string;
+        memberName: string;
+        accountId: string;
+        accountName: string;
+        AmountToBeCollected?: string | null;
+        FineToBeCollected?: string | null;
+      } | null> | null;
+    };
+  };
+};
+
+export type ListMrSubmissionListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type ListMrSubmissionListQuery = {
+  agent: {
+    listMRSubmissionList?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          mrId: string;
+          mrName: string;
+          submissionDate: Record<'local' | 'en' | 'np', string>;
+          status: TodayListStatus;
+          totalAmount: string;
+          totalFine: string;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type AgentTodayTaskDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type AgentTodayTaskDetailQuery = {
+  agent: {
+    agentTodayTaskDetail: {
+      status?: string | null;
+      date?: string | null;
+      remark?: string | null;
+      agent?: { data?: { name?: string | null; profilePicUrl?: string | null } | null } | null;
+      record?: Array<{
+        id?: string | null;
+        amount?: any | null;
+        fine?: string | null;
+        amountToBeCollected?: string | null;
+        fineToBeCollected?: string | null;
+        status?: TodayListStatus | null;
+        member?: {
+          id: string;
+          code: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+        account?: { id: string; accountName?: string | null } | null;
+      } | null> | null;
+    };
   };
 };
 
@@ -35514,12 +36324,14 @@ export type GetPayrollRunQuery = {
             year?: number | null;
             paygroupId?: string | null;
             employeeId?: string | null;
-            grossSalary?: string | null;
-            preTaxDeductionAmount?: string | null;
+            employeeName?: string | null;
+            unpaidDays?: number | null;
+            grossPay?: string | null;
+            preTaxDeductions?: string | null;
+            postTaxDeductions?: string | null;
+            totalTax?: string | null;
             taxableIncome?: string | null;
-            tax?: string | null;
             taxReceivedPaid?: string | null;
-            postTaxDeduction?: string | null;
             netPay?: string | null;
           } | null> | null;
           error?:
@@ -37835,6 +38647,7 @@ export type GetLoanListQuery = {
           closedDate?: Record<'local' | 'en' | 'np', string> | null;
           appliedDate?: Record<'local' | 'en' | 'np', string> | null;
           approvedDate?: Record<'local' | 'en' | 'np', string> | null;
+          groupName?: string | null;
           member: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
@@ -37982,6 +38795,7 @@ export type GetLoanApplicationDetailsQuery = {
 
 export type GetMemberLoanAccountsQueryVariables = Exact<{
   memberId: Scalars['ID'];
+  groupId?: InputMaybe<Scalars['ID']>;
 }>;
 
 export type GetMemberLoanAccountsQuery = {
@@ -38047,6 +38861,10 @@ export type GetLoanPreviewQuery = {
           natureOfLoanProduct?: NatureOfLoanProduct | null;
           loanName?: string | null;
           productCode?: string | null;
+          groupID?: string | null;
+          groupName?: string | null;
+          centerID?: string | null;
+          centerName?: string | null;
           penalty?: {
             penaltyType?: PenaltyType | null;
             penaltyDayAfterInstallmentDate?: number | null;
@@ -38178,6 +38996,8 @@ export type GetLoanRepaymentListQuery = {
           amount: string;
           paymentDate: Record<'local' | 'en' | 'np', string>;
           branchName: string;
+          groupId?: string | null;
+          groupName?: string | null;
         } | null;
       }> | null;
       pageInfo?: {
@@ -38192,6 +39012,7 @@ export type GetLoanRepaymentListQuery = {
 
 export type GetMemberLinkedAccountsQueryVariables = Exact<{
   memberId: Scalars['ID'];
+  groupID?: InputMaybe<Scalars['ID']>;
   filter?: InputMaybe<
     Array<InputMaybe<NatureOfDepositProduct>> | InputMaybe<NatureOfDepositProduct>
   >;
@@ -38302,6 +39123,10 @@ export type GetLoanAccountDetailsQuery = {
           installmentFrequency?: InstallmentFrequency | null;
           disbursedAmount?: string | null;
           lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
+          groupName?: string | null;
+          groupId?: string | null;
+          centerName?: string | null;
+          centerId?: string | null;
         } | null;
         loanSchedule?: {
           total: string;
@@ -39194,6 +40019,8 @@ export type GetMemberKymDetailsAccountsQuery = {
             interestRate?: string | null;
             interestEarned?: string | null;
             interestBooked?: string | null;
+            groupId?: string | null;
+            groupName?: string | null;
             guaranteeAccounts?: Array<{
               loanId?: string | null;
               loanAccountName?: string | null;
@@ -39217,6 +40044,8 @@ export type GetMemberKymDetailsAccountsQuery = {
             interestRate?: string | null;
             interestEarned?: string | null;
             interestBooked?: string | null;
+            groupId?: string | null;
+            groupName?: string | null;
             guaranteeAccounts?: Array<{
               loanId?: string | null;
               loanAccountName?: string | null;
@@ -39248,6 +40077,8 @@ export type GetMemberKymDetailsLoanQuery = {
             interestEarned?: string | null;
             interestBooked?: string | null;
             remainingPrincipal?: string | null;
+            groupId?: string | null;
+            groupName?: string | null;
           } | null> | null;
           payments?: Array<{
             date?: Record<'local' | 'en' | 'np', string> | null;
@@ -39271,6 +40102,8 @@ export type GetMemberKymDetailsLoanQuery = {
             interestEarned?: string | null;
             interestBooked?: string | null;
             objState?: ObjState | null;
+            groupId?: string | null;
+            groupName?: string | null;
             guaranteeAccounts?: Array<{
               loanId?: string | null;
               loanAccountName?: string | null;
@@ -39901,6 +40734,21 @@ export type CenterDetailsQuery = {
           centerName?: string | null;
           centerId?: string | null;
           allowedBranches?: Array<string | null> | null;
+          centerCoordinator?: {
+            id?: string | null;
+            name?: string | null;
+            contactNo?: string | null;
+            email?: string | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+          } | null;
           address?: {
             state?: Record<'local' | 'en' | 'np', string> | null;
             district?: Record<'local' | 'en' | 'np', string> | null;
@@ -39972,7 +40820,7 @@ export type ListMfMeetingsQuery = {
             endTime?: string | null;
             membersInvited?: number | null;
             presentMembers?: number | null;
-            status?: GroupMeetingStatus | null;
+            status?: MfMeetingStatus | null;
           } | null;
         } | null> | null;
         pageInfo?: PaginationFragment | null;
@@ -39984,6 +40832,7 @@ export type ListMfMeetingsQuery = {
 export type ListGroupMemberQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
+  groupID: Scalars['String'];
 }>;
 
 export type ListGroupMemberQuery = {
@@ -39995,10 +40844,20 @@ export type ListGroupMemberQuery = {
           cursor?: string | null;
           node?: {
             id: string;
-            memberId: string;
-            objState?: ObjState | null;
-            memberCode: string;
-            memberName: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            code: string;
+            branch?: string | null;
+            profilePicUrl?: string | null;
+            gender?: string | null;
+            age?: number | null;
+            maritalStatus?: string | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+            } | null;
           } | null;
         } | null> | null;
         pageInfo?: PaginationFragment | null;
@@ -40015,6 +40874,7 @@ export type GroupDetailsQuery = {
   microFinance: {
     group: {
       groupDetails?: {
+        allowableServiceCenters?: Array<string | null> | null;
         overview?: {
           newMemberCount?: number | null;
           totalMeeting?: number | null;
@@ -40047,7 +40907,81 @@ export type GroupDetailsQuery = {
             endTime?: string | null;
           } | null> | null;
         } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
       } | null;
+    };
+  };
+};
+
+export type MfMeetingsDetailsQueryVariables = Exact<{
+  meetingID: Scalars['ID'];
+}>;
+
+export type MfMeetingsDetailsQuery = {
+  microFinance: {
+    groupMeeting: {
+      mfMeetingDetail?: {
+        oveview?: {
+          id: string;
+          groupId: string;
+          groupName?: string | null;
+          groupCode?: string | null;
+          agenda?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          startTime?: string | null;
+          endTime?: string | null;
+          membersInvited?: number | null;
+          presentMembers?: number | null;
+          status?: MfMeetingStatus | null;
+        } | null;
+        attendance?: Array<{
+          id: string;
+          name?: string | null;
+          attended?: boolean | null;
+          invited?: boolean | null;
+          sendSms?: boolean | null;
+        } | null> | null;
+        decision?: {
+          note?: string | null;
+          files?: Array<{ identifier: string; url: string }> | null;
+        } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type ListDocumentsQueryVariables = Exact<{
+  meetingId: Scalars['ID'];
+}>;
+
+export type ListDocumentsQuery = {
+  microFinance: {
+    groupMeeting: {
+      listDocuments: {
+        data?: Array<{
+          fieldId?: string | null;
+          title?: string | null;
+          description?: string | null;
+          docData: Array<{ identifier: string; url: string } | null>;
+        } | null> | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      };
     };
   };
 };
@@ -41719,6 +42653,7 @@ export type GetLoanDisbursmentReportQuery = {
           interestRate?: number | null;
           nomineeAccount?: string | null;
           memberCode?: string | null;
+          loanDisbursedAmount?: string | null;
         } | null> | null;
       } | null;
     };
@@ -41876,6 +42811,7 @@ export type GetMemberRegistrationReportQuery = {
             email?: string | null;
             other?: string | null;
             panVatNo?: string | null;
+            activeDate?: Record<'local' | 'en' | 'np', string> | null;
             address?: AddressFragment | null;
             shareInfo?: {
               perShareAmount?: string | null;
@@ -41900,6 +42836,7 @@ export type GetMemberRegistrationReportQuery = {
             email?: string | null;
             other?: string | null;
             panVatNo?: string | null;
+            activeDate?: Record<'local' | 'en' | 'np', string> | null;
             address?: AddressFragment | null;
             shareInfo?: {
               perShareAmount?: string | null;
@@ -43464,6 +44401,40 @@ export type GetLedgerBalanceReportQuery = {
   };
 };
 
+export type GetJournalVoucherSummaryReportQueryVariables = Exact<{
+  data: JournalVoucherReportInput;
+}>;
+
+export type GetJournalVoucherSummaryReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        journerVoucherReport: {
+          data?: {
+            journalVoucherReportList?: Array<{
+              voucherId?: string | null;
+              voucherDate?: Record<'local' | 'en' | 'np', string> | null;
+              notes?: string | null;
+              totalDebit?: string | null;
+              totalCredit?: string | null;
+              nodeData?: Array<{
+                ledgerId?: string | null;
+                account: string;
+                serviceCentreId?: string | null;
+                serviceCenter?: string | null;
+                debit?: string | null;
+                credit?: string | null;
+                balance?: string | null;
+                balanceType?: BalanceType | null;
+              } | null> | null;
+            } | null> | null;
+          } | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetUtilityUsageReportQueryVariables = Exact<{
   data: UtilityUsageFilter;
 }>;
@@ -43761,6 +44732,33 @@ export type GetAlternativeChannelListQueryVariables = Exact<{
 export type GetAlternativeChannelListQuery = {
   alternativeChannel: {
     list?: {
+      totalCount: number;
+      pageInfo?: PaginationFragment | null;
+      edges?: Array<{
+        cursor: string;
+        data?: {
+          id?: string | null;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          memberId?: string | null;
+          coopConnection?: boolean | null;
+          lastActive?: string | null;
+          phoneNumber?: string | null;
+          serviceStatus?: AlternativeChannelStatus | null;
+          serviceType?: AlternativeChannelServiceType | null;
+        } | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetUpdatedAlternativeChannelListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  paginate?: InputMaybe<Pagination>;
+}>;
+
+export type GetUpdatedAlternativeChannelListQuery = {
+  alternativeChannel: {
+    listUpdated?: {
       totalCount: number;
       pageInfo?: PaginationFragment | null;
       edges?: Array<{
@@ -48030,6 +49028,7 @@ export type GetDepositListDataQuery = {
           profilePicUrl?: string | null;
           agentPicUrl?: string | null;
           branchName: string;
+          groupName?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -48064,6 +49063,7 @@ export type GetWithdrawListDataQuery = {
           date?: Record<'local' | 'en' | 'np', string> | null;
           profilePicUrl?: string | null;
           branchName: string;
+          groupName?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -48195,6 +49195,10 @@ export type TransactionDepositDetailQuery = {
         totalCredit?: string | null;
         note?: string | null;
         txnUserName?: string | null;
+        groupName?: string | null;
+        groupId?: string | null;
+        centerName?: string | null;
+        centerId?: string | null;
         member?: {
           id: string;
           code: string;
@@ -48250,6 +49254,10 @@ export type TransactionWithdrawDetailQuery = {
         totalCredit?: string | null;
         note?: string | null;
         txnUserName?: string | null;
+        groupName?: string | null;
+        groupId?: string | null;
+        centerName?: string | null;
+        centerId?: string | null;
         member?: {
           id: string;
           code: string;
@@ -48350,6 +49358,10 @@ export type LoanRepaymentDetailQuery = {
         totalRemainingInterest?: string | null;
         note?: string | null;
         discount?: string | null;
+        groupName?: string | null;
+        groupId?: string | null;
+        centerName?: string | null;
+        centerId?: string | null;
         member?: {
           id: string;
           code: string;
@@ -48431,6 +49443,8 @@ export type GetAllTransactionsListQuery = {
           date: Record<'local' | 'en' | 'np', string>;
           branchName: string;
           yearEndAdjustment?: string | null;
+          userId?: string | null;
+          userName?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -48717,6 +49731,7 @@ export type GetAllTransactionFilterMappingQuery = {
       allTransaction?: {
         branchId: Array<OptionTypeFragment>;
         txnType: Array<OptionTypeFragment>;
+        userId: Array<OptionTypeFragment>;
       } | null;
     } | null;
   };
@@ -50047,9 +51062,9 @@ export const useSetAccountCloseDataMutation = <TError = unknown, TContext = unkn
     options
   );
 export const SetAccountOpenDataDocument = `
-    mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!) {
+    mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!, $groupId: ID) {
   account {
-    add(id: $id, data: $data) {
+    add(id: $id, data: $data, groupId: $groupId) {
       recordId
       record {
         accountId
@@ -50429,38 +51444,6 @@ export const usePrintSlipMutation = <TError = unknown, TContext = unknown>(
     useAxios<PrintSlipMutation, PrintSlipMutationVariables>(PrintSlipDocument),
     options
   );
-export const SetAddMemberToAgentDataDocument = `
-    mutation setAddMemberToAgentData($agentId: String!, $data: [String!]!, $override: Boolean) {
-  agent {
-    addMemberToAgent(agentId: $agentId, data: $data, override: $override) {
-      recordId
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useSetAddMemberToAgentDataMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    SetAddMemberToAgentDataMutation,
-    TError,
-    SetAddMemberToAgentDataMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    SetAddMemberToAgentDataMutation,
-    TError,
-    SetAddMemberToAgentDataMutationVariables,
-    TContext
-  >(
-    ['setAddMemberToAgentData'],
-    useAxios<SetAddMemberToAgentDataMutation, SetAddMemberToAgentDataMutationVariables>(
-      SetAddMemberToAgentDataDocument
-    ),
-    options
-  );
 export const SetAgentTodayListDataDocument = `
     mutation setAgentTodayListData($id: ID!, $data: [AgentTodayListInput]) {
   agent {
@@ -50608,6 +51591,273 @@ export const useSetAgentTemplateMutation = <TError = unknown, TContext = unknown
   useMutation<SetAgentTemplateMutation, TError, SetAgentTemplateMutationVariables, TContext>(
     ['setAgentTemplate'],
     useAxios<SetAgentTemplateMutation, SetAgentTemplateMutationVariables>(SetAgentTemplateDocument),
+    options
+  );
+export const AddAgentMemberDocument = `
+    mutation addAgentMember($id: ID!, $memberId: ID!, $override: Boolean) {
+  agent {
+    addAgentMember(id: $id, memberid: $memberId, override: $override) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddAgentMemberMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddAgentMemberMutation,
+    TError,
+    AddAgentMemberMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddAgentMemberMutation, TError, AddAgentMemberMutationVariables, TContext>(
+    ['addAgentMember'],
+    useAxios<AddAgentMemberMutation, AddAgentMemberMutationVariables>(AddAgentMemberDocument),
+    options
+  );
+export const DeleteAgentMemberDocument = `
+    mutation deleteAgentMember($id: ID!, $memberId: ID!) {
+  agent {
+    deleteAgentMember(id: $id, memberid: $memberId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteAgentMemberMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteAgentMemberMutation,
+    TError,
+    DeleteAgentMemberMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteAgentMemberMutation, TError, DeleteAgentMemberMutationVariables, TContext>(
+    ['deleteAgentMember'],
+    useAxios<DeleteAgentMemberMutation, DeleteAgentMemberMutationVariables>(
+      DeleteAgentMemberDocument
+    ),
+    options
+  );
+export const CreateCollectionDocument = `
+    mutation createCollection($agentID: ID!, $name: String!, $accountId: [ID!]!) {
+  collection {
+    createCollection(agentID: $agentID, name: $name, accountId: $accountId) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useCreateCollectionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CreateCollectionMutation,
+    TError,
+    CreateCollectionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<CreateCollectionMutation, TError, CreateCollectionMutationVariables, TContext>(
+    ['createCollection'],
+    useAxios<CreateCollectionMutation, CreateCollectionMutationVariables>(CreateCollectionDocument),
+    options
+  );
+export const UpdateCollectionDocument = `
+    mutation updateCollection($collectionID: ID!, $collectionName: String, $accountId: [ID!]!) {
+  collection {
+    updateCollection(
+      collectionID: $collectionID
+      collectionName: $collectionName
+      accountId: $accountId
+    ) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateCollectionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateCollectionMutation,
+    TError,
+    UpdateCollectionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpdateCollectionMutation, TError, UpdateCollectionMutationVariables, TContext>(
+    ['updateCollection'],
+    useAxios<UpdateCollectionMutation, UpdateCollectionMutationVariables>(UpdateCollectionDocument),
+    options
+  );
+export const DeleteCollectionDocument = `
+    mutation deleteCollection($collectionID: ID!) {
+  collection {
+    deleteCollection(collectionID: $collectionID) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteCollectionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteCollectionMutation,
+    TError,
+    DeleteCollectionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteCollectionMutation, TError, DeleteCollectionMutationVariables, TContext>(
+    ['deleteCollection'],
+    useAxios<DeleteCollectionMutation, DeleteCollectionMutationVariables>(DeleteCollectionDocument),
+    options
+  );
+export const AddAgentTodayListDocument = `
+    mutation addAgentTodayList($id: ID, $input: AgentTodayListInputValue!) {
+  agent {
+    addAgentTodayList(id: $id, input: $input) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddAgentTodayListMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddAgentTodayListMutation,
+    TError,
+    AddAgentTodayListMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddAgentTodayListMutation, TError, AddAgentTodayListMutationVariables, TContext>(
+    ['addAgentTodayList'],
+    useAxios<AddAgentTodayListMutation, AddAgentTodayListMutationVariables>(
+      AddAgentTodayListDocument
+    ),
+    options
+  );
+export const EditRejectedTodayListDocument = `
+    mutation editRejectedTodayList($input: AgentTodayListInputValue!) {
+  agent {
+    editRejectedTodayList(input: $input) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useEditRejectedTodayListMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    EditRejectedTodayListMutation,
+    TError,
+    EditRejectedTodayListMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    EditRejectedTodayListMutation,
+    TError,
+    EditRejectedTodayListMutationVariables,
+    TContext
+  >(
+    ['editRejectedTodayList'],
+    useAxios<EditRejectedTodayListMutation, EditRejectedTodayListMutationVariables>(
+      EditRejectedTodayListDocument
+    ),
+    options
+  );
+export const SendTodayTaskDocument = `
+    mutation sendTodayTask($id: ID!) {
+  agent {
+    sentTodayTask(id: $id) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSendTodayTaskMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SendTodayTaskMutation,
+    TError,
+    SendTodayTaskMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SendTodayTaskMutation, TError, SendTodayTaskMutationVariables, TContext>(
+    ['sendTodayTask'],
+    useAxios<SendTodayTaskMutation, SendTodayTaskMutationVariables>(SendTodayTaskDocument),
+    options
+  );
+export const RejectTodayTaskDocument = `
+    mutation rejectTodayTask($id: ID!, $remark: String) {
+  agent {
+    rejectTodayTask(id: $id, remark: $remark) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useRejectTodayTaskMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    RejectTodayTaskMutation,
+    TError,
+    RejectTodayTaskMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<RejectTodayTaskMutation, TError, RejectTodayTaskMutationVariables, TContext>(
+    ['rejectTodayTask'],
+    useAxios<RejectTodayTaskMutation, RejectTodayTaskMutationVariables>(RejectTodayTaskDocument),
+    options
+  );
+export const AcceptAgentTodayDepositDocument = `
+    mutation acceptAgentTodayDeposit($id: ID!) {
+  agent {
+    acceptAgentTodayDeposit(id: $id) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAcceptAgentTodayDepositMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AcceptAgentTodayDepositMutation,
+    TError,
+    AcceptAgentTodayDepositMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    AcceptAgentTodayDepositMutation,
+    TError,
+    AcceptAgentTodayDepositMutationVariables,
+    TContext
+  >(
+    ['acceptAgentTodayDeposit'],
+    useAxios<AcceptAgentTodayDepositMutation, AcceptAgentTodayDepositMutationVariables>(
+      AcceptAgentTodayDepositDocument
+    ),
     options
   );
 export const AccountServiceActivationDocument = `
@@ -52006,6 +53256,37 @@ export const useSetSalAdjustmentRevisionMutation = <TError = unknown, TContext =
     ['setSalAdjustmentRevision'],
     useAxios<SetSalAdjustmentRevisionMutation, SetSalAdjustmentRevisionMutationVariables>(
       SetSalAdjustmentRevisionDocument
+    ),
+    options
+  );
+export const CompletePayrollRunDocument = `
+    mutation completePayrollRun($payrollRunId: ID!) {
+  hr {
+    payroll {
+      payrollRun {
+        completePayrollRun(payrollRunId: $payrollRunId) {
+          completedOrNot
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useCompletePayrollRunMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CompletePayrollRunMutation,
+    TError,
+    CompletePayrollRunMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<CompletePayrollRunMutation, TError, CompletePayrollRunMutationVariables, TContext>(
+    ['completePayrollRun'],
+    useAxios<CompletePayrollRunMutation, CompletePayrollRunMutationVariables>(
+      CompletePayrollRunDocument
     ),
     options
   );
@@ -53586,10 +54867,10 @@ export const useUpsertMeetingMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const AddAttendanceDocument = `
-    mutation addAttendance($data: MFMeetingInput!) {
+    mutation addAttendance($data: MFMeetingAttendanceInput!) {
   microFinance {
     groupMeeting {
-      upsertMeeting(data: $data) {
+      addAttendance(data: $data) {
         recordId
         error {
           ...MutationError
@@ -53637,6 +54918,108 @@ export const useUpsertDecisionMutation = <TError = unknown, TContext = unknown>(
   useMutation<UpsertDecisionMutation, TError, UpsertDecisionMutationVariables, TContext>(
     ['upsertDecision'],
     useAxios<UpsertDecisionMutation, UpsertDecisionMutationVariables>(UpsertDecisionDocument),
+    options
+  );
+export const AddMfDocumentsDocument = `
+    mutation addMFDocuments($meetingId: ID!, $input: MFMeetingDocumentsInput!) {
+  microFinance {
+    groupMeeting {
+      addDocuments(meetingId: $meetingId, input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddMfDocumentsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddMfDocumentsMutation,
+    TError,
+    AddMfDocumentsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddMfDocumentsMutation, TError, AddMfDocumentsMutationVariables, TContext>(
+    ['addMFDocuments'],
+    useAxios<AddMfDocumentsMutation, AddMfDocumentsMutationVariables>(AddMfDocumentsDocument),
+    options
+  );
+export const ChangeMeetingStatusDocument = `
+    mutation changeMeetingStatus($meetingID: ID!, $input: MFMeetingStatus!) {
+  microFinance {
+    groupMeeting {
+      changeStatus(meetingID: $meetingID, input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useChangeMeetingStatusMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ChangeMeetingStatusMutation,
+    TError,
+    ChangeMeetingStatusMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ChangeMeetingStatusMutation, TError, ChangeMeetingStatusMutationVariables, TContext>(
+    ['changeMeetingStatus'],
+    useAxios<ChangeMeetingStatusMutation, ChangeMeetingStatusMutationVariables>(
+      ChangeMeetingStatusDocument
+    ),
+    options
+  );
+export const SetGroupBulkDepositDocument = `
+    mutation setGroupBulkDeposit($data: MFBulkDepositInput!) {
+  microFinance {
+    transaction {
+      bulkDeposit(data: $data) {
+        error {
+          ...MutationError
+        }
+        recordId
+        record {
+          date
+          amount
+          fine
+          rebate
+          discount
+          paymentMode
+          depositedBy
+          createdAt
+          totalAmount
+          accounts {
+            accountName
+            memberName
+            amount
+          }
+          depositedOther
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetGroupBulkDepositMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetGroupBulkDepositMutation,
+    TError,
+    SetGroupBulkDepositMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetGroupBulkDepositMutation, TError, SetGroupBulkDepositMutationVariables, TContext>(
+    ['setGroupBulkDeposit'],
+    useAxios<SetGroupBulkDepositMutation, SetGroupBulkDepositMutationVariables>(
+      SetGroupBulkDepositDocument
+    ),
     options
   );
 export const SetOrganizationDataDocument = `
@@ -58636,6 +60019,37 @@ export const useCancelServiceCentreCashTransferMutation = <TError = unknown, TCo
     >(CancelServiceCentreCashTransferDocument),
     options
   );
+export const SavingInterestPostingDocument = `
+    mutation savingInterestPosting {
+  transaction {
+    savingInterestPosting {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSavingInterestPostingMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SavingInterestPostingMutation,
+    TError,
+    SavingInterestPostingMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SavingInterestPostingMutation,
+    TError,
+    SavingInterestPostingMutationVariables,
+    TContext
+  >(
+    ['savingInterestPosting'],
+    useAxios<SavingInterestPostingMutation, SavingInterestPostingMutationVariables>(
+      SavingInterestPostingDocument
+    ),
+    options
+  );
 export const GetAccountMemberListDocument = `
     query getAccountMemberList($filter: Filter, $pagination: Pagination) {
   members {
@@ -59058,6 +60472,7 @@ export const GetAccountTableListMinimalDocument = `
             isMandatorySaving
           }
           installmentAmount
+          groupName
         }
       }
     }
@@ -59295,9 +60710,13 @@ export const useGetBulkInstallmentsDataQuery = <
     options
   );
 export const GetDefaultAccountListDocument = `
-    query getDefaultAccountList($productId: ID!, $memberId: ID!) {
+    query getDefaultAccountList($productId: ID!, $memberId: ID!, $groupId: String) {
   account {
-    listDefaultAccounts(memberId: $memberId, productId: $productId) {
+    listDefaultAccounts(
+      memberId: $memberId
+      productId: $productId
+      groupId: $groupId
+    ) {
       data {
         id
         accountName
@@ -59398,6 +60817,7 @@ export const GetAccountDetailsDataDocument = `
           }
           interest
           depositFrequency
+          interestPostingFrequency
         }
         dues {
           fine
@@ -59417,6 +60837,10 @@ export const GetAccountDetailsDataDocument = `
           effectiveTill
         }
         lastInstallmentUpdatedDate
+        groupId
+        groupName
+        centerId
+        centerName
       }
     }
   }
@@ -60177,6 +61601,10 @@ export const GetLedgerAccountsForTransferDocument = `
           }
           transferBalance
           newBalance {
+            amount
+            amountType
+          }
+          balanceAt {
             amount
             amountType
           }
@@ -61259,6 +62687,7 @@ export const GetAgentTodayListDataDocument = `
     query getAgentTodayListData($id: ID!) {
   agent {
     listAgentTask(id: $id) {
+      submissionId
       record {
         id
         member {
@@ -61268,6 +62697,7 @@ export const GetAgentTodayListDataDocument = `
         }
         account {
           id
+          accountName
           installmentAmount
         }
         amount
@@ -61416,6 +62846,184 @@ export const useListAgentTemplateQuery = <TData = ListAgentTemplateQuery, TError
     ['listAgentTemplate', variables],
     useAxios<ListAgentTemplateQuery, ListAgentTemplateQueryVariables>(
       ListAgentTemplateDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListAgentMemberDocument = `
+    query listAgentMember($filter: Filter, $pagination: Pagination) {
+  agent {
+    listAgentMember(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          memberName
+          memberID
+          memberCode
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useListAgentMemberQuery = <TData = ListAgentMemberQuery, TError = unknown>(
+  variables?: ListAgentMemberQueryVariables,
+  options?: UseQueryOptions<ListAgentMemberQuery, TError, TData>
+) =>
+  useQuery<ListAgentMemberQuery, TError, TData>(
+    variables === undefined ? ['listAgentMember'] : ['listAgentMember', variables],
+    useAxios<ListAgentMemberQuery, ListAgentMemberQueryVariables>(ListAgentMemberDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const ListCollectionDocument = `
+    query listCollection($agentID: ID!) {
+  collection {
+    listCollection(agentID: $agentID) {
+      data {
+        collectionID
+        collectionName
+        memberCount
+        accountCount
+      }
+    }
+  }
+}
+    `;
+export const useListCollectionQuery = <TData = ListCollectionQuery, TError = unknown>(
+  variables: ListCollectionQueryVariables,
+  options?: UseQueryOptions<ListCollectionQuery, TError, TData>
+) =>
+  useQuery<ListCollectionQuery, TError, TData>(
+    ['listCollection', variables],
+    useAxios<ListCollectionQuery, ListCollectionQueryVariables>(ListCollectionDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const ListCollectionTemplateDocument = `
+    query listCollectionTemplate($collectionID: ID!) {
+  collection {
+    listCollectionTemplate(collectionID: $collectionID) {
+      collectionID
+      collectionName
+      data {
+        templateID
+        memberID
+        memberCode
+        memberName
+        accountId
+        accountName
+        AmountToBeCollected
+        FineToBeCollected
+      }
+    }
+  }
+}
+    `;
+export const useListCollectionTemplateQuery = <
+  TData = ListCollectionTemplateQuery,
+  TError = unknown
+>(
+  variables: ListCollectionTemplateQueryVariables,
+  options?: UseQueryOptions<ListCollectionTemplateQuery, TError, TData>
+) =>
+  useQuery<ListCollectionTemplateQuery, TError, TData>(
+    ['listCollectionTemplate', variables],
+    useAxios<ListCollectionTemplateQuery, ListCollectionTemplateQueryVariables>(
+      ListCollectionTemplateDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListMrSubmissionListDocument = `
+    query listMRSubmissionList($filter: Filter, $pagination: Pagination) {
+  agent {
+    listMRSubmissionList(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          mrId
+          mrName
+          submissionDate
+          status
+          totalAmount
+          totalFine
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useListMrSubmissionListQuery = <TData = ListMrSubmissionListQuery, TError = unknown>(
+  variables?: ListMrSubmissionListQueryVariables,
+  options?: UseQueryOptions<ListMrSubmissionListQuery, TError, TData>
+) =>
+  useQuery<ListMrSubmissionListQuery, TError, TData>(
+    variables === undefined ? ['listMRSubmissionList'] : ['listMRSubmissionList', variables],
+    useAxios<ListMrSubmissionListQuery, ListMrSubmissionListQueryVariables>(
+      ListMrSubmissionListDocument
+    ).bind(null, variables),
+    options
+  );
+export const AgentTodayTaskDetailDocument = `
+    query agentTodayTaskDetail($id: ID!) {
+  agent {
+    agentTodayTaskDetail(id: $id) {
+      status
+      date
+      agent {
+        data {
+          name
+          profilePicUrl
+        }
+      }
+      remark
+      record {
+        id
+        member {
+          id
+          code
+          name
+        }
+        account {
+          id
+          accountName
+        }
+        amount
+        fine
+        amountToBeCollected
+        fineToBeCollected
+        status
+      }
+    }
+  }
+}
+    `;
+export const useAgentTodayTaskDetailQuery = <TData = AgentTodayTaskDetailQuery, TError = unknown>(
+  variables: AgentTodayTaskDetailQueryVariables,
+  options?: UseQueryOptions<AgentTodayTaskDetailQuery, TError, TData>
+) =>
+  useQuery<AgentTodayTaskDetailQuery, TError, TData>(
+    ['agentTodayTaskDetail', variables],
+    useAxios<AgentTodayTaskDetailQuery, AgentTodayTaskDetailQueryVariables>(
+      AgentTodayTaskDetailDocument
     ).bind(null, variables),
     options
   );
@@ -63979,12 +65587,14 @@ export const GetPayrollRunDocument = `
             year
             paygroupId
             employeeId
-            grossSalary
-            preTaxDeductionAmount
+            employeeName
+            unpaidDays
+            grossPay
+            preTaxDeductions
+            postTaxDeductions
+            totalTax
             taxableIncome
-            tax
             taxReceivedPaid
-            postTaxDeduction
             netPay
           }
           error {
@@ -66993,6 +68603,7 @@ export const GetLoanListDocument = `
           closedDate
           appliedDate
           approvedDate
+          groupName
         }
       }
       pageInfo {
@@ -67163,9 +68774,9 @@ export const useGetLoanApplicationDetailsQuery = <
     options
   );
 export const GetMemberLoanAccountsDocument = `
-    query getMemberLoanAccounts($memberId: ID!) {
+    query getMemberLoanAccounts($memberId: ID!, $groupId: ID) {
   loanAccount {
-    memberDisbursedLoanAccounts(memberId: $memberId) {
+    memberDisbursedLoanAccounts(memberId: $memberId, groupId: $groupId) {
       id
       name
     }
@@ -67264,6 +68875,10 @@ export const GetLoanPreviewDocument = `
             rebateRate
             rebateAmount
           }
+          groupID
+          groupName
+          centerID
+          centerName
         }
         loanDetails {
           appliedLoanAmount
@@ -67396,6 +69011,8 @@ export const GetLoanRepaymentListDocument = `
           amount
           paymentDate
           branchName
+          groupId
+          groupName
         }
         cursor
       }
@@ -67421,9 +69038,9 @@ export const useGetLoanRepaymentListQuery = <TData = GetLoanRepaymentListQuery, 
     options
   );
 export const GetMemberLinkedAccountsDocument = `
-    query getMemberLinkedAccounts($memberId: ID!, $filter: [NatureOfDepositProduct], $objState: AccountObjState, $includeLoc: Boolean) {
+    query getMemberLinkedAccounts($memberId: ID!, $groupID: ID, $filter: [NatureOfDepositProduct], $objState: AccountObjState, $includeLoc: Boolean) {
   members {
-    getAllAccounts(memberId: $memberId) {
+    getAllAccounts(memberId: $memberId, groupID: $groupID) {
       data {
         depositAccount(filter: $filter, objState: $objState, includeLoc: $includeLoc) {
           id
@@ -67565,6 +69182,10 @@ export const GetLoanAccountDetailsDocument = `
           installmentFrequency
           disbursedAmount
           lastPaymentDate
+          groupName
+          groupId
+          centerName
+          centerId
         }
         loanSchedule {
           installments {
@@ -68836,6 +70457,8 @@ export const GetMemberKymDetailsAccountsDocument = `
               loanId
               loanAccountName
             }
+            groupId
+            groupName
           }
           payments {
             date
@@ -68859,6 +70482,8 @@ export const GetMemberKymDetailsAccountsDocument = `
               loanId
               loanAccountName
             }
+            groupId
+            groupName
           }
         }
       }
@@ -68897,6 +70522,8 @@ export const GetMemberKymDetailsLoanDocument = `
             interestEarned
             interestBooked
             remainingPrincipal
+            groupId
+            groupName
           }
           payments {
             date
@@ -68924,6 +70551,8 @@ export const GetMemberKymDetailsLoanDocument = `
               loanId
               loanAccountName
             }
+            groupId
+            groupName
           }
         }
       }
@@ -69669,6 +71298,24 @@ export const CenterDetailsDocument = `
           totalSaving
           centerName
           centerId
+          centerCoordinator {
+            id
+            name
+            contactNo
+            email
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+          }
           address {
             state
             district
@@ -69782,19 +71429,28 @@ export const useListMfMeetingsQuery = <TData = ListMfMeetingsQuery, TError = unk
     options
   );
 export const ListGroupMemberDocument = `
-    query listGroupMember($pagination: Pagination, $filter: Filter) {
+    query listGroupMember($pagination: Pagination, $filter: Filter, $groupID: String!) {
   microFinance {
     group {
-      listGroupMembers(pagination: $pagination, filter: $filter) {
+      listGroupMembers(pagination: $pagination, filter: $filter, groupID: $groupID) {
         totalCount
         edges {
           node {
             id
-            memberId
-            objState
-            memberCode
-            memberName
-            memberId
+            name
+            code
+            branch
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+            }
+            profilePicUrl
+            gender
+            age
+            maritalStatus
           }
           cursor
         }
@@ -69807,11 +71463,11 @@ export const ListGroupMemberDocument = `
 }
     ${PaginationFragmentDoc}`;
 export const useListGroupMemberQuery = <TData = ListGroupMemberQuery, TError = unknown>(
-  variables?: ListGroupMemberQueryVariables,
+  variables: ListGroupMemberQueryVariables,
   options?: UseQueryOptions<ListGroupMemberQuery, TError, TData>
 ) =>
   useQuery<ListGroupMemberQuery, TError, TData>(
-    variables === undefined ? ['listGroupMember'] : ['listGroupMember', variables],
+    ['listGroupMember', variables],
     useAxios<ListGroupMemberQuery, ListGroupMemberQueryVariables>(ListGroupMemberDocument).bind(
       null,
       variables
@@ -69836,6 +71492,7 @@ export const GroupDetailsDocument = `
           name
           id
         }
+        allowableServiceCenters
         meetings {
           upcomingMeetingCount
           pastMeetingCount
@@ -69855,11 +71512,14 @@ export const GroupDetailsDocument = `
             endTime
           }
         }
+        error {
+          ...MutationError
+        }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useGroupDetailsQuery = <TData = GroupDetailsQuery, TError = unknown>(
   variables: GroupDetailsQueryVariables,
   options?: UseQueryOptions<GroupDetailsQuery, TError, TData>
@@ -69867,6 +71527,91 @@ export const useGroupDetailsQuery = <TData = GroupDetailsQuery, TError = unknown
   useQuery<GroupDetailsQuery, TError, TData>(
     ['groupDetails', variables],
     useAxios<GroupDetailsQuery, GroupDetailsQueryVariables>(GroupDetailsDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const MfMeetingsDetailsDocument = `
+    query mfMeetingsDetails($meetingID: ID!) {
+  microFinance {
+    groupMeeting {
+      mfMeetingDetail(meetingID: $meetingID) {
+        oveview {
+          id
+          groupId
+          groupName
+          groupCode
+          agenda
+          date
+          startTime
+          endTime
+          membersInvited
+          presentMembers
+          status
+        }
+        attendance {
+          id
+          name
+          attended
+          invited
+          sendSms
+        }
+        decision {
+          note
+          files {
+            identifier
+            url
+          }
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useMfMeetingsDetailsQuery = <TData = MfMeetingsDetailsQuery, TError = unknown>(
+  variables: MfMeetingsDetailsQueryVariables,
+  options?: UseQueryOptions<MfMeetingsDetailsQuery, TError, TData>
+) =>
+  useQuery<MfMeetingsDetailsQuery, TError, TData>(
+    ['mfMeetingsDetails', variables],
+    useAxios<MfMeetingsDetailsQuery, MfMeetingsDetailsQueryVariables>(
+      MfMeetingsDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListDocumentsDocument = `
+    query listDocuments($meetingId: ID!) {
+  microFinance {
+    groupMeeting {
+      listDocuments(meetingId: $meetingId) {
+        data {
+          fieldId
+          title
+          description
+          docData {
+            identifier
+            url
+          }
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useListDocumentsQuery = <TData = ListDocumentsQuery, TError = unknown>(
+  variables: ListDocumentsQueryVariables,
+  options?: UseQueryOptions<ListDocumentsQuery, TError, TData>
+) =>
+  useQuery<ListDocumentsQuery, TError, TData>(
+    ['listDocuments', variables],
+    useAxios<ListDocumentsQuery, ListDocumentsQueryVariables>(ListDocumentsDocument).bind(
       null,
       variables
     ),
@@ -72042,6 +73787,7 @@ export const GetLoanDisbursmentReportDocument = `
           interestRate
           nomineeAccount
           memberCode
+          loanDisbursedAmount
         }
       }
     }
@@ -72251,6 +73997,7 @@ export const GetMemberRegistrationReportDocument = `
             email
             other
             panVatNo
+            activeDate
           }
           other {
             memberId
@@ -72277,6 +74024,7 @@ export const GetMemberRegistrationReportDocument = `
             email
             other
             panVatNo
+            activeDate
           }
         }
       }
@@ -74289,6 +76037,51 @@ export const useGetLedgerBalanceReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetJournalVoucherSummaryReportDocument = `
+    query getJournalVoucherSummaryReport($data: JournalVoucherReportInput!) {
+  report {
+    transactionReport {
+      financial {
+        journerVoucherReport(data: $data) {
+          data {
+            journalVoucherReportList {
+              voucherId
+              voucherDate
+              notes
+              totalDebit
+              totalCredit
+              nodeData {
+                ledgerId
+                account
+                serviceCentreId
+                serviceCenter
+                debit
+                credit
+                balance
+                balanceType
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetJournalVoucherSummaryReportQuery = <
+  TData = GetJournalVoucherSummaryReportQuery,
+  TError = unknown
+>(
+  variables: GetJournalVoucherSummaryReportQueryVariables,
+  options?: UseQueryOptions<GetJournalVoucherSummaryReportQuery, TError, TData>
+) =>
+  useQuery<GetJournalVoucherSummaryReportQuery, TError, TData>(
+    ['getJournalVoucherSummaryReport', variables],
+    useAxios<GetJournalVoucherSummaryReportQuery, GetJournalVoucherSummaryReportQueryVariables>(
+      GetJournalVoucherSummaryReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetUtilityUsageReportDocument = `
     query getUtilityUsageReport($data: UtilityUsageFilter!) {
   report {
@@ -74729,6 +76522,47 @@ export const useGetAlternativeChannelListQuery = <
       : ['getAlternativeChannelList', variables],
     useAxios<GetAlternativeChannelListQuery, GetAlternativeChannelListQueryVariables>(
       GetAlternativeChannelListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetUpdatedAlternativeChannelListDocument = `
+    query getUpdatedAlternativeChannelList($filter: Filter, $paginate: Pagination) {
+  alternativeChannel {
+    listUpdated(filter: $filter, paginate: $paginate) {
+      totalCount
+      pageInfo {
+        ...Pagination
+      }
+      edges {
+        cursor
+        data {
+          id
+          name
+          memberId
+          coopConnection
+          lastActive
+          phoneNumber
+          serviceStatus
+          serviceType
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetUpdatedAlternativeChannelListQuery = <
+  TData = GetUpdatedAlternativeChannelListQuery,
+  TError = unknown
+>(
+  variables?: GetUpdatedAlternativeChannelListQueryVariables,
+  options?: UseQueryOptions<GetUpdatedAlternativeChannelListQuery, TError, TData>
+) =>
+  useQuery<GetUpdatedAlternativeChannelListQuery, TError, TData>(
+    variables === undefined
+      ? ['getUpdatedAlternativeChannelList']
+      : ['getUpdatedAlternativeChannelList', variables],
+    useAxios<GetUpdatedAlternativeChannelListQuery, GetUpdatedAlternativeChannelListQueryVariables>(
+      GetUpdatedAlternativeChannelListDocument
     ).bind(null, variables),
     options
   );
@@ -80635,6 +82469,7 @@ export const GetDepositListDataDocument = `
           profilePicUrl
           agentPicUrl
           branchName
+          groupName
         }
         cursor
       }
@@ -80676,6 +82511,7 @@ export const GetWithdrawListDataDocument = `
           date
           profilePicUrl
           branchName
+          groupName
         }
         cursor
       }
@@ -80870,6 +82706,10 @@ export const TransactionDepositDetailDocument = `
         totalCredit
         note
         txnUserName
+        groupName
+        groupId
+        centerName
+        centerId
       }
     }
   }
@@ -80933,6 +82773,10 @@ export const TransactionWithdrawDetailDocument = `
         totalCredit
         note
         txnUserName
+        groupName
+        groupId
+        centerName
+        centerId
       }
     }
   }
@@ -81071,6 +82915,10 @@ export const LoanRepaymentDetailDocument = `
           id
           url
         }
+        groupName
+        groupId
+        centerName
+        centerId
       }
     }
   }
@@ -81147,6 +82995,8 @@ export const GetAllTransactionsListDocument = `
           date
           branchName
           yearEndAdjustment
+          userId
+          userName
         }
         cursor
       }
@@ -81563,6 +83413,9 @@ export const GetAllTransactionFilterMappingDocument = `
           ...OptionType
         }
         txnType {
+          ...OptionType
+        }
+        userId {
           ...OptionType
         }
       }

@@ -70,7 +70,11 @@ export const CashTransitTransferList = () => {
         accessorFn: (row) => localizedDate(row?.node?.transferDate),
         cell: (props) => localizedDate(props?.row?.original?.node?.transferDate),
         enableColumnFilter: true,
+        enableSorting: true,
         filterFn: 'dateTime',
+        meta: {
+          orderId: 'id',
+        },
       },
       {
         header: 'Transfer ID',

@@ -4,5 +4,6 @@ export * from './AllTransactionDetails';
 export * from './AllTransactionsList';
 export * from './BulkDepositAccountsSummary';
 export * from './BulkDepositAccountsTable';
+export * from './BulkDepositAccountsTableForGroup';
 export * from './InstallmentModel';
 export * from './Payment';

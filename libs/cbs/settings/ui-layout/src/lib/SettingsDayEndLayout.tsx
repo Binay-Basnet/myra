@@ -16,6 +16,10 @@ const tabList = [
     title: 'Setup',
     to: ROUTES.SETTINGS_EOD_SETUP,
   },
+  {
+    title: 'Actions',
+    to: ROUTES.SETTINGS_EOD_ACTIONS,
+  },
 ];
 
 interface SettingsDayEndLayoutProps {

@@ -124,6 +124,10 @@ export const CBSLoanRepaymentList = () => {
         enableColumnFilter: true,
         filterFn: 'amount',
       },
+      {
+        header: 'Group',
+        accessorFn: (row) => row?.node?.groupName,
+      },
 
       {
         id: '_actions',

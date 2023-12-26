@@ -48,23 +48,21 @@ export const GroupMeetingsAdd = () => {
 
   const groupIdWatch = watch('groupId');
 
-  const { data: groupMembersData } = useListGroupMemberQuery({
-    pagination: getPaginationQuery(),
-    filter: {
-      orConditions: [
-        {
-          andConditions: [{ column: 'groupId', comparator: 'EqualTo', value: groupIdWatch }],
-        },
-      ],
+  const { data: groupMembersData } = useListGroupMemberQuery(
+    {
+      pagination: getPaginationQuery(),
+      groupID: groupIdWatch,
     },
-  });
+    { enabled: !!groupIdWatch }
+  );
   const groupMember = groupMembersData?.microFinance?.group?.listGroupMembers?.edges;
-
   useEffect(() => {
-    setValue(
-      'memberIds',
-      groupMember?.map((item) => item?.node)
-    );
+    const groupMembersArray = groupMember?.map((item) => ({
+      id: item?.node?.id,
+      memberName: item?.node?.name?.local,
+    }));
+
+    setValue('memberIds', groupMembersArray);
   }, [groupMember]);
 
   const submitForm = () => {
@@ -87,6 +85,8 @@ export const GroupMeetingsAdd = () => {
           memberIds: values?.memberIds?.map((item: { id: string; invited: boolean }) => ({
             id: item?.id,
             invited: item?.invited || false,
+            attended: false,
+            sendSms: false,
           })),
         } as MfMeetingInput,
       }),
@@ -95,7 +95,7 @@ export const GroupMeetingsAdd = () => {
 
   return (
     <FormLayout methods={methods}>
-      <FormLayout.Header title="New Microfinance Group" />
+      <FormLayout.Header title="New Microfinance Group Meetings" />
       <FormLayout.Content>
         <FormLayout.Form>
           <FormSection templateColumns={2} divider={false}>
@@ -129,7 +129,7 @@ export const GroupMeetingsAdd = () => {
               {' '}
               <FormEditableTable
                 name="memberIds"
-                label="Employee"
+                label="Members"
                 canAddRow={false}
                 hideSN
                 canDeleteRow={false}
@@ -155,7 +155,7 @@ export const GroupMeetingsAdd = () => {
             <FormInput type="time" label="Start Time" name="startTime" />
             <FormInput type="time" label="End Time" name="endTime" />
           </FormSection>
-          <FormSection templateColumns={1}>
+          <FormSection templateColumns={1} divider={false}>
             <FormTextArea label="Description" name="notes" />
           </FormSection>
         </FormLayout.Form>{' '}

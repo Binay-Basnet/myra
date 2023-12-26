@@ -157,7 +157,7 @@ export const ActivationForm = () => {
         data: {
           ...filteredValues,
           paymentMode: values.paymentMode as AlternativeChannelPaymentMode,
-          service: selectedService,
+          service: selectedService as AlternativeChannelServiceType[],
           pin: null,
           totalAmount: String(serviceCharges?.reduce((a, b) => a + Number(b?.amount), 0)),
         },
@@ -232,7 +232,12 @@ export const ActivationForm = () => {
               header="acUserInformation"
               subHeader="acUserInformationDetails"
             >
-              <FormInput name="phoneNumber" label={t['acPhoneNumber']} />
+              <FormInput
+                name="phoneNumber"
+                label={t['acPhoneNumber']}
+                isRequired
+                rules={{ required: 'Phone number is required' }}
+              />
               <FormInput name="email" label={t['acEmail']} />
             </FormSection>
 
@@ -314,8 +319,8 @@ export const ActivationForm = () => {
         mainButtonHandler={
           mode === 'form'
             ? totalAmount === '0'
-              ? handleActivate
-              : () => setMode('payment')
+              ? methods.handleSubmit(handleActivate)
+              : methods.handleSubmit(() => setMode('payment'))
             : handleSubmit
         }
 

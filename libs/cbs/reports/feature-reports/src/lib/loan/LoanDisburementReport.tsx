@@ -154,7 +154,7 @@ export const LoanDisburesementReport = () => {
                 cell: (props) => localizedDate(props?.row?.original?.disbursedDate),
               },
               {
-                header: 'Disbursed Amount',
+                header: 'Approved Amount',
                 accessorKey: 'totalSactionedLoanAmount',
                 cell: (props) =>
                   amountConverter(props?.row?.original?.totalSactionedLoanAmount || '0'),
@@ -166,6 +166,11 @@ export const LoanDisburesementReport = () => {
               {
                 header: 'Nominee Account',
                 accessorKey: 'nomineeAccount',
+              },
+              {
+                header: 'Disbursed Amount',
+                accessorKey: 'loanDisbursedAmount',
+                cell: (props) => amountConverter(props?.row?.original?.loanDisbursedAmount || '0'),
               },
             ]}
           />

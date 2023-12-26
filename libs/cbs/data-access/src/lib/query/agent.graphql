@@ -77,6 +77,7 @@ query getAgentAssignedMemberListData($filter: Filter, $pagination: Pagination) {
 query getAgentTodayListData($id: ID!) {
   agent {
     listAgentTask(id: $id) {
+      submissionId
       record {
         id
         member {
@@ -86,6 +87,7 @@ query getAgentTodayListData($id: ID!) {
         }
         account {
           id
+          accountName
           installmentAmount
         }
         amount
@@ -169,6 +171,119 @@ query listAgentTemplate($agentId: ID!) {
           id
           installmentAmount
         }
+      }
+    }
+  }
+}
+
+query listAgentMember($filter: Filter, $pagination: Pagination) {
+  agent {
+    listAgentMember(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          memberName
+          memberID
+          memberCode
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+
+query listCollection($agentID: ID!) {
+  collection {
+    listCollection(agentID: $agentID) {
+      data {
+        collectionID
+        collectionName
+        memberCount
+        accountCount
+      }
+    }
+  }
+}
+
+query listCollectionTemplate($collectionID: ID!) {
+  collection {
+    listCollectionTemplate(collectionID: $collectionID) {
+      collectionID
+      collectionName
+      data {
+        templateID
+        memberID
+        memberCode
+        memberName
+        accountId
+        accountName
+        AmountToBeCollected
+        FineToBeCollected
+      }
+    }
+  }
+}
+
+query listMRSubmissionList($filter: Filter, $pagination: Pagination) {
+  agent {
+    listMRSubmissionList(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          mrId
+          mrName
+          submissionDate
+          status
+          totalAmount
+          totalFine
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+
+query agentTodayTaskDetail($id: ID!) {
+  agent {
+    agentTodayTaskDetail(id: $id) {
+      status
+      date
+      agent {
+        data {
+          name
+          profilePicUrl
+        }
+      }
+      remark
+      record {
+        id
+        member {
+          id
+          code
+          name
+        }
+        account {
+          id
+          accountName
+        }
+        amount
+        fine
+        amountToBeCollected
+        fineToBeCollected
+        status
       }
     }
   }

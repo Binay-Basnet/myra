@@ -26,8 +26,13 @@ export const AllTransactionsList = () => {
   const router = useRouter();
 
   const { data: allTransactionFilterMapping } = useGetAllTransactionFilterMappingQuery();
+
+  const sortParams = router.query['sort'];
+
   const { data, isFetching } = useGetAllTransactionsListQuery({
-    pagination: { ...getPaginationQuery(), order: { column: 'id', arrange: 'DESC' } },
+    pagination: sortParams
+      ? getPaginationQuery()
+      : { ...getPaginationQuery(), order: { column: 'createddate', arrange: 'DESC' } },
     // pagination: getPaginationQuery(),
     filter: getFilterQuery(),
   });
@@ -43,6 +48,7 @@ export const AllTransactionsList = () => {
         accessorKey: 'node.date.local',
         enableColumnFilter: true,
         filterFn: 'dateTime',
+        enableSorting: true,
       },
       {
         header: 'Transaction Id',
@@ -80,6 +86,17 @@ export const AllTransactionsList = () => {
         meta: {
           filterMaps: {
             list: allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.branchId,
+          },
+        },
+      },
+      {
+        id: 'userId',
+        header: 'User',
+        accessorFn: (row) => row?.node?.userName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.userId,
           },
         },
       },

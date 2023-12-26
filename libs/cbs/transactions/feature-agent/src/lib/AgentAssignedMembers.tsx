@@ -6,10 +6,10 @@ import { asyncToast, Box, DetailPageContentCard, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import {
-  useGetAgentAssignedMemberListDataQuery,
-  useRemoveMemberAccountAgentMutation,
+  Arrange,
+  useDeleteAgentMemberMutation,
+  useListAgentMemberQuery,
 } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 import { AddMemberModal } from '../components';
@@ -28,45 +28,45 @@ export const AgentAssignedMembers = () => {
 
   const id = router?.query?.['id'];
 
-  const search = router?.query?.['search'];
+  // const search = router?.query?.['search'];
 
-  const { mutateAsync: removeMemberAccount } = useRemoveMemberAccountAgentMutation();
+  const { mutateAsync: removeMember } = useDeleteAgentMemberMutation();
 
   const {
     data,
     isFetching,
     refetch: refetchAssignedMembersList,
-  } = useGetAgentAssignedMemberListDataQuery(
+  } = useListAgentMemberQuery(
     {
-      pagination: getPaginationQuery(),
+      // id: id as string,
+      pagination: {
+        ...getPaginationQuery(),
+        first: -1,
+        order: {
+          arrange: Arrange.Desc,
+          column: 'memberid',
+        },
+      },
       filter: {
         orConditions: [
-          {
-            andConditions: [
-              {
-                column: 'agentId',
-                comparator: 'EqualTo',
-                value: id,
-              },
-            ],
-          },
+          { andConditions: [{ column: 'agentid', comparator: 'EqualTo', value: id as string }] },
         ],
-        query: search as string,
       },
-      // filter: {
-      //   objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-      // },
     },
     { enabled: !!id }
   );
 
-  const rowData = useMemo(() => data?.agent?.assignedMemberList?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.agent?.listAgentMember?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        accessorFn: (row) => row?.node?.member?.name?.local,
-        header: t['agentAssignedMembersName'],
+        header: 'Member Code',
+        accessorFn: (row) => row?.node?.memberCode,
+      },
+      {
+        accessorFn: (row) => row?.node?.memberName,
+        header: 'Member Name',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Text
@@ -81,19 +81,8 @@ export const AgentAssignedMembers = () => {
         ),
 
         meta: {
-          width: '60%',
+          width: 'auto',
         },
-      },
-      {
-        header: t['agentAssignedMembersAccount'],
-        accessorFn: (row) => row?.node?.account?.id,
-        meta: {
-          width: '30%',
-        },
-      },
-      {
-        header: t['agentAssignedMembersAssignedDate'],
-        accessorFn: (row) => localizedDate(row?.node?.assignedDate),
       },
       {
         id: '_actions',
@@ -101,20 +90,19 @@ export const AgentAssignedMembers = () => {
         accessorKey: 'actions',
         cell: (props) => (
           <TablePopover
-            node={props?.row?.original?.node}
+            node={props?.row?.original}
             items={[
               {
-                title: 'Remove Account',
+                title: 'Remove Member',
                 onClick: (row) => {
                   asyncToast({
-                    id: 'remove-agent-assigned member account',
-                    msgs: { loading: 'Removing account', success: 'Account removed' },
-                    promise: removeMemberAccount({
-                      agentID: id as string,
-                      accountId: row?.account?.id as string,
+                    id: 'remove-agent-assigned-member',
+                    msgs: { loading: 'Removing member', success: 'Member removed' },
+                    promise: removeMember({
+                      id: id as string,
+                      memberId: row?.node?.memberID as string,
                     }),
-                    onSuccess: () =>
-                      queryClient.invalidateQueries(['getAgentAssignedMemberListData']),
+                    onSuccess: () => queryClient.invalidateQueries(['listAgentMember']),
                   });
                 },
               },
@@ -126,7 +114,7 @@ export const AgentAssignedMembers = () => {
         },
       },
     ],
-    [t]
+    []
   );
 
   const handleAddMemberModalOpen = () => {
@@ -146,24 +134,22 @@ export const AgentAssignedMembers = () => {
         headerButtonHandler={handleAddMemberModalOpen}
       >
         <Table
+          // isStatic
           data={rowData}
-          getRowId={(row) => String(row?.node?.id)}
           isLoading={isFetching}
           columns={columns}
           noDataTitle={t['agentAssignedMembersAssignedMembers']}
           pagination={{
-            total: data?.agent?.assignedMemberList?.totalCount ?? 'Many',
-            pageInfo: data?.agent?.assignedMemberList?.pageInfo,
+            total: data?.agent?.listAgentMember?.totalCount ?? 'Many',
+            pageInfo: data?.agent?.listAgentMember?.pageInfo,
           }}
         />
       </DetailPageContentCard>
-
       <AddMemberModal
         isOpen={isAddMemberModalOpen}
         onClose={handleAddMemberModalClose}
         refetchAssignedMembersList={refetchAssignedMembersList}
       />
-
       {/* <OverrideAlertModal
         isOpen={isOverrideMemberAlertOpen}
         onCancel={handleCancelOverrideMemberAlert}

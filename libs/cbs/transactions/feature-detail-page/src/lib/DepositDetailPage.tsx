@@ -27,6 +27,8 @@ export const DepositDetailPage = () => {
     paymentMode: depositDetailData?.paymentMode,
     amount: depositDetailData?.amount,
     method: depositDetailData?.depositedBy,
+    group: depositDetailData?.groupName,
+    center: depositDetailData?.centerName,
   };
 
   return (

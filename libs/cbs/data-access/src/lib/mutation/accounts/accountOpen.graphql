@@ -1,6 +1,6 @@
-mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!) {
+mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!, $groupId: ID) {
   account {
-    add(id: $id, data: $data) {
+    add(id: $id, data: $data, groupId: $groupId) {
       recordId
       record {
         accountId

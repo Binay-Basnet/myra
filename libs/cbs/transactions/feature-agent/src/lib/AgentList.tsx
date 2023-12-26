@@ -78,7 +78,7 @@ export const AgentList = () => {
             items={[
               {
                 title: 'transactionsAgentListViewDetail',
-                aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
+                // aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
                 action: 'VIEW',
                 onClick: () => {
                   router.push(

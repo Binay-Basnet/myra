@@ -141,6 +141,8 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
     if (watch('cash.disableDenomination') === undefined) setValue('cash.disableDenomination', true);
   });
 
+  const groupId = watch('groupId');
+
   return (
     <ContainerWithDivider p="s16" display={mode === 1 ? 'flex' : 'none'}>
       <BoxContainer>
@@ -206,6 +208,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
                   label="Member"
                   forceEnableAll
                   excludeIds={[memberId]}
+                  groupId={groupId}
                 />
               </GridItem>
             )}
@@ -218,6 +221,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
                 label="Account Name"
                 filterBy={ObjState.Active}
                 excludeIds={[accountId]}
+                groupId={groupId}
               />
             </GridItem>
             <FormSwitchTab

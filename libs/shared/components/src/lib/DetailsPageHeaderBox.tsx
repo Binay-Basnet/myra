@@ -1,13 +1,18 @@
+import React from 'react';
 import { useRouter } from 'next/router';
 import { Tab, TabIndicator, TabList, Tabs } from '@chakra-ui/react';
 import isEmpty from 'lodash/isEmpty';
 
 import { Box, Text } from '@myra-ui';
 
-export const DetailsPageHeaderBox = (props: { title: string; tablist?: string[] }) => {
+export const DetailsPageHeaderBox = (props: {
+  title: string;
+  tablist?: string[];
+  children?: React.ReactNode;
+}) => {
   const router = useRouter();
   const subTab = router?.query?.['subTab'];
-  const { title, tablist } = props;
+  const { title, tablist, children } = props;
   return (
     <Box
       display="flex"
@@ -49,6 +54,7 @@ export const DetailsPageHeaderBox = (props: { title: string; tablist?: string[] 
           <TabIndicator mt="s8" height="2px" bg="red.500" />
         </Tabs>
       )}
+      <Box>{children}</Box>
     </Box>
   );
 };

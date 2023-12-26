@@ -31,7 +31,9 @@ import {
   FormInput,
   FormLayout,
   FormMemberSelect,
+  FormMFGroupSelect,
   FormNumberInput,
+  FormSwitchTab,
 } from '@coop/shared/form';
 import {
   amountConverter,
@@ -58,6 +60,8 @@ type DepositFormInput = Omit<DepositInput, 'cash'> & {
     | undefined
     | null;
   isFinePaid: boolean;
+  memberOrGroup: 'member' | 'group';
+  groupId: string;
 };
 
 const REBATE = '0';
@@ -90,6 +94,7 @@ export const AddDeposit = () => {
 
   const methods = useForm<DepositFormInput>({
     defaultValues: {
+      memberOrGroup: 'member',
       payment_type: DepositPaymentType.Cash,
       cash: { disableDenomination: true },
       depositedBy: DepositedBy.Self,
@@ -107,13 +112,24 @@ export const AddDeposit = () => {
   const noOfInstallments = watch('noOfInstallments');
 
   useEffect(() => {
-    reset({ memberId, accountId: '', voucherId: '', noOfInstallments: null });
+    reset({
+      ...getValues(),
+      memberId,
+      accountId: '',
+      voucherId: '',
+      noOfInstallments: null,
+    });
   }, [memberId]);
 
   const accountId = watch('accountId');
 
   useEffect(() => {
-    reset({ memberId, accountId, voucherId: '', noOfInstallments: null });
+    reset({
+      ...getValues(),
+      accountId,
+      voucherId: '',
+      noOfInstallments: null,
+    });
   }, [accountId]);
 
   const { data: accountDetailQueryData } = useGetAccountDetailsDataQuery(
@@ -281,7 +297,7 @@ export const AddDeposit = () => {
   const handleSubmit = () => {
     const values = getValues();
     let filteredValues = {
-      ...omit(values, ['isFinePaid']),
+      ...omit(values, ['isFinePaid', 'memberOrGroup', 'groupId']),
       fine: String(isFinePaid ? payableFine : FINE),
       rebate: String(rebate ?? REBATE),
     };
@@ -347,6 +363,18 @@ export const AddDeposit = () => {
     }
   }, [memberId, redirectAccountId]);
 
+  const memberOrGroup = watch('memberOrGroup');
+
+  const groupId = watch('groupId');
+
+  useEffect(() => {
+    if (memberOrGroup === 'member') {
+      methods.setValue('groupId', '');
+    } else {
+      methods.setValue('memberId', '');
+    }
+  }, [memberOrGroup]);
+
   return (
     <>
       <FormLayout methods={methods} hasSidebar={Boolean(memberDetailData && mode === 0)}>
@@ -360,12 +388,30 @@ export const AddDeposit = () => {
           <FormLayout.Form>
             <Box display={mode === 0 ? 'flex' : 'none'}>
               <Box p="s16" width="100%" display="flex" flexDirection="column" gap="s24">
-                <FormMemberSelect
-                  isRequired
-                  name="memberId"
-                  label="Member"
-                  isDisabled={!!redirectMemberId}
+                <FormSwitchTab
+                  name="memberOrGroup"
+                  options={[
+                    { label: 'Member', value: 'member' },
+                    { label: 'Group', value: 'group' },
+                  ]}
                 />
+
+                {memberOrGroup === 'group' && (
+                  <>
+                    <FormMFGroupSelect name="groupId" label="Group" isRequired />
+
+                    <FormMemberSelect isRequired name="memberId" label="Member" groupId={groupId} />
+                  </>
+                )}
+
+                {memberOrGroup === 'member' && (
+                  <FormMemberSelect
+                    isRequired
+                    name="memberId"
+                    label="Member"
+                    isDisabled={!!redirectMemberId}
+                  />
+                )}
 
                 {memberId && (
                   <FormAccountSelect
@@ -376,6 +422,7 @@ export const AddDeposit = () => {
                     includeLoc
                     filterBy={AccountObjState?.Active}
                     isDisabled={!!redirectAccountId}
+                    groupId={groupId}
                   />
                 )}
 
