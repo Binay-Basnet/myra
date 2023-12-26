@@ -5,7 +5,7 @@ import { IoAdd, IoAddOutline, IoCloseCircleOutline } from 'react-icons/io5';
 import { useReactToPrint } from 'react-to-print';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
-import { HStack, useDisclosure } from '@chakra-ui/react';
+import { HStack, Spinner, useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -162,44 +162,40 @@ export const AgentDetailOverview = () => {
 
   const [selectedCollectionId, setSelectedCollectionId] = useState('');
 
-  const { data: collectionDetailData } = useListCollectionTemplateQuery(
+  const { isFetching: isTemplateFetching } = useListCollectionTemplateQuery(
     {
       collectionID: selectedCollectionId,
     },
     {
       enabled: !!selectedCollectionId,
+      onSuccess: (res) => {
+        const collectionDetail = res?.collection?.listCollectionTemplate;
+
+        const values = getValues();
+
+        const formAccounts = values?.['accounts']?.map((row) => row?.accountId) ?? [];
+
+        const accountsToAdd = collectionDetail?.data?.filter(
+          (row) => !formAccounts?.includes(row?.accountId as string)
+        );
+
+        setValue('accounts', [
+          ...(values?.['accounts'] ?? []),
+          ...(accountsToAdd?.map((acc) => ({
+            memberId: acc?.memberID,
+            memberName: acc?.memberName,
+            memberCode: acc?.memberCode,
+            accountId: acc?.accountId,
+            accountName: acc?.accountName,
+            amountToBeCollected: acc?.AmountToBeCollected,
+            fineToBeCollected: acc?.FineToBeCollected,
+          })) ?? []),
+        ] as AccountsEntry[]);
+
+        setSelectedCollectionId('');
+      },
     }
   );
-
-  useDeepCompareEffect(() => {
-    if (collectionDetailData && selectedCollectionId) {
-      const collectionDetail = collectionDetailData?.collection?.listCollectionTemplate;
-
-      const values = getValues();
-
-      const formAccounts = values?.['accounts']?.map((row) => row?.accountId) ?? [];
-
-      const accountsToAdd = collectionDetail?.data?.filter(
-        (row) => !formAccounts?.includes(row?.accountId as string)
-      );
-
-      setValue('accounts', [
-        ...(values?.['accounts'] ?? []),
-        ...(accountsToAdd?.map((acc) => ({
-          memberId: acc?.memberID,
-          memberName: acc?.memberName,
-          memberCode: acc?.memberCode,
-          accountId: acc?.accountId,
-          accountName: acc?.accountName,
-          amountToBeCollected: acc?.AmountToBeCollected,
-          fineToBeCollected: acc?.FineToBeCollected,
-        })) ?? []),
-      ] as AccountsEntry[]);
-
-      setSelectedCollectionId('');
-      queryClient.invalidateQueries(['listCollectionTemplate']);
-    }
-  }, [collectionDetailData, selectedCollectionId]);
 
   const handleAddAccounts = (
     accArr: {
@@ -304,9 +300,16 @@ export const AgentDetailOverview = () => {
                         type="status"
                         variant="outline"
                         label={coll?.collectionName as string}
-                        icon={<Icon as={IoAddOutline} />}
-                        cursor="pointer"
+                        icon={
+                          coll?.collectionID === selectedCollectionId && isTemplateFetching ? (
+                            <Spinner size="sm" />
+                          ) : (
+                            <Icon as={IoAddOutline} />
+                          )
+                        }
+                        cursor={isTemplateFetching ? 'not-allowed' : 'pointer'}
                         onClick={() => setSelectedCollectionId(coll?.collectionID as string)}
+                        pointerEvents={isTemplateFetching ? 'none' : 'auto'}
                       />
                     ))}
                   </Box>

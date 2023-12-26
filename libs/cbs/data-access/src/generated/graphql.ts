@@ -4361,7 +4361,7 @@ export type CollectionMutation = {
 };
 
 export type CollectionMutationCreateCollectionArgs = {
-  accountId?: InputMaybe<Array<Scalars['ID']>>;
+  accountId: Array<Scalars['ID']>;
   agentID: Scalars['ID'];
   name: Scalars['String'];
 };
@@ -4371,7 +4371,7 @@ export type CollectionMutationDeleteCollectionArgs = {
 };
 
 export type CollectionMutationUpdateCollectionArgs = {
-  accountId?: InputMaybe<Array<Scalars['ID']>>;
+  accountId: Array<Scalars['ID']>;
   collectionID: Scalars['ID'];
   collectionName?: InputMaybe<Scalars['String']>;
 };
@@ -16590,6 +16590,7 @@ export type MBankingTransactionResult = {
 
 export type MfBulkDepositData = {
   accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['String']>;
 };
@@ -23164,11 +23165,14 @@ export type SubmissionListConnection = {
 };
 
 export type SubmissionListData = {
-  date: Scalars['Localized'];
+  createdAt: Scalars['Localized'];
   id: Scalars['String'];
   mrId: Scalars['String'];
   mrName: Scalars['String'];
   status: TodayListStatus;
+  submissionDate: Scalars['Localized'];
+  totalAmount: Scalars['String'];
+  totalFine: Scalars['String'];
 };
 
 export type SubmissionListEdges = {
@@ -26188,7 +26192,7 @@ export type DeleteAgentMemberMutation = {
 export type CreateCollectionMutationVariables = Exact<{
   agentID: Scalars['ID'];
   name: Scalars['String'];
-  accountId?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  accountId: Array<Scalars['ID']> | Scalars['ID'];
 }>;
 
 export type CreateCollectionMutation = {
@@ -26208,7 +26212,7 @@ export type CreateCollectionMutation = {
 export type UpdateCollectionMutationVariables = Exact<{
   collectionID: Scalars['ID'];
   collectionName?: InputMaybe<Scalars['String']>;
-  accountId?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  accountId: Array<Scalars['ID']> | Scalars['ID'];
 }>;
 
 export type UpdateCollectionMutation = {
@@ -34226,8 +34230,10 @@ export type ListMrSubmissionListQuery = {
           id: string;
           mrId: string;
           mrName: string;
-          date: Record<'local' | 'en' | 'np', string>;
+          submissionDate: Record<'local' | 'en' | 'np', string>;
           status: TodayListStatus;
+          totalAmount: string;
+          totalFine: string;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -51628,7 +51634,7 @@ export const useDeleteAgentMemberMutation = <TError = unknown, TContext = unknow
     options
   );
 export const CreateCollectionDocument = `
-    mutation createCollection($agentID: ID!, $name: String!, $accountId: [ID!]) {
+    mutation createCollection($agentID: ID!, $name: String!, $accountId: [ID!]!) {
   collection {
     createCollection(agentID: $agentID, name: $name, accountId: $accountId) {
       error {
@@ -51652,7 +51658,7 @@ export const useCreateCollectionMutation = <TError = unknown, TContext = unknown
     options
   );
 export const UpdateCollectionDocument = `
-    mutation updateCollection($collectionID: ID!, $collectionName: String, $accountId: [ID!]) {
+    mutation updateCollection($collectionID: ID!, $collectionName: String, $accountId: [ID!]!) {
   collection {
     updateCollection(
       collectionID: $collectionID
@@ -62935,8 +62941,10 @@ export const ListMrSubmissionListDocument = `
           id
           mrId
           mrName
-          date
+          submissionDate
           status
+          totalAmount
+          totalFine
         }
         cursor
       }

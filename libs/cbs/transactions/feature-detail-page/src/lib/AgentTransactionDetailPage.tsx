@@ -243,15 +243,17 @@ export const AgentTransactionDetailPage = () => {
               >
                 <Box display="flex" justifyContent="space-between">
                   <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    Total Accounts
+                    Accounts Collected
                   </Text>
                   <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    {accounts?.filter((a) => !!a?.amountCollected)?.length || 0}
+                    {accounts?.filter((a) => a?.amountCollected || a?.fineToBeCollected)?.length ||
+                      0}{' '}
+                    / {accounts?.length}
                   </Text>
                 </Box>
                 <Box display="flex" justifyContent="space-between">
                   <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    Total Amount
+                    Amount Collected
                   </Text>
                   <Text fontSize="r1" fontWeight={500} color="gray.700">
                     {amountConverter(totalAmount)}
@@ -259,7 +261,7 @@ export const AgentTransactionDetailPage = () => {
                 </Box>
                 <Box display="flex" justifyContent="space-between">
                   <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    Total Fine
+                    Fine Collected
                   </Text>
                   <Text fontSize="r1" fontWeight={500} color="gray.700">
                     {amountConverter(totalFine)}
@@ -267,7 +269,7 @@ export const AgentTransactionDetailPage = () => {
                 </Box>
                 <Box display="flex" justifyContent="space-between">
                   <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    Total Collected
+                    Total Collection
                   </Text>
                   <Text fontSize="r1" fontWeight={500} color="gray.700">
                     {amountConverter(totalFine + totalAmount)}

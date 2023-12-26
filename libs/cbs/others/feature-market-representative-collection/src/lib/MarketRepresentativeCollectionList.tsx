@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { PageHeader } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
-import { useAppSelector, useListMrSubmissionListQuery } from '@coop/cbs/data-access';
+import { Arrange, useAppSelector, useListMrSubmissionListQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const MarketRepresentativeCollectionList = () => {
   const { t } = useTranslation();
@@ -16,7 +16,13 @@ export const MarketRepresentativeCollectionList = () => {
   const router = useRouter();
 
   const { data, isFetching } = useListMrSubmissionListQuery({
-    pagination: getPaginationQuery(),
+    pagination: {
+      ...getPaginationQuery(),
+      order: {
+        column: 'submissionDate',
+        arrange: Arrange.Desc,
+      },
+    },
     filter: {
       orConditions: [{ andConditions: [{ column: 'mrId', comparator: 'EqualTo', value: userId }] }],
     },
@@ -28,12 +34,12 @@ export const MarketRepresentativeCollectionList = () => {
     () => [
       {
         header: 'Date',
-        accessorFn: (row) => row?.node?.date?.local,
-        cell: (props) => localizedDate(props?.row?.original?.node?.date),
-        meta: {
-          orderId: 'id',
-        },
-        enableSorting: true,
+        accessorFn: (row) => row?.node?.submissionDate?.local,
+        cell: (props) => localizedDate(props?.row?.original?.node?.submissionDate),
+        // meta: {
+        //   orderId: 'submissionDate',
+        // },
+        // enableSorting: true,
       },
       {
         header: 'MR Transaction ID',
@@ -46,6 +52,16 @@ export const MarketRepresentativeCollectionList = () => {
         meta: {
           width: '60%',
         },
+      },
+      {
+        id: 'totalAmount',
+        header: 'Amount Collected',
+        cell: (props) => amountConverter(props?.row?.original?.node?.totalAmount || 0),
+      },
+      {
+        id: 'totalFine',
+        header: 'Fine Collected',
+        cell: (props) => amountConverter(props?.row?.original?.node?.totalFine || 0),
       },
       {
         header: 'Status',
@@ -97,6 +113,11 @@ export const MarketRepresentativeCollectionList = () => {
         //     }`
         //   )
         // }
+        rowOnClick={(row) =>
+          router.push(
+            `${ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_DETAILS}?id=${row?.node?.id}`
+          )
+        }
         noDataTitle="Market Representative Collection"
         pagination={{
           total: data?.agent?.listMRSubmissionList?.totalCount ?? 'Many',

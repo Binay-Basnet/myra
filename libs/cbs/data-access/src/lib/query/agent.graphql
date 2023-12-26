@@ -239,8 +239,10 @@ query listMRSubmissionList($filter: Filter, $pagination: Pagination) {
           id
           mrId
           mrName
-          date
+          submissionDate
           status
+          totalAmount
+          totalFine
         }
         cursor
       }

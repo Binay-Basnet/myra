@@ -7,6 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 import { TodayListStatus, useListMrSubmissionListQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
+  amountConverter,
   featureCode,
   getFilterQuery,
   getPaginationQuery,
@@ -42,8 +43,8 @@ export const AgentTransactionList = () => {
       {
         id: 'date',
         header: 'Date',
-        accessorFn: (row) => row?.node?.date?.local,
-        cell: (props) => localizedDate(props?.row?.original?.node?.date),
+        accessorFn: (row) => row?.node?.submissionDate?.local,
+        cell: (props) => localizedDate(props?.row?.original?.node?.submissionDate),
         enableSorting: true,
       },
       {
@@ -65,6 +66,16 @@ export const AgentTransactionList = () => {
             </Text>
           </Box>
         ),
+      },
+      {
+        id: 'totalAmount',
+        header: 'Amount Collected',
+        cell: (props) => amountConverter(props?.row?.original?.node?.totalAmount || 0),
+      },
+      {
+        id: 'totalFine',
+        header: 'Fine Collected',
+        cell: (props) => amountConverter(props?.row?.original?.node?.totalFine || 0),
       },
       {
         header: 'Status',
