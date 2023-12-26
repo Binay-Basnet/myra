@@ -4361,7 +4361,7 @@ export type CollectionMutation = {
 };
 
 export type CollectionMutationCreateCollectionArgs = {
-  accountId?: InputMaybe<Array<Scalars['ID']>>;
+  accountId: Array<Scalars['ID']>;
   agentID: Scalars['ID'];
   name: Scalars['String'];
 };
@@ -4371,7 +4371,7 @@ export type CollectionMutationDeleteCollectionArgs = {
 };
 
 export type CollectionMutationUpdateCollectionArgs = {
-  accountId?: InputMaybe<Array<Scalars['ID']>>;
+  accountId: Array<Scalars['ID']>;
   collectionID: Scalars['ID'];
   collectionName?: InputMaybe<Scalars['String']>;
 };
@@ -5440,10 +5440,10 @@ export type DepositAccountInstallmentResult = {
 };
 
 export type DepositBankVoucher = {
-  amount: Scalars['String'];
-  bankId: Scalars['String'];
-  depositedAt: Scalars['Localized'];
-  depositedBy: Scalars['String'];
+  amount?: InputMaybe<Scalars['String']>;
+  bankId?: InputMaybe<Scalars['String']>;
+  depositedAt?: InputMaybe<Scalars['Localized']>;
+  depositedBy?: InputMaybe<Scalars['String']>;
   voucherId?: InputMaybe<Scalars['String']>;
 };
 
@@ -16590,6 +16590,7 @@ export type MBankingTransactionResult = {
 
 export type MfBulkDepositData = {
   accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['String']>;
 };
@@ -26188,7 +26189,7 @@ export type DeleteAgentMemberMutation = {
 export type CreateCollectionMutationVariables = Exact<{
   agentID: Scalars['ID'];
   name: Scalars['String'];
-  accountId?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  accountId: Array<Scalars['ID']> | Scalars['ID'];
 }>;
 
 export type CreateCollectionMutation = {
@@ -26208,7 +26209,7 @@ export type CreateCollectionMutation = {
 export type UpdateCollectionMutationVariables = Exact<{
   collectionID: Scalars['ID'];
   collectionName?: InputMaybe<Scalars['String']>;
-  accountId?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  accountId: Array<Scalars['ID']> | Scalars['ID'];
 }>;
 
 export type UpdateCollectionMutation = {
@@ -28608,7 +28609,11 @@ export type SetGroupBulkDepositMutation = {
           createdAt?: Record<'local' | 'en' | 'np', string> | null;
           totalAmount?: string | null;
           depositedOther?: string | null;
-          accounts?: Array<{ memberName?: string | null; amount?: string | null } | null> | null;
+          accounts?: Array<{
+            accountName?: string | null;
+            memberName?: string | null;
+            amount?: string | null;
+          } | null> | null;
         } | null;
       };
     };
@@ -40009,6 +40014,8 @@ export type GetMemberKymDetailsAccountsQuery = {
             interestRate?: string | null;
             interestEarned?: string | null;
             interestBooked?: string | null;
+            groupId?: string | null;
+            groupName?: string | null;
             guaranteeAccounts?: Array<{
               loanId?: string | null;
               loanAccountName?: string | null;
@@ -40032,6 +40039,8 @@ export type GetMemberKymDetailsAccountsQuery = {
             interestRate?: string | null;
             interestEarned?: string | null;
             interestBooked?: string | null;
+            groupId?: string | null;
+            groupName?: string | null;
             guaranteeAccounts?: Array<{
               loanId?: string | null;
               loanAccountName?: string | null;
@@ -40063,6 +40072,8 @@ export type GetMemberKymDetailsLoanQuery = {
             interestEarned?: string | null;
             interestBooked?: string | null;
             remainingPrincipal?: string | null;
+            groupId?: string | null;
+            groupName?: string | null;
           } | null> | null;
           payments?: Array<{
             date?: Record<'local' | 'en' | 'np', string> | null;
@@ -40086,6 +40097,8 @@ export type GetMemberKymDetailsLoanQuery = {
             interestEarned?: string | null;
             interestBooked?: string | null;
             objState?: ObjState | null;
+            groupId?: string | null;
+            groupName?: string | null;
             guaranteeAccounts?: Array<{
               loanId?: string | null;
               loanAccountName?: string | null;
@@ -51628,7 +51641,7 @@ export const useDeleteAgentMemberMutation = <TError = unknown, TContext = unknow
     options
   );
 export const CreateCollectionDocument = `
-    mutation createCollection($agentID: ID!, $name: String!, $accountId: [ID!]) {
+    mutation createCollection($agentID: ID!, $name: String!, $accountId: [ID!]!) {
   collection {
     createCollection(agentID: $agentID, name: $name, accountId: $accountId) {
       error {
@@ -51652,7 +51665,7 @@ export const useCreateCollectionMutation = <TError = unknown, TContext = unknown
     options
   );
 export const UpdateCollectionDocument = `
-    mutation updateCollection($collectionID: ID!, $collectionName: String, $accountId: [ID!]) {
+    mutation updateCollection($collectionID: ID!, $collectionName: String, $accountId: [ID!]!) {
   collection {
     updateCollection(
       collectionID: $collectionID
@@ -54978,6 +54991,7 @@ export const SetGroupBulkDepositDocument = `
           createdAt
           totalAmount
           accounts {
+            accountName
             memberName
             amount
           }
@@ -70436,6 +70450,8 @@ export const GetMemberKymDetailsAccountsDocument = `
               loanId
               loanAccountName
             }
+            groupId
+            groupName
           }
           payments {
             date
@@ -70459,6 +70475,8 @@ export const GetMemberKymDetailsAccountsDocument = `
               loanId
               loanAccountName
             }
+            groupId
+            groupName
           }
         }
       }
@@ -70497,6 +70515,8 @@ export const GetMemberKymDetailsLoanDocument = `
             interestEarned
             interestBooked
             remainingPrincipal
+            groupId
+            groupName
           }
           payments {
             date
@@ -70524,6 +70544,8 @@ export const GetMemberKymDetailsLoanDocument = `
               loanId
               loanAccountName
             }
+            groupId
+            groupName
           }
         }
       }

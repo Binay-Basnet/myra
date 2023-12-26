@@ -31,37 +31,26 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'IBT receive transaction type to be set as "IBT transfer" as well (to be handled in transaction narration).',
-      'Loan Interest accrued no of days to be available somewhere (Days since last interest payment) in loan balance report.',
-      'Interest tax report - total column added in the interest section.',
-      'Recurring/regular saving installments report.',
-      'Sms utility usage report',
-      'Saving and loan interest report.',
-      'NEA : utility payment implementation.',
-      'Force logout after day close.',
-      'Alternative Channel allow/disallow change in account update.',
-      'Add all kind of interest in the saving and loan product list. ( organization rate , account premium, product premium, effective interest rate).',
-      'Option to decline IBT transaction.',
-      'Sms variables added - branch name, memberID, loan repayment variables(Principal+Interest+Fine, rebate).',
-      'Sorting as ascending/descending ( loan repayment, account transfer, deposit, withdraw, share register).',
-      'Active/ inactive service  in alternative channel.',
-      'sorting added - ( loan sections, saving products).',
-      'ledger balance transfer reprint added.',
+      'Microfinance section has been added with group, center features.',
+      'Market representative flow has been revamped in ERP section.',
+      'JV summary report added in other section of report.',
+      'Sorting option in date column of all dashboards consisting of date [all transaction].',
+      'NEA and Internet Payment added in Utility Payments',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Edit/Update KYM page header text change.',
-      'Check interest in loan account statement report and loan overview page ( effective interest rate ).',
-      'DOB AD/BS set in the apply for member request coop (e-banking).',
-      'DOB picker during New Myra account on e-banking portal.',
-      'Ledger report (others) - adjusted and settlement section were added in the report.',
-      'Role edit and assign issue.',
-      'Rebate in loan repayment = x% of interest accrued.',
-      'E-banking: AD/BS date picker in transaction history.',
-      'Loan repayment: remaining Principal and interest (if exists) in separate section in success card.',
-      'Account number added in the account list of a member in MR app.',
+      'New version available popup in iOS mobile banking (redirection issue in update).',
+      'Phone no. to be required in alt channel activation form.',
+      'In Saving Balance report/Loan Balance Report/Loan Aging Report effective interest rate added in the list.',
+      'Ebanking Coop pin field- To change placeholder text to "Enter Pin”.',
+      'Rename certificate generation option in member page "Get Certificate" to "Get Share Certificate”.',
+      'Mobile app: Issue in Date of birth validation during new myra ebanking registration.',
+      'Zero-Share member branch transfer.',
+      'Error creating head office in neosys portal.',
+      'Dosari loan report issue fixed.',
+      'Membership date in member register report.',
     ],
   },
 };
@@ -100,8 +89,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.101</Text>
-          <Text fontSize="s3">December 8, 2023</Text>
+          <Text fontSize="r2">Version 1.0.103</Text>
+          <Text fontSize="s3">December 26, 2023</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>

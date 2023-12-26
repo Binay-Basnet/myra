@@ -166,6 +166,8 @@ query getMemberKYMDetailsAccounts($id: ID!) {
               loanId
               loanAccountName
             }
+            groupId
+            groupName
           }
           payments {
             date
@@ -189,6 +191,8 @@ query getMemberKYMDetailsAccounts($id: ID!) {
               loanId
               loanAccountName
             }
+            groupId
+            groupName
           }
         }
       }
@@ -212,6 +216,8 @@ query getMemberKYMDetailsLoan($id: ID!) {
             interestEarned
             interestBooked
             remainingPrincipal
+            groupId
+            groupName
           }
           payments {
             date
@@ -239,6 +245,8 @@ query getMemberKYMDetailsLoan($id: ID!) {
               loanId
               loanAccountName
             }
+            groupId
+            groupName
           }
         }
       }

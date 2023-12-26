@@ -88,6 +88,7 @@ export const LoanAccountList = ({ isClosedAccount }: LoanProps) => {
       interestRate: data?.interestRate,
       accountNumber: data?.accountNumber,
       subscriptionDate: localizedDate(data?.subscriptionDate),
+      groupName: data?.groupName,
     })) || [];
 
   const closedAccountData =
@@ -100,6 +101,7 @@ export const LoanAccountList = ({ isClosedAccount }: LoanProps) => {
       interestRate: data?.interestRate,
       accountNumber: data?.accountNumber,
       subscriptionDate: localizedDate(data?.closedDate),
+      groupName: data?.groupName,
     })) || [];
 
   return (

@@ -54,6 +54,7 @@ export const Accounts = () => {
         data?.productType !== NatureOfDepositProduct?.Current ? data?.interestRate : '-',
       productName: data?.productName,
       guaranteeAccounts: data?.guaranteeAccounts ?? [],
+      groupName: data?.groupName,
     })) || [];
 
   const closedAccountTitle = `Closed Accounts List (${

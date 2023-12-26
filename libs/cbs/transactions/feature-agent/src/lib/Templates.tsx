@@ -144,7 +144,7 @@ export const Templates = () => {
                     {coll?.memberCount}
                   </Text>
                 </Box>
-                <Box>
+                <Box display="flex" flexDirection="column" gap="s4">
                   <Text fontSize="s2" fontWeight={500} color="gray.600">
                     Accounts
                   </Text>

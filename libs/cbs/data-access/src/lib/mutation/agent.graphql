@@ -82,7 +82,7 @@ mutation deleteAgentMember($id: ID!, $memberId: ID!) {
   }
 }
 
-mutation createCollection($agentID: ID!, $name: String!, $accountId: [ID!]) {
+mutation createCollection($agentID: ID!, $name: String!, $accountId: [ID!]!) {
   collection {
     createCollection(agentID: $agentID, name: $name, accountId: $accountId) {
       error {
@@ -92,7 +92,7 @@ mutation createCollection($agentID: ID!, $name: String!, $accountId: [ID!]) {
   }
 }
 
-mutation updateCollection($collectionID: ID!, $collectionName: String, $accountId: [ID!]) {
+mutation updateCollection($collectionID: ID!, $collectionName: String, $accountId: [ID!]!) {
   collection {
     updateCollection(
       collectionID: $collectionID
