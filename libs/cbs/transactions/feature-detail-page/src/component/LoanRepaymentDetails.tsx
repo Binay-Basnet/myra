@@ -51,10 +51,6 @@ export const LoanRepaymentDetails = () => {
         subtitle={amountConverter(loanRepaymentDetailData?.discount ?? 0)}
       />
       <DetailCardContent
-        title="Discount Amount"
-        subtitle={amountConverter(loanRepaymentDetailData?.discount ?? 0)}
-      />
-      <DetailCardContent
         title="Rebate"
         subtitle={amountConverter(loanRepaymentDetailData?.rebate || 0)}
       />
