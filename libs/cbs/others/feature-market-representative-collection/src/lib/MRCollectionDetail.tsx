@@ -662,6 +662,10 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
 
   const { watch, getValues } = methods;
 
+  const user = useAppSelector((state) => state?.auth?.user);
+
+  const agentId = user?.id;
+
   const { data: assignedMembersListData, isFetching: isMemberListFetching } =
     useListAgentMemberQuery(
       {
@@ -676,7 +680,11 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
         },
         filter: {
           orConditions: [
-            { andConditions: [{ column: 'agentid', comparator: 'EqualTo', value: id as string }] },
+            {
+              andConditions: [
+                { column: 'agentid', comparator: 'EqualTo', value: agentId as string },
+              ],
+            },
           ],
         },
       },

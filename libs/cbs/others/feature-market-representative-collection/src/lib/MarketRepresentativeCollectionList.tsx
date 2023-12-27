@@ -15,14 +15,18 @@ export const MarketRepresentativeCollectionList = () => {
 
   const router = useRouter();
 
+  const sortParams = router.query['sort'];
+
   const { data, isFetching } = useListMrSubmissionListQuery({
-    pagination: {
-      ...getPaginationQuery(),
-      order: {
-        column: 'submissionDate',
-        arrange: Arrange.Desc,
-      },
-    },
+    pagination: sortParams
+      ? getPaginationQuery()
+      : {
+          ...getPaginationQuery(),
+          order: {
+            column: 'submissionDate',
+            arrange: Arrange.Desc,
+          },
+        },
     filter: {
       orConditions: [{ andConditions: [{ column: 'mrId', comparator: 'EqualTo', value: userId }] }],
     },
@@ -33,13 +37,14 @@ export const MarketRepresentativeCollectionList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'submissionDate',
         header: 'Date',
         accessorFn: (row) => row?.node?.submissionDate?.local,
         cell: (props) => localizedDate(props?.row?.original?.node?.submissionDate),
         // meta: {
         //   orderId: 'submissionDate',
         // },
-        // enableSorting: true,
+        enableSorting: true,
       },
       {
         header: 'MR Transaction ID',
