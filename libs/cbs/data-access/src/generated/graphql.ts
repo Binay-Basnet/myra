@@ -5440,10 +5440,10 @@ export type DepositAccountInstallmentResult = {
 };
 
 export type DepositBankVoucher = {
-  amount: Scalars['String'];
-  bankId: Scalars['String'];
-  depositedAt: Scalars['Localized'];
-  depositedBy: Scalars['String'];
+  amount?: InputMaybe<Scalars['String']>;
+  bankId?: InputMaybe<Scalars['String']>;
+  depositedAt?: InputMaybe<Scalars['Localized']>;
+  depositedBy?: InputMaybe<Scalars['String']>;
   voucherId?: InputMaybe<Scalars['String']>;
 };
 
@@ -20166,6 +20166,7 @@ export const Resource = {
   ListAgentTodayTask: 'LIST_AGENT_TODAY_TASK',
   ListAssignMember: 'LIST_ASSIGN_MEMBER',
   ListCollection: 'LIST_COLLECTION',
+  MicrofinanceMfMf: 'MICROFINANCE_MF_MF',
   ReportsAccountingExternalLoan: 'REPORTS_ACCOUNTING_EXTERNAL_LOAN',
   ReportsAccountingExternalLoanStatement: 'REPORTS_ACCOUNTING_EXTERNAL_LOAN_STATEMENT',
   ReportsAccountingFdInvestment: 'REPORTS_ACCOUNTING_FD_INVESTMENT',

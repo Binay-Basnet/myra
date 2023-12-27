@@ -565,36 +565,36 @@ export const CBS: NavType = {
         {
           label: 'Add MF Center',
           route: ROUTES.CBS_MICRO_FINANCE_CENTER_ADD,
-          aclKey: 'CBS_SHARE_SHARE_ISSUE',
+          aclKey: 'MICROFINANCE_MF_MF',
         },
         {
           label: 'Add MF Group',
           route: ROUTES.CBS_MICRO_FINANCE_GROUP_ADD,
-          aclKey: 'CBS_SHARE_SHARE_ISSUE',
+          aclKey: 'MICROFINANCE_MF_MF',
         },
         {
           label: 'Add MF Group Meetings',
           route: ROUTES.CBS_MICRO_FINANCE_GROUP_MEETINGS_ADD,
-          aclKey: 'CBS_SHARE_SHARE_ISSUE',
+          aclKey: 'MICROFINANCE_MF_MF',
         },
       ],
       pages: [
         {
           label: 'MF Center',
           route: ROUTES?.CBS_MICRO_FINANCE_CENTER_LIST,
-          aclKey: 'CBS_SHARE_SHARE_ISSUE',
+          aclKey: 'MICROFINANCE_MF_MF',
           addRoute: ROUTES.CBS_MICRO_FINANCE_CENTER_ADD,
         },
         {
           label: 'MF Group',
           route: ROUTES?.CBS_MICRO_FINANCE_GROUP_LIST,
-          aclKey: 'CBS_SHARE_SHARE_ISSUE',
+          aclKey: 'MICROFINANCE_MF_MF',
           addRoute: ROUTES.CBS_MICRO_FINANCE_GROUP_ADD,
         },
         {
           label: 'MF Group Meetings',
           route: ROUTES?.CBS_MICRO_FINANCE_GROUP_MEETINGS_LIST,
-          aclKey: 'CBS_SHARE_SHARE_ISSUE',
+          aclKey: 'MICROFINANCE_MF_MF',
           addRoute: ROUTES.CBS_MICRO_FINANCE_GROUP_MEETINGS_ADD,
         },
       ],

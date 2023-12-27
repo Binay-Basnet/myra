@@ -172,6 +172,13 @@ query getMemberRegistrationReport($data: MemberRegistrationReportData) {
             activeDate
           }
         }
+        # error {
+        #   ...MutationError
+        # }
+        # success {
+        #   message
+        #   code
+        # }
       }
     }
   }
