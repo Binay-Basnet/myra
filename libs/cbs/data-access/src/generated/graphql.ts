@@ -1620,7 +1620,7 @@ export type AlternativeChannelActivation = {
   id?: Maybe<Scalars['String']>;
   lastActive?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['Localized']>;
+  name?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
   serviceStatus?: Maybe<AlternativeChannelStatus>;
   serviceType?: Maybe<AlternativeChannelServiceType>;
@@ -5440,10 +5440,10 @@ export type DepositAccountInstallmentResult = {
 };
 
 export type DepositBankVoucher = {
-  amount: Scalars['String'];
-  bankId: Scalars['String'];
-  depositedAt: Scalars['Localized'];
-  depositedBy: Scalars['String'];
+  amount?: InputMaybe<Scalars['String']>;
+  bankId?: InputMaybe<Scalars['String']>;
+  depositedAt?: InputMaybe<Scalars['Localized']>;
+  depositedBy?: InputMaybe<Scalars['String']>;
   voucherId?: InputMaybe<Scalars['String']>;
 };
 
@@ -16802,10 +16802,10 @@ export type MfMeetingDocumentsInput = {
 
 export type MfMeetingInput = {
   agenda?: InputMaybe<Scalars['String']>;
-  centerId: Scalars['ID'];
+  centerId?: InputMaybe<Scalars['ID']>;
   date?: InputMaybe<Scalars['Localized']>;
   endTime?: InputMaybe<Scalars['Time']>;
-  groupId: Scalars['ID'];
+  groupId?: InputMaybe<Scalars['ID']>;
   memberIds?: InputMaybe<Array<InputMaybe<MembersInvited>>>;
   notes?: InputMaybe<Scalars['String']>;
   startTime?: InputMaybe<Scalars['Time']>;
@@ -16840,7 +16840,7 @@ export type MfMeetingOverview = {
 };
 
 export type MfMeetingResult = {
-  error?: Maybe<QueryError>;
+  error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -16856,6 +16856,13 @@ export const MfObjectState = {
 } as const;
 
 export type MfObjectState = typeof MfObjectState[keyof typeof MfObjectState];
+export type MfTellerDayBookReportFilter = {
+  branchId: Array<InputMaybe<Scalars['String']>>;
+  groupId: Array<Scalars['String']>;
+  period?: InputMaybe<LocalizedDateFilter>;
+  user?: InputMaybe<Scalars['ID']>;
+};
+
 export type MpGroupMeetings = {
   pastMeetingCount?: Maybe<Scalars['Int']>;
   pastMeetings?: Maybe<Array<Maybe<Meetings>>>;
@@ -18251,6 +18258,14 @@ export type MicroFinanceTransactionMutation = {
 
 export type MicroFinanceTransactionMutationBulkDepositArgs = {
   data: MfBulkDepositInput;
+};
+
+export type MicrofinanceReport = {
+  mFTellerDayBookReport: DayBookReportResult;
+};
+
+export type MicrofinanceReportMfTellerDayBookReportArgs = {
+  data: MfTellerDayBookReportFilter;
 };
 
 export type MinMaxFilter = {
@@ -20166,6 +20181,7 @@ export const Resource = {
   ListAgentTodayTask: 'LIST_AGENT_TODAY_TASK',
   ListAssignMember: 'LIST_ASSIGN_MEMBER',
   ListCollection: 'LIST_COLLECTION',
+  MicrofinanceMfMf: 'MICROFINANCE_MF_MF',
   ReportsAccountingExternalLoan: 'REPORTS_ACCOUNTING_EXTERNAL_LOAN',
   ReportsAccountingExternalLoanStatement: 'REPORTS_ACCOUNTING_EXTERNAL_LOAN_STATEMENT',
   ReportsAccountingFdInvestment: 'REPORTS_ACCOUNTING_FD_INVESTMENT',
@@ -20466,6 +20482,7 @@ export type ReportQuery = {
   listReports: ReportListConnection;
   loanReport: LoanReport;
   memberReport: MemberReport;
+  microfinanceReport: MicrofinanceReport;
   mobileBankingReport: MobileBankingReport;
   otherReport: OtherReport;
   pearlsReport?: Maybe<PearlsReportResult>;
@@ -28496,6 +28513,7 @@ export type UpsertMeetingMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28516,6 +28534,7 @@ export type AddAttendanceMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28537,6 +28556,7 @@ export type UpsertDecisionMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28558,6 +28578,7 @@ export type AddMfDocumentsMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28579,6 +28600,7 @@ export type ChangeMeetingStatusMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -44738,7 +44760,7 @@ export type GetAlternativeChannelListQuery = {
         cursor: string;
         data?: {
           id?: string | null;
-          name?: Record<'local' | 'en' | 'np', string> | null;
+          name?: string | null;
           memberId?: string | null;
           coopConnection?: boolean | null;
           lastActive?: string | null;
@@ -44765,7 +44787,7 @@ export type GetUpdatedAlternativeChannelListQuery = {
         cursor: string;
         data?: {
           id?: string | null;
-          name?: Record<'local' | 'en' | 'np', string> | null;
+          name?: string | null;
           memberId?: string | null;
           coopConnection?: boolean | null;
           lastActive?: string | null;
