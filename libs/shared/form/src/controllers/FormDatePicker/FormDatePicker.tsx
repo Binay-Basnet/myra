@@ -1,4 +1,4 @@
-import { Controller, Path, useFormContext } from 'react-hook-form';
+import { Controller, get, Path, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
 import { useRouter } from 'next/router';
 
@@ -40,6 +40,8 @@ export const FormDatePicker = <T,>({
     control,
   } = methods;
 
+  const errorText = name ? (get(errors, name)?.message as string) : undefined;
+
   return (
     <Controller
       name={name}
@@ -72,9 +74,9 @@ export const FormDatePicker = <T,>({
 
           {
             /* eslint-disable no-nested-ternary */
-            errors[name] ? (
+            errorText ? (
               <Text variant="formHelper" color="danger.500">
-                {errors[name]?.message as string}
+                {errorText}
               </Text>
             ) : helperText ? (
               <Text variant="formHelper" color="gray.700">
