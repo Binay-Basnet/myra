@@ -106,9 +106,9 @@ const cbsTabs: TAB[] = [
     icon: TbMoneybag,
     link: ROUTES.CBS_MICRO_FINANCE_CENTER_LIST,
     match: ['microfinance'],
-    aclKey: 'CBS_WITHDRAW_SLIPS',
+    aclKey: 'MICROFINANCE_MF_MF',
     navMenu: 'MICROFINANCE',
-    prod: false,
+    // prod: false,
   },
   {
     title: 'reports',
