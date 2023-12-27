@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { TodayListStatus, useListMrSubmissionListQuery } from '@coop/cbs/data-access';
+import { Arrange, TodayListStatus, useListMrSubmissionListQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
@@ -18,8 +18,18 @@ export const AgentTransactionList = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
+  const sortParams = router.query['sort'];
+
   const { data, isFetching } = useListMrSubmissionListQuery({
-    pagination: getPaginationQuery(),
+    pagination: sortParams
+      ? getPaginationQuery()
+      : {
+          ...getPaginationQuery(),
+          order: {
+            column: 'submissionDate',
+            arrange: Arrange.Desc,
+          },
+        },
     filter: {
       ...getFilterQuery(),
       orConditions: [
@@ -41,7 +51,7 @@ export const AgentTransactionList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        id: 'date',
+        id: 'submissionDate',
         header: 'Date',
         accessorFn: (row) => row?.node?.submissionDate?.local,
         cell: (props) => localizedDate(props?.row?.original?.node?.submissionDate),
