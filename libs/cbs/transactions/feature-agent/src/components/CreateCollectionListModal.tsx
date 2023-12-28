@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
+import { useEffect, useMemo, useState } from 'react';
+import { FormProvider, useFieldArray, useForm, useFormContext } from 'react-hook-form';
 import { IoAdd, IoCloseCircleOutline } from 'react-icons/io5';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
@@ -359,12 +359,22 @@ const AccountSelectCell = ({ memberId, index }: { memberId: string; index: numbe
 
   const options = useMemo(
     () =>
-      accountListData?.account?.list?.edges?.map((acc) => ({
-        label: `${acc?.node?.accountName} [${acc?.node?.id}]`,
-        value: acc?.node?.id as string,
-      })),
-    [accountListData]
+      memberId
+        ? accountListData?.account?.list?.edges?.map((acc) => ({
+            label: `${acc?.node?.accountName} [${acc?.node?.id}]`,
+            value: acc?.node?.id as string,
+          }))
+        : [],
+    [accountListData, memberId]
   );
+
+  const { setValue } = useFormContext();
+
+  useEffect(() => {
+    if (!memberId) {
+      setValue(`${'collection'}.${index}.accountId`, '');
+    }
+  }, [memberId]);
 
   return (
     <FormSelect

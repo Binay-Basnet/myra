@@ -1620,7 +1620,7 @@ export type AlternativeChannelActivation = {
   id?: Maybe<Scalars['String']>;
   lastActive?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['Localized']>;
+  name?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
   serviceStatus?: Maybe<AlternativeChannelStatus>;
   serviceType?: Maybe<AlternativeChannelServiceType>;
@@ -16802,10 +16802,10 @@ export type MfMeetingDocumentsInput = {
 
 export type MfMeetingInput = {
   agenda?: InputMaybe<Scalars['String']>;
-  centerId: Scalars['ID'];
+  centerId?: InputMaybe<Scalars['ID']>;
   date?: InputMaybe<Scalars['Localized']>;
   endTime?: InputMaybe<Scalars['Time']>;
-  groupId: Scalars['ID'];
+  groupId?: InputMaybe<Scalars['ID']>;
   memberIds?: InputMaybe<Array<InputMaybe<MembersInvited>>>;
   notes?: InputMaybe<Scalars['String']>;
   startTime?: InputMaybe<Scalars['Time']>;
@@ -16840,7 +16840,7 @@ export type MfMeetingOverview = {
 };
 
 export type MfMeetingResult = {
-  error?: Maybe<QueryError>;
+  error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -28497,6 +28497,7 @@ export type UpsertMeetingMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28517,6 +28518,7 @@ export type AddAttendanceMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28538,6 +28540,7 @@ export type UpsertDecisionMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28559,6 +28562,7 @@ export type AddMfDocumentsMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28580,6 +28584,7 @@ export type ChangeMeetingStatusMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -44739,7 +44744,7 @@ export type GetAlternativeChannelListQuery = {
         cursor: string;
         data?: {
           id?: string | null;
-          name?: Record<'local' | 'en' | 'np', string> | null;
+          name?: string | null;
           memberId?: string | null;
           coopConnection?: boolean | null;
           lastActive?: string | null;
@@ -44766,7 +44771,7 @@ export type GetUpdatedAlternativeChannelListQuery = {
         cursor: string;
         data?: {
           id?: string | null;
-          name?: Record<'local' | 'en' | 'np', string> | null;
+          name?: string | null;
           memberId?: string | null;
           coopConnection?: boolean | null;
           lastActive?: string | null;
