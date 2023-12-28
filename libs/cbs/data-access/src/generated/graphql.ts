@@ -16856,13 +16856,6 @@ export const MfObjectState = {
 } as const;
 
 export type MfObjectState = typeof MfObjectState[keyof typeof MfObjectState];
-export type MfTellerDayBookReportFilter = {
-  branchId: Array<InputMaybe<Scalars['String']>>;
-  groupId: Array<Scalars['String']>;
-  period?: InputMaybe<LocalizedDateFilter>;
-  user?: InputMaybe<Scalars['ID']>;
-};
-
 export type MpGroupMeetings = {
   pastMeetingCount?: Maybe<Scalars['Int']>;
   pastMeetings?: Maybe<Array<Maybe<Meetings>>>;
@@ -18258,14 +18251,6 @@ export type MicroFinanceTransactionMutation = {
 
 export type MicroFinanceTransactionMutationBulkDepositArgs = {
   data: MfBulkDepositInput;
-};
-
-export type MicrofinanceReport = {
-  mFTellerDayBookReport: DayBookReportResult;
-};
-
-export type MicrofinanceReportMfTellerDayBookReportArgs = {
-  data: MfTellerDayBookReportFilter;
 };
 
 export type MinMaxFilter = {
@@ -20482,7 +20467,6 @@ export type ReportQuery = {
   listReports: ReportListConnection;
   loanReport: LoanReport;
   memberReport: MemberReport;
-  microfinanceReport: MicrofinanceReport;
   mobileBankingReport: MobileBankingReport;
   otherReport: OtherReport;
   pearlsReport?: Maybe<PearlsReportResult>;

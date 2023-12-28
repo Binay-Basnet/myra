@@ -1,6 +1,9 @@
 import { format } from 'date-fns';
 
 export const advancedTimeConvertor = (inputTime?: string) => {
+  if (!inputTime) {
+    return null;
+  }
   const currentDate = new Date();
   if (inputTime) {
     const inputTimeParts = inputTime.split(':');

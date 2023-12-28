@@ -90,6 +90,15 @@ export const GroupMeetingsAdd = () => {
           })),
         } as MfMeetingInput,
       }),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key as keyof MfMeetingInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
     });
   };
 
