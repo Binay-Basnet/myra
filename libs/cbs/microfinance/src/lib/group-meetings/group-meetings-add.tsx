@@ -32,11 +32,25 @@ export const GroupMeetingsAdd = () => {
   const { mutateAsync } = useUpsertMeetingMutation();
 
   const { data: centerListData } = useListMfCenterQuery({
-    pagination: getPaginationQuery(),
+    pagination: {
+      ...getPaginationQuery(),
+      first: -1,
+      order: {
+        arrange: 'ASC',
+        column: 'ID',
+      },
+    },
   });
 
   const { data: groupListData } = useListGroupQuery({
-    pagination: getPaginationQuery(),
+    pagination: {
+      ...getPaginationQuery(),
+      first: -1,
+      order: {
+        arrange: 'ASC',
+        column: 'ID',
+      },
+    },
     filter: {
       orConditions: [
         {
