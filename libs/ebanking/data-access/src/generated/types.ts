@@ -120,6 +120,14 @@ export type AdministrativeAddress = {
   wardNo: Scalars['Int'];
 };
 
+export const AlternativeChannelServiceType = {
+  Ebanking: 'EBANKING',
+  MobileBanking: 'MOBILE_BANKING',
+  SmsBanking: 'SMS_BANKING',
+} as const;
+
+export type AlternativeChannelServiceType =
+  typeof AlternativeChannelServiceType[keyof typeof AlternativeChannelServiceType];
 export type AmountLimitFormState = {
   avgAmount?: Maybe<Scalars['Amount']>;
   maxAmount?: Maybe<Scalars['Amount']>;
@@ -1037,7 +1045,8 @@ export type EbankingAccountExistsResult = {
 };
 
 export type EbankingAccountFilter = {
-  allowedAccount?: InputMaybe<Scalars['Boolean']>;
+  allowedAccount: Scalars['Boolean'];
+  servieType: AlternativeChannelServiceType;
 };
 
 export type EbankingAccountRecord = {
