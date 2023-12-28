@@ -5440,10 +5440,10 @@ export type DepositAccountInstallmentResult = {
 };
 
 export type DepositBankVoucher = {
-  amount?: InputMaybe<Scalars['String']>;
-  bankId?: InputMaybe<Scalars['String']>;
-  depositedAt?: InputMaybe<Scalars['Localized']>;
-  depositedBy?: InputMaybe<Scalars['String']>;
+  amount: Scalars['String'];
+  bankId: Scalars['String'];
+  depositedAt: Scalars['Localized'];
+  depositedBy: Scalars['String'];
   voucherId?: InputMaybe<Scalars['String']>;
 };
 
@@ -16802,10 +16802,10 @@ export type MfMeetingDocumentsInput = {
 
 export type MfMeetingInput = {
   agenda?: InputMaybe<Scalars['String']>;
-  centerId?: InputMaybe<Scalars['ID']>;
+  centerId: Scalars['ID'];
   date?: InputMaybe<Scalars['Localized']>;
   endTime?: InputMaybe<Scalars['Time']>;
-  groupId?: InputMaybe<Scalars['ID']>;
+  groupId: Scalars['ID'];
   memberIds?: InputMaybe<Array<InputMaybe<MembersInvited>>>;
   notes?: InputMaybe<Scalars['String']>;
   startTime?: InputMaybe<Scalars['Time']>;
@@ -16840,7 +16840,7 @@ export type MfMeetingOverview = {
 };
 
 export type MfMeetingResult = {
-  error?: Maybe<MutationError>;
+  error?: Maybe<QueryError>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -28497,7 +28497,6 @@ export type UpsertMeetingMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
-          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28518,7 +28517,6 @@ export type AddAttendanceMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
-          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28540,7 +28538,6 @@ export type UpsertDecisionMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
-          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28562,7 +28559,6 @@ export type AddMfDocumentsMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
-          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28584,7 +28580,6 @@ export type ChangeMeetingStatusMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
-          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
