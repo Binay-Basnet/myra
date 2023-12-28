@@ -13,6 +13,7 @@ export enum ReportGroup {
   EXCEPTION = 'exceptions',
   INVENTORY = 'inventory',
   ACCOUNTING = 'accounting',
+  MICROFINANCE = 'micro-finance',
 }
 
 export enum Report {
@@ -133,6 +134,8 @@ export enum Report {
   ACCOUNTING_EXTERNAL_LOAN_REPORT = 'External Loan Report',
   ACCOUNTING_FD_INVESTMENT_STATEMENT_REPORT = 'FD Investment Statement Report',
   ACCOUNTING_FD_INVESTMENT = 'FD Investment Report',
+
+  MICROFINANCE_TELLER_DAY_BOOK_REPORT = 'Micro Finance Teller Day Book Report',
 }
 
 type ReportType = Record<
@@ -845,6 +848,15 @@ export const REPORTS: ReportType = {
       link: 'fd-investment',
       acl: 'REPORTS_ACCOUNTING_FD_INVESTMENT',
       component: <Reports.FDInvestmentReport />,
+    },
+  ],
+  [ReportGroup.MICROFINANCE]: [
+    {
+      id: '1',
+      report: Report.MICROFINANCE_TELLER_DAY_BOOK_REPORT,
+      link: 'teller-day-book',
+      acl: 'REPORTS_MF_TXN_TELLER_DAYBOOK',
+      component: <Reports.MFTellerDayBookReport />,
     },
   ],
 };

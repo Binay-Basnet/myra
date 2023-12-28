@@ -16650,9 +16650,9 @@ export type MfCenterEntry = {
 
 export type MfCenterInput = {
   address?: InputMaybe<KymAddressInput>;
-  centerCode: Scalars['String'];
-  centerName: Scalars['String'];
-  coordinatorId: Scalars['String'];
+  centerCode?: InputMaybe<Scalars['String']>;
+  centerName?: InputMaybe<Scalars['String']>;
+  coordinatorId?: InputMaybe<Scalars['String']>;
   coordinatorServiceCenter?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   documents?: InputMaybe<Array<DocumentInsertInput>>;
@@ -16856,6 +16856,13 @@ export const MfObjectState = {
 } as const;
 
 export type MfObjectState = typeof MfObjectState[keyof typeof MfObjectState];
+export type MfTellerDayBookReportFilter = {
+  branchId: Array<InputMaybe<Scalars['String']>>;
+  groupId: Array<Scalars['String']>;
+  period?: InputMaybe<LocalizedDateFilter>;
+  user?: InputMaybe<Scalars['ID']>;
+};
+
 export type MpGroupMeetings = {
   pastMeetingCount?: Maybe<Scalars['Int']>;
   pastMeetings?: Maybe<Array<Maybe<Meetings>>>;
@@ -18251,6 +18258,14 @@ export type MicroFinanceTransactionMutation = {
 
 export type MicroFinanceTransactionMutationBulkDepositArgs = {
   data: MfBulkDepositInput;
+};
+
+export type MicrofinanceReport = {
+  mFTellerDayBookReport: DayBookReportResult;
+};
+
+export type MicrofinanceReportMfTellerDayBookReportArgs = {
+  data: MfTellerDayBookReportFilter;
 };
 
 export type MinMaxFilter = {
@@ -20082,6 +20097,7 @@ export const Resource = {
   CbsReportsInventory: 'CBS_REPORTS_INVENTORY',
   CbsReportsLoan: 'CBS_REPORTS_LOAN',
   CbsReportsMember: 'CBS_REPORTS_MEMBER',
+  CbsReportsMicrofinance: 'CBS_REPORTS_MICROFINANCE',
   CbsReportsMobileBanking: 'CBS_REPORTS_MOBILE_BANKING',
   CbsReportsOther: 'CBS_REPORTS_OTHER',
   CbsReportsSavings: 'CBS_REPORTS_SAVINGS',
@@ -20203,6 +20219,7 @@ export const Resource = {
   ReportsMemberMemberTransfer: 'REPORTS_MEMBER_MEMBER_TRANSFER',
   ReportsMemberMemberWiseBalance: 'REPORTS_MEMBER_MEMBER_WISE_BALANCE',
   ReportsMemberMinorList: 'REPORTS_MEMBER_MINOR_LIST',
+  ReportsMfTxnTellerDaybook: 'REPORTS_MF_TXN_TELLER_DAYBOOK',
   ReportsOthersAdjustedLedger: 'REPORTS_OTHERS_ADJUSTED_LEDGER',
   ReportsOthersCommitteeRegisteredDetails: 'REPORTS_OTHERS_COMMITTEE_REGISTERED_DETAILS',
   ReportsOthersCopomisFinancial: 'REPORTS_OTHERS_COPOMIS_FINANCIAL',
@@ -20467,6 +20484,7 @@ export type ReportQuery = {
   listReports: ReportListConnection;
   loanReport: LoanReport;
   memberReport: MemberReport;
+  microfinanceReport: MicrofinanceReport;
   mobileBankingReport: MobileBankingReport;
   otherReport: OtherReport;
   pearlsReport?: Maybe<PearlsReportResult>;
@@ -43038,6 +43056,50 @@ export type GetMemberTransferReportQuery = {
           }> | null;
         } | null> | null;
       } | null;
+    };
+  };
+};
+
+export type GetMfTellerDayBookReportQueryVariables = Exact<{
+  data: MfTellerDayBookReportFilter;
+}>;
+
+export type GetMfTellerDayBookReportQuery = {
+  report: {
+    microfinanceReport: {
+      mFTellerDayBookReport: {
+        data?: {
+          openingBalance?: string | null;
+          tellerBalance?: string | null;
+          vaultBalance?: string | null;
+          totalReceipts?: string | null;
+          totalAmount?: string | null;
+          totalPayment?: string | null;
+          closingAmount?: string | null;
+          remainingBalance?: string | null;
+          cashToVault?: string | null;
+          receipts?: Array<{
+            accountHead?: string | null;
+            amount?: string | null;
+            entries?: Array<{
+              particular?: string | null;
+              ledger?: string | null;
+              voucherNo?: string | null;
+              amount?: string | null;
+            } | null> | null;
+          } | null> | null;
+          payments?: Array<{
+            accountHead?: string | null;
+            amount?: string | null;
+            entries?: Array<{
+              particular?: string | null;
+              ledger?: string | null;
+              voucherNo?: string | null;
+              amount?: string | null;
+            } | null> | null;
+          } | null> | null;
+        } | null;
+      };
     };
   };
 };
@@ -74294,6 +74356,61 @@ export const useGetMemberTransferReportQuery = <
     ['getMemberTransferReport', variables],
     useAxios<GetMemberTransferReportQuery, GetMemberTransferReportQueryVariables>(
       GetMemberTransferReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMfTellerDayBookReportDocument = `
+    query getMFTellerDayBookReport($data: MFTellerDayBookReportFilter!) {
+  report {
+    microfinanceReport {
+      mFTellerDayBookReport(data: $data) {
+        data {
+          openingBalance
+          tellerBalance
+          vaultBalance
+          receipts {
+            accountHead
+            amount
+            entries {
+              particular
+              ledger
+              voucherNo
+              amount
+            }
+          }
+          totalReceipts
+          totalAmount
+          payments {
+            accountHead
+            amount
+            entries {
+              particular
+              ledger
+              voucherNo
+              amount
+            }
+          }
+          totalPayment
+          closingAmount
+          remainingBalance
+          cashToVault
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMfTellerDayBookReportQuery = <
+  TData = GetMfTellerDayBookReportQuery,
+  TError = unknown
+>(
+  variables: GetMfTellerDayBookReportQueryVariables,
+  options?: UseQueryOptions<GetMfTellerDayBookReportQuery, TError, TData>
+) =>
+  useQuery<GetMfTellerDayBookReportQuery, TError, TData>(
+    ['getMFTellerDayBookReport', variables],
+    useAxios<GetMfTellerDayBookReportQuery, GetMfTellerDayBookReportQueryVariables>(
+      GetMfTellerDayBookReportDocument
     ).bind(null, variables),
     options
   );
