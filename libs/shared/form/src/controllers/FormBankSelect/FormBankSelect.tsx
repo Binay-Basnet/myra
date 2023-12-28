@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Controller } from 'react-hook-form';
+import { Controller, get, useFormContext } from 'react-hook-form';
 import debounce from 'lodash/debounce';
 
 import { BankSelect, BankSelectProps } from '@myra-ui/forms';
@@ -74,6 +74,11 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
     [bankAccountListQueryData, isFetching]
   );
 
+  const methods = useFormContext();
+  const {
+    formState: { errors },
+  } = methods;
+
   return (
     <Controller
       render={({ field: { value, onChange } }) => (
@@ -82,6 +87,7 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
           label={label}
           value={bankOptions?.find((option) => option.value === value)}
           isLoading={isFetching}
+          errorText={name ? (get(errors, name)?.message as string) : undefined}
           onChange={(newValue: Option | Option[]) => {
             if (Array.isArray(newValue)) {
               onChange(newValue);

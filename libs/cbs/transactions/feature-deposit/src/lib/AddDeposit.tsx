@@ -715,6 +715,15 @@ export const AddDeposit = () => {
                 errorCardProps={{
                   title: 'New Deposit Failed',
                 }}
+                onError={(error) => {
+                  if (error.__typename === 'ValidationError') {
+                    Object.keys(error.validationErrorMsg).map((key) =>
+                      methods.setError(key as keyof DepositFormInput, {
+                        message: error.validationErrorMsg[key][0] as string,
+                      })
+                    );
+                  }
+                }}
               >
                 <Button width="160px">Add New Deposit</Button>
               </ResponseDialog>

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { asyncToast, Box, Grid, SettingsFooter, Text } from '@myra-ui';
 
@@ -18,6 +19,8 @@ export const AlternativeChannelGeneralSettings = () => {
   const methods = useForm();
 
   const { getValues, reset } = methods;
+
+  const queryClient = useQueryClient();
 
   const { data: utilityServicesData } = useListUtilityServiceTypeQuery({
     filter: {},
@@ -175,6 +178,9 @@ export const AlternativeChannelGeneralSettings = () => {
                 activate: values?.[utility?.name as string],
               })) as ActivationInput[],
             }),
+            onSuccess: () => {
+              queryClient.invalidateQueries(['listUtilityServiceType']);
+            },
           });
         }}
         handleDiscard={() => {

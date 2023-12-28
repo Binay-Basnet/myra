@@ -23,7 +23,7 @@ export const AlternativeChannelList = () => {
     () => [
       {
         header: 'Name',
-        accessorFn: (row) => row?.data?.name?.local,
+        accessorFn: (row) => row?.data?.name,
       },
       {
         header: 'Alternative Channel Category',
