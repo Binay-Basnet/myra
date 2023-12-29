@@ -167,7 +167,7 @@ export const TrialSheetReport = () => {
           </GridItem>
 
           <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Date" />
+            <FormDatePicker name="period.from" label="Date" isTransactionBaseDate />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

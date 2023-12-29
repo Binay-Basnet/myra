@@ -115,7 +115,7 @@ export const ServiceCenterCOAWiseBalanceReport = () => {
             />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormDatePicker name="date" label="Date" />
+            <FormDatePicker name="date" label="Date" isTransactionBaseDate />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
