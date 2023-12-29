@@ -226,21 +226,8 @@ export const MRCollectionDetail = () => {
     });
   };
 
-  const { totalAmount, totalFine } = useMemo(
-    () => ({
-      totalAmount: accounts?.reduce((sum, acc) => sum + Number(acc?.amountCollected || 0), 0),
-      totalFine: accounts?.reduce((sum, acc) => sum + Number(acc?.fineCollected || 0), 0),
-      totalAmountToBeCollected: accounts?.reduce(
-        (sum, acc) => sum + Number(acc?.amountToBeCollected || 0),
-        0
-      ),
-      totalFineToBeCollected: accounts?.reduce(
-        (sum, acc) => sum + Number(acc?.fineToBeCollected || 0),
-        0
-      ),
-    }),
-    [accounts]
-  );
+  const totalAmount = accounts?.reduce((sum, acc) => sum + Number(acc?.amountCollected || 0), 0);
+  const totalFine = accounts?.reduce((sum, acc) => sum + Number(acc?.fineCollected || 0), 0);
 
   const handleSaveAndSubmit = () => {
     const values = getValues();
@@ -563,8 +550,8 @@ export const MRCollectionDetail = () => {
                     Accounts Collected
                   </Text>
                   <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    {accounts?.filter((a) => a?.amountCollected || a?.fineToBeCollected)?.length ||
-                      0}{' '}
+                    {accounts?.filter((a) => Number(a?.amountCollected) || Number(a?.fineCollected))
+                      ?.length || 0}{' '}
                     / {accounts?.length}
                   </Text>
                 </Box>
