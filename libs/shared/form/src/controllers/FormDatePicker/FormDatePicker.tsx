@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Controller, get, Path, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
 import { useRouter } from 'next/router';
@@ -5,7 +6,7 @@ import { useRouter } from 'next/router';
 import { Box, InputProps, Text } from '@myra-ui';
 import { DatePicker } from '@myra-ui/date-picker';
 
-import { useAppSelector } from '@coop/cbs/data-access';
+import { useAppSelector, useGetEndOfDayDateDataQuery } from '@coop/cbs/data-access';
 
 interface IFormDatePickerProps<T> extends InputProps {
   name: Path<T> | string;
@@ -16,6 +17,7 @@ interface IFormDatePickerProps<T> extends InputProps {
   maxToday?: boolean;
   isRequired?: boolean;
   helperText?: string;
+  isTransactionBaseDate?: boolean;
 }
 
 export const FormDatePicker = <T,>({
@@ -26,7 +28,7 @@ export const FormDatePicker = <T,>({
   maxToday,
   isRequired,
   helperText,
-
+  isTransactionBaseDate,
   ...rest
 }: IFormDatePickerProps<T>) => {
   const router = useRouter();
@@ -41,6 +43,13 @@ export const FormDatePicker = <T,>({
   } = methods;
 
   const errorText = name ? (get(errors, name)?.message as string) : undefined;
+
+  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+
+  const transactionDate = useMemo(
+    () => endOfDayData?.transaction?.endOfDayDate?.value,
+    [endOfDayData]
+  );
 
   return (
     <Controller
@@ -70,6 +79,11 @@ export const FormDatePicker = <T,>({
             // value={value ? (preference?.date === 'AD' ? { ad: value } : { bs: value }) : undefined}
             maxDate={maxToday ? new Date() : maxDate}
             minDate={minDate}
+            baseDate={
+              isTransactionBaseDate && transactionDate?.en
+                ? new Date(transactionDate.en)
+                : new Date()
+            }
           />
 
           {
