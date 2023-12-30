@@ -76,6 +76,16 @@ query centerDetails($centerId: ID!) {
             }
           }
           allowedBranches
+          allowedBranchDetail {
+            id
+            branchCode
+            name
+          }
+          centerCoordinatorBranch {
+            id
+            branchCode
+            name
+          }
         }
         error {
           ...MutationError

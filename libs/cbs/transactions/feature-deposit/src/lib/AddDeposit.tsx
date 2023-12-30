@@ -81,6 +81,8 @@ export const AddDeposit = () => {
 
   const redirectAccountId = router.query['accountId'];
 
+  const redirectGroupId = router.query['groupId'];
+
   const queryClient = useQueryClient();
 
   const { t } = useTranslation();
@@ -363,15 +365,24 @@ export const AddDeposit = () => {
     }
   }, [memberId, redirectAccountId]);
 
+  useEffect(() => {
+    if (redirectGroupId) {
+      methods.setValue('memberOrGroup', 'group');
+      methods.setValue('groupId', String(redirectGroupId));
+    }
+  }, [redirectGroupId]);
+
   const memberOrGroup = watch('memberOrGroup');
 
   const groupId = watch('groupId');
 
   useEffect(() => {
-    if (memberOrGroup === 'member') {
-      methods.setValue('groupId', '');
-    } else {
-      methods.setValue('memberId', '');
+    if (!redirectAccountId) {
+      if (memberOrGroup === 'member') {
+        methods.setValue('groupId', '');
+      } else {
+        methods.setValue('memberId', '');
+      }
     }
   }, [memberOrGroup]);
 
@@ -392,13 +403,22 @@ export const AddDeposit = () => {
                   name="memberOrGroup"
                   options={[
                     { label: 'Member', value: 'member' },
-                    { label: 'Group', value: 'group' },
+                    {
+                      label: 'Group',
+                      value: 'group',
+                      isDisabled: redirectMemberId && !redirectAccountId,
+                    },
                   ]}
                 />
 
                 {memberOrGroup === 'group' && (
                   <>
-                    <FormMFGroupSelect name="groupId" label="Group" isRequired />
+                    <FormMFGroupSelect
+                      name="groupId"
+                      label="Group"
+                      isRequired
+                      isDisabled={!!redirectGroupId}
+                    />
 
                     <FormMemberSelect isRequired name="memberId" label="Member" groupId={groupId} />
                   </>
