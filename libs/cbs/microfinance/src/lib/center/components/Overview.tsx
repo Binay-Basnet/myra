@@ -11,7 +11,7 @@ import {
 export const Overview = (props: { data: CenterOverview }) => {
   const { data } = props;
 
-  const links = [{ title: 'New Group', link: ROUTES?.CBS_MICRO_FINANCE_GROUP_ADD }];
+  const links = [{ title: 'New MF Group', link: ROUTES?.CBS_MICRO_FINANCE_GROUP_ADD }];
 
   return (
     <>

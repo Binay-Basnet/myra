@@ -61,7 +61,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
             title={t['transDetailTotalDepositAmount']}
             subtitle={amountConverter(depositDetailData?.totalDepositedAmount ?? 0)}
           />
-          <DetailCardContent title="Group" subtitle={depositDetailData?.groupName} />
+          <DetailCardContent title="MF Group" subtitle={depositDetailData?.groupName} />
           <DetailCardContent title="Center" subtitle={depositDetailData?.centerName} />
           {depositDetailData?.status === ObjState?.Active && (
             <DetailCardContent title={t['transDetailStatus']} status />
@@ -111,7 +111,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
             title={t['transDetailTotalWithdrawAmount']}
             subtitle={amountConverter(withdrawDetailData?.totalWithdrawnAmount ?? 0)}
           />
-          <DetailCardContent title="Group" subtitle={withdrawDetailData?.groupName} />
+          <DetailCardContent title="MF Group" subtitle={withdrawDetailData?.groupName} />
           <DetailCardContent title="Center" subtitle={withdrawDetailData?.centerName} />
           {withdrawDetailData?.status === ObjState?.Active && (
             <DetailCardContent title={t['transDetailStatus']} status />

@@ -97,7 +97,7 @@ export const useLoanAccountDetailHooks = () => {
       value: amountConverter(generalInfo?.sanctionedAmount as string) ?? 'N/A',
     },
     {
-      label: 'Group',
+      label: 'MF Group',
       value: generalInfo?.groupName ?? 'N/A',
     },
     {

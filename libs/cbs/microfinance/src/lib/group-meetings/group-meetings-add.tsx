@@ -136,7 +136,7 @@ export const GroupMeetingsAdd = () => {
             </GridItem>
             <GridItem colSpan={2}>
               <FormSelect
-                label="Select Group"
+                label="Select MF Group"
                 name="groupId"
                 options={
                   groupListData?.microFinance?.group?.listGroup?.edges.map((item) => ({

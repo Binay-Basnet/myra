@@ -31,7 +31,7 @@ export const Overview = (props: { data: MfMeetingOverview; decision: MfDecisions
   const router = useRouter();
 
   const links = [
-    { title: 'Add Group Meetings', link: ROUTES?.CBS_MICRO_FINANCE_GROUP_MEETINGS_ADD },
+    { title: 'Add MF Group Meetings', link: ROUTES?.CBS_MICRO_FINANCE_GROUP_MEETINGS_ADD },
     {
       title: 'Add Attendance',
       link: `${ROUTES?.CBS_MICRO_FINANCE_GROUP_METTINGS_DETAILS}?id=${router?.query?.['id']}&tab=attendance`,
@@ -98,7 +98,7 @@ export const Overview = (props: { data: MfMeetingOverview; decision: MfDecisions
       <DetailsKeyValueCard
         title="General Information"
         keyValueList={[
-          { label: 'Group', value: data?.groupName },
+          { label: 'MF Group', value: data?.groupName },
           { label: 'Agenda', value: data?.agenda },
           { label: 'Date', value: data?.date?.local },
           { label: 'Start Time', value: readableTimeParser(data?.startTime) },

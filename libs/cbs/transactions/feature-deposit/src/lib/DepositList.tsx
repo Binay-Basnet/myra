@@ -129,7 +129,7 @@ export const DepositList = () => {
         },
       },
       {
-        header: 'Group',
+        header: 'MF Group',
         accessorFn: (row) => row?.node?.groupName,
       },
       {

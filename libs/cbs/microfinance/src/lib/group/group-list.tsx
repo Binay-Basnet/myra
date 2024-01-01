@@ -18,15 +18,15 @@ export const GroupList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Group Id',
+        header: 'MF Group Id',
         accessorFn: (row) => row?.node?.groupId,
       },
       {
-        header: 'Group Name',
+        header: 'MF Group Name',
         accessorFn: (row) => row?.node?.groupName,
       },
       {
-        header: 'Group Coordinator Name',
+        header: 'MF Group Coordinator Name',
         accessorFn: (row) => row?.node?.groupCoordinator?.name?.local,
       },
       {

@@ -554,13 +554,13 @@ export const AccountOpenNew = () => {
                     name="memberOrGroup"
                     options={[
                       { label: 'Member', value: 'member' },
-                      { label: 'Group', value: 'group' },
+                      { label: 'MF Group', value: 'group' },
                     ]}
                   />
 
                   {memberOrGroup === 'group' && (
                     <>
-                      <FormMFGroupSelect name="groupId" label="Group" isRequired />
+                      <FormMFGroupSelect name="groupId" label="MF Group" isRequired />
 
                       <FormMemberSelect
                         isRequired

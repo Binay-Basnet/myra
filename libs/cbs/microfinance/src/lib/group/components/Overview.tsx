@@ -39,8 +39,8 @@ export const Overview = (props: { data: MfGroupOverview }) => {
       <DetailsKeyValueCard
         title="General Information"
         keyValueList={[
-          { label: 'Group Name', value: data?.groupName },
-          { label: 'Group ID', value: data?.groupId },
+          { label: 'MF Group Name', value: data?.groupName },
+          { label: 'MF Group ID', value: data?.groupId },
           { label: 'Total Members', value: data?.totalMember },
         ]}
       />

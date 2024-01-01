@@ -233,13 +233,13 @@ export const AddBulkDeposit = () => {
                 name="memberOrGroup"
                 options={[
                   { label: 'Member', value: 'member' },
-                  { label: 'Group', value: 'group' },
+                  { label: 'MF Group', value: 'group' },
                 ]}
               />
               {memberOrGroupWatch === 'member' ? (
                 <FormMemberSelect name="memberId" label="Member" />
               ) : (
-                <FormMFGroupSelect name="groupId" label="Group" />
+                <FormMFGroupSelect name="groupId" label="MF Group" />
               )}
               {memberId && (
                 <MemberCard

@@ -1238,6 +1238,7 @@ export type AgentMember = {
   memberCode: Scalars['String'];
   memberID: Scalars['ID'];
   memberName: Scalars['String'];
+  memberProfile?: Maybe<Scalars['String']>;
 };
 
 export type AgentMemberNode = {

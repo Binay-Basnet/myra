@@ -11,7 +11,7 @@ export const Group = (props: { data: CenterOverview }) => {
   const groupColumns = useMemo<Column<typeof groupList[0]>[]>(
     () => [
       {
-        header: 'Group ID',
+        header: 'MF Group ID',
         accessorFn: (_, index) => index + 1,
         meta: {
           width: '5%',
@@ -22,11 +22,11 @@ export const Group = (props: { data: CenterOverview }) => {
         accessorFn: (row) => row?.createdDate?.local,
       },
       {
-        header: 'Group Name',
+        header: 'MF Group Name',
         accessorFn: (row) => row?.groupName,
       },
       {
-        header: 'Group Coordinator Name',
+        header: 'MF Group Coordinator Name',
         accessorFn: (row) => row?.groupCoordinator?.name,
       },
       {
@@ -38,10 +38,10 @@ export const Group = (props: { data: CenterOverview }) => {
   );
   return (
     <>
-      <DetailsPageHeaderBox title="Group" />
+      <DetailsPageHeaderBox title="MF Group" />
       <Box m="s24" p="s12" bg="white" borderRadius={5}>
         <Text fontSize="r1" fontWeight="semibold">
-          Group List
+          MF Group List
         </Text>
         <Table data={groupList} columns={groupColumns} variant="report" size="report" isStatic />
       </Box>
