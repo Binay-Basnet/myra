@@ -87,7 +87,7 @@ export const FormAccountSelect = ({
       includeLoc,
     },
     {
-      enabled: !!memberId && memberId !== 'undefined' && !!isLinkedAccounts,
+      enabled: !!memberId && !!isLinkedAccounts,
     }
   );
 
@@ -123,7 +123,7 @@ export const FormAccountSelect = ({
           }
         : null,
     },
-    { enabled: !!groupId && !!memberId }
+    { enabled: !!memberId }
   );
 
   const linkedAccountsOptions: Option[] =

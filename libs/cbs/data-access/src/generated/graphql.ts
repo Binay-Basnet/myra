@@ -40785,6 +40785,12 @@ export type CenterDetailsQuery = {
             houseNo?: string | null;
             coordinates?: { longitude?: number | null; latitude?: number | null } | null;
           } | null;
+          allowedBranchDetail?: Array<{
+            id: string;
+            branchCode?: string | null;
+            name: string;
+          }> | null;
+          centerCoordinatorBranch?: { id: string; branchCode?: string | null; name: string } | null;
         } | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -71400,6 +71406,16 @@ export const CenterDetailsDocument = `
             }
           }
           allowedBranches
+          allowedBranchDetail {
+            id
+            branchCode
+            name
+          }
+          centerCoordinatorBranch {
+            id
+            branchCode
+            name
+          }
         }
         error {
           ...MutationError

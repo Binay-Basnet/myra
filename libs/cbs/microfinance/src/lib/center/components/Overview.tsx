@@ -1,4 +1,6 @@
-import { Box, DetailPageQuickLinks } from '@myra-ui';
+import { useMemo } from 'react';
+
+import { Box, Column, DetailPageQuickLinks, Table, Text } from '@myra-ui';
 
 import { CenterOverview } from '@coop/cbs/data-access';
 import { formatTableAddress, ROUTES } from '@coop/cbs/utils';
@@ -12,6 +14,22 @@ export const Overview = (props: { data: CenterOverview }) => {
   const { data } = props;
 
   const links = [{ title: 'New MF Group', link: ROUTES?.CBS_MICRO_FINANCE_GROUP_ADD }];
+
+  const allowedBranches = data?.allowedBranchDetail || [];
+
+  const allowedBranchedColumns = useMemo<Column<typeof allowedBranches[0]>[]>(
+    () => [
+      {
+        header: 'Group Code',
+        accessorFn: (row) => row?.branchCode,
+      },
+      {
+        header: 'Group Name',
+        accessorFn: (row) => row?.name,
+      },
+    ],
+    []
+  );
 
   return (
     <>
@@ -45,8 +63,21 @@ export const Overview = (props: { data: CenterOverview }) => {
           { label: 'Phone No', value: data?.centerCoordinator?.contactNo },
           { label: 'Email', value: data?.centerCoordinator?.email },
           { label: 'Address', value: formatTableAddress(data?.address) },
+          { label: 'Center Coordinator Branch', value: data?.centerCoordinatorBranch?.name },
         ]}
       />
+      <Box m="s24" p="s12" bg="white" borderRadius={5}>
+        <Text fontSize="r1" fontWeight="semibold">
+          Allowed Branches List
+        </Text>
+        <Table
+          data={allowedBranches}
+          columns={allowedBranchedColumns}
+          variant="report"
+          size="report"
+          isStatic
+        />
+      </Box>
     </>
   );
 };

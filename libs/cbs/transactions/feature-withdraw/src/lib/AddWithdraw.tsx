@@ -266,6 +266,7 @@ export const AddWithdraw = () => {
   //  get redirect id from url
   const redirectMemberId = router.query['memberId'];
   const redirectAccountId = router.query['accountId'];
+  const redirectGroupId = router.query['groupId'];
 
   // redirect from member details
   useEffect(() => {
@@ -321,14 +322,25 @@ export const AddWithdraw = () => {
     return false;
   };
 
+  useEffect(() => {
+    if (redirectGroupId) {
+      methods.setValue('memberOrGroup', 'group');
+      methods.setValue('groupId', String(redirectGroupId));
+    }
+  }, [redirectGroupId]);
+
   const memberOrGroup = watch('memberOrGroup');
 
   const groupId = watch('groupId');
 
   useEffect(() => {
-    methods.setValue('groupId', '');
-    methods.setValue('memberId', '');
-    methods.setValue('accountId', '');
+    if (!redirectAccountId) {
+      if (memberOrGroup === 'member') {
+        methods.setValue('groupId', '');
+      } else {
+        methods.setValue('memberId', '');
+      }
+    }
   }, [memberOrGroup]);
 
   return (
@@ -343,13 +355,22 @@ export const AddWithdraw = () => {
                 name="memberOrGroup"
                 options={[
                   { label: 'Member', value: 'member' },
-                  { label: 'MF Group', value: 'group' },
+                  {
+                    label: 'MF Group',
+                    value: 'group',
+                    isDisabled: (redirectMemberId as unknown as boolean) && !redirectAccountId,
+                  },
                 ]}
               />
 
               {memberOrGroup === 'group' && (
                 <>
-                  <FormMFGroupSelect name="groupId" label="MF Group" isRequired />
+                  <FormMFGroupSelect
+                    name="groupId"
+                    label="MF Group"
+                    isRequired
+                    isDisabled={!!redirectGroupId}
+                  />
 
                   <FormMemberSelect isRequired name="memberId" label="Member" groupId={groupId} />
                 </>
