@@ -1,1 +1,1 @@
-export * from './lib/downloadCenterLib';
+export * from './lib/DownloadCenterLib';

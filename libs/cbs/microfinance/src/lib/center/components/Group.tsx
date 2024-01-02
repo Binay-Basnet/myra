@@ -27,7 +27,7 @@ export const Group = (props: { data: CenterOverview }) => {
       },
       {
         header: 'MF Group Coordinator Name',
-        accessorFn: (row) => row?.groupCoordinator?.name,
+        accessorFn: (row) => row?.groupCoordinator?.name?.local,
       },
       {
         header: 'Total Members',

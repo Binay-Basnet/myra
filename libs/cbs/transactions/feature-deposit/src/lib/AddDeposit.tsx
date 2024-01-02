@@ -402,11 +402,11 @@ export const AddDeposit = () => {
                 <FormSwitchTab
                   name="memberOrGroup"
                   options={[
-                    { label: 'Member', value: 'member' },
+                    { label: 'Member', value: 'member', isDisabled: !!redirectGroupId },
                     {
                       label: 'MF Group',
                       value: 'group',
-                      isDisabled: redirectMemberId && !redirectAccountId,
+                      isDisabled: (redirectMemberId && !redirectAccountId) || !redirectGroupId,
                     },
                   ]}
                 />

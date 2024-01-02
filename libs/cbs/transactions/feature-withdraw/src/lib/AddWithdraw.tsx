@@ -354,11 +354,13 @@ export const AddWithdraw = () => {
               <FormSwitchTab
                 name="memberOrGroup"
                 options={[
-                  { label: 'Member', value: 'member' },
+                  { label: 'Member', value: 'member', isDisabled: !!redirectGroupId },
                   {
                     label: 'MF Group',
                     value: 'group',
-                    isDisabled: (redirectMemberId as unknown as boolean) && !redirectAccountId,
+                    isDisabled:
+                      ((redirectMemberId as unknown as boolean) && !redirectAccountId) ||
+                      !redirectGroupId,
                   },
                 ]}
               />

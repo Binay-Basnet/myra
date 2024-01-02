@@ -20,11 +20,11 @@ export const Overview = (props: { data: CenterOverview }) => {
   const allowedBranchedColumns = useMemo<Column<typeof allowedBranches[0]>[]>(
     () => [
       {
-        header: 'Group Code',
+        header: 'Branch Code',
         accessorFn: (row) => row?.branchCode,
       },
       {
-        header: 'Group Name',
+        header: 'Branch Name',
         accessorFn: (row) => row?.name,
       },
     ],
