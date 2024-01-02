@@ -86,6 +86,14 @@ query centerDetails($centerId: ID!) {
             branchCode
             name
           }
+          groupList {
+            createdDate
+            groupName
+            groupCoordinator {
+              name
+            }
+            totalMember
+          }
         }
         error {
           ...MutationError

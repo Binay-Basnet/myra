@@ -6718,14 +6718,6 @@ export type DownloadCenterDataEdges = {
   node?: Maybe<DownloadCenterNode>;
 };
 
-export type DownloadCenterMutation = {
-  getElementUrl?: Maybe<StringWithError>;
-};
-
-export type DownloadCenterMutationGetElementUrlArgs = {
-  id: Scalars['ID'];
-};
-
 export type DownloadCenterNode = {
   createdAt?: Maybe<Scalars['Localized']>;
   downloadType?: Maybe<Scalars['String']>;
@@ -18505,7 +18497,6 @@ export type Mutation = {
   bpm: BpmMutation;
   collection: CollectionMutation;
   document: DocumentMutation;
-  downloadCentre: DownloadCenterMutation;
   example: ExampleMutation;
   hr: HrMutation;
   inventory: InventoryMutation;
@@ -23227,11 +23218,6 @@ export type StrTransactionActionInput = {
   declineReason?: InputMaybe<Scalars['String']>;
   isAccepted: Scalars['Boolean'];
   transactionId: Scalars['ID'];
-};
-
-export type StringWithError = {
-  error?: Maybe<QueryError>;
-  url?: Maybe<Scalars['String']>;
 };
 
 export type SubmissionListConnection = {
@@ -40873,6 +40859,12 @@ export type CenterDetailsQuery = {
             name: string;
           }> | null;
           centerCoordinatorBranch?: { id: string; branchCode?: string | null; name: string } | null;
+          groupList?: Array<{
+            createdDate?: Record<'local' | 'en' | 'np', string> | null;
+            groupName?: string | null;
+            totalMember?: number | null;
+            groupCoordinator?: { name?: Record<'local' | 'en' | 'np', string> | null } | null;
+          } | null> | null;
         } | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -71566,6 +71558,14 @@ export const CenterDetailsDocument = `
             id
             branchCode
             name
+          }
+          groupList {
+            createdDate
+            groupName
+            groupCoordinator {
+              name
+            }
+            totalMember
           }
         }
         error {

@@ -40,11 +40,15 @@ export const Overview = () => {
   const links = [
     {
       title: 'New Deposit',
-      link: `${ROUTES.CBS_TRANS_DEPOSIT_ADD}?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}&&groupId=${accountDetails?.groupId}`,
+      link: accountDetails?.groupId
+        ? `${ROUTES.CBS_TRANS_DEPOSIT_ADD}?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}&&groupId=${accountDetails?.groupId}`
+        : `${ROUTES.CBS_TRANS_DEPOSIT_ADD}?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}`,
     },
     {
       title: 'New Withdraw',
-      link: `${ROUTES.CBS_TRANS_WITHDRAW_ADD}?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}&&groupId=${accountDetails?.groupId}`,
+      link: accountDetails?.groupId
+        ? `${ROUTES.CBS_TRANS_WITHDRAW_ADD}?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}&&groupId=${accountDetails?.groupId}`
+        : `${ROUTES.CBS_TRANS_WITHDRAW_ADD}?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}`,
     },
     {
       title: 'New Account Transfer',
