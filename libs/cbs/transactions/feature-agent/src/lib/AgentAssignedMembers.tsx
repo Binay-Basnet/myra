@@ -28,7 +28,7 @@ export const AgentAssignedMembers = () => {
 
   const id = router?.query?.['id'];
 
-  // const search = router?.query?.['search'];
+  const search = router?.query?.['search'];
 
   const { mutateAsync: removeMember } = useDeleteAgentMemberMutation();
 
@@ -48,6 +48,7 @@ export const AgentAssignedMembers = () => {
         },
       },
       filter: {
+        query: search as string,
         orConditions: [
           { andConditions: [{ column: 'agentid', comparator: 'EqualTo', value: id as string }] },
         ],
