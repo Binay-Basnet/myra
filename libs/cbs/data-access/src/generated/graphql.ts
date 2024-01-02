@@ -6718,14 +6718,6 @@ export type DownloadCenterDataEdges = {
   node?: Maybe<DownloadCenterNode>;
 };
 
-export type DownloadCenterMutation = {
-  getElementUrl?: Maybe<StringWithError>;
-};
-
-export type DownloadCenterMutationGetElementUrlArgs = {
-  id: Scalars['ID'];
-};
-
 export type DownloadCenterNode = {
   createdAt?: Maybe<Scalars['Localized']>;
   downloadType?: Maybe<Scalars['String']>;
@@ -18505,7 +18497,6 @@ export type Mutation = {
   bpm: BpmMutation;
   collection: CollectionMutation;
   document: DocumentMutation;
-  downloadCentre: DownloadCenterMutation;
   example: ExampleMutation;
   hr: HrMutation;
   inventory: InventoryMutation;
@@ -23227,11 +23218,6 @@ export type StrTransactionActionInput = {
   declineReason?: InputMaybe<Scalars['String']>;
   isAccepted: Scalars['Boolean'];
   transactionId: Scalars['ID'];
-};
-
-export type StringWithError = {
-  error?: Maybe<QueryError>;
-  url?: Maybe<Scalars['String']>;
 };
 
 export type SubmissionListConnection = {
