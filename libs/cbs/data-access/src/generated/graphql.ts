@@ -6707,6 +6707,46 @@ export type DosariReportResult = {
   summary?: Maybe<LoanAgingStatementSummary>;
 };
 
+export type DownloadCenterConnection = {
+  edges?: Maybe<Array<Maybe<DownloadCenterDataEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type DownloadCenterDataEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<DownloadCenterNode>;
+};
+
+export type DownloadCenterMutation = {
+  getElementUrl?: Maybe<StringWithError>;
+};
+
+export type DownloadCenterMutationGetElementUrlArgs = {
+  id: Scalars['ID'];
+};
+
+export type DownloadCenterNode = {
+  createdAt?: Maybe<Scalars['Localized']>;
+  downloadType?: Maybe<Scalars['String']>;
+  fileType?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  remark?: Maybe<Scalars['String']>;
+  statusOfCompletion?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['ID']>;
+};
+
+export type DownloadCenterQuery = {
+  listDownloadCentreReports?: Maybe<DownloadCenterConnection>;
+};
+
+export type DownloadCenterQueryListDownloadCentreReportsArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type Dues = {
   dueInstallments?: Maybe<Scalars['Int']>;
   fine?: Maybe<Scalars['String']>;
@@ -17767,6 +17807,7 @@ export type MemberRecentTransactions = {
 export type MemberRegFilters = {
   gender?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   institutionType?: InputMaybe<Scalars['ID']>;
+  isExport?: InputMaybe<Scalars['Boolean']>;
   memberType?: InputMaybe<Array<InputMaybe<MemberType>>>;
   occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
 };
@@ -17785,6 +17826,7 @@ export type MemberRegistrationReportData = {
 export type MemberRegistrationReportResult = {
   data?: Maybe<MemberRegistrationReport>;
   error?: Maybe<QueryError>;
+  success?: Maybe<QuerySuccess>;
 };
 
 export type MemberReport = {
@@ -18463,6 +18505,7 @@ export type Mutation = {
   bpm: BpmMutation;
   collection: CollectionMutation;
   document: DocumentMutation;
+  downloadCentre: DownloadCenterMutation;
   example: ExampleMutation;
   hr: HrMutation;
   inventory: InventoryMutation;
@@ -19994,6 +20037,7 @@ export type Query = {
   config: ConfigQuery;
   dashboard: DashboardQuery;
   document: DocumentQuery;
+  downloadCentre: DownloadCenterQuery;
   endOfDay: EodQuery;
   example: ExampleQuery;
   form: FormQuery;
@@ -20021,6 +20065,11 @@ export type QueryError = AuthorizationError | BadRequestError | NotFoundError | 
 export type QueryResult = {
   error?: Maybe<QueryError>;
   result?: Maybe<Scalars['Any']>;
+};
+
+export type QuerySuccess = {
+  code: Scalars['Int'];
+  message: Scalars['String'];
 };
 
 export const Resource = {
@@ -23178,6 +23227,11 @@ export type StrTransactionActionInput = {
   declineReason?: InputMaybe<Scalars['String']>;
   isAccepted: Scalars['Boolean'];
   transactionId: Scalars['ID'];
+};
+
+export type StringWithError = {
+  error?: Maybe<QueryError>;
+  url?: Maybe<Scalars['String']>;
 };
 
 export type SubmissionListConnection = {
@@ -35313,6 +35367,34 @@ export type GetDashboardInfoQuery = {
   };
 };
 
+export type ListDownloadCentreReportsQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type ListDownloadCentreReportsQuery = {
+  downloadCentre: {
+    listDownloadCentreReports?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor?: string | null;
+        node?: {
+          id?: string | null;
+          createdAt?: Record<'local' | 'en' | 'np', string> | null;
+          userId?: string | null;
+          title?: string | null;
+          url?: string | null;
+          fileType?: string | null;
+          statusOfCompletion?: string | null;
+          remark?: string | null;
+          downloadType?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: PaginationFragment | null;
+    } | null;
+  };
+};
+
 export type GetCurrentFundAmountQueryVariables = Exact<{
   head: Scalars['String'];
 }>;
@@ -42878,6 +42960,33 @@ export type GetMemberRegistrationReportQuery = {
             } | null;
           } | null> | null;
         } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+        success?: { message: string; code: number } | null;
+      } | null;
+    };
+  };
+};
+
+export type GetMemberRegistrationReportForExportQueryVariables = Exact<{
+  data?: InputMaybe<MemberRegistrationReportData>;
+}>;
+
+export type GetMemberRegistrationReportForExportQuery = {
+  report: {
+    memberReport: {
+      memberRegistrationReport?: {
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+        success?: { message: string; code: number } | null;
       } | null;
     };
   };
@@ -64298,6 +64407,48 @@ export const useGetDashboardInfoQuery = <TData = GetDashboardInfoQuery, TError =
     ),
     options
   );
+export const ListDownloadCentreReportsDocument = `
+    query listDownloadCentreReports($filter: Filter, $pagination: Pagination) {
+  downloadCentre {
+    listDownloadCentreReports(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          createdAt
+          userId
+          title
+          url
+          fileType
+          statusOfCompletion
+          remark
+          downloadType
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useListDownloadCentreReportsQuery = <
+  TData = ListDownloadCentreReportsQuery,
+  TError = unknown
+>(
+  variables?: ListDownloadCentreReportsQueryVariables,
+  options?: UseQueryOptions<ListDownloadCentreReportsQuery, TError, TData>
+) =>
+  useQuery<ListDownloadCentreReportsQuery, TError, TData>(
+    variables === undefined
+      ? ['listDownloadCentreReports']
+      : ['listDownloadCentreReports', variables],
+    useAxios<ListDownloadCentreReportsQuery, ListDownloadCentreReportsQueryVariables>(
+      ListDownloadCentreReportsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetCurrentFundAmountDocument = `
     query getCurrentFundAmount($head: String!) {
   profitToFundManagement {
@@ -74114,11 +74265,19 @@ export const GetMemberRegistrationReportDocument = `
             activeDate
           }
         }
+        error {
+          ...MutationError
+        }
+        success {
+          message
+          code
+        }
       }
     }
   }
 }
-    ${AddressFragmentDoc}`;
+    ${AddressFragmentDoc}
+${MutationErrorFragmentDoc}`;
 export const useGetMemberRegistrationReportQuery = <
   TData = GetMemberRegistrationReportQuery,
   TError = unknown
@@ -74133,6 +74292,40 @@ export const useGetMemberRegistrationReportQuery = <
     useAxios<GetMemberRegistrationReportQuery, GetMemberRegistrationReportQueryVariables>(
       GetMemberRegistrationReportDocument
     ).bind(null, variables),
+    options
+  );
+export const GetMemberRegistrationReportForExportDocument = `
+    query getMemberRegistrationReportForExport($data: MemberRegistrationReportData) {
+  report {
+    memberReport {
+      memberRegistrationReport(data: $data) {
+        error {
+          ...MutationError
+        }
+        success {
+          message
+          code
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetMemberRegistrationReportForExportQuery = <
+  TData = GetMemberRegistrationReportForExportQuery,
+  TError = unknown
+>(
+  variables?: GetMemberRegistrationReportForExportQueryVariables,
+  options?: UseQueryOptions<GetMemberRegistrationReportForExportQuery, TError, TData>
+) =>
+  useQuery<GetMemberRegistrationReportForExportQuery, TError, TData>(
+    variables === undefined
+      ? ['getMemberRegistrationReportForExport']
+      : ['getMemberRegistrationReportForExport', variables],
+    useAxios<
+      GetMemberRegistrationReportForExportQuery,
+      GetMemberRegistrationReportForExportQueryVariables
+    >(GetMemberRegistrationReportForExportDocument).bind(null, variables),
     options
   );
 export const GetMemberWiseBalanceReportDocument = `

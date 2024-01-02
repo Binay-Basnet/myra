@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, MouseEventHandler, useState } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePrinter } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
@@ -38,9 +38,10 @@ type Path = {
 export interface PathBarProps {
   paths: Path[];
   hasSave?: boolean;
+  onExport?: MouseEventHandler<HTMLDivElement> | undefined;
 }
 
-export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
+export const ReportHeader = ({ paths, hasSave = false, onExport }: PathBarProps) => {
   const router = useRouter();
   const { printRef, data, report } = useReport();
 
@@ -161,6 +162,17 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
                 >
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
                     Export Visible
+                  </Text>
+                </GridItem>
+                <GridItem
+                  px="s16"
+                  py="s8"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
+                  onClick={onExport}
+                >
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    Export
                   </Text>
                 </GridItem>
               </Grid>
