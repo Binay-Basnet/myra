@@ -126,7 +126,7 @@ export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => {
           }
         />
         <DetailCardContent title="MF Group" subtitle={data?.group} />
-        <DetailCardContent title="Center" subtitle={data?.center} />
+        <DetailCardContent title="MF Center" subtitle={data?.center} />
         <Text
           fontWeight="500"
           fontSize="r1"

@@ -20,11 +20,11 @@ export const Overview = (props: { data: CenterOverview }) => {
   const allowedBranchedColumns = useMemo<Column<typeof allowedBranches[0]>[]>(
     () => [
       {
-        header: 'Branch Code',
+        header: 'Service Center Code',
         accessorFn: (row) => row?.branchCode,
       },
       {
-        header: 'Branch Name',
+        header: 'Service Center Name',
         accessorFn: (row) => row?.name,
       },
     ],
@@ -50,8 +50,8 @@ export const Overview = (props: { data: CenterOverview }) => {
       <DetailsKeyValueCard
         title="General Information"
         keyValueList={[
-          { label: 'Center Name', value: data?.centerName },
-          { label: 'Center ID', value: data?.centerId },
+          { label: 'MF Center Name', value: data?.centerName },
+          { label: 'MF Center ID', value: data?.centerId },
           { label: 'Total Members', value: data?.totalMembers },
         ]}
       />
@@ -68,7 +68,7 @@ export const Overview = (props: { data: CenterOverview }) => {
       />
       <Box m="s24" p="s12" bg="white" borderRadius={5}>
         <Text fontSize="r1" fontWeight="semibold">
-          Allowed Branches List
+          Allowed Service Center List
         </Text>
         <Table
           data={allowedBranches}

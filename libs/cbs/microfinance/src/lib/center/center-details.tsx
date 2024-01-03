@@ -49,7 +49,7 @@ export const CenterDetails = () => {
             </Text>
           </Box>
           <Divider />
-          <DetailPageTabs tabs={['Overview', 'group']} />
+          <DetailPageTabs tabs={['Overview', 'MF Group']} />
         </Box>
 
         <Scrollable detailPage>
@@ -57,7 +57,7 @@ export const CenterDetails = () => {
             {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && (
               <Overview data={centerDetailsData as CenterOverview} />
             )}
-            {tabQuery === 'group' && <Group data={centerDetailsData as CenterOverview} />}
+            {tabQuery === 'mf group' && <Group data={centerDetailsData as CenterOverview} />}
           </Box>
         </Scrollable>
       </Box>

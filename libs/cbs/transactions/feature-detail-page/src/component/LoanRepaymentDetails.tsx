@@ -59,7 +59,7 @@ export const LoanRepaymentDetails = () => {
         subtitle={amountConverter(loanRepaymentDetailData?.totalRepaymentAmount ?? 0)}
       />
       <DetailCardContent title="MF Group" subtitle={loanRepaymentDetailData?.groupName} />
-      <DetailCardContent title="Center" subtitle={loanRepaymentDetailData?.centerName} />
+      <DetailCardContent title="MF Center" subtitle={loanRepaymentDetailData?.centerName} />
       <DetailCardContent title={t['transDetailStatus']} status />
     </DetailsCard>
   );
