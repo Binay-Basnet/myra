@@ -687,7 +687,7 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
     () =>
       memberList?.map((member) => ({
         label: `${member?.node?.memberName} [${member?.node?.memberCode}]`,
-        value: member?.node?.memberID as string,
+        value: member?.node?.id as string,
       })) ?? [],
     [memberList]
   );
@@ -743,7 +743,7 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
       fineToBeCollected: string;
     }[] = [];
 
-    const memberDetail = memberList?.find((m) => m?.node?.memberID === values?.memberId);
+    const memberDetail = memberList?.find((m) => m?.node?.id === values?.memberId);
 
     values?.accountId?.forEach((acc) => {
       const accountDetail = accountList?.find((a) => a?.node?.id === acc?.value);

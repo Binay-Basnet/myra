@@ -1235,8 +1235,8 @@ export type AgentFilterMapping = {
 };
 
 export type AgentMember = {
+  id: Scalars['ID'];
   memberCode: Scalars['String'];
-  memberID: Scalars['ID'];
   memberName: Scalars['String'];
   memberProfile?: Maybe<Scalars['String']>;
 };
@@ -34234,7 +34234,7 @@ export type ListAgentMemberQuery = {
       totalCount: number;
       edges?: Array<{
         cursor: string;
-        node?: { memberName: string; memberID: string; memberCode: string } | null;
+        node?: { memberName: string; id: string; memberCode: string } | null;
       } | null> | null;
       pageInfo?: {
         hasNextPage: boolean;
@@ -63035,7 +63035,7 @@ export const ListAgentMemberDocument = `
       edges {
         node {
           memberName
-          memberID
+          id
           memberCode
         }
         cursor

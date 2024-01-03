@@ -69,7 +69,7 @@ export const CreateCollectionListModal = ({
     () =>
       assignedMembersListData?.agent?.listAgentMember?.edges?.map((member) => ({
         label: `${member?.node?.memberName} [${member?.node?.memberCode}]`,
-        value: member?.node?.memberID as string,
+        value: member?.node?.id as string,
       })) ?? [],
     [assignedMembersListData]
   );
