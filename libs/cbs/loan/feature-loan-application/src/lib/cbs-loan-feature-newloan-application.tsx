@@ -314,7 +314,7 @@ export const NewLoanApplication = () => {
                 name="memberOrGroup"
                 options={[
                   { label: 'Member', value: 'member' },
-                  { label: 'MF Group', value: 'group' },
+                  { label: 'MF Group', value: 'group', isDisabled: !!redirectMemberId },
                 ]}
               />
               {memberOrGroupWatch === 'group' && (
