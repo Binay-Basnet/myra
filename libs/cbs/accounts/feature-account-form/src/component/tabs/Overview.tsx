@@ -160,6 +160,10 @@ export const Overview = () => {
         />
       )}
 
+      {accountDetails?.objState === 'DORMANT' && (
+        <Alert status="warning" subtitle="This is an dormant account." hideCloseIcon />
+      )}
+
       {lockedTransaction && (
         <Alert
           status="info"
