@@ -289,6 +289,8 @@ export const LoanRepayment = () => {
   // const redirectLoanMemberId = router.query['redirectMemberId'];
   const redirectloanAccountId = router.query['loanAccountId'];
   // redirect from member details
+  const redirectGroupId = router.query['groupId'];
+
   useEffect(() => {
     if (redirectMemberId) {
       methods.setValue('memberId', String(redirectMemberId));
@@ -301,6 +303,12 @@ export const LoanRepayment = () => {
       methods.setValue('loanAccountId', String(redirectloanAccountId));
     }
   }, [redirectloanAccountId, redirectMemberId]);
+  useEffect(() => {
+    if (redirectGroupId) {
+      methods.setValue('memberOrGroup', 'group');
+      methods.setValue('groupId', String(redirectGroupId));
+    }
+  }, [redirectGroupId]);
 
   const isSuspicious = watch('isSuspicious');
 
@@ -313,6 +321,17 @@ export const LoanRepayment = () => {
         ?.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
     }
   }, [mode]);
+
+  const isMfGroupDisabled = () => {
+    if (!!redirectMemberId === false && !!redirectGroupId === false) {
+      return false;
+    }
+    if (!!redirectMemberId === true && !!redirectGroupId === false) {
+      return true;
+    }
+
+    return false;
+  };
 
   return (
     <FormLayout methods={methods} hasSidebar={!!memberId}>
@@ -330,8 +349,8 @@ export const LoanRepayment = () => {
             <FormSwitchTab
               name="memberOrGroup"
               options={[
-                { label: 'Member', value: 'member' },
-                { label: 'MF Group', value: 'group' },
+                { label: 'Member', value: 'member', isDisabled: !!redirectGroupId },
+                { label: 'MF Group', value: 'group', isDisabled: isMfGroupDisabled() },
               ]}
             />
 
