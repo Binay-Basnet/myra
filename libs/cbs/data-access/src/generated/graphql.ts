@@ -6718,6 +6718,14 @@ export type DownloadCenterDataEdges = {
   node?: Maybe<DownloadCenterNode>;
 };
 
+export type DownloadCenterMutation = {
+  getElementUrl?: Maybe<StringWithError>;
+};
+
+export type DownloadCenterMutationGetElementUrlArgs = {
+  id: Scalars['ID'];
+};
+
 export type DownloadCenterNode = {
   createdAt?: Maybe<Scalars['Localized']>;
   downloadType?: Maybe<Scalars['String']>;
@@ -14372,6 +14380,7 @@ export const ListType = {
 
 export type ListType = typeof ListType[keyof typeof ListType];
 export type LoanAccReportDetails = {
+  accountName?: Maybe<Scalars['String']>;
   accountNo?: Maybe<Scalars['String']>;
   approvedAmount?: Maybe<Scalars['String']>;
   charge?: Maybe<Scalars['String']>;
@@ -18497,6 +18506,7 @@ export type Mutation = {
   bpm: BpmMutation;
   collection: CollectionMutation;
   document: DocumentMutation;
+  downloadCentre: DownloadCenterMutation;
   example: ExampleMutation;
   hr: HrMutation;
   inventory: InventoryMutation;
@@ -21633,6 +21643,7 @@ export type SavingStatement = {
 };
 
 export type SavingStatementMeta = {
+  accountName?: Maybe<Scalars['String']>;
   accountNo?: Maybe<Scalars['String']>;
   currentInterestRate?: Maybe<Scalars['Float']>;
   installments?: Maybe<Scalars['Int']>;
@@ -23218,6 +23229,11 @@ export type StrTransactionActionInput = {
   declineReason?: InputMaybe<Scalars['String']>;
   isAccepted: Scalars['Boolean'];
   transactionId: Scalars['ID'];
+};
+
+export type StringWithError = {
+  error?: Maybe<QueryError>;
+  url?: Maybe<Scalars['String']>;
 };
 
 export type SubmissionListConnection = {
@@ -41571,6 +41587,7 @@ export type GetSavingStatementQuery = {
               meta?: {
                 currentInterestRate?: number | null;
                 accountNo?: string | null;
+                accountName?: string | null;
                 savingType?: string | null;
                 productName?: string | null;
               } | null;
@@ -42307,6 +42324,7 @@ export type GetLoanStatementReportQuery = {
           | {
               meta?: {
                 accountNo?: string | null;
+                accountName?: string | null;
                 approvedAmount?: string | null;
                 interestRate?: number | null;
                 loanType?: string | null;
@@ -42713,6 +42731,7 @@ export type GetLoanTransactionReportQuery = {
               meta?: {
                 productName?: string | null;
                 accountNo?: string | null;
+                accountName?: string | null;
                 approvedAmount?: string | null;
                 interestRate?: number | null;
                 loanType?: string | null;
@@ -72522,6 +72541,7 @@ export const GetSavingStatementDocument = `
             meta {
               currentInterestRate
               accountNo
+              accountName
               savingType
               productName
             }
@@ -73481,6 +73501,7 @@ export const GetLoanStatementReportDocument = `
           ... on LoanStatementReport {
             meta {
               accountNo
+              accountName
               approvedAmount
               interestRate
               loanType
@@ -73987,6 +74008,7 @@ export const GetLoanTransactionReportDocument = `
             meta {
               productName
               accountNo
+              accountName
               approvedAmount
               interestRate
               loanType
