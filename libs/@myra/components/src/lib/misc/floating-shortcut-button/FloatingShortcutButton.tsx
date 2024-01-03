@@ -31,26 +31,28 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Microfinance section has been added with group, center features.',
-      'Market representative flow has been revamped in ERP section.',
-      'JV summary report added in other section of report.',
-      'Sorting option in date column of all dashboards consisting of date [all transaction].',
-      'NEA and Internet Payment added in Utility Payments',
+      'Add dormant account tag in the dormant account list.',
+      "Total in today's list amount column.",
+      'Member account search in saving products detail page ( active , inactive, dormant accounts)',
+      'Member account search in loan products detail page ( active , inactive accounts)',
+      'User-wise filter in all transactions list (or in user report with transaction type).',
+      'To add account name in header of saving account statement and loan account statement report.',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'New version available popup in iOS mobile banking (redirection issue in update).',
-      'Phone no. to be required in alt channel activation form.',
-      'In Saving Balance report/Loan Balance Report/Loan Aging Report effective interest rate added in the list.',
-      'Ebanking Coop pin field- To change placeholder text to "Enter Pin”.',
-      'Rename certificate generation option in member page "Get Certificate" to "Get Share Certificate”.',
-      'Mobile app: Issue in Date of birth validation during new myra ebanking registration.',
-      'Zero-Share member branch transfer.',
-      'Error creating head office in neosys portal.',
-      'Dosari loan report issue fixed.',
-      'Membership date in member register report.',
+      'Date selection in case of payment via bank- future date (wrt current system date) to not be accepted.',
+      'search account  in member assigned page of MR list page.',
+      'Add amount column in the deposit transaction list.',
+      'Disbursed amount issue in the loan disbursement report.',
+      'Total not calculated in the collection sheet.',
+      'Account selected in payment mode to be reset if any changes is made in main (deposit/loan repayment etc) window by coming back.',
+      'Add member section remove from the mr role in mr list (assigned members).',
+      'Total in loan account statement report-- also, to remove loan statement report from loan reports list.',
+      'Page Redirection issues in microFinance.',
+      'Group table issue in microFinance Group tab.',
+      'Rename group of microFinance group center and microFinance center.',
     ],
   },
 };
@@ -89,8 +91,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.102</Text>
-          <Text fontSize="s3">December 26, 2023</Text>
+          <Text fontSize="r2">Version 1.0.103</Text>
+          <Text fontSize="s3">Jan 3, 2024</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>

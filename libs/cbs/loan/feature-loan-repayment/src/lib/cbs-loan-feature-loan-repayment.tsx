@@ -364,7 +364,11 @@ export const LoanRepayment = () => {
                   label="Member"
                   groupId={groupIdWatch}
                   onChangeAction={(newVal) => {
-                    methods.reset({ memberId: (newVal as Option)?.['value'] });
+                    methods.reset({
+                      memberOrGroup: methods.getValues().memberOrGroup,
+                      groupId: methods.getValues().groupId,
+                      memberId: (newVal as Option)?.['value'],
+                    });
                   }}
                 />
               </>
@@ -376,7 +380,10 @@ export const LoanRepayment = () => {
                 label="Member"
                 isDisabled={!!redirectMemberId}
                 onChangeAction={(newVal) => {
-                  methods.reset({ memberId: (newVal as Option)?.['value'] });
+                  methods.reset({
+                    memberOrGroup: methods.getValues().memberOrGroup,
+                    memberId: (newVal as Option)?.['value'],
+                  });
                 }}
               />
             )}

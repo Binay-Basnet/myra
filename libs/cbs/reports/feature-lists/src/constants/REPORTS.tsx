@@ -763,6 +763,13 @@ export const REPORTS: ReportType = {
       component: <Reports.SavingLoanInterestReport />,
       acl: 'REPORTS_OTHERS_GENERAL_LEDGER',
     },
+    {
+      id: '10',
+      report: Report.LOAN_INDIVIDUAL_STATEMENT,
+      link: 'statement',
+      component: <Reports.LoanStatementReport />,
+      acl: 'REPORTS_LOAN_LOAN_ACCOUNT_STATEMENT',
+    },
   ],
   [ReportGroup.EXCEPTION]: [
     {
