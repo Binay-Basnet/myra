@@ -2,10 +2,11 @@ import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, DetailPageContentCard, Text } from '@myra-ui';
+import { asyncToast, Box, Button, DetailPageContentCard, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { useDeleteAgentMemberMutation, useListAgentMemberQuery } from '@coop/cbs/data-access';
+import { Can } from '@coop/cbs/utils';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 import { AddMemberModal } from '../components';
@@ -127,8 +128,15 @@ export const AgentAssignedMembers = () => {
     <>
       <DetailPageContentCard
         header={t['agentAssignedMembersAssignedMembers']}
-        headerButtonLabel={t['agentAssignedMembersAddMember']}
-        headerButtonHandler={handleAddMemberModalOpen}
+        // headerButtonLabel={t['agentAssignedMembersAddMember']}
+        // headerButtonHandler={handleAddMemberModalOpen}
+        headerButtons={
+          <Can I="CREATE" a="AGENT_ASSIGN_MEMBER">
+            <Button variant="link" onClick={handleAddMemberModalOpen}>
+              {t['agentAssignedMembersAddMember']}
+            </Button>
+          </Can>
+        }
       >
         <Table
           // isStatic
