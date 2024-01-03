@@ -37,6 +37,7 @@ const whatsNewData = {
       'Member account search in loan products detail page ( active , inactive accounts)',
       'User-wise filter in all transactions list (or in user report with transaction type).',
       'To add account name in header of saving account statement and loan account statement report.',
+      'cashback/service charges are added in the other utility payments.',
     ],
   },
   bugsSquashed: {
