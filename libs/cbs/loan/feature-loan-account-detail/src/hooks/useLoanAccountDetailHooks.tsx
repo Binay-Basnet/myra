@@ -101,7 +101,7 @@ export const useLoanAccountDetailHooks = () => {
       value: generalInfo?.groupName ?? 'N/A',
     },
     {
-      label: 'Center',
+      label: 'MF Center',
       value: generalInfo?.centerName ?? 'N/A',
     },
   ];

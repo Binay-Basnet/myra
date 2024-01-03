@@ -18,11 +18,11 @@ export const CenterList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Center Code',
+        header: 'MF Center Code',
         accessorFn: (row) => row?.node?.code,
       },
       {
-        header: 'Center Name',
+        header: 'MF Center Name',
         accessorFn: (row) => row?.node?.name,
       },
       {
