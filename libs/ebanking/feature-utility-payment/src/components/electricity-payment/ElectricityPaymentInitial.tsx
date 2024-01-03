@@ -20,7 +20,7 @@ interface InternetPaymentProps {
 export const ElectricityPaymentInitial = ({ setCurrentSequence }: InternetPaymentProps) => {
   const user = useAppSelector((state) => state.auth.cooperative.user);
   const { data } = useGetAccountListQuery({
-    listFilter: { allowedAccount: true },
+    listFilter: { allowedAccount: true, servieType: 'EBANKING' },
     transactionPagination: { after: '', first: 1 },
   });
 

@@ -4,3 +4,4 @@ export * from './lib/AlternativeChannels';
 export * from './lib/AlternativeChannelSMSBankingSMSSetting';
 export * from './lib/AlternativeChannelSMSBankingSMSTemplate';
 export * from './lib/AlternativeChannelTopupSettings';
+export * from './lib/AlternativeChannelUtilityServiceSetting';

@@ -243,6 +243,11 @@ export const AgentDetailOverview = () => {
     }
   };
 
+  const accounts = methods.watch('accounts');
+
+  const totalAmount = accounts?.reduce((sum, acc) => sum + Number(acc?.amountCollected || 0), 0);
+  const totalFine = accounts?.reduce((sum, acc) => sum + Number(acc?.fineCollected || 0), 0);
+
   return (
     <>
       <Box display="flex" flexDirection="column" gap="s16">
@@ -496,6 +501,51 @@ export const AgentDetailOverview = () => {
                     </Text>
                   </Box>
                 </Box>
+
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  gap="s4"
+                  p="s16"
+                  bg="background.500"
+                  borderRadius="br2"
+                >
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      Accounts Collected
+                    </Text>
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      {accounts?.filter(
+                        (a) => Number(a?.amountCollected) || Number(a?.fineCollected)
+                      )?.length || 0}{' '}
+                      / {accounts?.length}
+                    </Text>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      Amount Collected
+                    </Text>
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      {amountConverter(totalAmount)}
+                    </Text>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      Fine Collected
+                    </Text>
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      {amountConverter(totalFine)}
+                    </Text>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      Total Collection
+                    </Text>
+                    <Text fontSize="r1" fontWeight={500} color="gray.700">
+                      {amountConverter(totalFine + totalAmount)}
+                    </Text>
+                  </Box>
+                </Box>
               </FormSection>
             </FormProvider>
             {/* </Box> */}
@@ -571,7 +621,7 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
     () =>
       memberList?.map((member) => ({
         label: `${member?.node?.memberName} [${member?.node?.memberCode}]`,
-        value: member?.node?.memberID as string,
+        value: member?.node?.id as string,
       })) ?? [],
     [memberList]
   );
@@ -627,7 +677,7 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
       fineToBeCollected: string;
     }[] = [];
 
-    const memberDetail = memberList?.find((m) => m?.node?.memberID === values?.memberId);
+    const memberDetail = memberList?.find((m) => m?.node?.id === values?.memberId);
 
     values?.accountId?.forEach((acc) => {
       const accountDetail = accountList?.find((a) => a?.node?.id === acc?.value);

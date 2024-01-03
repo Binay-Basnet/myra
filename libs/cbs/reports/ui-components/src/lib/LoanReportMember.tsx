@@ -56,6 +56,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => (
             <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
               {account?.interestRate && <Text>Current Interest Rate:</Text>}
               {account?.accountNo && <Text>Loan Account No:</Text>}
+              {account?.accountName && <Text>Loan Account Name:</Text>}
               {account?.productName && <Text>Loan Product Name</Text>}
               {account?.loanType && <Text>Loan Type:</Text>}
               {account?.loanSubtype && <Text>Loan Subtype:</Text>}
@@ -70,6 +71,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => (
             <Box display="flex" flexDir="column" fontSize="r1" color="gray.700" fontWeight="500">
               {account?.interestRate && <Text noOfLines={1}>{account?.interestRate ?? 0}%</Text>}
               {account?.accountNo && <Text noOfLines={1}>{account?.accountNo}</Text>}
+              {account?.accountName && <Text noOfLines={1}>{account?.accountName}</Text>}
               {account?.productName && <Text noOfLines={1}>{account?.productName}</Text>}
               {account?.loanType && <Text noOfLines={1}>{account?.loanType}</Text>}
               {account?.loanSubtype && <Text noOfLines={1}>{account?.loanSubtype}</Text>}

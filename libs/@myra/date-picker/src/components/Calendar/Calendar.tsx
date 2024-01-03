@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { IoSettingsOutline } from 'react-icons/io5';
+import { useDeepCompareEffect } from 'react-use';
 import { Icon } from '@chakra-ui/icons';
 import { Box, Popover, PopoverContent, PopoverTrigger } from '@chakra-ui/react';
 
@@ -24,23 +25,9 @@ interface ICalendar {
 
   minDate?: Date;
   maxDate?: Date;
+
+  baseDate?: Date;
 }
-
-const adDate = {
-  year: new Date().getFullYear(),
-  month: new Date().getMonth() + 1,
-  day: new Date().getDate(),
-  dayOfWeek: new Date().getDay(),
-};
-
-const bsDate = ad2bs(adDate.year, adDate.month, adDate.day);
-
-const todayDate = {
-  current: null,
-  today: new Date(),
-  ad: adDate,
-  bs: bsDate,
-};
 
 export const Calendar = ({
   calendarType = 'AD',
@@ -50,9 +37,39 @@ export const Calendar = ({
   locale,
   minDate,
   maxDate,
+
+  baseDate,
 }: ICalendar) => {
+  const adDate = useMemo(
+    () => ({
+      year: (baseDate || new Date()).getFullYear(),
+      month: (baseDate || new Date()).getMonth() + 1,
+      day: (baseDate || new Date()).getDate(),
+      dayOfWeek: (baseDate || new Date()).getDay(),
+    }),
+    [baseDate]
+  );
+
+  const bsDate = ad2bs(adDate.year, adDate.month, adDate.day);
+
+  const todayDate = useMemo(
+    () => ({
+      current: null,
+      today: baseDate || new Date(),
+      ad: adDate,
+      bs: bsDate,
+    }),
+    [baseDate, adDate, bsDate]
+  );
+
   const [dateState, setDateState] = useState<TDateState>(value || todayDate);
   const [internalCalendarType, setInternalCalendarType] = useState(calendarType);
+
+  useDeepCompareEffect(() => {
+    if (todayDate) {
+      setDateState(todayDate);
+    }
+  }, [todayDate.ad]);
 
   const { gotoPreviousMonth, gotToNextMonth } = useMonthNavigateHook({
     calendarType: internalCalendarType,
@@ -212,6 +229,7 @@ export const Calendar = ({
             locale={locale}
             calendarType={internalCalendarType}
             onDateChange={onDateChange}
+            baseDate={baseDate}
           />
         </Box>
       </Box>

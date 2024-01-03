@@ -4,11 +4,11 @@ import {
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
 import { Can } from '@coop/cbs/utils';
-import { AlternativeChannelTopupSettings } from '@coop/settings/alternative-channels';
+import { AlternativeChannelUtilityServiceSetting } from '@coop/settings/alternative-channels';
 
 export const AlternativeChannelsChargesPage = () => (
   <Can I="SHOW_IN_MENU" a="SETTINGS_ALTERNATIVE_CHANNELS" showError isErrorCentered>
-    <AlternativeChannelTopupSettings />
+    <AlternativeChannelUtilityServiceSetting />
   </Can>
 );
 export default AlternativeChannelsChargesPage;

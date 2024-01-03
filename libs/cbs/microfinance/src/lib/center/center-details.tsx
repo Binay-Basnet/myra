@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { Box, DetailPageHeader, DetailPageTabs, Divider, Scrollable, Text } from '@myra-ui';
 
-import { useCenterDetailsQuery } from '@coop/cbs/data-access';
+import { CenterOverview, useCenterDetailsQuery } from '@coop/cbs/data-access';
 
 import { Group } from './components/Group';
 import Overview from './components/Overview';
@@ -49,15 +49,15 @@ export const CenterDetails = () => {
             </Text>
           </Box>
           <Divider />
-          <DetailPageTabs tabs={['Overview', 'group']} />
+          <DetailPageTabs tabs={['Overview', 'MF Group']} />
         </Box>
 
         <Scrollable detailPage>
           <Box display="flex" flexDir="column" gap="s16" bg="background.500" minH="100vh">
             {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && (
-              <Overview data={centerDetailsData} />
+              <Overview data={centerDetailsData as CenterOverview} />
             )}
-            {tabQuery === 'group' && <Group data={centerDetailsData} />}
+            {tabQuery === 'mf group' && <Group data={centerDetailsData as CenterOverview} />}
           </Box>
         </Scrollable>
       </Box>

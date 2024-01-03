@@ -81,6 +81,8 @@ export const AddDeposit = () => {
 
   const redirectAccountId = router.query['accountId'];
 
+  const redirectGroupId = router.query['groupId'];
+
   const queryClient = useQueryClient();
 
   const { t } = useTranslation();
@@ -363,17 +365,37 @@ export const AddDeposit = () => {
     }
   }, [memberId, redirectAccountId]);
 
+  useEffect(() => {
+    if (redirectGroupId) {
+      methods.setValue('memberOrGroup', 'group');
+      methods.setValue('groupId', String(redirectGroupId));
+    }
+  }, [redirectGroupId]);
+
   const memberOrGroup = watch('memberOrGroup');
 
   const groupId = watch('groupId');
 
   useEffect(() => {
-    if (memberOrGroup === 'member') {
-      methods.setValue('groupId', '');
-    } else {
-      methods.setValue('memberId', '');
+    if (!redirectAccountId) {
+      if (memberOrGroup === 'member') {
+        methods.setValue('groupId', '');
+      } else {
+        methods.setValue('memberId', '');
+      }
     }
   }, [memberOrGroup]);
+
+  const isMfGroupDisabled = () => {
+    if (!!redirectMemberId === false && !!redirectGroupId === false) {
+      return false;
+    }
+    if (!!redirectMemberId === true && !!redirectGroupId === false) {
+      return true;
+    }
+
+    return false;
+  };
 
   return (
     <>
@@ -391,14 +413,23 @@ export const AddDeposit = () => {
                 <FormSwitchTab
                   name="memberOrGroup"
                   options={[
-                    { label: 'Member', value: 'member' },
-                    { label: 'Group', value: 'group' },
+                    { label: 'Member', value: 'member', isDisabled: !!redirectGroupId },
+                    {
+                      label: 'MF Group',
+                      value: 'group',
+                      isDisabled: isMfGroupDisabled(),
+                    },
                   ]}
                 />
 
                 {memberOrGroup === 'group' && (
                   <>
-                    <FormMFGroupSelect name="groupId" label="Group" isRequired />
+                    <FormMFGroupSelect
+                      name="groupId"
+                      label="MF Group"
+                      isRequired
+                      isDisabled={!!redirectGroupId}
+                    />
 
                     <FormMemberSelect isRequired name="memberId" label="Member" groupId={groupId} />
                   </>
@@ -714,6 +745,15 @@ export const AddDeposit = () => {
                 }}
                 errorCardProps={{
                   title: 'New Deposit Failed',
+                }}
+                onError={(error) => {
+                  if (error.__typename === 'ValidationError') {
+                    Object.keys(error.validationErrorMsg).map((key) =>
+                      methods.setError(key as keyof DepositFormInput, {
+                        message: error.validationErrorMsg[key][0] as string,
+                      })
+                    );
+                  }
                 }}
               >
                 <Button width="160px">Add New Deposit</Button>

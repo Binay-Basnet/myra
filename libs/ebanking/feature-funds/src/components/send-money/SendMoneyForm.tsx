@@ -42,6 +42,7 @@ export const SendMoneyForm = ({ setPaymentStatus }: SendMoneyProps) => {
   const { data: accountData } = useGetAccountListQuery({
     listFilter: {
       allowedAccount: true,
+      servieType: 'EBANKING',
     },
     transactionPagination: { after: '', first: 1 },
   });

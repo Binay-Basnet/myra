@@ -90,9 +90,8 @@ export const Documents = () => {
         </Box> */}
       </Box>
       <Modal
-        title="Add Decision"
+        title="Add Documents"
         width="lg"
-        hasCloseBtn={false}
         open={isOpen}
         onClose={onClose}
         primaryButtonLabel="Save"

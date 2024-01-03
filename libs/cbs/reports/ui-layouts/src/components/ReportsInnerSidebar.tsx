@@ -58,6 +58,11 @@ const REPORTS_INNER_TAB_LINKS: { title: string; to: string; acl: AclKey }[] = [
     acl: 'CBS_REPORTS_ACCOUNTING',
   },
   {
+    title: 'Micro Finance Reports',
+    to: '/cbs/reports/cbs-reports/micro-finance',
+    acl: 'CBS_REPORTS_MICROFINANCE',
+  },
+  {
     title: 'Others Report',
     to: '/cbs/reports/cbs-reports/others',
     acl: 'CBS_REPORTS_OTHER',

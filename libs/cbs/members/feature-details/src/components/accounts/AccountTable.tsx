@@ -131,7 +131,7 @@ export const AccountTable = ({ data, memberName, contactNo }: ILoanPaymentSchedu
         },
       },
       {
-        header: 'Group',
+        header: 'MF Group',
         accessorFn: (row) => row?.groupName,
       },
       {

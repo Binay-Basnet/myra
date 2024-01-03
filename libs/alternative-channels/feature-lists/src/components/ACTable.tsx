@@ -149,7 +149,7 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
   const columns = useMemo<Column<typeof alternativeList[0]>[]>(
     () => [
       {
-        accessorFn: (row) => row?.data?.name?.local,
+        accessorFn: (row) => row?.data?.name,
         header: t['acName'],
         meta: {
           width: '80%',

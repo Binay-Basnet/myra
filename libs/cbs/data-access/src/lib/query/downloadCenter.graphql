@@ -1,0 +1,24 @@
+query listDownloadCentreReports($filter: Filter, $pagination: Pagination) {
+  downloadCentre {
+    listDownloadCentreReports(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          createdAt
+          userId
+          title
+          url
+          fileType
+          statusOfCompletion
+          remark
+          downloadType
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}

@@ -266,6 +266,7 @@ export const AddWithdraw = () => {
   //  get redirect id from url
   const redirectMemberId = router.query['memberId'];
   const redirectAccountId = router.query['accountId'];
+  const redirectGroupId = router.query['groupId'];
 
   // redirect from member details
   useEffect(() => {
@@ -321,15 +322,37 @@ export const AddWithdraw = () => {
     return false;
   };
 
+  useEffect(() => {
+    if (redirectGroupId) {
+      methods.setValue('memberOrGroup', 'group');
+      methods.setValue('groupId', String(redirectGroupId));
+    }
+  }, [redirectGroupId]);
+
   const memberOrGroup = watch('memberOrGroup');
 
   const groupId = watch('groupId');
 
   useEffect(() => {
-    methods.setValue('groupId', '');
-    methods.setValue('memberId', '');
-    methods.setValue('accountId', '');
+    if (!redirectAccountId) {
+      if (memberOrGroup === 'member') {
+        methods.setValue('groupId', '');
+      } else {
+        methods.setValue('memberId', '');
+      }
+    }
   }, [memberOrGroup]);
+
+  const isMfGroupDisabled = () => {
+    if (!!redirectMemberId === false && !!redirectGroupId === false) {
+      return false;
+    }
+    if (!!redirectMemberId === true && !!redirectGroupId === false) {
+      return true;
+    }
+
+    return false;
+  };
 
   return (
     <FormLayout methods={methods} hasSidebar={Boolean(memberId && mode === 0)}>
@@ -342,14 +365,23 @@ export const AddWithdraw = () => {
               <FormSwitchTab
                 name="memberOrGroup"
                 options={[
-                  { label: 'Member', value: 'member' },
-                  { label: 'Group', value: 'group' },
+                  { label: 'Member', value: 'member', isDisabled: !!redirectGroupId },
+                  {
+                    label: 'MF Group',
+                    value: 'group',
+                    isDisabled: isMfGroupDisabled(),
+                  },
                 ]}
               />
 
               {memberOrGroup === 'group' && (
                 <>
-                  <FormMFGroupSelect name="groupId" label="Group" isRequired />
+                  <FormMFGroupSelect
+                    name="groupId"
+                    label="MF Group"
+                    isRequired
+                    isDisabled={!!redirectGroupId}
+                  />
 
                   <FormMemberSelect isRequired name="memberId" label="Member" groupId={groupId} />
                 </>

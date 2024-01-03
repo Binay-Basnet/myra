@@ -1,0 +1,39 @@
+query getMFTellerDayBookReport($data: MFTellerDayBookReportFilter!) {
+  report {
+    microfinanceReport {
+      mFTellerDayBookReport(data: $data) {
+        data {
+          openingBalance
+          tellerBalance
+          vaultBalance
+          receipts {
+            accountHead
+            amount
+            entries {
+              particular
+              ledger
+              voucherNo
+              amount
+            }
+          }
+          totalReceipts
+          totalAmount
+          payments {
+            accountHead
+            amount
+            entries {
+              particular
+              ledger
+              voucherNo
+              amount
+            }
+          }
+          totalPayment
+          closingAmount
+          remainingBalance
+          cashToVault
+        }
+      }
+    }
+  }
+}

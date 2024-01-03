@@ -32,11 +32,25 @@ export const GroupMeetingsAdd = () => {
   const { mutateAsync } = useUpsertMeetingMutation();
 
   const { data: centerListData } = useListMfCenterQuery({
-    pagination: getPaginationQuery(),
+    pagination: {
+      ...getPaginationQuery(),
+      first: -1,
+      order: {
+        arrange: 'ASC',
+        column: 'ID',
+      },
+    },
   });
 
   const { data: groupListData } = useListGroupQuery({
-    pagination: getPaginationQuery(),
+    pagination: {
+      ...getPaginationQuery(),
+      first: -1,
+      order: {
+        arrange: 'ASC',
+        column: 'ID',
+      },
+    },
     filter: {
       orConditions: [
         {
@@ -90,6 +104,15 @@ export const GroupMeetingsAdd = () => {
           })),
         } as MfMeetingInput,
       }),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key as keyof MfMeetingInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
     });
   };
 
@@ -113,7 +136,7 @@ export const GroupMeetingsAdd = () => {
             </GridItem>
             <GridItem colSpan={2}>
               <FormSelect
-                label="Select Group"
+                label="Select MF Group"
                 name="groupId"
                 options={
                   groupListData?.microFinance?.group?.listGroup?.edges.map((item) => ({

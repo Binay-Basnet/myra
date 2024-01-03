@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { CgMenuGridO } from 'react-icons/cg';
+import { HiOutlineDownload } from 'react-icons/hi';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -345,9 +346,18 @@ export const TopLevelHeader = () => {
           </Box>
           <Box gap="s8" flex={1} display="flex" justifyContent="flex-end" alignItems="center">
             <HeaderTransactionDate />
-
             <FloatingShortcutButton />
-
+            {process.env['NX_APP_ENV'] === 'dev' && (
+              <IconButton
+                icon={<Icon size="lg" as={HiOutlineDownload} />}
+                aria-label="help"
+                variant="ghost"
+                color="white"
+                borderRadius="br1"
+                _hover={{ backgroundColor: 'secondary.900' }}
+                onClick={() => router?.push(ROUTES?.DOWNLOADCENTER)}
+              />
+            )}
             <IconButton
               icon={<Icon size="lg" as={AiOutlineSetting} />}
               aria-label="help"
@@ -359,7 +369,6 @@ export const TopLevelHeader = () => {
               onClick={() => router.push(ROUTES?.SETTINGS_GENERAL_ORGANIZATION_DETAILS)}
               ref={settingShortcut}
             />
-
             <Popover placement="bottom-end" gutter={3}>
               {() => (
                 <>
@@ -425,7 +434,6 @@ export const TopLevelHeader = () => {
                 </>
               )}
             </Popover>
-
             <Popover placement="bottom-end" gutter={3}>
               {() => (
                 <>

@@ -37,7 +37,14 @@ export const CenterAdd = () => {
   const coordinatorServiceCenterWatch = watch('coordinatorServiceCenter');
 
   const { data: userListQueryData } = useGetSettingsUserListDataQuery({
-    paginate: getPaginationQuery(),
+    paginate: {
+      ...getPaginationQuery(),
+      first: -1,
+      order: {
+        arrange: 'ASC',
+        column: 'ID',
+      },
+    },
     filter: {
       orConditions: [
         {

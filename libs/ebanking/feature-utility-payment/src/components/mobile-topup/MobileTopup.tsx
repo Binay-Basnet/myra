@@ -18,7 +18,7 @@ interface MobileTopupProps {
 export const MobileTopup = ({ setPaymentStatus }: MobileTopupProps) => {
   const user = useAppSelector((state) => state.auth.cooperative.user);
   const { data } = useGetAccountListQuery({
-    listFilter: { allowedAccount: true },
+    listFilter: { allowedAccount: true, servieType: 'EBANKING' },
     transactionPagination: { after: '', first: 1 },
   });
 

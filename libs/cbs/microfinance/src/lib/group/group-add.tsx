@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { debounce } from 'lodash';
 
 import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
@@ -27,13 +29,21 @@ const documentMap = [
 ];
 
 export const GroupAdd = () => {
+  const [IDMember, setIDMember] = useState('');
   const methods = useForm();
   const router = useRouter();
   const { getValues, watch } = methods;
   const { mutateAsync } = useAddMfGroupMutation();
 
   const { data: centerListData } = useListMfCenterQuery({
-    pagination: getPaginationQuery(),
+    pagination: {
+      ...getPaginationQuery(),
+      first: -1,
+      order: {
+        arrange: 'ASC',
+        column: 'ID',
+      },
+    },
   });
 
   const centerIdWatch = watch('centerId');
@@ -47,6 +57,7 @@ export const GroupAdd = () => {
     {
       pagination: getPaginationQuery(),
       filter: {
+        query: IDMember,
         orConditions: [
           {
             andConditions: [
@@ -121,6 +132,11 @@ export const GroupAdd = () => {
                     value: item?.node?.id,
                   })) as { label: string; value: string }[]
                 }
+                onInputChange={debounce((id) => {
+                  // if (id) {
+                  setIDMember(id);
+                  // }
+                }, 800)}
               />
             </GridItem>
           </FormSection>

@@ -1,27 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Box } from '@myra-ui';
 
+import { useListUtilityServiceTypeQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
 import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMenu';
-
-const tabList = [
-  {
-    title: 'General',
-    to: ROUTES.SETTINGS_APPLICATION_ALTERNATIVE_CHANNEL_UTILITY_PAYMENT_GENERAL,
-  },
-  {
-    title: 'Topup',
-    to: ROUTES.SETTINGS_APPLICATION_ALTERNATIVE_CHANNEL_UTILITY_PAYMENT_TOPUP,
-  },
-  {
-    title: 'Internet',
-    to: ROUTES.SETTINGS_APPLICATION_ALTERNATIVE_CHANNEL_UTILITY_PAYMENT_INTERNET,
-  },
-];
 
 interface ISettingsLoanLayout {
   children: React.ReactNode;
@@ -31,6 +17,30 @@ export const SettingsAlternativeChannelUtilityPaymentLayout = ({
   children,
 }: ISettingsLoanLayout) => {
   const { t } = useTranslation();
+
+  const { data: utilityServicesData } = useListUtilityServiceTypeQuery({
+    filter: { isActive: true },
+  });
+
+  const tabList = useMemo(() => {
+    const temp: { title: string; to: string }[] = [
+      {
+        title: 'General',
+        to: ROUTES.SETTINGS_APPLICATION_ALTERNATIVE_CHANNEL_UTILITY_PAYMENT_GENERAL,
+      },
+    ];
+
+    const services = utilityServicesData?.settings?.ebanking?.utility?.listServiceType?.data;
+
+    services?.forEach((service) => {
+      temp.push({
+        title: service?.name as string,
+        to: `/settings/general/utility-payment/${service?.slug}`,
+      });
+    });
+
+    return temp;
+  }, [utilityServicesData]);
 
   return (
     <>

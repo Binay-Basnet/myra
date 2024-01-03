@@ -69,7 +69,12 @@ export const GroupMeetingsDetails = () => {
                 decision={meetingsDetailsData?.decision}
               />
             )}
-            {tabQuery === 'attendance' && <Attendance data={meetingsDetailsData?.attendance} />}
+            {tabQuery === 'attendance' && (
+              <Attendance
+                data={meetingsDetailsData?.attendance}
+                status={meetingsDetailsData?.oveview?.status}
+              />
+            )}
             {tabQuery === 'decision' && <Decision data={meetingsDetailsData?.decision} />}
             {tabQuery === 'documents' && <Documents />}
           </Box>

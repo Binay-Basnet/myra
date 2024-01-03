@@ -17,7 +17,6 @@ interface AccountTransferFormProps {
 export const AccountTransferForm = ({ setPaymentStatus }: AccountTransferFormProps) => {
   const user = useAppSelector((state) => state.auth.cooperative.user);
   const { data: destinationAccountsData } = useGetAccountListQuery({
-    listFilter: { allowedAccount: false },
     transactionPagination: { after: '', first: 1 },
   });
 
@@ -31,7 +30,7 @@ export const AccountTransferForm = ({ setPaymentStatus }: AccountTransferFormPro
   );
 
   const { data: sourceAccountsData } = useGetAccountListQuery({
-    listFilter: { allowedAccount: true },
+    listFilter: { allowedAccount: true, servieType: 'EBANKING' },
     transactionPagination: { after: '', first: 1 },
   });
 
