@@ -343,6 +343,17 @@ export const AddWithdraw = () => {
     }
   }, [memberOrGroup]);
 
+  const isMfGroupDisabled = () => {
+    if (!!redirectMemberId === false && !!redirectGroupId === false) {
+      return false;
+    }
+    if (!!redirectMemberId === true && !!redirectGroupId === false) {
+      return true;
+    }
+
+    return false;
+  };
+
   return (
     <FormLayout methods={methods} hasSidebar={Boolean(memberId && mode === 0)}>
       <FormLayout.Header title={`${t['addWithdrawNewWithdraw']} - ${featureCode?.newWithdraw}`} />
@@ -358,9 +369,7 @@ export const AddWithdraw = () => {
                   {
                     label: 'MF Group',
                     value: 'group',
-                    isDisabled:
-                      ((redirectMemberId as unknown as boolean) && !redirectAccountId) ||
-                      !redirectGroupId,
+                    isDisabled: isMfGroupDisabled(),
                   },
                 ]}
               />

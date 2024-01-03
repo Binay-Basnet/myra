@@ -27036,6 +27036,24 @@ export type ChangeLedgerParentMutation = {
   };
 };
 
+export type GetElementUrlMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetElementUrlMutation = {
+  downloadCentre: {
+    getElementUrl?: {
+      url?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type AddProfitToFundManagementDataMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: FundManagementInput;
@@ -52892,6 +52910,31 @@ export const useChangeLedgerParentMutation = <TError = unknown, TContext = unkno
     useAxios<ChangeLedgerParentMutation, ChangeLedgerParentMutationVariables>(
       ChangeLedgerParentDocument
     ),
+    options
+  );
+export const GetElementUrlDocument = `
+    mutation getElementUrl($id: ID!) {
+  downloadCentre {
+    getElementUrl(id: $id) {
+      url
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetElementUrlMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    GetElementUrlMutation,
+    TError,
+    GetElementUrlMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<GetElementUrlMutation, TError, GetElementUrlMutationVariables, TContext>(
+    ['getElementUrl'],
+    useAxios<GetElementUrlMutation, GetElementUrlMutationVariables>(GetElementUrlDocument),
     options
   );
 export const AddProfitToFundManagementDataDocument = `

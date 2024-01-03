@@ -386,6 +386,17 @@ export const AddDeposit = () => {
     }
   }, [memberOrGroup]);
 
+  const isMfGroupDisabled = () => {
+    if (!!redirectMemberId === false && !!redirectGroupId === false) {
+      return false;
+    }
+    if (!!redirectMemberId === true && !!redirectGroupId === false) {
+      return true;
+    }
+
+    return false;
+  };
+
   return (
     <>
       <FormLayout methods={methods} hasSidebar={Boolean(memberDetailData && mode === 0)}>
@@ -406,7 +417,7 @@ export const AddDeposit = () => {
                     {
                       label: 'MF Group',
                       value: 'group',
-                      isDisabled: (redirectMemberId && !redirectAccountId) || !redirectGroupId,
+                      isDisabled: isMfGroupDisabled(),
                     },
                   ]}
                 />

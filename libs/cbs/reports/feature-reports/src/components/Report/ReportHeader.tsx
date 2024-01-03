@@ -164,17 +164,19 @@ export const ReportHeader = ({ paths, hasSave = false, onExport }: PathBarProps)
                     Export Visible
                   </Text>
                 </GridItem>
-                <GridItem
-                  px="s16"
-                  py="s8"
-                  _hover={{ bg: 'gray.100' }}
-                  cursor="pointer"
-                  onClick={onExport}
-                >
-                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                    Export
-                  </Text>
-                </GridItem>
+                {process.env['NX_APP_ENV'] === 'dev' && (
+                  <GridItem
+                    px="s16"
+                    py="s8"
+                    _hover={{ bg: 'gray.100' }}
+                    cursor="pointer"
+                    onClick={onExport}
+                  >
+                    <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                      Export
+                    </Text>
+                  </GridItem>
+                )}
               </Grid>
             </PopoverBody>
           </PopoverContent>
