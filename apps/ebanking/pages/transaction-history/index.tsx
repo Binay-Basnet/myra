@@ -70,7 +70,6 @@ const TransactionHistoryPage = () => {
   });
 
   const { data: accountListData } = useGetAccountListQuery({
-    listFilter: { allowedAccount: false },
     transactionPagination: { after: '', first: 1 },
   });
 

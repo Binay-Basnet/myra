@@ -118,6 +118,7 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
           ... on LoanStatementReport {
             meta {
               accountNo
+              accountName
               approvedAmount
               interestRate
               loanType
@@ -490,6 +491,7 @@ query getLoanTransactionReport($data: LoanStatementReportSettings!) {
             meta {
               productName
               accountNo
+              accountName
               approvedAmount
               interestRate
               loanType

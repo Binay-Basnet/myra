@@ -1,5 +1,6 @@
 export const ROUTES = {
   HOME: '/',
+  DOWNLOADCENTER: '/download-center',
 
   CBS_NO_MEMBER_CODE: '/no-member-code',
 

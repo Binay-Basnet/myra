@@ -19,6 +19,7 @@ interface ICalendarCellProps {
 
   minDate?: Date;
   maxDate?: Date;
+  baseDate?: Date;
   testid?: string;
 }
 
@@ -30,6 +31,7 @@ export const CalendarCell = ({
   onDateStateChange,
   minDate = new Date('1913-03-13'),
   maxDate = new Date('2043-12-31'),
+  baseDate,
   testid,
 }: ICalendarCellProps) => {
   const isInvalid =
@@ -42,7 +44,9 @@ export const CalendarCell = ({
       ? isSameMonth(getJSDate(calendarDate), new Date(dateState.ad.year, dateState.ad.month - 1))
       : Number(calendarDate.month) === dateState.bs.month;
 
-  const isToday = isSameDay(getJSDate(calendarDate, calendarType));
+  const isToday = baseDate
+    ? isSameDay(getJSDate(calendarDate, calendarType), baseDate)
+    : isSameDay(getJSDate(calendarDate, calendarType));
 
   const isSelectedDate = dateState.current
     ? isSameDay(getJSDate(calendarDate, calendarType), dateState.current)

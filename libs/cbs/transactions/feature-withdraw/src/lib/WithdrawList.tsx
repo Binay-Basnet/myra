@@ -120,7 +120,7 @@ export const WithdrawList = () => {
         },
       },
       {
-        header: 'Group',
+        header: 'MF Group',
         accessorFn: (row) => row?.node?.groupName,
       },
       {

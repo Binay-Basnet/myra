@@ -163,6 +163,7 @@ query getSavingStatement($data: SavingStatementReportSettings!) {
             meta {
               currentInterestRate
               accountNo
+              accountName
               savingType
               productName
             }

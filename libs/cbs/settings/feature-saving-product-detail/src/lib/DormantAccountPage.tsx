@@ -11,7 +11,7 @@ import { SideBar } from '../components';
 
 export const DormantAccountListPage = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const { id, search } = router.query;
 
   const { data, isLoading } = useGetAccountTableListQuery({
     paginate: {
@@ -20,7 +20,7 @@ export const DormantAccountListPage = () => {
       order: null,
     },
     filter: {
-      // query: id as string,
+      query: search as string,
       orConditions: [
         {
           andConditions: [

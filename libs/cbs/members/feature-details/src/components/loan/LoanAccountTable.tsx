@@ -162,7 +162,7 @@ export const LoanTable = ({
         },
       },
       {
-        header: 'Group',
+        header: 'MF Group',
         accessorFn: (row) => row?.groupName,
       },
       {
@@ -260,7 +260,7 @@ export const LoanTable = ({
         cell: (props) => props?.row?.original?.subscriptionDate,
       },
       {
-        header: 'Group',
+        header: 'MF Group',
         accessorFn: (row) => row?.groupName,
       },
       {

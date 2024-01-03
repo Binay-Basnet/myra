@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { MultiValue, SingleValue } from 'chakra-react-select';
 import { debounce } from 'lodash';
 
 import { MemberSelect, MemberSelectProps, Option } from '@myra-ui/forms';
@@ -25,6 +26,7 @@ interface IMemberSelectProps extends MemberSelectProps {
   isCurrentBranchMember?: boolean;
   memberType?: MemberType;
   groupId?: string;
+  onChangeAction?: (newValue: MultiValue<Option> | SingleValue<Option>) => void;
 }
 
 export const FormMemberSelect = ({
@@ -37,6 +39,7 @@ export const FormMemberSelect = ({
   isCurrentBranchMember,
   memberType,
   groupId,
+  onChangeAction,
   ...rest
 }: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
@@ -274,12 +277,14 @@ export const FormMemberSelect = ({
           onChange={(newValue: Option | Option[]) => {
             if (Array.isArray(newValue)) {
               onChange(newValue);
+              onChangeAction && onChangeAction(newValue);
             } else {
               // const { value: newVal } = newValue as Option;
 
               const newVal = (newValue as Option)?.value;
 
               onChange(newVal);
+              onChangeAction && onChangeAction(newValue);
             }
           }}
           onInputChange={debounce((id) => {

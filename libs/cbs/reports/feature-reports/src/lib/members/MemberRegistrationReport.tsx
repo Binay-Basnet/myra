@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
-import { Box, GridItem, Text } from '@myra-ui';
+import { Box, GridItem, Text, toast } from '@myra-ui';
 
 import {
   Address,
@@ -9,6 +10,7 @@ import {
   MemberOtherData,
   MemberRegistrationReportData,
   MemberType,
+  useGetMemberRegistrationReportForExportQuery,
   useGetMemberRegistrationReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
@@ -43,6 +45,7 @@ export const MemberRegisterReport = () => {
     filters?.filter?.memberType && filters?.filter?.memberType.length !== 0
       ? filters?.filter?.memberType?.map((m) => m)
       : null;
+
   const { data: memberRegistrationReportData, isFetching } = useGetMemberRegistrationReportQuery(
     {
       data: {
@@ -72,12 +75,7 @@ export const MemberRegisterReport = () => {
       report={ReportEnum.MEMBER_REGISTER_REPORT}
     >
       <Report.Header>
-        <Report.PageHeader
-          paths={[
-            { label: 'Member Reports', link: '/cbs/reports/cbs-reports/members' },
-            { label: 'Member Register', link: '/cbs/reports/cbs-reports/members/register/new' },
-          ]}
-        />
+        <ReportHeaderWatch />
         <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect
@@ -354,5 +352,54 @@ export const MemberRegisterReport = () => {
         </Report.Filters>
       </Report.Body>
     </Report>
+  );
+};
+
+const ReportHeaderWatch = () => {
+  const [triggerExport, setTriggerExport] = useState(false);
+  const methods = useFormContext();
+
+  const values = methods?.getValues();
+
+  const branchIds =
+    values?.['branchId'] && values?.['branchId'].length !== 0
+      ? values?.['branchId']?.map((t) => t.value)
+      : null;
+
+  const { data: memberRegistrationReportData, isFetching } =
+    useGetMemberRegistrationReportForExportQuery(
+      {
+        data: {
+          period: values?.['period'] as LocalizedDateFilter,
+          branchId: branchIds,
+          filter: {
+            isExport: true,
+          },
+        },
+      },
+      { enabled: triggerExport, onSettled: () => setTriggerExport(false) }
+    );
+
+  const exportData =
+    memberRegistrationReportData?.report?.memberReport?.memberRegistrationReport?.success;
+
+  useEffect(() => {
+    if (exportData?.message) {
+      toast({
+        id: 'export',
+        type: 'success',
+        message: exportData?.message,
+      });
+    }
+  }, [isFetching]);
+
+  return (
+    <Report.PageHeader
+      paths={[
+        { label: 'Member Reports', link: '/cbs/reports/cbs-reports/members' },
+        { label: 'Member Register', link: '/cbs/reports/cbs-reports/members/register/new' },
+      ]}
+      onExport={() => setTriggerExport(true)}
+    />
   );
 };

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useRouter } from 'next/router';
 import {
@@ -11,13 +11,14 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { Table } from '@tanstack/react-table';
-import debounce from 'lodash/debounce';
+import omit from 'lodash/omit';
 import qs from 'qs';
 
 import { DEFAULT_PAGE_SIZE, GridItem, PopoverTrigger, SmallPagination } from '@myra-ui/components';
 import { Box, Button, Grid, Icon } from '@myra-ui/foundations';
 
 import { exportVisibleTableToExcel } from '@coop/cbs/utils';
+import { useDebounce } from '@coop/shared/utils';
 
 export const SearchIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -93,7 +94,7 @@ export const TableSearch = <T,>({
   globalFilter,
   setGlobalFilter,
 }: TableSearchProps<T>) => {
-  const [search, setSearch] = React.useState('');
+  const [search, setSearch] = React.useState<string | null>(null);
   const router = useRouter();
   const searchTerm = router?.query['search'] as string;
 
@@ -114,6 +115,23 @@ export const TableSearch = <T,>({
     }
   }, []);
 
+  const debouncedValue = useDebounce(search, 800);
+
+  useEffect(() => {
+    if (debouncedValue !== null) {
+      if (tablePagination) {
+        setGlobalFilter(debouncedValue as string);
+      } else {
+        router.push({
+          query: {
+            ...router.query,
+            search: debouncedValue,
+          },
+        });
+      }
+    }
+  }, [debouncedValue]);
+
   return (
     <Box h="3.125rem" bg="white" display="flex" borderBottom="1px" borderColor="border.layout">
       <InputGroup h="3.125rem" bg="white" borderBottom="1px" borderColor="border.layout">
@@ -130,19 +148,8 @@ export const TableSearch = <T,>({
           color="gray.600"
           _focus={{ border: 'solid 1px', borderColor: 'primary.300' }}
           _active={{ border: 'solid 1px', borderColor: 'primary.500' }}
-          defaultValue={tablePagination ? globalFilter : search && search}
-          onChange={debounce((e) => {
-            if (tablePagination) {
-              setGlobalFilter(e.target.value);
-            } else {
-              router.push({
-                query: {
-                  ...router.query,
-                  search: e.target.value,
-                },
-              });
-            }
-          }, 800)}
+          value={(tablePagination ? globalFilter : search && search) as string}
+          onChange={(e) => setSearch(e.target.value)}
         />
       </InputGroup>
       {!isStatic && (
@@ -164,7 +171,16 @@ export const TableSearch = <T,>({
               display="flex"
               alignItems="center"
               gap="s8"
-              onClick={() => router.push({ query: {} })}
+              onClick={() => {
+                router.push({
+                  query: { ...omit(router.query, ['paginate', 'sort', 'filter', 'search']) },
+                });
+                setSearch('');
+
+                if (tablePagination) {
+                  table.resetPagination();
+                }
+              }}
             >
               <Icon as={RefreshIcon} size="sm" />
               <span>Reset Table</span>

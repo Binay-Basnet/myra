@@ -102,7 +102,7 @@ export const BalanceSheetReport = () => {
             <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Date" />
+            <FormDatePicker name="period.from" label="Date" isTransactionBaseDate />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

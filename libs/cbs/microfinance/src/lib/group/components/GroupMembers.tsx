@@ -79,13 +79,13 @@ export const GroupMembers = (props: { data: Member[]; allowableServiceCenters: s
 
   return (
     <>
-      <DetailsPageHeaderBox title="Group Members" />
+      <DetailsPageHeaderBox title="MF Group Members" />
       <Box m="s24" p="s12" bg="white" borderRadius={5}>
         <FormProvider {...methods}>
           <Box display="flex" flexDir="column" gap="s8">
             <FormEditableTable
               name="memberIds"
-              label="Group Members"
+              label="MF Group Members"
               hideSN
               canDeleteRow
               searchPlaceholder="Search for Members"

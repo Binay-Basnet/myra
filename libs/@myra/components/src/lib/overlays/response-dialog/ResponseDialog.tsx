@@ -76,6 +76,7 @@ export const ResponseDialog = <T extends Record<string, unknown>>({
                   errorModalProps.onToggle();
                   setIsLoading(false);
                 } else {
+                  onError && onError(errorKeys[0]);
                   setErrorMessage('Some fields are empty or Invalid');
                   errorModalProps.onToggle();
                   setIsLoading(false);

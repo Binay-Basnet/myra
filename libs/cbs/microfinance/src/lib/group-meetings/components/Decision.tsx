@@ -3,11 +3,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Button, FileViewer, Modal, Text } from '@myra-ui';
+import { asyncToast, Box, Button, Modal, Text } from '@myra-ui';
 
 import { MfDecisions, useUpsertDecisionMutation } from '@coop/cbs/data-access';
 import { DetailsPageHeaderBox } from '@coop/shared/components';
-import { FormFileInput, FormTextArea } from '@coop/shared/form';
+import { FormTextArea } from '@coop/shared/form';
 
 export const Decision = (props: { data: MfDecisions }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -71,16 +71,10 @@ export const Decision = (props: { data: MfDecisions }) => {
         <Text fontSize="r1" fontWeight="medium" mb="s8">
           {data?.note || '-'}
         </Text>
-        <Box w="-webkit-fit-content">
-          {data?.files?.map((item) => (
-            <FileViewer fileName={item?.identifier} fileUrl={item?.url} />
-          ))}
-        </Box>
       </Box>
       <Modal
         title="Add Decision"
         width="lg"
-        hasCloseBtn={false}
         open={isOpen}
         onClose={onClose}
         primaryButtonLabel="Save"
@@ -89,7 +83,6 @@ export const Decision = (props: { data: MfDecisions }) => {
         <FormProvider {...methods}>
           <Box display="flex" flexDir="column" gap="s8">
             <FormTextArea label="Decision" name="note" />
-            <FormFileInput label="Attachment(Optional)" name="files" />
           </Box>
         </FormProvider>
       </Modal>

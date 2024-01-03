@@ -1235,9 +1235,10 @@ export type AgentFilterMapping = {
 };
 
 export type AgentMember = {
+  id: Scalars['ID'];
   memberCode: Scalars['String'];
-  memberID: Scalars['ID'];
   memberName: Scalars['String'];
+  memberProfile?: Maybe<Scalars['String']>;
 };
 
 export type AgentMemberNode = {
@@ -1620,7 +1621,7 @@ export type AlternativeChannelActivation = {
   id?: Maybe<Scalars['String']>;
   lastActive?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['Localized']>;
+  name?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
   serviceStatus?: Maybe<AlternativeChannelStatus>;
   serviceType?: Maybe<AlternativeChannelServiceType>;
@@ -3895,8 +3896,10 @@ export const CashValue = {
 export type CashValue = typeof CashValue[keyof typeof CashValue];
 export type CenterOverview = {
   address?: Maybe<Address>;
+  allowedBranchDetail?: Maybe<Array<BranchMinimal>>;
   allowedBranches?: Maybe<Array<Maybe<Scalars['String']>>>;
   centerCoordinator?: Maybe<MyraUserFormStateData>;
+  centerCoordinatorBranch?: Maybe<BranchMinimal>;
   centerId?: Maybe<Scalars['String']>;
   centerName?: Maybe<Scalars['String']>;
   groupList?: Maybe<Array<Maybe<MfGroupOverview>>>;
@@ -6702,6 +6705,46 @@ export type DosariReportResult = {
   data?: Maybe<Array<Maybe<DosariReportData>>>;
   error?: Maybe<QueryError>;
   summary?: Maybe<LoanAgingStatementSummary>;
+};
+
+export type DownloadCenterConnection = {
+  edges?: Maybe<Array<Maybe<DownloadCenterDataEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type DownloadCenterDataEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<DownloadCenterNode>;
+};
+
+export type DownloadCenterMutation = {
+  getElementUrl?: Maybe<StringWithError>;
+};
+
+export type DownloadCenterMutationGetElementUrlArgs = {
+  id: Scalars['ID'];
+};
+
+export type DownloadCenterNode = {
+  createdAt?: Maybe<Scalars['Localized']>;
+  downloadType?: Maybe<Scalars['String']>;
+  fileType?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  remark?: Maybe<Scalars['String']>;
+  statusOfCompletion?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['ID']>;
+};
+
+export type DownloadCenterQuery = {
+  listDownloadCentreReports?: Maybe<DownloadCenterConnection>;
+};
+
+export type DownloadCenterQueryListDownloadCentreReportsArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type Dues = {
@@ -14337,6 +14380,7 @@ export const ListType = {
 
 export type ListType = typeof ListType[keyof typeof ListType];
 export type LoanAccReportDetails = {
+  accountName?: Maybe<Scalars['String']>;
   accountNo?: Maybe<Scalars['String']>;
   approvedAmount?: Maybe<Scalars['String']>;
   charge?: Maybe<Scalars['String']>;
@@ -16650,9 +16694,9 @@ export type MfCenterEntry = {
 
 export type MfCenterInput = {
   address?: InputMaybe<KymAddressInput>;
-  centerCode: Scalars['String'];
-  centerName: Scalars['String'];
-  coordinatorId: Scalars['String'];
+  centerCode?: InputMaybe<Scalars['String']>;
+  centerName?: InputMaybe<Scalars['String']>;
+  coordinatorId?: InputMaybe<Scalars['String']>;
   coordinatorServiceCenter?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   documents?: InputMaybe<Array<DocumentInsertInput>>;
@@ -16802,10 +16846,10 @@ export type MfMeetingDocumentsInput = {
 
 export type MfMeetingInput = {
   agenda?: InputMaybe<Scalars['String']>;
-  centerId: Scalars['ID'];
+  centerId?: InputMaybe<Scalars['ID']>;
   date?: InputMaybe<Scalars['Localized']>;
   endTime?: InputMaybe<Scalars['Time']>;
-  groupId: Scalars['ID'];
+  groupId?: InputMaybe<Scalars['ID']>;
   memberIds?: InputMaybe<Array<InputMaybe<MembersInvited>>>;
   notes?: InputMaybe<Scalars['String']>;
   startTime?: InputMaybe<Scalars['Time']>;
@@ -16840,7 +16884,7 @@ export type MfMeetingOverview = {
 };
 
 export type MfMeetingResult = {
-  error?: Maybe<QueryError>;
+  error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -16856,6 +16900,13 @@ export const MfObjectState = {
 } as const;
 
 export type MfObjectState = typeof MfObjectState[keyof typeof MfObjectState];
+export type MfTellerDayBookReportFilter = {
+  branchId: Array<InputMaybe<Scalars['String']>>;
+  groupId: Array<Scalars['String']>;
+  period?: InputMaybe<LocalizedDateFilter>;
+  user?: InputMaybe<Scalars['ID']>;
+};
+
 export type MpGroupMeetings = {
   pastMeetingCount?: Maybe<Scalars['Int']>;
   pastMeetings?: Maybe<Array<Maybe<Meetings>>>;
@@ -17757,6 +17808,7 @@ export type MemberRecentTransactions = {
 export type MemberRegFilters = {
   gender?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   institutionType?: InputMaybe<Scalars['ID']>;
+  isExport?: InputMaybe<Scalars['Boolean']>;
   memberType?: InputMaybe<Array<InputMaybe<MemberType>>>;
   occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
 };
@@ -17775,6 +17827,7 @@ export type MemberRegistrationReportData = {
 export type MemberRegistrationReportResult = {
   data?: Maybe<MemberRegistrationReport>;
   error?: Maybe<QueryError>;
+  success?: Maybe<QuerySuccess>;
 };
 
 export type MemberReport = {
@@ -18253,6 +18306,14 @@ export type MicroFinanceTransactionMutationBulkDepositArgs = {
   data: MfBulkDepositInput;
 };
 
+export type MicrofinanceReport = {
+  mFTellerDayBookReport: DayBookReportResult;
+};
+
+export type MicrofinanceReportMfTellerDayBookReportArgs = {
+  data: MfTellerDayBookReportFilter;
+};
+
 export type MinMaxFilter = {
   max?: InputMaybe<Scalars['String']>;
   min?: InputMaybe<Scalars['String']>;
@@ -18445,6 +18506,7 @@ export type Mutation = {
   bpm: BpmMutation;
   collection: CollectionMutation;
   document: DocumentMutation;
+  downloadCentre: DownloadCenterMutation;
   example: ExampleMutation;
   hr: HrMutation;
   inventory: InventoryMutation;
@@ -19976,6 +20038,7 @@ export type Query = {
   config: ConfigQuery;
   dashboard: DashboardQuery;
   document: DocumentQuery;
+  downloadCentre: DownloadCenterQuery;
   endOfDay: EodQuery;
   example: ExampleQuery;
   form: FormQuery;
@@ -20003,6 +20066,11 @@ export type QueryError = AuthorizationError | BadRequestError | NotFoundError | 
 export type QueryResult = {
   error?: Maybe<QueryError>;
   result?: Maybe<Scalars['Any']>;
+};
+
+export type QuerySuccess = {
+  code: Scalars['Int'];
+  message: Scalars['String'];
 };
 
 export const Resource = {
@@ -20082,6 +20150,7 @@ export const Resource = {
   CbsReportsInventory: 'CBS_REPORTS_INVENTORY',
   CbsReportsLoan: 'CBS_REPORTS_LOAN',
   CbsReportsMember: 'CBS_REPORTS_MEMBER',
+  CbsReportsMicrofinance: 'CBS_REPORTS_MICROFINANCE',
   CbsReportsMobileBanking: 'CBS_REPORTS_MOBILE_BANKING',
   CbsReportsOther: 'CBS_REPORTS_OTHER',
   CbsReportsSavings: 'CBS_REPORTS_SAVINGS',
@@ -20203,6 +20272,7 @@ export const Resource = {
   ReportsMemberMemberTransfer: 'REPORTS_MEMBER_MEMBER_TRANSFER',
   ReportsMemberMemberWiseBalance: 'REPORTS_MEMBER_MEMBER_WISE_BALANCE',
   ReportsMemberMinorList: 'REPORTS_MEMBER_MINOR_LIST',
+  ReportsMfTxnTellerDaybook: 'REPORTS_MF_TXN_TELLER_DAYBOOK',
   ReportsOthersAdjustedLedger: 'REPORTS_OTHERS_ADJUSTED_LEDGER',
   ReportsOthersCommitteeRegisteredDetails: 'REPORTS_OTHERS_COMMITTEE_REGISTERED_DETAILS',
   ReportsOthersCopomisFinancial: 'REPORTS_OTHERS_COPOMIS_FINANCIAL',
@@ -20467,6 +20537,7 @@ export type ReportQuery = {
   listReports: ReportListConnection;
   loanReport: LoanReport;
   memberReport: MemberReport;
+  microfinanceReport: MicrofinanceReport;
   mobileBankingReport: MobileBankingReport;
   otherReport: OtherReport;
   pearlsReport?: Maybe<PearlsReportResult>;
@@ -21572,6 +21643,7 @@ export type SavingStatement = {
 };
 
 export type SavingStatementMeta = {
+  accountName?: Maybe<Scalars['String']>;
   accountNo?: Maybe<Scalars['String']>;
   currentInterestRate?: Maybe<Scalars['Float']>;
   installments?: Maybe<Scalars['Int']>;
@@ -23157,6 +23229,11 @@ export type StrTransactionActionInput = {
   declineReason?: InputMaybe<Scalars['String']>;
   isAccepted: Scalars['Boolean'];
   transactionId: Scalars['ID'];
+};
+
+export type StringWithError = {
+  error?: Maybe<QueryError>;
+  url?: Maybe<Scalars['String']>;
 };
 
 export type SubmissionListConnection = {
@@ -26975,6 +27052,24 @@ export type ChangeLedgerParentMutation = {
   };
 };
 
+export type GetElementUrlMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetElementUrlMutation = {
+  downloadCentre: {
+    getElementUrl?: {
+      url?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type AddProfitToFundManagementDataMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: FundManagementInput;
@@ -28497,6 +28592,7 @@ export type UpsertMeetingMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28517,6 +28613,7 @@ export type AddAttendanceMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28538,6 +28635,7 @@ export type UpsertDecisionMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28559,6 +28657,7 @@ export type AddMfDocumentsMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -28580,6 +28679,7 @@ export type ChangeMeetingStatusMutation = {
           | MutationError_BadRequestError_Fragment
           | MutationError_NotFoundError_Fragment
           | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
           | null;
       } | null;
     };
@@ -34168,7 +34268,7 @@ export type ListAgentMemberQuery = {
       totalCount: number;
       edges?: Array<{
         cursor: string;
-        node?: { memberName: string; memberID: string; memberCode: string } | null;
+        node?: { memberName: string; id: string; memberCode: string } | null;
       } | null> | null;
       pageInfo?: {
         hasNextPage: boolean;
@@ -35283,6 +35383,34 @@ export type GetDashboardInfoQuery = {
           totalBranch?: number | null;
         } | null;
       } | null;
+    } | null;
+  };
+};
+
+export type ListDownloadCentreReportsQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type ListDownloadCentreReportsQuery = {
+  downloadCentre: {
+    listDownloadCentreReports?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor?: string | null;
+        node?: {
+          id?: string | null;
+          createdAt?: Record<'local' | 'en' | 'np', string> | null;
+          userId?: string | null;
+          title?: string | null;
+          url?: string | null;
+          fileType?: string | null;
+          statusOfCompletion?: string | null;
+          remark?: string | null;
+          downloadType?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: PaginationFragment | null;
     } | null;
   };
 };
@@ -40759,6 +40887,18 @@ export type CenterDetailsQuery = {
             houseNo?: string | null;
             coordinates?: { longitude?: number | null; latitude?: number | null } | null;
           } | null;
+          allowedBranchDetail?: Array<{
+            id: string;
+            branchCode?: string | null;
+            name: string;
+          }> | null;
+          centerCoordinatorBranch?: { id: string; branchCode?: string | null; name: string } | null;
+          groupList?: Array<{
+            createdDate?: Record<'local' | 'en' | 'np', string> | null;
+            groupName?: string | null;
+            totalMember?: number | null;
+            groupCoordinator?: { name?: Record<'local' | 'en' | 'np', string> | null } | null;
+          } | null> | null;
         } | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -41447,6 +41587,7 @@ export type GetSavingStatementQuery = {
               meta?: {
                 currentInterestRate?: number | null;
                 accountNo?: string | null;
+                accountName?: string | null;
                 savingType?: string | null;
                 productName?: string | null;
               } | null;
@@ -42183,6 +42324,7 @@ export type GetLoanStatementReportQuery = {
           | {
               meta?: {
                 accountNo?: string | null;
+                accountName?: string | null;
                 approvedAmount?: string | null;
                 interestRate?: number | null;
                 loanType?: string | null;
@@ -42589,6 +42731,7 @@ export type GetLoanTransactionReportQuery = {
               meta?: {
                 productName?: string | null;
                 accountNo?: string | null;
+                accountName?: string | null;
                 approvedAmount?: string | null;
                 interestRate?: number | null;
                 loanType?: string | null;
@@ -42846,6 +42989,33 @@ export type GetMemberRegistrationReportQuery = {
             } | null;
           } | null> | null;
         } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+        success?: { message: string; code: number } | null;
+      } | null;
+    };
+  };
+};
+
+export type GetMemberRegistrationReportForExportQueryVariables = Exact<{
+  data?: InputMaybe<MemberRegistrationReportData>;
+}>;
+
+export type GetMemberRegistrationReportForExportQuery = {
+  report: {
+    memberReport: {
+      memberRegistrationReport?: {
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+        success?: { message: string; code: number } | null;
       } | null;
     };
   };
@@ -43033,6 +43203,50 @@ export type GetMemberTransferReportQuery = {
           }> | null;
         } | null> | null;
       } | null;
+    };
+  };
+};
+
+export type GetMfTellerDayBookReportQueryVariables = Exact<{
+  data: MfTellerDayBookReportFilter;
+}>;
+
+export type GetMfTellerDayBookReportQuery = {
+  report: {
+    microfinanceReport: {
+      mFTellerDayBookReport: {
+        data?: {
+          openingBalance?: string | null;
+          tellerBalance?: string | null;
+          vaultBalance?: string | null;
+          totalReceipts?: string | null;
+          totalAmount?: string | null;
+          totalPayment?: string | null;
+          closingAmount?: string | null;
+          remainingBalance?: string | null;
+          cashToVault?: string | null;
+          receipts?: Array<{
+            accountHead?: string | null;
+            amount?: string | null;
+            entries?: Array<{
+              particular?: string | null;
+              ledger?: string | null;
+              voucherNo?: string | null;
+              amount?: string | null;
+            } | null> | null;
+          } | null> | null;
+          payments?: Array<{
+            accountHead?: string | null;
+            amount?: string | null;
+            entries?: Array<{
+              particular?: string | null;
+              ledger?: string | null;
+              voucherNo?: string | null;
+              amount?: string | null;
+            } | null> | null;
+          } | null> | null;
+        } | null;
+      };
     };
   };
 };
@@ -44739,7 +44953,7 @@ export type GetAlternativeChannelListQuery = {
         cursor: string;
         data?: {
           id?: string | null;
-          name?: Record<'local' | 'en' | 'np', string> | null;
+          name?: string | null;
           memberId?: string | null;
           coopConnection?: boolean | null;
           lastActive?: string | null;
@@ -44766,7 +44980,7 @@ export type GetUpdatedAlternativeChannelListQuery = {
         cursor: string;
         data?: {
           id?: string | null;
-          name?: Record<'local' | 'en' | 'np', string> | null;
+          name?: string | null;
           memberId?: string | null;
           coopConnection?: boolean | null;
           lastActive?: string | null;
@@ -52715,6 +52929,31 @@ export const useChangeLedgerParentMutation = <TError = unknown, TContext = unkno
     useAxios<ChangeLedgerParentMutation, ChangeLedgerParentMutationVariables>(
       ChangeLedgerParentDocument
     ),
+    options
+  );
+export const GetElementUrlDocument = `
+    mutation getElementUrl($id: ID!) {
+  downloadCentre {
+    getElementUrl(id: $id) {
+      url
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetElementUrlMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    GetElementUrlMutation,
+    TError,
+    GetElementUrlMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<GetElementUrlMutation, TError, GetElementUrlMutationVariables, TContext>(
+    ['getElementUrl'],
+    useAxios<GetElementUrlMutation, GetElementUrlMutationVariables>(GetElementUrlDocument),
     options
   );
 export const AddProfitToFundManagementDataDocument = `
@@ -62858,7 +63097,7 @@ export const ListAgentMemberDocument = `
       edges {
         node {
           memberName
-          memberID
+          id
           memberCode
         }
         cursor
@@ -64220,6 +64459,48 @@ export const useGetDashboardInfoQuery = <TData = GetDashboardInfoQuery, TError =
       null,
       variables
     ),
+    options
+  );
+export const ListDownloadCentreReportsDocument = `
+    query listDownloadCentreReports($filter: Filter, $pagination: Pagination) {
+  downloadCentre {
+    listDownloadCentreReports(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          createdAt
+          userId
+          title
+          url
+          fileType
+          statusOfCompletion
+          remark
+          downloadType
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useListDownloadCentreReportsQuery = <
+  TData = ListDownloadCentreReportsQuery,
+  TError = unknown
+>(
+  variables?: ListDownloadCentreReportsQueryVariables,
+  options?: UseQueryOptions<ListDownloadCentreReportsQuery, TError, TData>
+) =>
+  useQuery<ListDownloadCentreReportsQuery, TError, TData>(
+    variables === undefined
+      ? ['listDownloadCentreReports']
+      : ['listDownloadCentreReports', variables],
+    useAxios<ListDownloadCentreReportsQuery, ListDownloadCentreReportsQueryVariables>(
+      ListDownloadCentreReportsDocument
+    ).bind(null, variables),
     options
   );
 export const GetCurrentFundAmountDocument = `
@@ -71330,6 +71611,24 @@ export const CenterDetailsDocument = `
             }
           }
           allowedBranches
+          allowedBranchDetail {
+            id
+            branchCode
+            name
+          }
+          centerCoordinatorBranch {
+            id
+            branchCode
+            name
+          }
+          groupList {
+            createdDate
+            groupName
+            groupCoordinator {
+              name
+            }
+            totalMember
+          }
         }
         error {
           ...MutationError
@@ -72242,6 +72541,7 @@ export const GetSavingStatementDocument = `
             meta {
               currentInterestRate
               accountNo
+              accountName
               savingType
               productName
             }
@@ -73201,6 +73501,7 @@ export const GetLoanStatementReportDocument = `
           ... on LoanStatementReport {
             meta {
               accountNo
+              accountName
               approvedAmount
               interestRate
               loanType
@@ -73707,6 +74008,7 @@ export const GetLoanTransactionReportDocument = `
             meta {
               productName
               accountNo
+              accountName
               approvedAmount
               interestRate
               loanType
@@ -74028,11 +74330,19 @@ export const GetMemberRegistrationReportDocument = `
             activeDate
           }
         }
+        error {
+          ...MutationError
+        }
+        success {
+          message
+          code
+        }
       }
     }
   }
 }
-    ${AddressFragmentDoc}`;
+    ${AddressFragmentDoc}
+${MutationErrorFragmentDoc}`;
 export const useGetMemberRegistrationReportQuery = <
   TData = GetMemberRegistrationReportQuery,
   TError = unknown
@@ -74047,6 +74357,40 @@ export const useGetMemberRegistrationReportQuery = <
     useAxios<GetMemberRegistrationReportQuery, GetMemberRegistrationReportQueryVariables>(
       GetMemberRegistrationReportDocument
     ).bind(null, variables),
+    options
+  );
+export const GetMemberRegistrationReportForExportDocument = `
+    query getMemberRegistrationReportForExport($data: MemberRegistrationReportData) {
+  report {
+    memberReport {
+      memberRegistrationReport(data: $data) {
+        error {
+          ...MutationError
+        }
+        success {
+          message
+          code
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetMemberRegistrationReportForExportQuery = <
+  TData = GetMemberRegistrationReportForExportQuery,
+  TError = unknown
+>(
+  variables?: GetMemberRegistrationReportForExportQueryVariables,
+  options?: UseQueryOptions<GetMemberRegistrationReportForExportQuery, TError, TData>
+) =>
+  useQuery<GetMemberRegistrationReportForExportQuery, TError, TData>(
+    variables === undefined
+      ? ['getMemberRegistrationReportForExport']
+      : ['getMemberRegistrationReportForExport', variables],
+    useAxios<
+      GetMemberRegistrationReportForExportQuery,
+      GetMemberRegistrationReportForExportQueryVariables
+    >(GetMemberRegistrationReportForExportDocument).bind(null, variables),
     options
   );
 export const GetMemberWiseBalanceReportDocument = `
@@ -74289,6 +74633,61 @@ export const useGetMemberTransferReportQuery = <
     ['getMemberTransferReport', variables],
     useAxios<GetMemberTransferReportQuery, GetMemberTransferReportQueryVariables>(
       GetMemberTransferReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMfTellerDayBookReportDocument = `
+    query getMFTellerDayBookReport($data: MFTellerDayBookReportFilter!) {
+  report {
+    microfinanceReport {
+      mFTellerDayBookReport(data: $data) {
+        data {
+          openingBalance
+          tellerBalance
+          vaultBalance
+          receipts {
+            accountHead
+            amount
+            entries {
+              particular
+              ledger
+              voucherNo
+              amount
+            }
+          }
+          totalReceipts
+          totalAmount
+          payments {
+            accountHead
+            amount
+            entries {
+              particular
+              ledger
+              voucherNo
+              amount
+            }
+          }
+          totalPayment
+          closingAmount
+          remainingBalance
+          cashToVault
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMfTellerDayBookReportQuery = <
+  TData = GetMfTellerDayBookReportQuery,
+  TError = unknown
+>(
+  variables: GetMfTellerDayBookReportQueryVariables,
+  options?: UseQueryOptions<GetMfTellerDayBookReportQuery, TError, TData>
+) =>
+  useQuery<GetMfTellerDayBookReportQuery, TError, TData>(
+    ['getMFTellerDayBookReport', variables],
+    useAxios<GetMfTellerDayBookReportQuery, GetMfTellerDayBookReportQueryVariables>(
+      GetMfTellerDayBookReportDocument
     ).bind(null, variables),
     options
   );

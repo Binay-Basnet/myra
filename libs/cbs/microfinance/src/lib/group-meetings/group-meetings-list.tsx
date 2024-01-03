@@ -22,7 +22,7 @@ export const GroupMeetingsList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Group Name',
+        header: 'MF Group Name',
         accessorFn: (row) => row?.node?.groupName,
       },
       {

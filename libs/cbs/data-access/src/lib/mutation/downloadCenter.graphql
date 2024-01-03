@@ -1,0 +1,10 @@
+mutation getElementUrl($id: ID!) {
+  downloadCentre {
+    getElementUrl(id: $id) {
+      url
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

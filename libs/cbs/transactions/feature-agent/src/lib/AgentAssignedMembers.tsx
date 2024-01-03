@@ -2,14 +2,11 @@ import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, DetailPageContentCard, Text } from '@myra-ui';
+import { asyncToast, Box, Button, DetailPageContentCard, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
-import {
-  Arrange,
-  useDeleteAgentMemberMutation,
-  useListAgentMemberQuery,
-} from '@coop/cbs/data-access';
+import { useDeleteAgentMemberMutation, useListAgentMemberQuery } from '@coop/cbs/data-access';
+import { Can } from '@coop/cbs/utils';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 import { AddMemberModal } from '../components';
@@ -28,7 +25,7 @@ export const AgentAssignedMembers = () => {
 
   const id = router?.query?.['id'];
 
-  // const search = router?.query?.['search'];
+  const search = router?.query?.['search'];
 
   const { mutateAsync: removeMember } = useDeleteAgentMemberMutation();
 
@@ -42,12 +39,13 @@ export const AgentAssignedMembers = () => {
       pagination: {
         ...getPaginationQuery(),
         first: -1,
-        order: {
-          arrange: Arrange.Desc,
-          column: 'memberid',
-        },
+        // order: {
+        //   arrange: Arrange.Desc,
+        //   column: 'memberid',
+        // },
       },
       filter: {
+        query: search as string,
         orConditions: [
           { andConditions: [{ column: 'agentid', comparator: 'EqualTo', value: id as string }] },
         ],
@@ -100,7 +98,7 @@ export const AgentAssignedMembers = () => {
                     msgs: { loading: 'Removing member', success: 'Member removed' },
                     promise: removeMember({
                       id: id as string,
-                      memberId: row?.node?.memberID as string,
+                      memberId: row?.node?.id as string,
                     }),
                     onSuccess: () => queryClient.invalidateQueries(['listAgentMember']),
                   });
@@ -130,8 +128,15 @@ export const AgentAssignedMembers = () => {
     <>
       <DetailPageContentCard
         header={t['agentAssignedMembersAssignedMembers']}
-        headerButtonLabel={t['agentAssignedMembersAddMember']}
-        headerButtonHandler={handleAddMemberModalOpen}
+        // headerButtonLabel={t['agentAssignedMembersAddMember']}
+        // headerButtonHandler={handleAddMemberModalOpen}
+        headerButtons={
+          <Can I="CREATE" a="AGENT_ASSIGN_MEMBER">
+            <Button variant="link" onClick={handleAddMemberModalOpen}>
+              {t['agentAssignedMembersAddMember']}
+            </Button>
+          </Can>
+        }
       >
         <Table
           // isStatic

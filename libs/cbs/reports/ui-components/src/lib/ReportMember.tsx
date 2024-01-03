@@ -40,6 +40,12 @@ export const ReportMember = ({ member, accountCloseDate, savingData }: ReportMem
                 </Text>
               )}
 
+              {!!savingData?.meta?.accountName && (
+                <Text fontSize="r1" color="gray.700">
+                  Account Name:
+                </Text>
+              )}
+
               {!!savingData?.meta?.currentInterestRate && (
                 <Text fontSize="r1" color="gray.700">
                   Current Interest Rate:
@@ -101,6 +107,17 @@ export const ReportMember = ({ member, accountCloseDate, savingData }: ReportMem
                   textTransform="capitalize"
                 >
                   {savingData?.meta?.accountNo}
+                </Text>
+              )}
+              {!!savingData?.meta?.accountName && (
+                <Text
+                  noOfLines={1}
+                  fontSize="r1"
+                  color="gray.700"
+                  fontWeight="500"
+                  textTransform="capitalize"
+                >
+                  {savingData?.meta?.accountName}
                 </Text>
               )}
               {!!savingData?.meta?.currentInterestRate && (

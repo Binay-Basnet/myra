@@ -42,6 +42,8 @@ interface IDatePickerProps {
   isRequired?: boolean;
 
   trigger?: (isOpen: boolean) => React.ReactNode;
+
+  baseDate?: Date;
 }
 
 export const DatePicker = ({
@@ -55,6 +57,7 @@ export const DatePicker = ({
   isRequired,
   minDate,
   maxDate,
+  baseDate,
   label,
   trigger,
 }: IDatePickerProps) => {
@@ -166,6 +169,7 @@ export const DatePicker = ({
             maxDate={maxDate}
             name={name}
             minDate={minDate}
+            baseDate={baseDate}
             onDateChange={(date) => {
               setDateState(date);
               if (date.current) {

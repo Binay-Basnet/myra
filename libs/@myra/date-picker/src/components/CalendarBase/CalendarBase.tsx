@@ -18,6 +18,7 @@ interface ICalendarBase {
   calendarType: 'AD' | 'BS';
   minDate?: Date;
   maxDate?: Date;
+  baseDate?: Date;
 }
 
 export const CalendarBase = ({
@@ -29,6 +30,7 @@ export const CalendarBase = ({
   calendarType,
   minDate,
   maxDate,
+  baseDate,
 }: ICalendarBase) => {
   const getCalendarDates = () => {
     const { ad, current } = dateState;
@@ -76,6 +78,7 @@ export const CalendarBase = ({
                 }
               }}
               calendarDate={calendarDate}
+              baseDate={baseDate}
             />
           ))
         : // JS

@@ -208,6 +208,7 @@
       "@dhadda-migration/data-access": ["libs/dhadda-migration/data-access/src/index.ts"],
       "@dhadda-migration/ui-components": ["libs/dhadda-migration/ui-components/src/index.ts"],
       "@dhadda-migration/ui-layout": ["libs/dhadda-migration/ui-layout/src/index.ts"],
+      "@download-center": ["libs/download-center/src/index.ts"],
       "@fam/assets": ["libs/fam-module/feature-assets/src/index.ts"],
       "@fam/feature-operation": ["libs/fam-module/feature-operation/src/index.ts"],
       "@fam/feature-purchase": ["libs/fam-module/feature-purchase/src/index.ts"],

@@ -62,7 +62,7 @@ export const AccountSelect = ({
       </Text>
       <ChakraSelect<Option, boolean, GroupBase<Option>>
         options={options}
-        value={value}
+        value={value ?? null}
         controlShouldRenderValue={!isMulti}
         name={name}
         closeMenuOnSelect={!isMulti}

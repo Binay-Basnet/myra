@@ -5,14 +5,14 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { asyncToast, Box, Button } from '@myra-ui';
 
-import { MfMeetingMembers, useAddAttendanceMutation } from '@coop/cbs/data-access';
+import { MfMeetingMembers, MfMeetingStatus, useAddAttendanceMutation } from '@coop/cbs/data-access';
 import { DetailsPageHeaderBox } from '@coop/shared/components';
 import { FormEditableTable } from '@coop/shared/form';
 
-export const Attendance = (props: { data: MfMeetingMembers[] }) => {
+export const Attendance = (props: { data: MfMeetingMembers[]; status: MfMeetingStatus }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { data } = props;
+  const { data, status } = props;
   const methods = useForm();
   const { getValues, setValue } = methods;
 
@@ -72,21 +72,26 @@ export const Attendance = (props: { data: MfMeetingMembers[] }) => {
                   accessor: 'invited',
                   header: 'Invite',
                   fieldType: 'checkbox',
+                  getDisabled: () => status === MfMeetingStatus?.Completed,
                 },
                 {
                   accessor: 'attended',
                   header: 'Attended',
                   fieldType: 'checkbox',
+                  getDisabled: () => status === MfMeetingStatus?.Completed,
                 },
                 {
                   accessor: 'sendSms',
                   header: 'Send SMS',
                   fieldType: 'checkbox',
+                  getDisabled: () => status === MfMeetingStatus?.Completed,
                 },
               ]}
             />
             <Box display="flex" justifyContent="flex-end">
-              <Button onClick={onSubmit}>Save Changes</Button>
+              <Button onClick={onSubmit} disabled={status === MfMeetingStatus?.Completed}>
+                Save Changes
+              </Button>
             </Box>
           </Box>
         </FormProvider>

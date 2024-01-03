@@ -183,7 +183,7 @@ query listAgentMember($filter: Filter, $pagination: Pagination) {
       edges {
         node {
           memberName
-          memberID
+          id
           memberCode
         }
         cursor

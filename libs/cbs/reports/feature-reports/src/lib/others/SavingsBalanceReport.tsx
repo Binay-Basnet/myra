@@ -132,7 +132,7 @@ export const SavingBalanceReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Report Group', link: '/cbs/reports/cbs-reports/others' },
+            { label: 'Report Group', link: '/cbs/reports/cbs-reports/savings' },
             {
               label: 'Saving Balance Report',
               link: '/cbs/reports/cbs-reports/savings/saving-balance/new',
@@ -149,7 +149,7 @@ export const SavingBalanceReport = () => {
             />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Date" />
+            <FormDatePicker name="period.from" label="Date" isTransactionBaseDate />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

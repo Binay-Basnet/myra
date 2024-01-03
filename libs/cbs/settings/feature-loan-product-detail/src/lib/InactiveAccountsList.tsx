@@ -12,7 +12,8 @@ import { SideBar } from '../components';
 
 export const InactiveLoanAccountListPage = () => {
   const router = useRouter();
-  // const searchTerm = router?.query['search'] as string;
+  const searchTerm = router?.query['search'] as string;
+  const searchText = searchTerm ?? '';
   const id = router?.query['id'] as string;
 
   const { data, isLoading } = useGetLoanAccountListQuery({
@@ -22,7 +23,7 @@ export const InactiveLoanAccountListPage = () => {
       order: null,
     },
     filter: {
-      query: id as string,
+      query: `${searchText} ${id}`,
       orConditions: [
         {
           andConditions: [

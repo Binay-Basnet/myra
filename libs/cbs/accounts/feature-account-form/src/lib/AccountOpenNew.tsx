@@ -518,9 +518,11 @@ export const AccountOpenNew = () => {
   const memberOrGroup = watch('memberOrGroup');
 
   useEffect(() => {
-    methods.setValue('groupId', '');
-    methods.setValue('memberId', '');
-    methods.setValue('productId', '');
+    if (memberOrGroup === 'member') {
+      methods.setValue('groupId', '');
+    } else {
+      methods.setValue('memberId', '');
+    }
   }, [memberOrGroup]);
 
   return (
@@ -554,13 +556,13 @@ export const AccountOpenNew = () => {
                     name="memberOrGroup"
                     options={[
                       { label: 'Member', value: 'member' },
-                      { label: 'Group', value: 'group' },
+                      { label: 'MF Group', value: 'group', isDisabled: !!redirectMemberId },
                     ]}
                   />
 
                   {memberOrGroup === 'group' && (
                     <>
-                      <FormMFGroupSelect name="groupId" label="Group" isRequired />
+                      <FormMFGroupSelect name="groupId" label="MF Group" isRequired />
 
                       <FormMemberSelect
                         isRequired

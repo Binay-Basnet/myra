@@ -44,6 +44,7 @@ export * from './lib/members/MemberRegistrationReport';
 export * from './lib/members/MemberTransferReport';
 export * from './lib/members/MinorListReport';
 export * from './lib/members/UsersReport';
+export * from './lib/microfinance';
 export * from './lib/mobile-banking/MBExpiryReport';
 export * from './lib/mobile-banking/MBRegistrationReport';
 export * from './lib/mobile-banking/MBTransactionReport';

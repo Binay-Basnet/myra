@@ -196,8 +196,8 @@ export const AddBulkDeposit = () => {
   );
   const returnAmount = Number(totalCashPaid) - Number(totalDep || 0);
 
-  const bankSelected = watch('bankVoucher.bankId');
-  const bankVoucherDateSelected = watch('bankVoucher.depositedAt');
+  // const bankSelected = watch('bankVoucher.bankId');
+  // const bankVoucherDateSelected = watch('bankVoucher.depositedAt');
 
   const disableSubmitButtonFxn = (paymentMode: DepositPaymentType) => {
     if (paymentMode === DepositPaymentType.Cash && !disableDenomination) {
@@ -206,12 +206,12 @@ export const AddBulkDeposit = () => {
         !(Number(cashPaid) >= Number(totalDep || 0) + Number(totalFine || 0))
       );
     }
-    if (
-      (paymentMode === DepositPaymentType.BankVoucher && bankSelected === undefined) ||
-      (paymentMode === DepositPaymentType.BankVoucher && bankVoucherDateSelected === undefined)
-    ) {
-      return true;
-    }
+    // if (
+    //   (paymentMode === DepositPaymentType.BankVoucher && bankSelected === undefined) ||
+    //   (paymentMode === DepositPaymentType.BankVoucher && bankVoucherDateSelected === undefined)
+    // ) {
+    //   return true;
+    // }
 
     return false;
   };
@@ -233,13 +233,13 @@ export const AddBulkDeposit = () => {
                 name="memberOrGroup"
                 options={[
                   { label: 'Member', value: 'member' },
-                  { label: 'Group', value: 'group' },
+                  { label: 'MF Group', value: 'group' },
                 ]}
               />
               {memberOrGroupWatch === 'member' ? (
                 <FormMemberSelect name="memberId" label="Member" />
               ) : (
-                <FormMFGroupSelect name="groupId" label="Group" />
+                <FormMFGroupSelect name="groupId" label="MF Group" />
               )}
               {memberId && (
                 <MemberCard
@@ -365,6 +365,15 @@ export const AddBulkDeposit = () => {
               }}
               errorCardProps={{
                 title: 'Bulk Deposit Failed',
+              }}
+              onError={(error) => {
+                if (error.__typename === 'ValidationError') {
+                  Object.keys(error.validationErrorMsg).map((key) =>
+                    methods.setError(key as keyof CustomBulkDepositInput, {
+                      message: error.validationErrorMsg[key][0] as string,
+                    })
+                  );
+                }
               }}
             >
               <Button width="160px" isDisabled={disableSubmitButtonFxn(paymentModes) && mode === 1}>
