@@ -294,9 +294,8 @@ export const AgentTransactionDetailPage = () => {
                     Accounts Collected
                   </Text>
                   <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    {accounts?.filter(
-                      (a) => Number(a?.amountCollected) || Number(a?.fineToBeCollected)
-                    )?.length || 0}{' '}
+                    {accounts?.filter((a) => Number(a?.amountCollected) || Number(a?.fineCollected))
+                      ?.length || 0}{' '}
                     / {accounts?.length}
                   </Text>
                 </Box>
