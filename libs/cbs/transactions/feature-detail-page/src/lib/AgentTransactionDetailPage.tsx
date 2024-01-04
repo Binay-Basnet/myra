@@ -45,6 +45,31 @@ type AccountsEntry = {
 type TodaysList = {
   accounts: AccountsEntry[];
 };
+
+const getAmountToCollect = (dueAmount: number, dueFine: number, installmentAmount: number) => {
+  if (!dueAmount) {
+    return '';
+  }
+
+  if (!installmentAmount) {
+    if (dueFine) {
+      return `[Due Amount: Rs.${amountConverter(
+        Number(dueAmount) - Number(dueFine)
+      )}, Fine: Rs.${amountConverter(dueFine)}]`;
+    }
+
+    return `[Rs.${amountConverter(dueAmount)}]`;
+  }
+
+  if (dueFine) {
+    return `[Installment Amt.: Rs.${amountConverter(installmentAmount)}, Fine: Rs.${amountConverter(
+      dueFine
+    )}]`;
+  }
+
+  return `[Installment Amt.: Rs.${amountConverter(installmentAmount)}]`;
+};
+
 export const AgentTransactionDetailPage = () => {
   const router = useRouter();
 
@@ -118,6 +143,18 @@ export const AgentTransactionDetailPage = () => {
         id: 'Account',
         header: 'Account',
         accessorFn: (row) => `${row?.account?.accountName} [${row?.account?.id}]`,
+        cell: (props) => (
+          <Box display="flex" flexDirection="column">
+            <Text>{`${props?.row?.original?.account?.accountName} [${props?.row?.original?.account?.id}]`}</Text>
+            <Text>
+              {getAmountToCollect(
+                Number(props?.row?.original?.amountToBeCollected),
+                Number(props?.row?.original?.fineToBeCollected),
+                Number(props?.row?.original?.account?.installmentAmount)
+              )}
+            </Text>
+          </Box>
+        ),
       },
       {
         header: 'Amount',
@@ -252,8 +289,8 @@ export const AgentTransactionDetailPage = () => {
                     Accounts Collected
                   </Text>
                   <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    {accounts?.filter((a) => a?.amountCollected || a?.fineToBeCollected)?.length ||
-                      0}{' '}
+                    {accounts?.filter((a) => Number(a?.amountCollected) || Number(a?.fineCollected))
+                      ?.length || 0}{' '}
                     / {accounts?.length}
                   </Text>
                 </Box>
@@ -278,7 +315,7 @@ export const AgentTransactionDetailPage = () => {
                     Total Collection
                   </Text>
                   <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    {amountConverter(totalFine + totalAmount)}
+                    {amountConverter(totalAmount)}
                   </Text>
                 </Box>
               </Box>

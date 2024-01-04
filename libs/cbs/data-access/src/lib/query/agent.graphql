@@ -89,6 +89,11 @@ query getAgentTodayListData($id: ID!) {
           id
           accountName
           installmentAmount
+          dues {
+            dueInstallments
+            totalDue
+            fine
+          }
         }
         amount
         fine
@@ -278,6 +283,10 @@ query agentTodayTaskDetail($id: ID!) {
         account {
           id
           accountName
+          installmentAmount
+          dues {
+            dueInstallments
+          }
         }
         amount
         fine

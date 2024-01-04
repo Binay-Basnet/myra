@@ -11,7 +11,6 @@ import { chakraDefaultStyles } from 'libs/@myra/editable-table/src/utils/ChakraS
 import { asyncToast, Box, Button, FormSection, Icon, Loader, Modal, Text } from '@myra-ui';
 
 import {
-  Arrange,
   ObjState,
   useCreateCollectionMutation,
   useGetAccountTableListMinimalQuery,
@@ -51,10 +50,10 @@ export const CreateCollectionListModal = ({
       pagination: {
         ...getPaginationQuery(),
         first: -1,
-        order: {
-          arrange: Arrange.Desc,
-          column: 'memberid',
-        },
+        // order: {
+        //   arrange: Arrange.Desc,
+        //   column: 'id',
+        // },
       },
       filter: {
         orConditions: [

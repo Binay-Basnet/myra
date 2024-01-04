@@ -383,13 +383,13 @@ export const REPORTS: ReportType = {
       component: <Reports.LoanBalanceReport />,
       acl: 'REPORTS_LOAN_LOAN_BALANCE',
     },
-    {
-      id: '6.1',
-      report: Report.LOAN_INDIVIDUAL_STATEMENT,
-      link: 'statement',
-      component: <Reports.LoanStatementReport />,
-      acl: 'REPORTS_LOAN_LOAN_ACCOUNT_STATEMENT',
-    },
+    // {
+    //   id: '6.1',
+    //   report: Report.LOAN_INDIVIDUAL_STATEMENT,
+    //   link: 'statement',
+    //   component: <Reports.LoanStatementReport />,
+    //   acl: 'REPORTS_LOAN_LOAN_ACCOUNT_STATEMENT',
+    // },
 
     {
       id: '6.3',

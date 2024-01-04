@@ -150,7 +150,7 @@ export const FormAccountSelect = ({
     }, [] as Option[]) ?? [];
 
   const accountOptions: Option[] = useMemo(() => {
-    if (groupAccountList) {
+    if (groupId) {
       return (
         groupAccountList?.account?.list?.edges?.reduce((prevVal, curVal) => {
           if (excludeIds?.includes(curVal?.node?.id as string) || !curVal) {
@@ -201,7 +201,7 @@ export const FormAccountSelect = ({
         ];
       }, [] as Option[]) ?? []
     );
-  }, [accountsList, groupAccountList]);
+  }, [accountsList, groupAccountList, groupId]);
 
   return (
     <Controller

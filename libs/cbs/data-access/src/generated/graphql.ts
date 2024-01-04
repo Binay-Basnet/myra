@@ -34161,6 +34161,11 @@ export type GetAgentTodayListDataQuery = {
           id: string;
           accountName?: string | null;
           installmentAmount?: string | null;
+          dues?: {
+            dueInstallments?: number | null;
+            totalDue?: string | null;
+            fine?: string | null;
+          } | null;
         } | null;
       } | null> | null;
     } | null;
@@ -34374,7 +34379,12 @@ export type AgentTodayTaskDetailQuery = {
           code: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
         } | null;
-        account?: { id: string; accountName?: string | null } | null;
+        account?: {
+          id: string;
+          accountName?: string | null;
+          installmentAmount?: string | null;
+          dues?: { dueInstallments?: number | null } | null;
+        } | null;
       } | null> | null;
     };
   };
@@ -62939,6 +62949,11 @@ export const GetAgentTodayListDataDocument = `
           id
           accountName
           installmentAmount
+          dues {
+            dueInstallments
+            totalDue
+            fine
+          }
         }
         amount
         fine
@@ -63245,6 +63260,10 @@ export const AgentTodayTaskDetailDocument = `
         account {
           id
           accountName
+          installmentAmount
+          dues {
+            dueInstallments
+          }
         }
         amount
         fine
