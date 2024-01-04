@@ -22,7 +22,6 @@ import {
 } from '@myra-ui';
 
 import {
-  Arrange,
   ObjState,
   useAddAgentTodayListMutation,
   useGetAccountTableListQuery,
@@ -51,10 +50,40 @@ type AccountsEntry = {
   fineToBeCollected: string;
   amountCollected: string;
   fineCollected: string;
+  installmentAmount: string;
+  dueInstallments: number;
 };
 
 type TodaysList = {
   accounts: AccountsEntry[];
+};
+
+const getAmountToCollect = (
+  dueInstallment: number,
+  dueAmount: number,
+  dueFine: number,
+  installmentAmount: number
+) => {
+  if (!dueAmount) {
+    return '';
+  }
+
+  if (!dueInstallment) {
+    if (dueFine) {
+      return `[Rs.${amountConverter(Number(dueAmount) - Number(dueFine))} + Rs.${amountConverter(
+        dueFine
+      )}]`;
+    }
+    return `[Rs.${amountConverter(dueAmount)}]`;
+  }
+
+  if (dueFine) {
+    return `[${dueInstallment} x Rs.${amountConverter(installmentAmount)} + Rs.${amountConverter(
+      dueFine
+    )}]`;
+  }
+
+  return `[${dueInstallment} x Rs.${amountConverter(installmentAmount)}]`;
 };
 
 export const AgentDetailOverview = () => {
@@ -206,6 +235,8 @@ export const AgentDetailOverview = () => {
       accountName: string;
       amountToBeCollected: string;
       fineToBeCollected: string;
+      installmentAmount: string;
+      dueInstallments: number;
     }[]
   ) => {
     const values = getValues();
@@ -239,6 +270,7 @@ export const AgentDetailOverview = () => {
         })) as AccountsEntry[],
       });
     } else {
+      reset({ accounts: [] });
       setShowMemberTable(false);
     }
   };
@@ -375,9 +407,17 @@ export const AgentDetailOverview = () => {
                           borderLeftColor="border.layout"
                           px="s8"
                           display="flex"
-                          alignItems="center"
+                          flexDirection="column"
                         >
                           <Text>{`${item?.accountName} [${item?.accountId}]`}</Text>
+                          <Text>
+                            {getAmountToCollect(
+                              Number(item?.dueInstallments),
+                              Number(item?.amountToBeCollected),
+                              Number(item?.fineToBeCollected),
+                              Number(item?.installmentAmount)
+                            )}
+                          </Text>
                         </Box>
 
                         <Box
@@ -542,7 +582,7 @@ export const AgentDetailOverview = () => {
                       Total Collection
                     </Text>
                     <Text fontSize="r1" fontWeight={500} color="gray.700">
-                      {amountConverter(totalFine + totalAmount)}
+                      {amountConverter(totalAmount)}
                     </Text>
                   </Box>
                 </Box>
@@ -578,6 +618,8 @@ interface AddAccountModalProps {
       accountName: string;
       amountToBeCollected: string;
       fineToBeCollected: string;
+      installmentAmount: string;
+      dueInstallments: number;
     }[]
   ) => void;
 }
@@ -598,10 +640,10 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
         pagination: {
           ...getPaginationQuery(),
           first: -1,
-          order: {
-            arrange: Arrange.Desc,
-            column: 'memberid',
-          },
+          // order: {
+          //   arrange: Arrange.Desc,
+          //   column: 'id',
+          // },
         },
         filter: {
           orConditions: [
@@ -675,6 +717,8 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
       accountName: string;
       amountToBeCollected: string;
       fineToBeCollected: string;
+      installmentAmount: string;
+      dueInstallments: number;
     }[] = [];
 
     const memberDetail = memberList?.find((m) => m?.node?.id === values?.memberId);
@@ -690,6 +734,8 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
         accountName: accountDetail?.node?.accountName as string,
         amountToBeCollected: accountDetail?.node?.dues?.totalDue as string,
         fineToBeCollected: accountDetail?.node?.dues?.fine as string,
+        installmentAmount: accountDetail?.node?.installmentAmount as string,
+        dueInstallments: Number(accountDetail?.node?.dues?.dueInstallments || 0),
       });
     });
 
