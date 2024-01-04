@@ -46,32 +46,28 @@ type TodaysList = {
   accounts: AccountsEntry[];
 };
 
-const getAmountToCollect = (
-  dueInstallment: number,
-  dueAmount: number,
-  dueFine: number,
-  installmentAmount: number
-) => {
+const getAmountToCollect = (dueAmount: number, dueFine: number, installmentAmount: number) => {
   if (!dueAmount) {
     return '';
   }
 
-  if (!dueInstallment) {
+  if (!installmentAmount) {
     if (dueFine) {
-      return `[Rs.${amountConverter(Number(dueAmount) - Number(dueFine))} + Rs.${amountConverter(
-        dueFine
-      )}]`;
+      return `[Due Amount: Rs.${amountConverter(
+        Number(dueAmount) - Number(dueFine)
+      )}, Fine: Rs.${amountConverter(dueFine)}]`;
     }
+
     return `[Rs.${amountConverter(dueAmount)}]`;
   }
 
   if (dueFine) {
-    return `[${dueInstallment} x Rs.${amountConverter(installmentAmount)} + Rs.${amountConverter(
+    return `[Installment Amt.: Rs.${amountConverter(installmentAmount)}, Fine: Rs.${amountConverter(
       dueFine
     )}]`;
   }
 
-  return `[${dueInstallment} x Rs.${amountConverter(installmentAmount)}]`;
+  return `[Installment Amt.: Rs.${amountConverter(installmentAmount)}]`;
 };
 
 export const AgentTransactionDetailPage = () => {
@@ -152,7 +148,6 @@ export const AgentTransactionDetailPage = () => {
             <Text>{`${props?.row?.original?.account?.accountName} [${props?.row?.original?.account?.id}]`}</Text>
             <Text>
               {getAmountToCollect(
-                Number(props?.row?.original?.account?.dues?.dueInstallments),
                 Number(props?.row?.original?.amountToBeCollected),
                 Number(props?.row?.original?.fineToBeCollected),
                 Number(props?.row?.original?.account?.installmentAmount)
