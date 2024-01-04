@@ -137,6 +137,8 @@ export const AgentDetailOverview = () => {
           fineToBeCollected: record?.fineToBeCollected,
           amountCollected: record?.amount,
           fineCollected: record?.fine,
+          dueInstallments: record?.account?.dues?.dueInstallments,
+          installmentAmount: record?.account?.installmentAmount,
         })) as AccountsEntry[],
       });
     }
