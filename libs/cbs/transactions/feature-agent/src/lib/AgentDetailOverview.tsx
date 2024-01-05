@@ -17,6 +17,7 @@ import {
   DetailPageContentCard,
   FormSection,
   Icon,
+  Loader,
   Modal,
   Text,
 } from '@myra-ui';
@@ -105,12 +106,13 @@ export const AgentDetailOverview = () => {
     onToggle: onAddAccountsModalToggle,
   } = useDisclosure();
 
-  const { data: agentTodayListQueryData } = useGetAgentTodayListDataQuery(
-    {
-      id: id as string,
-    },
-    { staleTime: 0, enabled: !!id }
-  );
+  const { data: agentTodayListQueryData, isFetching: isTodayListFetching } =
+    useGetAgentTodayListDataQuery(
+      {
+        id: id as string,
+      },
+      { staleTime: 0, enabled: !!id }
+    );
 
   const submissionId = useMemo(
     () => agentTodayListQueryData?.agent?.listAgentTask?.submissionId,
@@ -283,7 +285,9 @@ export const AgentDetailOverview = () => {
       <Box display="flex" flexDirection="column" gap="s16">
         <AssignedMembersCard />
 
-        {!showMemberTable && (
+        {isTodayListFetching && <Loader />}
+
+        {!showMemberTable && !isTodayListFetching && (
           <Alert
             status="info"
             title={t['agentOverviewCreateTodaysList']}
@@ -293,7 +297,7 @@ export const AgentDetailOverview = () => {
           />
         )}
 
-        {showMemberTable && (
+        {showMemberTable && !isTodayListFetching && (
           <DetailPageContentCard
             header={t['agentOverviewTodaysList']}
             showFooter
