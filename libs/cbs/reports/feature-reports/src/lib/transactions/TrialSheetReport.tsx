@@ -15,7 +15,7 @@ import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedText, ROUTES } from '@coop/cbs/utils';
 import { arrayToTree } from '@coop/shared/components';
-import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
+import { FormBranchSelect, FormCBSDatePicker, FormRadioGroup } from '@coop/shared/form';
 import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
 type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId'> & {
@@ -167,7 +167,7 @@ export const TrialSheetReport = () => {
           </GridItem>
 
           <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Date" isTransactionBaseDate />
+            <FormCBSDatePicker name="period.from" label="Date" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

@@ -11,7 +11,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { formatAddress, localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
-import { FormAmountFilter, FormBranchSelect, FormDatePicker } from '@coop/shared/form';
+import { FormAmountFilter, FormBranchSelect, FormCBSDatePicker } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type ShareBalanceReportFilters = Omit<ShareBalanceReportFilter, 'branchId'> & {
@@ -67,7 +67,7 @@ export const ExceptionShareBalanceReport = () => {
             <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Date" isTransactionBaseDate />
+            <FormCBSDatePicker name="period.from" label="Date" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

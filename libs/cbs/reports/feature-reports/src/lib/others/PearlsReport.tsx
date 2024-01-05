@@ -5,7 +5,7 @@ import { Box, Column, GridItem, Text } from '@myra-ui';
 import { PearlsRecord, PearlsReportInput, useGetPearlsReportQuery } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormDatePicker } from '@coop/shared/form';
+import { FormCBSDatePicker } from '@coop/shared/form';
 
 export const PearlsReport = () => {
   const [filters, setFilters] = useState<PearlsReportInput | null>(null);
@@ -44,7 +44,7 @@ export const PearlsReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Date" isTransactionBaseDate />
+            <FormCBSDatePicker name="period.from" label="Date" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

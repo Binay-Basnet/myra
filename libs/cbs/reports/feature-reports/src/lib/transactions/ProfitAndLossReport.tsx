@@ -9,7 +9,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report, TrialSheetReportDataEntry } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
+import { FormBranchSelect, FormCBSDatePicker, FormRadioGroup } from '@coop/shared/form';
 import { useIsCbs } from '@coop/shared/utils';
 
 import { COATable, generateAndSortCOATreeArray, TrialBalance } from './TrialSheetReport';
@@ -97,7 +97,7 @@ export const ProfitAndLossReport = () => {
             <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Date" isTransactionBaseDate />
+            <FormCBSDatePicker name="period.from" label="Date" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

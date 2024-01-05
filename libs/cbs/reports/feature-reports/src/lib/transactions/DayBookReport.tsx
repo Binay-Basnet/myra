@@ -13,7 +13,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { RouteToDetailsPage } from '@coop/cbs/utils';
-import { FormBranchSelect, FormDatePicker, FormSelect } from '@coop/shared/form';
+import { FormBranchSelect, FormCBSDatePicker, FormSelect } from '@coop/shared/form';
 import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
 type DayBookTable = {
@@ -138,7 +138,7 @@ export const DayBookReport = () => {
             />{' '}
           </GridItem>
           <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Date" isTransactionBaseDate />
+            <FormCBSDatePicker name="period.from" label="Date" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

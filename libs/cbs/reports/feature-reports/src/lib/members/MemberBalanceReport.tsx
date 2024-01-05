@@ -14,7 +14,7 @@ import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
-  FormDatePicker,
+  FormCBSDatePicker,
   FormRadioGroup,
 } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
@@ -75,7 +75,7 @@ export const MemberBalanceReport = () => {
             <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Date" isTransactionBaseDate />
+            <FormCBSDatePicker name="period.from" label="Date" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

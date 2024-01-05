@@ -9,7 +9,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormBranchSelect, FormDatePicker, FormSelect } from '@coop/shared/form';
+import { FormBranchSelect, FormCBSDatePicker, FormSelect } from '@coop/shared/form';
 import { debitCreditConverter } from '@coop/shared/utils';
 
 type ServiceCenterBalanceFilters = {
@@ -115,7 +115,7 @@ export const ServiceCenterCOAWiseBalanceReport = () => {
             />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormDatePicker name="date" label="Date" isTransactionBaseDate />
+            <FormCBSDatePicker name="date" label="Date" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
