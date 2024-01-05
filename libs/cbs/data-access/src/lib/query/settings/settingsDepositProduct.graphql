@@ -38,6 +38,7 @@ query getDepositProductSettingsList($paginate: Pagination, $filter: DepositProdu
                 userType
               }
               isMandatorySaving
+              interestPostingFrequency
             }
           }
           totalCount

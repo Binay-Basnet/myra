@@ -16189,6 +16189,7 @@ export type LoanRepaymentRecord = {
   accountName?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Localized']>;
   date?: Maybe<Scalars['Localized']>;
+  destinationAccount?: Maybe<Scalars['String']>;
   discountAmount?: Maybe<Scalars['String']>;
   installmentNo?: Maybe<Scalars['String']>;
   interestAmount?: Maybe<Scalars['String']>;
@@ -47875,6 +47876,7 @@ export type GetDepositProductSettingsListQuery = {
               createdAt: Record<'local' | 'en' | 'np', string>;
               modifiedAt: string;
               isMandatorySaving?: boolean | null;
+              interestPostingFrequency?: Frequency | null;
               createdBy: { id: string; name: string; username: string; userType: UserType };
               modifiedBy: { id: string; name: string; username: string; userType: UserType };
             };
@@ -80965,6 +80967,7 @@ export const GetDepositProductSettingsListDocument = `
                 userType
               }
               isMandatorySaving
+              interestPostingFrequency
             }
           }
           totalCount

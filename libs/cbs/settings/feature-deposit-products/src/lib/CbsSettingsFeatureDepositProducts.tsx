@@ -119,6 +119,11 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
         meta: { width: '50%' },
       },
       {
+        header: 'Posting Frequency',
+        accessorFn: (row) => row?.node?.interestPostingFrequency,
+        meta: { width: '50%' },
+      },
+      {
         header: t['depositNature'],
         accessorFn: (row) => row?.node?.nature,
         cell: (props) => {
