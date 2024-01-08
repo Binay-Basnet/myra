@@ -50,7 +50,7 @@ export const UTILITY_LINK_DICT: Record<string, string> = {
   topup: '/utility-payments/mobile-topup',
   electricity: '/utility-payments/electricity',
   internet: '/utility-payments/internet-payment',
-  tv: '',
+  tv: '/utility-payments/tv-payment',
   KHANEPANI: '',
   E_TELLER: '',
   FLIGHT_BOOK: '',

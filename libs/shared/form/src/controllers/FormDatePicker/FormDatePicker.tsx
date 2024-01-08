@@ -28,6 +28,7 @@ export const FormDatePicker = <T,>({
   isRequired,
   helperText,
   baseDate,
+  // isTransactionBaseDate,
   ...rest
 }: IFormDatePickerProps<T>) => {
   const router = useRouter();
@@ -42,6 +43,13 @@ export const FormDatePicker = <T,>({
   } = methods;
 
   const errorText = name ? (get(errors, name)?.message as string) : undefined;
+
+  // const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+
+  // const transactionDate = useMemo(
+  //   () => endOfDayData?.transaction?.endOfDayDate?.value,
+  //   [endOfDayData]
+  // );
 
   return (
     <Controller
@@ -72,6 +80,11 @@ export const FormDatePicker = <T,>({
             maxDate={maxToday ? new Date() : maxDate}
             minDate={minDate}
             baseDate={baseDate}
+            // baseDate={
+            //   isTransactionBaseDate && transactionDate?.en
+            //     ? new Date(transactionDate.en)
+            //     : new Date()
+            // }
           />
 
           {

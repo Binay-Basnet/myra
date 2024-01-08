@@ -130,15 +130,15 @@ export const InternetPaymentResult = ({
                     const responseOptions =
                       response?.[currentSequence - 1]?.[prevField?.fieldName as string];
 
-                    const selectedPlan = (
-                      responseOptions as unknown as {
-                        planId: string;
-                        planAmount: string;
-                        planName: string;
-                      }[]
-                    )?.find((opt) => opt?.planId === values[field?.fieldName as string]);
+                    const selectedOption = (
+                      responseOptions as unknown as Record<string, string>[]
+                    )?.find(
+                      (opt) =>
+                        opt?.[prevField?.options?.key as string] ===
+                        values[field?.fieldName as string]
+                    );
 
-                    displayValue = selectedPlan?.planName;
+                    displayValue = selectedOption?.[prevField?.options?.value as string];
                   }
 
                   return (

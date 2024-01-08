@@ -142,7 +142,10 @@ export const InternetPaymentForm = ({
   //   return () => subscription.unsubscribe();
   // }, [watch, currentSequenceObj]);
 
-  const { data: neaOfficeData } = useListNeaOfficeQuery();
+  const { data: neaOfficeData } = useListNeaOfficeQuery(
+    {},
+    { enabled: router?.asPath?.includes('electricity-payment') }
+  );
 
   const neaOfficeList = useMemo(
     () =>
