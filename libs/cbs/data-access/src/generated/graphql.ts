@@ -365,6 +365,7 @@ export type AccountOperatorDetailsFormState = {
 };
 
 export type AccountPremium = {
+  defaultRate?: InputMaybe<Scalars['Float']>;
   maxRate?: InputMaybe<Scalars['Float']>;
   minRate?: InputMaybe<Scalars['Float']>;
 };
@@ -6159,7 +6160,6 @@ export type DepositProductSettingsMutationUpdateWithdrawPenaltyArgs = {
 };
 
 export type DepositProductSettingsQuery = {
-  ViewProductWithAccount: ProductWithAccountResult;
   depositProductDetail?: Maybe<DepositProductFormStateResult>;
   formState?: Maybe<DepositProductFormStateResult>;
   get?: Maybe<DepositProduct>;
@@ -6176,10 +6176,6 @@ export type DepositProductSettingsQuery = {
   listOpenCharge: ProductAccountOpenCloseListQueryResult;
   listPenaltyCharge: ProductPenaltyListQueryResult;
   listProductInterestRates: InterestSetupListResult;
-};
-
-export type DepositProductSettingsQueryViewProductWithAccountArgs = {
-  productId: Scalars['ID'];
 };
 
 export type DepositProductSettingsQueryDepositProductDetailArgs = {
@@ -15948,21 +15944,6 @@ export type LoanProductTypeInput = {
   productType?: InputMaybe<Scalars['String']>;
 };
 
-export type LoanProductWithAccountNode = {
-  accountIds?: Maybe<Array<Scalars['String']>>;
-  accountPremium?: Maybe<Scalars['String']>;
-  count?: Maybe<Scalars['Int']>;
-  effectiveInterestRate?: Maybe<Scalars['String']>;
-  id: Scalars['String'];
-  organizationPremium?: Maybe<Scalars['String']>;
-  productPremium?: Maybe<Scalars['String']>;
-};
-
-export type LoanProductWithAccountResult = {
-  data?: Maybe<Array<Maybe<LoanProductWithAccountNode>>>;
-  error?: Maybe<QueryError>;
-};
-
 export type LoanProductsMutation = {
   editProductInterest: InterestSetupMutationResult;
   makeInactive?: Maybe<LoanProductInactiveResult>;
@@ -16023,7 +16004,6 @@ export type LoanProductsMutationUpsertArgs = {
 };
 
 export type LoanProductsQuery = {
-  ViewProductWithAccount: LoanProductWithAccountResult;
   formState?: Maybe<LoanProductData>;
   getLoanAccountlist?: Maybe<LoanAccountConnection>;
   getPenaltyCharge: ProductPenaltyQueryResult;
@@ -16036,10 +16016,6 @@ export type LoanProductsQuery = {
   listProcessingCharge: ProductAccountOpenCloseListQueryResult;
   listProductInterestRates: InterestSetupListResult;
   listRebateCharge: ProductRebateListQueryResult;
-};
-
-export type LoanProductsQueryViewProductWithAccountArgs = {
-  productId: Scalars['ID'];
 };
 
 export type LoanProductsQueryFormStateArgs = {
@@ -17592,6 +17568,7 @@ export type MemberOverview = {
 export type MemberOverviewAccountsView = {
   accounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
   closedAccounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
+  dormantAccounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
 };
 
@@ -19885,21 +19862,6 @@ export type ProductRebateData = {
 
 export type ProductRebateListQueryResult = {
   data?: Maybe<Array<Maybe<ProductRebateData>>>;
-  error?: Maybe<QueryError>;
-};
-
-export type ProductWithAccountNode = {
-  accountIds?: Maybe<Array<Scalars['String']>>;
-  accountPremium?: Maybe<Scalars['String']>;
-  count?: Maybe<Scalars['Int']>;
-  effectiveInterestRate?: Maybe<Scalars['String']>;
-  id: Scalars['String'];
-  organizationPremium?: Maybe<Scalars['String']>;
-  productPremium?: Maybe<Scalars['String']>;
-};
-
-export type ProductWithAccountResult = {
-  data?: Maybe<Array<Maybe<ProductWithAccountNode>>>;
   error?: Maybe<QueryError>;
 };
 
@@ -40217,6 +40179,22 @@ export type GetMemberKymDetailsAccountsQuery = {
             interestRate?: string | null;
           } | null> | null;
           closedAccounts?: Array<{
+            accountName?: string | null;
+            accountNumber?: string | null;
+            totalBalance?: string | null;
+            productName?: string | null;
+            productType?: string | null;
+            interestRate?: string | null;
+            interestEarned?: string | null;
+            interestBooked?: string | null;
+            groupId?: string | null;
+            groupName?: string | null;
+            guaranteeAccounts?: Array<{
+              loanId?: string | null;
+              loanAccountName?: string | null;
+            } | null> | null;
+          } | null> | null;
+          dormantAccounts?: Array<{
             accountName?: string | null;
             accountNumber?: string | null;
             totalBalance?: string | null;
@@ -70815,6 +70793,22 @@ export const GetMemberKymDetailsAccountsDocument = `
             interestRate
           }
           closedAccounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+            interestEarned
+            interestBooked
+            guaranteeAccounts {
+              loanId
+              loanAccountName
+            }
+            groupId
+            groupName
+          }
+          dormantAccounts {
             accountName
             accountNumber
             totalBalance
