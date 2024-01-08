@@ -1,5 +1,3 @@
-import { useFormContext } from 'react-hook-form';
-
 import { FormSection, GridItem } from '@myra-ui';
 
 import { useAppSelector, useGetBranchListQuery } from '@coop/cbs/data-access';
@@ -16,7 +14,7 @@ export type ServiceCenterTableProps = {
 export const ServiceCenterTable = () => {
   const user = useAppSelector((state) => state.auth?.user);
 
-  const { watch } = useFormContext();
+  // const { watch } = useFormContext();
 
   const { data: branchListQueryData } = useGetBranchListQuery({
     paginate: {
@@ -34,7 +32,7 @@ export const ServiceCenterTable = () => {
     value: serviceCenter?.node?.id as string,
   }));
 
-  const branchEntries = watch('branchEntries');
+  // const branchEntries = watch('branchEntries');
 
   return (
     <FormSection
@@ -54,7 +52,7 @@ export const ServiceCenterTable = () => {
               fieldType: 'search',
               cellWidth: 'auto',
               searchOptions: serviceCenterOptions,
-              getDisabled: () => branchEntries?.length >= 1,
+              // getDisabled: () => branchEntries?.length >= 1,
             },
             {
               accessor: 'dr',
