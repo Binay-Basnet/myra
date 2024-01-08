@@ -365,6 +365,7 @@ export type AccountOperatorDetailsFormState = {
 };
 
 export type AccountPremium = {
+  defaultRate?: InputMaybe<Scalars['Float']>;
   maxRate?: InputMaybe<Scalars['Float']>;
   minRate?: InputMaybe<Scalars['Float']>;
 };
