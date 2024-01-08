@@ -365,7 +365,6 @@ export type AccountOperatorDetailsFormState = {
 };
 
 export type AccountPremium = {
-  defaultRate?: InputMaybe<Scalars['Float']>;
   maxRate?: InputMaybe<Scalars['Float']>;
   minRate?: InputMaybe<Scalars['Float']>;
 };
@@ -6160,6 +6159,7 @@ export type DepositProductSettingsMutationUpdateWithdrawPenaltyArgs = {
 };
 
 export type DepositProductSettingsQuery = {
+  ViewProductWithAccount: ProductWithAccountResult;
   depositProductDetail?: Maybe<DepositProductFormStateResult>;
   formState?: Maybe<DepositProductFormStateResult>;
   get?: Maybe<DepositProduct>;
@@ -6176,6 +6176,10 @@ export type DepositProductSettingsQuery = {
   listOpenCharge: ProductAccountOpenCloseListQueryResult;
   listPenaltyCharge: ProductPenaltyListQueryResult;
   listProductInterestRates: InterestSetupListResult;
+};
+
+export type DepositProductSettingsQueryViewProductWithAccountArgs = {
+  productId: Scalars['ID'];
 };
 
 export type DepositProductSettingsQueryDepositProductDetailArgs = {
@@ -15944,6 +15948,21 @@ export type LoanProductTypeInput = {
   productType?: InputMaybe<Scalars['String']>;
 };
 
+export type LoanProductWithAccountNode = {
+  accountIds?: Maybe<Array<Scalars['String']>>;
+  accountPremium?: Maybe<Scalars['String']>;
+  count?: Maybe<Scalars['Int']>;
+  effectiveInterestRate?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  organizationPremium?: Maybe<Scalars['String']>;
+  productPremium?: Maybe<Scalars['String']>;
+};
+
+export type LoanProductWithAccountResult = {
+  data?: Maybe<Array<Maybe<LoanProductWithAccountNode>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanProductsMutation = {
   editProductInterest: InterestSetupMutationResult;
   makeInactive?: Maybe<LoanProductInactiveResult>;
@@ -16004,6 +16023,7 @@ export type LoanProductsMutationUpsertArgs = {
 };
 
 export type LoanProductsQuery = {
+  ViewProductWithAccount: LoanProductWithAccountResult;
   formState?: Maybe<LoanProductData>;
   getLoanAccountlist?: Maybe<LoanAccountConnection>;
   getPenaltyCharge: ProductPenaltyQueryResult;
@@ -16016,6 +16036,10 @@ export type LoanProductsQuery = {
   listProcessingCharge: ProductAccountOpenCloseListQueryResult;
   listProductInterestRates: InterestSetupListResult;
   listRebateCharge: ProductRebateListQueryResult;
+};
+
+export type LoanProductsQueryViewProductWithAccountArgs = {
+  productId: Scalars['ID'];
 };
 
 export type LoanProductsQueryFormStateArgs = {
@@ -19861,6 +19885,21 @@ export type ProductRebateData = {
 
 export type ProductRebateListQueryResult = {
   data?: Maybe<Array<Maybe<ProductRebateData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type ProductWithAccountNode = {
+  accountIds?: Maybe<Array<Scalars['String']>>;
+  accountPremium?: Maybe<Scalars['String']>;
+  count?: Maybe<Scalars['Int']>;
+  effectiveInterestRate?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  organizationPremium?: Maybe<Scalars['String']>;
+  productPremium?: Maybe<Scalars['String']>;
+};
+
+export type ProductWithAccountResult = {
+  data?: Maybe<Array<Maybe<ProductWithAccountNode>>>;
   error?: Maybe<QueryError>;
 };
 

@@ -528,7 +528,7 @@ export const LoanRepayment = () => {
                     'Rebate Amount': amountConverter(result?.rebateAmount || '0'),
 
                     'Payment Mode': result?.paymentMethod,
-                    'Destination Account': result?.destinationAccount || 'N/A',
+                    'Source Account': result?.destinationAccount || 'N/A',
                   },
                   extraDetails: {
                     'Remaining Principal': amountConverter(result?.totalRemainingPrincipal || '0'),
