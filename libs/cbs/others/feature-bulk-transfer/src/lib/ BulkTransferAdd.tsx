@@ -185,6 +185,7 @@ export const BulkTransferAdd = () => {
               productId={savingProduct as string}
               productName={selectedProductName as string}
               setSelectedAccounts={setSelectedAccounts}
+              selectedAccounts={selectedAccounts}
             />
           )}
         </FormLayout.Form>

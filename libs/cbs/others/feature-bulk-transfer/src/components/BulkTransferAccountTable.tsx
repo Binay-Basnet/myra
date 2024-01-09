@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useMemo } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import { Avatar, Box, FormSection, Text } from '@myra-ui';
@@ -6,24 +7,29 @@ import { Column, Table } from '@myra-ui/table';
 
 import { ObjState, useAppSelector, useGetSavingsAccountListQuery } from '@coop/cbs/data-access';
 import { localizedDate, localizedText } from '@coop/cbs/utils';
+import { FormCheckbox } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 interface IBulkTransferAccountTableProps {
   productName: string;
   productId: string;
   setSelectedAccounts: Dispatch<SetStateAction<string[]>>;
+  selectedAccounts: string[];
 }
 
 export const BulkTransferAccountTable = ({
   productName,
   productId,
   setSelectedAccounts,
+  selectedAccounts,
 }: IBulkTransferAccountTableProps) => {
   const router = useRouter();
 
   const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
 
   const search = router.query['search'] || '';
+
+  const { watch } = useFormContext();
 
   const { data: accountListData, isLoading } = useGetSavingsAccountListQuery(
     {
@@ -110,6 +116,8 @@ export const BulkTransferAccountTable = ({
     []
   );
 
+  const selectAll = watch('selectAll');
+
   return (
     <FormSection templateColumns={1} divider={false}>
       <Box display="flex" flexDirection="column" gap="s4">
@@ -122,22 +130,39 @@ export const BulkTransferAccountTable = ({
         </Text>
       </Box>
 
-      <Table
-        isStatic
-        allowSelection
-        allowSearch
-        data={accountList}
-        getRowId={(row) => row?.node?.id as string}
-        columns={columns}
-        isLoading={isLoading}
-        pagination={{
-          total:
-            accountListData?.settings?.general?.depositProduct?.getAccountlist?.totalCount ??
-            'Many',
-          pageInfo: accountListData?.settings?.general?.depositProduct?.getAccountlist?.pageInfo,
-        }}
-        onRowSelect={(selected) => setSelectedAccounts(selected)}
-      />
+      <Box display="flex" justifyContent="space-between">
+        <FormCheckbox name="selectAll" label="Select All Accounts" />
+
+        {selectAll && (
+          <Text variant="formLabel">
+            {accountListData?.settings?.general?.depositProduct?.getAccountlist?.totalCount}{' '}
+            accounts selected
+          </Text>
+        )}
+
+        {!selectAll && (
+          <Text variant="formLabel">{selectedAccounts?.length} accounts selected</Text>
+        )}
+      </Box>
+
+      {!selectAll && (
+        <Table
+          isStatic
+          allowSelection
+          allowSearch
+          data={accountList}
+          getRowId={(row) => row?.node?.id as string}
+          columns={columns}
+          isLoading={isLoading}
+          pagination={{
+            total:
+              accountListData?.settings?.general?.depositProduct?.getAccountlist?.totalCount ??
+              'Many',
+            pageInfo: accountListData?.settings?.general?.depositProduct?.getAccountlist?.pageInfo,
+          }}
+          onRowSelect={(selected) => setSelectedAccounts(selected)}
+        />
+      )}
     </FormSection>
   );
 };
