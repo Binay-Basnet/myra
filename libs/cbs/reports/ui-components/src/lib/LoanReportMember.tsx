@@ -14,76 +14,158 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => (
     <Box w="50%">
       <Box w="90%">
         <Grid templateColumns="repeat(2, 1fr)">
-          <GridItem>
-            <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
-              <Text>Name of member:</Text>
-              {member?.address && <Text>Address:</Text>}
-              {member?.branch && <Text>Service Center Name:</Text>}
-              {account?.approvedAmount && <Text>Approved Amount:</Text>}
-              {account?.issuedDate && <Text>Loan Issued Date:</Text>}
-              {member?.code && <Text>Membership No:</Text>}
-              {member?.panVatNo && <Text>PAN No:</Text>}
-              {/* {account?.openingBalance && <Text>Opening Balance:</Text>} */}
-            </Box>
-          </GridItem>
-
-          <GridItem>
-            <Box display="flex" flexDir="column" fontSize="r1" fontWeight="500" color="gray.700">
-              <Text noOfLines={1} textTransform="capitalize">
-                {member?.name?.local === '' ? '-' : member?.name?.local}
-              </Text>
-              {member?.address && <Text noOfLines={1}>{formatAddress(member?.address)}</Text>}
-              {member?.branch && <Text noOfLines={1}>{member?.branch}</Text>}
-              <Text noOfLines={1}>{amountConverter(account?.approvedAmount ?? 0)}</Text>
-              {account?.issuedDate && (
-                <Text noOfLines={1}> {localizedDate(account?.issuedDate)}</Text>
-              )}
-              {member?.code && <Text noOfLines={1}>{member?.code}</Text>}
-              {member?.panVatNo && <Text noOfLines={1}>{member?.panVatNo}</Text>}
-              {/* {account?.openingBalance && (
-                <Text noOfLines={1}>{amountConverter(account?.openingBalance ?? 0)}</Text>
-              )} */}
-            </Box>
-          </GridItem>
+          <Text fontSize="r1" color="gray.700">
+            Name of member:
+          </Text>
+          <Text fontSize="r1" fontWeight="500" color="gray.700">
+            {member?.name?.local === '' ? '-' : member?.name?.local}
+          </Text>
         </Grid>
+        {member?.address && (
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Text fontSize="r1" color="gray.700">
+              Address:
+            </Text>
+            <Text fontSize="r1" fontWeight="500" color="gray.700">
+              {formatAddress(member?.address)}
+            </Text>
+          </Grid>
+        )}
+        {account?.approvedAmount && (
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Text fontSize="r1" color="gray.700">
+              Approved Amount:
+            </Text>
+            <Text fontSize="r1" fontWeight="500" color="gray.700">
+              {amountConverter(account?.approvedAmount ?? 0)}
+            </Text>
+          </Grid>
+        )}
+        {account?.issuedDate && (
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Text fontSize="r1" color="gray.700">
+              Loan Issued Date:
+            </Text>
+            <Text fontSize="r1" fontWeight="500" color="gray.700">
+              {localizedDate(account?.issuedDate)}
+            </Text>
+          </Grid>
+        )}
+        {member?.code && (
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Text fontSize="r1" color="gray.700">
+              Membership No:
+            </Text>
+            <Text fontSize="r1" fontWeight="500" color="gray.700">
+              {member?.code}
+            </Text>
+          </Grid>
+        )}
+        {member?.panVatNo && (
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Text fontSize="r1" color="gray.700">
+              PAN No:
+            </Text>
+            <Text fontSize="r1" fontWeight="500" color="gray.700">
+              {member?.panVatNo}
+            </Text>
+          </Grid>
+        )}
       </Box>
     </Box>
 
     <Box w="50%">
       <Box w="100%">
-        <Grid templateColumns="repeat(2, 1fr)">
-          <GridItem>
-            <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
-              {account?.interestRate && <Text>Current Interest Rate:</Text>}
-              {account?.accountNo && <Text>Loan Account No:</Text>}
-              {account?.accountName && <Text>Loan Account Name:</Text>}
-              {account?.productName && <Text>Loan Product Name</Text>}
-              {account?.loanType && <Text>Loan Type:</Text>}
-              {account?.loanSubtype && <Text>Loan Subtype:</Text>}
-              {account?.installment && <Text>Installment:</Text>}
-              {/* <Text>Loan Processing Charge:</Text> */}
-              {account?.disbursedAmount && <Text>Disbursed Amount:</Text>}
-              {account?.charge && <Text>Service Charge:</Text>}
-            </Box>
-          </GridItem>
-
-          <GridItem>
-            <Box display="flex" flexDir="column" fontSize="r1" color="gray.700" fontWeight="500">
-              {account?.interestRate && <Text noOfLines={1}>{account?.interestRate ?? 0}%</Text>}
-              {account?.accountNo && <Text noOfLines={1}>{account?.accountNo}</Text>}
-              {account?.accountName && <Text noOfLines={1}>{account?.accountName}</Text>}
-              {account?.productName && <Text noOfLines={1}>{account?.productName}</Text>}
-              {account?.loanType && <Text noOfLines={1}>{account?.loanType}</Text>}
-              {account?.loanSubtype && <Text noOfLines={1}>{account?.loanSubtype}</Text>}
-              {account?.installment && <Text noOfLines={1}>{account?.installment}</Text>}
-              {/* <Text>0</Text> */}
-              {account?.disbursedAmount && (
-                <Text noOfLines={1}>{amountConverter(account?.disbursedAmount || 0)}</Text>
-              )}
-              {account?.charge && <Text>{amountConverter(account?.charge || 0)}</Text>}
-            </Box>
-          </GridItem>
-        </Grid>
+        {account?.interestRate && (
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Text fontSize="r1" color="gray.700">
+              Current Interest Rate:
+            </Text>
+            <Text fontSize="r1" fontWeight="500" color="gray.700">
+              {account?.interestRate ?? 0}%
+            </Text>
+          </Grid>
+        )}
+        {account?.accountNo && (
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Text fontSize="r1" color="gray.700">
+              Loan Account No:
+            </Text>
+            <Text fontSize="r1" fontWeight="500" color="gray.700">
+              {account?.accountNo}
+            </Text>
+          </Grid>
+        )}
+        {account?.accountName && (
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Text fontSize="r1" color="gray.700">
+              Loan Account Name:
+            </Text>
+            <Text fontSize="r1" fontWeight="500" color="gray.700">
+              {account?.accountName}
+            </Text>
+          </Grid>
+        )}
+        {account?.productName && (
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Text fontSize="r1" color="gray.700">
+              Loan Product Name:
+            </Text>
+            <Text fontSize="r1" fontWeight="500" color="gray.700">
+              {account?.productName}
+            </Text>
+          </Grid>
+        )}
+        {account?.loanType && (
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Text fontSize="r1" color="gray.700">
+              Loan Type:
+            </Text>
+            <Text fontSize="r1" fontWeight="500" color="gray.700">
+              {account?.loanType}
+            </Text>
+          </Grid>
+        )}
+        {account?.loanSubtype && (
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Text fontSize="r1" color="gray.700">
+              Loan Subtype:
+            </Text>
+            <Text fontSize="r1" fontWeight="500" color="gray.700">
+              {account?.loanSubtype}
+            </Text>
+          </Grid>
+        )}
+        {account?.installment && (
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Text fontSize="r1" color="gray.700">
+              Installment:
+            </Text>
+            <Text fontSize="r1" fontWeight="500" color="gray.700">
+              {account?.installment}
+            </Text>
+          </Grid>
+        )}
+        {account?.disbursedAmount && (
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Text fontSize="r1" color="gray.700">
+              Disbursed Amount:
+            </Text>
+            <Text fontSize="r1" fontWeight="500" color="gray.700">
+              {amountConverter(account?.disbursedAmount || 0)}
+            </Text>
+          </Grid>
+        )}
+        {account?.charge && (
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Text fontSize="r1" color="gray.700">
+              Service Charge:
+            </Text>
+            <Text fontSize="r1" fontWeight="500" color="gray.700">
+              {amountConverter(account?.charge || 0)}
+            </Text>
+          </Grid>
+        )}
       </Box>
     </Box>
   </Box>
