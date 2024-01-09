@@ -53,6 +53,7 @@ export const UpdateLoanAccountPremiumModal = ({
         payload: {
           minRate: values?.['minRate'],
           maxRate: values?.['maxRate'],
+          defaultRate: values?.['defaultRate'],
         },
       }),
     });
@@ -89,12 +90,18 @@ export const UpdateLoanAccountPremiumModal = ({
                     Maximum Interest Rate: {detailData?.interest?.maxRate ?? 'N/A'}
                   </Text>
                 </li>
+                <li>
+                  <Text fontSize="s3">
+                    Default Interest Rate: {detailData?.interest?.defaultRate ?? 'N/A'}
+                  </Text>
+                </li>
               </ul>
             </Box>
           </Alert>
           <Box display="flex" gap="s16">
             <FormNumberInput label="Minimum Interest Rate" name="minRate" />
             <FormNumberInput label="Maximum Interest Rate" name="maxRate" />
+            <FormNumberInput label="Default Interest Rate" name="defaultRate" />
           </Box>
         </Box>
       </FormProvider>

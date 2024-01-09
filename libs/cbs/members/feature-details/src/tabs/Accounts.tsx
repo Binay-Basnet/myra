@@ -86,6 +86,7 @@ export const Accounts = () => {
           account?.productType !== NatureOfDepositProduct?.Current ? account?.interestRate : '-',
         productName: account?.productName,
         guaranteeAccounts: account?.guaranteeAccounts ?? [],
+        totalBalance: account?.totalBalance,
       })
     ) || [];
 
