@@ -9154,7 +9154,7 @@ export type GeneralMemberData = {
 };
 
 export type GeneralMemberInput = {
-  charge?: InputMaybe<Array<InputMaybe<MemberChargeInput>>>;
+  charge?: InputMaybe<Array<MemberChargeInput>>;
   memberCode?: InputMaybe<MemberCodeInput>;
   memberType?: InputMaybe<MemberActiveInput>;
   risk?: InputMaybe<MemberRiskInput>;
