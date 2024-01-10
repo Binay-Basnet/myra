@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { Box } from '@myra-ui';
+import { Box, MultiFooter } from '@myra-ui';
 
 import {
   LoanAccReportDetails,
@@ -81,11 +81,11 @@ export const LoanTransactionStatementReport = () => {
                 {
                   header: 'S.No.',
                   accessorKey: 'index',
-                  footer: () => <Box textAlign="right">Closing Balance</Box>,
+                  footer: () => <MultiFooter texts={['Total', '']} />,
                   meta: {
                     width: '60px',
                     Footer: {
-                      colspan: 8,
+                      colspan: 4,
                     },
                   },
                 },
@@ -136,11 +136,16 @@ export const LoanTransactionStatementReport = () => {
                   header: 'Withdraw Principal',
                   accessorKey: 'withdrawPrincipal',
                   cell: (props) => amountConverter(props.getValue() as string),
+                  footer: () => (
+                    <MultiFooter
+                      texts={[
+                        amountConverter(loanFooter?.withDrawPrincipalTotal || '0') as string,
+                        '',
+                      ]}
+                    />
+                  ),
                   meta: {
                     isNumeric: true,
-                    Footer: {
-                      display: 'none',
-                    },
                   },
                 },
 
@@ -160,35 +165,42 @@ export const LoanTransactionStatementReport = () => {
                   header: 'Paid Principal',
                   accessorKey: 'paidPrinciple',
                   cell: (props) => amountConverter(props.getValue() as string),
+                  footer: () => (
+                    <MultiFooter
+                      texts={[amountConverter(loanFooter?.paidPrincipleTotal || '0'), '']}
+                    />
+                  ),
                   meta: {
                     isNumeric: true,
-                    Footer: {
-                      display: 'none',
-                    },
                   },
                 },
                 {
                   header: 'Interest Paid',
                   accessorKey: 'interestPaid',
                   cell: (props) => amountConverter(props.getValue() as string),
-
+                  footer: () => (
+                    <MultiFooter
+                      texts={[amountConverter(loanFooter?.interestPaidTotal || '0'), '']}
+                    />
+                  ),
                   meta: {
                     isNumeric: true,
-                    Footer: {
-                      display: 'none',
-                    },
                   },
                 },
                 {
                   header: 'Fine Paid',
                   accessorKey: 'finePaid',
                   cell: (props) => amountConverter(props.getValue() as string),
-
+                  footer: () => (
+                    <MultiFooter
+                      texts={[
+                        amountConverter(loanFooter?.penaltyPaidTotal || '0'),
+                        'Closing Balance',
+                      ]}
+                    />
+                  ),
                   meta: {
                     isNumeric: true,
-                    Footer: {
-                      display: 'none',
-                    },
                   },
                 },
                 {
@@ -199,11 +211,17 @@ export const LoanTransactionStatementReport = () => {
                       props.row?.original?.ledgerBalance?.amount || '0',
                       props?.row?.original?.ledgerBalance?.amountType as string
                     ),
-                  footer: () =>
-                    debitCreditConverter(
-                      loanFooter?.closingBalance?.amount || '0',
-                      loanFooter?.closingBalance?.amountType as string
-                    ),
+                  footer: () => (
+                    <MultiFooter
+                      texts={[
+                        '',
+                        debitCreditConverter(
+                          loanFooter?.closingBalance?.amount || '0',
+                          loanFooter?.closingBalance?.amountType as string
+                        ),
+                      ]}
+                    />
+                  ),
 
                   meta: {
                     isNumeric: true,

@@ -536,3 +536,23 @@ query getLoanProductRebateUpdateList($productId: ID!) {
     }
   }
 }
+
+query viewLoanProductWithAccount($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        ViewProductWithAccount(productId: $productId) {
+          data {
+            id
+            organizationPremium
+            productPremium
+            accountPremium
+            effectiveInterestRate
+            count
+            accountIds
+          }
+        }
+      }
+    }
+  }
+}

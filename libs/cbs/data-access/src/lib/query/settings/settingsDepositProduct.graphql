@@ -651,3 +651,23 @@ query getCloseCharge($id: ID!) {
     }
   }
 }
+
+query viewSavingProductWithAccount($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        ViewProductWithAccount(productId: $productId) {
+          data {
+            id
+            organizationPremium
+            productPremium
+            accountPremium
+            effectiveInterestRate
+            count
+            accountIds
+          }
+        }
+      }
+    }
+  }
+}
