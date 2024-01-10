@@ -9154,7 +9154,7 @@ export type GeneralMemberData = {
 };
 
 export type GeneralMemberInput = {
-  charge?: InputMaybe<Array<InputMaybe<MemberChargeInput>>>;
+  charge?: InputMaybe<Array<MemberChargeInput>>;
   memberCode?: InputMaybe<MemberCodeInput>;
   memberType?: InputMaybe<MemberActiveInput>;
   risk?: InputMaybe<MemberRiskInput>;
@@ -14399,6 +14399,11 @@ export type LoanAccReportDetails = {
   openingBalance?: Maybe<Scalars['String']>;
   productName?: Maybe<Scalars['String']>;
   tenureUnit?: Maybe<Scalars['String']>;
+  totalBalance?: Maybe<Scalars['String']>;
+  totalFinePaid?: Maybe<Scalars['String']>;
+  totalInterestPaid?: Maybe<Scalars['String']>;
+  totalPaidPrincipal?: Maybe<Scalars['String']>;
+  totalWithDrawPrincipal?: Maybe<Scalars['String']>;
 };
 
 export type LoanAccount = {
@@ -16507,6 +16512,7 @@ export type LoanStatementFooter = {
   paidPrincipleTotal?: Maybe<Scalars['String']>;
   penaltyPaidTotal?: Maybe<Scalars['String']>;
   remainingPrincipleTotal?: Maybe<Scalars['String']>;
+  withDrawPrincipalTotal?: Maybe<Scalars['String']>;
 };
 
 export type LoanStatementReport = {
@@ -42832,6 +42838,7 @@ export type GetLoanTransactionReportQuery = {
                 penaltyPaidTotal?: string | null;
                 discountTotal?: string | null;
                 remainingPrincipleTotal?: string | null;
+                withDrawPrincipalTotal?: string | null;
                 openingBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
                 closingBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
               } | null;
@@ -74143,6 +74150,7 @@ export const GetLoanTransactionReportDocument = `
               penaltyPaidTotal
               discountTotal
               remainingPrincipleTotal
+              withDrawPrincipalTotal
               closingBalance {
                 amount
                 amountType

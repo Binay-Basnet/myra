@@ -530,6 +530,7 @@ query getLoanTransactionReport($data: LoanStatementReportSettings!) {
               penaltyPaidTotal
               discountTotal
               remainingPrincipleTotal
+              withDrawPrincipalTotal
               closingBalance {
                 amount
                 amountType
