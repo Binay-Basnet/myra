@@ -19,8 +19,8 @@ import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
+  FormCBSDatePicker,
   FormCheckboxGroup,
-  FormDatePicker,
   FormMemberSelect,
   FormRadioGroup,
 } from '@coop/shared/form';
@@ -110,7 +110,7 @@ export const ExceptionSavingBalanceReport = () => {
             />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Date" isTransactionBaseDate />
+            <FormCBSDatePicker name="period.from" label="Date" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

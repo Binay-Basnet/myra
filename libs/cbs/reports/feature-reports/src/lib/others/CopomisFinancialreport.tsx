@@ -9,7 +9,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormDatePicker } from '@coop/shared/form';
+import { FormCBSDatePicker } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 export const CopomisFinancialReport = () => {
@@ -49,7 +49,7 @@ export const CopomisFinancialReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={2}>
-            <FormDatePicker label="Select Date" name="period.from" isTransactionBaseDate />
+            <FormCBSDatePicker label="Select Date" name="period.from" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

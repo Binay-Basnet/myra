@@ -194,6 +194,22 @@ query getMemberKYMDetailsAccounts($id: ID!) {
             groupId
             groupName
           }
+          dormantAccounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+            interestEarned
+            interestBooked
+            guaranteeAccounts {
+              loanId
+              loanAccountName
+            }
+            groupId
+            groupName
+          }
         }
       }
     }

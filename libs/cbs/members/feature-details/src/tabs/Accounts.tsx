@@ -75,6 +75,21 @@ export const Accounts = () => {
       })
     ) || [];
 
+  const dormantAccountList =
+    memberDetails?.data?.members?.memberOverviewV2?.accounts?.data?.dormantAccounts?.map(
+      (account, index) => ({
+        sn: Number(index) + 1,
+        accountType: account?.productType,
+        accountName: account?.accountName,
+        accountNumber: account?.accountNumber,
+        interestRate:
+          account?.productType !== NatureOfDepositProduct?.Current ? account?.interestRate : '-',
+        productName: account?.productName,
+        guaranteeAccounts: account?.guaranteeAccounts ?? [],
+        totalBalance: account?.totalBalance,
+      })
+    ) || [];
+
   return (
     <>
       {isMemberAccountFetching && <SkeletonDetails />}
@@ -114,6 +129,7 @@ export const Accounts = () => {
             accountList={closedAccountList}
             isClosedAccounts
           />
+          <AccountList title="Dormant Accounts" accountList={dormantAccountList} />
         </Box>
       )}
     </>

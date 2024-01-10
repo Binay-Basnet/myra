@@ -9,7 +9,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormBranchSelect, FormDatePicker } from '@coop/shared/form';
+import { FormBranchSelect, FormCBSDatePicker } from '@coop/shared/form';
 import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
 type VaultBalanceReportDataType = {
@@ -124,7 +124,7 @@ export const VaultBalanceReport = () => {
             <FormBranchSelect showUserBranchesOnly name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Date" isTransactionBaseDate />
+            <FormCBSDatePicker name="period.from" label="Date" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

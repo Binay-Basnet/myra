@@ -10,6 +10,7 @@ import { DormantAccountListPage } from './DormantAccountPage';
 import FeesAndChargesUpdatePage from './FeesAndChargesUpdatePage';
 import GeneralUpdatesPage from './GeneralUpdatesPage';
 import { InactiveAccountListPage } from './InactiveAccountPage';
+import { InterestBreakdownPage } from './InterestBreakdownPage';
 import { InterestUpdatePage } from './InterestUpdatePage';
 import { OverviewPage } from './OverviewPage';
 import { PenaltyUpdatePage } from './PenaltyUpdatePage';
@@ -41,6 +42,7 @@ export const CbsSettingsSavingsDetailPage = () => {
       {tabQuery === 'fee and charges update' && <FeesAndChargesUpdatePage />}
       {tabQuery === 'general updates' && <GeneralUpdatesPage />}
       {tabQuery === 'cheque settings update' && <ChequeSettingsUpdatePage />}
+      {tabQuery === 'interest breakdown' && <InterestBreakdownPage />}
     </>
   );
 };

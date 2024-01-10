@@ -16,8 +16,8 @@ import { formatAddress, localizedDate, RouteToDetailsPage } from '@coop/cbs/util
 import {
   FormAmountFilter,
   FormBranchSelect,
+  FormCBSDatePicker,
   FormCheckboxGroup,
-  FormDatePicker,
   FormInput,
 } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
@@ -85,7 +85,7 @@ export const ShareBalanceReport = () => {
             <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormDatePicker name="period.from" label="Date" isTransactionBaseDate />
+            <FormCBSDatePicker name="period.from" label="Date" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

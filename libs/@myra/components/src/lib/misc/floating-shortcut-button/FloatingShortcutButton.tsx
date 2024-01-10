@@ -31,29 +31,31 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Add dormant account tag in the dormant account list.',
-      "Total in today's list amount column.",
-      'Member account search in saving products detail page ( active , inactive, dormant accounts)',
-      'Member account search in loan products detail page ( active , inactive accounts)',
-      'User-wise filter in all transactions list (or in user report with transaction type).',
-      'To add account name in header of saving account statement and loan account statement report.',
-      'cashback/service charges are added in the other utility payments.',
+      'TV payment feature added in utility payments.',
+      'Default interest rate added in the saving product general update section.',
+      'Default interest rate added in the loan product general update section.',
+      "MR cannot create other MR's today list.",
+      'Interest posting to be allowed in dormant account.',
+      'Interest breakdown section added in the saving and loan product details section.',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Date selection in case of payment via bank- future date (wrt current system date) to not be accepted.',
-      'search account  in member assigned page of MR list page.',
-      'Add amount column in the deposit transaction list.',
-      'Disbursed amount issue in the loan disbursement report.',
-      'Total not calculated in the collection sheet.',
-      'Account selected in payment mode to be reset if any changes is made in main (deposit/loan repayment etc) window by coming back.',
-      'Add member section remove from the mr role in mr list (assigned members).',
-      'Total in loan account statement report-- also, to remove loan statement report from loan reports list.',
-      'Page Redirection issues in microFinance.',
-      'Group table issue in microFinance Group tab.',
-      'Rename group of microFinance group center and microFinance center.',
+      'Dormant accounts list in Saving accounts section of Member overview page.',
+      'Account number if payment mode is "account transfer" in loan repayment success card.',
+      'Interest Posting frequency in saving product dashboard page.',
+      'In loan statement account report , account name are added with visible format.',
+      'Dormant accounts are listed in the nominee search while in account open.',
+      'Added no of account selected and select all account feature in bulk transfer.',
+      'Search issue fixed in the bulk transfer section.',
+      'Share return issue(membership fee is unpaid) fix.',
+      'Deposit date (in payment mode) to always be required.',
+      'Remove loan statement report from loan reports list.(shifted to others report section).',
+      'Installment amount to be shown in the table.(MR)',
+      'effective interest rate added  in the member overview page.( saving and loan accounts)',
+      'In loan statement account report , total added in the report section.',
+      'Loan application and account interest rate mismatch if account premium is edited after application has already been saved',
     ],
   },
 };
@@ -92,8 +94,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.103</Text>
-          <Text fontSize="s3">Jan 3, 2024</Text>
+          <Text fontSize="r2">Version 1.0.104</Text>
+          <Text fontSize="s3">Jan 10, 2024</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>

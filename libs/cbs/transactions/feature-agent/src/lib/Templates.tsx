@@ -12,6 +12,7 @@ import {
   Grid,
   Icon,
   IconButton,
+  Loader,
   Popover,
   PopoverBody,
   PopoverContent,
@@ -45,7 +46,9 @@ export const Templates = () => {
     onToggle: onDeleteConfirmToggle,
   } = useDisclosure();
 
-  const { data: collectionListData } = useListCollectionQuery({ agentID: id as string });
+  const { data: collectionListData, isFetching: isCollectionFetching } = useListCollectionQuery({
+    agentID: id as string,
+  });
 
   const collectionList = collectionListData?.collection?.listCollection?.data ?? [];
 
@@ -75,88 +78,92 @@ export const Templates = () => {
         Collection List
       </Text>
 
-      <Box
-        bg="white"
-        border="1px"
-        borderColor="border.layout"
-        borderRadius="br3"
-        p="s16"
-        display="flex"
-        flexDirection="column"
-        gap="s16"
-      >
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Text fontSize="r2" color="gray.700" fontWeight={500}>
-            Collections Lists
-          </Text>
-          <Button
-            rightIcon={<Icon color="gray.600" as={IoAddOutline} />}
-            variant="outline"
-            shade="neutral"
-            onClick={onCreateListToggle}
-          >
-            New Collections
-          </Button>
-        </Box>
+      {isCollectionFetching && <Loader />}
 
-        <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-          {collectionList?.map((coll) => (
-            <Box
-              border="1px"
-              borderColor="border.layout"
-              borderRadius="br3"
-              p="s16"
-              display="flex"
-              flexDirection="column"
-              gap="s20"
+      {!isCollectionFetching && (
+        <Box
+          bg="white"
+          border="1px"
+          borderColor="border.layout"
+          borderRadius="br3"
+          p="s16"
+          display="flex"
+          flexDirection="column"
+          gap="s16"
+        >
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Text fontSize="r2" color="gray.700" fontWeight={500}>
+              Collections Lists
+            </Text>
+            <Button
+              rightIcon={<Icon color="gray.600" as={IoAddOutline} />}
+              variant="outline"
+              shade="neutral"
+              onClick={onCreateListToggle}
             >
-              <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Text fontSize="r1" fontWeight={500} color="primary.500">
-                  {coll?.collectionName}
-                </Text>
+              New Collections
+            </Button>
+          </Box>
 
-                <Actions
-                  items={[
-                    {
-                      title: 'Edit',
-                      onClick: () => {
-                        setSelectedCollectionId(coll?.collectionID as string);
-                        onCreateListToggle();
-                      },
-                    },
-                    {
-                      title: 'Delete',
-                      onClick: () => {
-                        setSelectedCollectionId(coll?.collectionID as string);
-                        onDeleteConfirmToggle();
-                      },
-                    },
-                  ]}
-                />
-              </Box>
+          <Grid templateColumns="repeat(2, 1fr)" gap="s16">
+            {collectionList?.map((coll) => (
+              <Box
+                border="1px"
+                borderColor="border.layout"
+                borderRadius="br3"
+                p="s16"
+                display="flex"
+                flexDirection="column"
+                gap="s20"
+              >
+                <Box display="flex" justifyContent="space-between" alignItems="center">
+                  <Text fontSize="r1" fontWeight={500} color="primary.500">
+                    {coll?.collectionName}
+                  </Text>
 
-              <Box display="flex" gap="s32">
-                <Box display="flex" flexDirection="column" gap="s4">
-                  <Text fontSize="s2" fontWeight={500} color="gray.600">
-                    Members
-                  </Text>
-                  <Text fontSize="r3" fontWeight={600} color="gray.800">
-                    {coll?.memberCount}
-                  </Text>
+                  <Actions
+                    items={[
+                      {
+                        title: 'Edit',
+                        onClick: () => {
+                          setSelectedCollectionId(coll?.collectionID as string);
+                          onCreateListToggle();
+                        },
+                      },
+                      {
+                        title: 'Delete',
+                        onClick: () => {
+                          setSelectedCollectionId(coll?.collectionID as string);
+                          onDeleteConfirmToggle();
+                        },
+                      },
+                    ]}
+                  />
                 </Box>
-                <Box display="flex" flexDirection="column" gap="s4">
-                  <Text fontSize="s2" fontWeight={500} color="gray.600">
-                    Accounts
-                  </Text>
-                  <Text fontSize="r3" fontWeight={600} color="gray.800">
-                    {coll?.accountCount}
-                  </Text>
+
+                <Box display="flex" gap="s32">
+                  <Box display="flex" flexDirection="column" gap="s4">
+                    <Text fontSize="s2" fontWeight={500} color="gray.600">
+                      Members
+                    </Text>
+                    <Text fontSize="r3" fontWeight={600} color="gray.800">
+                      {coll?.memberCount}
+                    </Text>
+                  </Box>
+                  <Box display="flex" flexDirection="column" gap="s4">
+                    <Text fontSize="s2" fontWeight={500} color="gray.600">
+                      Accounts
+                    </Text>
+                    <Text fontSize="r3" fontWeight={600} color="gray.800">
+                      {coll?.accountCount}
+                    </Text>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          ))}
-        </Grid>
-      </Box>
+            ))}
+          </Grid>
+        </Box>
+      )}
 
       {isCreateListModalOpen ? (
         <CreateCollectionListModal

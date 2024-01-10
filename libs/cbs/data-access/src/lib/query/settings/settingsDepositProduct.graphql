@@ -38,6 +38,7 @@ query getDepositProductSettingsList($paginate: Pagination, $filter: DepositProdu
                 userType
               }
               isMandatorySaving
+              interestPostingFrequency
             }
           }
           totalCount
@@ -644,6 +645,26 @@ query getCloseCharge($id: ID!) {
           }
           error {
             ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query viewSavingProductWithAccount($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        ViewProductWithAccount(productId: $productId) {
+          data {
+            id
+            organizationPremium
+            productPremium
+            accountPremium
+            effectiveInterestRate
+            count
+            accountIds
           }
         }
       }

@@ -50,13 +50,14 @@ export const UpdateAccountPremiumModal = ({ isOpen, onClose }: IUpdateAccountPre
         payload: {
           minRate: values?.['minRate'],
           maxRate: values?.['maxRate'],
+          defaultRate: values?.['defaultRate'],
         },
       }),
     });
   };
 
   const handleClose = () => {
-    methods.reset({ minRate: '', maxRate: '' });
+    methods.reset({ minRate: '', maxRate: '', defaultRate: '' });
 
     onClose();
   };
@@ -86,12 +87,18 @@ export const UpdateAccountPremiumModal = ({ isOpen, onClose }: IUpdateAccountPre
                     Maximum Interest Rate: {detailData?.interest?.maxRate ?? 'N/A'}
                   </Text>
                 </li>
+                <li>
+                  <Text fontSize="s3">
+                    Default Interest Rate: {detailData?.interest?.defaultRate ?? 'N/A'}
+                  </Text>
+                </li>
               </ul>
             </Box>
           </Alert>
           <Box display="flex" gap="s16">
             <FormNumberInput label="Minimum Interest Rate" name="minRate" />
             <FormNumberInput label="Maximum Interest Rate" name="maxRate" />
+            <FormNumberInput label="Default Interest Rate" name="defaultRate" />
           </Box>
         </Box>
       </FormProvider>

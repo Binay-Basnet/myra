@@ -7,7 +7,7 @@ import { DatePicker } from '@myra-ui/date-picker';
 
 import { useAppSelector } from '@coop/cbs/data-access';
 
-interface IFormDatePickerProps<T> extends InputProps {
+export interface IFormDatePickerProps<T> extends InputProps {
   name: Path<T> | string;
   label?: string;
   rules?: UseControllerProps['rules'];
@@ -16,7 +16,7 @@ interface IFormDatePickerProps<T> extends InputProps {
   maxToday?: boolean;
   isRequired?: boolean;
   helperText?: string;
-  isTransactionBaseDate?: boolean;
+  baseDate?: Date;
 }
 
 export const FormDatePicker = <T,>({
@@ -27,6 +27,7 @@ export const FormDatePicker = <T,>({
   maxToday,
   isRequired,
   helperText,
+  baseDate,
   // isTransactionBaseDate,
   ...rest
 }: IFormDatePickerProps<T>) => {
@@ -78,6 +79,7 @@ export const FormDatePicker = <T,>({
             // value={value ? (preference?.date === 'AD' ? { ad: value } : { bs: value }) : undefined}
             maxDate={maxToday ? new Date() : maxDate}
             minDate={minDate}
+            baseDate={baseDate}
             // baseDate={
             //   isTransactionBaseDate && transactionDate?.en
             //     ? new Date(transactionDate.en)

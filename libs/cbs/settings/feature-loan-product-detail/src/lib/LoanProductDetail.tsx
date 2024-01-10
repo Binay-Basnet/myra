@@ -7,6 +7,7 @@ import { featureCode } from '@coop/shared/utils';
 import { AccountListPage } from './AccountListPage';
 import GeneralUpdatesPage from './GeneralUpdatesPage';
 import { InactiveLoanAccountListPage } from './InactiveAccountsList';
+import { InterestBreakdownPage } from './InterestBreakdownPage';
 import { InterestUpdatePage } from './InteretUpdatePage';
 import LoanFeesAndChargesUpdatePage from './LoanFeesAndChargesUpdatePage';
 import { LoanPenaltyUpdatePage } from './LoanPenaltyUpdatePage';
@@ -38,6 +39,7 @@ export const LoanProductDetail = () => {
       {tabQuery === 'rebate update' && <LoanRebateUpdatePage />}
       {tabQuery === 'fee and charges update' && <LoanFeesAndChargesUpdatePage />}
       {tabQuery === 'general updates' && <GeneralUpdatesPage />}
+      {tabQuery === 'interest breakdown' && <InterestBreakdownPage />}
     </>
   );
 };

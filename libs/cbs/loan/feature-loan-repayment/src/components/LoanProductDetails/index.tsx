@@ -89,11 +89,11 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
         value: String(rebate?.dayBeforeInstallmentDate ?? '-'),
       },
       {
-        label: 'Penalty Rate',
+        label: 'Rebate Rate',
         value: rebate?.rebateRate ? `${rebate?.rebateRate} %` : '-',
       },
       {
-        label: 'Penalty Amount',
+        label: 'Rebate Amount',
         value: amountConverter(rebate?.rebateAmount),
       },
     ];

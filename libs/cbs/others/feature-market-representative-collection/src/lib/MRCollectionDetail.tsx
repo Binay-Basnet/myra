@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { HStack, useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Alert, asyncToast, Box, Button, Icon, Modal, Text } from '@myra-ui';
+import { Alert, asyncToast, Box, Button, Icon, Loader, Modal, Text } from '@myra-ui';
 
 import {
   ObjState,
@@ -93,7 +93,7 @@ export const MRCollectionDetail = () => {
     onToggle: onConfirmModalToggle,
   } = useDisclosure();
 
-  const { data: agentTaskDetailData } = useAgentTodayTaskDetailQuery({
+  const { data: agentTaskDetailData, isFetching } = useAgentTodayTaskDetailQuery({
     id: id as string,
   });
 
@@ -353,292 +353,306 @@ export const MRCollectionDetail = () => {
           buttonHandler={() => router.back()}
         />
 
-        <FormLayout.Content>
-          <FormLayout.Form>
-            <Box p="s16" pb="100px" width="100%" display="flex" flexDirection="column" gap="s32">
-              <Box display="flex" flexDirection="column">
+        {isFetching && <Loader />}
+
+        {!isFetching && (
+          <>
+            <FormLayout.Content>
+              <FormLayout.Form>
                 <Box
+                  p="s16"
+                  pb="100px"
+                  width="100%"
                   display="flex"
-                  w="100%"
-                  borderTopRadius="br2"
-                  h="40px"
-                  alignItems="center"
-                  bg="gray.700"
-                  color="white"
+                  flexDirection="column"
+                  gap="s32"
                 >
-                  <Text flexBasis="35%" fontWeight="600" fontSize="r1" px="s8">
-                    Member
-                  </Text>
-
-                  <Text flexBasis="35%" fontWeight="600" fontSize="r1" px="s8">
-                    Account
-                  </Text>
-
-                  <Text flexBasis="15%" fontWeight="600" fontSize="r1" px="s8">
-                    Amount to be Collected
-                  </Text>
-                  <Text flexBasis="15%" fontWeight="600" fontSize="r1" px="s8">
-                    Fine to be Collected
-                  </Text>
-                  <Text flexBasis="15%" fontWeight="600" fontSize="r1" px="s8">
-                    Amount
-                  </Text>
-                  <Text flexBasis="15%" fontWeight="600" fontSize="r1" px="s8">
-                    Fine
-                  </Text>
-
-                  <Box w="s36" />
-                </Box>
-
-                <Box w="100%" bg="white" borderX="1px" borderColor="border.layout">
-                  {fields.map((item, index) => (
-                    <HStack
+                  <Box display="flex" flexDirection="column">
+                    <Box
+                      display="flex"
                       w="100%"
-                      minH="36px"
-                      alignItems="stretch"
-                      bg="white"
-                      spacing={0}
-                      borderBottom="1px"
-                      borderBottomColor="border.layout"
-                      key={item?.id}
+                      borderTopRadius="br2"
+                      h="40px"
+                      alignItems="center"
+                      bg="gray.700"
+                      color="white"
                     >
-                      <Box flexBasis="40%" px="s8" display="flex" alignItems="center">
-                        <Text>{`${item?.memberName} [${item?.memberCode}]`}</Text>
-                      </Box>
+                      <Text flexBasis="35%" fontWeight="600" fontSize="r1" px="s8">
+                        Member
+                      </Text>
 
-                      <Box
-                        flexBasis="40%"
-                        borderLeft="1px"
-                        borderLeftColor="border.layout"
-                        px="s8"
-                        display="flex"
-                        flexDirection="column"
-                      >
-                        <Text>{`${item?.accountName} [${item?.accountId}]`}</Text>
-                        <Text>
-                          {getAmountToCollect(
-                            Number(item?.amountToBeCollected),
-                            Number(item?.fineToBeCollected),
-                            Number(item?.installmentAmount)
-                          )}
-                        </Text>
-                      </Box>
+                      <Text flexBasis="35%" fontWeight="600" fontSize="r1" px="s8">
+                        Account
+                      </Text>
 
-                      <Box
-                        flexBasis="15%"
-                        borderLeft="1px"
-                        borderLeftColor="border.layout"
-                        px="s8"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="flex-end"
-                      >
-                        <Text>{amountConverter(item?.amountToBeCollected)}</Text>
-                      </Box>
+                      <Text flexBasis="15%" fontWeight="600" fontSize="r1" px="s8">
+                        Amount to be Collected
+                      </Text>
+                      <Text flexBasis="15%" fontWeight="600" fontSize="r1" px="s8">
+                        Fine to be Collected
+                      </Text>
+                      <Text flexBasis="15%" fontWeight="600" fontSize="r1" px="s8">
+                        Amount
+                      </Text>
+                      <Text flexBasis="15%" fontWeight="600" fontSize="r1" px="s8">
+                        Fine
+                      </Text>
 
-                      <Box
-                        flexBasis="15%"
-                        borderLeft="1px"
-                        borderLeftColor="border.layout"
-                        px="s8"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="flex-end"
-                      >
-                        <Text>{amountConverter(item?.fineToBeCollected)}</Text>
-                      </Box>
+                      <Box w="s36" />
+                    </Box>
 
-                      <Box
-                        flexBasis="15%"
-                        borderLeft="1px"
-                        borderLeftColor="border.layout"
-                        display="flex"
-                        alignItems="center"
-                      >
-                        <FormNumberInput
-                          name={`${'accounts'}.${index}.amountCollected`}
-                          py="0"
-                          h="100%"
+                    <Box w="100%" bg="white" borderX="1px" borderColor="border.layout">
+                      {fields.map((item, index) => (
+                        <HStack
                           w="100%"
-                          px="s8"
-                          minH="inherit"
-                          _focus={{ boxShadow: 'none', bg: 'primary.100' }}
-                          _focusWithin={{ boxShadow: 'none' }}
-                          border="none"
-                          onWheel={(e) => e.currentTarget.blur()}
-                          borderRadius="0"
-                          isDisabled={
-                            submissionStatus === 'PENDING' || submissionStatus === 'COMPLETED'
-                          }
-                        />
-                      </Box>
+                          minH="36px"
+                          alignItems="stretch"
+                          bg="white"
+                          spacing={0}
+                          borderBottom="1px"
+                          borderBottomColor="border.layout"
+                          key={item?.id}
+                        >
+                          <Box flexBasis="40%" px="s8" display="flex" alignItems="center">
+                            <Text>{`${item?.memberName} [${item?.memberCode}]`}</Text>
+                          </Box>
 
-                      <Box
-                        flexBasis="15%"
-                        borderLeft="1px"
-                        borderLeftColor="border.layout"
-                        display="flex"
-                        alignItems="center"
-                      >
-                        <FormNumberInput
-                          name={`${'accounts'}.${index}.fineCollected`}
-                          py="0"
-                          h="100%"
-                          w="100%"
-                          px="s8"
-                          minH="inherit"
-                          _focus={{ boxShadow: 'none', bg: 'primary.100' }}
-                          _focusWithin={{ boxShadow: 'none' }}
-                          border="none"
-                          onWheel={(e) => e.currentTarget.blur()}
-                          borderRadius="0"
-                          isDisabled={
-                            submissionStatus === 'PENDING' || submissionStatus === 'COMPLETED'
-                          }
-                        />
-                      </Box>
+                          <Box
+                            flexBasis="40%"
+                            borderLeft="1px"
+                            borderLeftColor="border.layout"
+                            px="s8"
+                            display="flex"
+                            flexDirection="column"
+                          >
+                            <Text>{`${item?.accountName} [${item?.accountId}]`}</Text>
+                            <Text>
+                              {getAmountToCollect(
+                                Number(item?.amountToBeCollected),
+                                Number(item?.fineToBeCollected),
+                                Number(item?.installmentAmount)
+                              )}
+                            </Text>
+                          </Box>
 
-                      <Box
-                        as="button"
-                        w="s36"
-                        minH="s36"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        flexShrink={0}
-                        borderLeft="1px"
-                        borderLeftColor="border.layout"
-                        cursor={
-                          submissionStatus === 'PENDING' || submissionStatus === 'COMPLETED'
-                            ? 'not-allowed'
-                            : 'pointer'
-                        }
-                        pointerEvents={
-                          submissionStatus === 'PENDING' || submissionStatus === 'COMPLETED'
-                            ? 'none'
-                            : 'auto'
-                        }
-                        _focus={{ bg: 'background.500' }}
-                        _focusVisible={{ outline: 'none' }}
-                        _hover={{ bg: 'gray.100' }}
-                        data-testid={`deleteRow-${index}`}
-                        onClick={() => {
-                          remove(index);
-                        }}
-                        flexBasis="5%"
-                      >
-                        <Icon as={IoCloseCircleOutline} color="danger.500" fontSize="2xl" />
-                      </Box>
-                    </HStack>
-                  ))}
-                </Box>
+                          <Box
+                            flexBasis="15%"
+                            borderLeft="1px"
+                            borderLeftColor="border.layout"
+                            px="s8"
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="flex-end"
+                          >
+                            <Text>{amountConverter(item?.amountToBeCollected)}</Text>
+                          </Box>
 
-                <Box
-                  w="100%"
-                  bg="white"
-                  borderBottom="1px"
-                  borderX="1px"
-                  borderColor="border.layout"
-                  borderBottomRadius="br2"
-                  h="36px"
-                  px="s8"
-                  display="flex"
-                  alignItems="center"
-                  color="gray.600"
-                  _hover={{ bg: 'gray.100' }}
-                  gap="s4"
-                  onClick={() => {
-                    // append({});
-                    onAddAccountsModalToggle();
-                  }}
-                  cursor={
-                    submissionStatus === 'PENDING' || submissionStatus === 'COMPLETED'
-                      ? 'not-allowed'
-                      : 'pointer'
-                  }
-                  pointerEvents={
-                    submissionStatus === 'PENDING' || submissionStatus === 'COMPLETED'
-                      ? 'none'
-                      : 'auto'
-                  }
-                >
-                  <Icon as={IoAdd} fontSize="xl" color="primary.500" />
-                  <Text color="primary.500" fontSize="s3" lineHeight="1.5">
-                    New
-                  </Text>
-                </Box>
-              </Box>
+                          <Box
+                            flexBasis="15%"
+                            borderLeft="1px"
+                            borderLeftColor="border.layout"
+                            px="s8"
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="flex-end"
+                          >
+                            <Text>{amountConverter(item?.fineToBeCollected)}</Text>
+                          </Box>
 
-              {rejectReason && (
-                <Alert title={`Reject reason: ${rejectReason}`} status="error" hideCloseIcon />
-              )}
+                          <Box
+                            flexBasis="15%"
+                            borderLeft="1px"
+                            borderLeftColor="border.layout"
+                            display="flex"
+                            alignItems="center"
+                          >
+                            <FormNumberInput
+                              name={`${'accounts'}.${index}.amountCollected`}
+                              py="0"
+                              h="100%"
+                              w="100%"
+                              px="s8"
+                              minH="inherit"
+                              _focus={{ boxShadow: 'none', bg: 'primary.100' }}
+                              _focusWithin={{ boxShadow: 'none' }}
+                              border="none"
+                              onWheel={(e) => e.currentTarget.blur()}
+                              borderRadius="0"
+                              isDisabled={
+                                submissionStatus === 'PENDING' || submissionStatus === 'COMPLETED'
+                              }
+                            />
+                          </Box>
 
-              <Box
-                display="flex"
-                flexDirection="column"
-                gap="s4"
-                p="s16"
-                bg="background.500"
-                borderRadius="br2"
-              >
-                <Box display="flex" justifyContent="space-between">
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    Accounts Collected
-                  </Text>
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    {accounts?.filter((a) => Number(a?.amountCollected) || Number(a?.fineCollected))
-                      ?.length || 0}{' '}
-                    / {accounts?.length}
-                  </Text>
-                </Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    Amount Collected
-                  </Text>
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    {amountConverter(totalAmount)}
-                  </Text>
-                </Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    Fine Collected
-                  </Text>
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    {amountConverter(totalFine)}
-                  </Text>
-                </Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    Total Collection
-                  </Text>
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    {amountConverter(totalAmount)}
-                  </Text>
-                </Box>
-              </Box>
-            </Box>
-          </FormLayout.Form>
-        </FormLayout.Content>
+                          <Box
+                            flexBasis="15%"
+                            borderLeft="1px"
+                            borderLeftColor="border.layout"
+                            display="flex"
+                            alignItems="center"
+                          >
+                            <FormNumberInput
+                              name={`${'accounts'}.${index}.fineCollected`}
+                              py="0"
+                              h="100%"
+                              w="100%"
+                              px="s8"
+                              minH="inherit"
+                              _focus={{ boxShadow: 'none', bg: 'primary.100' }}
+                              _focusWithin={{ boxShadow: 'none' }}
+                              border="none"
+                              onWheel={(e) => e.currentTarget.blur()}
+                              borderRadius="0"
+                              isDisabled={
+                                submissionStatus === 'PENDING' || submissionStatus === 'COMPLETED'
+                              }
+                            />
+                          </Box>
 
-        <FormLayout.Footer
-          draftButton={
-            submissionStatus === 'COLLECTED' || submissionStatus === 'FAILED' ? (
-              <Button onClick={handleSaveTodayList} variant="outline" minWidth="160px">
-                Save Changes
-              </Button>
-            ) : null
-          }
-          mainButton={
-            submissionStatus === 'COLLECTED' || submissionStatus === 'FAILED' ? (
-              <Button
-                onClick={formState.isDirty ? handleSaveAndSubmit : onConfirmModalToggle}
-                minWidth="160px"
-              >
-                Submit Collection Request
-              </Button>
-            ) : null
-          }
-        />
+                          <Box
+                            as="button"
+                            w="s36"
+                            minH="s36"
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                            flexShrink={0}
+                            borderLeft="1px"
+                            borderLeftColor="border.layout"
+                            cursor={
+                              submissionStatus === 'PENDING' || submissionStatus === 'COMPLETED'
+                                ? 'not-allowed'
+                                : 'pointer'
+                            }
+                            pointerEvents={
+                              submissionStatus === 'PENDING' || submissionStatus === 'COMPLETED'
+                                ? 'none'
+                                : 'auto'
+                            }
+                            _focus={{ bg: 'background.500' }}
+                            _focusVisible={{ outline: 'none' }}
+                            _hover={{ bg: 'gray.100' }}
+                            data-testid={`deleteRow-${index}`}
+                            onClick={() => {
+                              remove(index);
+                            }}
+                            flexBasis="5%"
+                          >
+                            <Icon as={IoCloseCircleOutline} color="danger.500" fontSize="2xl" />
+                          </Box>
+                        </HStack>
+                      ))}
+                    </Box>
+
+                    <Box
+                      w="100%"
+                      bg="white"
+                      borderBottom="1px"
+                      borderX="1px"
+                      borderColor="border.layout"
+                      borderBottomRadius="br2"
+                      h="36px"
+                      px="s8"
+                      display="flex"
+                      alignItems="center"
+                      color="gray.600"
+                      _hover={{ bg: 'gray.100' }}
+                      gap="s4"
+                      onClick={() => {
+                        // append({});
+                        onAddAccountsModalToggle();
+                      }}
+                      cursor={
+                        submissionStatus === 'PENDING' || submissionStatus === 'COMPLETED'
+                          ? 'not-allowed'
+                          : 'pointer'
+                      }
+                      pointerEvents={
+                        submissionStatus === 'PENDING' || submissionStatus === 'COMPLETED'
+                          ? 'none'
+                          : 'auto'
+                      }
+                    >
+                      <Icon as={IoAdd} fontSize="xl" color="primary.500" />
+                      <Text color="primary.500" fontSize="s3" lineHeight="1.5">
+                        New
+                      </Text>
+                    </Box>
+                  </Box>
+
+                  {rejectReason && (
+                    <Alert title={`Reject reason: ${rejectReason}`} status="error" hideCloseIcon />
+                  )}
+
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    gap="s4"
+                    p="s16"
+                    bg="background.500"
+                    borderRadius="br2"
+                  >
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        Accounts Collected
+                      </Text>
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        {accounts?.filter(
+                          (a) => Number(a?.amountCollected) || Number(a?.fineCollected)
+                        )?.length || 0}{' '}
+                        / {accounts?.length}
+                      </Text>
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        Amount Collected
+                      </Text>
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        {amountConverter(totalAmount)}
+                      </Text>
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        Fine Collected
+                      </Text>
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        {amountConverter(totalFine)}
+                      </Text>
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        Total Collection
+                      </Text>
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        {amountConverter(totalAmount)}
+                      </Text>
+                    </Box>
+                  </Box>
+                </Box>
+              </FormLayout.Form>
+            </FormLayout.Content>
+
+            <FormLayout.Footer
+              draftButton={
+                submissionStatus === 'COLLECTED' || submissionStatus === 'FAILED' ? (
+                  <Button onClick={handleSaveTodayList} variant="outline" minWidth="160px">
+                    Save Changes
+                  </Button>
+                ) : null
+              }
+              mainButton={
+                submissionStatus === 'COLLECTED' || submissionStatus === 'FAILED' ? (
+                  <Button
+                    onClick={formState.isDirty ? handleSaveAndSubmit : onConfirmModalToggle}
+                    minWidth="160px"
+                  >
+                    Submit Collection Request
+                  </Button>
+                ) : null
+              }
+            />
+          </>
+        )}
       </FormLayout>
 
       <AddAccountModal

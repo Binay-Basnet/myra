@@ -136,7 +136,7 @@ export const MFTellerDayBookReport = () => {
             }))}
             name="user"
           />
-          <FormDatePicker name="period.from" label="Date" isTransactionBaseDate />
+          <FormDatePicker name="period.from" label="Date" />
         </Report.Inputs>
       </Report.Header>
       <Report.Body>

@@ -365,6 +365,7 @@ export type AccountOperatorDetailsFormState = {
 };
 
 export type AccountPremium = {
+  defaultRate?: InputMaybe<Scalars['Float']>;
   maxRate?: InputMaybe<Scalars['Float']>;
   minRate?: InputMaybe<Scalars['Float']>;
 };
@@ -9153,7 +9154,7 @@ export type GeneralMemberData = {
 };
 
 export type GeneralMemberInput = {
-  charge?: InputMaybe<Array<InputMaybe<MemberChargeInput>>>;
+  charge?: InputMaybe<Array<MemberChargeInput>>;
   memberCode?: InputMaybe<MemberCodeInput>;
   memberType?: InputMaybe<MemberActiveInput>;
   risk?: InputMaybe<MemberRiskInput>;
@@ -14398,6 +14399,11 @@ export type LoanAccReportDetails = {
   openingBalance?: Maybe<Scalars['String']>;
   productName?: Maybe<Scalars['String']>;
   tenureUnit?: Maybe<Scalars['String']>;
+  totalBalance?: Maybe<Scalars['String']>;
+  totalFinePaid?: Maybe<Scalars['String']>;
+  totalInterestPaid?: Maybe<Scalars['String']>;
+  totalPaidPrincipal?: Maybe<Scalars['String']>;
+  totalWithDrawPrincipal?: Maybe<Scalars['String']>;
 };
 
 export type LoanAccount = {
@@ -16506,6 +16512,7 @@ export type LoanStatementFooter = {
   paidPrincipleTotal?: Maybe<Scalars['String']>;
   penaltyPaidTotal?: Maybe<Scalars['String']>;
   remainingPrincipleTotal?: Maybe<Scalars['String']>;
+  withDrawPrincipalTotal?: Maybe<Scalars['String']>;
 };
 
 export type LoanStatementReport = {
@@ -17592,6 +17599,7 @@ export type MemberOverview = {
 export type MemberOverviewAccountsView = {
   accounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
   closedAccounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
+  dormantAccounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
 };
 
@@ -28060,6 +28068,7 @@ export type SetLoanRepaymentMutation = {
         paymentMethod?: LoanRepaymentMethod | null;
         totalRemainingPrincipal?: string | null;
         totalRemainingInterest?: string | null;
+        destinationAccount?: string | null;
         nextInstallment?: {
           installmentNo: number;
           installmentDate: Record<'local' | 'en' | 'np', string>;
@@ -40231,6 +40240,22 @@ export type GetMemberKymDetailsAccountsQuery = {
               loanAccountName?: string | null;
             } | null> | null;
           } | null> | null;
+          dormantAccounts?: Array<{
+            accountName?: string | null;
+            accountNumber?: string | null;
+            totalBalance?: string | null;
+            productName?: string | null;
+            productType?: string | null;
+            interestRate?: string | null;
+            interestEarned?: string | null;
+            interestBooked?: string | null;
+            groupId?: string | null;
+            groupName?: string | null;
+            guaranteeAccounts?: Array<{
+              loanId?: string | null;
+              loanAccountName?: string | null;
+            } | null> | null;
+          } | null> | null;
         } | null;
       } | null;
     } | null;
@@ -42813,6 +42838,7 @@ export type GetLoanTransactionReportQuery = {
                 penaltyPaidTotal?: string | null;
                 discountTotal?: string | null;
                 remainingPrincipleTotal?: string | null;
+                withDrawPrincipalTotal?: string | null;
                 openingBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
                 closingBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
               } | null;
@@ -47289,6 +47315,30 @@ export type GetLoanProductRebateUpdateListQuery = {
   };
 };
 
+export type ViewLoanProductWithAccountQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type ViewLoanProductWithAccountQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        ViewProductWithAccount: {
+          data?: Array<{
+            id: string;
+            organizationPremium?: string | null;
+            productPremium?: string | null;
+            accountPremium?: string | null;
+            effectiveInterestRate?: string | null;
+            count?: number | null;
+            accountIds?: Array<string> | null;
+          } | null> | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type GetLoanGeneralSettingsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetLoanGeneralSettingsQuery = {
@@ -47916,6 +47966,7 @@ export type GetDepositProductSettingsListQuery = {
               createdAt: Record<'local' | 'en' | 'np', string>;
               modifiedAt: string;
               isMandatorySaving?: boolean | null;
+              interestPostingFrequency?: Frequency | null;
               createdBy: { id: string; name: string; username: string; userType: UserType };
               modifiedBy: { id: string; name: string; username: string; userType: UserType };
             };
@@ -48516,6 +48567,30 @@ export type GetCloseChargeQuery = {
             | MutationError_NotFoundError_Fragment
             | MutationError_ServerError_Fragment
             | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type ViewSavingProductWithAccountQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type ViewSavingProductWithAccountQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        ViewProductWithAccount: {
+          data?: Array<{
+            id: string;
+            organizationPremium?: string | null;
+            productPremium?: string | null;
+            accountPremium?: string | null;
+            effectiveInterestRate?: string | null;
+            count?: number | null;
+            accountIds?: Array<string> | null;
+          } | null> | null;
         };
       } | null;
     } | null;
@@ -54343,6 +54418,7 @@ export const SetLoanRepaymentDocument = `
         }
         totalRemainingPrincipal
         totalRemainingInterest
+        destinationAccount
       }
       recordId
     }
@@ -70827,6 +70903,22 @@ export const GetMemberKymDetailsAccountsDocument = `
             groupId
             groupName
           }
+          dormantAccounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+            interestEarned
+            interestBooked
+            guaranteeAccounts {
+              loanId
+              loanAccountName
+            }
+            groupId
+            groupName
+          }
         }
       }
     }
@@ -74106,6 +74198,7 @@ export const GetLoanTransactionReportDocument = `
               penaltyPaidTotal
               discountTotal
               remainingPrincipleTotal
+              withDrawPrincipalTotal
               closingBalance {
                 amount
                 amountType
@@ -80089,6 +80182,41 @@ export const useGetLoanProductRebateUpdateListQuery = <
     ).bind(null, variables),
     options
   );
+export const ViewLoanProductWithAccountDocument = `
+    query viewLoanProductWithAccount($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        ViewProductWithAccount(productId: $productId) {
+          data {
+            id
+            organizationPremium
+            productPremium
+            accountPremium
+            effectiveInterestRate
+            count
+            accountIds
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useViewLoanProductWithAccountQuery = <
+  TData = ViewLoanProductWithAccountQuery,
+  TError = unknown
+>(
+  variables: ViewLoanProductWithAccountQueryVariables,
+  options?: UseQueryOptions<ViewLoanProductWithAccountQuery, TError, TData>
+) =>
+  useQuery<ViewLoanProductWithAccountQuery, TError, TData>(
+    ['viewLoanProductWithAccount', variables],
+    useAxios<ViewLoanProductWithAccountQuery, ViewLoanProductWithAccountQueryVariables>(
+      ViewLoanProductWithAccountDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanGeneralSettingsDocument = `
     query getLoanGeneralSettings {
   settings {
@@ -81006,6 +81134,7 @@ export const GetDepositProductSettingsListDocument = `
                 userType
               }
               isMandatorySaving
+              interestPostingFrequency
             }
           }
           totalCount
@@ -81800,6 +81929,41 @@ export const useGetCloseChargeQuery = <TData = GetCloseChargeQuery, TError = unk
       null,
       variables
     ),
+    options
+  );
+export const ViewSavingProductWithAccountDocument = `
+    query viewSavingProductWithAccount($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        ViewProductWithAccount(productId: $productId) {
+          data {
+            id
+            organizationPremium
+            productPremium
+            accountPremium
+            effectiveInterestRate
+            count
+            accountIds
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useViewSavingProductWithAccountQuery = <
+  TData = ViewSavingProductWithAccountQuery,
+  TError = unknown
+>(
+  variables: ViewSavingProductWithAccountQueryVariables,
+  options?: UseQueryOptions<ViewSavingProductWithAccountQuery, TError, TData>
+) =>
+  useQuery<ViewSavingProductWithAccountQuery, TError, TData>(
+    ['viewSavingProductWithAccount', variables],
+    useAxios<ViewSavingProductWithAccountQuery, ViewSavingProductWithAccountQueryVariables>(
+      ViewSavingProductWithAccountDocument
+    ).bind(null, variables),
     options
   );
 export const GetSettingsOptionsFieldsDocument = `

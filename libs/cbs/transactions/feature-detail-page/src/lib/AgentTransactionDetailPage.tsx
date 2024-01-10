@@ -13,6 +13,7 @@ import {
   Button,
   Column,
   FormSection,
+  Loader,
   Modal,
   Table,
   Text,
@@ -92,7 +93,7 @@ export const AgentTransactionDetailPage = () => {
     onToggle: onDeclineModalToggle,
   } = useDisclosure();
 
-  const { data: agentTaskDetailData } = useAgentTodayTaskDetailQuery({
+  const { data: agentTaskDetailData, isFetching } = useAgentTodayTaskDetailQuery({
     id: id as string,
   });
 
@@ -226,129 +227,135 @@ export const AgentTransactionDetailPage = () => {
           buttonHandler={() => router.back()}
         />
 
-        <FormLayout.Content>
-          <FormLayout.Form>
-            <FormSection header="Request By" templateColumns={1}>
-              <Box
-                p="s12"
-                border="1px"
-                borderColor="border.layout"
-                borderRadius="br3"
-                display="flex"
-                justifyContent="space-between"
-                width="100%"
-              >
-                <Box display="flex" alignItems="center" gap="s8">
-                  <Avatar
-                    name={agentDetail?.name as string}
-                    size="md"
-                    src={agentDetail?.profilePicUrl as string}
-                    // onClick={() =>
-                    //   handleModalOpen(memberDetails.avatar as string, memberDetails.name ?? 'Member')
-                    // }
-                    // cursor="pointer"
-                  />
+        {isFetching && <Loader />}
 
-                  <Text fontSize="r1" fontWeight={500} color="primary.500">
-                    {agentDetail?.name}
-                  </Text>
-                </Box>
-                <Box display="flex" flexDirection="column" gap="s4">
-                  <Text fontSize="s3" fontWeight={400} color="gray.600">
-                    Collection Date
-                  </Text>
-                  <Text fontSize="r1" fontWeight={500} color="gray.800">
-                    {collectedDate?.split(' ')[0]}
-                  </Text>
-                </Box>
-              </Box>
-            </FormSection>
+        {!isFetching && (
+          <>
+            <FormLayout.Content>
+              <FormLayout.Form>
+                <FormSection header="Request By" templateColumns={1}>
+                  <Box
+                    p="s12"
+                    border="1px"
+                    borderColor="border.layout"
+                    borderRadius="br3"
+                    display="flex"
+                    justifyContent="space-between"
+                    width="100%"
+                  >
+                    <Box display="flex" alignItems="center" gap="s8">
+                      <Avatar
+                        name={agentDetail?.name as string}
+                        size="md"
+                        src={agentDetail?.profilePicUrl as string}
+                        // onClick={() =>
+                        //   handleModalOpen(memberDetails.avatar as string, memberDetails.name ?? 'Member')
+                        // }
+                        // cursor="pointer"
+                      />
 
-            <FormSection
-              templateColumns={1}
-              divider={false}
-              header="All Collections"
-              subHeader="Review all collections and Verify/Decline with a Note."
-            >
-              <Table isDetailPageTable isStatic data={taskList} columns={columns} />
+                      <Text fontSize="r1" fontWeight={500} color="primary.500">
+                        {agentDetail?.name}
+                      </Text>
+                    </Box>
+                    <Box display="flex" flexDirection="column" gap="s4">
+                      <Text fontSize="s3" fontWeight={400} color="gray.600">
+                        Collection Date
+                      </Text>
+                      <Text fontSize="r1" fontWeight={500} color="gray.800">
+                        {collectedDate?.split(' ')[0]}
+                      </Text>
+                    </Box>
+                  </Box>
+                </FormSection>
 
-              {rejectReason && (
-                <Alert title={`Reject reason: ${rejectReason}`} status="error" hideCloseIcon />
-              )}
+                <FormSection
+                  templateColumns={1}
+                  divider={false}
+                  header="All Collections"
+                  subHeader="Review all collections and Verify/Decline with a Note."
+                >
+                  <Table isDetailPageTable isStatic data={taskList} columns={columns} />
 
-              <Box
-                display="flex"
-                flexDirection="column"
-                gap="s4"
-                p="s16"
-                bg="background.500"
-                borderRadius="br2"
-              >
-                <Box display="flex" justifyContent="space-between">
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    Accounts Collected
-                  </Text>
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    {accounts?.filter((a) => Number(a?.amountCollected) || Number(a?.fineCollected))
-                      ?.length || 0}{' '}
-                    / {accounts?.length}
-                  </Text>
-                </Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    Amount Collected
-                  </Text>
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    {amountConverter(totalAmount)}
-                  </Text>
-                </Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    Fine Collected
-                  </Text>
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    {amountConverter(totalFine)}
-                  </Text>
-                </Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    Total Collection
-                  </Text>
-                  <Text fontSize="r1" fontWeight={500} color="gray.700">
-                    {amountConverter(totalAmount)}
-                  </Text>
-                </Box>
-              </Box>
-            </FormSection>
-          </FormLayout.Form>
-        </FormLayout.Content>
+                  {rejectReason && (
+                    <Alert title={`Reject reason: ${rejectReason}`} status="error" hideCloseIcon />
+                  )}
 
-        <FormLayout.Footer
-          draftButton={
-            submissionStatus === TodayListStatus.Pending ? (
-              <Button
-                onClick={onDeclineModalToggle}
-                variant="ghost"
-                shade="danger"
-                minWidth="160px"
-                disabled={!isTellerOrHeadTeller}
-              >
-                Decline with a Note
-              </Button>
-            ) : null
-          }
-          mainButton={
-            submissionStatus === TodayListStatus.Pending ? (
-              <Button
-                onClick={handleAcceptRequest}
-                minWidth="160px"
-                disabled={!isTellerOrHeadTeller}
-              >
-                Approve Transaction
-              </Button>
-            ) : null
-          }
-        />
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    gap="s4"
+                    p="s16"
+                    bg="background.500"
+                    borderRadius="br2"
+                  >
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        Accounts Collected
+                      </Text>
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        {accounts?.filter(
+                          (a) => Number(a?.amountCollected) || Number(a?.fineCollected)
+                        )?.length || 0}{' '}
+                        / {accounts?.length}
+                      </Text>
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        Amount Collected
+                      </Text>
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        {amountConverter(totalAmount)}
+                      </Text>
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        Fine Collected
+                      </Text>
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        {amountConverter(totalFine)}
+                      </Text>
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        Total Collection
+                      </Text>
+                      <Text fontSize="r1" fontWeight={500} color="gray.700">
+                        {amountConverter(totalAmount)}
+                      </Text>
+                    </Box>
+                  </Box>
+                </FormSection>
+              </FormLayout.Form>
+            </FormLayout.Content>
+            <FormLayout.Footer
+              draftButton={
+                submissionStatus === TodayListStatus.Pending ? (
+                  <Button
+                    onClick={onDeclineModalToggle}
+                    variant="ghost"
+                    shade="danger"
+                    minWidth="160px"
+                    disabled={!isTellerOrHeadTeller}
+                  >
+                    Decline with a Note
+                  </Button>
+                ) : null
+              }
+              mainButton={
+                submissionStatus === TodayListStatus.Pending ? (
+                  <Button
+                    onClick={handleAcceptRequest}
+                    minWidth="160px"
+                    disabled={!isTellerOrHeadTeller}
+                  >
+                    Approve Transaction
+                  </Button>
+                ) : null
+              }
+            />
+          </>
+        )}
       </FormLayout>
 
       <DeclineCollectionRequestModal

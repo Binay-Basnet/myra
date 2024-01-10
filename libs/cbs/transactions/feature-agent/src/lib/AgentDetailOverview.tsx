@@ -17,6 +17,7 @@ import {
   DetailPageContentCard,
   FormSection,
   Icon,
+  Loader,
   Modal,
   Text,
 } from '@myra-ui';
@@ -91,6 +92,8 @@ export const AgentDetailOverview = () => {
 
   const id = router?.query?.['id'];
 
+  const [isTodayListSaving, setIsTodayListSaving] = useState(false);
+
   const queryClient = useQueryClient();
 
   const methods = useForm<TodaysList>();
@@ -105,12 +108,13 @@ export const AgentDetailOverview = () => {
     onToggle: onAddAccountsModalToggle,
   } = useDisclosure();
 
-  const { data: agentTodayListQueryData } = useGetAgentTodayListDataQuery(
-    {
-      id: id as string,
-    },
-    { staleTime: 0, enabled: !!id }
-  );
+  const { data: agentTodayListQueryData, isFetching: isTodayListFetching } =
+    useGetAgentTodayListDataQuery(
+      {
+        id: id as string,
+      },
+      { staleTime: 0, enabled: !!id }
+    );
 
   const submissionId = useMemo(
     () => agentTodayListQueryData?.agent?.listAgentTask?.submissionId,
@@ -140,7 +144,9 @@ export const AgentDetailOverview = () => {
     }
   }, [agentTodayListQueryData]);
 
-  const { mutateAsync: addAgentTodayList } = useAddAgentTodayListMutation();
+  const { mutateAsync: addAgentTodayList } = useAddAgentTodayListMutation({
+    onMutate: () => setIsTodayListSaving(true),
+  });
 
   const handleSaveTodayList = () => {
     const values = getValues();
@@ -173,7 +179,13 @@ export const AgentDetailOverview = () => {
         loading: 'Adding today list',
         success: 'Today list added',
       },
-      onSuccess: () => queryClient.invalidateQueries(['getAgentTodayListData']),
+      onSuccess: () => {
+        setTimeout(() => {
+          queryClient.invalidateQueries(['getAgentTodayListData']);
+          setIsTodayListSaving(false);
+        }, 1000);
+      },
+      onError: () => setIsTodayListSaving(false),
     });
   };
 
@@ -198,17 +210,8 @@ export const AgentDetailOverview = () => {
       onSuccess: (res) => {
         const collectionDetail = res?.collection?.listCollectionTemplate;
 
-        const values = getValues();
-
-        const formAccounts = values?.['accounts']?.map((row) => row?.accountId) ?? [];
-
-        const accountsToAdd = collectionDetail?.data?.filter(
-          (row) => !formAccounts?.includes(row?.accountId as string)
-        );
-
-        setValue('accounts', [
-          ...(values?.['accounts'] ?? []),
-          ...(accountsToAdd?.map((acc) => ({
+        handleAddAccounts(
+          collectionDetail?.data?.map((acc) => ({
             memberId: acc?.memberID,
             memberName: acc?.memberName,
             memberCode: acc?.memberCode,
@@ -216,27 +219,15 @@ export const AgentDetailOverview = () => {
             accountName: acc?.accountName,
             amountToBeCollected: acc?.AmountToBeCollected,
             fineToBeCollected: acc?.FineToBeCollected,
-          })) ?? []),
-        ] as AccountsEntry[]);
+          })) as AccountsEntry[]
+        );
 
         setSelectedCollectionId('');
       },
     }
   );
 
-  const handleAddAccounts = (
-    accArr: {
-      memberId: string;
-      memberName: string;
-      memberCode: string;
-      accountId: string;
-      accountName: string;
-      amountToBeCollected: string;
-      fineToBeCollected: string;
-      installmentAmount: string;
-      dueInstallments: number;
-    }[]
-  ) => {
+  const handleAddAccounts = (accArr: AccountsEntry[]) => {
     const values = getValues();
 
     const formAccounts = values?.accounts?.map((v) => v?.accountId);
@@ -283,7 +274,9 @@ export const AgentDetailOverview = () => {
       <Box display="flex" flexDirection="column" gap="s16">
         <AssignedMembersCard />
 
-        {!showMemberTable && (
+        {(isTodayListFetching || isTodayListSaving) && <Loader />}
+
+        {!showMemberTable && !(isTodayListFetching || isTodayListSaving) && (
           <Alert
             status="info"
             title={t['agentOverviewCreateTodaysList']}
@@ -293,7 +286,7 @@ export const AgentDetailOverview = () => {
           />
         )}
 
-        {showMemberTable && (
+        {showMemberTable && !(isTodayListFetching || isTodayListSaving) && (
           <DetailPageContentCard
             header={t['agentOverviewTodaysList']}
             showFooter
@@ -606,19 +599,7 @@ export default AgentDetailOverview;
 interface AddAccountModalProps {
   isOpen: boolean;
   onClose: () => void;
-  handleAdd: (
-    accounts: {
-      memberId: string;
-      memberName: string;
-      memberCode: string;
-      accountId: string;
-      accountName: string;
-      amountToBeCollected: string;
-      fineToBeCollected: string;
-      installmentAmount: string;
-      dueInstallments: number;
-    }[]
-  ) => void;
+  handleAdd: (accounts: AccountsEntry[]) => void;
 }
 
 const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) => {
@@ -706,17 +687,7 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
   const handleSave = () => {
     const values = getValues();
 
-    const temp: {
-      memberId: string;
-      memberName: string;
-      memberCode: string;
-      accountId: string;
-      accountName: string;
-      amountToBeCollected: string;
-      fineToBeCollected: string;
-      installmentAmount: string;
-      dueInstallments: number;
-    }[] = [];
+    const temp: AccountsEntry[] = [];
 
     const memberDetail = memberList?.find((m) => m?.node?.id === values?.memberId);
 
@@ -733,7 +704,7 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
         fineToBeCollected: accountDetail?.node?.dues?.fine as string,
         installmentAmount: accountDetail?.node?.installmentAmount as string,
         dueInstallments: Number(accountDetail?.node?.dues?.dueInstallments || 0),
-      });
+      } as AccountsEntry);
     });
 
     handleAdd(temp);
