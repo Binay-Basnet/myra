@@ -47315,6 +47315,30 @@ export type GetLoanProductRebateUpdateListQuery = {
   };
 };
 
+export type ViewLoanProductWithAccountQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type ViewLoanProductWithAccountQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        ViewProductWithAccount: {
+          data?: Array<{
+            id: string;
+            organizationPremium?: string | null;
+            productPremium?: string | null;
+            accountPremium?: string | null;
+            effectiveInterestRate?: string | null;
+            count?: number | null;
+            accountIds?: Array<string> | null;
+          } | null> | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type GetLoanGeneralSettingsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetLoanGeneralSettingsQuery = {
@@ -48543,6 +48567,30 @@ export type GetCloseChargeQuery = {
             | MutationError_NotFoundError_Fragment
             | MutationError_ServerError_Fragment
             | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type ViewSavingProductWithAccountQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type ViewSavingProductWithAccountQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        ViewProductWithAccount: {
+          data?: Array<{
+            id: string;
+            organizationPremium?: string | null;
+            productPremium?: string | null;
+            accountPremium?: string | null;
+            effectiveInterestRate?: string | null;
+            count?: number | null;
+            accountIds?: Array<string> | null;
+          } | null> | null;
         };
       } | null;
     } | null;
@@ -80134,6 +80182,41 @@ export const useGetLoanProductRebateUpdateListQuery = <
     ).bind(null, variables),
     options
   );
+export const ViewLoanProductWithAccountDocument = `
+    query viewLoanProductWithAccount($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        ViewProductWithAccount(productId: $productId) {
+          data {
+            id
+            organizationPremium
+            productPremium
+            accountPremium
+            effectiveInterestRate
+            count
+            accountIds
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useViewLoanProductWithAccountQuery = <
+  TData = ViewLoanProductWithAccountQuery,
+  TError = unknown
+>(
+  variables: ViewLoanProductWithAccountQueryVariables,
+  options?: UseQueryOptions<ViewLoanProductWithAccountQuery, TError, TData>
+) =>
+  useQuery<ViewLoanProductWithAccountQuery, TError, TData>(
+    ['viewLoanProductWithAccount', variables],
+    useAxios<ViewLoanProductWithAccountQuery, ViewLoanProductWithAccountQueryVariables>(
+      ViewLoanProductWithAccountDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanGeneralSettingsDocument = `
     query getLoanGeneralSettings {
   settings {
@@ -81846,6 +81929,41 @@ export const useGetCloseChargeQuery = <TData = GetCloseChargeQuery, TError = unk
       null,
       variables
     ),
+    options
+  );
+export const ViewSavingProductWithAccountDocument = `
+    query viewSavingProductWithAccount($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        ViewProductWithAccount(productId: $productId) {
+          data {
+            id
+            organizationPremium
+            productPremium
+            accountPremium
+            effectiveInterestRate
+            count
+            accountIds
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useViewSavingProductWithAccountQuery = <
+  TData = ViewSavingProductWithAccountQuery,
+  TError = unknown
+>(
+  variables: ViewSavingProductWithAccountQueryVariables,
+  options?: UseQueryOptions<ViewSavingProductWithAccountQuery, TError, TData>
+) =>
+  useQuery<ViewSavingProductWithAccountQuery, TError, TData>(
+    ['viewSavingProductWithAccount', variables],
+    useAxios<ViewSavingProductWithAccountQuery, ViewSavingProductWithAccountQueryVariables>(
+      ViewSavingProductWithAccountDocument
+    ).bind(null, variables),
     options
   );
 export const GetSettingsOptionsFieldsDocument = `
