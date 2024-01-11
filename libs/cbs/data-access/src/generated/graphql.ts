@@ -6269,6 +6269,7 @@ export type DepositRecord = {
   from?: Maybe<InstallmentDate>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
+  newAmount?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<DepositPaymentType>;
   rebate?: Maybe<Scalars['String']>;
   to?: Maybe<InstallmentDate>;
@@ -24230,6 +24231,7 @@ export type TransferData = {
   date?: Maybe<Scalars['Localized']>;
   fine?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
+  newAmount?: Maybe<Scalars['String']>;
   payeeNumber?: Maybe<Scalars['String']>;
   receiverAccountId?: Maybe<Scalars['String']>;
   receiverAccountName?: Maybe<Scalars['String']>;
@@ -25191,6 +25193,7 @@ export type WithdrawRecord = {
   fine?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
+  newAmount?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<Scalars['String']>;
   slipNo?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['String']>;
@@ -31799,6 +31802,7 @@ export type SetDepositDataMutation = {
         accountId?: string | null;
         accountName?: string | null;
         depositedOther?: string | null;
+        newAmount?: string | null;
         from?: {
           date?: Record<'local' | 'en' | 'np', string> | null;
           month?: Record<'local' | 'en' | 'np', string> | null;
@@ -31877,6 +31881,7 @@ export type SetWithdrawDataMutation = {
         withdrawWith?: WithdrawWith | null;
         paymentMode?: string | null;
         slipNo?: string | null;
+        newAmount?: string | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -31918,6 +31923,7 @@ export type SetAccountTransferDataMutation = {
         withdrawWith?: WithdrawWith | null;
         transferType?: TransferType | null;
         slipNo?: string | null;
+        newAmount?: string | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -59784,6 +59790,7 @@ export const SetDepositDataDocument = `
           date
           month
         }
+        newAmount
       }
       error {
         ...MutationError
@@ -59871,6 +59878,7 @@ export const SetWithdrawDataDocument = `
         withdrawWith
         paymentMode
         slipNo
+        newAmount
       }
       error {
         ...MutationError
@@ -59918,6 +59926,7 @@ export const SetAccountTransferDataDocument = `
         withdrawWith
         transferType
         slipNo
+        newAmount
       }
       error {
         ...MutationError

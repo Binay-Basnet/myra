@@ -601,6 +601,7 @@ export const AddWithdraw = () => {
                           result?.withdrawOther
                         })`
                       : withdranByObj[result?.withdrawnBy as WithdrawBy],
+                    'Actual Balance': amountConverter(result?.newAmount || 0),
 
                     // ...(isWithdrawOther && { 'Withdrawer Name': result?.withdrawOther }),
                   },
