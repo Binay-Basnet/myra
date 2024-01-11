@@ -1,10 +1,10 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 
-import { Box, Button, Grid, Icon, Text } from '@myra-ui';
+import { Box, Button, Grid } from '@myra-ui';
 
-import { InfoCard } from '@coop/ebanking/cards';
+import { ResultModal, TransactionHeaderCardWithChip } from '@coop/ebanking/cards';
 import {
   useGetAccountListQuery,
   useGetCashBackChargesQuery,
@@ -16,39 +16,46 @@ import {
   CardContent,
   CardHeader,
 } from '@coop/ebanking/ui-layout';
-import { FormPasswordInput } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'pending';
 
-interface InternetPaymentReviewProps {
-  handleMakePayment: () => Promise<void>;
+interface UtilityResultProps {
+  paymentStatus: 'success' | 'failure' | 'pending';
   setPaymentStatus: React.Dispatch<React.SetStateAction<PaymentStatus>>;
+  mutationMsg: string;
+  handleMakePayment: () => Promise<void>;
   schema: Utility;
   currentSequence: number;
   response: Record<number, Record<string, string> | null | undefined>;
+  transactionCode: string;
 }
 
-export const InternetPaymentReview = ({
-  handleMakePayment,
+export const UtilityPaymentResult = ({
+  paymentStatus,
   setPaymentStatus,
+  mutationMsg,
+  handleMakePayment,
   schema,
   currentSequence,
   response,
-}: InternetPaymentReviewProps) => {
-  const [isReviewed, setIsReviewed] = useState(false);
+  transactionCode,
+}: UtilityResultProps) => {
+  const router = useRouter();
+  const methods = useFormContext();
 
-  const { getValues, handleSubmit, setValue, watch } = useFormContext();
+  const { data: accountData } = useGetAccountListQuery({
+    transactionPagination: { after: '', first: 1 },
+  });
 
-  const { data } = useGetAccountListQuery({ transactionPagination: { after: '', first: 1 } });
-  const accounts = data?.eBanking?.account?.list?.accounts?.map((account) => ({
+  const accounts = accountData?.eBanking?.account?.list?.accounts?.map((account) => ({
     label: `${account?.name} - ${account?.accountNumber}`,
     value: account?.id as string,
   }));
 
-  const values = getValues();
+  const values = methods.getValues();
 
-  const amount = watch('amount');
+  const amount = methods.watch('amount');
 
   const { data: cashBackData } = useGetCashBackChargesQuery(
     {
@@ -72,22 +79,41 @@ export const InternetPaymentReview = ({
 
   return (
     <>
-      <InfoCard
-        title="Payment Review"
-        btn={
-          <Button variant="ghost" gap="s4">
-            <Icon as={AiOutlinePlus} color="primary.500" />
-            Schedule for later
-          </Button>
+      <ResultModal
+        status={paymentStatus}
+        title={
+          paymentStatus === 'failure'
+            ? 'Payment Failed'
+            : paymentStatus === 'pending'
+            ? 'Payment Pending'
+            : 'Payment Successful'
         }
-      >
+        description={mutationMsg}
+      />
+      <Box display="flex" flexDir="column" bg="white" borderRadius="br2" overflow="hidden">
+        <TransactionHeaderCardWithChip
+          chipText={
+            paymentStatus === 'failure'
+              ? 'Payment Failed'
+              : paymentStatus === 'pending'
+              ? 'Payment Pending'
+              : 'Payment Successful'
+          }
+          status={paymentStatus}
+        />
+
         <CardContainer>
           <CardBodyContainer>
-            <CardHeader>Payment Details (NPR)</CardHeader>
+            <CardHeader>Transaction Details</CardHeader>
+
+            {paymentStatus !== 'failure' && (
+              <CardContent title="Transaction Code" subtitle={transactionCode} />
+            )}
+
             <CardContent
               title="Source Account"
               subtitle={
-                accounts?.find((account) => account.value === getValues().sourceAccount)
+                accounts?.find((account) => account.value === methods?.getValues().sourceAccount)
                   ?.label as string
               }
             />
@@ -135,65 +161,40 @@ export const InternetPaymentReview = ({
             </Grid>
           </CardBodyContainer>
 
-          {!isReviewed && (
+          {paymentStatus === 'failure' ? (
             <Box display="flex" gap="s16">
-              <Button w="100px" onClick={() => setIsReviewed(true)}>
-                Proceed
+              <Button w="100px" shade="danger" onClick={handleMakePayment}>
+                Retry
               </Button>
               <Button
                 variant="outline"
-                colorScheme="white"
+                colorScheme="gray"
                 w="100px"
                 cursor="pointer"
                 onClick={() => {
-                  setPaymentStatus('form');
+                  setPaymentStatus('review');
                 }}
               >
-                Edit
+                Go Back
+              </Button>
+            </Box>
+          ) : (
+            <Box display="flex" gap="s16">
+              <Button
+                w="100px"
+                onClick={() => {
+                  router.push('/home');
+                }}
+              >
+                Done
+              </Button>
+              <Button variant="outline" colorScheme="gray" w="100px" cursor="pointer">
+                Save
               </Button>
             </Box>
           )}
         </CardContainer>
-      </InfoCard>
-
-      {isReviewed && (
-        <Box bg="white" borderRadius="br2">
-          <CardContainer>
-            <CardBodyContainer>
-              <Grid templateColumns="repeat(2, 1fr)">
-                <Box display="flex" flexDir="column" gap="s4">
-                  <FormPasswordInput
-                    name="txnPin"
-                    label="Enter your Transaction Password"
-                    rules={{ required: 'Transaction Password is required' }}
-                  />
-
-                  <Text fontSize="r1" fontWeight={500} color="primary.500">
-                    Forgot your Password?
-                  </Text>
-                </Box>
-              </Grid>
-            </CardBodyContainer>
-
-            <Box display="flex" gap="s16">
-              <Button w="100px" onClick={handleSubmit(handleMakePayment)}>
-                Submit
-              </Button>
-              <Button
-                variant="outline"
-                colorScheme="white"
-                w="100px"
-                cursor="pointer"
-                onClick={() => {
-                  setValue('txnPin', '');
-                }}
-              >
-                Clear
-              </Button>
-            </Box>
-          </CardContainer>
-        </Box>
-      )}
+      </Box>
     </>
   );
 };
