@@ -1,4 +1,4 @@
-import { Controller, get, Path, useFormContext } from 'react-hook-form';
+import { Controller, get, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
 import { useRouter } from 'next/router';
 
@@ -7,8 +7,8 @@ import { DatePicker } from '@myra-ui/date-picker';
 
 import { useAppSelector } from '@coop/cbs/data-access';
 
-export interface IFormDatePickerProps<T> extends InputProps {
-  name: Path<T> | string;
+export interface IFormDatePickerProps extends InputProps {
+  name: string;
   label?: string;
   rules?: UseControllerProps['rules'];
   maxDate?: Date;
@@ -19,7 +19,7 @@ export interface IFormDatePickerProps<T> extends InputProps {
   baseDate?: Date;
 }
 
-export const FormDatePicker = <T,>({
+export const FormDatePicker = ({
   name,
   label,
   maxDate,
@@ -30,7 +30,7 @@ export const FormDatePicker = <T,>({
   baseDate,
   // isTransactionBaseDate,
   ...rest
-}: IFormDatePickerProps<T>) => {
+}: IFormDatePickerProps) => {
   const router = useRouter();
   const preference = useAppSelector((state) => state?.auth?.preference);
 

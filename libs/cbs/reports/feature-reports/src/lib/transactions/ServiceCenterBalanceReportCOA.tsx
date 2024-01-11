@@ -115,7 +115,7 @@ export const ServiceCenterCOAWiseBalanceReport = () => {
             />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormCBSDatePicker name="date" label="Date" />
+            <FormCBSDatePicker name="date" label="Date" setInitialDate />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
