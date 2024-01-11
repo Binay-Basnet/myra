@@ -12,7 +12,7 @@ import { CardContent } from '@coop/ebanking/ui-layout';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'pending';
 
-interface InternetPaymentFormProps {
+interface UtilityPaymentFormProps {
   currentSequence: number;
   setCurrentSequence: React.Dispatch<React.SetStateAction<number>>;
   schema: Utility;
@@ -23,13 +23,13 @@ interface InternetPaymentFormProps {
 }
 
 const ServiceTitle: Record<string, string> = {
-  'electricity-payment': 'Electricity Payment',
+  electricity: 'Electricity Payment',
   'internet-payment': 'Internet Payment',
   'tv-payment': 'TV Payment',
   'wallet-load': 'Wallet Load',
 };
 
-export const InternetPaymentForm = ({
+export const UtilityPaymentForm = ({
   currentSequence,
   setCurrentSequence,
   schema,
@@ -37,14 +37,12 @@ export const InternetPaymentForm = ({
   setResponse,
   setPaymentStatus,
   setIsLoading,
-}: InternetPaymentFormProps) => {
+}: UtilityPaymentFormProps) => {
   const router = useRouter();
 
   const serviceName = router?.asPath?.split('/')?.[2];
 
   const methods = useFormContext();
-
-  // const [isActionDisabled, setIsActionDisabled] = useState(true);
 
   const { handleSubmit } = methods;
 
@@ -91,7 +89,7 @@ export const InternetPaymentForm = ({
     });
 
     asyncToast({
-      id: 'utility-internet-payment-process',
+      id: 'utility-payment-process',
       msgs: {
         loading: 'Proccessing',
         success: 'Proceed',
@@ -126,34 +124,16 @@ export const InternetPaymentForm = ({
         setCurrentSequence((val) => val + 1);
 
         setIsLoading(false);
-        // setPaymentStatus('form');
       },
       onError: () => {
         setIsLoading(false);
-        // setPaymentStatus('form');
       },
     });
   };
 
-  // useEffect(() => {
-  //   const subscription = watch((data) => {
-  //     let temp = false;
-
-  //     currentSequenceObj?.requiredFields?.forEach((field) => {
-  //       if (!data?.[field?.fieldName as string]) {
-  //         temp = true;
-  //       }
-  //     });
-
-  //     setIsActionDisabled(temp);
-  //   });
-
-  //   return () => subscription.unsubscribe();
-  // }, [watch, currentSequenceObj]);
-
   const { data: neaOfficeData } = useListNeaOfficeQuery(
     {},
-    { enabled: router?.asPath?.includes('electricity-payment') }
+    { enabled: router?.asPath?.includes('electricity') }
   );
 
   const neaOfficeList = useMemo(
@@ -226,7 +206,6 @@ export const InternetPaymentForm = ({
                 ? () => setPaymentStatus('review')
                 : handleProceed
             )}
-            // isDisabled={isActionDisabled}
           >
             Proceed
           </Button>

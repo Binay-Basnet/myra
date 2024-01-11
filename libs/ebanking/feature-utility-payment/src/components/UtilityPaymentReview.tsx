@@ -21,7 +21,7 @@ import { amountConverter } from '@coop/shared/utils';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'pending';
 
-interface InternetPaymentReviewProps {
+interface UtilityPaymentReviewProps {
   handleMakePayment: () => Promise<void>;
   setPaymentStatus: React.Dispatch<React.SetStateAction<PaymentStatus>>;
   schema: Utility;
@@ -29,18 +29,19 @@ interface InternetPaymentReviewProps {
   response: Record<number, Record<string, string> | null | undefined>;
 }
 
-export const InternetPaymentReview = ({
+export const UtilityPaymentReview = ({
   handleMakePayment,
   setPaymentStatus,
   schema,
   currentSequence,
   response,
-}: InternetPaymentReviewProps) => {
+}: UtilityPaymentReviewProps) => {
   const [isReviewed, setIsReviewed] = useState(false);
 
   const { getValues, handleSubmit, setValue, watch } = useFormContext();
 
   const { data } = useGetAccountListQuery({ transactionPagination: { after: '', first: 1 } });
+
   const accounts = data?.eBanking?.account?.list?.accounts?.map((account) => ({
     label: `${account?.name} - ${account?.accountNumber}`,
     value: account?.id as string,

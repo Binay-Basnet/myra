@@ -120,6 +120,10 @@ export const InternetPaymentResult = ({
             <Grid templateColumns="repeat(3, 1fr)">
               {schema?.sequence[Number(schema?.totalProcessingSequence) - 1]?.requiredFields?.map(
                 (field) => {
+                  if (!field?.fieldLabel) {
+                    return null;
+                  }
+
                   let displayValue = values[field?.fieldName as string];
 
                   if (field?.fieldType === 'OPTION') {

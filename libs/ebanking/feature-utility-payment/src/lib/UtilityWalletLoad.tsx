@@ -13,11 +13,11 @@ import {
 } from '@coop/ebanking/data-access';
 
 import { UtilityPaymentForm, UtilityPaymentResult, UtilityPaymentReview } from '../components';
-import { ElectricityBill, ElectricityPaymentInitial } from '../components/electricity-payment';
+import { WalletLoadInitial } from '../components/wallet-load';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'pending';
 
-export const UtilityElectricityPayment = () => {
+export const UtilityWalletLoad = () => {
   const [currentSequence, setCurrentSequence] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +48,7 @@ export const UtilityElectricityPayment = () => {
 
   const { refetch } = useGetUtilityQuery(
     {
-      slug: slug as unknown as string,
+      slug: 'walletload',
     },
     {
       enabled: !!slug,
@@ -98,6 +98,8 @@ export const UtilityElectricityPayment = () => {
       !submitResponse?.eBanking?.utility?.makePayment?.error &&
       submitResponse?.eBanking?.utility?.makePayment?.data?.transactionId
     ) {
+      // queryClient.invalidateQueries(['getAccountList']);
+      // queryClient.invalidateQueries(['getTransactionLists']);
       setTransactionCode(
         submitResponse?.eBanking?.utility?.makePayment?.data?.transactionId as string
       );
@@ -117,6 +119,12 @@ export const UtilityElectricityPayment = () => {
 
       setMutationMsg(errMsg as string);
       setPaymentStatus('failure');
+      // if (errMsg) {
+      //   // methods.setError('mobileNumber', { message: errMsg });
+      //   setPaymentStatus('form');
+      // } else {
+      //   setPaymentStatus('failure');
+      // }
     }
   };
 
@@ -126,31 +134,17 @@ export const UtilityElectricityPayment = () => {
         <EbankingPathBar
           paths={[
             { label: 'Utility Payments', link: '/utility-payments' },
-            { label: 'Electricity' },
+            { label: 'TV Payment' },
           ]}
         />
 
         <Box display={paymentStatus === 'form' && currentSequence === 0 ? 'block' : 'none'}>
-          <ElectricityPaymentInitial setCurrentSequence={setCurrentSequence} />
+          <WalletLoadInitial setCurrentSequence={setCurrentSequence} />
         </Box>
 
-        {currentSequence === 1 && paymentStatus === 'form' && (
+        {currentSequence !== 0 && paymentStatus === 'form' && (
           <Box>
             <UtilityPaymentForm
-              currentSequence={currentSequence}
-              setCurrentSequence={setCurrentSequence}
-              schema={schema as Utility}
-              setResponse={setResponse}
-              response={response}
-              setPaymentStatus={setPaymentStatus}
-              setIsLoading={setIsLoading}
-            />
-          </Box>
-        )}
-
-        {currentSequence === 2 && paymentStatus === 'form' && (
-          <Box>
-            <ElectricityBill
               currentSequence={currentSequence}
               setCurrentSequence={setCurrentSequence}
               schema={schema as Utility}
