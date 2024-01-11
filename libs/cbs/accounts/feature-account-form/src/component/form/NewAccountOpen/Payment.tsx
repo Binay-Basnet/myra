@@ -21,8 +21,8 @@ import {
   FormAgentSelect,
   FormAmountInput,
   FormBankSelect,
+  FormCBSDatePicker,
   FormCheckbox,
-  FormDatePicker,
   FormFileInput,
   FormInput,
   FormMemberSelect,
@@ -178,7 +178,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
               label={t['depositPaymentAmount']}
             />
 
-            <FormDatePicker
+            <FormCBSDatePicker
               isRequired
               name="openingPayment.bankVoucher.depositedAt"
               label={t['depositPaymentDepositedDate']}

@@ -6,8 +6,9 @@ import FormDatePicker, {
   IFormDatePickerProps,
 } from '../../controllers/FormDatePicker/FormDatePicker';
 
-export const FormCBSDatePicker = <T,>({ ...rest }: IFormDatePickerProps<T>) => {
+export const FormCBSDatePicker = <T,>({ maxToday, maxDate, ...rest }: IFormDatePickerProps<T>) => {
   const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+
   const transactionDate = useMemo(
     () => endOfDayData?.transaction?.endOfDayDate?.value,
     [endOfDayData]
@@ -16,6 +17,7 @@ export const FormCBSDatePicker = <T,>({ ...rest }: IFormDatePickerProps<T>) => {
   return (
     <FormDatePicker
       baseDate={transactionDate?.en ? new Date(transactionDate.en) : new Date()}
+      maxDate={maxToday ? new Date(transactionDate?.en as string) : maxDate}
       {...rest}
     />
   );
