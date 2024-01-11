@@ -48,7 +48,7 @@ export const UtilityWalletLoad = () => {
 
   const { refetch } = useGetUtilityQuery(
     {
-      slug: 'walletload',
+      slug,
     },
     {
       enabled: !!slug,
@@ -134,7 +134,7 @@ export const UtilityWalletLoad = () => {
         <EbankingPathBar
           paths={[
             { label: 'Utility Payments', link: '/utility-payments' },
-            { label: 'TV Payment' },
+            { label: 'Wallet Load' },
           ]}
         />
 

@@ -51,7 +51,7 @@ export const WalletLoadInitial = ({ setCurrentSequence }: InternetPaymentProps) 
 
   return (
     <InfoCard
-      title="TV Payment"
+      title="Wallet Load"
       btn={
         <Button variant="ghost" gap="s4">
           <Icon as={AiOutlinePlus} color="priamry.500" />
