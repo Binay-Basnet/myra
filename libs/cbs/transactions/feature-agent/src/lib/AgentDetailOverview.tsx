@@ -59,10 +59,14 @@ type TodaysList = {
   accounts: AccountsEntry[];
 };
 
-const getAmountToCollect = (dueAmount: number, dueFine: number, installmentAmount: number) => {
-  if (!dueAmount) {
-    return '';
-  }
+export const getAmountToCollect = (
+  dueAmount: number,
+  dueFine: number,
+  installmentAmount: number
+) => {
+  // if (!dueAmount) {
+  //   return '';
+  // }
 
   if (!installmentAmount) {
     if (dueFine) {
@@ -219,6 +223,7 @@ export const AgentDetailOverview = () => {
             accountName: acc?.accountName,
             amountToBeCollected: acc?.AmountToBeCollected,
             fineToBeCollected: acc?.FineToBeCollected,
+            installmentAmount: acc?.installementAmount,
           })) as AccountsEntry[]
         );
 

@@ -25523,6 +25523,7 @@ export type ListCollectionTemplateOutput = {
   FineToBeCollected?: Maybe<Scalars['String']>;
   accountId: Scalars['ID'];
   accountName: Scalars['String'];
+  installementAmount?: Maybe<Scalars['String']>;
   memberCode: Scalars['String'];
   memberID: Scalars['ID'];
   memberName: Scalars['String'];
@@ -34376,6 +34377,7 @@ export type ListCollectionTemplateQuery = {
         accountName: string;
         AmountToBeCollected?: string | null;
         FineToBeCollected?: string | null;
+        installementAmount?: string | null;
       } | null> | null;
     };
   };
@@ -63306,6 +63308,7 @@ export const ListCollectionTemplateDocument = `
         accountName
         AmountToBeCollected
         FineToBeCollected
+        installementAmount
       }
     }
   }

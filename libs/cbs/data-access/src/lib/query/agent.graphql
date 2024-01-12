@@ -230,6 +230,7 @@ query listCollectionTemplate($collectionID: ID!) {
         accountName
         AmountToBeCollected
         FineToBeCollected
+        installementAmount
       }
     }
   }

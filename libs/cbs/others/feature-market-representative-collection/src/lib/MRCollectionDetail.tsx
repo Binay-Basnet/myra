@@ -19,6 +19,7 @@ import {
   useListAgentMemberQuery,
   useSendTodayTaskMutation,
 } from '@coop/cbs/data-access';
+import { getAmountToCollect } from '@coop/cbs/transactions/agent';
 import { ConfirmationDialog } from '@coop/shared/components';
 import { FormLayout, FormNumberInput, FormSelect } from '@coop/shared/form';
 import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
@@ -42,29 +43,29 @@ type TodaysList = {
   accounts: AccountsEntry[];
 };
 
-const getAmountToCollect = (dueAmount: number, dueFine: number, installmentAmount: number) => {
-  if (!dueAmount) {
-    return '';
-  }
+// const getAmountToCollect = (dueAmount: number, dueFine: number, installmentAmount: number) => {
+//   if (!dueAmount) {
+//     return '';
+//   }
 
-  if (!installmentAmount) {
-    if (dueFine) {
-      return `[Due Amount: Rs.${amountConverter(
-        Number(dueAmount) - Number(dueFine)
-      )}, Fine: Rs.${amountConverter(dueFine)}]`;
-    }
+//   if (!installmentAmount) {
+//     if (dueFine) {
+//       return `[Due Amount: Rs.${amountConverter(
+//         Number(dueAmount) - Number(dueFine)
+//       )}, Fine: Rs.${amountConverter(dueFine)}]`;
+//     }
 
-    return `[Rs.${amountConverter(dueAmount)}]`;
-  }
+//     return `[Rs.${amountConverter(dueAmount)}]`;
+//   }
 
-  if (dueFine) {
-    return `[Installment Amt.: Rs.${amountConverter(installmentAmount)}, Fine: Rs.${amountConverter(
-      dueFine
-    )}]`;
-  }
+//   if (dueFine) {
+//     return `[Installment Amt.: Rs.${amountConverter(installmentAmount)}, Fine: Rs.${amountConverter(
+//       dueFine
+//     )}]`;
+//   }
 
-  return `[Installment Amt.: Rs.${amountConverter(installmentAmount)}]`;
-};
+//   return `[Installment Amt.: Rs.${amountConverter(installmentAmount)}]`;
+// };
 
 export const MRCollectionDetail = () => {
   const user = useAppSelector((state) => state?.auth?.user);
