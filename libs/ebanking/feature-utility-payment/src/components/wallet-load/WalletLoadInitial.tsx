@@ -18,6 +18,7 @@ interface InternetPaymentProps {
 
 export const WalletLoadInitial = ({ setCurrentSequence }: InternetPaymentProps) => {
   const user = useAppSelector((state) => state.auth.cooperative.user);
+
   const { data } = useGetAccountListQuery({
     listFilter: { allowedAccount: true, servieType: 'EBANKING' },
     transactionPagination: { after: '', first: 1 },

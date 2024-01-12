@@ -107,6 +107,7 @@ export const UtilityPaymentForm = ({
         const responseData = res?.eBanking?.utility?.useUtility?.data;
 
         setResponse((val) => ({ ...val, [currentSequence]: responseData }));
+
         const responseMapObj: Record<string, string> = {};
 
         currentSequenceObj?.responseFieldMapping?.forEach((field) => {
@@ -189,7 +190,11 @@ export const UtilityPaymentForm = ({
           return (
             <EbankingFormField
               {...field}
-              options={field?.fieldName === 'officeCode' ? neaOfficeList : options}
+              options={
+                field?.fieldName === 'officeCode' && router?.asPath?.includes('electricity')
+                  ? neaOfficeList
+                  : options
+              }
               schema={schema}
               currentSequence={currentSequence}
               response={response}

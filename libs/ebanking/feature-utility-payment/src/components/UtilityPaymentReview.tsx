@@ -93,7 +93,7 @@ export const UtilityPaymentReview = ({
               }
             />
 
-            <Grid templateColumns="repeat(3, 1fr)">
+            <Grid templateColumns="repeat(3, 1fr)" gap="s16">
               {schema?.sequence[Number(schema?.totalProcessingSequence) - 1]?.requiredFields?.map(
                 (field) => {
                   if (!field?.fieldLabel) {
