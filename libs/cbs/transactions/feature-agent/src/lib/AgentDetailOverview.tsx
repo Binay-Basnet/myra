@@ -23,6 +23,7 @@ import {
 } from '@myra-ui';
 
 import {
+  NatureOfDepositProduct,
   ObjState,
   useAddAgentTodayListMutation,
   useGetAccountTableListQuery,
@@ -669,6 +670,15 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
                 column: 'memberId',
                 comparator: 'EqualTo',
                 value: memberId,
+              },
+              {
+                column: 'nature',
+                comparator: 'IN',
+                value: [
+                  NatureOfDepositProduct.Saving,
+                  NatureOfDepositProduct.Current,
+                  NatureOfDepositProduct.RecurringSaving,
+                ],
               },
             ],
           },

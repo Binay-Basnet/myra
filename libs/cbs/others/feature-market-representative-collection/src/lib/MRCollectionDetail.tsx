@@ -9,6 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Alert, asyncToast, Box, Button, Icon, Loader, Modal, Text } from '@myra-ui';
 
 import {
+  NatureOfDepositProduct,
   ObjState,
   TodayListStatus,
   useAddAgentTodayListMutation,
@@ -739,6 +740,15 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
                 column: 'memberId',
                 comparator: 'EqualTo',
                 value: memberId,
+              },
+              {
+                column: 'nature',
+                comparator: 'IN',
+                value: [
+                  NatureOfDepositProduct.Saving,
+                  NatureOfDepositProduct.Current,
+                  NatureOfDepositProduct.RecurringSaving,
+                ],
               },
             ],
           },

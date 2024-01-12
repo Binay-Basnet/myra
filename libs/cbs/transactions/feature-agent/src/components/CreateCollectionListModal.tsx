@@ -11,6 +11,7 @@ import { chakraDefaultStyles } from 'libs/@myra/editable-table/src/utils/ChakraS
 import { asyncToast, Box, Button, FormSection, Icon, Loader, Modal, Text } from '@myra-ui';
 
 import {
+  NatureOfDepositProduct,
   ObjState,
   useCreateCollectionMutation,
   useGetAccountTableListMinimalQuery,
@@ -351,6 +352,15 @@ const AccountSelectCell = ({ memberId, index }: { memberId: string; index: numbe
                 column: 'memberId',
                 comparator: 'EqualTo',
                 value: memberId,
+              },
+              {
+                column: 'nature',
+                comparator: 'IN',
+                value: [
+                  NatureOfDepositProduct.Saving,
+                  NatureOfDepositProduct.Current,
+                  NatureOfDepositProduct.RecurringSaving,
+                ],
               },
             ],
           },
