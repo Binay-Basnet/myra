@@ -53,6 +53,7 @@ export const UTILITY_LINK_DICT: Record<string, string> = {
   internet: '/utility-payments/internet-payment',
   tv: '/utility-payments/tv-payment',
   walletload: '/utility-payments/wallet-load',
+  package: '/utility-payments/package',
   KHANEPANI: '',
   E_TELLER: '',
   FLIGHT_BOOK: '',
