@@ -5110,6 +5110,25 @@ export type DailyBalanceReportResult = {
   error?: Maybe<QueryError>;
 };
 
+export type DailyVoucherSummarInput = {
+  branchId: Array<Scalars['String']>;
+  period: LocalizedDateFilter;
+  transactionNature: TransactionNature;
+  userIds?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type DailyVoucherSummaryReportData = {
+  coaCode: Scalars['String'];
+  coaHeadName: Scalars['String'];
+  crAmount: Scalars['String'];
+  drAmount: Scalars['String'];
+};
+
+export type DailyVoucherSummaryReportResult = {
+  data?: Maybe<Array<DailyVoucherSummaryReportData>>;
+  error?: Maybe<QueryError>;
+};
+
 export type DashboardInfo = {
   branchInfo?: Maybe<BranchInfo>;
   coopInfo?: Maybe<MyCoopInfo>;
@@ -8202,6 +8221,7 @@ export type FianancialTransactionReport = {
   bankGLStatementReport: BankGlStatementResult;
   charKhataReport: TrialSheetReportResult;
   dailyBalanceReport: DailyBalanceReportResult;
+  dailyVoucherSummaryReport: DailyVoucherSummaryReportResult;
   dayBookReport: DayBookReportResult;
   fiscalTrialSheetReport: TrialSheetReportResult;
   journerVoucherReport: JournalVoucherReportOutput;
@@ -8242,6 +8262,10 @@ export type FianancialTransactionReportCharKhataReportArgs = {
 
 export type FianancialTransactionReportDailyBalanceReportArgs = {
   data: DailyBalanceReport;
+};
+
+export type FianancialTransactionReportDailyVoucherSummaryReportArgs = {
+  data: DailyVoucherSummarInput;
 };
 
 export type FianancialTransactionReportDayBookReportArgs = {
@@ -20367,6 +20391,7 @@ export const Resource = {
   ReportsTxnCashLedger: 'REPORTS_TXN_CASH_LEDGER',
   ReportsTxnCharkhataLedgerReport: 'REPORTS_TXN_CHARKHATA_LEDGER_REPORT',
   ReportsTxnDailyBalance: 'REPORTS_TXN_DAILY_BALANCE',
+  ReportsTxnDailyVoucherSummary: 'REPORTS_TXN_DAILY_VOUCHER_SUMMARY',
   ReportsTxnDaybook: 'REPORTS_TXN_DAYBOOK',
   ReportsTxnFiscalYearEndAdjustmentTrialBalance:
     'REPORTS_TXN_FISCAL_YEAR_END_ADJUSTMENT_TRIAL_BALANCE',
@@ -44730,6 +44755,27 @@ export type GetJournalVoucherSummaryReportQuery = {
               } | null> | null;
             } | null> | null;
           } | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetDailyVoucherSummaryReportQueryVariables = Exact<{
+  data: DailyVoucherSummarInput;
+}>;
+
+export type GetDailyVoucherSummaryReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        dailyVoucherSummaryReport: {
+          data?: Array<{
+            coaCode: string;
+            coaHeadName: string;
+            drAmount: string;
+            crAmount: string;
+          }> | null;
         };
       };
     };
@@ -76645,6 +76691,38 @@ export const useGetJournalVoucherSummaryReportQuery = <
     ['getJournalVoucherSummaryReport', variables],
     useAxios<GetJournalVoucherSummaryReportQuery, GetJournalVoucherSummaryReportQueryVariables>(
       GetJournalVoucherSummaryReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDailyVoucherSummaryReportDocument = `
+    query getDailyVoucherSummaryReport($data: DailyVoucherSummarInput!) {
+  report {
+    transactionReport {
+      financial {
+        dailyVoucherSummaryReport(data: $data) {
+          data {
+            coaCode
+            coaHeadName
+            drAmount
+            crAmount
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDailyVoucherSummaryReportQuery = <
+  TData = GetDailyVoucherSummaryReportQuery,
+  TError = unknown
+>(
+  variables: GetDailyVoucherSummaryReportQueryVariables,
+  options?: UseQueryOptions<GetDailyVoucherSummaryReportQuery, TError, TData>
+) =>
+  useQuery<GetDailyVoucherSummaryReportQuery, TError, TData>(
+    ['getDailyVoucherSummaryReport', variables],
+    useAxios<GetDailyVoucherSummaryReportQuery, GetDailyVoucherSummaryReportQueryVariables>(
+      GetDailyVoucherSummaryReportDocument
     ).bind(null, variables),
     options
   );
