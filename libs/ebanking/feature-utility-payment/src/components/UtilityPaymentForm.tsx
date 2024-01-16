@@ -3,7 +3,8 @@ import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
-import { asyncToast, Box, Button, Grid, Icon } from '@myra-ui';
+import { asyncToast, Box, Button, Grid, Icon, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { InfoCard } from '@coop/ebanking/cards';
 import { EbankingFormField } from '@coop/ebanking/components';
@@ -27,6 +28,7 @@ const ServiceTitle: Record<string, string> = {
   'internet-payment': 'Internet Payment',
   'tv-payment': 'TV Payment',
   'wallet-load': 'Wallet Load',
+  package: 'Package',
 };
 
 export const UtilityPaymentForm = ({
@@ -158,13 +160,24 @@ export const UtilityPaymentForm = ({
     >
       <Box p="s16" display="flex" flexDir="column" gap="s32">
         <Grid templateColumns="repeat(3, 1fr)" gap="s16">
-          {currentSequenceInfo?.map(
-            (info) =>
-              typeof info.value === 'string' && (
-                <CardContent title={info.label} subtitle={info.value} />
-              )
-          )}
+          {currentSequenceInfo
+            ?.filter((i) => typeof i.value === 'string')
+            ?.map((info) => (
+              <CardContent title={info.label} subtitle={info.value} />
+            ))}
         </Grid>
+
+        {currentSequenceInfo
+          ?.filter((i) => Array.isArray(i.value))
+          ?.map((info) => (
+            <Box display="flex" flexDirection="column" gap="s4">
+              <Text color="gray.800" fontSize="s3" fontWeight="600">
+                {info.label}
+              </Text>
+
+              <CurrentSequenceArrayInfo info={info.value as unknown as Record<string, string>[]} />
+            </Box>
+          ))}
 
         {currentSequenceObj?.requiredFields?.map((field) => {
           if (!field?.fieldLabel) return null;
@@ -179,10 +192,11 @@ export const UtilityPaymentForm = ({
             const responseOptions =
               response?.[currentSequence - 1]?.[prevField?.fieldName as string] || [];
 
-            (responseOptions as unknown as [])?.forEach((opt) => {
+            (responseOptions as unknown as [])?.forEach((opt: Record<string, string>) => {
               options?.push({
                 label: opt?.[prevField?.options?.value as string],
                 value: opt?.[prevField?.options?.key as string],
+                ...opt,
               });
             });
           }
@@ -197,7 +211,6 @@ export const UtilityPaymentForm = ({
               }
               schema={schema}
               currentSequence={currentSequence}
-              response={response}
             />
           );
         })}
@@ -230,4 +243,21 @@ export const UtilityPaymentForm = ({
       </Box>
     </InfoCard>
   );
+};
+
+const CurrentSequenceArrayInfo = ({ info }: { info: Record<string, string>[] }) => {
+  const columns = useMemo(() => {
+    const temp: Column<typeof info[0]>[] = [];
+
+    Object.keys(info[0])?.forEach((key) => {
+      temp.push({
+        header: key,
+        accessorKey: key,
+      });
+    });
+
+    return temp;
+  }, [info]);
+
+  return <Table data={info} columns={columns} isStatic isDetailPageTable />;
 };

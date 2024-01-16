@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 
@@ -8,9 +8,10 @@ import { InfoCard } from '@coop/ebanking/cards';
 import {
   useAppSelector,
   useGetAccountListQuery,
-  useListWalletServicesQuery,
+  useListUtilitiesQuery,
 } from '@coop/ebanking/data-access';
 import { FormSelect } from '@coop/shared/form';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 interface InternetPaymentProps {
   setCurrentSequence: React.Dispatch<React.SetStateAction<number>>;
@@ -31,24 +32,25 @@ export const WalletLoadInitial = ({ setCurrentSequence }: InternetPaymentProps) 
     value: account?.id as string,
   }));
 
-  const { reset, handleSubmit, setValue } = useFormContext();
+  const { reset, handleSubmit } = useFormContext();
 
-  const { data: walletServicesData } = useListWalletServicesQuery();
-
-  const walletServices = walletServicesData?.eBanking?.utility?.listWalletLoaderUtility;
+  const { data: walletServicesData } = useListUtilitiesQuery({
+    pagination: { ...getPaginationQuery(), first: -1 },
+    filter: {
+      orConditions: [
+        { andConditions: [{ column: 'servicename', comparator: 'EqualTo', value: 'walletload' }] },
+      ],
+    },
+  });
 
   const walletOptions = useMemo(
     () =>
-      walletServices?.map((w) => ({
-        label: w?.name as string,
-        value: w?.operatorCode as string,
+      walletServicesData?.eBanking?.utility?.listUtilities?.edges?.map((w) => ({
+        label: w?.node?.name as string,
+        value: w?.node?.slug as string,
       })) ?? [],
-    [walletServices]
+    [walletServicesData]
   );
-
-  useEffect(() => {
-    setValue('slug', 'walletload');
-  }, []);
 
   return (
     <InfoCard
@@ -69,13 +71,9 @@ export const WalletLoadInitial = ({ setCurrentSequence }: InternetPaymentProps) 
         />
 
         <FormSelect
-          name="opCode"
+          name="slug"
           label="Select Wallet"
           options={walletOptions}
-          // onChangeAction={(newVal) => {
-          //   const selectedWallet = walletServices?.find((w) => w?.name === newVal?.['label']);
-          //   setValue('operatorCode', selectedWallet?.operatorCode);
-          // }}
           rules={{ required: 'Wallet is required' }}
         />
 

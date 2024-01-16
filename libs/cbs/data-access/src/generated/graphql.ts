@@ -14225,6 +14225,7 @@ export type LedgerBalanceTransferRequestResult = {
   data?: Maybe<Array<Maybe<LedgerBalanceEntry>>>;
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['ID']>;
+  totalCurrentBalance: BalanceValue;
   totalLedgerAccounts: Scalars['String'];
   totalTransferBalance: BalanceValue;
 };
