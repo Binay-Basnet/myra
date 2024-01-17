@@ -18538,6 +18538,10 @@ export type MrTransactionEntry = {
   mrName?: Maybe<Scalars['String']>;
 };
 
+export type MrTransactionFilterMapping = {
+  userId: Array<LabelValueArray>;
+};
+
 export type MrTransactionListConnection = {
   edges?: Maybe<Array<Maybe<MrTransactionListEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -23978,6 +23982,7 @@ export type TransactionFilterMapping = {
   agent?: Maybe<AgentFilterMapping>;
   allTransaction?: Maybe<AllTransactionFilterMapping>;
   deposit?: Maybe<DepositFilterMapping>;
+  mrTransaction?: Maybe<MrTransactionFilterMapping>;
   transfer?: Maybe<TransferFilterMapping>;
   withdraw?: Maybe<WithdrawFilterMapping>;
 };
@@ -50276,6 +50281,16 @@ export type GetMrTransactionsListQuery = {
         endCursor?: string | null;
       } | null;
     };
+  };
+};
+
+export type GetMrTransactionFilterMappingQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetMrTransactionFilterMappingQuery = {
+  transaction: {
+    filterMapping?: {
+      mrTransaction?: { userId: Array<{ label?: string | null; value?: unknown | null }> } | null;
+    } | null;
   };
 };
 
@@ -84357,6 +84372,36 @@ export const useGetMrTransactionsListQuery = <TData = GetMrTransactionsListQuery
     variables === undefined ? ['getMrTransactionsList'] : ['getMrTransactionsList', variables],
     useAxios<GetMrTransactionsListQuery, GetMrTransactionsListQueryVariables>(
       GetMrTransactionsListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMrTransactionFilterMappingDocument = `
+    query getMRTransactionFilterMapping {
+  transaction {
+    filterMapping {
+      mrTransaction {
+        userId {
+          label
+          value
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMrTransactionFilterMappingQuery = <
+  TData = GetMrTransactionFilterMappingQuery,
+  TError = unknown
+>(
+  variables?: GetMrTransactionFilterMappingQueryVariables,
+  options?: UseQueryOptions<GetMrTransactionFilterMappingQuery, TError, TData>
+) =>
+  useQuery<GetMrTransactionFilterMappingQuery, TError, TData>(
+    variables === undefined
+      ? ['getMRTransactionFilterMapping']
+      : ['getMRTransactionFilterMapping', variables],
+    useAxios<GetMrTransactionFilterMappingQuery, GetMrTransactionFilterMappingQueryVariables>(
+      GetMrTransactionFilterMappingDocument
     ).bind(null, variables),
     options
   );
