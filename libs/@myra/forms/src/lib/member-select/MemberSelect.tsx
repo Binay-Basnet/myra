@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Flex } from '@chakra-ui/react';
 import {
   ChakraStylesConfig,
@@ -51,40 +52,42 @@ export const MemberSelect = ({
   name,
   isRequired,
   ...rest
-}: MemberSelectProps) => (
-  <Flex direction="column" gap="s4">
-    <Text variant="formLabel" color="gray.700">
-      {isRequired ? `${label} *` : label}
-    </Text>
-    {/* <div data-testid={`${name}`}> */}
-    <ChakraSelect<Option, boolean, GroupBase<Option>>
-      options={options}
-      value={value}
-      name={name}
-      controlShouldRenderValue={!isMulti}
-      closeMenuOnSelect={!isMulti}
-      isMulti={isMulti}
-      hideSelectedOptions={false}
-      isClearable
-      chakraStyles={chakraDefaultStyles as ChakraStylesConfig<Option, boolean, GroupBase<Option>>}
-      components={
-        customComponents(name) as Partial<
-          SelectComponentsConfig<Option, boolean, GroupBase<Option>>
-        >
-      }
-      {...rest}
-    />
-    {/* </div> */}
-    {errorText ? (
-      <Text variant="formHelper" color="danger.500">
-        {errorText}
+}: MemberSelectProps) => {
+  const components = useMemo(() => customComponents(name), [name]);
+
+  return (
+    <Flex direction="column" gap="s4">
+      <Text variant="formLabel" color="gray.700">
+        {isRequired ? `${label} *` : label}
       </Text>
-    ) : helperText ? (
-      <Text variant="formHelper" color="gray.700">
-        {helperText}
-      </Text>
-    ) : null}
-  </Flex>
-);
+      {/* <div data-testid={`${name}`}> */}
+      <ChakraSelect<Option, boolean, GroupBase<Option>>
+        options={options}
+        value={value}
+        name={name}
+        controlShouldRenderValue={!isMulti}
+        closeMenuOnSelect={!isMulti}
+        isMulti={isMulti}
+        hideSelectedOptions={false}
+        isClearable
+        chakraStyles={chakraDefaultStyles as ChakraStylesConfig<Option, boolean, GroupBase<Option>>}
+        components={
+          components as Partial<SelectComponentsConfig<Option, boolean, GroupBase<Option>>>
+        }
+        {...rest}
+      />
+      {/* </div> */}
+      {errorText ? (
+        <Text variant="formHelper" color="danger.500">
+          {errorText}
+        </Text>
+      ) : helperText ? (
+        <Text variant="formHelper" color="gray.700">
+          {helperText}
+        </Text>
+      ) : null}
+    </Flex>
+  );
+};
 
 export default MemberSelect;
