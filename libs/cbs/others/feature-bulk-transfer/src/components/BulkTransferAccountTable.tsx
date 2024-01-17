@@ -35,8 +35,6 @@ export const BulkTransferAccountTable = ({
     {
       paginate: {
         ...getPaginationQuery(),
-
-        order: null,
       },
       filter: {
         query: search as string,
@@ -76,8 +74,13 @@ export const BulkTransferAccountTable = ({
   const columns = useMemo<Column<typeof accountList[0]>[]>(
     () => [
       {
+        id: 'date',
         header: 'Account Open Date',
         accessorFn: (row) => localizedDate(row?.node?.accountOpenedDate),
+        enableSorting: true,
+        meta: {
+          orderId: 'accountOpenedDate',
+        },
       },
       {
         header: 'Account ID',
@@ -111,6 +114,10 @@ export const BulkTransferAccountTable = ({
       {
         header: 'Member ID',
         accessorFn: (row) => row?.node?.member?.code,
+        enableSorting: true,
+        meta: {
+          orderId: 'member__code',
+        },
       },
     ],
     []

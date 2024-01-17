@@ -852,3 +852,16 @@ query getMrTransactionsList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getMRTransactionFilterMapping {
+  transaction {
+    filterMapping {
+      mrTransaction {
+        userId {
+          label
+          value
+        }
+      }
+    }
+  }
+}
