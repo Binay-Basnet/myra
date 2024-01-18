@@ -78,6 +78,15 @@ export const TransferDetails = () => {
             ?.totalTransferBalance?.amountType as string
         ),
       },
+      {
+        heading: 'Total Current Balance',
+        subHeading: debitCreditConverter(
+          ledgerAccountsListData?.accounting?.ledgerBalanceTransfer?.getLedgerAccounts
+            ?.totalCurrentBalance?.amount as string,
+          ledgerAccountsListData?.accounting?.ledgerBalanceTransfer?.getLedgerAccounts
+            ?.totalCurrentBalance?.amountType as string
+        ),
+      },
     ],
     [ledgerAccountsListData, coaHead]
   );
@@ -151,7 +160,7 @@ export const TransferDetails = () => {
           </GridItem>
           <GridItem colSpan={3}>
             <Box p="s16" borderRadius="br3" bgColor="highlight.500">
-              <Grid templateColumns="repeat(2, 1fr)" rowGap="s24">
+              <Grid templateColumns="repeat(2, 1fr)" rowGap="s24" columnGap="s16">
                 {transferSummary?.map((info) => (
                   <Box display="flex" flexDirection="column" gap="s4">
                     <Text fontSize="r1" fontWeight={400} color="gray.600">

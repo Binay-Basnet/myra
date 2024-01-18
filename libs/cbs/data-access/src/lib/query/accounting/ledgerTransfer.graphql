@@ -24,6 +24,10 @@ query getLedgerAccountsForTransfer($input: LedgerBalanceTransferRequestInput!) {
             amountType
           }
         }
+        totalCurrentBalance {
+          amount
+          amountType
+        }
       }
     }
   }

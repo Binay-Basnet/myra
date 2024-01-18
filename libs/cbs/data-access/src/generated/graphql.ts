@@ -33448,6 +33448,7 @@ export type GetLedgerAccountsForTransferQuery = {
           newBalance: { amount?: string | null; amountType?: BalanceType | null };
           balanceAt: { amount?: string | null; amountType?: BalanceType | null };
         } | null> | null;
+        totalCurrentBalance: { amount?: string | null; amountType?: BalanceType | null };
       };
     };
   };
@@ -62048,6 +62049,10 @@ export const GetLedgerAccountsForTransferDocument = `
             amount
             amountType
           }
+        }
+        totalCurrentBalance {
+          amount
+          amountType
         }
       }
     }
