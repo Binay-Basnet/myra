@@ -20,7 +20,7 @@ import {
   useGetChequeBookRequestsQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { featureCode, getPaginationQuery } from '@coop/shared/utils';
+import { featureCode, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { ApproveDeclineModal } from '../components/ApproveDeclineModal';
@@ -37,6 +37,7 @@ export const WithdrawSlipBookList = () => {
   const { data, isFetching } = useGetChequeBookRequestsQuery(
     {
       pagination: getPaginationQuery(),
+      filter: getFilterQuery(),
     },
     {
       staleTime: 0,
