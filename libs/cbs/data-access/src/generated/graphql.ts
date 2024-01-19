@@ -5660,6 +5660,7 @@ export type DepositLoanAccountMutation = {
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
   issueFDCertificate: Scalars['String'];
   makeActive?: Maybe<Scalars['String']>;
+  setMultipleAccountInterest: InterestSetupMutationResult;
   updateAccountInterest: InterestSetupMutationResult;
   updateAccountName?: Maybe<SavingsTenureUpdateResult>;
   updateInstallmentAmount?: Maybe<SavingsTenureUpdateResult>;
@@ -5695,6 +5696,11 @@ export type DepositLoanAccountMutationIssueFdCertificateArgs = {
 
 export type DepositLoanAccountMutationMakeActiveArgs = {
   accountID: Scalars['ID'];
+};
+
+export type DepositLoanAccountMutationSetMultipleAccountInterestArgs = {
+  accountId: Array<Scalars['ID']>;
+  data: InterestRateSetupInput;
 };
 
 export type DepositLoanAccountMutationUpdateAccountInterestArgs = {
@@ -14755,6 +14761,7 @@ export type LoanAccountMutation = {
   loanProvision?: Maybe<LoanProvisionResult>;
   makeActive?: Maybe<MutationResult>;
   repayment?: Maybe<LoanRepaymentResult>;
+  setAccountInterest: InterestSetupMutationResult;
   updateAccountInterest: InterestSetupMutationResult;
   updateLinkedAccount?: Maybe<LoanAccountResult>;
 };
@@ -14800,6 +14807,11 @@ export type LoanAccountMutationMakeActiveArgs = {
 
 export type LoanAccountMutationRepaymentArgs = {
   data?: InputMaybe<LoanRepaymentInput>;
+};
+
+export type LoanAccountMutationSetAccountInterestArgs = {
+  accountId: Array<Scalars['ID']>;
+  data: InterestRateSetupInput;
 };
 
 export type LoanAccountMutationUpdateAccountInterestArgs = {
@@ -29638,6 +29650,26 @@ export type UpdateSavingProductRebateMutation = {
         } | null;
       } | null;
     } | null;
+  };
+};
+
+export type UpdateMultipleInterestRateMutationVariables = Exact<{
+  accountId: Array<Scalars['ID']> | Scalars['ID'];
+  data: InterestRateSetupInput;
+}>;
+
+export type UpdateMultipleInterestRateMutation = {
+  account: {
+    setMultipleAccountInterest: {
+      record?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
   };
 };
 
@@ -47400,6 +47432,26 @@ export type ViewLoanProductWithAccountQuery = {
   };
 };
 
+export type UpdateLoanMultipleInterestRateMutationVariables = Exact<{
+  accountId: Array<Scalars['ID']> | Scalars['ID'];
+  data: InterestRateSetupInput;
+}>;
+
+export type UpdateLoanMultipleInterestRateMutation = {
+  loanAccount: {
+    setAccountInterest: {
+      record?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
 export type GetLoanGeneralSettingsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetLoanGeneralSettingsQuery = {
@@ -56687,6 +56739,38 @@ export const useUpdateSavingProductRebateMutation = <TError = unknown, TContext 
     ['updateSavingProductRebate'],
     useAxios<UpdateSavingProductRebateMutation, UpdateSavingProductRebateMutationVariables>(
       UpdateSavingProductRebateDocument
+    ),
+    options
+  );
+export const UpdateMultipleInterestRateDocument = `
+    mutation updateMultipleInterestRate($accountId: [ID!]!, $data: InterestRateSetupInput!) {
+  account {
+    setMultipleAccountInterest(accountId: $accountId, data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateMultipleInterestRateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateMultipleInterestRateMutation,
+    TError,
+    UpdateMultipleInterestRateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateMultipleInterestRateMutation,
+    TError,
+    UpdateMultipleInterestRateMutationVariables,
+    TContext
+  >(
+    ['updateMultipleInterestRate'],
+    useAxios<UpdateMultipleInterestRateMutation, UpdateMultipleInterestRateMutationVariables>(
+      UpdateMultipleInterestRateDocument
     ),
     options
   );
@@ -80326,6 +80410,39 @@ export const useViewLoanProductWithAccountQuery = <
     useAxios<ViewLoanProductWithAccountQuery, ViewLoanProductWithAccountQueryVariables>(
       ViewLoanProductWithAccountDocument
     ).bind(null, variables),
+    options
+  );
+export const UpdateLoanMultipleInterestRateDocument = `
+    mutation updateLoanMultipleInterestRate($accountId: [ID!]!, $data: InterestRateSetupInput!) {
+  loanAccount {
+    setAccountInterest(accountId: $accountId, data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateLoanMultipleInterestRateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateLoanMultipleInterestRateMutation,
+    TError,
+    UpdateLoanMultipleInterestRateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateLoanMultipleInterestRateMutation,
+    TError,
+    UpdateLoanMultipleInterestRateMutationVariables,
+    TContext
+  >(
+    ['updateLoanMultipleInterestRate'],
+    useAxios<
+      UpdateLoanMultipleInterestRateMutation,
+      UpdateLoanMultipleInterestRateMutationVariables
+    >(UpdateLoanMultipleInterestRateDocument),
     options
   );
 export const GetLoanGeneralSettingsDocument = `
