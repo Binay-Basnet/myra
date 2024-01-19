@@ -42093,6 +42093,7 @@ export type GetSpreadRateReportQuery = {
   report: {
     depositReport: {
       spreadRateReport: {
+        spreadRate?: string | null;
         savingData?: {
           meta?: { prodInterest?: string | null } | null;
           record?: Array<{
@@ -42115,6 +42116,12 @@ export type GetSpreadRateReportQuery = {
             effectiveRate?: string | null;
           } | null> | null;
         } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
       };
     };
   };
@@ -73402,11 +73409,15 @@ export const GetSpreadRateReportDocument = `
             effectiveRate
           }
         }
+        spreadRate
+        error {
+          ...MutationError
+        }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useGetSpreadRateReportQuery = <TData = GetSpreadRateReportQuery, TError = unknown>(
   variables: GetSpreadRateReportQueryVariables,
   options?: UseQueryOptions<GetSpreadRateReportQuery, TError, TData>
