@@ -83,6 +83,7 @@ export * from './lib/transactions/JournalVoucherSummaryReport';
 export * from './lib/transactions/ProfitAndLossReport';
 export * from './lib/transactions/ServiceCenterBalanceReport';
 export * from './lib/transactions/ServiceCenterBalanceReportCOA';
+export * from './lib/transactions/SpreadRateCalculationReport';
 export * from './lib/transactions/TagKhataReport';
 export * from './lib/transactions/TellerDayBookReport';
 export * from './lib/transactions/TellerReport';

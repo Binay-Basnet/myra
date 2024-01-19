@@ -97,6 +97,7 @@ export enum Report {
   TRANSACTION_DAILY_BALANCE_REPORT = 'Daily Balance Report',
   TRANSACTION_JOURNAL_VOUCHER_SUMMARY = 'Journal Voucher Summary',
   TRANSACTION_DAILY_VOUCHER_SUMMARY = 'Daily Voucher Summary',
+  TRANSACTION_SPREAD_RATE_CALCULATION = 'Spread Rate Calculation',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -644,6 +645,13 @@ export const REPORTS: ReportType = {
       report: Report.TRANSACTION_DAILY_VOUCHER_SUMMARY,
       link: 'daily-voucher-summary',
       component: <Reports.DailyVoucherSummaryReport />,
+      acl: 'REPORTS_TXN_DAILY_VOUCHER_SUMMARY',
+    },
+    {
+      id: '7.7.2',
+      report: Report.TRANSACTION_SPREAD_RATE_CALCULATION,
+      link: 'spread-rate-calculation',
+      component: <Reports.SpreadRateCalculationReport />,
       acl: 'REPORTS_TXN_DAILY_VOUCHER_SUMMARY',
     },
   ],

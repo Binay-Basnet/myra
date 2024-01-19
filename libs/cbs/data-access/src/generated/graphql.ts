@@ -42085,6 +42085,41 @@ export type GetRecurringSavingInstallmentReportQuery = {
   };
 };
 
+export type GetSpreadRateReportQueryVariables = Exact<{
+  data: SpreadRateReportInput;
+}>;
+
+export type GetSpreadRateReportQuery = {
+  report: {
+    depositReport: {
+      spreadRateReport: {
+        savingData?: {
+          meta?: { prodInterest?: string | null } | null;
+          record?: Array<{
+            productId?: string | null;
+            productName?: string | null;
+            averageBalance?: string | null;
+            interestRate?: string | null;
+            weight?: string | null;
+            effectiveRate?: string | null;
+          } | null> | null;
+        } | null;
+        loanData?: {
+          meta?: { prodInterest?: string | null } | null;
+          record?: Array<{
+            productId?: string | null;
+            productName?: string | null;
+            averageBalance?: string | null;
+            interestRate?: string | null;
+            weight?: string | null;
+            effectiveRate?: string | null;
+          } | null> | null;
+        } | null;
+      };
+    };
+  };
+};
+
 export type GetUserReportQueryVariables = Exact<{
   data?: InputMaybe<UserReportFilter>;
 }>;
@@ -73334,6 +73369,53 @@ export const useGetRecurringSavingInstallmentReportQuery = <
       GetRecurringSavingInstallmentReportQuery,
       GetRecurringSavingInstallmentReportQueryVariables
     >(GetRecurringSavingInstallmentReportDocument).bind(null, variables),
+    options
+  );
+export const GetSpreadRateReportDocument = `
+    query getSpreadRateReport($data: SpreadRateReportInput!) {
+  report {
+    depositReport {
+      spreadRateReport(data: $data) {
+        savingData {
+          meta {
+            prodInterest
+          }
+          record {
+            productId
+            productName
+            averageBalance
+            interestRate
+            weight
+            effectiveRate
+          }
+        }
+        loanData {
+          meta {
+            prodInterest
+          }
+          record {
+            productId
+            productName
+            averageBalance
+            interestRate
+            weight
+            effectiveRate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSpreadRateReportQuery = <TData = GetSpreadRateReportQuery, TError = unknown>(
+  variables: GetSpreadRateReportQueryVariables,
+  options?: UseQueryOptions<GetSpreadRateReportQuery, TError, TData>
+) =>
+  useQuery<GetSpreadRateReportQuery, TError, TData>(
+    ['getSpreadRateReport', variables],
+    useAxios<GetSpreadRateReportQuery, GetSpreadRateReportQueryVariables>(
+      GetSpreadRateReportDocument
+    ).bind(null, variables),
     options
   );
 export const GetUserReportDocument = `
