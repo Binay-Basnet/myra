@@ -5118,14 +5118,13 @@ export type DailyVoucherSummarInput = {
 };
 
 export type DailyVoucherSummaryReportData = {
-  coaCode: Scalars['String'];
-  coaHeadName: Scalars['String'];
-  crAmount: Scalars['String'];
-  drAmount: Scalars['String'];
+  headData?: Maybe<Array<HeadData>>;
+  totalCrBalance: Scalars['String'];
+  totalDrBalance: Scalars['String'];
 };
 
 export type DailyVoucherSummaryReportResult = {
-  data?: Maybe<Array<DailyVoucherSummaryReportData>>;
+  data?: Maybe<DailyVoucherSummaryReportData>;
   error?: Maybe<QueryError>;
 };
 
@@ -6316,6 +6315,7 @@ export type DepositReport = {
   savingAccruedInterestReport: SavingAccruedInterestResult;
   savingProductBalanceReport: SavingProductBalanceResult;
   savingStatementReport?: Maybe<ReportResult>;
+  spreadRateReport: SpreadRateReportResult;
   suspiciousTransctionReport?: Maybe<SuspiciousTransactionReportResult>;
   thresholdTransactionReport: TtrReportResult;
 };
@@ -6370,6 +6370,10 @@ export type DepositReportSavingProductBalanceReportArgs = {
 
 export type DepositReportSavingStatementReportArgs = {
   data: SavingStatementReportSettings;
+};
+
+export type DepositReportSpreadRateReportArgs = {
+  data: SpreadRateReportInput;
 };
 
 export type DepositReportSuspiciousTransctionReportArgs = {
@@ -10513,6 +10517,13 @@ export type HcmPayrollTaxSlabQueryGetTaxSlabArgs = {
 export type HcmPayrollTaxSlabQueryListTaxSlabArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type HeadData = {
+  coaCode: Scalars['String'];
+  coaHeadName: Scalars['String'];
+  crAmount: Scalars['String'];
+  drAmount: Scalars['String'];
 };
 
 export type HrEmployeeAttendanceMutation = {
@@ -23238,6 +23249,36 @@ export const SourceOfHire = {
 } as const;
 
 export type SourceOfHire = typeof SourceOfHire[keyof typeof SourceOfHire];
+export type SpreadRateMetaDetail = {
+  prodInterest?: Maybe<Scalars['String']>;
+};
+
+export type SpreadRateReportData = {
+  meta?: Maybe<SpreadRateMetaDetail>;
+  record?: Maybe<Array<Maybe<SpreadRateRowData>>>;
+};
+
+export type SpreadRateReportInput = {
+  branchId: Array<Scalars['String']>;
+  period: LocalizedDateFilter;
+};
+
+export type SpreadRateReportResult = {
+  error?: Maybe<QueryError>;
+  loanData?: Maybe<SpreadRateReportData>;
+  savingData?: Maybe<SpreadRateReportData>;
+  spreadRate?: Maybe<Scalars['String']>;
+};
+
+export type SpreadRateRowData = {
+  averageBalance?: Maybe<Scalars['String']>;
+  effectiveRate?: Maybe<Scalars['String']>;
+  interestRate?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
+  weight?: Maybe<Scalars['String']>;
+};
+
 export type StaffPlanInput = {
   branchId?: InputMaybe<Scalars['String']>;
   date: LocalizedDateFilter;
@@ -44808,12 +44849,16 @@ export type GetDailyVoucherSummaryReportQuery = {
     transactionReport: {
       financial: {
         dailyVoucherSummaryReport: {
-          data?: Array<{
-            coaCode: string;
-            coaHeadName: string;
-            drAmount: string;
-            crAmount: string;
-          }> | null;
+          data?: {
+            totalDrBalance: string;
+            totalCrBalance: string;
+            headData?: Array<{
+              coaCode: string;
+              coaHeadName: string;
+              drAmount: string;
+              crAmount: string;
+            }> | null;
+          } | null;
         };
       };
     };
@@ -76805,10 +76850,14 @@ export const GetDailyVoucherSummaryReportDocument = `
       financial {
         dailyVoucherSummaryReport(data: $data) {
           data {
-            coaCode
-            coaHeadName
-            drAmount
-            crAmount
+            headData {
+              coaCode
+              coaHeadName
+              drAmount
+              crAmount
+            }
+            totalDrBalance
+            totalCrBalance
           }
         }
       }

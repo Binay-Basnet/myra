@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import {
-  DailyVoucherSummaryReportData,
+  HeadData,
   LocalizedDateFilter,
   TransactionNature,
   useGetDailyVoucherSummaryReportQuery,
@@ -53,8 +53,20 @@ export const DailyVoucherSummaryReport = () => {
     { enabled: !!filters }
   );
 
-  const reportData =
-    data?.report?.transactionReport?.financial?.dailyVoucherSummaryReport?.data ?? [];
+  const { reportData, totalDrBalance, totalCrBalance } = useMemo(
+    () => ({
+      reportData:
+        data?.report?.transactionReport?.financial?.dailyVoucherSummaryReport?.data?.headData ?? [],
+      totalDrBalance:
+        data?.report?.transactionReport?.financial?.dailyVoucherSummaryReport?.data?.totalDrBalance,
+      totalCrBalance:
+        data?.report?.transactionReport?.financial?.dailyVoucherSummaryReport?.data?.totalCrBalance,
+    }),
+    [data]
+  );
+
+  // const reportData =
+  //   data?.report?.transactionReport?.financial?.dailyVoucherSummaryReport?.data?.headData ?? [];
 
   const { data: userListData } = useGetTellerListQuery();
 
@@ -63,7 +75,7 @@ export const DailyVoucherSummaryReport = () => {
   return (
     <Report
       defaultFilters={{}}
-      data={reportData as DailyVoucherSummaryReportData[]}
+      data={reportData as HeadData[]}
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
@@ -120,26 +132,37 @@ export const DailyVoucherSummaryReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization />
-          <Report.Table<DailyVoucherSummaryReportData>
+          <Report.Table<HeadData>
+            showFooter
             columns={[
               {
                 header: 'COA Code',
                 accessorKey: 'coaCode',
+                footer: 'Total',
                 meta: {
                   isNumeric: true,
+                  Footer: {
+                    colspan: 2,
+                  },
                 },
               },
               {
                 header: 'COA Head',
                 accessorKey: 'coaHeadName',
+                accessorFn: (row) =>
+                  Number(row?.crAmount) ? `To, ${row?.coaHeadName}` : row?.coaHeadName,
                 meta: {
                   width: 'auto',
+                  Footer: {
+                    display: 'none',
+                  },
                 },
               },
               {
                 header: 'Debit',
                 accessorKey: 'drAmount',
                 cell: (props) => amountConverter(props?.row?.original?.drAmount || 0),
+                footer: () => amountConverter(totalDrBalance || 0),
                 meta: {
                   isNumeric: true,
                 },
@@ -148,6 +171,7 @@ export const DailyVoucherSummaryReport = () => {
                 header: 'Credit',
                 accessorKey: 'crAmount',
                 cell: (props) => amountConverter(props?.row?.original?.crAmount || 0),
+                footer: () => amountConverter(totalCrBalance || 0),
                 meta: {
                   isNumeric: true,
                 },

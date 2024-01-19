@@ -702,10 +702,14 @@ query getDailyVoucherSummaryReport($data: DailyVoucherSummarInput!) {
       financial {
         dailyVoucherSummaryReport(data: $data) {
           data {
-            coaCode
-            coaHeadName
-            drAmount
-            crAmount
+            headData {
+              coaCode
+              coaHeadName
+              drAmount
+              crAmount
+            }
+            totalDrBalance
+            totalCrBalance
           }
         }
       }
