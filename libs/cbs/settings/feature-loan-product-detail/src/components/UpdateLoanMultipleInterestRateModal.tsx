@@ -1,13 +1,16 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useDisclosure } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { ListItem, UnorderedList, useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Grid, GridItem, Modal, Text } from '@myra-ui';
+import { Alert, asyncToast, Box, Grid, GridItem, Modal, Text } from '@myra-ui';
 
 import {
   InterestRateSetupInput,
+  LoanProductWithAccountNode,
   useGetEndOfDayDateDataQuery,
+  useGetLoanProductDetailQuery,
   useUpdateLoanMultipleInterestRateMutation,
 } from '@coop/cbs/data-access';
 import { ConfirmationDialog } from '@coop/shared/components';
@@ -16,13 +19,13 @@ import { FormCBSDatePicker, FormFileInput, FormInput, FormTextArea } from '@coop
 interface IUpdateLoanMultipleInterestRateModalProps {
   isOpen: boolean;
   onClose: () => void;
-  accountIds: string[];
+  selectedBreakdown: LoanProductWithAccountNode;
 }
 
 export const UpdateLoanMultipleInterestRateModal = ({
   isOpen,
   onClose,
-  accountIds,
+  selectedBreakdown,
 }: IUpdateLoanMultipleInterestRateModalProps) => {
   const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
   const closingDate = useMemo(() => endOfDayData?.transaction?.endOfDayDate?.value, [endOfDayData]);
@@ -44,6 +47,32 @@ export const UpdateLoanMultipleInterestRateModal = ({
     onClose();
   };
 
+  const router = useRouter();
+  const { id } = router.query;
+
+  const { data: loanProductDetailData } = useGetLoanProductDetailQuery(
+    { id: id as string },
+    { enabled: !!id }
+  );
+
+  const { minRate, maxRate, changeMin, changeMax } = useMemo(
+    () => ({
+      minRate:
+        loanProductDetailData?.settings?.general?.loanProducts?.getProductDetail?.data?.interest
+          ?.minRate,
+      maxRate:
+        loanProductDetailData?.settings?.general?.loanProducts?.getProductDetail?.data?.interest
+          ?.maxRate,
+      changeMin:
+        loanProductDetailData?.settings?.general?.loanProducts?.getProductDetail?.data?.interest
+          ?.changeMin,
+      changeMax:
+        loanProductDetailData?.settings?.general?.loanProducts?.getProductDetail?.data?.interest
+          ?.changeMax,
+    }),
+    [loanProductDetailData]
+  );
+
   const { mutateAsync: updateMultipleInterestRate } = useUpdateLoanMultipleInterestRateMutation();
 
   const handleSaveInterestRate = () => {
@@ -58,11 +87,19 @@ export const UpdateLoanMultipleInterestRateModal = ({
         handleClose();
       },
       promise: updateMultipleInterestRate({
-        accountId: accountIds,
+        accountId: selectedBreakdown?.accountIds as string[],
         data: { ...methods.getValues() } as InterestRateSetupInput,
       }),
     });
   };
+
+  const rate = methods.watch('rate');
+
+  useEffect(() => {
+    if (selectedBreakdown?.accountPremium) {
+      methods.setValue('rate', selectedBreakdown.accountPremium);
+    }
+  }, [selectedBreakdown?.accountPremium]);
 
   return (
     <>
@@ -75,6 +112,33 @@ export const UpdateLoanMultipleInterestRateModal = ({
       >
         <FormProvider {...methods}>
           <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
+            <GridItem colSpan={2}>
+              <Alert status="info" title="Account Premium Details" hideCloseIcon>
+                <UnorderedList>
+                  <ListItem>
+                    <Box display="flex" gap="s4">
+                      <Text fontSize="s3" fontWeight={400} color="gray.700">
+                        Account Premium Rate:
+                      </Text>
+                      <Text fontSize="s3" fontWeight={500} color="gray.700">
+                        {minRate} % - {maxRate} %
+                      </Text>
+                    </Box>
+                  </ListItem>
+                  <ListItem>
+                    <Box display="flex" gap="s4">
+                      <Text fontSize="s3" fontWeight={400} color="gray.700">
+                        Allowable Update Rate:
+                      </Text>
+                      <Text fontSize="s3" fontWeight={500} color="gray.700">
+                        {changeMin} % - {changeMax} %
+                      </Text>
+                    </Box>
+                  </ListItem>
+                </UnorderedList>
+              </Alert>
+            </GridItem>
+
             <FormInput
               name="rate"
               type="number"
@@ -92,6 +156,68 @@ export const UpdateLoanMultipleInterestRateModal = ({
               label="Effective Date"
               minDate={closingDate?.local ? new Date(closingDate?.en ?? '') : new Date()}
             />
+
+            {rate && (
+              <GridItem colSpan={2}>
+                <Alert status="info" title="New Interest Details" hideCloseIcon>
+                  <UnorderedList>
+                    <ListItem>
+                      <Box display="flex" gap="s4">
+                        <Text fontSize="s3" fontWeight={400} color="gray.700">
+                          Organization Premium:
+                        </Text>
+                        <Text fontSize="s3" fontWeight={500} color="gray.700">
+                          {selectedBreakdown?.organizationPremium} %
+                        </Text>
+                      </Box>
+                    </ListItem>
+                    <ListItem>
+                      <Box display="flex" gap="s4">
+                        <Text fontSize="s3" fontWeight={400} color="gray.700">
+                          Product Premium:
+                        </Text>
+                        <Text fontSize="s3" fontWeight={500} color="gray.700">
+                          {selectedBreakdown?.productPremium} %
+                        </Text>
+                      </Box>
+                    </ListItem>
+                    <ListItem>
+                      <Box display="flex" gap="s4">
+                        <Text fontSize="s3" fontWeight={400} color="gray.700">
+                          Old Account Premium:
+                        </Text>
+                        <Text fontSize="s3" fontWeight={500} color="gray.700">
+                          {selectedBreakdown?.accountPremium} %
+                        </Text>
+                      </Box>
+                    </ListItem>
+                    <ListItem>
+                      <Box display="flex" gap="s4">
+                        <Text fontSize="s3" fontWeight={400} color="gray.700">
+                          Old Effective Interest Rate:
+                        </Text>
+                        <Text fontSize="s3" fontWeight={500} color="gray.700">
+                          {selectedBreakdown?.effectiveInterestRate} %
+                        </Text>
+                      </Box>
+                    </ListItem>
+                    <ListItem>
+                      <Box display="flex" gap="s4">
+                        <Text fontSize="s3" fontWeight={400} color="gray.700">
+                          New Effective Interest Rate:
+                        </Text>
+                        <Text fontSize="s3" fontWeight={500} color="gray.700">
+                          {(Number(selectedBreakdown?.organizationPremium) || 0) +
+                            (Number(selectedBreakdown?.productPremium) || 0) +
+                            (Number(rate) || 0)}
+                          %
+                        </Text>
+                      </Box>
+                    </ListItem>
+                  </UnorderedList>
+                </Alert>
+              </GridItem>
+            )}
 
             <GridItem colSpan={2}>
               <FormFileInput name="fileUploads" label="File Upload" size="md" />

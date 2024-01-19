@@ -4,7 +4,10 @@ import { useDisclosure } from '@chakra-ui/react';
 
 import { Box, Column, Scrollable, Table, TablePopover, Text } from '@myra-ui';
 
-import { useViewLoanProductWithAccountQuery } from '@coop/cbs/data-access';
+import {
+  LoanProductWithAccountNode,
+  useViewLoanProductWithAccountQuery,
+} from '@coop/cbs/data-access';
 
 import { SideBar, UpdateLoanMultipleInterestRateModal } from '../components';
 
@@ -12,7 +15,7 @@ export const InterestBreakdownPage = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const [selectedAccounts, setSelectedAccounts] = useState<string[]>([]);
+  const [selectedBreakdown, setSelectedBreakdown] = useState<LoanProductWithAccountNode | null>();
 
   const {
     isOpen: isUpdateModalOpen,
@@ -85,7 +88,7 @@ export const InterestBreakdownPage = () => {
                   aclKey: 'CBS_LOAN_LOAN_ACCOUNT',
                   action: 'UPDATE',
                   onClick: (row) => {
-                    setSelectedAccounts(row?.accountIds as string[]);
+                    setSelectedBreakdown(row);
                     onUpdateModalToggle();
                   },
                 },
@@ -129,10 +132,10 @@ export const InterestBreakdownPage = () => {
       <UpdateLoanMultipleInterestRateModal
         isOpen={isUpdateModalOpen}
         onClose={() => {
-          setSelectedAccounts([]);
+          setSelectedBreakdown(null);
           onUpdateModalClose();
         }}
-        accountIds={selectedAccounts}
+        selectedBreakdown={selectedBreakdown as LoanProductWithAccountNode}
       />
     </>
   );
