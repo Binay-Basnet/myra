@@ -1256,6 +1256,7 @@ export type AgentMutation = {
   agentTodayDeposit?: Maybe<AgentTodayListResult>;
   agentTodayList?: Maybe<AgentTodayListResult>;
   deleteAgentMember: DeleteAgentMemberResult;
+  deleteSubmissionListCollected: DeleteSubmissionListCollected;
   deleteTodayTask: RemoveTodayTaskResult;
   editRejectedTodayList: AgentTodayListResult;
   modifyPreviousData: DataModificationResult;
@@ -1303,6 +1304,10 @@ export type AgentMutationAgentTodayListArgs = {
 export type AgentMutationDeleteAgentMemberArgs = {
   id: Scalars['ID'];
   memberid: Scalars['ID'];
+};
+
+export type AgentMutationDeleteSubmissionListCollectedArgs = {
+  id: Scalars['ID'];
 };
 
 export type AgentMutationDeleteTodayTaskArgs = {
@@ -20307,6 +20312,7 @@ export const Resource = {
   CbsWithdrawSlipsWithdrawSlipsRequests: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_REQUESTS',
   CollectionList: 'COLLECTION_LIST',
   CreateCollectionList: 'CREATE_COLLECTION_LIST',
+  DeleteCollectionList: 'DELETE_COLLECTION_LIST',
   FundManagement: 'FUND_MANAGEMENT',
   HcmEmployee: 'HCM_EMPLOYEE',
   HcmEmployeeAttendance: 'HCM_EMPLOYEE_ATTENDANCE',
@@ -25520,6 +25526,11 @@ export type DeleteCollectionResult = {
   error?: Maybe<MutationError>;
 };
 
+export type DeleteSubmissionListCollected = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type DepartTransferDetails = {
   id?: Maybe<Scalars['ID']>;
   transferredDate?: Maybe<Scalars['Localized']>;
@@ -26545,6 +26556,25 @@ export type AcceptAgentTodayDepositMutationVariables = Exact<{
 export type AcceptAgentTodayDepositMutation = {
   agent: {
     acceptAgentTodayDeposit: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type DeleteSubmissionListCollectedMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type DeleteSubmissionListCollectedMutation = {
+  agent: {
+    deleteSubmissionListCollected: {
       recordId?: string | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -52408,6 +52438,38 @@ export const useAcceptAgentTodayDepositMutation = <TError = unknown, TContext = 
     ['acceptAgentTodayDeposit'],
     useAxios<AcceptAgentTodayDepositMutation, AcceptAgentTodayDepositMutationVariables>(
       AcceptAgentTodayDepositDocument
+    ),
+    options
+  );
+export const DeleteSubmissionListCollectedDocument = `
+    mutation deleteSubmissionListCollected($id: ID!) {
+  agent {
+    deleteSubmissionListCollected(id: $id) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteSubmissionListCollectedMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteSubmissionListCollectedMutation,
+    TError,
+    DeleteSubmissionListCollectedMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteSubmissionListCollectedMutation,
+    TError,
+    DeleteSubmissionListCollectedMutationVariables,
+    TContext
+  >(
+    ['deleteSubmissionListCollected'],
+    useAxios<DeleteSubmissionListCollectedMutation, DeleteSubmissionListCollectedMutationVariables>(
+      DeleteSubmissionListCollectedDocument
     ),
     options
   );

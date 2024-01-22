@@ -168,3 +168,14 @@ mutation acceptAgentTodayDeposit($id: ID!) {
     }
   }
 }
+
+mutation deleteSubmissionListCollected($id: ID!) {
+  agent {
+    deleteSubmissionListCollected(id: $id) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
