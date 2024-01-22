@@ -106,11 +106,11 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
       },
       {
         id: 'appliedLoanAmount',
-        header: 'Applied Amount',
+        header: 'Sanctioned Amount',
         meta: {
           isNumeric: true,
         },
-        accessorFn: (row) => amountConverter(row?.node?.appliedLoanAmount as string),
+        accessorFn: (row) => amountConverter(row?.node?.totalSanctionedAmount as string),
         enableColumnFilter: true,
         filterFn: 'amount',
       },
