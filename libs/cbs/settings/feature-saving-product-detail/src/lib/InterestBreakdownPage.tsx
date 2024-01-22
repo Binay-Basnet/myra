@@ -126,9 +126,7 @@ export const InterestBreakdownPage = () => {
             </Box>
           </Box>
           <Box bg="background.500" ml="320px" p="s16" minH="100vh">
-            <Box pb="100px">
-              <Table isStatic isLoading={isFetching} data={rowData} columns={columns} />
-            </Box>
+            <Table isStatic isLoading={isFetching} data={rowData} columns={columns} />
           </Box>
         </Scrollable>
       </Box>
