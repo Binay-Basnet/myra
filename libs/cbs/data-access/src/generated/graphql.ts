@@ -1251,17 +1251,12 @@ export type AgentMutation = {
   acceptAgentTodayDeposit: AgentTodayDepositResult;
   addAgentMember: AddAgentMemberResult;
   addAgentTodayList: AgentTodayListResult;
-  agentTemplate?: Maybe<AgentTemplateResult>;
-  agentTodayCollection?: Maybe<AgentTodayListResult>;
-  agentTodayDeposit?: Maybe<AgentTodayListResult>;
-  agentTodayList?: Maybe<AgentTodayListResult>;
   deleteAgentMember: DeleteAgentMemberResult;
   deleteSubmissionListCollected: DeleteSubmissionListCollected;
   deleteTodayTask: RemoveTodayTaskResult;
   editRejectedTodayList: AgentTodayListResult;
   modifyPreviousData: DataModificationResult;
   rejectTodayTask: RemoveTodayTaskResult;
-  removeMemberAccountAgent?: Maybe<RemoveMemberResult>;
   sentTodayTask: RemoveTodayTaskResult;
 };
 
@@ -1279,26 +1274,6 @@ export type AgentMutationAddAgentMemberArgs = {
 export type AgentMutationAddAgentTodayListArgs = {
   id?: InputMaybe<Scalars['ID']>;
   input: AgentTodayListInputValue;
-};
-
-export type AgentMutationAgentTemplateArgs = {
-  agentId: Scalars['ID'];
-  data?: InputMaybe<Array<InputMaybe<AgentTemplateInput>>>;
-};
-
-export type AgentMutationAgentTodayCollectionArgs = {
-  agentId: Scalars['ID'];
-  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
-};
-
-export type AgentMutationAgentTodayDepositArgs = {
-  agentID: Scalars['ID'];
-  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
-};
-
-export type AgentMutationAgentTodayListArgs = {
-  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
-  id: Scalars['ID'];
 };
 
 export type AgentMutationDeleteAgentMemberArgs = {
@@ -1323,11 +1298,6 @@ export type AgentMutationRejectTodayTaskArgs = {
   remark?: InputMaybe<Scalars['String']>;
 };
 
-export type AgentMutationRemoveMemberAccountAgentArgs = {
-  accountId: Scalars['ID'];
-  agentID: Scalars['ID'];
-};
-
 export type AgentMutationSentTodayTaskArgs = {
   id: Scalars['ID'];
 };
@@ -1335,14 +1305,11 @@ export type AgentMutationSentTodayTaskArgs = {
 export type AgentQuery = {
   agentDetail?: Maybe<AgentRecord>;
   agentTodayTaskDetail: AgentTodayTaskDetailResult;
-  assignedMemberList: AssignedMembersListConnection;
   listAgent: AccountAgentListConnection;
-  listAgentCollection?: Maybe<AgentCollectionListConnection>;
   listAgentMember: ListAgentMemberConnection;
   listAgentTask?: Maybe<AgentTodayListData>;
   listAgentTemplate?: Maybe<AgentTemplateData>;
   listMRSubmissionList?: Maybe<SubmissionListConnection>;
-  viewAgentList?: Maybe<AgentTransactionViewResult>;
 };
 
 export type AgentQueryAgentDetailArgs = {
@@ -1353,18 +1320,8 @@ export type AgentQueryAgentTodayTaskDetailArgs = {
   id: Scalars['ID'];
 };
 
-export type AgentQueryAssignedMemberListArgs = {
-  filter?: InputMaybe<Filter>;
-  pagination?: InputMaybe<Pagination>;
-};
-
 export type AgentQueryListAgentArgs = {
   currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
-  filter?: InputMaybe<Filter>;
-  pagination?: InputMaybe<Pagination>;
-};
-
-export type AgentQueryListAgentCollectionArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -1385,11 +1342,6 @@ export type AgentQueryListAgentTemplateArgs = {
 export type AgentQueryListMrSubmissionListArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
-};
-
-export type AgentQueryViewAgentListArgs = {
-  agentId: Scalars['ID'];
-  date: Scalars['String'];
 };
 
 export type AgentRecord = {
@@ -20327,6 +20279,7 @@ export const Resource = {
   CbsTransfers: 'CBS_TRANSFERS',
   CbsTransfersBankTransfer: 'CBS_TRANSFERS_BANK_TRANSFER',
   CbsTransfersCashInTransitTransfer: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
+  CbsTransfersIbtTransfer: 'CBS_TRANSFERS_IBT_TRANSFER',
   CbsTransfersServiceCenterCashTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
   CbsTransfersServiceCenterTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_TRANSFER',
   CbsTransfersTellerTransfer: 'CBS_TRANSFERS_TELLER_TRANSFER',
