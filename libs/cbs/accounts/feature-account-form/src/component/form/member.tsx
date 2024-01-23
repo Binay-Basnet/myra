@@ -37,7 +37,7 @@ export const Member = () => {
     }
   );
 
-  const memberListData = memberList?.members?.list?.edges;
+  const memberListData = memberList?.members?.list?.data?.edges;
   const memberData =
     memberListData && memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
 

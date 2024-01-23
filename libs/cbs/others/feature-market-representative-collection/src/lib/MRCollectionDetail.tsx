@@ -758,7 +758,10 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
     { enabled: !!memberId }
   );
 
-  const accountList = useMemo(() => accountListData?.account?.list?.edges ?? [], [accountListData]);
+  const accountList = useMemo(
+    () => accountListData?.account?.list?.data?.edges ?? [],
+    [accountListData]
+  );
 
   const accountOptions = useMemo(
     () =>

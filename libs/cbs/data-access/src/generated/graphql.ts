@@ -5596,6 +5596,12 @@ export type DepositLoanAccountConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type DepositLoanAccountConnectionWithError = {
+  data?: Maybe<DepositLoanAccountConnection>;
+  error?: Maybe<QueryError>;
+  success?: Maybe<QuerySuccess>;
+};
+
 export type DepositLoanAccountData = {
   data?: Maybe<DepositLoanAccount>;
   error?: Maybe<MutationError>;
@@ -5746,7 +5752,7 @@ export type DepositLoanAccountQuery = {
   getBulkInstallments?: Maybe<Array<Maybe<BulkInstallmentResult>>>;
   getInstallments?: Maybe<InstallmentResult>;
   getMRMemberInstallments: MRmemberInstallmentResult;
-  list?: Maybe<DepositLoanAccountConnection>;
+  list?: Maybe<DepositLoanAccountConnectionWithError>;
   listAccountInterestRates: InterestSetupListResult;
   listAccountLedgers?: Maybe<AccountLedgerListResult>;
   listAssociatedGuaranteeAccounts?: Maybe<AssociatedGuaranteeAccountListResult>;
@@ -5791,6 +5797,8 @@ export type DepositLoanAccountQueryGetMrMemberInstallmentsArgs = {
 export type DepositLoanAccountQueryListArgs = {
   filter?: InputMaybe<Filter>;
   injectLoc?: InputMaybe<Scalars['Boolean']>;
+  isExportExcel?: InputMaybe<Scalars['Boolean']>;
+  isExportPDF?: InputMaybe<Scalars['Boolean']>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -6768,7 +6776,7 @@ export type DownloadCenterMutationGetElementUrlArgs = {
 };
 
 export type DownloadCenterNode = {
-  createdAt?: Maybe<Scalars['Localized']>;
+  createdAt?: Maybe<Scalars['Time']>;
   downloadType?: Maybe<Scalars['String']>;
   fileType?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
@@ -14393,6 +14401,12 @@ export type Level2HelloArgs = {
   data: ExampleInput;
 };
 
+export type ListConnectionWithError = {
+  data?: Maybe<KymMemberListConnection>;
+  error?: Maybe<QueryError>;
+  success?: Maybe<QuerySuccess>;
+};
+
 export type ListDetailsByDayEdges = {
   cursor?: Maybe<Scalars['Cursor']>;
   node?: Maybe<DetailsByDayListed>;
@@ -14578,6 +14592,12 @@ export type LoanAccountConnection = {
   edges?: Maybe<Array<LoanAccountEdge>>;
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
+};
+
+export type LoanAccountConnectionWithError = {
+  data?: Maybe<LoanAccountConnection>;
+  error?: Maybe<QueryError>;
+  success?: Maybe<QuerySuccess>;
 };
 
 export type LoanAccountDetailsResult = {
@@ -14891,7 +14911,7 @@ export type LoanAccountQuery = {
   getLoanInstallments?: Maybe<LoanInstallmentResult>;
   getProductCriteria?: Maybe<LoanProductCriteriaResult>;
   getProductList?: Maybe<LoanProductList>;
-  list?: Maybe<LoanAccountConnection>;
+  list?: Maybe<LoanAccountConnectionWithError>;
   listAccountInterestRates: InterestSetupListResult;
   loanAccountDetails?: Maybe<LoanAccountDetailsResult>;
   loanPreview?: Maybe<LoanAccountPreviewResult>;
@@ -14940,6 +14960,8 @@ export type LoanAccountQueryGetProductListArgs = {
 
 export type LoanAccountQueryListArgs = {
   filter?: InputMaybe<Filter>;
+  isExportExcel?: InputMaybe<Scalars['Boolean']>;
+  isExportPDF?: InputMaybe<Scalars['Boolean']>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -17793,7 +17815,7 @@ export type MemberQuery = {
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
   lastKymUpdatedDate?: Maybe<LastKymUpdatedMemberDateResult>;
-  list: KymMemberListConnection;
+  list: ListConnectionWithError;
   listMinor?: Maybe<MinorListConnection>;
   memberOverview?: Maybe<MemberOverviewResult>;
   memberOverviewV2?: Maybe<MemberOverviewV2Result>;
@@ -17841,6 +17863,8 @@ export type MemberQueryLastKymUpdatedDateArgs = {
 
 export type MemberQueryListArgs = {
   filter?: InputMaybe<Filter>;
+  isExportExcel?: InputMaybe<Scalars['Boolean']>;
+  isExportPDF?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -17896,7 +17920,8 @@ export type MemberRecentTransactions = {
 export type MemberRegFilters = {
   gender?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   institutionType?: InputMaybe<Scalars['ID']>;
-  isExport?: InputMaybe<Scalars['Boolean']>;
+  isExportExcel?: InputMaybe<Scalars['Boolean']>;
+  isExportPDF?: InputMaybe<Scalars['Boolean']>;
   memberType?: InputMaybe<Array<InputMaybe<MemberType>>>;
   occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
 };
@@ -32287,27 +32312,29 @@ export type GetAccountMemberListQueryVariables = Exact<{
 export type GetAccountMemberListQuery = {
   members: {
     list: {
-      totalCount: number;
-      edges?: Array<{
-        cursor: string;
-        node: {
-          id: string;
-          name?: Record<'local' | 'en' | 'np', string> | null;
-          code: string;
-          type: KymMemberTypesEnum;
-          contact?: string | null;
-          createdAt: string;
-          dateJoined?: Record<'local' | 'en' | 'np', string> | null;
-          address?: {
-            state?: Record<'local' | 'en' | 'np', string> | null;
-            district?: Record<'local' | 'en' | 'np', string> | null;
-            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
-            wardNo?: string | null;
-            locality?: Record<'local' | 'en' | 'np', string> | null;
-          } | null;
-        };
-      } | null> | null;
-      pageInfo?: { startCursor?: string | null; endCursor?: string | null } | null;
+      data?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node: {
+            id: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            code: string;
+            type: KymMemberTypesEnum;
+            contact?: string | null;
+            createdAt: string;
+            dateJoined?: Record<'local' | 'en' | 'np', string> | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+            } | null;
+          };
+        } | null> | null;
+        pageInfo?: { startCursor?: string | null; endCursor?: string | null } | null;
+      } | null;
     };
   };
 };
@@ -32518,77 +32545,86 @@ export type GetAccountTableListQueryVariables = Exact<{
 export type GetAccountTableListQuery = {
   account: {
     list?: {
-      totalCount: number;
-      pageInfo?: {
-        hasNextPage: boolean;
-        hasPreviousPage: boolean;
-        startCursor?: string | null;
-        endCursor?: string | null;
-      } | null;
-      edges?: Array<{
-        node?: {
-          id: string;
-          objState: ObjState;
-          createdAt: string;
-          accountName?: string | null;
-          modifiedAt: string;
-          installmentAmount?: string | null;
-          balance?: string | null;
-          availableBalance?: string | null;
-          accountOpenedDate?: Record<'local' | 'en' | 'np', string> | null;
-          lastTransactionDate?: Record<'local' | 'en' | 'np', string> | null;
-          accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
-          closedAt?: string | null;
-          overDrawnBalance?: string | null;
-          guaranteedAmount?: string | null;
-          interestAccured?: string | null;
-          interestTax?: string | null;
-          prematurePenalty?: string | null;
-          member?: {
+      data?: {
+        totalCount: number;
+        edges?: Array<{
+          node?: {
             id: string;
-            name?: Record<'local' | 'en' | 'np', string> | null;
-            profilePicUrl?: string | null;
-            profilePic?: string | null;
-            signaturePicUrl?: string | null;
-            contact?: string | null;
-            dateJoined?: Record<'local' | 'en' | 'np', string> | null;
-            address?: {
-              state?: Record<'local' | 'en' | 'np', string> | null;
-              district?: Record<'local' | 'en' | 'np', string> | null;
-              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
-              wardNo?: string | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            objState: ObjState;
+            createdAt: string;
+            accountName?: string | null;
+            modifiedAt: string;
+            installmentAmount?: string | null;
+            balance?: string | null;
+            availableBalance?: string | null;
+            accountOpenedDate?: Record<'local' | 'en' | 'np', string> | null;
+            lastTransactionDate?: Record<'local' | 'en' | 'np', string> | null;
+            accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
+            closedAt?: string | null;
+            overDrawnBalance?: string | null;
+            guaranteedAmount?: string | null;
+            interestAccured?: string | null;
+            interestTax?: string | null;
+            prematurePenalty?: string | null;
+            member?: {
+              id: string;
+              name?: Record<'local' | 'en' | 'np', string> | null;
+              profilePicUrl?: string | null;
+              profilePic?: string | null;
+              signaturePicUrl?: string | null;
+              contact?: string | null;
+              dateJoined?: Record<'local' | 'en' | 'np', string> | null;
+              address?: {
+                state?: Record<'local' | 'en' | 'np', string> | null;
+                district?: Record<'local' | 'en' | 'np', string> | null;
+                localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                wardNo?: string | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+              } | null;
+            } | null;
+            product: {
+              id: string;
+              productCode: string;
+              productName: string;
+              nature: NatureOfDepositProduct;
+              minimumBalance?: string | null;
+              isMandatorySaving?: boolean | null;
+              withdrawRestricted?: boolean | null;
+              interest?: number | null;
+              accountClosingCharge?: Array<{
+                serviceName?: string | null;
+                ledgerName?: string | null;
+                amount?: any | null;
+              } | null> | null;
+              withdrawPenalty?: {
+                penaltyLedgerMapping?: string | null;
+                penaltyAmount?: any | null;
+                penaltyRate?: number | null;
+              } | null;
+            };
+            dues?: {
+              fine?: string | null;
+              totalDue?: string | null;
+              dueInstallments?: number | null;
             } | null;
           } | null;
-          product: {
-            id: string;
-            productCode: string;
-            productName: string;
-            nature: NatureOfDepositProduct;
-            minimumBalance?: string | null;
-            isMandatorySaving?: boolean | null;
-            withdrawRestricted?: boolean | null;
-            interest?: number | null;
-            accountClosingCharge?: Array<{
-              serviceName?: string | null;
-              ledgerName?: string | null;
-              amount?: any | null;
-            } | null> | null;
-            withdrawPenalty?: {
-              penaltyLedgerMapping?: string | null;
-              penaltyAmount?: any | null;
-              penaltyRate?: number | null;
-            } | null;
-          };
-          dues?: {
-            fine?: string | null;
-            totalDue?: string | null;
-            dueInstallments?: number | null;
-          } | null;
+        }> | null;
+        pageInfo?: {
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+          startCursor?: string | null;
+          endCursor?: string | null;
         } | null;
-      }> | null;
+      } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | null;
+      success?: { message: string; code: number } | null;
     } | null;
   };
 };
@@ -32601,41 +32637,70 @@ export type GetAccountTableListMinimalQueryVariables = Exact<{
 export type GetAccountTableListMinimalQuery = {
   account: {
     list?: {
-      totalCount: number;
-      pageInfo?: {
-        hasNextPage: boolean;
-        hasPreviousPage: boolean;
-        startCursor?: string | null;
-        endCursor?: string | null;
-      } | null;
-      edges?: Array<{
-        node?: {
-          id: string;
-          objState: ObjState;
-          createdAt: string;
-          accountName?: string | null;
-          balance?: string | null;
-          accountOpenedDate?: Record<'local' | 'en' | 'np', string> | null;
-          accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
-          closedAt?: string | null;
-          installmentAmount?: string | null;
-          groupName?: string | null;
-          member?: {
-            id: string;
-            name?: Record<'local' | 'en' | 'np', string> | null;
-            code: string;
-            profilePicUrl?: string | null;
-          } | null;
-          product: {
-            id: string;
-            productCode: string;
-            productName: string;
-            nature: NatureOfDepositProduct;
-            interest?: number | null;
-            isMandatorySaving?: boolean | null;
-          };
+      data?: {
+        totalCount: number;
+        pageInfo?: {
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+          startCursor?: string | null;
+          endCursor?: string | null;
         } | null;
-      }> | null;
+        edges?: Array<{
+          node?: {
+            id: string;
+            objState: ObjState;
+            createdAt: string;
+            accountName?: string | null;
+            balance?: string | null;
+            accountOpenedDate?: Record<'local' | 'en' | 'np', string> | null;
+            accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
+            closedAt?: string | null;
+            installmentAmount?: string | null;
+            groupName?: string | null;
+            member?: {
+              id: string;
+              name?: Record<'local' | 'en' | 'np', string> | null;
+              code: string;
+              profilePicUrl?: string | null;
+            } | null;
+            product: {
+              id: string;
+              productCode: string;
+              productName: string;
+              nature: NatureOfDepositProduct;
+              interest?: number | null;
+              isMandatorySaving?: boolean | null;
+            };
+          } | null;
+        }> | null;
+      } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type GetAccountTableListMinimalExportQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+  isExportPDF?: InputMaybe<Scalars['Boolean']>;
+  isExportExcel?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type GetAccountTableListMinimalExportQuery = {
+  account: {
+    list?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | null;
+      success?: { message: string; code: number } | null;
     } | null;
   };
 };
@@ -35419,7 +35484,7 @@ export type ListDownloadCentreReportsQuery = {
         cursor?: string | null;
         node?: {
           id?: string | null;
-          createdAt?: Record<'local' | 'en' | 'np', string> | null;
+          createdAt?: string | null;
           userId?: string | null;
           title?: string | null;
           url?: string | null;
@@ -38781,36 +38846,66 @@ export type GetLoanListQueryVariables = Exact<{
 export type GetLoanListQuery = {
   loanAccount: {
     list?: {
-      totalCount: number;
-      edges?: Array<{
-        cursor: string;
-        node?: {
-          id: string;
-          appliedLoanAmount: string;
-          totalSanctionedAmount?: string | null;
-          branchId?: string | null;
-          branchName?: string | null;
-          LoanAccountName?: string | null;
-          createdAt: string;
-          closedDate?: Record<'local' | 'en' | 'np', string> | null;
-          appliedDate?: Record<'local' | 'en' | 'np', string> | null;
-          approvedDate?: Record<'local' | 'en' | 'np', string> | null;
-          groupName?: string | null;
-          member: {
+      data?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
             id: string;
-            name?: Record<'local' | 'en' | 'np', string> | null;
-            code: string;
-            profilePicUrl?: string | null;
-          };
-          product: { productName: string };
+            appliedLoanAmount: string;
+            totalSanctionedAmount?: string | null;
+            branchId?: string | null;
+            branchName?: string | null;
+            LoanAccountName?: string | null;
+            createdAt: string;
+            closedDate?: Record<'local' | 'en' | 'np', string> | null;
+            appliedDate?: Record<'local' | 'en' | 'np', string> | null;
+            approvedDate?: Record<'local' | 'en' | 'np', string> | null;
+            groupName?: string | null;
+            member: {
+              id: string;
+              name?: Record<'local' | 'en' | 'np', string> | null;
+              code: string;
+              profilePicUrl?: string | null;
+            };
+            product: { productName: string };
+          } | null;
+        }> | null;
+        pageInfo?: {
+          endCursor?: string | null;
+          startCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
         } | null;
-      }> | null;
-      pageInfo?: {
-        endCursor?: string | null;
-        startCursor?: string | null;
-        hasNextPage: boolean;
-        hasPreviousPage: boolean;
       } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | null;
+      success?: { message: string; code: number } | null;
+    } | null;
+  };
+};
+
+export type GetLoanListExportQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+  isExportPDF?: InputMaybe<Scalars['Boolean']>;
+  isExportExcel?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type GetLoanListExportQuery = {
+  loanAccount: {
+    list?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | null;
+      success?: { message: string; code: number } | null;
     } | null;
   };
 };
@@ -38960,7 +39055,9 @@ export type GetMemberLoanAccountSearchQueryVariables = Exact<{
 export type GetMemberLoanAccountSearchQuery = {
   loanAccount: {
     list?: {
-      edges?: Array<{ node?: { id: string; LoanAccountName?: string | null } | null }> | null;
+      data?: {
+        edges?: Array<{ node?: { id: string; LoanAccountName?: string | null } | null }> | null;
+      } | null;
     } | null;
   };
 };
@@ -39562,35 +39659,64 @@ export type GetMemberListQueryVariables = Exact<{
 export type GetMemberListQuery = {
   members: {
     list: {
-      totalCount: number;
-      edges?: Array<{
-        cursor: string;
-        node: {
-          id: string;
-          name?: Record<'local' | 'en' | 'np', string> | null;
-          code: string;
-          type: KymMemberTypesEnum;
-          branch?: string | null;
-          profilePicUrl?: string | null;
-          signaturePicUrl?: string | null;
-          contact?: string | null;
-          createdAt: string;
-          dateJoined?: Record<'local' | 'en' | 'np', string> | null;
-          activeDate?: Record<'local' | 'en' | 'np', string> | null;
-          inactiveDate?: Record<'local' | 'en' | 'np', string> | null;
-          gender?: string | null;
-          age?: number | null;
-          maritalStatus?: string | null;
-          address?: {
-            state?: Record<'local' | 'en' | 'np', string> | null;
-            district?: Record<'local' | 'en' | 'np', string> | null;
-            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
-            wardNo?: string | null;
-            locality?: Record<'local' | 'en' | 'np', string> | null;
-          } | null;
-        };
-      } | null> | null;
-      pageInfo?: PaginationFragment | null;
+      data?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node: {
+            id: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            code: string;
+            type: KymMemberTypesEnum;
+            branch?: string | null;
+            profilePicUrl?: string | null;
+            signaturePicUrl?: string | null;
+            contact?: string | null;
+            createdAt: string;
+            dateJoined?: Record<'local' | 'en' | 'np', string> | null;
+            activeDate?: Record<'local' | 'en' | 'np', string> | null;
+            inactiveDate?: Record<'local' | 'en' | 'np', string> | null;
+            gender?: string | null;
+            age?: number | null;
+            maritalStatus?: string | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+            } | null;
+          };
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | null;
+    };
+  };
+};
+
+export type GetMemberListExportQueryVariables = Exact<{
+  pagination: Pagination;
+  filter?: InputMaybe<Filter>;
+  isExportPDF?: InputMaybe<Scalars['Boolean']>;
+  isExportExcel?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type GetMemberListExportQuery = {
+  members: {
+    list: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | null;
+      success?: { message: string; code: number } | null;
     };
   };
 };
@@ -60395,29 +60521,31 @@ export const GetAccountMemberListDocument = `
     query getAccountMemberList($filter: Filter, $pagination: Pagination) {
   members {
     list(pagination: $pagination, filter: $filter) {
-      totalCount
-      edges {
-        node {
-          id
-          name
-          code
-          type
-          address {
-            state
-            district
-            localGovernment
-            wardNo
-            locality
+      data {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            code
+            type
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+            }
+            contact
+            createdAt
+            dateJoined
           }
-          contact
-          createdAt
-          dateJoined
+          cursor
         }
-        cursor
-      }
-      pageInfo {
-        startCursor
-        endCursor
+        pageInfo {
+          startCursor
+          endCursor
+        }
       }
     }
   }
@@ -60687,85 +60815,94 @@ export const GetAccountTableListDocument = `
     query getAccountTableList($paginate: Pagination, $filter: Filter) {
   account {
     list(paginate: $paginate, filter: $filter) {
-      totalCount
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
-      edges {
-        node {
-          id
-          objState
-          createdAt
-          accountName
-          modifiedAt
-          installmentAmount
-          balance
-          availableBalance
-          accountOpenedDate
-          lastTransactionDate
-          accountExpiryDate
-          closedAt
-          member {
+      data {
+        edges {
+          node {
             id
-            name
-            profilePicUrl
-            profilePic
-            signaturePicUrl
-            address {
-              state
-              district
-              localGovernment
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
+            objState
+            createdAt
+            accountName
+            modifiedAt
+            installmentAmount
+            balance
+            availableBalance
+            accountOpenedDate
+            lastTransactionDate
+            accountExpiryDate
+            closedAt
+            member {
+              id
+              name
+              profilePicUrl
+              profilePic
+              signaturePicUrl
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
               }
+              contact
+              dateJoined
             }
-            contact
-            dateJoined
-          }
-          overDrawnBalance
-          guaranteedAmount
-          interestAccured
-          interestTax
-          product {
-            id
-            productCode
-            productName
-            nature
-            minimumBalance
-            isMandatorySaving
-            withdrawRestricted
-            accountClosingCharge {
-              serviceName
-              ledgerName
-              amount
+            overDrawnBalance
+            guaranteedAmount
+            interestAccured
+            interestTax
+            product {
+              id
+              productCode
+              productName
+              nature
+              minimumBalance
+              isMandatorySaving
+              withdrawRestricted
+              accountClosingCharge {
+                serviceName
+                ledgerName
+                amount
+              }
+              withdrawPenalty {
+                penaltyLedgerMapping
+                penaltyAmount
+                penaltyRate
+              }
+              interest
             }
-            withdrawPenalty {
-              penaltyLedgerMapping
-              penaltyAmount
-              penaltyRate
+            dues {
+              fine
+              totalDue
+              dueInstallments
             }
-            interest
+            prematurePenalty
+            installmentAmount
           }
-          dues {
-            fine
-            totalDue
-            dueInstallments
-          }
-          prematurePenalty
-          installmentAmount
         }
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+      }
+      error {
+        ...MutationError
+      }
+      success {
+        message
+        code
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useGetAccountTableListQuery = <TData = GetAccountTableListQuery, TError = unknown>(
   variables?: GetAccountTableListQueryVariables,
   options?: UseQueryOptions<GetAccountTableListQuery, TError, TData>
@@ -60781,45 +60918,50 @@ export const GetAccountTableListMinimalDocument = `
     query getAccountTableListMinimal($paginate: Pagination, $filter: Filter) {
   account {
     list(paginate: $paginate, filter: $filter) {
-      totalCount
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
-      edges {
-        node {
-          id
-          objState
-          createdAt
-          accountName
-          balance
-          accountOpenedDate
-          accountExpiryDate
-          closedAt
-          member {
-            id
-            name
-            code
-            profilePicUrl
-          }
-          product {
-            id
-            productCode
-            productName
-            nature
-            interest
-            isMandatorySaving
-          }
-          installmentAmount
-          groupName
+      data {
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
         }
+        edges {
+          node {
+            id
+            objState
+            createdAt
+            accountName
+            balance
+            accountOpenedDate
+            accountExpiryDate
+            closedAt
+            member {
+              id
+              name
+              code
+              profilePicUrl
+            }
+            product {
+              id
+              productCode
+              productName
+              nature
+              interest
+              isMandatorySaving
+            }
+            installmentAmount
+            groupName
+          }
+        }
+      }
+      error {
+        ...MutationError
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useGetAccountTableListMinimalQuery = <
   TData = GetAccountTableListMinimalQuery,
   TError = unknown
@@ -60833,6 +60975,42 @@ export const useGetAccountTableListMinimalQuery = <
       : ['getAccountTableListMinimal', variables],
     useAxios<GetAccountTableListMinimalQuery, GetAccountTableListMinimalQueryVariables>(
       GetAccountTableListMinimalDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountTableListMinimalExportDocument = `
+    query getAccountTableListMinimalExport($paginate: Pagination, $filter: Filter, $isExportPDF: Boolean, $isExportExcel: Boolean) {
+  account {
+    list(
+      paginate: $paginate
+      filter: $filter
+      isExportPDF: $isExportPDF
+      isExportExcel: $isExportExcel
+    ) {
+      error {
+        ...MutationError
+      }
+      success {
+        message
+        code
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetAccountTableListMinimalExportQuery = <
+  TData = GetAccountTableListMinimalExportQuery,
+  TError = unknown
+>(
+  variables?: GetAccountTableListMinimalExportQueryVariables,
+  options?: UseQueryOptions<GetAccountTableListMinimalExportQuery, TError, TData>
+) =>
+  useQuery<GetAccountTableListMinimalExportQuery, TError, TData>(
+    variables === undefined
+      ? ['getAccountTableListMinimalExport']
+      : ['getAccountTableListMinimalExport', variables],
+    useAxios<GetAccountTableListMinimalExportQuery, GetAccountTableListMinimalExportQueryVariables>(
+      GetAccountTableListMinimalExportDocument
     ).bind(null, variables),
     options
   );
@@ -68852,42 +69030,51 @@ export const GetLoanListDocument = `
     query getLoanList($paginate: Pagination, $filter: Filter) {
   loanAccount {
     list(paginate: $paginate, filter: $filter) {
-      totalCount
-      edges {
-        cursor
-        node {
-          id
-          appliedLoanAmount
-          totalSanctionedAmount
-          member {
+      data {
+        totalCount
+        edges {
+          cursor
+          node {
             id
-            name
-            code
-            profilePicUrl
+            appliedLoanAmount
+            totalSanctionedAmount
+            member {
+              id
+              name
+              code
+              profilePicUrl
+            }
+            product {
+              productName
+            }
+            branchId
+            branchName
+            LoanAccountName
+            createdAt
+            closedDate
+            appliedDate
+            approvedDate
+            groupName
           }
-          product {
-            productName
-          }
-          branchId
-          branchName
-          LoanAccountName
-          createdAt
-          closedDate
-          appliedDate
-          approvedDate
-          groupName
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
+          hasPreviousPage
         }
       }
-      pageInfo {
-        endCursor
-        startCursor
-        hasNextPage
-        hasPreviousPage
+      error {
+        ...MutationError
+      }
+      success {
+        message
+        code
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useGetLoanListQuery = <TData = GetLoanListQuery, TError = unknown>(
   variables?: GetLoanListQueryVariables,
   options?: UseQueryOptions<GetLoanListQuery, TError, TData>
@@ -68898,6 +69085,37 @@ export const useGetLoanListQuery = <TData = GetLoanListQuery, TError = unknown>(
       null,
       variables
     ),
+    options
+  );
+export const GetLoanListExportDocument = `
+    query getLoanListExport($paginate: Pagination, $filter: Filter, $isExportPDF: Boolean, $isExportExcel: Boolean) {
+  loanAccount {
+    list(
+      paginate: $paginate
+      filter: $filter
+      isExportExcel: $isExportExcel
+      isExportPDF: $isExportPDF
+    ) {
+      error {
+        ...MutationError
+      }
+      success {
+        message
+        code
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetLoanListExportQuery = <TData = GetLoanListExportQuery, TError = unknown>(
+  variables?: GetLoanListExportQueryVariables,
+  options?: UseQueryOptions<GetLoanListExportQuery, TError, TData>
+) =>
+  useQuery<GetLoanListExportQuery, TError, TData>(
+    variables === undefined ? ['getLoanListExport'] : ['getLoanListExport', variables],
+    useAxios<GetLoanListExportQuery, GetLoanListExportQueryVariables>(
+      GetLoanListExportDocument
+    ).bind(null, variables),
     options
   );
 export const GetLoanInstallmentsDocument = `
@@ -69070,10 +69288,12 @@ export const GetMemberLoanAccountSearchDocument = `
     query getMemberLoanAccountSearch($filter: Filter, $pagination: Pagination) {
   loanAccount {
     list(filter: $filter, paginate: $pagination) {
-      edges {
-        node {
-          id
-          LoanAccountName
+      data {
+        edges {
+          node {
+            id
+            LoanAccountName
+          }
         }
       }
     }
@@ -69886,41 +70106,47 @@ export const GetMemberListDocument = `
     query getMemberList($pagination: Pagination!, $filter: Filter) {
   members {
     list(pagination: $pagination, filter: $filter) {
-      totalCount
-      edges {
-        node {
-          id
-          name
-          code
-          type
-          branch
-          address {
-            state
-            district
-            localGovernment
-            wardNo
-            locality
+      data {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            code
+            type
+            branch
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+            }
+            profilePicUrl
+            signaturePicUrl
+            contact
+            createdAt
+            dateJoined
+            activeDate
+            inactiveDate
+            gender
+            age
+            maritalStatus
           }
-          profilePicUrl
-          signaturePicUrl
-          contact
-          createdAt
-          dateJoined
-          activeDate
-          inactiveDate
-          gender
-          age
-          maritalStatus
+          cursor
         }
-        cursor
+        pageInfo {
+          ...Pagination
+        }
       }
-      pageInfo {
-        ...Pagination
+      error {
+        ...MutationError
       }
     }
   }
 }
-    ${PaginationFragmentDoc}`;
+    ${PaginationFragmentDoc}
+${MutationErrorFragmentDoc}`;
 export const useGetMemberListQuery = <TData = GetMemberListQuery, TError = unknown>(
   variables: GetMemberListQueryVariables,
   options?: UseQueryOptions<GetMemberListQuery, TError, TData>
@@ -69931,6 +70157,37 @@ export const useGetMemberListQuery = <TData = GetMemberListQuery, TError = unkno
       null,
       variables
     ),
+    options
+  );
+export const GetMemberListExportDocument = `
+    query getMemberListExport($pagination: Pagination!, $filter: Filter, $isExportPDF: Boolean, $isExportExcel: Boolean) {
+  members {
+    list(
+      pagination: $pagination
+      filter: $filter
+      isExportExcel: $isExportExcel
+      isExportPDF: $isExportPDF
+    ) {
+      error {
+        ...MutationError
+      }
+      success {
+        message
+        code
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetMemberListExportQuery = <TData = GetMemberListExportQuery, TError = unknown>(
+  variables: GetMemberListExportQueryVariables,
+  options?: UseQueryOptions<GetMemberListExportQuery, TError, TData>
+) =>
+  useQuery<GetMemberListExportQuery, TError, TData>(
+    ['getMemberListExport', variables],
+    useAxios<GetMemberListExportQuery, GetMemberListExportQueryVariables>(
+      GetMemberListExportDocument
+    ).bind(null, variables),
     options
   );
 export const GetMemberTypesDocument = `

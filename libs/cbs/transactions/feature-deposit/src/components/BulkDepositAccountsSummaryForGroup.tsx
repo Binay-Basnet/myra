@@ -55,7 +55,7 @@ export const BulkDepositAccountsSummaryForGroup = ({ groupId }: { groupId: strin
   return (
     <Box bg="background.500" p="s16" display="flex" flexDirection="column" gap="s10">
       {accounts?.map((accountInfo) => {
-        const filteredAccount = accountListData?.account?.list?.edges?.find(
+        const filteredAccount = accountListData?.account?.list?.data?.edges?.find(
           (accountData) => accountData.node?.id === accountInfo?.accountId
         )?.node;
 

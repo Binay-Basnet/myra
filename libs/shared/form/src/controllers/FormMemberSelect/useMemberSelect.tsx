@@ -136,7 +136,7 @@ export const useMemberSelect = ({
     }
   );
 
-  const memberListData = memberList?.members?.list?.edges;
+  const memberListData = memberList?.members?.list?.data?.edges;
 
   const memberOptions: Option[] =
     memberListData?.reduce((prevVal, curVal) => {

@@ -18,7 +18,7 @@ export const OverviewDetailPage = () => {
     pagination: getPaginationQuery(),
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.members?.list?.data?.edges ?? [], [data]);
 
   const popoverTitle = [
     {

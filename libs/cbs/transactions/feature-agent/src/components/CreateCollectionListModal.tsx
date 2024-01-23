@@ -373,7 +373,7 @@ const AccountSelectCell = ({ memberId, index }: { memberId: string; index: numbe
   const options = useMemo(
     () =>
       memberId
-        ? accountListData?.account?.list?.edges?.map((acc) => ({
+        ? accountListData?.account?.list?.data?.edges?.map((acc) => ({
             label: `${acc?.node?.accountName} [${acc?.node?.id}]`,
             value: acc?.node?.id as string,
           }))

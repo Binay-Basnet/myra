@@ -222,38 +222,71 @@ query getCollateralList {
 query getLoanList($paginate: Pagination, $filter: Filter) {
   loanAccount {
     list(paginate: $paginate, filter: $filter) {
-      totalCount
-      edges {
-        cursor
-        node {
-          id
-          appliedLoanAmount
-          totalSanctionedAmount
-          member {
+      data {
+        totalCount
+        edges {
+          cursor
+          node {
             id
-            name
-            code
-            profilePicUrl
-          }
-          product {
-            productName
-          }
-          branchId
-          branchName
+            appliedLoanAmount
+            totalSanctionedAmount
+            member {
+              id
+              name
+              code
+              profilePicUrl
+            }
+            product {
+              productName
+            }
+            branchId
+            branchName
 
-          LoanAccountName
-          createdAt
-          closedDate
-          appliedDate
-          approvedDate
-          groupName
+            LoanAccountName
+            createdAt
+            closedDate
+            appliedDate
+            approvedDate
+            groupName
+          }
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
+          hasPreviousPage
         }
       }
-      pageInfo {
-        endCursor
-        startCursor
-        hasNextPage
-        hasPreviousPage
+      error {
+        ...MutationError
+      }
+      success {
+        message
+        code
+      }
+    }
+  }
+}
+
+query getLoanListExport(
+  $paginate: Pagination
+  $filter: Filter
+  $isExportPDF: Boolean
+  $isExportExcel: Boolean
+) {
+  loanAccount {
+    list(
+      paginate: $paginate
+      filter: $filter
+      isExportExcel: $isExportExcel
+      isExportPDF: $isExportPDF
+    ) {
+      error {
+        ...MutationError
+      }
+      success {
+        message
+        code
       }
     }
   }
@@ -399,10 +432,12 @@ query getMemberLoanAccounts($memberId: ID!, $groupId: ID) {
 query getMemberLoanAccountSearch($filter: Filter, $pagination: Pagination) {
   loanAccount {
     list(filter: $filter, paginate: $pagination) {
-      edges {
-        node {
-          id
-          LoanAccountName
+      data {
+        edges {
+          node {
+            id
+            LoanAccountName
+          }
         }
       }
     }

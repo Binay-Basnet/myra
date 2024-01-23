@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiFillCheckCircle } from 'react-icons/ai';
+import { IoMdPrint } from 'react-icons/io';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
@@ -52,7 +53,6 @@ import {
   LoanProductCard,
 } from '../components';
 import { useLoanDetails } from '../hooks/useLoanDetails';
-import { IoMdPrint } from 'react-icons/io';
 
 const paymentModes = [
   {
@@ -137,7 +137,7 @@ export const CBSLoanDisburseSuccess = () => {
     onAfterPrint: () => {},
     documentTitle: `${router.query?.['id']}.pdf`,
   });
-  
+
   return (
     <Container minW="container.lg" p="0" bg="white" pt="3.125rem">
       <Box display="flex" flexDirection="column" gap="s32" p="s16" minH="calc(100vh - 220px)">
@@ -159,13 +159,13 @@ export const CBSLoanDisburseSuccess = () => {
           mainButtonLabel="Done"
           mainButtonHandler={() => router.push(ROUTES.CBS_LOAN_ACCOUNTS_LIST)}
           draftButton={
-              <Button onClick={handlePrint} variant="ghost" shade="neutral">
-                <Icon as={IoMdPrint} />
-                <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
-                  Print
-                </Text>
-              </Button>
-            }
+            <Button onClick={handlePrint} variant="ghost" shade="neutral">
+              <Icon as={IoMdPrint} />
+              <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
+                Print
+              </Text>
+            </Button>
+          }
         />
       </Box>
       <LoanApplicationPrintContent ref={printComponentRef} />
