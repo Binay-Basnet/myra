@@ -1256,6 +1256,7 @@ export type AgentMutation = {
   agentTodayDeposit?: Maybe<AgentTodayListResult>;
   agentTodayList?: Maybe<AgentTodayListResult>;
   deleteAgentMember: DeleteAgentMemberResult;
+  deleteSubmissionListCollected: DeleteSubmissionListCollected;
   deleteTodayTask: RemoveTodayTaskResult;
   editRejectedTodayList: AgentTodayListResult;
   modifyPreviousData: DataModificationResult;
@@ -1303,6 +1304,10 @@ export type AgentMutationAgentTodayListArgs = {
 export type AgentMutationDeleteAgentMemberArgs = {
   id: Scalars['ID'];
   memberid: Scalars['ID'];
+};
+
+export type AgentMutationDeleteSubmissionListCollectedArgs = {
+  id: Scalars['ID'];
 };
 
 export type AgentMutationDeleteTodayTaskArgs = {
@@ -5110,6 +5115,24 @@ export type DailyBalanceReportResult = {
   error?: Maybe<QueryError>;
 };
 
+export type DailyVoucherSummarInput = {
+  branchId: Array<Scalars['String']>;
+  period: LocalizedDateFilter;
+  transactionNature: TransactionNature;
+  userIds?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type DailyVoucherSummaryReportData = {
+  headData?: Maybe<Array<HeadData>>;
+  totalCrBalance: Scalars['String'];
+  totalDrBalance: Scalars['String'];
+};
+
+export type DailyVoucherSummaryReportResult = {
+  data?: Maybe<DailyVoucherSummaryReportData>;
+  error?: Maybe<QueryError>;
+};
+
 export type DashboardInfo = {
   branchInfo?: Maybe<BranchInfo>;
   coopInfo?: Maybe<MyCoopInfo>;
@@ -5641,6 +5664,7 @@ export type DepositLoanAccountMutation = {
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
   issueFDCertificate: Scalars['String'];
   makeActive?: Maybe<Scalars['String']>;
+  setMultipleAccountInterest: InterestSetupMutationResult;
   updateAccountInterest: InterestSetupMutationResult;
   updateAccountName?: Maybe<SavingsTenureUpdateResult>;
   updateInstallmentAmount?: Maybe<SavingsTenureUpdateResult>;
@@ -5676,6 +5700,11 @@ export type DepositLoanAccountMutationIssueFdCertificateArgs = {
 
 export type DepositLoanAccountMutationMakeActiveArgs = {
   accountID: Scalars['ID'];
+};
+
+export type DepositLoanAccountMutationSetMultipleAccountInterestArgs = {
+  accountId: Array<Scalars['ID']>;
+  data: InterestRateSetupInput;
 };
 
 export type DepositLoanAccountMutationUpdateAccountInterestArgs = {
@@ -6269,6 +6298,7 @@ export type DepositRecord = {
   from?: Maybe<InstallmentDate>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
+  newAmount?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<DepositPaymentType>;
   rebate?: Maybe<Scalars['String']>;
   to?: Maybe<InstallmentDate>;
@@ -6290,6 +6320,7 @@ export type DepositReport = {
   savingAccruedInterestReport: SavingAccruedInterestResult;
   savingProductBalanceReport: SavingProductBalanceResult;
   savingStatementReport?: Maybe<ReportResult>;
+  spreadRateReport: SpreadRateReportResult;
   suspiciousTransctionReport?: Maybe<SuspiciousTransactionReportResult>;
   thresholdTransactionReport: TtrReportResult;
 };
@@ -6344,6 +6375,10 @@ export type DepositReportSavingProductBalanceReportArgs = {
 
 export type DepositReportSavingStatementReportArgs = {
   data: SavingStatementReportSettings;
+};
+
+export type DepositReportSpreadRateReportArgs = {
+  data: SpreadRateReportInput;
 };
 
 export type DepositReportSuspiciousTransctionReportArgs = {
@@ -8201,6 +8236,7 @@ export type FianancialTransactionReport = {
   bankGLStatementReport: BankGlStatementResult;
   charKhataReport: TrialSheetReportResult;
   dailyBalanceReport: DailyBalanceReportResult;
+  dailyVoucherSummaryReport: DailyVoucherSummaryReportResult;
   dayBookReport: DayBookReportResult;
   fiscalTrialSheetReport: TrialSheetReportResult;
   journerVoucherReport: JournalVoucherReportOutput;
@@ -8241,6 +8277,10 @@ export type FianancialTransactionReportCharKhataReportArgs = {
 
 export type FianancialTransactionReportDailyBalanceReportArgs = {
   data: DailyBalanceReport;
+};
+
+export type FianancialTransactionReportDailyVoucherSummaryReportArgs = {
+  data: DailyVoucherSummarInput;
 };
 
 export type FianancialTransactionReportDayBookReportArgs = {
@@ -10482,6 +10522,13 @@ export type HcmPayrollTaxSlabQueryGetTaxSlabArgs = {
 export type HcmPayrollTaxSlabQueryListTaxSlabArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type HeadData = {
+  coaCode: Scalars['String'];
+  coaHeadName: Scalars['String'];
+  crAmount: Scalars['String'];
+  drAmount: Scalars['String'];
 };
 
 export type HrEmployeeAttendanceMutation = {
@@ -14224,6 +14271,7 @@ export type LedgerBalanceTransferRequestResult = {
   data?: Maybe<Array<Maybe<LedgerBalanceEntry>>>;
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['ID']>;
+  totalCurrentBalance: BalanceValue;
   totalLedgerAccounts: Scalars['String'];
   totalTransferBalance: BalanceValue;
 };
@@ -14729,6 +14777,7 @@ export type LoanAccountMutation = {
   loanProvision?: Maybe<LoanProvisionResult>;
   makeActive?: Maybe<MutationResult>;
   repayment?: Maybe<LoanRepaymentResult>;
+  setAccountInterest: InterestSetupMutationResult;
   updateAccountInterest: InterestSetupMutationResult;
   updateLinkedAccount?: Maybe<LoanAccountResult>;
 };
@@ -14774,6 +14823,11 @@ export type LoanAccountMutationMakeActiveArgs = {
 
 export type LoanAccountMutationRepaymentArgs = {
   data?: InputMaybe<LoanRepaymentInput>;
+};
+
+export type LoanAccountMutationSetAccountInterestArgs = {
+  accountId: Array<Scalars['ID']>;
+  data: InterestRateSetupInput;
 };
 
 export type LoanAccountMutationUpdateAccountInterestArgs = {
@@ -18512,6 +18566,10 @@ export type MrTransactionEntry = {
   mrName?: Maybe<Scalars['String']>;
 };
 
+export type MrTransactionFilterMapping = {
+  userId: Array<LabelValueArray>;
+};
+
 export type MrTransactionListConnection = {
   edges?: Maybe<Array<Maybe<MrTransactionListEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -20254,6 +20312,7 @@ export const Resource = {
   CbsWithdrawSlipsWithdrawSlipsRequests: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_REQUESTS',
   CollectionList: 'COLLECTION_LIST',
   CreateCollectionList: 'CREATE_COLLECTION_LIST',
+  DeleteCollectionList: 'DELETE_COLLECTION_LIST',
   FundManagement: 'FUND_MANAGEMENT',
   HcmEmployee: 'HCM_EMPLOYEE',
   HcmEmployeeAttendance: 'HCM_EMPLOYEE_ATTENDANCE',
@@ -20365,6 +20424,7 @@ export const Resource = {
   ReportsTxnCashLedger: 'REPORTS_TXN_CASH_LEDGER',
   ReportsTxnCharkhataLedgerReport: 'REPORTS_TXN_CHARKHATA_LEDGER_REPORT',
   ReportsTxnDailyBalance: 'REPORTS_TXN_DAILY_BALANCE',
+  ReportsTxnDailyVoucherSummary: 'REPORTS_TXN_DAILY_VOUCHER_SUMMARY',
   ReportsTxnDaybook: 'REPORTS_TXN_DAYBOOK',
   ReportsTxnFiscalYearEndAdjustmentTrialBalance:
     'REPORTS_TXN_FISCAL_YEAR_END_ADJUSTMENT_TRIAL_BALANCE',
@@ -23195,6 +23255,39 @@ export const SourceOfHire = {
 } as const;
 
 export type SourceOfHire = typeof SourceOfHire[keyof typeof SourceOfHire];
+export type SpreadRateMetaDetail = {
+  prodInterest?: Maybe<Scalars['String']>;
+  totalAvgBalance?: Maybe<Scalars['String']>;
+  totalEffectiveRate?: Maybe<Scalars['String']>;
+  totalWeight?: Maybe<Scalars['String']>;
+};
+
+export type SpreadRateReportData = {
+  meta?: Maybe<SpreadRateMetaDetail>;
+  record?: Maybe<Array<Maybe<SpreadRateRowData>>>;
+};
+
+export type SpreadRateReportInput = {
+  branchId: Array<Scalars['String']>;
+  period: LocalizedDateFilter;
+};
+
+export type SpreadRateReportResult = {
+  error?: Maybe<QueryError>;
+  loanData?: Maybe<SpreadRateReportData>;
+  savingData?: Maybe<SpreadRateReportData>;
+  spreadRate?: Maybe<Scalars['String']>;
+};
+
+export type SpreadRateRowData = {
+  averageBalance?: Maybe<Scalars['String']>;
+  effectiveRate?: Maybe<Scalars['String']>;
+  interestRate?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
+  weight?: Maybe<Scalars['String']>;
+};
+
 export type StaffPlanInput = {
   branchId?: InputMaybe<Scalars['String']>;
   date: LocalizedDateFilter;
@@ -23951,6 +24044,7 @@ export type TransactionFilterMapping = {
   agent?: Maybe<AgentFilterMapping>;
   allTransaction?: Maybe<AllTransactionFilterMapping>;
   deposit?: Maybe<DepositFilterMapping>;
+  mrTransaction?: Maybe<MrTransactionFilterMapping>;
   transfer?: Maybe<TransferFilterMapping>;
   withdraw?: Maybe<WithdrawFilterMapping>;
 };
@@ -24230,6 +24324,7 @@ export type TransferData = {
   date?: Maybe<Scalars['Localized']>;
   fine?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
+  newAmount?: Maybe<Scalars['String']>;
   payeeNumber?: Maybe<Scalars['String']>;
   receiverAccountId?: Maybe<Scalars['String']>;
   receiverAccountName?: Maybe<Scalars['String']>;
@@ -25191,6 +25286,7 @@ export type WithdrawRecord = {
   fine?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
+  newAmount?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<Scalars['String']>;
   slipNo?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['String']>;
@@ -25433,6 +25529,11 @@ export type DeleteCollectionResult = {
   error?: Maybe<MutationError>;
 };
 
+export type DeleteSubmissionListCollected = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type DepartTransferDetails = {
   id?: Maybe<Scalars['ID']>;
   transferredDate?: Maybe<Scalars['Localized']>;
@@ -25520,6 +25621,7 @@ export type ListCollectionTemplateOutput = {
   FineToBeCollected?: Maybe<Scalars['String']>;
   accountId: Scalars['ID'];
   accountName: Scalars['String'];
+  installementAmount?: Maybe<Scalars['String']>;
   memberCode: Scalars['String'];
   memberID: Scalars['ID'];
   memberName: Scalars['String'];
