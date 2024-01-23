@@ -23257,6 +23257,9 @@ export const SourceOfHire = {
 export type SourceOfHire = typeof SourceOfHire[keyof typeof SourceOfHire];
 export type SpreadRateMetaDetail = {
   prodInterest?: Maybe<Scalars['String']>;
+  totalAvgBalance?: Maybe<Scalars['String']>;
+  totalEffectiveRate?: Maybe<Scalars['String']>;
+  totalWeight?: Maybe<Scalars['String']>;
 };
 
 export type SpreadRateReportData = {
@@ -26267,102 +26270,6 @@ export type PrintSlipMutation = {
   withdrawSlip: {
     printSlip?: {
       recordId: string;
-      error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | MutationError_ValidationError_Fragment
-        | null;
-    } | null;
-  };
-};
-
-export type SetAgentTodayListDataMutationVariables = Exact<{
-  id: Scalars['ID'];
-  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>> | InputMaybe<AgentTodayListInput>>;
-}>;
-
-export type SetAgentTodayListDataMutation = {
-  agent: {
-    agentTodayList?: {
-      error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | MutationError_ValidationError_Fragment
-        | null;
-    } | null;
-  };
-};
-
-export type SetAgentTodayDepositDataMutationVariables = Exact<{
-  id: Scalars['ID'];
-  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>> | InputMaybe<AgentTodayListInput>>;
-}>;
-
-export type SetAgentTodayDepositDataMutation = {
-  agent: {
-    agentTodayDeposit?: {
-      error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | MutationError_ValidationError_Fragment
-        | null;
-    } | null;
-  };
-};
-
-export type RemoveMemberAccountAgentMutationVariables = Exact<{
-  accountId: Scalars['ID'];
-  agentID: Scalars['ID'];
-}>;
-
-export type RemoveMemberAccountAgentMutation = {
-  agent: {
-    removeMemberAccountAgent?: {
-      recordId?: string | null;
-      error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | MutationError_ValidationError_Fragment
-        | null;
-    } | null;
-  };
-};
-
-export type AgentTodayCollectionMutationVariables = Exact<{
-  agentId: Scalars['ID'];
-  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>> | InputMaybe<AgentTodayListInput>>;
-}>;
-
-export type AgentTodayCollectionMutation = {
-  agent: {
-    agentTodayCollection?: {
-      error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | MutationError_ValidationError_Fragment
-        | null;
-    } | null;
-  };
-};
-
-export type SetAgentTemplateMutationVariables = Exact<{
-  agentId: Scalars['ID'];
-  data?: InputMaybe<Array<InputMaybe<AgentTemplateInput>> | InputMaybe<AgentTemplateInput>>;
-}>;
-
-export type SetAgentTemplateMutation = {
-  agent: {
-    agentTemplate?: {
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -34290,44 +34197,6 @@ export type GetAgentDetailDataQuery = {
   };
 };
 
-export type GetAgentAssignedMemberListDataQueryVariables = Exact<{
-  filter?: InputMaybe<Filter>;
-  pagination?: InputMaybe<Pagination>;
-}>;
-
-export type GetAgentAssignedMemberListDataQuery = {
-  agent: {
-    assignedMemberList: {
-      totalCount: number;
-      edges?: Array<{
-        cursor: string;
-        node?: {
-          id: string;
-          assignedDate?: Record<'local' | 'en' | 'np', string> | null;
-          member?: {
-            id: string;
-            name?: Record<'local' | 'en' | 'np', string> | null;
-            code: string;
-          } | null;
-          account?: {
-            id: string;
-            accountName?: string | null;
-            installmentAmount?: string | null;
-            dues?: { totalDue?: string | null; fine?: string | null } | null;
-          } | null;
-          product?: { productName: string } | null;
-        } | null;
-      } | null> | null;
-      pageInfo?: {
-        hasNextPage: boolean;
-        hasPreviousPage: boolean;
-        startCursor?: string | null;
-        endCursor?: string | null;
-      } | null;
-    };
-  };
-};
-
 export type GetAgentTodayListDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -34364,30 +34233,6 @@ export type GetAgentTodayListDataQuery = {
   };
 };
 
-export type AgentTransactionDetailQueryVariables = Exact<{
-  agentId: Scalars['ID'];
-  date: Scalars['String'];
-}>;
-
-export type AgentTransactionDetailQuery = {
-  agent: {
-    viewAgentList?: {
-      data?: {
-        transactionId: string;
-        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
-        status: string;
-        totalAmount?: string | null;
-        assignedMember?: Array<{
-          transactionId?: string | null;
-          member?: string | null;
-          account?: string | null;
-          amount?: string | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  };
-};
-
 export type GetAgentDetailQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -34401,35 +34246,6 @@ export type GetAgentDetailQuery = {
         branch?: string | null;
         totalMembers?: number | null;
         profilePicUrl?: string | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type ListAgentCollectionQueryVariables = Exact<{
-  filter?: InputMaybe<Filter>;
-  pagination?: InputMaybe<Pagination>;
-}>;
-
-export type ListAgentCollectionQuery = {
-  agent: {
-    listAgentCollection?: {
-      totalCount: number;
-      edges?: Array<{
-        cursor: string;
-        node?: {
-          id: string;
-          mrId: string;
-          mrName: string;
-          date: Record<'local' | 'en' | 'np', string>;
-          amount: string;
-        } | null;
-      } | null> | null;
-      pageInfo?: {
-        hasNextPage: boolean;
-        hasPreviousPage: boolean;
-        startCursor?: string | null;
-        endCursor?: string | null;
       } | null;
     } | null;
   };
@@ -52025,155 +51841,6 @@ export const usePrintSlipMutation = <TError = unknown, TContext = unknown>(
     useAxios<PrintSlipMutation, PrintSlipMutationVariables>(PrintSlipDocument),
     options
   );
-export const SetAgentTodayListDataDocument = `
-    mutation setAgentTodayListData($id: ID!, $data: [AgentTodayListInput]) {
-  agent {
-    agentTodayList(id: $id, data: $data) {
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useSetAgentTodayListDataMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    SetAgentTodayListDataMutation,
-    TError,
-    SetAgentTodayListDataMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    SetAgentTodayListDataMutation,
-    TError,
-    SetAgentTodayListDataMutationVariables,
-    TContext
-  >(
-    ['setAgentTodayListData'],
-    useAxios<SetAgentTodayListDataMutation, SetAgentTodayListDataMutationVariables>(
-      SetAgentTodayListDataDocument
-    ),
-    options
-  );
-export const SetAgentTodayDepositDataDocument = `
-    mutation setAgentTodayDepositData($id: ID!, $data: [AgentTodayListInput]) {
-  agent {
-    agentTodayDeposit(agentID: $id, data: $data) {
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useSetAgentTodayDepositDataMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    SetAgentTodayDepositDataMutation,
-    TError,
-    SetAgentTodayDepositDataMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    SetAgentTodayDepositDataMutation,
-    TError,
-    SetAgentTodayDepositDataMutationVariables,
-    TContext
-  >(
-    ['setAgentTodayDepositData'],
-    useAxios<SetAgentTodayDepositDataMutation, SetAgentTodayDepositDataMutationVariables>(
-      SetAgentTodayDepositDataDocument
-    ),
-    options
-  );
-export const RemoveMemberAccountAgentDocument = `
-    mutation removeMemberAccountAgent($accountId: ID!, $agentID: ID!) {
-  agent {
-    removeMemberAccountAgent(accountId: $accountId, agentID: $agentID) {
-      recordId
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useRemoveMemberAccountAgentMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    RemoveMemberAccountAgentMutation,
-    TError,
-    RemoveMemberAccountAgentMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    RemoveMemberAccountAgentMutation,
-    TError,
-    RemoveMemberAccountAgentMutationVariables,
-    TContext
-  >(
-    ['removeMemberAccountAgent'],
-    useAxios<RemoveMemberAccountAgentMutation, RemoveMemberAccountAgentMutationVariables>(
-      RemoveMemberAccountAgentDocument
-    ),
-    options
-  );
-export const AgentTodayCollectionDocument = `
-    mutation agentTodayCollection($agentId: ID!, $data: [AgentTodayListInput]) {
-  agent {
-    agentTodayCollection(agentId: $agentId, data: $data) {
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useAgentTodayCollectionMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    AgentTodayCollectionMutation,
-    TError,
-    AgentTodayCollectionMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    AgentTodayCollectionMutation,
-    TError,
-    AgentTodayCollectionMutationVariables,
-    TContext
-  >(
-    ['agentTodayCollection'],
-    useAxios<AgentTodayCollectionMutation, AgentTodayCollectionMutationVariables>(
-      AgentTodayCollectionDocument
-    ),
-    options
-  );
-export const SetAgentTemplateDocument = `
-    mutation setAgentTemplate($agentId: ID!, $data: [AgentTemplateInput]) {
-  agent {
-    agentTemplate(agentId: $agentId, data: $data) {
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useSetAgentTemplateMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    SetAgentTemplateMutation,
-    TError,
-    SetAgentTemplateMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<SetAgentTemplateMutation, TError, SetAgentTemplateMutationVariables, TContext>(
-    ['setAgentTemplate'],
-    useAxios<SetAgentTemplateMutation, SetAgentTemplateMutationVariables>(SetAgentTemplateDocument),
-    options
-  );
 export const AddAgentMemberDocument = `
     mutation addAgentMember($id: ID!, $memberId: ID!, $override: Boolean) {
   agent {
@@ -63306,61 +62973,6 @@ export const useGetAgentDetailDataQuery = <TData = GetAgentDetailDataQuery, TErr
     ).bind(null, variables),
     options
   );
-export const GetAgentAssignedMemberListDataDocument = `
-    query getAgentAssignedMemberListData($filter: Filter, $pagination: Pagination) {
-  agent {
-    assignedMemberList(filter: $filter, pagination: $pagination) {
-      totalCount
-      edges {
-        node {
-          id
-          member {
-            id
-            name
-            code
-          }
-          account {
-            id
-            accountName
-            dues {
-              totalDue
-              fine
-            }
-            installmentAmount
-          }
-          product {
-            productName
-          }
-          assignedDate
-        }
-        cursor
-      }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
-    }
-  }
-}
-    `;
-export const useGetAgentAssignedMemberListDataQuery = <
-  TData = GetAgentAssignedMemberListDataQuery,
-  TError = unknown
->(
-  variables?: GetAgentAssignedMemberListDataQueryVariables,
-  options?: UseQueryOptions<GetAgentAssignedMemberListDataQuery, TError, TData>
-) =>
-  useQuery<GetAgentAssignedMemberListDataQuery, TError, TData>(
-    variables === undefined
-      ? ['getAgentAssignedMemberListData']
-      : ['getAgentAssignedMemberListData', variables],
-    useAxios<GetAgentAssignedMemberListDataQuery, GetAgentAssignedMemberListDataQueryVariables>(
-      GetAgentAssignedMemberListDataDocument
-    ).bind(null, variables),
-    options
-  );
 export const GetAgentTodayListDataDocument = `
     query getAgentTodayListData($id: ID!) {
   agent {
@@ -63405,40 +63017,6 @@ export const useGetAgentTodayListDataQuery = <TData = GetAgentTodayListDataQuery
     ).bind(null, variables),
     options
   );
-export const AgentTransactionDetailDocument = `
-    query agentTransactionDetail($agentId: ID!, $date: String!) {
-  agent {
-    viewAgentList(agentId: $agentId, date: $date) {
-      data {
-        transactionId
-        transactionDate
-        status
-        totalAmount
-        assignedMember {
-          transactionId
-          member
-          account
-          amount
-        }
-      }
-    }
-  }
-}
-    `;
-export const useAgentTransactionDetailQuery = <
-  TData = AgentTransactionDetailQuery,
-  TError = unknown
->(
-  variables: AgentTransactionDetailQueryVariables,
-  options?: UseQueryOptions<AgentTransactionDetailQuery, TError, TData>
-) =>
-  useQuery<AgentTransactionDetailQuery, TError, TData>(
-    ['agentTransactionDetail', variables],
-    useAxios<AgentTransactionDetailQuery, AgentTransactionDetailQueryVariables>(
-      AgentTransactionDetailDocument
-    ).bind(null, variables),
-    options
-  );
 export const GetAgentDetailDocument = `
     query getAgentDetail($id: ID!) {
   agent {
@@ -63464,42 +63042,6 @@ export const useGetAgentDetailQuery = <TData = GetAgentDetailQuery, TError = unk
       null,
       variables
     ),
-    options
-  );
-export const ListAgentCollectionDocument = `
-    query listAgentCollection($filter: Filter, $pagination: Pagination) {
-  agent {
-    listAgentCollection(filter: $filter, pagination: $pagination) {
-      totalCount
-      edges {
-        node {
-          id
-          mrId
-          mrName
-          date
-          amount
-        }
-        cursor
-      }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
-    }
-  }
-}
-    `;
-export const useListAgentCollectionQuery = <TData = ListAgentCollectionQuery, TError = unknown>(
-  variables?: ListAgentCollectionQueryVariables,
-  options?: UseQueryOptions<ListAgentCollectionQuery, TError, TData>
-) =>
-  useQuery<ListAgentCollectionQuery, TError, TData>(
-    variables === undefined ? ['listAgentCollection'] : ['listAgentCollection', variables],
-    useAxios<ListAgentCollectionQuery, ListAgentCollectionQueryVariables>(
-      ListAgentCollectionDocument
-    ).bind(null, variables),
     options
   );
 export const ListAgentTemplateDocument = `

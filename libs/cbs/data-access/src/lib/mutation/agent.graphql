@@ -9,56 +9,56 @@
 #   }
 # }
 
-mutation setAgentTodayListData($id: ID!, $data: [AgentTodayListInput]) {
-  agent {
-    agentTodayList(id: $id, data: $data) {
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
+# mutation setAgentTodayListData($id: ID!, $data: [AgentTodayListInput]) {
+#   agent {
+#     agentTodayList(id: $id, data: $data) {
+#       error {
+#         ...MutationError
+#       }
+#     }
+#   }
+# }
 
-mutation setAgentTodayDepositData($id: ID!, $data: [AgentTodayListInput]) {
-  agent {
-    agentTodayDeposit(agentID: $id, data: $data) {
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
+# mutation setAgentTodayDepositData($id: ID!, $data: [AgentTodayListInput]) {
+#   agent {
+#     agentTodayDeposit(agentID: $id, data: $data) {
+#       error {
+#         ...MutationError
+#       }
+#     }
+#   }
+# }
 
-mutation removeMemberAccountAgent($accountId: ID!, $agentID: ID!) {
-  agent {
-    removeMemberAccountAgent(accountId: $accountId, agentID: $agentID) {
-      recordId
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
+# mutation removeMemberAccountAgent($accountId: ID!, $agentID: ID!) {
+#   agent {
+#     removeMemberAccountAgent(accountId: $accountId, agentID: $agentID) {
+#       recordId
+#       error {
+#         ...MutationError
+#       }
+#     }
+#   }
+# }
 
-mutation agentTodayCollection($agentId: ID!, $data: [AgentTodayListInput]) {
-  agent {
-    agentTodayCollection(agentId: $agentId, data: $data) {
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
+# mutation agentTodayCollection($agentId: ID!, $data: [AgentTodayListInput]) {
+#   agent {
+#     agentTodayCollection(agentId: $agentId, data: $data) {
+#       error {
+#         ...MutationError
+#       }
+#     }
+#   }
+# }
 
-mutation setAgentTemplate($agentId: ID!, $data: [AgentTemplateInput]) {
-  agent {
-    agentTemplate(agentId: $agentId, data: $data) {
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
+# mutation setAgentTemplate($agentId: ID!, $data: [AgentTemplateInput]) {
+#   agent {
+#     agentTemplate(agentId: $agentId, data: $data) {
+#       error {
+#         ...MutationError
+#       }
+#     }
+#   }
+# }
 
 mutation addAgentMember($id: ID!, $memberId: ID!, $override: Boolean) {
   agent {
