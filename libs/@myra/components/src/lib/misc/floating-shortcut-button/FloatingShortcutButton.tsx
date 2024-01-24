@@ -32,7 +32,6 @@ const whatsNewData = {
     title: 'New Features',
     data: [
       'Download center added in the member register report,  member list, saving account list, and loan account list.',
-      'Spread Rate Report',
       'Summary Voucher Report.',
       'IBT approval allowed for the Branch Manager',
       'Search in the withdraw slip section. ( slip book, requests, block slip requests.)',
