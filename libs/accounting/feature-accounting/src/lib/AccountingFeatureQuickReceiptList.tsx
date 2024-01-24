@@ -22,7 +22,7 @@ export const AccountingFeatureQuickReceiptList = () => {
     pagination: getPaginationQuery(),
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.members?.list?.data?.edges ?? [], [data]);
 
   const popoverTitle = [
     {
@@ -117,8 +117,8 @@ export const AccountingFeatureQuickReceiptList = () => {
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members?.list?.pageInfo,
+          total: data?.members?.list?.data?.totalCount ?? 'Many',
+          pageInfo: data?.members?.list?.data?.pageInfo,
         }}
       />
     </>

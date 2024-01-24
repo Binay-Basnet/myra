@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
 import {
   Modal,
   ModalBody,
@@ -23,9 +22,6 @@ import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 export const ChequeDetailPage = () => {
   const { t } = useTranslation();
   const methods = useForm({});
-
-  const router = useRouter();
-
   const [openModal, setOpenModal] = useState(false);
 
   // const onOpenModal = () => {
@@ -40,7 +36,7 @@ export const ChequeDetailPage = () => {
     pagination: getPaginationQuery(),
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.members?.list?.data?.edges ?? [], [data]);
 
   const popoverTitle = [
     {

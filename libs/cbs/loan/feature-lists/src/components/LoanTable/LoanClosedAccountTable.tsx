@@ -30,7 +30,7 @@ export const LoanClosedAccountTable = ({
   const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
 
   const rowData = useMemo<LoanAccountEdge[]>(
-    () => (data?.loanAccount?.list?.edges as LoanAccountEdge[]) ?? [],
+    () => (data?.loanAccount?.list?.data?.edges as LoanAccountEdge[]) ?? [],
     [data]
   );
 
@@ -154,8 +154,8 @@ export const LoanClosedAccountTable = ({
       columns={columns}
       rowOnClick={(row) => router.push(`${viewLink}?id=${row?.node?.id}`)}
       pagination={{
-        total: data?.loanAccount?.list?.totalCount ?? 'Many',
-        pageInfo: data?.loanAccount?.list?.pageInfo,
+        total: data?.loanAccount?.list?.data?.totalCount ?? 'Many',
+        pageInfo: data?.loanAccount?.list?.data?.pageInfo,
       }}
     />
   );

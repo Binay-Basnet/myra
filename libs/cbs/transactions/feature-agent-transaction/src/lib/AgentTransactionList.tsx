@@ -4,7 +4,12 @@ import { useRouter } from 'next/router';
 import { Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Arrange, TodayListStatus, useListMrSubmissionListQuery } from '@coop/cbs/data-access';
+import {
+  Arrange,
+  TodayListStatus,
+  useGetMrTransactionFilterMappingQuery,
+  useListMrSubmissionListQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
@@ -31,20 +36,15 @@ export const AgentTransactionList = () => {
           },
         },
     filter: {
-      ...getFilterQuery(),
-      orConditions: [
-        {
-          andConditions: [
-            {
-              column: 'status',
-              comparator: 'IN',
-              value: [TodayListStatus.Completed, TodayListStatus.Failed, TodayListStatus.Pending],
-            },
-          ],
+      ...getFilterQuery({
+        status: {
+          compare: '=',
+          value: [TodayListStatus.Completed, TodayListStatus.Failed, TodayListStatus.Pending],
         },
-      ],
+      }),
     },
   });
+  const { data: mrTransactionFilterData } = useGetMrTransactionFilterMappingQuery();
 
   const rowData = useMemo(() => data?.agent?.listMRSubmissionList?.edges ?? [], [data]);
 
@@ -56,14 +56,24 @@ export const AgentTransactionList = () => {
         accessorFn: (row) => row?.node?.submissionDate?.local,
         cell: (props) => localizedDate(props?.row?.original?.node?.submissionDate),
         enableSorting: true,
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'MR Transaction ID',
         accessorFn: (row) => row?.node?.mrId,
       },
       {
+        id: 'userId',
         accessorFn: (row) => row?.node?.mrName,
         header: 'Market Representative Name',
+        enableColumnFilter: true,
+        meta: {
+          // orderId: 'mrName',
+          filterMaps: {
+            list: mrTransactionFilterData?.transaction?.filterMapping?.mrTransaction?.userId || [],
+          },
+        },
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Text
@@ -125,7 +135,7 @@ export const AgentTransactionList = () => {
         },
       },
     ],
-    [t]
+    [t, mrTransactionFilterData?.transaction?.filterMapping?.mrTransaction?.userId]
   );
 
   return (

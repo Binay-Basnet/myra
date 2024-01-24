@@ -143,7 +143,7 @@ export const BulkDepositAccountsTableForGroup = ({ groupId }: IBulkDepositAccoun
   useEffect(() => {
     const temp: string[] = [];
 
-    accountListData?.account?.list?.edges?.forEach((account) => {
+    accountListData?.account?.list?.data?.edges?.forEach((account) => {
       if (
         account?.node?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
         (account?.node?.product?.nature === NatureOfDepositProduct.Saving &&
@@ -155,7 +155,7 @@ export const BulkDepositAccountsTableForGroup = ({ groupId }: IBulkDepositAccoun
 
     setInstallmentAccountIds(temp);
   }, [accountListData]);
-  const filteredAccountValues = accountListData?.account?.list?.edges?.filter(
+  const filteredAccountValues = accountListData?.account?.list?.data?.edges?.filter(
     (d) => d?.node?.product?.nature !== NatureOfDepositProduct?.TermSavingOrFd
   );
   useDeepCompareEffect(() => {
@@ -187,7 +187,7 @@ export const BulkDepositAccountsTableForGroup = ({ groupId }: IBulkDepositAccoun
 
   const accountListSearchOptions = useMemo(
     () =>
-      accountListData?.account?.list?.edges?.map((account) => ({
+      accountListData?.account?.list?.data?.edges?.map((account) => ({
         label: account?.node?.product?.productName as string,
         value: account?.node?.id as string,
       })) ?? [],
@@ -206,7 +206,7 @@ export const BulkDepositAccountsTableForGroup = ({ groupId }: IBulkDepositAccoun
           fieldType: 'select',
           selectOptions: accountListSearchOptions,
           cell: (row) => {
-            const accountInfo = accountListData?.account?.list?.edges?.find(
+            const accountInfo = accountListData?.account?.list?.data?.edges?.find(
               (account) => account?.node?.id === row.accountId
             )?.node;
             return (

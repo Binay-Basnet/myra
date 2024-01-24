@@ -210,7 +210,7 @@ const BankGlStatementInputs = () => {
             andConditions: [
               {
                 column: 'branchId',
-                comparator: 'EqualTo',
+                comparator: 'IN',
                 value: branchesArray,
               },
             ],

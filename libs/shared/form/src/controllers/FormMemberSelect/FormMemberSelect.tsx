@@ -176,7 +176,7 @@ export const FormMemberSelect = ({
     }
   );
 
-  const memberListData = memberList?.members?.list?.edges;
+  const memberListData = memberList?.members?.list?.data?.edges;
 
   const { data: groupMembersData, isFetching: isGroupMemberFetching } = useListGroupMemberQuery(
     {

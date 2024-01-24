@@ -6,7 +6,9 @@ query listDownloadCentreReports($filter: Filter, $pagination: Pagination) {
         node {
           id
           createdAt
+          createdAtLocalized
           userId
+          userName
           title
           url
           fileType

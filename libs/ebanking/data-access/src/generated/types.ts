@@ -2620,6 +2620,7 @@ export type UtilityQuery = {
   listCashBack: UtilitiesChargesConnection;
   listServiceType: ServiceTypeResult;
   listUtilities: UtilitiesListConnection;
+  listWalletLoaderUtility?: Maybe<Array<WalletUtility>>;
 };
 
 export type UtilityQueryGetCashBackChargesArgs = {
@@ -2657,6 +2658,12 @@ export type UtilityResponseResult = {
 export type ValidationError = {
   code: Scalars['Int'];
   message: Scalars['InvalidData'];
+};
+
+export type WalletUtility = {
+  name: Scalars['String'];
+  operatorCode: Scalars['String'];
+  slug: Scalars['String'];
 };
 
 export type WithdrawPenaltyFormState = {
@@ -4105,6 +4112,16 @@ export type ListNeaOfficeQueryVariables = Exact<{
 export type ListNeaOfficeQuery = {
   eBanking: {
     utility: { getNeaOffice?: Array<{ officeCode: string; office: string } | null> | null };
+  };
+};
+
+export type ListWalletServicesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListWalletServicesQuery = {
+  eBanking: {
+    utility: {
+      listWalletLoaderUtility?: Array<{ name: string; slug: string; operatorCode: string }> | null;
+    };
   };
 };
 

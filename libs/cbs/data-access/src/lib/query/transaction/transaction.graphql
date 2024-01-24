@@ -356,6 +356,7 @@ query loanRepaymentDetail($paymentId: ID!) {
         groupId
         centerName
         centerId
+        destinationAccount
       }
     }
   }
@@ -848,6 +849,19 @@ query getMrTransactionsList($filter: Filter, $pagination: Pagination) {
         hasPreviousPage
         startCursor
         endCursor
+      }
+    }
+  }
+}
+
+query getMRTransactionFilterMapping {
+  transaction {
+    filterMapping {
+      mrTransaction {
+        userId {
+          label
+          value
+        }
       }
     }
   }

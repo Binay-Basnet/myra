@@ -23,6 +23,7 @@ import {
 } from '@myra-ui';
 
 import {
+  NatureOfDepositProduct,
   ObjState,
   useAddAgentTodayListMutation,
   useGetAccountTableListQuery,
@@ -59,10 +60,14 @@ type TodaysList = {
   accounts: AccountsEntry[];
 };
 
-const getAmountToCollect = (dueAmount: number, dueFine: number, installmentAmount: number) => {
-  if (!dueAmount) {
-    return '';
-  }
+export const getAmountToCollect = (
+  dueAmount: number,
+  dueFine: number,
+  installmentAmount: number
+) => {
+  // if (!dueAmount) {
+  //   return '';
+  // }
 
   if (!installmentAmount) {
     if (dueFine) {
@@ -219,6 +224,7 @@ export const AgentDetailOverview = () => {
             accountName: acc?.accountName,
             amountToBeCollected: acc?.AmountToBeCollected,
             fineToBeCollected: acc?.FineToBeCollected,
+            installmentAmount: acc?.installementAmount,
           })) as AccountsEntry[]
         );
 
@@ -665,6 +671,15 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
                 comparator: 'EqualTo',
                 value: memberId,
               },
+              {
+                column: 'nature',
+                comparator: 'IN',
+                value: [
+                  NatureOfDepositProduct.Saving,
+                  NatureOfDepositProduct.Current,
+                  NatureOfDepositProduct.RecurringSaving,
+                ],
+              },
             ],
           },
         ],
@@ -673,7 +688,10 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
     { enabled: !!memberId }
   );
 
-  const accountList = useMemo(() => accountListData?.account?.list?.edges ?? [], [accountListData]);
+  const accountList = useMemo(
+    () => accountListData?.account?.list?.data?.edges ?? [],
+    [accountListData]
+  );
 
   const accountOptions = useMemo(
     () =>

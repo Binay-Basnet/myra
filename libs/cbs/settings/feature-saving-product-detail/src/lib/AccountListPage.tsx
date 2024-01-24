@@ -40,7 +40,7 @@ export const AccountListPage = () => {
       ],
     },
   });
-  const rowData = useMemo(() => data?.account?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.account?.list?.data?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -117,8 +117,8 @@ export const AccountListPage = () => {
             data={rowData}
             columns={columns}
             pagination={{
-              total: data?.account?.list?.totalCount ?? 'Many',
-              pageInfo: data?.account?.list?.pageInfo,
+              total: data?.account?.list?.data?.totalCount ?? 'Many',
+              pageInfo: data?.account?.list?.data?.pageInfo,
             }}
           />
         </Box>

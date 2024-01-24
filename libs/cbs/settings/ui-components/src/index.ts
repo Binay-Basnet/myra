@@ -3,6 +3,7 @@ export * from './lib/PenaltyDetailModal';
 export * from './lib/SettingsCard';
 export * from './lib/UpdateCloseChargeDetailModal';
 export * from './lib/UpdateCloseChargesModal';
+export * from './lib/UpdateMultipleInterestRateModal';
 export * from './lib/UpdateOpenChargesDetailModal';
 export * from './lib/UpdateOpenChargesModal';
 export * from './lib/UpdatePenaltyModal';

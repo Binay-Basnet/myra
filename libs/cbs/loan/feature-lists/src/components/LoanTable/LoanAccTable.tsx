@@ -19,16 +19,27 @@ interface ILoanAccTable {
   isLoading: boolean;
   type: LoanObjState;
   viewLink: string;
+  canExport?: boolean;
+  handleExportCSV?: () => void;
+  handleExportPDF?: () => void;
 }
 
-export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable) => {
+export const LoanAccTable = ({
+  data,
+  isLoading,
+  type,
+  viewLink,
+  canExport,
+  handleExportCSV,
+  handleExportPDF,
+}: ILoanAccTable) => {
   const router = useRouter();
 
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
   const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
 
   const rowData = useMemo<LoanAccountEdge[]>(
-    () => (data?.loanAccount?.list?.edges as LoanAccountEdge[]) ?? [],
+    () => (data?.loanAccount?.list?.data?.edges as LoanAccountEdge[]) ?? [],
     [data]
   );
 
@@ -187,9 +198,12 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
       columns={columns}
       rowOnClick={(row) => router.push(`${viewLink}?id=${row?.node?.id}`)}
       pagination={{
-        total: data?.loanAccount?.list?.totalCount ?? 'Many',
-        pageInfo: data?.loanAccount?.list?.pageInfo,
+        total: data?.loanAccount?.list?.data?.totalCount ?? 'Many',
+        pageInfo: data?.loanAccount?.list?.data?.pageInfo,
       }}
+      canExport={canExport}
+      handleExportPDF={handleExportPDF}
+      handleExportCSV={handleExportCSV}
     />
   );
 };

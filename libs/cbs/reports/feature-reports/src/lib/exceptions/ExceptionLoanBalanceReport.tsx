@@ -93,7 +93,7 @@ export const ExceptionLoanBalanceReport = () => {
             />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormCBSDatePicker name="period.from" label="Date" />
+            <FormCBSDatePicker name="period.from" label="Date" setInitialDate />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

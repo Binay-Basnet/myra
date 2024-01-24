@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Box, GridItem, Text, toast } from '@myra-ui';
@@ -357,6 +357,8 @@ export const MemberRegisterReport = () => {
 
 const ReportHeaderWatch = () => {
   const [triggerExport, setTriggerExport] = useState(false);
+  const [isExportPDF, setIsExportPDF] = useState(false);
+  const [isExportExcel, setIsExportExcel] = useState(false);
   const methods = useFormContext();
 
   const values = methods?.getValues();
@@ -366,32 +368,31 @@ const ReportHeaderWatch = () => {
       ? values?.['branchId']?.map((t) => t.value)
       : null;
 
-  const { data: memberRegistrationReportData, isFetching } =
-    useGetMemberRegistrationReportForExportQuery(
-      {
-        data: {
-          period: values?.['period'] as LocalizedDateFilter,
-          branchId: branchIds,
-          filter: {
-            isExport: true,
-          },
+  useGetMemberRegistrationReportForExportQuery(
+    {
+      data: {
+        period: values?.['period'] as LocalizedDateFilter,
+        branchId: branchIds,
+        filter: {
+          isExportPDF,
+          isExportExcel,
         },
       },
-      { enabled: triggerExport, onSettled: () => setTriggerExport(false) }
-    );
-
-  const exportData =
-    memberRegistrationReportData?.report?.memberReport?.memberRegistrationReport?.success;
-
-  useEffect(() => {
-    if (exportData?.message) {
-      toast({
-        id: 'export',
-        type: 'success',
-        message: exportData?.message,
-      });
+    },
+    {
+      enabled: triggerExport,
+      staleTime: 0,
+      onSettled: () => setTriggerExport(false),
+      onSuccess: (res) => {
+        setTriggerExport(false);
+        toast({
+          id: 'export',
+          type: 'success',
+          message: res?.report?.memberReport?.memberRegistrationReport?.success?.message as string,
+        });
+      },
     }
-  }, [isFetching]);
+  );
 
   return (
     <Report.PageHeader
@@ -399,7 +400,17 @@ const ReportHeaderWatch = () => {
         { label: 'Member Reports', link: '/cbs/reports/cbs-reports/members' },
         { label: 'Member Register', link: '/cbs/reports/cbs-reports/members/register/new' },
       ]}
-      onExport={() => setTriggerExport(true)}
+      canExport
+      onExportPDF={() => {
+        setTriggerExport(true);
+        setIsExportPDF(true);
+        setIsExportExcel(false);
+      }}
+      onExportCSV={() => {
+        setTriggerExport(true);
+        setIsExportPDF(false);
+        setIsExportExcel(true);
+      }}
     />
   );
 };

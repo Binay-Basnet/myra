@@ -1,6 +1,6 @@
 import { FormSection, GridItem } from '@myra-ui';
 
-import { FormAmountInput, FormBankSelect, FormDatePicker, FormInput } from '@coop/shared/form';
+import { FormAmountInput, FormBankSelect, FormCBSDatePicker, FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 type PurchaseProps = {
@@ -36,7 +36,7 @@ export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
       </GridItem>
 
       <GridItem colSpan={1}>
-        <FormDatePicker
+        <FormCBSDatePicker
           isRequired
           name="bankVoucher.depositedDate"
           label={t['sharePurchaseDepositedDate']}

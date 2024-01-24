@@ -404,6 +404,7 @@ export const NewAccountTransfer = () => {
 
                   'Transfer Amount': amountConverter(result?.amount || 0) as string,
                   Fine: String(amountConverter(result?.fine || 0)),
+                  'Actual Balance': amountConverter(result?.newAmount || 0),
                 },
                 subTitle:
                   'Amount transferred successfully. Details of the transaction is listed below',

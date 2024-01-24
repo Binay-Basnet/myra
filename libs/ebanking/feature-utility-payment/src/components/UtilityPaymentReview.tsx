@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useRouter } from 'next/router';
+import { AiOutlinePlus } from 'react-icons/ai';
 
-import { Box, Button, Grid } from '@myra-ui';
+import { Box, Button, Grid, Icon, Text } from '@myra-ui';
 
-import { ResultModal, TransactionHeaderCardWithChip } from '@coop/ebanking/cards';
+import { InfoCard } from '@coop/ebanking/cards';
 import {
   useGetAccountListQuery,
   useGetCashBackChargesQuery,
@@ -16,45 +16,40 @@ import {
   CardContent,
   CardHeader,
 } from '@coop/ebanking/ui-layout';
+import { FormPasswordInput } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'pending';
 
-interface MobileTopupResultProps {
-  paymentStatus: 'success' | 'failure' | 'pending';
-  setPaymentStatus: React.Dispatch<React.SetStateAction<PaymentStatus>>;
-  mutationMsg: string;
+interface UtilityPaymentReviewProps {
   handleMakePayment: () => Promise<void>;
+  setPaymentStatus: React.Dispatch<React.SetStateAction<PaymentStatus>>;
   schema: Utility;
   currentSequence: number;
   response: Record<number, Record<string, string> | null | undefined>;
-  transactionCode: string;
 }
 
-export const InternetPaymentResult = ({
-  paymentStatus,
-  setPaymentStatus,
-  mutationMsg,
+export const UtilityPaymentReview = ({
   handleMakePayment,
+  setPaymentStatus,
   schema,
   currentSequence,
   response,
-  transactionCode,
-}: MobileTopupResultProps) => {
-  const router = useRouter();
-  const methods = useFormContext();
+}: UtilityPaymentReviewProps) => {
+  const [isReviewed, setIsReviewed] = useState(false);
 
-  const { data: accountData } = useGetAccountListQuery({
-    transactionPagination: { after: '', first: 1 },
-  });
-  const accounts = accountData?.eBanking?.account?.list?.accounts?.map((account) => ({
+  const { getValues, handleSubmit, setValue, watch } = useFormContext();
+
+  const { data } = useGetAccountListQuery({ transactionPagination: { after: '', first: 1 } });
+
+  const accounts = data?.eBanking?.account?.list?.accounts?.map((account) => ({
     label: `${account?.name} - ${account?.accountNumber}`,
     value: account?.id as string,
   }));
 
-  const values = methods.getValues();
+  const values = getValues();
 
-  const amount = methods.watch('amount');
+  const amount = watch('amount');
 
   const { data: cashBackData } = useGetCashBackChargesQuery(
     {
@@ -78,48 +73,33 @@ export const InternetPaymentResult = ({
 
   return (
     <>
-      <ResultModal
-        status={paymentStatus}
-        title={
-          paymentStatus === 'failure'
-            ? 'Payment Failed'
-            : paymentStatus === 'pending'
-            ? 'Payment Pending'
-            : 'Payment Successful'
+      <InfoCard
+        title="Payment Review"
+        btn={
+          <Button variant="ghost" gap="s4">
+            <Icon as={AiOutlinePlus} color="primary.500" />
+            Schedule for later
+          </Button>
         }
-        description={mutationMsg}
-      />
-      <Box display="flex" flexDir="column" bg="white" borderRadius="br2" overflow="hidden">
-        <TransactionHeaderCardWithChip
-          chipText={
-            paymentStatus === 'failure'
-              ? 'Payment Failed'
-              : paymentStatus === 'pending'
-              ? 'Payment Pending'
-              : 'Payment Successful'
-          }
-          status={paymentStatus}
-        />
-
+      >
         <CardContainer>
           <CardBodyContainer>
-            <CardHeader>Transaction Details</CardHeader>
-
-            {paymentStatus !== 'failure' && (
-              <CardContent title="Transaction Code" subtitle={transactionCode} />
-            )}
-
+            <CardHeader>Payment Details (NPR)</CardHeader>
             <CardContent
               title="Source Account"
               subtitle={
-                accounts?.find((account) => account.value === methods?.getValues().sourceAccount)
+                accounts?.find((account) => account.value === getValues().sourceAccount)
                   ?.label as string
               }
             />
 
-            <Grid templateColumns="repeat(3, 1fr)">
+            <Grid templateColumns="repeat(3, 1fr)" gap="s16">
               {schema?.sequence[Number(schema?.totalProcessingSequence) - 1]?.requiredFields?.map(
                 (field) => {
+                  if (!field?.fieldLabel) {
+                    return null;
+                  }
+
                   let displayValue = values[field?.fieldName as string];
 
                   if (field?.fieldType === 'OPTION') {
@@ -156,40 +136,65 @@ export const InternetPaymentResult = ({
             </Grid>
           </CardBodyContainer>
 
-          {paymentStatus === 'failure' ? (
+          {!isReviewed && (
             <Box display="flex" gap="s16">
-              <Button w="100px" shade="danger" onClick={handleMakePayment}>
-                Retry
+              <Button w="100px" onClick={() => setIsReviewed(true)}>
+                Proceed
               </Button>
               <Button
                 variant="outline"
-                colorScheme="gray"
+                colorScheme="white"
                 w="100px"
                 cursor="pointer"
                 onClick={() => {
-                  setPaymentStatus('review');
+                  setPaymentStatus('form');
                 }}
               >
-                Go Back
-              </Button>
-            </Box>
-          ) : (
-            <Box display="flex" gap="s16">
-              <Button
-                w="100px"
-                onClick={() => {
-                  router.push('/home');
-                }}
-              >
-                Done
-              </Button>
-              <Button variant="outline" colorScheme="gray" w="100px" cursor="pointer">
-                Save
+                Edit
               </Button>
             </Box>
           )}
         </CardContainer>
-      </Box>
+      </InfoCard>
+
+      {isReviewed && (
+        <Box bg="white" borderRadius="br2">
+          <CardContainer>
+            <CardBodyContainer>
+              <Grid templateColumns="repeat(2, 1fr)">
+                <Box display="flex" flexDir="column" gap="s4">
+                  <FormPasswordInput
+                    name="txnPin"
+                    label="Enter your Transaction Password"
+                    rules={{ required: 'Transaction Password is required' }}
+                  />
+
+                  <Text fontSize="r1" fontWeight={500} color="primary.500">
+                    Forgot your Password?
+                  </Text>
+                </Box>
+              </Grid>
+            </CardBodyContainer>
+
+            <Box display="flex" gap="s16">
+              <Button w="100px" onClick={handleSubmit(handleMakePayment)}>
+                Submit
+              </Button>
+              <Button
+                variant="outline"
+                colorScheme="white"
+                w="100px"
+                cursor="pointer"
+                onClick={() => {
+                  setValue('txnPin', '');
+                }}
+              >
+                Clear
+              </Button>
+            </Box>
+          </CardContainer>
+        </Box>
+      )}
     </>
   );
 };

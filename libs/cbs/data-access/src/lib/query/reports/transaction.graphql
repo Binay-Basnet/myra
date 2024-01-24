@@ -695,3 +695,24 @@ query getJournalVoucherSummaryReport($data: JournalVoucherReportInput!) {
     }
   }
 }
+
+query getDailyVoucherSummaryReport($data: DailyVoucherSummarInput!) {
+  report {
+    transactionReport {
+      financial {
+        dailyVoucherSummaryReport(data: $data) {
+          data {
+            headData {
+              coaCode
+              coaHeadName
+              drAmount
+              crAmount
+            }
+            totalDrBalance
+            totalCrBalance
+          }
+        }
+      }
+    }
+  }
+}

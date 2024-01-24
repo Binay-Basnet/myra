@@ -139,3 +139,15 @@ query listNeaOffice($vendor: String) {
     }
   }
 }
+
+query listWalletServices {
+  eBanking {
+    utility {
+      listWalletLoaderUtility {
+        name
+        slug
+        operatorCode
+      }
+    }
+  }
+}

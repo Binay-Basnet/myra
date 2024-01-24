@@ -38,10 +38,18 @@ type Path = {
 export interface PathBarProps {
   paths: Path[];
   hasSave?: boolean;
-  onExport?: MouseEventHandler<HTMLDivElement> | undefined;
+  onExportCSV?: MouseEventHandler<HTMLDivElement> | undefined;
+  onExportPDF?: MouseEventHandler<HTMLDivElement> | undefined;
+  canExport?: boolean;
 }
 
-export const ReportHeader = ({ paths, hasSave = false, onExport }: PathBarProps) => {
+export const ReportHeader = ({
+  paths,
+  hasSave = false,
+  canExport,
+  onExportPDF,
+  onExportCSV,
+}: PathBarProps) => {
   const router = useRouter();
   const { printRef, data, report } = useReport();
 
@@ -164,18 +172,34 @@ export const ReportHeader = ({ paths, hasSave = false, onExport }: PathBarProps)
                     Export Visible
                   </Text>
                 </GridItem>
-                {process.env['NX_APP_ENV'] === 'dev' && (
-                  <GridItem
-                    px="s16"
-                    py="s8"
-                    _hover={{ bg: 'gray.100' }}
-                    cursor="pointer"
-                    onClick={onExport}
-                  >
-                    <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                      Export
-                    </Text>
-                  </GridItem>
+                {canExport && (
+                  <>
+                    {process.env['NX_APP_ENV'] === 'dev' && (
+                      <GridItem
+                        px="s16"
+                        py="s8"
+                        _hover={{ bg: 'gray.100' }}
+                        cursor="pointer"
+                        onClick={onExportPDF}
+                      >
+                        <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                          Export PDF
+                        </Text>
+                      </GridItem>
+                    )}
+
+                    <GridItem
+                      px="s16"
+                      py="s8"
+                      _hover={{ bg: 'gray.100' }}
+                      cursor="pointer"
+                      onClick={onExportCSV}
+                    >
+                      <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                        Export CSV
+                      </Text>
+                    </GridItem>
+                  </>
                 )}
               </Grid>
             </PopoverBody>

@@ -3,7 +3,8 @@ import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
-import { asyncToast, Box, Button, Grid, Icon } from '@myra-ui';
+import { asyncToast, Box, Button, Grid, Icon, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { InfoCard } from '@coop/ebanking/cards';
 import { EbankingFormField } from '@coop/ebanking/components';
@@ -12,7 +13,7 @@ import { CardContent } from '@coop/ebanking/ui-layout';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'pending';
 
-interface InternetPaymentFormProps {
+interface UtilityPaymentFormProps {
   currentSequence: number;
   setCurrentSequence: React.Dispatch<React.SetStateAction<number>>;
   schema: Utility;
@@ -22,7 +23,15 @@ interface InternetPaymentFormProps {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const InternetPaymentForm = ({
+const ServiceTitle: Record<string, string> = {
+  electricity: 'Electricity Payment',
+  'internet-payment': 'Internet Payment',
+  'tv-payment': 'TV Payment',
+  'wallet-load': 'Wallet Load',
+  package: 'Package',
+};
+
+export const UtilityPaymentForm = ({
   currentSequence,
   setCurrentSequence,
   schema,
@@ -30,12 +39,12 @@ export const InternetPaymentForm = ({
   setResponse,
   setPaymentStatus,
   setIsLoading,
-}: InternetPaymentFormProps) => {
+}: UtilityPaymentFormProps) => {
   const router = useRouter();
 
-  const methods = useFormContext();
+  const serviceName = router?.asPath?.split('/')?.[2];
 
-  // const [isActionDisabled, setIsActionDisabled] = useState(true);
+  const methods = useFormContext();
 
   const { handleSubmit } = methods;
 
@@ -82,7 +91,7 @@ export const InternetPaymentForm = ({
     });
 
     asyncToast({
-      id: 'utility-internet-payment-process',
+      id: 'utility-payment-process',
       msgs: {
         loading: 'Proccessing',
         success: 'Proceed',
@@ -100,6 +109,7 @@ export const InternetPaymentForm = ({
         const responseData = res?.eBanking?.utility?.useUtility?.data;
 
         setResponse((val) => ({ ...val, [currentSequence]: responseData }));
+
         const responseMapObj: Record<string, string> = {};
 
         currentSequenceObj?.responseFieldMapping?.forEach((field) => {
@@ -117,34 +127,16 @@ export const InternetPaymentForm = ({
         setCurrentSequence((val) => val + 1);
 
         setIsLoading(false);
-        // setPaymentStatus('form');
       },
       onError: () => {
         setIsLoading(false);
-        // setPaymentStatus('form');
       },
     });
   };
 
-  // useEffect(() => {
-  //   const subscription = watch((data) => {
-  //     let temp = false;
-
-  //     currentSequenceObj?.requiredFields?.forEach((field) => {
-  //       if (!data?.[field?.fieldName as string]) {
-  //         temp = true;
-  //       }
-  //     });
-
-  //     setIsActionDisabled(temp);
-  //   });
-
-  //   return () => subscription.unsubscribe();
-  // }, [watch, currentSequenceObj]);
-
   const { data: neaOfficeData } = useListNeaOfficeQuery(
     {},
-    { enabled: router?.asPath?.includes('electricity-payment') }
+    { enabled: router?.asPath?.includes('electricity') }
   );
 
   const neaOfficeList = useMemo(
@@ -158,7 +150,7 @@ export const InternetPaymentForm = ({
 
   return (
     <InfoCard
-      title={router?.asPath?.includes('electricity') ? 'Electricity' : 'Internet Payment'}
+      title={ServiceTitle[serviceName]}
       btn={
         <Button variant="ghost" gap="s4">
           <Icon as={AiOutlinePlus} color="priamry.500" />
@@ -168,13 +160,24 @@ export const InternetPaymentForm = ({
     >
       <Box p="s16" display="flex" flexDir="column" gap="s32">
         <Grid templateColumns="repeat(3, 1fr)" gap="s16">
-          {currentSequenceInfo?.map(
-            (info) =>
-              typeof info.value === 'string' && (
-                <CardContent title={info.label} subtitle={info.value} />
-              )
-          )}
+          {currentSequenceInfo
+            ?.filter((i) => typeof i.value === 'string')
+            ?.map((info) => (
+              <CardContent title={info.label} subtitle={info.value} />
+            ))}
         </Grid>
+
+        {currentSequenceInfo
+          ?.filter((i) => Array.isArray(i.value))
+          ?.map((info) => (
+            <Box display="flex" flexDirection="column" gap="s4">
+              <Text color="gray.800" fontSize="s3" fontWeight="600">
+                {info.label}
+              </Text>
+
+              <CurrentSequenceArrayInfo info={info.value as unknown as Record<string, string>[]} />
+            </Box>
+          ))}
 
         {currentSequenceObj?.requiredFields?.map((field) => {
           if (!field?.fieldLabel) return null;
@@ -189,10 +192,11 @@ export const InternetPaymentForm = ({
             const responseOptions =
               response?.[currentSequence - 1]?.[prevField?.fieldName as string] || [];
 
-            (responseOptions as unknown as [])?.forEach((opt) => {
+            (responseOptions as unknown as [])?.forEach((opt: Record<string, string>) => {
               options?.push({
                 label: opt?.[prevField?.options?.value as string],
                 value: opt?.[prevField?.options?.key as string],
+                ...opt,
               });
             });
           }
@@ -200,10 +204,13 @@ export const InternetPaymentForm = ({
           return (
             <EbankingFormField
               {...field}
-              options={field?.fieldName === 'officeCode' ? neaOfficeList : options}
+              options={
+                field?.fieldName === 'officeCode' && router?.asPath?.includes('electricity')
+                  ? neaOfficeList
+                  : options
+              }
               schema={schema}
               currentSequence={currentSequence}
-              response={response}
             />
           );
         })}
@@ -217,7 +224,6 @@ export const InternetPaymentForm = ({
                 ? () => setPaymentStatus('review')
                 : handleProceed
             )}
-            // isDisabled={isActionDisabled}
           >
             Proceed
           </Button>
@@ -237,4 +243,21 @@ export const InternetPaymentForm = ({
       </Box>
     </InfoCard>
   );
+};
+
+const CurrentSequenceArrayInfo = ({ info }: { info: Record<string, string>[] }) => {
+  const columns = useMemo(() => {
+    const temp: Column<typeof info[0]>[] = [];
+
+    Object.keys(info[0])?.forEach((key) => {
+      temp.push({
+        header: key,
+        accessorKey: key,
+      });
+    });
+
+    return temp;
+  }, [info]);
+
+  return <Table data={info} columns={columns} isStatic isDetailPageTable />;
 };

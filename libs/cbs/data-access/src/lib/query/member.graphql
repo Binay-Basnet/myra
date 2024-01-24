@@ -1,60 +1,67 @@
 query getMemberList($pagination: Pagination!, $filter: Filter) {
   members {
     list(pagination: $pagination, filter: $filter) {
-      totalCount
-      edges {
-        node {
-          id
-          name
-          code
-          type
-          branch
-          address {
-            state
-            district
-            localGovernment
-            wardNo
-            locality
+      data {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            code
+            type
+            branch
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+            }
+
+            profilePicUrl
+            signaturePicUrl
+            contact
+            createdAt
+            dateJoined
+            activeDate
+            inactiveDate
+
+            gender
+            age
+            maritalStatus
           }
-
-          profilePicUrl
-          signaturePicUrl
-          contact
-          createdAt
-          dateJoined
-          activeDate
-          inactiveDate
-
-          gender
-          age
-          maritalStatus
-
-          # profile {
-          #   ... on KymIndFormStateQuery {
-          #     data {
-          #       formData {
-          #         genderId
-          #         # basicInformation {
-          #         #   genderId
-          #         #   gender
-          #         #   age
-          #         # }
-          #         # contactDetails {
-          #         #   mobileNumber
-          #         #   phoneNumber
-          #         #   email
-          #         # }
-          #         # maritalStatusId
-          #         # maritalStatus
-          #       }
-          #     }
-          #   }
-          # }
+          cursor
         }
-        cursor
+        pageInfo {
+          ...Pagination
+        }
       }
-      pageInfo {
-        ...Pagination
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+query getMemberListExport(
+  $pagination: Pagination!
+  $filter: Filter
+  $isExportPDF: Boolean
+  $isExportExcel: Boolean
+) {
+  members {
+    list(
+      pagination: $pagination
+      filter: $filter
+      isExportExcel: $isExportExcel
+      isExportPDF: $isExportPDF
+    ) {
+      error {
+        ...MutationError
+      }
+      success {
+        message
+        code
       }
     }
   }

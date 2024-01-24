@@ -127,7 +127,7 @@ export const GroupAdd = () => {
                 label="Select Member"
                 name="coordinatorId"
                 options={
-                  memberData?.members?.list?.edges?.map((item) => ({
+                  memberData?.members?.list?.data?.edges?.map((item) => ({
                     label: item?.node?.name?.local,
                     value: item?.node?.id,
                   })) as { label: string; value: string }[]
