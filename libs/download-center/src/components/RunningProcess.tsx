@@ -2,15 +2,16 @@ import { useMemo, useState } from 'react';
 import { HiOutlineDownload } from 'react-icons/hi';
 import { IoMdClose } from 'react-icons/io';
 import { ApprovalStatusItem } from 'libs/cbs/requests/feature-lists/src/components/ApprovalStatusItem';
+import isEmpty from 'lodash/isEmpty';
 
-import { Box, Button, Column, Icon, Modal, Table, Text } from '@myra-ui';
+import { Box, Button, Column, Divider, Icon, Modal, Table, Text } from '@myra-ui';
 
 import {
   LeaveStatusEnum,
   useGetElementUrlMutation,
   useListDownloadCentreReportsQuery,
 } from '@coop/cbs/data-access';
-import { readableTimeParser } from '@coop/cbs/utils';
+import { localizedDate } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 const formatDate = (date: Date) => {
@@ -57,6 +58,9 @@ export const RunningProcess = () => {
       {
         header: 'S.N',
         accessorFn: (_, index) => index + 1,
+        meta: {
+          width: '1%',
+        },
       },
       {
         header: 'Process',
@@ -64,7 +68,7 @@ export const RunningProcess = () => {
       },
       {
         header: 'Initiated Date',
-        accessorFn: (row) => readableTimeParser(row?.node?.createdAt as string, true),
+        accessorFn: (row) => localizedDate(row?.node?.createdAtLocalized),
       },
       {
         header: 'File Type',
@@ -122,23 +126,27 @@ export const RunningProcess = () => {
     setRemark('');
   };
 
-  return (
-    <>
-      <Text fontSize="r1">Running Process</Text>
-      <Box h="30vh" overflowY="auto">
-        <Table data={rowData} columns={columns} variant="report" size="report" isStatic />
-      </Box>
-      <Modal
-        open={isErrorModalOpen}
-        onClose={handleErrorModalClose}
-        isCentered
-        title="Error"
-        width="3xl"
-      >
-        <Text>{remark}</Text>
-      </Modal>
-    </>
-  );
+  if (!isEmpty(rowData)) {
+    return (
+      <>
+        <Text fontSize="r1">Running Process</Text>
+        <Box maxH="30vh" overflowY="auto">
+          <Table data={rowData} columns={columns} variant="report" size="report" isStatic />
+        </Box>
+        <Divider my="s16" />
+        <Modal
+          open={isErrorModalOpen}
+          onClose={handleErrorModalClose}
+          isCentered
+          title="Error"
+          width="3xl"
+        >
+          <Text>{remark}</Text>
+        </Modal>
+      </>
+    );
+  }
+  return null;
 };
 
 export default RunningProcess;

@@ -6729,6 +6729,7 @@ export type DownloadCenterMutationGetElementUrlArgs = {
 
 export type DownloadCenterNode = {
   createdAt?: Maybe<Scalars['Time']>;
+  createdAtLocalized?: Maybe<Scalars['Localized']>;
   downloadType?: Maybe<Scalars['String']>;
   fileType?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
@@ -6737,6 +6738,7 @@ export type DownloadCenterNode = {
   title?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['ID']>;
+  userName?: Maybe<Scalars['String']>;
 };
 
 export type DownloadCenterQuery = {
@@ -20280,7 +20282,6 @@ export const Resource = {
   CbsTransfers: 'CBS_TRANSFERS',
   CbsTransfersBankTransfer: 'CBS_TRANSFERS_BANK_TRANSFER',
   CbsTransfersCashInTransitTransfer: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
-  CbsTransfersIbtTransfer: 'CBS_TRANSFERS_IBT_TRANSFER',
   CbsTransfersServiceCenterCashTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
   CbsTransfersServiceCenterTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_TRANSFER',
   CbsTransfersTellerTransfer: 'CBS_TRANSFERS_TELLER_TRANSFER',
@@ -35439,7 +35440,9 @@ export type ListDownloadCentreReportsQuery = {
         node?: {
           id?: string | null;
           createdAt?: string | null;
+          createdAtLocalized?: Record<'local' | 'en' | 'np', string> | null;
           userId?: string | null;
+          userName?: string | null;
           title?: string | null;
           url?: string | null;
           fileType?: string | null;
@@ -64593,7 +64596,9 @@ export const ListDownloadCentreReportsDocument = `
         node {
           id
           createdAt
+          createdAtLocalized
           userId
+          userName
           title
           url
           fileType

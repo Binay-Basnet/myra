@@ -277,17 +277,20 @@ export const TableSearch = <T,>({
                   </GridItem>
                   {canExport && (
                     <>
-                      <GridItem
-                        px="s16"
-                        py="s8"
-                        _hover={{ bg: 'gray.100' }}
-                        cursor="pointer"
-                        onClick={handleExportPDF}
-                      >
-                        <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                          Export PDF
-                        </Text>
-                      </GridItem>
+                      {process.env['NX_APP_ENV'] === 'dev' && (
+                        <GridItem
+                          px="s16"
+                          py="s8"
+                          _hover={{ bg: 'gray.100' }}
+                          cursor="pointer"
+                          onClick={handleExportPDF}
+                        >
+                          <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                            Export PDF
+                          </Text>
+                        </GridItem>
+                      )}
+
                       <GridItem
                         px="s16"
                         py="s8"

@@ -18,8 +18,9 @@ export const DownloadCenterLib = () => (
       </Box>
     </Box>
     <Divider my="s16" />
+
     <RunningProcess />
-    <Divider my="s16" />
+
     <PreviousExports />
   </Box>
 );

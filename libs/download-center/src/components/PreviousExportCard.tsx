@@ -3,16 +3,11 @@ import { IoIosList } from 'react-icons/io';
 
 import { Box, Divider, Icon, Text } from '@myra-ui';
 
-import { readableTimeParser } from '@coop/cbs/utils';
+import { DownloadCenterNode } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 
 export interface CardInfoProps {
-  node?: {
-    id: string;
-    title: string;
-    downloadType: string;
-    createdAt: string;
-    userId: string;
-  };
+  node?: DownloadCenterNode;
 }
 interface PreviousExportCardProps {
   item?: CardInfoProps;
@@ -44,12 +39,12 @@ const PreviousExportCard = (props: PreviousExportCardProps) => {
             {item?.node?.title}
           </Text>
           <Text fontSize="s2" color="gray.600">
-            {readableTimeParser(item?.node?.createdAt as string, true)}
+            {localizedDate(item?.node?.createdAtLocalized)}
           </Text>
         </Box>
       </Box>
       <Text fontSize="s2" color="gray.600">
-        Initiated By {item?.node?.userId}
+        Initiated By {item?.node?.userName}
       </Text>
       <Divider />
       <Box display="flex" gap="s12">
@@ -58,11 +53,6 @@ const PreviousExportCard = (props: PreviousExportCardProps) => {
           <Icon as={HiOutlineDownload} color="primary.500" size="sm" />
           <Text fontSize="s2">Download</Text>
         </Box>
-        {/* <Box display="flex" gap="s8">
-          {' '}
-          <Icon as={IoMdPrint} color="primary.500" size="sm" />
-          <Text fontSize="s2">Print</Text>
-        </Box> */}
       </Box>
     </Box>
   );
