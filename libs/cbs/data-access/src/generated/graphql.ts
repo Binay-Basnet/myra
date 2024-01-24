@@ -20282,6 +20282,7 @@ export const Resource = {
   CbsTransfers: 'CBS_TRANSFERS',
   CbsTransfersBankTransfer: 'CBS_TRANSFERS_BANK_TRANSFER',
   CbsTransfersCashInTransitTransfer: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
+  CbsTransfersIbtTransfer: 'CBS_TRANSFERS_IBT_TRANSFER',
   CbsTransfersServiceCenterCashTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
   CbsTransfersServiceCenterTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_TRANSFER',
   CbsTransfersTellerTransfer: 'CBS_TRANSFERS_TELLER_TRANSFER',
