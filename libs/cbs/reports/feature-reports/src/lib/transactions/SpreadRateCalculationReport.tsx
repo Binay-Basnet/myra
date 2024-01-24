@@ -5,7 +5,6 @@ import { Box, Column, Divider, GridItem, Table, Text } from '@myra-ui';
 import {
   LocalizedDateFilter,
   SpreadRateReportInput,
-  SpreadRateRowData,
   useGetSpreadRateReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
@@ -23,6 +22,7 @@ type Filter = {
 };
 
 type CombinedArrayType = {
+  index: number;
   loanProductId: string;
   loanProductName: string;
   loanAverageBalance: string;
@@ -52,15 +52,35 @@ export const SpreadRateCalculationReport = () => {
 
   const spreadRateReportData = data?.report?.depositReport?.spreadRateReport;
 
-  const reportData = combineArrays(
-    spreadRateReportData?.savingData?.record as SpreadRateRowData[],
-    spreadRateReportData?.loanData?.record as SpreadRateRowData[]
-  );
+  // const reportData = combineArrays(
+  //   spreadRateReportData?.savingData?.record as SpreadRateRowData[],
+  //   spreadRateReportData?.loanData?.record as SpreadRateRowData[]
+  // );
+
+  const savingData =
+    spreadRateReportData?.savingData?.record?.map((r) => ({
+      savingProductId: r?.productId,
+      savingProductName: r?.productName,
+      savingAverageBalance: r?.averageBalance,
+      savingInterestRate: r?.interestRate,
+      savingWeight: r?.weight,
+      savingEffectiveRate: r?.effectiveRate,
+    })) ?? [];
+
+  const loanData =
+    spreadRateReportData?.loanData?.record?.map((r) => ({
+      loanProductId: r?.productId,
+      loanProductName: r?.productName,
+      loanAverageBalance: r?.averageBalance,
+      loanInterestRate: r?.interestRate,
+      loanWeight: r?.weight,
+      loanEffectiveRate: r?.effectiveRate,
+    })) ?? [];
 
   const spreadRateData = [
     {
-      loanAvg: spreadRateReportData?.loanData?.meta?.prodInterest,
-      SavingAvg: spreadRateReportData?.savingData?.meta?.prodInterest,
+      loanAvg: spreadRateReportData?.loanData?.meta?.totalEffectiveRate,
+      SavingAvg: spreadRateReportData?.savingData?.meta?.totalEffectiveRate,
       SpreadRate: spreadRateReportData?.spreadRate,
     },
   ];
@@ -86,7 +106,7 @@ export const SpreadRateCalculationReport = () => {
   return (
     <Report
       defaultFilters={{}}
-      data={reportData as CombinedArrayType[]}
+      data={[] as CombinedArrayType[]}
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
@@ -122,7 +142,7 @@ export const SpreadRateCalculationReport = () => {
           <Text px="s16" mt="s16" fontSize="r2" color="gray.800" fontWeight={500}>
             Saving Product
           </Text>
-          <Report.Table<CombinedArrayType & { index: number }>
+          <Report.Table<CombinedArrayType>
             showFooter
             columns={[
               {
@@ -157,7 +177,7 @@ export const SpreadRateCalculationReport = () => {
               {
                 header: 'Avg. Rate',
                 accessorKey: 'savingEffectiveRate',
-                footer: spreadRateReportData?.savingData?.meta?.prodInterest as any,
+                footer: spreadRateReportData?.savingData?.meta?.totalEffectiveRate as string,
                 meta: {
                   Footer: {
                     colspan: 1,
@@ -166,12 +186,14 @@ export const SpreadRateCalculationReport = () => {
                 },
               },
             ]}
+            data={savingData as CombinedArrayType[]}
+            hasSNo
           />
           <Divider my="s16" />
           <Text px="s16" mt="s16" fontSize="r2" color="gray.800" fontWeight={500}>
             Loan Product
           </Text>
-          <Report.Table<CombinedArrayType & { index: number }>
+          <Report.Table<CombinedArrayType>
             showFooter
             columns={[
               {
@@ -206,7 +228,7 @@ export const SpreadRateCalculationReport = () => {
               {
                 header: 'Avg. Rate',
                 accessorKey: 'loanEffectiveRate',
-                footer: spreadRateReportData?.loanData?.meta?.prodInterest as any,
+                footer: spreadRateReportData?.loanData?.meta?.totalEffectiveRate as string,
                 meta: {
                   Footer: {
                     colspan: 1,
@@ -215,6 +237,8 @@ export const SpreadRateCalculationReport = () => {
                 },
               },
             ]}
+            data={loanData as CombinedArrayType[]}
+            hasSNo
           />
           <Divider my="s16" />
           <Text px="s16" mt="s16" fontSize="r2" color="gray.800" fontWeight={500}>
@@ -236,58 +260,58 @@ export const SpreadRateCalculationReport = () => {
 };
 
 // Function to combine the arrays
-function combineArrays(
-  savingProductArray: SpreadRateRowData[],
-  loanProductArray: SpreadRateRowData[]
-): CombinedArrayType[] {
-  const combinedArray: CombinedArrayType[] = [];
-  const maxLength = Math.max(savingProductArray?.length || 0, loanProductArray?.length || 0);
+// function combineArrays(
+//   savingProductArray: SpreadRateRowData[],
+//   loanProductArray: SpreadRateRowData[]
+// ): CombinedArrayType[] {
+//   const combinedArray: CombinedArrayType[] = [];
+//   const maxLength = Math.max(savingProductArray?.length || 0, loanProductArray?.length || 0);
 
-  // Convert null arrays to empty arrays
-  const safeArray1 = savingProductArray || [];
-  const safeArray2 = loanProductArray || [];
+//   // Convert null arrays to empty arrays
+//   const safeArray1 = savingProductArray || [];
+//   const safeArray2 = loanProductArray || [];
 
-  // Add "-" as value to missing keys in the objects to make them have the same keys
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < maxLength; i++) {
-    if (!savingProductArray || !savingProductArray[i])
-      safeArray1[i] = {
-        productId: null,
-        productName: null,
-        averageBalance: null,
-        interestRate: null,
-        weight: null,
-        effectiveRate: null,
-      };
-    if (!loanProductArray || !loanProductArray[i])
-      safeArray2[i] = {
-        productId: null,
-        productName: null,
-        averageBalance: null,
-        interestRate: null,
-        weight: null,
-        effectiveRate: null,
-      };
-  }
-  // Iterate through the modified arrays and combine the objects
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < maxLength; i++) {
-    const mergedObject = {
-      savingProductId: safeArray1[i]?.productId,
-      savingProductName: safeArray1[i]?.productName,
-      savingAverageBalance: safeArray1[i]?.averageBalance,
-      savingInterestRate: safeArray1[i]?.interestRate,
-      savingWeight: safeArray1[i]?.weight,
-      savingEffectiveRate: safeArray1[i]?.effectiveRate,
-      loanProductId: safeArray2[i]?.productId,
-      loanProductName: safeArray2[i]?.productName,
-      loanAverageBalance: safeArray2[i]?.averageBalance,
-      loanInterestRate: safeArray2[i]?.interestRate,
-      loanWeight: safeArray2[i]?.weight,
-      loanEffectiveRate: safeArray2[i]?.effectiveRate,
-    };
-    combinedArray.push(mergedObject as CombinedArrayType);
-  }
+//   // Add "-" as value to missing keys in the objects to make them have the same keys
+//   // eslint-disable-next-line no-plusplus
+//   for (let i = 0; i < maxLength; i++) {
+//     if (!savingProductArray || !savingProductArray[i])
+//       safeArray1[i] = {
+//         productId: null,
+//         productName: null,
+//         averageBalance: null,
+//         interestRate: null,
+//         weight: null,
+//         effectiveRate: null,
+//       };
+//     if (!loanProductArray || !loanProductArray[i])
+//       safeArray2[i] = {
+//         productId: null,
+//         productName: null,
+//         averageBalance: null,
+//         interestRate: null,
+//         weight: null,
+//         effectiveRate: null,
+//       };
+//   }
+//   // Iterate through the modified arrays and combine the objects
+//   // eslint-disable-next-line no-plusplus
+//   for (let i = 0; i < maxLength; i++) {
+//     const mergedObject = {
+//       savingProductId: safeArray1[i]?.productId,
+//       savingProductName: safeArray1[i]?.productName,
+//       savingAverageBalance: safeArray1[i]?.averageBalance,
+//       savingInterestRate: safeArray1[i]?.interestRate,
+//       savingWeight: safeArray1[i]?.weight,
+//       savingEffectiveRate: safeArray1[i]?.effectiveRate,
+//       loanProductId: safeArray2[i]?.productId,
+//       loanProductName: safeArray2[i]?.productName,
+//       loanAverageBalance: safeArray2[i]?.averageBalance,
+//       loanInterestRate: safeArray2[i]?.interestRate,
+//       loanWeight: safeArray2[i]?.weight,
+//       loanEffectiveRate: safeArray2[i]?.effectiveRate,
+//     };
+//     combinedArray.push(mergedObject as CombinedArrayType);
+//   }
 
-  return combinedArray;
-}
+//   return combinedArray;
+// }

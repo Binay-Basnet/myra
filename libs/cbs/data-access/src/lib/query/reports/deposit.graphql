@@ -445,7 +445,8 @@ query getSpreadRateReport($data: SpreadRateReportInput!) {
       spreadRateReport(data: $data) {
         savingData {
           meta {
-            prodInterest
+            # prodInterest
+            totalEffectiveRate
           }
           record {
             productId
@@ -458,7 +459,8 @@ query getSpreadRateReport($data: SpreadRateReportInput!) {
         }
         loanData {
           meta {
-            prodInterest
+            # prodInterest
+            totalEffectiveRate
           }
           record {
             productId

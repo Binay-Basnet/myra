@@ -42020,7 +42020,7 @@ export type GetSpreadRateReportQuery = {
       spreadRateReport: {
         spreadRate?: string | null;
         savingData?: {
-          meta?: { prodInterest?: string | null } | null;
+          meta?: { totalEffectiveRate?: string | null } | null;
           record?: Array<{
             productId?: string | null;
             productName?: string | null;
@@ -42031,7 +42031,7 @@ export type GetSpreadRateReportQuery = {
           } | null> | null;
         } | null;
         loanData?: {
-          meta?: { prodInterest?: string | null } | null;
+          meta?: { totalEffectiveRate?: string | null } | null;
           record?: Array<{
             productId?: string | null;
             productName?: string | null;
@@ -73199,7 +73199,7 @@ export const GetSpreadRateReportDocument = `
       spreadRateReport(data: $data) {
         savingData {
           meta {
-            prodInterest
+            totalEffectiveRate
           }
           record {
             productId
@@ -73212,7 +73212,7 @@ export const GetSpreadRateReportDocument = `
         }
         loanData {
           meta {
-            prodInterest
+            totalEffectiveRate
           }
           record {
             productId
