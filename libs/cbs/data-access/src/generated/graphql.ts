@@ -16285,6 +16285,7 @@ export type LoanRepaymentView = {
   centerName?: Maybe<Scalars['String']>;
   depositedBy?: Maybe<Scalars['String']>;
   depositedDate?: Maybe<Scalars['Localized']>;
+  destinationAccount?: Maybe<Scalars['String']>;
   discount?: Maybe<Scalars['String']>;
   discountDocIdentifiers?: Maybe<Array<Maybe<Scalars['String']>>>;
   discountDocs?: Maybe<Array<Maybe<DocumentInfo>>>;
@@ -49828,6 +49829,7 @@ export type LoanRepaymentDetailQuery = {
         groupId?: string | null;
         centerName?: string | null;
         centerId?: string | null;
+        destinationAccount?: string | null;
         member?: {
           id: string;
           code: string;
@@ -83727,6 +83729,7 @@ export const LoanRepaymentDetailDocument = `
         groupId
         centerName
         centerId
+        destinationAccount
       }
     }
   }

@@ -322,6 +322,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         'Rebate Amount': amountConverter(loanRepaymentDetailData?.rebate || 0),
 
         'Payment Mode': loanRepaymentDetailData?.paymentMode,
+        'Source Account': loanRepaymentDetailData?.destinationAccount || 'N/A',
       };
 
       tempExtraDetails = {
