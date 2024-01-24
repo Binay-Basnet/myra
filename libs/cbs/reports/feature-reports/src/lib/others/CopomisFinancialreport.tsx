@@ -49,7 +49,7 @@ export const CopomisFinancialReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={2}>
-            <FormCBSDatePicker label="Select Date" name="period.from" />
+            <FormCBSDatePicker label="Select Date" name="period.from" setInitialDate />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

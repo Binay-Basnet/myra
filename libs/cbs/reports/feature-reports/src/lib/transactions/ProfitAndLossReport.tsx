@@ -97,7 +97,7 @@ export const ProfitAndLossReport = () => {
             <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormCBSDatePicker name="period.from" label="Date" />
+            <FormCBSDatePicker name="period.from" label="Date" setInitialDate />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

@@ -1,29 +1,31 @@
 query getAccountMemberList($filter: Filter, $pagination: Pagination) {
   members {
     list(pagination: $pagination, filter: $filter) {
-      totalCount
-      edges {
-        node {
-          id
-          name
-          code
-          type
-          address {
-            state
-            district
-            localGovernment
-            wardNo
-            locality
+      data {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            code
+            type
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+            }
+            contact
+            createdAt
+            dateJoined
           }
-          contact
-          createdAt
-          dateJoined
+          cursor
         }
-        cursor
-      }
-      pageInfo {
-        startCursor
-        endCursor
+        pageInfo {
+          startCursor
+          endCursor
+        }
       }
     }
   }
@@ -240,92 +242,101 @@ query getAccountOpenEditData($id: ID!) {
 query getAccountTableList($paginate: Pagination, $filter: Filter) {
   account {
     list(paginate: $paginate, filter: $filter) {
-      totalCount
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
-      edges {
-        node {
-          id
-          objState
-          createdAt
-          accountName
-          # createdBy {
-          #   id
-          #   # name
-          #   # username
-          #   # userType
-          # }
-          modifiedAt
-          # modifiedBy {
-          #   id
-          #   # name
-          #   # username
-          #   # userType
-          # }
-          installmentAmount
-          balance
-          availableBalance
-          accountOpenedDate
-          lastTransactionDate
-          accountExpiryDate
-          closedAt
-          member {
+      data {
+        edges {
+          node {
             id
-            name
-            profilePicUrl
-            profilePic
-            signaturePicUrl
-            address {
-              state
-              district
-              localGovernment
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
+            objState
+            createdAt
+            accountName
+            # createdBy {
+            #   id
+            #   # name
+            #   # username
+            #   # userType
+            # }
+            modifiedAt
+            # modifiedBy {
+            #   id
+            #   # name
+            #   # username
+            #   # userType
+            # }
+            installmentAmount
+            balance
+            availableBalance
+            accountOpenedDate
+            lastTransactionDate
+            accountExpiryDate
+            closedAt
+            member {
+              id
+              name
+              profilePicUrl
+              profilePic
+              signaturePicUrl
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
               }
+              contact
+              dateJoined
             }
-            contact
-            dateJoined
-          }
-          overDrawnBalance
-          guaranteedAmount
-          interestAccured
-          interestTax
-          product {
-            id
-            productCode
-            productName
-            nature
-            minimumBalance
-            isMandatorySaving
-            withdrawRestricted
-            accountClosingCharge {
-              serviceName
-              ledgerName
-              amount
+            overDrawnBalance
+            guaranteedAmount
+            interestAccured
+            interestTax
+            product {
+              id
+              productCode
+              productName
+              nature
+              minimumBalance
+              isMandatorySaving
+              withdrawRestricted
+              accountClosingCharge {
+                serviceName
+                ledgerName
+                amount
+              }
+              withdrawPenalty {
+                penaltyLedgerMapping
+                penaltyAmount
+                penaltyRate
+              }
+              interest
             }
-            withdrawPenalty {
-              penaltyLedgerMapping
-              penaltyAmount
-              penaltyRate
+            dues {
+              fine
+              totalDue
+              dueInstallments
             }
-            interest
+            prematurePenalty
+            installmentAmount
           }
-          dues {
-            fine
-            totalDue
-            dueInstallments
-          }
-          prematurePenalty
-          installmentAmount
         }
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+      }
+      error {
+        ...MutationError
+      }
+      success {
+        message
+        code
       }
     }
   }
@@ -334,41 +345,70 @@ query getAccountTableList($paginate: Pagination, $filter: Filter) {
 query getAccountTableListMinimal($paginate: Pagination, $filter: Filter) {
   account {
     list(paginate: $paginate, filter: $filter) {
-      totalCount
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
-      edges {
-        node {
-          id
-          objState
-          createdAt
-          accountName
-          balance
-
-          accountOpenedDate
-          accountExpiryDate
-          closedAt
-          member {
-            id
-            name
-            code
-            profilePicUrl
-          }
-          product {
-            id
-            productCode
-            productName
-            nature
-            interest
-            isMandatorySaving
-          }
-          installmentAmount
-          groupName
+      data {
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
         }
+        edges {
+          node {
+            id
+            objState
+            createdAt
+            accountName
+            balance
+
+            accountOpenedDate
+            accountExpiryDate
+            closedAt
+            member {
+              id
+              name
+              code
+              profilePicUrl
+            }
+            product {
+              id
+              productCode
+              productName
+              nature
+              interest
+              isMandatorySaving
+            }
+            installmentAmount
+            groupName
+          }
+        }
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+query getAccountTableListMinimalExport(
+  $paginate: Pagination
+  $filter: Filter
+  $isExportPDF: Boolean
+  $isExportExcel: Boolean
+) {
+  account {
+    list(
+      paginate: $paginate
+      filter: $filter
+      isExportPDF: $isExportPDF
+      isExportExcel: $isExportExcel
+    ) {
+      error {
+        ...MutationError
+      }
+      success {
+        message
+        code
       }
     }
   }

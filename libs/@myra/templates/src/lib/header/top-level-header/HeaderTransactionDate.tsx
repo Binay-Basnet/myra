@@ -17,7 +17,7 @@ import {
   useGetEndOfDayDateDataQuery,
   useSetEndOfDayDataMutation,
 } from '@coop/cbs/data-access';
-import { getLocalizedTodaysDate, localizedDate, ROUTES } from '@coop/cbs/utils';
+import { Can, getLocalizedTodaysDate, localizedDate, ROUTES } from '@coop/cbs/utils';
 import { ConfirmationDialog } from '@coop/shared/components';
 
 const eodStatusIcon = (status: EodState | undefined | null, errors: number | null | undefined) => {
@@ -168,47 +168,57 @@ export const HeaderTransactionDate = () => {
                         {user?.currentBranch?.category === BranchCategory.HeadOffice ? (
                           hasEodErrors ? (
                             <>
-                              <Button
-                                variant="outline"
-                                display="flex"
-                                justifyContent="center"
-                                w="100%"
-                                onClick={reinitiateCloseDay}
-                              >
-                                Reinitiate
-                              </Button>
-                              <Button
-                                variant="solid"
-                                display="flex"
-                                justifyContent="center"
-                                w="100%"
-                                onClick={ignoreAndCloseDay}
-                              >
-                                Ignore and Close Day
-                              </Button>
-                            </>
-                          ) : (
-                            <>
-                              <Button
-                                variant="outline"
-                                display="flex"
-                                justifyContent="center"
-                                w="100%"
-                                onClick={onReadinessConfirmToggle}
-                              >
-                                Branch Readiness
-                              </Button>
-                              {isHeadOfficeReady && (
+                              <Can I="CREATE" a="CBS_END_OF_THE_DAY">
+                                <Button
+                                  variant="outline"
+                                  display="flex"
+                                  justifyContent="center"
+                                  w="100%"
+                                  onClick={reinitiateCloseDay}
+                                >
+                                  Reinitiate
+                                </Button>
+                              </Can>
+
+                              <Can I="CREATE" a="CBS_END_OF_THE_DAY">
                                 <Button
                                   variant="solid"
                                   display="flex"
                                   justifyContent="center"
                                   w="100%"
-                                  // onClick={() => router.push(ROUTES.DAY_CLOSE)}
-                                  onClick={onDayEndConfirmToggle}
+                                  onClick={ignoreAndCloseDay}
                                 >
-                                  Close Day
+                                  Ignore and Close Day
                                 </Button>
+                              </Can>
+                            </>
+                          ) : (
+                            <>
+                              <Can I="CREATE" a="CBS_END_OF_THE_DAY">
+                                <Button
+                                  variant="outline"
+                                  display="flex"
+                                  justifyContent="center"
+                                  w="100%"
+                                  onClick={onReadinessConfirmToggle}
+                                >
+                                  Branch Readiness
+                                </Button>
+                              </Can>
+
+                              {isHeadOfficeReady && (
+                                <Can I="CREATE" a="CBS_END_OF_THE_DAY">
+                                  <Button
+                                    variant="solid"
+                                    display="flex"
+                                    justifyContent="center"
+                                    w="100%"
+                                    // onClick={() => router.push(ROUTES.DAY_CLOSE)}
+                                    onClick={onDayEndConfirmToggle}
+                                  >
+                                    Close Day
+                                  </Button>
+                                </Can>
                               )}
                               {isYearEnd && (
                                 <Button
@@ -225,15 +235,17 @@ export const HeaderTransactionDate = () => {
                             </>
                           )
                         ) : (
-                          <Button
-                            variant="solid"
-                            display="flex"
-                            justifyContent="center"
-                            w="100%"
-                            onClick={onReadinessConfirmToggle}
-                          >
-                            Branch Readiness
-                          </Button>
+                          <Can I="CREATE" a="CBS_END_OF_THE_DAY">
+                            <Button
+                              variant="solid"
+                              display="flex"
+                              justifyContent="center"
+                              w="100%"
+                              onClick={onReadinessConfirmToggle}
+                            >
+                              Branch Readiness
+                            </Button>
+                          </Can>
                         )}
                       </Box>
                     </Box>

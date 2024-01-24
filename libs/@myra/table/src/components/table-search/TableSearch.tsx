@@ -81,6 +81,9 @@ export type TableSearchProps<T> = {
   tablePagination: boolean;
   globalFilter: string;
   setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
+  canExport?: boolean;
+  handleExportPDF?: () => void;
+  handleExportCSV?: () => void;
 };
 
 export const TableSearch = <T,>({
@@ -93,6 +96,9 @@ export const TableSearch = <T,>({
   tablePagination,
   globalFilter,
   setGlobalFilter,
+  canExport,
+  handleExportPDF,
+  handleExportCSV,
 }: TableSearchProps<T>) => {
   const [search, setSearch] = React.useState<string | null>(null);
   const router = useRouter();
@@ -269,6 +275,35 @@ export const TableSearch = <T,>({
                       Export Visible
                     </Text>
                   </GridItem>
+                  {canExport && (
+                    <>
+                      {process.env['NX_APP_ENV'] === 'dev' && (
+                        <GridItem
+                          px="s16"
+                          py="s8"
+                          _hover={{ bg: 'gray.100' }}
+                          cursor="pointer"
+                          onClick={handleExportPDF}
+                        >
+                          <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                            Export PDF
+                          </Text>
+                        </GridItem>
+                      )}
+
+                      <GridItem
+                        px="s16"
+                        py="s8"
+                        _hover={{ bg: 'gray.100' }}
+                        cursor="pointer"
+                        onClick={handleExportCSV}
+                      >
+                        <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                          Export CSV
+                        </Text>
+                      </GridItem>
+                    </>
+                  )}
                 </Grid>
               </PopoverBody>
             </PopoverContent>

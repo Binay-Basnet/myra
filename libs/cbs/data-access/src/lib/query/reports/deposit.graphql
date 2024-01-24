@@ -439,3 +439,43 @@ query getRecurringSavingInstallmentReport($data: RecurringSavingInstallmentInput
     }
   }
 }
+query getSpreadRateReport($data: SpreadRateReportInput!) {
+  report {
+    depositReport {
+      spreadRateReport(data: $data) {
+        savingData {
+          meta {
+            # prodInterest
+            totalEffectiveRate
+          }
+          record {
+            productId
+            productName
+            averageBalance
+            interestRate
+            weight
+            effectiveRate
+          }
+        }
+        loanData {
+          meta {
+            # prodInterest
+            totalEffectiveRate
+          }
+          record {
+            productId
+            productName
+            averageBalance
+            interestRate
+            weight
+            effectiveRate
+          }
+        }
+        spreadRate
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

@@ -2084,3 +2084,27 @@ export const useListNeaOfficeQuery = <TData = Types.ListNeaOfficeQuery, TError =
     ).bind(null, variables),
     options
   );
+export const ListWalletServicesDocument = `
+    query listWalletServices {
+  eBanking {
+    utility {
+      listWalletLoaderUtility {
+        name
+        slug
+        operatorCode
+      }
+    }
+  }
+}
+    `;
+export const useListWalletServicesQuery = <TData = Types.ListWalletServicesQuery, TError = unknown>(
+  variables?: Types.ListWalletServicesQueryVariables,
+  options?: UseQueryOptions<Types.ListWalletServicesQuery, TError, TData>
+) =>
+  useQuery<Types.ListWalletServicesQuery, TError, TData>(
+    variables === undefined ? ['listWalletServices'] : ['listWalletServices', variables],
+    useAxios<Types.ListWalletServicesQuery, Types.ListWalletServicesQueryVariables>(
+      ListWalletServicesDocument
+    ).bind(null, variables),
+    options
+  );

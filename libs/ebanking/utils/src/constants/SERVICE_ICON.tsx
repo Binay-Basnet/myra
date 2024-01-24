@@ -14,6 +14,7 @@ import {
   MdOutlineSend,
   MdOutlineWaterDrop,
 } from 'react-icons/md';
+import { TbDeviceMobileUp } from 'react-icons/tb';
 
 export const SERVICE_ICON_DICT: Record<string, IconType> = {
   ACC_TRANSFER: MdCompareArrows,
@@ -38,6 +39,9 @@ export const UTILITY_ICON_DICT: Record<string, IconType> = {
   electricity: MdLightbulbOutline,
   internet: IoWifiSharp,
   tv: MdOutlineLiveTv,
+  walletload: IoWalletOutline,
+  // package: TbMobiledata,
+  package: TbDeviceMobileUp,
   KHANEPANI: MdOutlineWaterDrop,
   E_TELLER: MdOutlineCameraFront,
   FLIGHT_BOOK: MdFlightTakeoff,
@@ -51,6 +55,8 @@ export const UTILITY_LINK_DICT: Record<string, string> = {
   electricity: '/utility-payments/electricity',
   internet: '/utility-payments/internet-payment',
   tv: '/utility-payments/tv-payment',
+  walletload: '/utility-payments/wallet-load',
+  package: '/utility-payments/package',
   KHANEPANI: '',
   E_TELLER: '',
   FLIGHT_BOOK: '',

@@ -730,6 +730,7 @@ export const AddDeposit = () => {
                           })`
                         : depositedByObj[result?.depositedBy as DepositedBy],
                       ...tempObj,
+                      'Actual Balance': amountConverter(result?.newAmount || 0),
                     },
                     subTitle:
                       'Amount deposited successfully. Details of the transaction is listed below.',

@@ -14,9 +14,9 @@ import {
 
 import {
   InternetPayment,
-  InternetPaymentForm,
-  InternetPaymentResult,
-  InternetPaymentReview,
+  UtilityPaymentForm,
+  UtilityPaymentResult,
+  UtilityPaymentReview,
 } from '../components';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'pending';
@@ -148,7 +148,7 @@ export const UtilityInternetPayment = () => {
 
         {currentSequence !== 0 && paymentStatus === 'form' && (
           <Box>
-            <InternetPaymentForm
+            <UtilityPaymentForm
               currentSequence={currentSequence}
               setCurrentSequence={setCurrentSequence}
               schema={schema as Utility}
@@ -161,7 +161,7 @@ export const UtilityInternetPayment = () => {
         )}
 
         {paymentStatus === 'review' && (
-          <InternetPaymentReview
+          <UtilityPaymentReview
             setPaymentStatus={setPaymentStatus}
             handleMakePayment={handlePayment}
             schema={schema as Utility}
@@ -173,7 +173,7 @@ export const UtilityInternetPayment = () => {
         {paymentStatus === 'success' ||
         paymentStatus === 'failure' ||
         paymentStatus === 'pending' ? (
-          <InternetPaymentResult
+          <UtilityPaymentResult
             paymentStatus={paymentStatus}
             setPaymentStatus={setPaymentStatus}
             mutationMsg={mutationMsg}

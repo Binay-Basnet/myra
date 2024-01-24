@@ -2,20 +2,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  FormHeader,
-  Loader,
-  Modal,
-  Text,
-  toast,
-} from '@myra-ui';
+import { Box, Button, Container, FormFooter, FormHeader, Loader, toast } from '@myra-ui';
 
 import {
   BranchCategory,
@@ -24,7 +13,6 @@ import {
   EodState,
   logout,
   useAppSelector,
-  useGetEndOfDayDateDataQuery,
   useGetEodStatusQuery,
   useSetEndOfDayDataMutation,
 } from '@coop/cbs/data-access';
@@ -37,7 +25,6 @@ import { DayClose } from '../component/DayClose';
 export interface CbsCloseDayProps {}
 
 export const CbsCloseDay = () => {
-  // const [stopFetch, setStopFetch] = React.useState(false);
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -46,23 +33,11 @@ export const CbsCloseDay = () => {
 
   const queryClient = useQueryClient();
 
-  const [closedDate, setClosedDate] = useState<
-    Record<'local' | 'en' | 'np', string> | null | undefined
-  >(null);
-
   const [stopFetch, setStopFetch] = useState<boolean>(false);
 
   const [stageInitiated, setStageInitiated] = useState<EodStage | null>(null);
 
   const [isPreStageIgnoreInitiated, setIsPreStageIgnoreInitiated] = useState<boolean>(false);
-
-  const {
-    isOpen: isConfirmationModalOpen,
-    onClose: onConfirmationModalClose,
-    onToggle: onConfirmationModalToggle,
-  } = useDisclosure();
-
-  // const queryClient = useQueryClient();
 
   const user = useAppSelector((state) => state?.auth?.user);
 
@@ -72,22 +47,13 @@ export const CbsCloseDay = () => {
     onSuccess: (res) => {
       if (res?.transaction?.endOfDay?.record === 'COMPLETED') {
         toast({ id: 'day-close-complete', type: 'success', message: 'Day closed successfully' });
-        setClosedDate(transactionDate);
-        refetchEndOfDay();
-        onConfirmationModalToggle();
-        // router.push('/');
+
+        dispatch(logout());
+        router.replace('/login').then(() => queryClient.clear());
       }
     },
     onMutate: () => setStopFetch(false),
   });
-
-  const {
-    data: endOfDayData,
-    refetch: refetchEndOfDay,
-    // isFetching,
-  } = useGetEndOfDayDateDataQuery();
-
-  const transactionDate = endOfDayData?.transaction?.endOfDayDate?.value;
 
   const { data: eodStatusQueryData } = useGetEodStatusQuery(
     {},
@@ -386,38 +352,6 @@ export const CbsCloseDay = () => {
           </Container>
         </Box>
       </Box>
-
-      <Modal
-        open={isConfirmationModalOpen}
-        onClose={onConfirmationModalClose}
-        primaryButtonLabel="OK"
-        closeOnEsc={false}
-        closeOnOverlayClick={false}
-        hasCloseBtn={false}
-        title="Day Close"
-        footer={
-          <Box display="flex" flexDirection="row" gap="s8" p="s16" justifyContent="flex-end">
-            <Button maxW="200px" onClick={onConfirmationModalClose} display="none">
-              Close
-            </Button>
-            <Button
-              variant="solid"
-              onClick={() => {
-                dispatch(logout());
-                router.replace('/login').then(() => queryClient.clear());
-              }}
-              maxW="200px"
-            >
-              OK
-            </Button>
-          </Box>
-        }
-      >
-        <Text fontSize="r1">
-          Day End is completed for date {closedDate?.en} ({closedDate?.np}) and you will be
-          redirected to login page.
-        </Text>
-      </Modal>
     </>
   ) : (
     <Loader />

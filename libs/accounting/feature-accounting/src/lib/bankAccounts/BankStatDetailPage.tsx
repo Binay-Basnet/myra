@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { FiCornerLeftDown } from 'react-icons/fi';
-import { useRouter } from 'next/router';
 
 import { Box, Button, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -12,13 +11,11 @@ import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 export const BankStatDetailPage = () => {
   const { t } = useTranslation();
 
-  const router = useRouter();
-
   const { data, isFetching } = useGetMemberListQuery({
     pagination: getPaginationQuery(),
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.members?.list?.data?.edges ?? [], [data]);
 
   const popoverTitle = [
     {

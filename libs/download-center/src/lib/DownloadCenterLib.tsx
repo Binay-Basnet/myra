@@ -2,6 +2,7 @@ import { HiOutlineDownload } from 'react-icons/hi';
 
 import { Box, Divider, Icon, Text } from '@myra-ui';
 
+import PreviousExports from '../components/PreviousExports';
 import RunningProcess from '../components/RunningProcess';
 
 export const DownloadCenterLib = () => (
@@ -17,7 +18,10 @@ export const DownloadCenterLib = () => (
       </Box>
     </Box>
     <Divider my="s16" />
+
     <RunningProcess />
+
+    <PreviousExports />
   </Box>
 );
 

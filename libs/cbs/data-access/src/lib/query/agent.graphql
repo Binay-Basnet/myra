@@ -36,43 +36,43 @@ query getAgentDetailData($id: ID!) {
   }
 }
 
-query getAgentAssignedMemberListData($filter: Filter, $pagination: Pagination) {
-  agent {
-    assignedMemberList(filter: $filter, pagination: $pagination) {
-      totalCount
-      edges {
-        node {
-          id
-          member {
-            id
-            name
-            code
-          }
-          account {
-            id
-            accountName
-            dues {
-              totalDue
-              fine
-            }
-            installmentAmount
-          }
-          product {
-            productName
-          }
-          assignedDate
-        }
-        cursor
-      }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
-    }
-  }
-}
+# query getAgentAssignedMemberListData($filter: Filter, $pagination: Pagination) {
+#   agent {
+#     assignedMemberList(filter: $filter, pagination: $pagination) {
+#       totalCount
+#       edges {
+#         node {
+#           id
+#           member {
+#             id
+#             name
+#             code
+#           }
+#           account {
+#             id
+#             accountName
+#             dues {
+#               totalDue
+#               fine
+#             }
+#             installmentAmount
+#           }
+#           product {
+#             productName
+#           }
+#           assignedDate
+#         }
+#         cursor
+#       }
+#       pageInfo {
+#         hasNextPage
+#         hasPreviousPage
+#         startCursor
+#         endCursor
+#       }
+#     }
+#   }
+# }
 
 query getAgentTodayListData($id: ID!) {
   agent {
@@ -106,24 +106,24 @@ query getAgentTodayListData($id: ID!) {
   }
 }
 
-query agentTransactionDetail($agentId: ID!, $date: String!) {
-  agent {
-    viewAgentList(agentId: $agentId, date: $date) {
-      data {
-        transactionId
-        transactionDate
-        status
-        totalAmount
-        assignedMember {
-          transactionId
-          member
-          account
-          amount
-        }
-      }
-    }
-  }
-}
+# query agentTransactionDetail($agentId: ID!, $date: String!) {
+#   agent {
+#     viewAgentList(agentId: $agentId, date: $date) {
+#       data {
+#         transactionId
+#         transactionDate
+#         status
+#         totalAmount
+#         assignedMember {
+#           transactionId
+#           member
+#           account
+#           amount
+#         }
+#       }
+#     }
+#   }
+# }
 
 query getAgentDetail($id: ID!) {
   agent {
@@ -139,29 +139,29 @@ query getAgentDetail($id: ID!) {
   }
 }
 
-query listAgentCollection($filter: Filter, $pagination: Pagination) {
-  agent {
-    listAgentCollection(filter: $filter, pagination: $pagination) {
-      totalCount
-      edges {
-        node {
-          id
-          mrId
-          mrName
-          date
-          amount
-        }
-        cursor
-      }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
-    }
-  }
-}
+# query listAgentCollection($filter: Filter, $pagination: Pagination) {
+#   agent {
+#     listAgentCollection(filter: $filter, pagination: $pagination) {
+#       totalCount
+#       edges {
+#         node {
+#           id
+#           mrId
+#           mrName
+#           date
+#           amount
+#         }
+#         cursor
+#       }
+#       pageInfo {
+#         hasNextPage
+#         hasPreviousPage
+#         startCursor
+#         endCursor
+#       }
+#     }
+#   }
+# }
 
 query listAgentTemplate($agentId: ID!) {
   agent {
@@ -230,6 +230,7 @@ query listCollectionTemplate($collectionID: ID!) {
         accountName
         AmountToBeCollected
         FineToBeCollected
+        installementAmount
       }
     }
   }

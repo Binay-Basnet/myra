@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode } from 'react';
 import { DownloadCenterLib } from '@download-center';
 
-import { Scrollable, TopLevelHeader } from '@myra-ui';
+import { TopLevelHeader } from '@myra-ui';
 
 const TopLevelHeaderLayout = ({ children }: { children: ReactNode }) => (
   <>
@@ -15,7 +15,8 @@ export const DownloadCenter = () => <DownloadCenterLib />;
 DownloadCenter.getLayout = function getLayout(page: ReactElement) {
   return (
     <TopLevelHeaderLayout>
-      <Scrollable>{page}</Scrollable>
+      {/* <Scrollable>{page}</Scrollable> */}
+      {page}
     </TopLevelHeaderLayout>
   );
 };

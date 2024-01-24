@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 
 import {
-  useAgentTransactionDetailQuery,
   useGetAgentDetailQuery,
   useGetAllTransactionsDetailQuery,
   useLoanRepaymentDetailQuery,
@@ -14,7 +13,8 @@ import { localizedText } from '@coop/cbs/utils';
 export const useTransactionDetailHooks = () => {
   const router = useRouter();
 
-  const { id, date } = router.query;
+  // const { id, date } = router.query;
+  const { id } = router.query;
 
   // deposit
   const { data: deposit } = useTransactionDepositDetailQuery(
@@ -56,15 +56,15 @@ export const useTransactionDetailHooks = () => {
   const accountTransferDetailData = accountTransfer?.transaction?.viewAccountTransfer?.data;
 
   // agent transaction
-  const { data: agentTransaction } = useAgentTransactionDetailQuery(
-    { agentId: id as string, date: date as string },
-    {
-      staleTime: 0,
-      enabled: !!date && router?.asPath?.includes('/market-representative-transaction/'),
-    }
-  );
+  // const { data: agentTransaction } = useAgentTransactionDetailQuery(
+  //   { agentId: id as string, date: date as string },
+  //   {
+  //     staleTime: 0,
+  //     enabled: !!date && router?.asPath?.includes('/market-representative-transaction/'),
+  //   }
+  // );
 
-  const agentTransactionDetailData = agentTransaction?.agent?.viewAgentList?.data;
+  // const agentTransactionDetailData = agentTransaction?.agent?.viewAgentList?.data;
 
   // agent detail
   const { data: agentDetail } = useGetAgentDetailQuery(
@@ -105,7 +105,7 @@ export const useTransactionDetailHooks = () => {
     depositDetailData,
     withdrawDetailData,
     accountTransferDetailData,
-    agentTransactionDetailData,
+    // agentTransactionDetailData,
     agentDetailData,
     loanRepaymentDetailData,
     allTransactionsData,

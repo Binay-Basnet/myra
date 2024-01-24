@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -7,6 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import {
   ObjState,
+  useGetAccountTableListMinimalExportQuery,
   useGetAccountTableListMinimalQuery,
   useGetSavingFilterMappingQuery,
   useSetMakeDormantAccountActiveMutation,
@@ -30,6 +31,10 @@ const ACCOUNT_TAB_ITEMS = [
 ];
 
 export const CBSAccountList = () => {
+  const [triggerExport, setTriggerExport] = useState(false);
+  const [isExportPDF, setIsExportPDF] = useState(false);
+  const [isExportExcel, setIsExportExcel] = useState(false);
+
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -52,12 +57,17 @@ export const CBSAccountList = () => {
   );
 
   const { data: savingFilterMapping } = useGetSavingFilterMappingQuery();
-  const { data, isFetching } = useGetAccountTableListMinimalQuery({
-    paginate: getPaginationQuery(),
+
+  const filterParams = {
     filter: getFilterQuery({ objState: { value: 'ACTIVE', compare: '=' } }),
+  };
+
+  const { data, isFetching } = useGetAccountTableListMinimalQuery({
+    ...filterParams,
+    paginate: getPaginationQuery(),
   });
 
-  const rowData = useMemo(() => data?.account?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.account?.list?.data?.edges ?? [], [data]);
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -189,6 +199,23 @@ export const CBSAccountList = () => {
     [savingFilterMapping?.account.filterMapping?.productID, objState, router, makeActiveHandler]
   );
 
+  useGetAccountTableListMinimalExportQuery(
+    { ...filterParams, paginate: { after: '', first: -1 }, isExportExcel, isExportPDF },
+    {
+      enabled: triggerExport,
+      staleTime: 0,
+      onSettled: () => setTriggerExport(false),
+      onSuccess: (res) => {
+        setTriggerExport(false);
+        toast({
+          id: 'export',
+          type: 'success',
+          message: res?.account?.list?.success?.message as string,
+        });
+      },
+    }
+  );
+
   return (
     <>
       <Box position="sticky" top="0px" zIndex={3}>
@@ -207,10 +234,21 @@ export const CBSAccountList = () => {
           router.push(`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${row?.node?.id}`);
         }}
         pagination={{
-          total: data?.account?.list?.totalCount ?? 'Many',
-          pageInfo: data?.account?.list?.pageInfo,
+          total: data?.account?.list?.data?.totalCount ?? 'Many',
+          pageInfo: data?.account?.list?.data?.pageInfo,
         }}
         menu="SAVINGS"
+        canExport
+        handleExportPDF={() => {
+          setTriggerExport(true);
+          setIsExportPDF(true);
+          setIsExportExcel(false);
+        }}
+        handleExportCSV={() => {
+          setTriggerExport(true);
+          setIsExportPDF(false);
+          setIsExportExcel(true);
+        }}
       />
     </>
   );

@@ -75,7 +75,7 @@ export const AddMembersModal = ({ isOpen, onClose }: IUpdateBalanceProps) => {
       staleTime: 0,
     }
   );
-  const memberListData = memberList?.members?.list?.edges;
+  const memberListData = memberList?.members?.list?.data?.edges;
 
   const memberSearchOptions = useMemo(
     () =>

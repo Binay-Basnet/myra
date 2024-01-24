@@ -70,6 +70,9 @@ export const TableWithoutRef = <T,>(
     enableAllFilters = true,
     freezeFirstColumn,
     expandFirstLevel,
+    canExport,
+    handleExportCSV,
+    handleExportPDF,
   } = props;
 
   const [expanded, setExpanded] = React.useState<ExpandedState>(
@@ -180,6 +183,9 @@ export const TableWithoutRef = <T,>(
           tablePagination={!!tablePagination}
           globalFilter={globalFilter}
           setGlobalFilter={setGlobalFilter}
+          canExport={canExport}
+          handleExportPDF={handleExportPDF}
+          handleExportCSV={handleExportCSV}
         />
       )}
 

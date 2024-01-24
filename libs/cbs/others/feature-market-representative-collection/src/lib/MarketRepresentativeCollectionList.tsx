@@ -1,15 +1,33 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { PageHeader } from '@myra-ui';
+import { asyncToast, PageHeader } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
-import { Arrange, useAppSelector, useListMrSubmissionListQuery } from '@coop/cbs/data-access';
+import {
+  Arrange,
+  useAppSelector,
+  useDeleteSubmissionListCollectedMutation,
+  useListMrSubmissionListQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
+import { ConfirmationDialog } from '@coop/shared/components';
 import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const MarketRepresentativeCollectionList = () => {
   const { t } = useTranslation();
+
+  const {
+    isOpen: isDeleteConfirmOpen,
+    onClose: onDeleteConfirmClose,
+    onToggle: onDeleteConfirmToggle,
+  } = useDisclosure();
+
+  const [selectedSubmissionId, setSelectedSubmissionId] = useState('');
+
+  const queryClient = useQueryClient();
 
   const userId = useAppSelector((state) => state.auth?.user?.id);
 
@@ -80,18 +98,42 @@ export const MarketRepresentativeCollectionList = () => {
           props?.row?.original?.node && (
             <TablePopover
               node={props?.row?.original?.node}
-              items={[
-                {
-                  title: t['transDetailViewDetail'],
-                  aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
-                  action: 'VIEW',
-                  onClick: (row) => {
-                    router.push(
-                      `${ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_DETAILS}?id=${row?.id}`
-                    );
-                  },
-                },
-              ]}
+              items={
+                props?.row?.original?.node?.status === 'COLLECTED'
+                  ? [
+                      {
+                        title: 'Delete',
+                        aclKey: 'DELETE_COLLECTION_LIST',
+                        action: 'DELETE',
+                        onClick: (row) => {
+                          setSelectedSubmissionId(row?.id);
+                          onDeleteConfirmToggle();
+                        },
+                      },
+                      {
+                        title: t['transDetailViewDetail'],
+                        aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
+                        action: 'VIEW',
+                        onClick: (row) => {
+                          router.push(
+                            `${ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_DETAILS}?id=${row?.id}`
+                          );
+                        },
+                      },
+                    ]
+                  : [
+                      {
+                        title: t['transDetailViewDetail'],
+                        aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
+                        action: 'VIEW',
+                        onClick: (row) => {
+                          router.push(
+                            `${ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_DETAILS}?id=${row?.id}`
+                          );
+                        },
+                      },
+                    ]
+              }
             />
           ),
         meta: {
@@ -101,6 +143,23 @@ export const MarketRepresentativeCollectionList = () => {
     ],
     [t]
   );
+
+  const { mutateAsync: deleteSubmission } = useDeleteSubmissionListCollectedMutation();
+
+  const handleDeleteCollection = () => {
+    asyncToast({
+      id: 'mr-delete-submission-list',
+      msgs: {
+        loading: 'Deleting Submission List',
+        success: 'Submission List Deleted',
+      },
+      promise: deleteSubmission({ id: selectedSubmissionId }),
+      onSuccess: () => {
+        setSelectedSubmissionId('');
+        queryClient.invalidateQueries(['listMRSubmissionList']);
+      },
+    });
+  };
 
   return (
     <>
@@ -128,6 +187,17 @@ export const MarketRepresentativeCollectionList = () => {
           total: data?.agent?.listMRSubmissionList?.totalCount ?? 'Many',
           pageInfo: data?.agent?.listMRSubmissionList?.pageInfo,
         }}
+      />
+
+      <ConfirmationDialog
+        isOpen={isDeleteConfirmOpen}
+        onClose={() => {
+          setSelectedSubmissionId('');
+          onDeleteConfirmClose();
+        }}
+        handleConfirm={handleDeleteCollection}
+        title="Delete Submission List"
+        description="This action will delete the submission list. Are you sure you want to continue?"
       />
     </>
   );

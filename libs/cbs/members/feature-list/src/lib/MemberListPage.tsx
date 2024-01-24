@@ -3,12 +3,13 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { PageHeader, TablePopover } from '@myra-ui';
+import { PageHeader, TablePopover, toast } from '@myra-ui';
 import { AvatarCell, Column, Table } from '@myra-ui/table';
 
 import {
   useGetGeneralMemberSettingsDataQuery,
   useGetMemberFilterMappingQuery,
+  useGetMemberListExportQuery,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
 import { formatTableAddress, localizedDate, ROUTES } from '@coop/cbs/utils';
@@ -33,6 +34,9 @@ const memberTypeSlug = {
 };
 
 export const MemberListPage = () => {
+  const [triggerExport, setTriggerExport] = useState(false);
+  const [isExportPDF, setIsExportPDF] = useState(false);
+  const [isExportExcel, setIsExportExcel] = useState(false);
   const { t } = useTranslation();
   const [memberId, setMemberId] = useState<string | null>(null);
   const { isOpen, onClose, onToggle } = useDisclosure();
@@ -51,10 +55,15 @@ export const MemberListPage = () => {
   const queryClient = useQueryClient();
   const objState = getFilter('objState') || 'APPROVED';
 
-  const { data, isFetching } = useGetMemberListQuery({
-    pagination: getPaginationQuery(),
+  const filterParams = {
     filter: getFilterQuery({ objState: { value: 'APPROVED', compare: '=' } }),
+  };
+
+  const { data, isFetching } = useGetMemberListQuery({
+    ...filterParams,
+    pagination: getPaginationQuery(),
   });
+
   const { data: memberFilterData } = useGetMemberFilterMappingQuery();
   const { data: memberTypeData } = useGetGeneralMemberSettingsDataQuery();
 
@@ -84,7 +93,7 @@ export const MemberListPage = () => {
     [isMemberCodeSetup, memberForms]
   );
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.members?.list?.data?.edges ?? [], [data]);
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -286,6 +295,23 @@ export const MemberListPage = () => {
     [objState, t, memberFilterData?.members?.filterMapping?.serviceCenter, router, onToggle]
   );
 
+  useGetMemberListExportQuery(
+    { ...filterParams, pagination: { after: '', first: -1 }, isExportExcel, isExportPDF },
+    {
+      enabled: triggerExport,
+      staleTime: 0,
+      onSettled: () => setTriggerExport(false),
+      onSuccess: (res) => {
+        setTriggerExport(false);
+        toast({
+          id: 'export',
+          type: 'success',
+          message: res?.members?.list?.success?.message as string,
+        });
+      },
+    }
+  );
+
   return (
     <>
       <PageHeader
@@ -307,11 +333,22 @@ export const MemberListPage = () => {
         isLoading={isFetching}
         noDataTitle={t['member']}
         pagination={{
-          total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members?.list?.pageInfo,
+          total: data?.members?.list?.data?.totalCount ?? 'Many',
+          pageInfo: data?.members?.list?.data?.pageInfo,
         }}
         menu="MEMBERS"
         forms={alteredMemberForms}
+        canExport
+        handleExportPDF={() => {
+          setTriggerExport(true);
+          setIsExportPDF(true);
+          setIsExportExcel(false);
+        }}
+        handleExportCSV={() => {
+          setTriggerExport(true);
+          setIsExportPDF(false);
+          setIsExportExcel(true);
+        }}
       />
       <MemberDeleteModal isOpen={isOpen} onClose={onClose} memberId={memberId} />
 

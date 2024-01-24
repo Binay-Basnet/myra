@@ -292,3 +292,14 @@ mutation updateSavingProductRebate(
     }
   }
 }
+
+mutation updateMultipleInterestRate($accountId: [ID!]!, $data: InterestRateSetupInput!) {
+  account {
+    setMultipleAccountInterest(accountId: $accountId, data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

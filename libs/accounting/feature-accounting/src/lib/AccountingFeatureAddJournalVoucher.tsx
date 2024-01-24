@@ -11,7 +11,7 @@ import {
   useGetEndOfDayDateDataQuery,
   useSetJournalVoucherDataMutation,
 } from '@coop/cbs/data-access';
-import { localizedDate, localizedTime } from '@coop/cbs/utils';
+import { Can, localizedDate, localizedTime } from '@coop/cbs/utils';
 import { FormDatePicker, FormInput, FormLayout, FormTextArea } from '@coop/shared/form';
 import {
   amountConverter,
@@ -192,7 +192,9 @@ export const AccountingFeatureAddJournalVoucher = () => {
                 title: 'Jornal Voucher Entry Failed',
               }}
             >
-              <Button width="160px">{t['save']}</Button>
+              <Can I="VIEW" a="CBS_TRANSFERS_IBT_TRANSFER">
+                <Button width="160px">{t['save']}</Button>
+              </Can>
             </ResponseDialog>
           ) : (
             <ResponseDialog

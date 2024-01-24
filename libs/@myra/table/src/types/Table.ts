@@ -102,6 +102,9 @@ export interface TableProps<TData> {
   freezeFirstColumn?: boolean;
 
   expandFirstLevel?: boolean;
+  handleExportCSV?: () => void;
+  handleExportPDF?: () => void;
+  canExport?: boolean;
 }
 
 export type Column<TData> = Omit<ColumnDef<TData, unknown>, 'accessorKey' | 'accessorFn' | 'id'> & {

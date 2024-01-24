@@ -10,38 +10,28 @@ type IEbankingFormFieldProps = RequiredFields & {
   options: { label: string; value: string }[];
   schema: Utility;
   currentSequence: number;
-  response: Record<number, Record<string, string> | null | undefined>;
 };
 
 export const EbankingFormField = (props: IEbankingFormFieldProps) => {
-  const {
-    fieldType,
-    fieldName,
-    fieldLabel,
-    isRequired,
-    options,
-    schema,
-    currentSequence,
-    response,
-  } = props;
+  const { fieldType, fieldName, fieldLabel, isRequired, options, schema, currentSequence } = props;
 
   const { setValue } = useFormContext();
 
   const handleRenewalPlans = (newVal: SingleValue<SelectOption>) => {
+    if (!('amount' in options[0])) {
+      return;
+    }
+
     const prevField = schema?.sequence?.[currentSequence - 2]?.responseFieldMapping?.find(
       (prev) => prev?.mapField === fieldName
     );
 
-    if (prevField?.fieldName !== 'renewalPlans') return;
+    const selectedOption = (options as Record<string, string>[])?.find(
+      (opt) => opt?.[prevField?.options?.key as string] === newVal?.value
+    );
 
-    const responseOptions = response?.[currentSequence - 1]?.[prevField?.fieldName as string];
-
-    const selectedPlan = (
-      responseOptions as unknown as { planId: string; planAmount: string }[]
-    )?.find((opt) => opt?.planId === newVal?.value);
-
-    if (selectedPlan) {
-      setValue('amount', selectedPlan?.planAmount || 0);
+    if (selectedOption) {
+      setValue('amount', selectedOption?.['amount'] || 0);
     }
   };
 

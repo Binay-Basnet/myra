@@ -12,7 +12,7 @@ import {
   UtilityInput,
 } from '@coop/ebanking/data-access';
 
-import { InternetPaymentForm, InternetPaymentResult, InternetPaymentReview } from '../components';
+import { UtilityPaymentForm, UtilityPaymentResult, UtilityPaymentReview } from '../components';
 import { ElectricityBill, ElectricityPaymentInitial } from '../components/electricity-payment';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'pending';
@@ -136,7 +136,7 @@ export const UtilityElectricityPayment = () => {
 
         {currentSequence === 1 && paymentStatus === 'form' && (
           <Box>
-            <InternetPaymentForm
+            <UtilityPaymentForm
               currentSequence={currentSequence}
               setCurrentSequence={setCurrentSequence}
               schema={schema as Utility}
@@ -163,7 +163,7 @@ export const UtilityElectricityPayment = () => {
         )}
 
         {paymentStatus === 'review' && (
-          <InternetPaymentReview
+          <UtilityPaymentReview
             setPaymentStatus={setPaymentStatus}
             handleMakePayment={handlePayment}
             schema={schema as Utility}
@@ -175,7 +175,7 @@ export const UtilityElectricityPayment = () => {
         {paymentStatus === 'success' ||
         paymentStatus === 'failure' ||
         paymentStatus === 'pending' ? (
-          <InternetPaymentResult
+          <UtilityPaymentResult
             paymentStatus={paymentStatus}
             setPaymentStatus={setPaymentStatus}
             mutationMsg={mutationMsg}

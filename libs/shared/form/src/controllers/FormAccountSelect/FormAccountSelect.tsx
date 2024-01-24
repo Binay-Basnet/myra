@@ -152,7 +152,7 @@ export const FormAccountSelect = ({
   const accountOptions: Option[] = useMemo(() => {
     if (groupId) {
       return (
-        groupAccountList?.account?.list?.edges?.reduce((prevVal, curVal) => {
+        groupAccountList?.account?.list?.data?.edges?.reduce((prevVal, curVal) => {
           if (excludeIds?.includes(curVal?.node?.id as string) || !curVal) {
             return prevVal;
           }

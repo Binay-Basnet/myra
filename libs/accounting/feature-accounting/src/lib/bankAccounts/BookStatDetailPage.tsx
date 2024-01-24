@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
 import { Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -11,13 +10,11 @@ import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 export const BookStatDetailPage = () => {
   const { t } = useTranslation();
 
-  const router = useRouter();
-
   const { data, isFetching } = useGetMemberListQuery({
     pagination: getPaginationQuery(),
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.members?.list?.data?.edges ?? [], [data]);
 
   const popoverTitle = [
     {

@@ -42,7 +42,7 @@ export const GroupMembers = (props: { data: Member[]; allowableServiceCenters: s
     { enabled: !!allowableServiceCenters }
   );
 
-  const memberSearchOptions = memberData?.members?.list?.edges?.map((item) => ({
+  const memberSearchOptions = memberData?.members?.list?.data?.edges?.map((item) => ({
     label: item?.node?.name?.local,
     value: item?.node?.id,
   }));

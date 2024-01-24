@@ -31,31 +31,32 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'TV payment feature added in utility payments.',
-      'Default interest rate added in the saving product general update section.',
-      'Default interest rate added in the loan product general update section.',
-      "MR cannot create other MR's today list.",
-      'Interest posting to be allowed in dormant account.',
-      'Interest breakdown section added in the saving and loan product details section.',
+      'Download center added in the member register report,  member list, saving account list, and loan account list.',
+      'Summary Voucher Report.',
+      'IBT approval allowed for the Branch Manager',
+      'Search in the withdraw slip section. ( slip book, requests, block slip requests.)',
+      'Bulk account premium rate update available on both loan and saving product details page.',
+      'Search implementation in teller - vault, teller - bank, teller - teller, cash in transit, and IBT sections.',
+      'Wallet load (Prabhu pay, cell pay, eSewa, namaste pay) in e-banking.',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Dormant accounts list in Saving accounts section of Member overview page.',
-      'Account number if payment mode is "account transfer" in loan repayment success card.',
-      'Interest Posting frequency in saving product dashboard page.',
-      'In loan statement account report , account name are added with visible format.',
-      'Dormant accounts are listed in the nominee search while in account open.',
-      'Added no of account selected and select all account feature in bulk transfer.',
-      'Search issue fixed in the bulk transfer section.',
-      'Share return issue(membership fee is unpaid) fix.',
-      'Deposit date (in payment mode) to always be required.',
-      'Remove loan statement report from loan reports list.(shifted to others report section).',
-      'Installment amount to be shown in the table.(MR)',
-      'effective interest rate added  in the member overview page.( saving and loan accounts)',
-      'In loan statement account report , total added in the report section.',
-      'Loan application and account interest rate mismatch if account premium is edited after application has already been saved',
+      'Account total balance in deposit bill print',
+      'Date and member ID sorted in the bulk transfer table',
+      'Future Date not to be accepted for payment via bank',
+      'Interest rate (0% shown) in Saving Balance report',
+      'The date filter should be as per the system date by default, instead of the calendar date.',
+      'Sanctioned amount instead of applied amount in loan application "approved" section.',
+      'Error when updating a user with a previously uploaded profile image.',
+      "Automatically remove an inactive member and closed saving accounts from the MR collection list and today's list.",
+      'print data for account transfer which includes LOC loan account.',
+      'Force logout after the day-end process is completed',
+      'Share ledger name format ( member name + member code ) for new ledgers',
+      'Account number if payment mode is "account transfer" in loan repayment success card reprint.',
+      'Disclaimer text break for second page in Balance Certificate Print',
+      'Bank filter in Bank GL report  as per branch',
     ],
   },
 };
@@ -94,8 +95,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.104</Text>
-          <Text fontSize="s3">Jan 10, 2024</Text>
+          <Text fontSize="r2">Version 1.0.105</Text>
+          <Text fontSize="s3">Jan 24, 2024</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>

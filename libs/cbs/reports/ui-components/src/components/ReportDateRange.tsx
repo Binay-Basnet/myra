@@ -10,12 +10,14 @@ interface IReportDateRange {
   label?: string;
   name?: string;
   setInitialDate?: boolean;
+  baseDate?: Date;
 }
 
 export const ReportDateRange = ({
   label = 'Select Period',
   name = 'period',
   setInitialDate = true,
+  baseDate,
 }: IReportDateRange) => {
   const { control, setValue, watch } = useFormContext();
   const { locale } = useRouter();
@@ -44,7 +46,7 @@ export const ReportDateRange = ({
           locale={locale === 'ne' ? 'ne' : 'en'}
           calendarType={calendarType || 'BS'}
           value={value}
-          baseDate={new Date(transactionDate?.en || '')}
+          baseDate={baseDate || new Date(transactionDate?.en || '')}
           onChange={(newDate) =>
             onChange({
               from: {

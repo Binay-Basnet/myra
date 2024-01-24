@@ -9,6 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Alert, asyncToast, Box, Button, Icon, Loader, Modal, Text } from '@myra-ui';
 
 import {
+  NatureOfDepositProduct,
   ObjState,
   TodayListStatus,
   useAddAgentTodayListMutation,
@@ -19,6 +20,7 @@ import {
   useListAgentMemberQuery,
   useSendTodayTaskMutation,
 } from '@coop/cbs/data-access';
+import { getAmountToCollect } from '@coop/cbs/transactions/agent';
 import { ConfirmationDialog } from '@coop/shared/components';
 import { FormLayout, FormNumberInput, FormSelect } from '@coop/shared/form';
 import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
@@ -40,30 +42,6 @@ type AccountsEntry = {
 
 type TodaysList = {
   accounts: AccountsEntry[];
-};
-
-const getAmountToCollect = (dueAmount: number, dueFine: number, installmentAmount: number) => {
-  if (!dueAmount) {
-    return '';
-  }
-
-  if (!installmentAmount) {
-    if (dueFine) {
-      return `[Due Amount: Rs.${amountConverter(
-        Number(dueAmount) - Number(dueFine)
-      )}, Fine: Rs.${amountConverter(dueFine)}]`;
-    }
-
-    return `[Rs.${amountConverter(dueAmount)}]`;
-  }
-
-  if (dueFine) {
-    return `[Installment Amt.: Rs.${amountConverter(installmentAmount)}, Fine: Rs.${amountConverter(
-      dueFine
-    )}]`;
-  }
-
-  return `[Installment Amt.: Rs.${amountConverter(installmentAmount)}]`;
 };
 
 export const MRCollectionDetail = () => {
@@ -763,6 +741,15 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
                 comparator: 'EqualTo',
                 value: memberId,
               },
+              {
+                column: 'nature',
+                comparator: 'IN',
+                value: [
+                  NatureOfDepositProduct.Saving,
+                  NatureOfDepositProduct.Current,
+                  NatureOfDepositProduct.RecurringSaving,
+                ],
+              },
             ],
           },
         ],
@@ -771,7 +758,10 @@ const AddAccountModal = ({ isOpen, onClose, handleAdd }: AddAccountModalProps) =
     { enabled: !!memberId }
   );
 
-  const accountList = useMemo(() => accountListData?.account?.list?.edges ?? [], [accountListData]);
+  const accountList = useMemo(
+    () => accountListData?.account?.list?.data?.edges ?? [],
+    [accountListData]
+  );
 
   const accountOptions = useMemo(
     () =>
