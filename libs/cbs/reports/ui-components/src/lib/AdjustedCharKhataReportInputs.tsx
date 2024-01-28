@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { CharKhataReportFilter, CoaAccountClass, CoaHead } from '@coop/cbs/data-access';
 import { FormBranchSelect, FormLeafCoaHeadSelect, FormSelect } from '@coop/shared/form';
 
-import { ReportCustomDateRange } from '../components';
+import { ReportDateRange } from '../components';
 
 type TrialSheetReportFiltersCharkhata = Omit<
   CharKhataReportFilter,
@@ -55,7 +55,7 @@ export const AdjustedCharkhataReportInputs = () => {
         coaClass={selectedCoaClasses as CoaAccountClass[]}
       />
 
-      <ReportCustomDateRange name="period" label="Date" />
+      <ReportDateRange name="period" label="Date" />
     </>
   );
 };
