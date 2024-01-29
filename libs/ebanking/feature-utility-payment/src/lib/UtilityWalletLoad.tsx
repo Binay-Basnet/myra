@@ -98,8 +98,6 @@ export const UtilityWalletLoad = () => {
       !submitResponse?.eBanking?.utility?.makePayment?.error &&
       submitResponse?.eBanking?.utility?.makePayment?.data?.transactionId
     ) {
-      // queryClient.invalidateQueries(['getAccountList']);
-      // queryClient.invalidateQueries(['getTransactionLists']);
       setTransactionCode(
         submitResponse?.eBanking?.utility?.makePayment?.data?.transactionId as string
       );
