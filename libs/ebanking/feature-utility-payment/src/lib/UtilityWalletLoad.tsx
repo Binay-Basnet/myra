@@ -119,12 +119,6 @@ export const UtilityWalletLoad = () => {
 
       setMutationMsg(errMsg as string);
       setPaymentStatus('failure');
-      // if (errMsg) {
-      //   // methods.setError('mobileNumber', { message: errMsg });
-      //   setPaymentStatus('form');
-      // } else {
-      //   setPaymentStatus('failure');
-      // }
     }
   };
 

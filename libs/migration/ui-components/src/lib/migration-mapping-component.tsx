@@ -12,7 +12,6 @@ import { FormEditableTable } from '@coop/shared/form';
 
 export const MigrationMappingComponent = () => {
   const router = useRouter();
-  // const { data, isLoading } = useGetMappingDataQuery({ dbName: router?.query?.['name'] as string });
   const methods = useForm();
   const {
     // reset

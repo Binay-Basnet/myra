@@ -21,24 +21,27 @@ export const ValidateExcel = (props: {
       row: item.row,
     })
   );
-  const { mutate: validateExcelMutation, isLoading } = useMutation(validateExcel, {
-    onSuccess: (res) => {
-      toast({
-        id: 'validate-excel',
-        type: 'success',
-        message: res?.data?.message,
-      });
-      queryClient.invalidateQueries(['project-status']);
-    },
-    onError: (res: { response: { data: { error: []; message: string } } }) => {
-      toast({
-        id: 'validate-excel',
-        type: 'error',
-        message: res?.response?.data?.message,
-      });
-      setErrorData(res?.response?.data?.error);
-    },
-  });
+  const { mutate: validateExcelMutation, isLoading: isValidationLoading } = useMutation(
+    validateExcel,
+    {
+      onSuccess: (res) => {
+        toast({
+          id: 'validate-excel',
+          type: 'success',
+          message: res?.data?.message,
+        });
+        queryClient.invalidateQueries(['project-status']);
+      },
+      onError: (res: { response: { data: { error: []; message: string } } }) => {
+        toast({
+          id: 'validate-excel',
+          type: 'error',
+          message: res?.response?.data?.message,
+        });
+        setErrorData(res?.response?.data?.error);
+      },
+    }
+  );
   const onValidateExcel = () => {
     const formData = new FormData();
     formData.append('project_name', router?.query?.['projectName'] as string);
@@ -58,7 +61,7 @@ export const ValidateExcel = (props: {
       <Button
         w="-webkit-fit-content"
         onClick={onValidateExcel}
-        isLoading={isLoading}
+        isLoading={isValidationLoading}
         isDisabled={!inputStatus}
       >
         Validate Excel
