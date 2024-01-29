@@ -4,7 +4,7 @@ import { debounce } from 'lodash';
 
 import { SelectProps } from '@myra-ui';
 
-import { useGetCoaAccountListQuery } from '@coop/cbs/data-access';
+import { useGetCoaAccountListWithoutBalanceQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 
 interface IFormBranchSelectProps extends SelectProps {
@@ -20,7 +20,7 @@ export const FormCOASelect = (props: IFormBranchSelectProps) => {
 
   const [coaName, setCOAName] = useState('');
 
-  const { data: branchListQueryData, isFetching } = useGetCoaAccountListQuery(
+  const { data: branchListQueryData, isFetching } = useGetCoaAccountListWithoutBalanceQuery(
     {
       pagination: {
         after: '',
@@ -47,7 +47,8 @@ export const FormCOASelect = (props: IFormBranchSelectProps) => {
     }
   );
 
-  const coaList = branchListQueryData?.settings?.chartsOfAccount?.coaAccountList?.edges;
+  const coaList =
+    branchListQueryData?.settings?.chartsOfAccount?.coaAccountListWithoutBalance?.edges;
 
   const coaOptions = coaList?.map((coa) => ({
     label: `${coa?.node?.accountName?.local}` as string,
