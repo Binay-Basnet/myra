@@ -1256,6 +1256,7 @@ export type AgentMutation = {
   deleteTodayTask: RemoveTodayTaskResult;
   editRejectedTodayList: AgentTodayListResult;
   modifyPreviousData: DataModificationResult;
+  modifyPreviousStatus: DataModificationResult;
   rejectTodayTask: RemoveTodayTaskResult;
   sentTodayTask: RemoveTodayTaskResult;
 };
@@ -4022,6 +4023,7 @@ export type ChartsOfAccountSettingsQuery = {
   class?: Maybe<ChartsOfAccountClassResult>;
   coaAccountDetails?: Maybe<CoaDetailsResult>;
   coaAccountList?: Maybe<CoaAccountListResult>;
+  coaAccountListWithoutBalance?: Maybe<CoaAccountListResult>;
   coaLeafNodeDetails?: Maybe<CoaLeafNodeDetailView>;
   coaLedgerList?: Maybe<CoaLedgerListResult>;
   filterMapping?: Maybe<CoaLedgerListFilterMap>;
@@ -4052,6 +4054,12 @@ export type ChartsOfAccountSettingsQueryCoaAccountDetailsArgs = {
 };
 
 export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
+  filter?: InputMaybe<Filter>;
+  flag?: InputMaybe<CoaListFlag>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ChartsOfAccountSettingsQueryCoaAccountListWithoutBalanceArgs = {
   filter?: InputMaybe<Filter>;
   flag?: InputMaybe<CoaListFlag>;
   pagination?: InputMaybe<Pagination>;
