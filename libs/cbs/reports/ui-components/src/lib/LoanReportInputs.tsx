@@ -35,7 +35,7 @@ export const LoanReportInputs = ({ isClosed, accountName, showAll }: LoanReportI
                 column: 'objState',
                 comparator: 'IN',
                 value: isClosed
-                  ? 'COMPLETED'
+                  ? ['COMPLETED']
                   : showAll
                   ? ['DISBURSED', 'COMPLETED']
                   : ['DISBURSED'],
@@ -55,7 +55,7 @@ export const LoanReportInputs = ({ isClosed, accountName, showAll }: LoanReportI
   );
   const loanAccounts = loanAccountData?.loanAccount?.list?.data?.edges?.map((account) => ({
     label:
-      account?.node?.objState === 'COMPLETED'
+      !isClosed && account?.node?.objState === 'COMPLETED'
         ? `[Closed] ${account?.node?.LoanAccountName}`
         : (account?.node?.LoanAccountName as string),
     value: account?.node?.id as string,
