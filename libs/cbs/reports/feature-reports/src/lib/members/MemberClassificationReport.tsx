@@ -53,11 +53,16 @@ export const MemberClassificationReport = () => {
 
   const [filters, setFilters] = useState<MemberClassificationFilter | null>(null);
 
+  const branchIds =
+    filters?.branch && filters?.branch.length !== 0
+      ? filters?.branch?.map((b) => (b as unknown as { value: string }).value)
+      : null;
+
   const { data, isFetching } = useGetMemberClassificationReportQuery(
     {
       data: {
         period: filters?.period,
-        branch: filters?.branch,
+        branch: branchIds,
       } as MemberClassificationFilter,
     },
     { enabled: !!filters }
@@ -136,7 +141,7 @@ export const MemberClassificationReport = () => {
           </GridItem>
 
           <GridItem colSpan={1}>
-            <FormBranchSelect showUserBranchesOnly name="branch" label="Select Branch" />
+            <FormBranchSelect showUserBranchesOnly name="branch" label="Select Branch" isMulti />
           </GridItem>
 
           <GridItem colSpan={2}>

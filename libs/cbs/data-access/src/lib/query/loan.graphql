@@ -437,6 +437,7 @@ query getMemberLoanAccountSearch($filter: Filter, $pagination: Pagination) {
           node {
             id
             LoanAccountName
+            objState
           }
         }
       }

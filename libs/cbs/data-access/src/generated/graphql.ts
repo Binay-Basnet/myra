@@ -17366,7 +17366,7 @@ export type MemberChequeDetails = {
 };
 
 export type MemberClassificationFilter = {
-  branch?: InputMaybe<Scalars['String']>;
+  branch?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   period: LocalizedDateFilter;
 };
 
@@ -39050,7 +39050,9 @@ export type GetMemberLoanAccountSearchQuery = {
   loanAccount: {
     list?: {
       data?: {
-        edges?: Array<{ node?: { id: string; LoanAccountName?: string | null } | null }> | null;
+        edges?: Array<{
+          node?: { id: string; LoanAccountName?: string | null; objState: LoanObjState } | null;
+        }> | null;
       } | null;
     } | null;
   };
@@ -69356,6 +69358,7 @@ export const GetMemberLoanAccountSearchDocument = `
           node {
             id
             LoanAccountName
+            objState
           }
         }
       }
