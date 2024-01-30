@@ -13,7 +13,7 @@ export const MemberKYMProfession = () => {
   });
 
   return (
-    <FormSection isRequired header="kymIndPROFESSION" flexLayout>
+    <FormSection isRequired header="kymIndProfession" flexLayout>
       {occupationLoading ? (
         <Skeleton height="40px" />
       ) : (

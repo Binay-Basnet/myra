@@ -35,7 +35,7 @@ const KYMIndCoopBasicInformation = () => {
       <FormSection templateColumns={2} id="kymAccIndMainPurposeofBecomingMember">
         <FormSelect
           name="purposeId"
-          label={t['kynIndMainpurposeofbecomingmember']}
+          label={t['kymIndMainpurposeofbecomingmember']}
           isLoading={purposeLoading}
           options={getFieldOption(purposeData)}
         />
@@ -44,7 +44,7 @@ const KYMIndCoopBasicInformation = () => {
       <FormSection>
         <GridItem colSpan={3}>
           <FormSwitchTab
-            label={t['kynIndMemberofAnothercooperative']}
+            label={t['kymIndMemberofAnothercooperative']}
             options={booleanList}
             name="isMemberOfAnotherCooperative"
           />
@@ -53,7 +53,7 @@ const KYMIndCoopBasicInformation = () => {
           <>
             <FormInput type="text" name="otherCoopName" label={t['kymIndCooperativeName']} />
 
-            <FormInput name="otherCoopBranchId" label={t['kymIndCooperativeServiceCenter']} />
+            <FormInput name="otherCoopBranchId" label={t['serviceCenter']} />
 
             <FormInput
               type="text"

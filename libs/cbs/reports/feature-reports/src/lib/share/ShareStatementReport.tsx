@@ -14,9 +14,11 @@ import { ReportDateRange, ReportMember } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate } from '@coop/cbs/utils';
 import { FormMemberSelect, FormRadioGroup } from '@coop/shared/form';
-import { amountConverter, quantityConverter } from '@coop/shared/utils';
+import { amountConverter, quantityConverter, useTranslation } from '@coop/shared/utils';
 
 export const ShareStatementReport = () => {
+  const { t } = useTranslation();
+
   const [filters, setFilters] = useState<ShareStatementReportSettings | null>(null);
   const router = useRouter();
   const memberId = router.query?.['memberId'];
@@ -61,13 +63,19 @@ export const ShareStatementReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Share Reports', link: '/cbs/reports/cbs-reports/share' },
-            { label: 'Share Statement', link: '/cbs/reports/cbs-reports/share/statement/new' },
+            { label: t['reportsSidebarShareReports'], link: '/cbs/reports/cbs-reports/share' },
+            {
+              label: t['reportsShareStatement'],
+              link: '/cbs/reports/cbs-reports/share/statement/new',
+            },
           ]}
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormMemberSelect name="memberId" label="Member Search" />
+            <FormMemberSelect
+              name="memberId"
+              label={t['reportsShareStatementReportMemberSearch']}
+            />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange />
@@ -82,7 +90,8 @@ export const ShareStatementReport = () => {
           <ReportMember member={shareMember} />
           <Box display="flex" justifyContent="end" px="s16">
             <Text fontSize="r1" fontWeight="500">
-              Opening Balance: {amountConverter((openingBalance as number) || 0)}
+              {t['reportsShareStatementReportOpeningBalance']}:{' '}
+              {amountConverter((openingBalance as number) || 0)}
             </Text>
           </Box>
 
@@ -90,8 +99,10 @@ export const ShareStatementReport = () => {
             showFooter
             columns={[
               {
-                header: 'S.No.',
-                footer: () => <Box textAlign="right">Total Balance</Box>,
+                header: t['sn'],
+                footer: () => (
+                  <Box textAlign="right">{t['reportsShareStatementReportTotalBalance']}</Box>
+                ),
                 accessorKey: 'index',
                 meta: {
                   width: '60px',
@@ -101,7 +112,7 @@ export const ShareStatementReport = () => {
                 },
               },
               {
-                header: 'Date',
+                header: t['reportsShareStatementReportDate'],
                 accessorKey: 'date',
                 accessorFn: (row) => localizedDate(row?.date),
                 meta: {
@@ -112,7 +123,7 @@ export const ShareStatementReport = () => {
                 },
               },
               {
-                header: 'Particular',
+                header: t['reportsShareStatementReportParticular'],
                 accessorKey: 'particular',
                 meta: {
                   width: '100%',
@@ -122,7 +133,7 @@ export const ShareStatementReport = () => {
                 },
               },
               {
-                header: 'No of Share',
+                header: t['reportsShareStatementReportNoOfShare'],
                 footer: () => shareReportTotal?.totalShares,
                 accessorKey: 'noOfShares',
                 cell: (props) => quantityConverter(props.getValue() as string),
@@ -132,7 +143,7 @@ export const ShareStatementReport = () => {
                 },
               },
               {
-                header: 'Return Amount (Dr.)',
+                header: t['reportsShareStatementReportReturnAmountDr'],
                 accessorKey: 'returnAmountDr',
                 cell: (props) => amountConverter(props.getValue() as string),
 
@@ -142,7 +153,7 @@ export const ShareStatementReport = () => {
                 },
               },
               {
-                header: 'Issue Amount (Cr.)',
+                header: t['reportsShareStatementReportIssueAmountCr'],
                 accessorKey: 'purchaseAmountCr',
                 cell: (props) => amountConverter(props.getValue() as string),
 
@@ -153,7 +164,7 @@ export const ShareStatementReport = () => {
                 },
               },
               {
-                header: 'Balance Sheet',
+                header: t['reportsShareStatementReportBalanceSheet'],
                 accessorKey: 'balanceSheet',
                 cell: (props) => amountConverter(props.getValue() as string),
 
@@ -167,18 +178,28 @@ export const ShareStatementReport = () => {
           />
           <Box display="flex" px="s16" justifyContent="end">
             <Text fontSize="r1" fontWeight="500">
-              Closing Balance: {amountConverter(shareReportTotal?.totalBalanceSheet || 0)}
+              {t['reportsShareStatementReportClosingBalance']}:{' '}
+              {amountConverter(shareReportTotal?.totalBalanceSheet || 0)}
             </Text>
           </Box>
         </Report.Content>
         <Report.Filters>
-          <Report.Filter title="Type of Share Transaction">
+          <Report.Filter title={t['reportsShareStatementReportTypeOfShareTransaction']}>
             <FormRadioGroup
               name="filter"
               options={[
-                { label: 'All', value: ShareTransactionType.All },
-                { label: 'Issue', value: ShareTransactionType.Issue },
-                { label: 'Return', value: ShareTransactionType.Return },
+                {
+                  label: t['reportsShareStatementReportTypeOfShareTransactionAll'],
+                  value: ShareTransactionType.All,
+                },
+                {
+                  label: t['reportsShareStatementReportTypeOfShareTransactionIssue'],
+                  value: ShareTransactionType.Issue,
+                },
+                {
+                  label: t['reportsShareStatementReportTypeOfShareTransactionReturn'],
+                  value: ShareTransactionType.Return,
+                },
               ]}
               direction="column"
             />

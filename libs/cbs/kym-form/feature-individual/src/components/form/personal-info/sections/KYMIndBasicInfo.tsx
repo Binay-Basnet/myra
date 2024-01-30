@@ -44,7 +44,7 @@ export const KYMIndBasicInfo = () => {
   }, [nationalityLoading]);
 
   return (
-    <FormSection id={KYMSection.INDIVIDUAL_BASIC_INFORMATION} header="kymIndBASICINFORMATION">
+    <FormSection id={KYMSection.INDIVIDUAL_BASIC_INFORMATION} header="kymIndBasicInformation">
       <FormInput isRequired type="text" name="firstName" label={t['kymIndFirstName']} />
       <FormInput type="text" name="middleName" label={t['kymIndMiddleName']} />
       <FormInput isRequired type="text" name="lastName" label={t['kymIndLastName']} />
@@ -92,7 +92,7 @@ export const KYMIndBasicInfo = () => {
         options={getFieldOption(religionFields)}
       />
 
-      <FormInput name="panNo" label="Pan No" />
+      <FormInput name={t['kymIndPanNo']} label="Pan No" />
     </FormSection>
   );
 };

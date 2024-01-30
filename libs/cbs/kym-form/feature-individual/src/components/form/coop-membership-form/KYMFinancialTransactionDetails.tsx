@@ -9,13 +9,13 @@ export const KYMFinancialTransactionDetails = () => {
   return (
     <FormSection
       id="kymAccIndFinancialTransactionDetails"
-      header="kynIndFINANCIALTRANSACTIONDETAILS"
-      subHeader="kynIndDetailsoftheamount"
+      header="kymIndFinancialTransactionDetails"
+      subHeader="kymIndDetailsoftheamount"
     >
       <FormAmountInput name="initialShare" label={t['kymIndFinancialShare']} />
       <FormAmountInput name="initialSaving" label={t['kymIndFinancialSavings']} />
 
-      <FormAmountInput name="initialLoan" label={t['kymIndLoan']} />
+      <FormAmountInput name="initialLoan" label={t['kymIndFinancialLoan']} />
 
       <FormAmountInput
         type="number"

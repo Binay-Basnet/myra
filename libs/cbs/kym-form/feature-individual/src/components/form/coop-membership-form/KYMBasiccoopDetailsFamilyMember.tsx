@@ -46,7 +46,7 @@ export const KYMIndCoopDetailsFamilyMember = () => {
       <GridItem colSpan={3}>
         <Box display="flex" flexDirection="column" gap="s16">
           <FormSwitchTab
-            label={t['kynIndFamilyMemberinthisinstitution']}
+            label={t['kymIndFamilyMemberinthisinstitution']}
             options={booleanList}
             name="isFamilyAMember"
             id="familyMemberInThisInstitution"
@@ -57,12 +57,12 @@ export const KYMIndCoopDetailsFamilyMember = () => {
                 <ul>
                   <li>
                     <Text fontSize="r1" fontWeight="600">
-                      Find Family Members With Name
+                      {t['kymIndFamilyMemberinthisinstitutionInfoOne']}
                     </Text>
                   </li>
                   <li>
                     <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-                      Multiple Members Can Be Selected With FInd Member Search{' '}
+                      {t['kymIndFamilyMemberinthisinstitutionInfoTwo']}
                     </Text>
                   </li>
                 </ul>
@@ -80,7 +80,7 @@ export const KYMIndCoopDetailsFamilyMember = () => {
                 <MemberSelect
                   value={currentMember}
                   name="familyMemberId"
-                  label="Member Search"
+                  label={t['kymIndFamilyMemberinthisinstitutionMemberSearch']}
                   onInputChange={debounce((id) => {
                     setMemberSearch(id);
                   }, 800)}

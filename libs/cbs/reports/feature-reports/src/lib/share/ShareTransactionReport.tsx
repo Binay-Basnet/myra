@@ -16,14 +16,14 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
+import { localizedDate, localizedText, RouteToDetailsPage } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
   FormCheckboxGroup,
   FormSelect,
 } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type Filter = {
   branchId: {
@@ -42,11 +42,13 @@ type Filter = {
   };
 };
 export const ShareTransactionsReport = () => {
+  const { t } = useTranslation();
+
   const [filters, setFilters] = useState<Filter | null>(null);
 
   const branchIds =
     filters?.branchId && filters?.branchId.length !== 0
-      ? filters?.branchId?.map((t) => t.value)
+      ? filters?.branchId?.map((b) => b.value)
       : null;
 
   const occupationIds =
@@ -111,17 +113,17 @@ export const ShareTransactionsReport = () => {
   });
 
   const genderOptions = genderFields?.form?.options?.predefined?.data?.map((g) => ({
-    label: String(g?.name?.local),
+    label: localizedText(g?.name) as string,
     value: g?.id as string,
   }));
 
   const educationOptions = educationFields?.form?.options?.predefined?.data?.map((g) => ({
-    label: String(g?.name?.local),
+    label: localizedText(g?.name) as string,
     value: g?.id as string,
   }));
   const occupationOptions =
     occupationData?.form?.options?.predefined?.data?.map((g) => ({
-      label: String(g?.name?.local),
+      label: localizedText(g?.name) as string,
       value: g?.id as string,
     })) || [];
 
@@ -137,19 +139,24 @@ export const ShareTransactionsReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Share Reports', link: '/cbs/reports/cbs-reports/share' },
+            { label: t['reportsSidebarShareReports'], link: '/cbs/reports/cbs-reports/share' },
             {
-              label: 'Share Transaction Report',
+              label: t['reportsShareTransactionReport'],
               link: '/cbs/reports/cbs-reports/share/transaction/new',
             },
           ]}
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect
+              showUserBranchesOnly
+              isMulti
+              name="branchId"
+              label={t['serviceCenter']}
+            />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange label="Share Transaction Date Period" />
+            <ReportDateRange label={t['reportsShareTransactionReportShareTransactionDatePeriod']} />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
@@ -166,8 +173,12 @@ export const ShareTransactionsReport = () => {
                 header: '',
                 columns: [
                   {
-                    header: 'Share Transaction Date',
-                    footer: () => <Box textAlign="right">Total Balance</Box>,
+                    header: t['reportsShareTransactionReportShareTransactionDate'],
+                    footer: () => (
+                      <Box textAlign="right">
+                        {t['reportsShareTransactionReportShareTotalBalance']}
+                      </Box>
+                    ),
                     accessorKey: 'transactionDate',
                     accessorFn: (row) => localizedDate(row?.transactionDate),
                     meta: {
@@ -179,7 +190,7 @@ export const ShareTransactionsReport = () => {
                     },
                   },
                   {
-                    header: 'Member ID',
+                    header: t['reportsShareTransactionReportMemberID'],
                     accessorKey: 'memberCode',
                     cell: (props) => (
                       <RouteToDetailsPage
@@ -196,7 +207,7 @@ export const ShareTransactionsReport = () => {
                     },
                   },
                   {
-                    header: 'Name',
+                    header: t['reportsShareTransactionReportName'],
                     accessorKey: 'name',
                     meta: {
                       width: '100%',
@@ -206,7 +217,7 @@ export const ShareTransactionsReport = () => {
                     },
                   },
                   {
-                    header: 'Service Center',
+                    header: t['serviceCenter'],
                     accessorKey: 'branchName',
                     meta: {
                       Footer: {
@@ -218,10 +229,10 @@ export const ShareTransactionsReport = () => {
               },
 
               {
-                header: 'Share Account',
+                header: t['reportsShareTransactionReportShareAccount'],
                 columns: [
                   {
-                    header: 'Share Return Amount Dr.',
+                    header: t['reportsShareTransactionReportShareReturnAmountDr'],
                     footer: () => amountConverter(footerData?.totalDr as string),
                     accessorKey: 'shareReturnDr',
                     cell: (props) => amountConverter(props.getValue() as string),
@@ -230,7 +241,7 @@ export const ShareTransactionsReport = () => {
                     },
                   },
                   {
-                    header: 'Share Issue Amount Cr.',
+                    header: t['reportsShareTransactionReportShareReturnAmountCr'],
                     accessorKey: 'shareIssueCr',
                     footer: () => amountConverter(footerData?.totalCr as string),
                     cell: (props) => amountConverter(props.getValue() as string),
@@ -274,7 +285,7 @@ export const ShareTransactionsReport = () => {
                 fontWeight={600}
                 color="gray.700"
               >
-                Total Share Issued
+                {t['reportsShareTransactionReportTotalShareIssued']}
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
                 {totalShare}
@@ -293,7 +304,7 @@ export const ShareTransactionsReport = () => {
                 fontWeight={600}
                 color="gray.700"
               >
-                Average Share Per Member{' '}
+                {t['reportsShareTransactionReportAverageSharePerMember']}{' '}
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
                 {averageSharePerMember}{' '}
@@ -302,24 +313,24 @@ export const ShareTransactionsReport = () => {
           </Box>
         </Report.Content>
         <Report.Filters>
-          <Report.Filter title="Gender">
+          <Report.Filter title={t['reportsShareTransactionReportGender']}>
             <FormCheckboxGroup name="filter.gender" list={genderOptions} orientation="column" />
           </Report.Filter>
-          <Report.Filter title="Education">
+          <Report.Filter title={t['reportsShareTransactionReportEducation']}>
             <FormCheckboxGroup
               name="filter.education"
               list={educationOptions}
               orientation="column"
             />
           </Report.Filter>
-          <Report.Filter title="Occupation Wise">
+          <Report.Filter title={t['reportsShareTransactionReportOccupationWise']}>
             <FormSelect name="filter.occupation" isMulti options={occupationOptions} />
           </Report.Filter>
-          <Report.Filter title="Address">
+          <Report.Filter title={t['reportsShareTransactionReportAddress']}>
             <Box display="flex" flexDir="column" gap="s16">
               <FormSelect
                 name="filter.provinceId"
-                label="Province"
+                label={t['province']}
                 isMulti
                 options={provinceData?.administration?.provinces.map((province) => ({
                   label: province.name,
@@ -328,7 +339,7 @@ export const ShareTransactionsReport = () => {
               />
               <FormSelect
                 name="filter.districtId"
-                label="District"
+                label={t['district']}
                 isMulti
                 options={districtsData?.administration?.districts.map((district) => ({
                   label: district.name,
@@ -337,7 +348,7 @@ export const ShareTransactionsReport = () => {
               />
               <FormSelect
                 name="filter.localGovernmentId"
-                label="Local Government"
+                label={t['localGoverment']}
                 isMulti
                 options={localGovernmentData?.administration?.municipalities.map(
                   (localGovernment) => ({
@@ -348,7 +359,7 @@ export const ShareTransactionsReport = () => {
               />
             </Box>
           </Report.Filter>
-          <Report.Filter title="Age Range">
+          <Report.Filter title={t['reportsShareTransactionReportAgeRange']}>
             <FormAmountFilter placeholder="Age" name="filter.ageRange" />
           </Report.Filter>
         </Report.Filters>

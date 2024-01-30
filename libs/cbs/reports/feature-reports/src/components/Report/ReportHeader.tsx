@@ -29,6 +29,7 @@ import {
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { useReport } from '@coop/cbs/reports';
 import { exportVisibleTableToExcel } from '@coop/cbs/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 type Path = {
   link?: string;
@@ -59,6 +60,8 @@ export const ReportHeader = ({
   const { mutateAsync: saveReport } = useSaveNewReportMutation();
   const { mutateAsync: getNewId } = useGetNewIdMutation();
   const queryClient = useQueryClient();
+
+  const { t } = useTranslation();
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -93,7 +96,7 @@ export const ReportHeader = ({
                   }
                 }}
               >
-                {path?.label}
+                {t[path?.label] || path?.label}
               </Text>
               {paths?.length !== index + 1 && (
                 <Icon
@@ -124,7 +127,7 @@ export const ReportHeader = ({
               shade="neutral"
               leftIcon={<Icon as={AiOutlinePrinter} />}
             >
-              Print
+              {t['print']}
             </Button>
           )}
           content={() => printRef.current}
@@ -138,7 +141,7 @@ export const ReportHeader = ({
           isDisabled={router.query['action'] !== 'new' || !hasSave}
         >
           <Icon as={IoSaveOutline} />
-          Save Report
+          {t['reportsSaveReport']}
         </Button>
 
         <Popover placement="bottom-end">
@@ -166,10 +169,10 @@ export const ReportHeader = ({
                   py="s8"
                   _hover={{ bg: 'gray.100' }}
                   cursor="pointer"
-                  onClick={() => exportVisibleTableToExcel(report)}
+                  onClick={() => exportVisibleTableToExcel(t[report])}
                 >
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                    Export Visible
+                    {t['exportVisible']}
                   </Text>
                 </GridItem>
                 {canExport && (
@@ -183,7 +186,7 @@ export const ReportHeader = ({
                         onClick={onExportPDF}
                       >
                         <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                          Export PDF
+                          {t['exportPdf']}
                         </Text>
                       </GridItem>
                     )}
@@ -196,7 +199,7 @@ export const ReportHeader = ({
                       onClick={onExportCSV}
                     >
                       <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                        Export CSV
+                        {t['exportCSV']}
                       </Text>
                     </GridItem>
                   </>
@@ -254,7 +257,7 @@ export const ReportHeader = ({
               });
             }}
           >
-            Save Report
+            {t['reportsSaveReport']}
           </Button>
         </Box>
       </Modal>

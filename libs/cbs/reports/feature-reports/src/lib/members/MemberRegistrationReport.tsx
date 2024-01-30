@@ -18,7 +18,7 @@ import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { formatAddress, localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormCheckboxGroup } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type Filter = Omit<MemberRegistrationReportData, 'branchId'> & {
   branchId: {
@@ -35,11 +35,13 @@ type Filter = Omit<MemberRegistrationReportData, 'branchId'> & {
 };
 
 export const MemberRegisterReport = () => {
+  const { t } = useTranslation();
+
   const [filters, setFilters] = useState<Filter | null>(null);
 
   const branchIds =
     filters?.branchId && filters?.branchId.length !== 0
-      ? filters?.branchId?.map((t) => t.value)
+      ? filters?.branchId?.map((b) => b.value)
       : null;
   const memberTypes =
     filters?.filter?.memberType && filters?.filter?.memberType.length !== 0
@@ -82,11 +84,11 @@ export const MemberRegisterReport = () => {
               showUserBranchesOnly
               isMulti
               name="branchId"
-              label="Select Service Center"
+              label={t['serviceCenter']}
             />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange label="Member Registration Date Period" />
+            <ReportDateRange label={t['reportsMemberRegisterReportMemberRegdDatePeriod']} />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
@@ -99,13 +101,13 @@ export const MemberRegisterReport = () => {
             {individualReport && individualReport?.length !== 0 ? (
               <Box pt="s16">
                 <Text px="s16" fontSize="r2" color="gray.800" fontWeight={500}>
-                  Individual
+                  {t['reportsMemberRegisterReportIndividual']}
                 </Text>
                 <Report.Table<MemberIndividualData & { index: number }>
                   data={individualReport?.map((r, index) => ({ ...r, index: index + 1 }))}
                   columns={[
                     {
-                      header: 'Member ID',
+                      header: t['reportsMemberRegisterReportIndMemberID'],
                       accessorKey: 'memberCode',
                       cell: (props) => (
                         <RouteToDetailsPage
@@ -116,98 +118,98 @@ export const MemberRegisterReport = () => {
                       ),
                     },
                     {
-                      header: 'Member Name',
+                      header: t['reportsMemberRegisterReportIndMemberName'],
                       accessorFn: (row) => row?.name,
                     },
                     {
-                      header: 'Address',
+                      header: t['reportsMemberRegisterReportIndAddress'],
                       accessorKey: 'address',
                       cell: (props) => formatAddress(props.getValue() as Address),
                     },
 
                     {
-                      header: 'DOB',
+                      header: t['reportsMemberRegisterReportIndDOB'],
                       accessorFn: (row) => localizedDate(row?.dob),
                       meta: {
                         skipExcelFormatting: true,
                       },
                     },
                     {
-                      header: 'GrandFather Name',
+                      header: t['reportsMemberRegisterReportIndGrandFatherName'],
                       accessorFn: (row) => row?.grandFatherName,
                     },
 
                     {
-                      header: "Father's Name",
+                      header: t['reportsMemberRegisterReportIndFatherName'],
                       accessorFn: (row) => row?.fatherName,
                     },
 
                     {
-                      header: 'Profession',
+                      header: t['reportsMemberRegisterReportIndProfession'],
                       accessorKey: 'profession',
                     },
                     {
-                      header: 'Share Information',
+                      header: t['reportsMemberRegisterReportIndShareInformation'],
                       columns: [
                         {
-                          header: 'Per Share Kitta',
+                          header: t['reportsMemberRegisterReportIndPerShareKitta'],
                           accessorFn: (row) => row?.shareInfo?.perShareAmount,
                           cell: (props) => amountConverter(props.getValue() as string),
                         },
                         {
-                          header: 'Share Purchase Kitta',
+                          header: t['reportsMemberRegisterReportIndSharePurchaseKitta'],
                           accessorFn: (row) => row?.shareInfo?.kitta,
                         },
                         {
-                          header: 'Total Amount',
+                          header: t['reportsMemberRegisterReportIndTotalAmount'],
                           accessorFn: (row) => row?.shareInfo?.amount,
                           cell: (props) => amountConverter(props.getValue() as string),
                         },
                       ],
                     },
                     {
-                      header: 'FingerPrint',
+                      header: t['reportsMemberRegisterReportIndFingerprint'],
                       accessorKey: 'fingerPrint',
                       cell: (props) => (props?.getValue() ? 'Yes' : 'No'),
                     },
 
                     {
-                      header: 'Photo',
+                      header: t['reportsMemberRegisterReportIndPhoto'],
                       accessorKey: 'photo',
                       cell: (props) => (props?.getValue() ? 'Yes' : 'No'),
                     },
 
                     {
-                      header: 'Contact Number',
+                      header: t['reportsMemberRegisterReportIndContactNumber'],
                       accessorKey: 'contactNo',
                       meta: {
                         skipExcelFormatting: true,
                       },
                     },
                     {
-                      header: 'Email',
+                      header: t['reportsMemberRegisterReportIndEmail'],
                       accessorKey: 'email',
                     },
                     {
-                      header: 'VAT/PAN No',
+                      header: t['reportsMemberRegisterReportIndVatPanNo'],
                       accessorKey: 'panVatNo',
                       meta: {
                         skipExcelFormatting: true,
                       },
                     },
                     {
-                      header: 'Other',
+                      header: t['reportsMemberRegisterReportIndOther'],
                       accessorKey: 'other',
                     },
                     {
-                      header: 'Membership Date',
+                      header: t['reportsMemberRegisterReportIndMembershipDate'],
                       accessorFn: (row) => localizedDate(row?.activeDate),
                       meta: {
                         skipExcelFormatting: true,
                       },
                     },
                   ]}
-                  tableTitle="Individual"
+                  tableTitle={t['reportsMemberRegisterReportIndTableTitle']}
                 />
               </Box>
             ) : null}
@@ -215,13 +217,13 @@ export const MemberRegisterReport = () => {
             {otherReport && otherReport?.length !== 0 ? (
               <Box pt="s16">
                 <Text px="s16" fontSize="r2" color="gray.800" fontWeight={500}>
-                  Institutional, Cooperative, Cooperative Union
+                  {t['reportsMemberRegisterReportInstCoopCoopUnion']}
                 </Text>
                 <Report.Table<MemberOtherData & { index: number }>
                   data={otherReport?.map((r, index) => ({ ...r, index: index + 1 }))}
                   columns={[
                     {
-                      header: 'Member ID',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionMemberID'],
                       accessorKey: 'memberCode',
                       cell: (props) => (
                         <RouteToDetailsPage
@@ -232,21 +234,21 @@ export const MemberRegisterReport = () => {
                       ),
                     },
                     {
-                      header: 'Member Name',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionMemberName'],
                       accessorFn: (row) => row?.name,
                     },
                     {
-                      header: 'Address',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionAddress'],
                       accessorKey: 'address',
                       cell: (props) => formatAddress(props.getValue() as Address),
                     },
 
                     {
-                      header: 'DOE',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionDOE'],
                       accessorFn: (row) => localizedDate(row?.doe),
                     },
                     {
-                      header: 'Type of Institution',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionTypeOfInstitution'],
                       accessorKey: 'typeOfInstitution',
                       cell: (props) => (
                         <Box textTransform="capitalize">
@@ -259,93 +261,109 @@ export const MemberRegisterReport = () => {
                     },
 
                     {
-                      header: 'Working Area',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionWorkingArea'],
                       accessorKey: 'workingArea',
                     },
 
                     {
-                      header: 'Total Member',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionTotalMember'],
                       accessorKey: 'totalMember',
                     },
 
                     {
-                      header: 'Balance Sheet',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionBalanceSheet'],
                       accessorKey: 'balanceSheet',
                       cell: (props) => amountConverter(props.getValue() as string),
                     },
                     {
-                      header: 'Share Information',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionShareInformation'],
                       columns: [
                         {
-                          header: 'Per Amount Kitta',
+                          header: t['reportsMemberRegisterReportInstCoopCoopUnionPerShareKitta'],
                           accessorFn: (row) => row?.shareInfo?.perShareAmount,
                           cell: (props) => amountConverter(props.getValue() as string),
                         },
                         {
-                          header: 'Share Purchase Kitta',
+                          header:
+                            t['reportsMemberRegisterReportInstCoopCoopUnionSharePurchaseKitta'],
                           accessorFn: (row) => row?.shareInfo?.kitta,
                         },
                         {
-                          header: 'Total Amount',
+                          header: t['reportsMemberRegisterReportInstCoopCoopUnionTotalAmount'],
                           accessorFn: (row) => row?.shareInfo?.amount,
                         },
                       ],
                     },
                     {
-                      header: 'Authorized Person Name',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionAuthorizedPersonName'],
                       accessorKey: 'authPersonName',
                     },
                     {
-                      header: 'Post',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionPost'],
                       accessorKey: 'post',
                     },
                     {
-                      header: 'Stamp',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionStamp'],
                       accessorKey: 'stamp',
                       cell: (props) => (props?.getValue() ? 'Yes' : 'No'),
                     },
 
                     {
-                      header: 'Contact Number',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionContactNumber'],
                       accessorKey: 'contactNo',
                     },
                     {
-                      header: 'Email',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionEmail'],
                       accessorKey: 'email',
                     },
                     {
-                      header: 'VAT/PAN No',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionVatPanNo'],
                       accessorKey: 'panVatNo',
                     },
                     {
-                      header: 'Other',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionOther'],
                       accessorKey: 'other',
                     },
                     {
-                      header: 'Membership Date',
+                      header: t['reportsMemberRegisterReportInstCoopCoopUnionMembershipDate'],
                       accessorFn: (row) => localizedDate(row?.activeDate),
                       meta: {
                         skipExcelFormatting: true,
                       },
                     },
                   ]}
-                  tableTitle="Other"
+                  tableTitle={t['reportsMemberRegisterReportInstCoopCoopUnionTableTitle']}
                 />
               </Box>
             ) : null}
           </Box>
         </Report.Content>
         <Report.Filters>
-          <Report.Filter title="Member Type">
+          <Report.Filter title={t['reportsMemberRegisterReportFilterMemberType']}>
             <FormCheckboxGroup
               name="filter.memberType"
               orientation="column"
               list={[
-                { label: 'All', value: MemberType.All },
-                { label: 'Individual', value: MemberType.Individual },
-                { label: 'Institution', value: MemberType.Institution },
-                { label: 'Cooperative', value: MemberType.Cooperative },
-                { label: 'Cooperative Union', value: MemberType.CooperativeUnion },
+                {
+                  label: t['reportsMemberRegisterReportFilterMemberTypeAll'],
+                  value: MemberType.All,
+                },
+                {
+                  label: t['reportsMemberRegisterReportFilterMemberTypeIndividual'],
+                  value: MemberType.Individual,
+                },
+                {
+                  label: t['reportsMemberRegisterReportFilterMemberTypeInstitution'],
+                  value: MemberType.Institution,
+                },
+                {
+                  label: t['reportsMemberRegisterReportFilterMemberTypeCooperative'],
+                  value: MemberType.Cooperative,
+                },
+                {
+                  label: t['reportsMemberRegisterReportFilterMemberTypeCooperativeUnion'],
+                  value: MemberType.CooperativeUnion,
+                },
               ]}
             />
           </Report.Filter>
@@ -356,6 +374,8 @@ export const MemberRegisterReport = () => {
 };
 
 const ReportHeaderWatch = () => {
+  const { t } = useTranslation();
+
   const [triggerExport, setTriggerExport] = useState(false);
   const [isExportPDF, setIsExportPDF] = useState(false);
   const [isExportExcel, setIsExportExcel] = useState(false);
@@ -365,7 +385,7 @@ const ReportHeaderWatch = () => {
 
   const branchIds =
     values?.['branchId'] && values?.['branchId'].length !== 0
-      ? values?.['branchId']?.map((t) => t.value)
+      ? values?.['branchId']?.map((b) => b.value)
       : null;
 
   useGetMemberRegistrationReportForExportQuery(
@@ -397,8 +417,11 @@ const ReportHeaderWatch = () => {
   return (
     <Report.PageHeader
       paths={[
-        { label: 'Member Reports', link: '/cbs/reports/cbs-reports/members' },
-        { label: 'Member Register', link: '/cbs/reports/cbs-reports/members/register/new' },
+        { label: t['reportsSidebarMemberReports'], link: '/cbs/reports/cbs-reports/members' },
+        {
+          label: t['reportsMemberRegisterReport'],
+          link: '/cbs/reports/cbs-reports/members/register/new',
+        },
       ]}
       canExport
       onExportPDF={() => {

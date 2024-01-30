@@ -17,7 +17,7 @@ import {
   FormCBSDatePicker,
   FormRadioGroup,
 } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type MemberWiseBalanceFilters = Omit<MemberBalanceFilter, 'branchId'> & {
   branchId: {
@@ -27,11 +27,13 @@ type MemberWiseBalanceFilters = Omit<MemberBalanceFilter, 'branchId'> & {
 };
 
 export const MemberBalanceReport = () => {
+  const { t } = useTranslation();
+
   const [filters, setFilters] = useState<MemberWiseBalanceFilters | null>(null);
 
   const branchIds =
     filters?.branchId && filters?.branchId.length !== 0
-      ? filters?.branchId?.map((t) => t.value)
+      ? filters?.branchId?.map((b) => b.value)
       : null;
 
   const { data: memberBalanceReportData, isFetching } = useGetMemberWiseBalanceReportQuery(
@@ -63,19 +65,28 @@ export const MemberBalanceReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Member Reports', link: '/cbs/reports/cbs-reports/members' },
+            { label: t['reportsSidebarMemberReports'], link: '/cbs/reports/cbs-reports/members' },
             {
-              label: 'Member Wise Balance Report',
+              label: t['reportsMemberWiseBalanceReport'],
               link: '/cbs/reports/cbs-reports/members/balance/new',
             },
           ]}
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect
+              showUserBranchesOnly
+              isMulti
+              name="branchId"
+              label={t['serviceCenter']}
+            />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormCBSDatePicker name="period.from" label="Date" setInitialDate />
+            <FormCBSDatePicker
+              name="period.from"
+              label={t['reportsMemberMemberWiseBalanceReportDate']}
+              setInitialDate
+            />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
@@ -88,9 +99,13 @@ export const MemberBalanceReport = () => {
             <Report.Table<MemberBalanceReportData>
               columns={[
                 {
-                  header: 'Member Code',
+                  header: t['reportsMemberMemberWiseBalanceReportMemberCode'],
                   accessorKey: 'memberCode',
-                  footer: () => <Box textAlign="right">Total Balance</Box>,
+                  footer: () => (
+                    <Box textAlign="right">
+                      {t['reportsMemberMemberWiseBalanceReportTotalBalance']}
+                    </Box>
+                  ),
                   cell: (props) => (
                     <RouteToDetailsPage
                       id={props?.row?.original?.memberId as string}
@@ -105,7 +120,7 @@ export const MemberBalanceReport = () => {
                   },
                 },
                 {
-                  header: 'Member Name',
+                  header: t['reportsMemberMemberWiseBalanceReportMemberName'],
                   accessorKey: 'memberName',
                   meta: {
                     Footer: {
@@ -114,7 +129,7 @@ export const MemberBalanceReport = () => {
                   },
                 },
                 {
-                  header: 'Member Type',
+                  header: t['reportsMemberMemberWiseBalanceReportMemberType'],
                   accessorKey: 'memberType',
                   cell: (props) => (
                     <Box textTransform="capitalize">
@@ -128,7 +143,7 @@ export const MemberBalanceReport = () => {
                   },
                 },
                 {
-                  header: 'Membership Date',
+                  header: t['reportsMemberMemberWiseBalanceReportMembershipDate'],
                   accessorFn: (row) => row?.membershipDate,
                   cell: ({ row }) => localizedDate(row.original?.membershipDate),
                   meta: {
@@ -139,7 +154,7 @@ export const MemberBalanceReport = () => {
                   },
                 },
                 {
-                  header: 'Member Service Center',
+                  header: t['reportsMemberMemberWiseBalanceReportMemberServiceCenter'],
                   accessorFn: (row) => row?.branchName,
                   meta: {
                     Footer: {
@@ -148,12 +163,12 @@ export const MemberBalanceReport = () => {
                   },
                 },
                 {
-                  header: 'Saving Balance',
+                  header: t['reportsMemberMemberWiseBalanceReportSavingBalance'],
                   accessorKey: 'totalSavingCrBalance',
                   id: 'SavingBalanceHeader',
                   columns: [
                     {
-                      header: 'Debit (Dr.)',
+                      header: t['reportsMemberMemberWiseBalanceReportSavingBalanceDebit'],
                       accessorKey: 'totalSavingDrBalance',
 
                       accessorFn: (row) => row?.totalSavingDrBalance,
@@ -167,7 +182,7 @@ export const MemberBalanceReport = () => {
                       },
                     },
                     {
-                      header: 'Credit (Cr.)',
+                      header: t['reportsMemberMemberWiseBalanceReportSavingBalanceCredit'],
                       accessorFn: (row) => row?.totalSavingCrBalance,
                       accessorKey: 'totalSavingCrBalance',
 
@@ -183,14 +198,14 @@ export const MemberBalanceReport = () => {
                   ],
                 },
                 {
-                  header: 'Loan Balance',
+                  header: t['reportsMemberMemberWiseBalanceReportLoanBalance'],
                   accessorFn: (row) => row?.totalLoanCrBalance,
                   accessorKey: 'totalLoanDrBalance',
                   id: 'loanBalanceHeader',
 
                   columns: [
                     {
-                      header: 'Debit (Dr.)',
+                      header: t['reportsMemberMemberWiseBalanceReportLoanBalanceDebit'],
                       accessorFn: (row) => row?.totalLoanDrBalance,
                       accessorKey: 'totalLoanDrBalance',
 
@@ -204,7 +219,7 @@ export const MemberBalanceReport = () => {
                       },
                     },
                     {
-                      header: 'Credit (Cr.)',
+                      header: t['reportsMemberMemberWiseBalanceReportLoanBalanceCredit'],
                       accessorFn: (row) => row?.totalLoanCrBalance,
                       accessorKey: 'totalLoanCrBalance',
 
@@ -220,13 +235,13 @@ export const MemberBalanceReport = () => {
                   ],
                 },
                 {
-                  header: 'Share Balance',
+                  header: t['reportsMemberMemberWiseBalanceReportShareBalance'],
                   accessorKey: 'totalShareDrBalance',
                   id: 'ShareBalanceHeader',
 
                   columns: [
                     {
-                      header: 'Debit (Dr.)',
+                      header: t['reportsMemberMemberWiseBalanceReportShareBalanceDebit'],
                       accessorKey: 'totalShareDrBalance',
                       accessorFn: (row) => row?.totalShareDrBalance,
                       cell: (props) =>
@@ -239,7 +254,7 @@ export const MemberBalanceReport = () => {
                       },
                     },
                     {
-                      header: 'Credit (Cr.)',
+                      header: t['reportsMemberMemberWiseBalanceReportShareBalanceCredit'],
                       accessorKey: 'totalShareCrBalance',
 
                       accessorFn: (row) => row?.totalShareCrBalance,
@@ -260,36 +275,36 @@ export const MemberBalanceReport = () => {
           </Box>
         </Report.Content>
         <Report.Filters>
-          <Report.Filter title="Member Type">
+          <Report.Filter title={t['reportsMemberMemberWiseBalanceReportFilterMemberType']}>
             <FormRadioGroup
               name="filter.memberType"
               options={[
                 {
-                  label: 'Individual',
+                  label: t['reportsMemberMemberWiseBalanceReportFilterMemberTypeIndividual'],
                   value: KymMemberTypesEnum.Individual,
                 },
                 {
-                  label: 'Institution',
+                  label: t['reportsMemberMemberWiseBalanceReportFilterMemberTypeInstitution'],
                   value: KymMemberTypesEnum.Institution,
                 },
                 {
-                  label: 'Cooperative',
+                  label: t['reportsMemberMemberWiseBalanceReportFilterMemberTypeCooperative'],
                   value: KymMemberTypesEnum.Cooperative,
                 },
                 {
-                  label: 'Cooperative Union',
+                  label: t['reportsMemberMemberWiseBalanceReportFilterMemberTypeCooperativeUnion'],
                   value: KymMemberTypesEnum.CooperativeUnion,
                 },
               ]}
             />
           </Report.Filter>
-          <Report.Filter title="Total Share Balance">
+          <Report.Filter title={t['reportsMemberMemberWiseBalanceReportFilterTotalShareBalance']}>
             <FormAmountFilter name="filter.shareBalance" />
           </Report.Filter>
-          <Report.Filter title="Total Saving Balance">
+          <Report.Filter title={t['reportsMemberMemberWiseBalanceReportFilterTotalSavingBalance']}>
             <FormAmountFilter name="filter.savingBalance" />
           </Report.Filter>
-          <Report.Filter title="Total Loan Balance">
+          <Report.Filter title={t['reportsMemberMemberWiseBalanceReportFilterTotalLoanBalance']}>
             <FormAmountFilter name="filter.loanBalance" />
           </Report.Filter>
         </Report.Filters>
