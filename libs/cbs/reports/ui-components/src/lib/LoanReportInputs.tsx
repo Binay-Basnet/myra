@@ -54,7 +54,10 @@ export const LoanReportInputs = ({ isClosed, accountName, showAll }: LoanReportI
     { enabled: !!memberId }
   );
   const loanAccounts = loanAccountData?.loanAccount?.list?.data?.edges?.map((account) => ({
-    label: account?.node?.LoanAccountName as string,
+    label:
+      account?.node?.objState === 'COMPLETED'
+        ? `[Closed] ${account?.node?.LoanAccountName}`
+        : (account?.node?.LoanAccountName as string),
     value: account?.node?.id as string,
   })) as { label: string; value: string }[];
 
