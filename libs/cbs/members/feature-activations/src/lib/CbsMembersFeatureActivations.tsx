@@ -74,7 +74,7 @@ export const CbsMembersFeatureActivate = () => {
     });
   };
 
-  const { mutateAsync } = useUpdateBranchDuringActivationMutation();
+  const { mutateAsync: updateMemberBranch } = useUpdateBranchDuringActivationMutation();
 
   const branchIdWatch = watch('branchId');
 
@@ -85,7 +85,7 @@ export const CbsMembersFeatureActivate = () => {
         loading: 'Upading member branch',
         success: 'Member branch updated successfully',
       },
-      promise: mutateAsync({ memberId: memberInfo?.id as string, branchId: branchIdWatch }),
+      promise: updateMemberBranch({ memberId: memberInfo?.id as string, branchId: branchIdWatch }),
       onSuccess: () => refetchMemberDetails(),
     });
   }, [branchIdWatch]);
