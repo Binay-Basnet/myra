@@ -325,6 +325,10 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         'Source Account': loanRepaymentDetailData?.destinationAccount || 'N/A',
       };
 
+      tempVoucherDetails = {
+        Date: localizedDate(loanRepaymentDetailData?.repaymentDate),
+      };
+
       tempExtraDetails = {
         'Remaining Principal': amountConverter(
           loanRepaymentDetailData?.totalRemainingPrincipal || 0
