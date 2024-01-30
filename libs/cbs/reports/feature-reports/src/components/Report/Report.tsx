@@ -21,6 +21,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useAppSelector } from '@coop/cbs/data-access';
 import { useReport } from '@coop/cbs/reports';
+import { useTranslation } from '@coop/shared/utils';
 
 import { ReportOrganizationHeader } from './ReportOrganizationHeader';
 
@@ -43,6 +44,8 @@ export const ReportContent = ({
   children: React.ReactNode;
   showSignatures?: boolean;
 }) => {
+  const { t } = useTranslation();
+
   const { isFilterShown, data, isLoading, filters, printRef } = useReport();
   const user = useAppSelector((state) => state.auth.user);
 
@@ -135,19 +138,19 @@ export const ReportContent = ({
             <Box display="flex" flexDir="column" alignItems="center" gap="s12">
               <Divider borderTop="1px dotted black" />
               <Text fontSize="s2" color="gray.800" fontWeight="500">
-                {`Prepared By [${user?.firstName?.en}]`}
+                {`${t['reportsPrintPreparedBy']} [${user?.firstName?.en}]`}
               </Text>
             </Box>
             <Box display="flex" flexDir="column" alignItems="center" gap="s12">
               <Divider borderTop="1px dotted black" />
               <Text fontSize="s2" color="gray.800" fontWeight="500">
-                Checked By
+                {t['reportsPrintCheckedBy']}
               </Text>
             </Box>
             <Box display="flex" flexDir="column" alignItems="center" gap="s12">
               <Divider borderTop="1px dotted black" />
               <Text fontSize="s2" color="gray.800" fontWeight="500">
-                Approved By
+                {t['reportsPrintApprovedBy']}
               </Text>
             </Box>
           </Box>
@@ -164,6 +167,8 @@ export const OrganizationHeader = () => {
 };
 
 export const ReportFilters = ({ children }: { children: React.ReactNode }) => {
+  const { t } = useTranslation();
+
   const { isFilterShown, setFilters, defaultFilters } = useReport();
   const { getValues, setValue } = useFormContext();
   const [indices, setIndices] = useState(Array.from(Array(20).keys()));
@@ -196,7 +201,7 @@ export const ReportFilters = ({ children }: { children: React.ReactNode }) => {
           borderBottomColor="border.layout"
         >
           <Text fontSize="r2" color="gray.800" fontWeight="600">
-            Filters
+            {t['reportsDrawerFilters']}
           </Text>
 
           {indices?.length === 0 ? (
@@ -206,7 +211,7 @@ export const ReportFilters = ({ children }: { children: React.ReactNode }) => {
               onClick={() => setIndices(Array.from(Array(20).keys()))}
               leftIcon={<Icon as={TbArrowsDiagonalMinimize2} />}
             >
-              Expand
+              {t['reportsDrawerExpand']}
             </Button>
           ) : (
             <Button
@@ -215,7 +220,7 @@ export const ReportFilters = ({ children }: { children: React.ReactNode }) => {
               onClick={() => setIndices([])}
               leftIcon={<Icon as={TbArrowsDiagonalMinimize2} />}
             >
-              Collapse
+              {t['reportsDrawerCollapse']}
             </Button>
           )}
         </Box>
@@ -244,7 +249,7 @@ export const ReportFilters = ({ children }: { children: React.ReactNode }) => {
             );
           }}
         >
-          Apply Filter
+          {t['reportsDrawerApplyFilter']}
         </Button>
         <Button
           variant="ghost"
@@ -262,7 +267,7 @@ export const ReportFilters = ({ children }: { children: React.ReactNode }) => {
             setValue('filter', defaultFilters?.['filter']);
           }}
         >
-          Reset To Default
+          {t['reportsDrawerResetToDefault']}
         </Button>
       </Box>
     </Box>
@@ -329,6 +334,8 @@ export const ReportInputs = <T extends FieldValues | null>({
 
   const { isFilterShown, setIsFilterShown, setFilters } = useReport();
 
+  const { t } = useTranslation();
+
   // console.log(
   //   Object.keys(omit(getValues(), ['filter', 'period'])).some((field) => !!watch()[field])
   // );
@@ -351,13 +358,13 @@ export const ReportInputs = <T extends FieldValues | null>({
             });
           }}
         >
-          Create Report
+          {t['reportsCreateReport']}
         </Button>
 
         {isFilterShown ? (
           <Button size="lg" gap="s4" onClick={() => setIsFilterShown((prev) => !prev)}>
             <Icon as={IoFilterOutline} />
-            Hide Filter
+            {t['reportsHideFilter']}
           </Button>
         ) : (
           <Button
@@ -368,7 +375,7 @@ export const ReportInputs = <T extends FieldValues | null>({
             onClick={() => setIsFilterShown((prev) => !prev)}
           >
             <Icon as={IoFilterOutline} />
-            Show Filter
+            {t['reportsShowFilter']}
           </Button>
         )}
       </Box>

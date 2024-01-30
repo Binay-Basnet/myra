@@ -13,6 +13,7 @@ import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormSelect } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type MinorListReportFilter = Omit<MinorFilter, 'branchId'> & {
   branchId: {
@@ -22,11 +23,13 @@ type MinorListReportFilter = Omit<MinorFilter, 'branchId'> & {
 };
 
 export const MinorListReport = () => {
+  const { t } = useTranslation();
+
   const [filters, setFilters] = useState<MinorListReportFilter | null>(null);
 
   const branchIds =
     filters?.branchId && filters?.branchId.length !== 0
-      ? filters?.branchId?.map((t) => t.value)
+      ? filters?.branchId?.map((b) => b.value)
       : null;
 
   const { data, isFetching } = useGetMinorListReportQuery(
@@ -71,28 +74,33 @@ export const MinorListReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Members Reports', link: '/cbs/reports/cbs-reports/members' },
+            { label: t['reportsSidebarMemberReports'], link: '/cbs/reports/cbs-reports/members' },
             {
-              label: 'Minor List Report',
+              label: t['reportsMinorListReport'],
               link: '/cbs/reports/cbs-reports/members/minor-list/new',
             },
           ]}
         />
         <Report.Inputs hideDate>
           <GridItem colSpan={3}>
-            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect
+              showUserBranchesOnly
+              isMulti
+              name="branchId"
+              label={t['reportsMinorListReport']}
+            />
           </GridItem>
           <GridItem colSpan={1}>
             <FormSelect
               name="minorType"
-              label="Minor Type"
+              label={t['reportsMemberMinorListReportMinorType']}
               options={[
                 {
-                  label: 'All Minor',
+                  label: t['reportsMemberMinorListReportMinorTypeAllMinor'],
                   value: MinorTypeFilter.AllMinors,
                 },
                 {
-                  label: 'Minor with Saving Account',
+                  label: t['reportsMemberMinorListReportMinorTypeMinorWithSavingAccount'],
                   value: MinorTypeFilter.WithSavingAccount,
                 },
               ]}
@@ -108,14 +116,14 @@ export const MinorListReport = () => {
           <Report.Table<MinorInformation & { index: number }>
             columns={[
               {
-                header: 'S.No.',
+                header: t['sn'],
                 accessorKey: 'index',
                 meta: {
                   width: '60px',
                 },
               },
               {
-                header: 'Member Id',
+                header: t['reportsMemberMinorListReportMemberId'],
                 accessorKey: 'memberId',
                 cell: (props) => (
                   <RouteToDetailsPage
@@ -127,30 +135,30 @@ export const MinorListReport = () => {
               },
 
               {
-                header: 'Member Name',
+                header: t['reportsMemberMinorListReportMemberName'],
                 accessorFn: (row) => row?.memberName?.local,
                 meta: {
                   width: '40%',
                 },
               },
               {
-                header: 'Service Center Name',
+                header: t['reportsMemberMinorListReportServiceCenterName'],
                 accessorFn: (row) => row?.serviceCentreName,
                 meta: {
                   width: '40%',
                 },
               },
               {
-                header: 'Minor Name',
+                header: t['reportsMemberMinorListReportMinorName'],
                 accessorFn: (row) => row?.minorName,
               },
               {
-                header: 'Relationship',
+                header: t['reportsMemberMinorListReportRelationship'],
                 accessorFn: (row) => row?.relationshipName,
               },
 
               {
-                header: 'Date of Birth',
+                header: t['reportsMemberMinorListReportDateOfBirth'],
                 accessorFn: (row) => row?.dateOfBirth,
                 cell: (props) => localizedDate(props.row.original.dateOfBirth),
                 meta: {

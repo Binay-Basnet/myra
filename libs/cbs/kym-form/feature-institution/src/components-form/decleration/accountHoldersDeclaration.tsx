@@ -16,15 +16,15 @@ export const AccountHolderDeclarationInstitution = () => {
 
       <FormAddress
         name="accountHolderAddress"
-        sectionHeader="kymInAccountHolderDeclarations"
+        sectionHeader="kymInsAccountHolderAddress"
         sectionId="kymInsAccountHolderDeclaration"
       />
       <Box p="s20" display="flex" gap="s16" alignItems="center">
         <Checkbox id="weAgree" fontSize="s3" />
         <Text variant="formInput" mt="-6px">
-          I/We agree to the&nbsp;
+          {t['kymIndAgree']}&nbsp;
           <Text as="span" variant="link">
-            Terms and condition.
+            {t['kymIndAgreeLink']}
           </Text>
         </Text>
       </Box>

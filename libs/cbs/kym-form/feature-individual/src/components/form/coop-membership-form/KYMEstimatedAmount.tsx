@@ -17,19 +17,19 @@ export const KYMEstimatedAmount = () => {
     <>
       <FormSection
         id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion"
-        header="kynIndESTIMATEDWITHDRAWDEPOSITAMOUNTINTHEINSTITUTION"
+        header="kymIndEstimatedWithdrawDepositAmountInTheInstitution"
       >
         <FormAmountInput
           isRequired
           name="estimatedAnnualTransactionAmount"
-          label={t['kynIndEstimatedannualaccounttransaction']}
+          label={t['kymIndEstimatedannualaccounttransaction']}
         />
       </FormSection>
 
       <Box p="s20" id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion">
         <FormRadioGroup
           isRequired
-          label={t['kynIndEstimatednoofAnnualTransaction']}
+          label={t['kymIndEstimatednoofAnnualTransaction']}
           id="estimatedAnnualTransactionFrequencyId"
           name="estimatedAnnualTransactionFrequencyId"
           options={getFieldOption(estimatedAnnualTransactionData, (label) => label)}
@@ -41,12 +41,12 @@ export const KYMEstimatedAmount = () => {
         <FormAmountInput
           isRequired
           name="estimatedAnnualDepositAmount"
-          label={t['kynIndEstimatedAnnualDeposit']}
+          label={t['kymIndEstimatedAnnualDeposit']}
         />
         <FormAmountInput
           isRequired
           name="estimatedAnnualLoanAmount"
-          label={t['kynIndEstimatedAnnualLoan']}
+          label={t['kymIndEstimatedAnnualLoan']}
         />
       </FormSection>
     </>

@@ -44,11 +44,11 @@ const leaveVariant: Record<LeaveStatusEnum, 'success' | 'failure' | 'pending'> =
 
 export const EmployeeLeavePage = () => {
   const { isOpen, onClose, onToggle } = useDisclosure();
-  const userId = useAppSelector((state) => state.auth.user?.id);
+  const userID = useAppSelector((state) => state.auth.user?.id);
   const { data } = useGetLeaveStatsQuery();
   const { data: leaveListData } = useGetLeaveListQuery({
     filter: getFilterQuery({
-      id: { compare: '=', value: String(userId) },
+      id: { compare: '=', value: String(userID) },
       leaveFrom: {
         compare: '< >',
         value: {

@@ -58,14 +58,14 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
       <FormSelect
         isRequired
         name={`${name}.provinceId`}
-        label={t['kymIndProvince']}
+        label={t['province']}
         options={provinceList}
         errorText={errors?.[name]?.provinceId?.message}
       />
       <FormSelect
         isRequired
         name={`${name}.districtId`}
-        label={t['kymIndDistrict']}
+        label={t['district']}
         errorText={errors?.[name]?.districtId?.message}
         options={districtList.map((d) => ({
           label: d.name,
@@ -75,7 +75,7 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
       <FormSelect
         isRequired
         name={`${name}.localGovernmentId`}
-        label={t['kymIndLocalGovernment']}
+        label={t['localGovernment']}
         errorText={errors?.[name]?.localGovernmentId?.message}
         options={localityList.map((d) => ({
           label: d.name,
@@ -85,7 +85,7 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
       <FormSelect
         isRequired
         name={`${name}.wardNo`}
-        label={t['kymIndWardNo']}
+        label={t['wardNo']}
         errorText={errors?.[name]?.wardNo?.message}
         options={wardList?.map((d) => ({
           label: d,
@@ -95,12 +95,12 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
       <FormInput
         name={`${name}.locality`}
         errorText={errors?.[name]?.locality?.message}
-        label={t['kymIndLocality']}
+        label={t['locality']}
       />
       <FormInput
         name={`${name}.houseNo`}
         errorText={errors?.[name]?.houseNo?.message}
-        label={t['kymIndHouseNo']}
+        label={t['houseNo']}
       />
       <GridItem colSpan={2}>
         <FormMap name={`${name}.coordinates`} />

@@ -306,6 +306,7 @@ export const NewAccountTransfer = () => {
               }}
               // notice="KYM needs to be updated"
               signaturePath={sourceAccount?.member?.signaturePicUrl ?? ''}
+              showSignaturePreview
               citizenshipPath={memberCitizenshipUrl as string}
               accountInfo={
                 sourceAccount

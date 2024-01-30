@@ -8,23 +8,22 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { KymInsAccountOperationType } from '../../types';
 
-const booleanList = [
-  {
-    label: 'Single',
-    value: KymInsAccountOperationType.Single,
-  },
-  {
-    label: 'Joint',
-    value: KymInsAccountOperationType.Joint,
-  },
-];
-
 export const AccountOperationInstitution = () => {
   const { t } = useTranslation();
 
   const { watch } = useFormContext<KymInsInput>();
 
   const isCompanyStampCompulsory = watch('isCompanyStampCompulsory');
+  const booleanList = [
+    {
+      label: t['kymInsSingle'],
+      value: KymInsAccountOperationType.Single,
+    },
+    {
+      label: t['kymInsJoint'],
+      value: KymInsAccountOperationType.Joint,
+    },
+  ];
 
   return (
     <>
@@ -39,7 +38,7 @@ export const AccountOperationInstitution = () => {
           <Grid gap="s16">
             <FormCheckbox
               name="isCompanyStampCompulsory"
-              label={t['kynInsCompanyStampCompulsory']}
+              label={t['kymInsCompanyStampCompulsory']}
             />
             {isCompanyStampCompulsory && (
               <Box w="30%">

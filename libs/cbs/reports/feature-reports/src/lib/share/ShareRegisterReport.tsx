@@ -13,7 +13,7 @@ import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type ShareRegisterReportFilters = Omit<SharePurchaseRegisterReportFilter, 'branchId'> & {
   branchId: {
@@ -23,11 +23,13 @@ type ShareRegisterReportFilters = Omit<SharePurchaseRegisterReportFilter, 'branc
 };
 
 export const ShareRegisterReport = () => {
+  const { t } = useTranslation();
+
   const [filters, setFilters] = useState<ShareRegisterReportFilters | null>(null);
 
   const branchIds =
     filters?.branchId && filters?.branchId.length !== 0
-      ? filters?.branchId?.map((t) => t.value)
+      ? filters?.branchId?.map((b) => b.value)
       : null;
 
   const { data, isFetching } = useGetShareRegisterReportQuery(
@@ -55,13 +57,18 @@ export const ShareRegisterReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Share Reports', link: '/cbs/reports/cbs-reports/share' },
-            { label: 'Share Register', link: '/cbs/reports/cbs-reports/share/register/new' },
+            { label: 'reportsSidebarShareReports', link: '/cbs/reports/cbs-reports/share' },
+            { label: 'reportsShareRegister', link: '/cbs/reports/cbs-reports/share/register/new' },
           ]}
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect
+              showUserBranchesOnly
+              isMulti
+              name="branchId"
+              label={t['serviceCenter']}
+            />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange />
@@ -77,7 +84,7 @@ export const ShareRegisterReport = () => {
             hasSNo={false}
             columns={[
               {
-                header: 'Member Id',
+                header: t['reportsShareRegisterMemberId'],
                 accessorKey: 'memberCode',
                 cell: (props) => (
                   <RouteToDetailsPage
@@ -91,29 +98,29 @@ export const ShareRegisterReport = () => {
                 },
               },
               {
-                header: 'Name',
+                header: t['reportsShareRegisterName'],
                 accessorKey: 'name',
               },
               {
-                header: 'Particular',
+                header: t['reportsShareRegisterParticular'],
                 accessorKey: 'particular',
               },
               {
-                header: 'Service Center',
+                header: t['reportsShareRegisterServiceCenter'],
                 accessorKey: 'branchName',
               },
               {
-                header: 'Share Information',
+                header: t['reportsShareRegisterShareInformation'],
                 columns: [
                   {
-                    header: 'Per Share Amount(100)',
+                    header: t['reportsShareRegisterPerShareAmount'],
                     accessorKey: 'perShareAmount',
                     meta: {
                       isNumeric: true,
                     },
                   },
                   {
-                    header: 'Kitta Number From ',
+                    header: t['reportsShareRegisterKittaNumberFrom'],
                     accessorKey: 'kittaNumFrom',
                     meta: {
                       isNumeric: true,
@@ -121,21 +128,21 @@ export const ShareRegisterReport = () => {
                   },
 
                   {
-                    header: 'Kitta Number To ',
+                    header: t['reportsShareRegisterKittaNumberTo'],
                     accessorKey: 'kittaNumTo',
                     meta: {
                       isNumeric: true,
                     },
                   },
                   {
-                    header: 'Total Kitta ',
+                    header: t['reportsShareRegisterTotalKitta'],
                     accessorKey: 'totalKitta',
                     meta: {
                       isNumeric: true,
                     },
                   },
                   {
-                    header: 'Total Amount ',
+                    header: t['reportsShareRegisterTotalAmount'],
                     accessorKey: 'totalAmount',
                     cell: (props) => amountConverter(props.getValue() as string),
                     meta: {
@@ -148,13 +155,22 @@ export const ShareRegisterReport = () => {
           />
         </Report.Content>
         <Report.Filters>
-          <Report.Filter title="Type of Share Transaction">
+          <Report.Filter title={t['reportsShareRegisterReportTypeOfShareTransaction']}>
             <FormRadioGroup
               name="filter.type"
               options={[
-                { label: 'All', value: ShareTransactionType.All },
-                { label: 'Issue', value: ShareTransactionType.Issue },
-                { label: 'Return', value: ShareTransactionType.Return },
+                {
+                  label: t['reportsShareRegisterReportTypeOfShareTransactionAll'],
+                  value: ShareTransactionType.All,
+                },
+                {
+                  label: t['reportsShareRegisterReportTypeOfShareTransactionIssue'],
+                  value: ShareTransactionType.Issue,
+                },
+                {
+                  label: t['reportsShareRegisterReportTypeOfShareTransactionReturn'],
+                  value: ShareTransactionType.Return,
+                },
               ]}
               direction="column"
             />

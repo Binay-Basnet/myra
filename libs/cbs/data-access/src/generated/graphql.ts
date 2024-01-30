@@ -1256,6 +1256,7 @@ export type AgentMutation = {
   deleteTodayTask: RemoveTodayTaskResult;
   editRejectedTodayList: AgentTodayListResult;
   modifyPreviousData: DataModificationResult;
+  modifyPreviousStatus: DataModificationResult;
   rejectTodayTask: RemoveTodayTaskResult;
   sentTodayTask: RemoveTodayTaskResult;
 };
@@ -4022,6 +4023,7 @@ export type ChartsOfAccountSettingsQuery = {
   class?: Maybe<ChartsOfAccountClassResult>;
   coaAccountDetails?: Maybe<CoaDetailsResult>;
   coaAccountList?: Maybe<CoaAccountListResult>;
+  coaAccountListWithoutBalance?: Maybe<CoaAccountListResult>;
   coaLeafNodeDetails?: Maybe<CoaLeafNodeDetailView>;
   coaLedgerList?: Maybe<CoaLedgerListResult>;
   filterMapping?: Maybe<CoaLedgerListFilterMap>;
@@ -4052,6 +4054,12 @@ export type ChartsOfAccountSettingsQueryCoaAccountDetailsArgs = {
 };
 
 export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
+  filter?: InputMaybe<Filter>;
+  flag?: InputMaybe<CoaListFlag>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ChartsOfAccountSettingsQueryCoaAccountListWithoutBalanceArgs = {
   filter?: InputMaybe<Filter>;
   flag?: InputMaybe<CoaListFlag>;
   pagination?: InputMaybe<Pagination>;
@@ -45648,6 +45656,37 @@ export type GetCoaAccountListQuery = {
   };
 };
 
+export type GetCoaAccountListWithoutBalanceQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+  flag?: InputMaybe<CoaListFlag>;
+}>;
+
+export type GetCoaAccountListWithoutBalanceQuery = {
+  settings: {
+    chartsOfAccount?: {
+      coaAccountListWithoutBalance?: {
+        totalCount: number;
+        edges?: Array<{
+          node?: {
+            accountCode?: string | null;
+            accountName?: Record<'local' | 'en' | 'np', string> | null;
+            accountClass?: string | null;
+            parentGroup?: Record<'local' | 'en' | 'np', string> | null;
+            branch?: string | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: {
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+          startCursor?: string | null;
+          endCursor?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetLedgerForJvPostingQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<CoaListFilter>;
@@ -77970,6 +78009,52 @@ export const useGetCoaAccountListQuery = <TData = GetCoaAccountListQuery, TError
     variables === undefined ? ['getCoaAccountList'] : ['getCoaAccountList', variables],
     useAxios<GetCoaAccountListQuery, GetCoaAccountListQueryVariables>(
       GetCoaAccountListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCoaAccountListWithoutBalanceDocument = `
+    query getCoaAccountListWithoutBalance($pagination: Pagination, $filter: Filter, $flag: COAListFlag) {
+  settings {
+    chartsOfAccount {
+      coaAccountListWithoutBalance(
+        pagination: $pagination
+        filter: $filter
+        flag: $flag
+      ) {
+        edges {
+          node {
+            accountCode
+            accountName
+            accountClass
+            parentGroup
+            branch
+          }
+        }
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoaAccountListWithoutBalanceQuery = <
+  TData = GetCoaAccountListWithoutBalanceQuery,
+  TError = unknown
+>(
+  variables?: GetCoaAccountListWithoutBalanceQueryVariables,
+  options?: UseQueryOptions<GetCoaAccountListWithoutBalanceQuery, TError, TData>
+) =>
+  useQuery<GetCoaAccountListWithoutBalanceQuery, TError, TData>(
+    variables === undefined
+      ? ['getCoaAccountListWithoutBalance']
+      : ['getCoaAccountListWithoutBalance', variables],
+    useAxios<GetCoaAccountListWithoutBalanceQuery, GetCoaAccountListWithoutBalanceQueryVariables>(
+      GetCoaAccountListWithoutBalanceDocument
     ).bind(null, variables),
     options
   );

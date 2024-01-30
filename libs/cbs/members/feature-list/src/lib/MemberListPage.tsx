@@ -156,7 +156,7 @@ export const MemberListPage = () => {
         },
       },
       {
-        id: 'serviceCenter',
+        id: t['memberListTableServiceCenter'],
         header: 'Service Center',
         accessorFn: (row) => row?.node?.branch,
         enableColumnFilter: true,
@@ -181,14 +181,14 @@ export const MemberListPage = () => {
                 objState === 'DORMANT'
                   ? [
                       {
-                        title: 'Edit Dormancy',
+                        title: t['memberListEditDormancy'],
                         onClick: (node) => {
                           setMemberId(node?.id);
                           onDormancyEditModalToggle();
                         },
                       },
                       {
-                        title: 'Make Active',
+                        title: t['memberListTableMakeActive'],
                         onClick: (node) => {
                           setMemberId(node?.id);
                           onActivationModalToggle();
@@ -279,7 +279,7 @@ export const MemberListPage = () => {
                         },
                       },
                       {
-                        title: 'Make Dormant',
+                        title: t['memberListTableMakeDormant'],
                         onClick: (node) =>
                           router.push(`${ROUTES.CBS_MEMBER_DORMANCY}?id=${node?.id}`),
                       },
@@ -316,7 +316,7 @@ export const MemberListPage = () => {
     <>
       <PageHeader
         showTabsInFilter
-        heading={`Active Members - ${featureCode?.memberList}`}
+        heading={`${t['activeMembers']} - ${featureCode?.memberList}`}
         tabItems={MEMBER_TAB_ITEMS}
       />
 

@@ -24,6 +24,7 @@ import { Avatar, Box, Divider, Grid, Icon, IconButton, Text } from '@myra-ui/fou
 
 import {
   DateType,
+  Language,
   logout,
   RootState,
   saveToken,
@@ -65,10 +66,10 @@ export interface TopLevelHeaderProps {
   imageSrc?: string;
 }
 
-// const languageList = [
-//   { label: 'EN', value: 'en' },
-//   { label: 'ने', value: 'ne' },
-// ];
+const languageList = [
+  { label: 'EN', value: 'en' },
+  { label: 'ने', value: 'ne' },
+];
 
 const calendarList = [
   { label: 'AD', value: 'AD' },
@@ -347,17 +348,15 @@ export const TopLevelHeader = () => {
           <Box gap="s8" flex={1} display="flex" justifyContent="flex-end" alignItems="center">
             <HeaderTransactionDate />
             <FloatingShortcutButton />
-            {process.env['NX_APP_ENV'] === 'dev' && (
-              <IconButton
-                icon={<Icon size="lg" as={HiOutlineDownload} />}
-                aria-label="help"
-                variant="ghost"
-                color="white"
-                borderRadius="br1"
-                _hover={{ backgroundColor: 'secondary.900' }}
-                onClick={() => router?.push(ROUTES?.DOWNLOADCENTER)}
-              />
-            )}
+            <IconButton
+              icon={<Icon size="lg" as={HiOutlineDownload} />}
+              aria-label="help"
+              variant="ghost"
+              color="white"
+              borderRadius="br1"
+              _hover={{ backgroundColor: 'secondary.900' }}
+              onClick={() => router?.push(ROUTES?.DOWNLOADCENTER)}
+            />
             <IconButton
               icon={<Icon size="lg" as={AiOutlineSetting} />}
               aria-label="help"
@@ -561,7 +560,7 @@ export const TopLevelHeader = () => {
                             )}
                           </Box>
 
-                          {/* <Box
+                          <Box
                             display="flex"
                             flexDirection="column"
                             justifyContent="space-between"
@@ -613,7 +612,7 @@ export const TopLevelHeader = () => {
                                 });
                               }}
                             />
-                          </Box> */}
+                          </Box>
 
                           <Box
                             display="flex"

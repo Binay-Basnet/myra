@@ -48,7 +48,7 @@ export const KYMIndFamilyMember = () => {
             });
           }}
         >
-          Add Family Member
+          {t['kymIndFamilyAddMembers']}
         </Button>
       }
     >
@@ -58,26 +58,26 @@ export const KYMIndFamilyMember = () => {
             <FormSelect
               menuPosition="fixed"
               name={`familyMembers.${index}.relationshipId`}
-              label={t['kymIndRelationship']}
+              label={t['kymIndFamilyRelationship']}
               options={getFieldOption(relationshipData)}
             />
 
             <FormInput
               type="text"
               name={`familyMembers.${index}.fullName`}
-              label={t['kymIndFullName']}
+              label={t['kymIndFamilyFullName']}
             />
 
             <FormDatePicker
               name={`familyMembers.${index}.dateOfBirth`}
-              label={t['kymIndDateofBirthBS']}
+              label={t['kymIndfamilyDateofBirthBS']}
               maxToday
             />
 
             <FormFileInput
               name={`familyMembers.${index}.documents.0.identifiers`}
               size="sm"
-              label="Photo"
+              label={t['kymIndFamilyPhoto']}
             />
           </DynamicBoxGroupContainer>
 

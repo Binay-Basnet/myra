@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { Box, FormSection, GridItem, Text } from '@myra-ui';
+import { Box, FormSection, GridItem } from '@myra-ui';
 
 import {
   FormFieldSearchTerm,
@@ -50,17 +50,11 @@ export const KYMDeclaration = () => {
   const hasForeignResidentialPermit = watch('hasForeignResidentialPermit');
 
   return (
-    <Box display="flex" flexDirection="column" id="Next to Kin" scrollMarginTop="200px">
-      <Box p="s20" pb="0">
-        <Text variant="bodyRegular" fontWeight="SemiBold">
-          {t['kynIndNominee']}
-        </Text>
-      </Box>
-
-      <FormSection id="kymAccIndBeneficialOwner">
+    <>
+      <FormSection id="kymAccIndBeneficialOwner" header={t['kymIndNominee']}>
         <GridItem colSpan={3}>
           <FormSwitchTab
-            label={t['kynIndDoyouhavebeneficialowner']}
+            label={t['kymIndDoyouhavebeneficialowner']}
             options={booleanList}
             name="hasBeneficialOwner"
           />
@@ -72,7 +66,7 @@ export const KYMDeclaration = () => {
                 name="beneficialRelationshipId"
                 isLoading={familyRelationshipLoading}
                 options={getFieldOption(familyRelationShipData)}
-                label={t['kynIndIyespleasewritenameandrelationship']}
+                label={t['kymIndBeneficialOwnerRelationship']}
               />
             </GridItem>
 
@@ -81,7 +75,7 @@ export const KYMDeclaration = () => {
                 type="text"
                 id="beneficialFullName"
                 name="beneficialFullName"
-                label="Name"
+                label={t['kymIndBeneficialOwnerName']}
               />
             </GridItem>
           </>
@@ -91,7 +85,7 @@ export const KYMDeclaration = () => {
       <FormSection id="kymAccIndFamilymembersinpolitics">
         <GridItem colSpan={3}>
           <FormSwitchTab
-            label={t['kynIndPoliticallyexposedperson']}
+            label={t['kymIndPoliticallyexposedperson']}
             options={booleanList}
             name="isPoliticallyExposed"
           />
@@ -102,7 +96,7 @@ export const KYMDeclaration = () => {
               <FormTextArea
                 name="politicallyExposedDetails"
                 id="politicallyExposedDetails"
-                label={t['kynIndPleasespecify']}
+                label={t['kymIndPleasespecify']}
               />
             </Box>
           </GridItem>
@@ -112,7 +106,7 @@ export const KYMDeclaration = () => {
       <FormSection id="kymAccIndConvictedNonconvictedStatus">
         <GridItem colSpan={3}>
           <FormSwitchTab
-            label={t['kynIndDeclarationofconvicted']}
+            label={t['kymIndDeclarationofconvicted']}
             options={booleanList}
             name="isConvicted"
           />
@@ -122,7 +116,7 @@ export const KYMDeclaration = () => {
             <Box w="50%">
               <FormTextArea
                 id="convictedDetails"
-                label={t['kynIndPleasespecify']}
+                label={t['kymIndPleasespecify']}
                 name="convictedDetails"
               />
             </Box>
@@ -133,7 +127,7 @@ export const KYMDeclaration = () => {
       <FormSection id="kymAccIndResidentialpermitofforeigncountry">
         <GridItem colSpan={3}>
           <FormSwitchTab
-            label={t['kynIndForeignCountry']}
+            label={t['kymIndForeignCountry']}
             options={booleanList}
             name="hasForeignResidentialPermit"
           />
@@ -142,13 +136,13 @@ export const KYMDeclaration = () => {
           {hasForeignResidentialPermit && (
             <FormRadioGroup
               name="foreignResidentialPermitTypeId"
-              label={t['kynIndSpecifyfollowingdetails']}
+              label={t['kymIndSpecifyfollowingdetails']}
               options={getFieldOption(foreignEmploymentOptions)}
               labelFontSize="s3"
             />
           )}
         </GridItem>
       </FormSection>
-    </Box>
+    </>
   );
 };

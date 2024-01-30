@@ -10,7 +10,7 @@ export const DocumentDeclarationInstitution = () => {
     <FormSection templateColumns={2} id="Documents Declaration" header="kymInsDocumentsDeclaration">
       <FormFileInput name="documents.0.identifiers" label={t['kymInsAGMDecisionDocument']} />
       <FormFileInput name="documents.1.identifiers" label={t['kymInsRegisteredCertificate']} />
-      <FormFileInput name="documents.2.identifiers" label="MOA/AOA" />
+      <FormFileInput name="documents.2.identifiers" label={t['kymInsMoaAoa']} />
       <FormFileInput name="documents.3.identifiers" label={t['kymInsPANCertificate']} />
       <FormFileInput name="documents.4.identifiers" label={t['kymInsTaxClearance']} />
       <FormFileInput name="documents.5.identifiers" label={t['kymInsLatestAuditReport']} />

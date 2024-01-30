@@ -158,10 +158,10 @@ const AddAccountDetails = ({ removeDirector, index }: IAddDirector) => {
                   name={`accountOperator.${index}.designation`}
                   label={t['kymInsDesignation']}
                   options={[
-                    { value: 'President', label: 'President' },
-                    { value: 'Vice President', label: 'Vice-President' },
-                    { value: 'Secretary', label: 'Secretary' },
-                    { value: 'Treasurer', label: 'Treasurer' },
+                    { value: 'President', label: t['kymInsPresident'] },
+                    { value: 'Vice President', label: t['kymInsVicePresident'] },
+                    { value: 'Secretary', label: t['kymInsSecretary'] },
+                    { value: 'Treasurer', label: t['kymInsTreasurer'] },
                   ]}
                 />
                 <FormInput name={`accountOperator.${index}.panNo`} label={t['kymInsPanNo']} />

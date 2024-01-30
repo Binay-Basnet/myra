@@ -286,25 +286,25 @@ export const AddUser = () => {
                   {identificationValues?.includes('citizenship') && (
                     <Box display="flex" flexDirection="column" gap="s16">
                       <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
-                        {t['kynIndCitizenship']}
+                        {t['kymIndCitizenship']}
                       </Text>
 
                       <InputGroupContainer>
                         <FormInput
                           type="text"
                           name="citizenship.idNo"
-                          label={t['kynIndCitizenshipNo']}
+                          label={t['kymIndCitizenshipNo']}
                         />
 
                         <FormInput
                           type="text"
                           name="citizenship.place"
-                          label={t['kynIndCitizenshipIssuePlace']}
+                          label={t['kymIndCitizenshipIssuePlace']}
                         />
 
                         <FormDatePicker
                           name="citizenship.date"
-                          label={t['kynIndCitizenshipIssueDate']}
+                          label={t['kymIndCitizenshipIssueDate']}
                         />
                       </InputGroupContainer>
                     </Box>

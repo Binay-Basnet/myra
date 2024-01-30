@@ -25,7 +25,7 @@ import {
   RouteToDetailsPage,
 } from '@coop/cbs/utils';
 import { FormMemberSelect } from '@coop/shared/form';
-import { amountConverter, quantityConverter } from '@coop/shared/utils';
+import { amountConverter, quantityConverter, useTranslation } from '@coop/shared/utils';
 
 const riskCategory = {
   [RiskCategoryFilter.All]: 'All',
@@ -35,6 +35,8 @@ const riskCategory = {
 };
 
 export const IndividualMemberReport = () => {
+  const { t } = useTranslation();
+
   const [filters, setFilters] = useState<{ memberId: string } | null>(null);
 
   const { data, isFetching } = useGetIndividualMemberReportQuery(
@@ -73,9 +75,9 @@ export const IndividualMemberReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Members Reports', link: '/cbs/reports/cbs-reports/members' },
+            { label: t['reportsSidebarMemberReports'], link: '/cbs/reports/cbs-reports/members' },
             {
-              label: 'Individual Member Profile Report',
+              label: t['reportsIndividualMemberProfileReport'],
               link: '/cbs/reports/cbs-reports/members/individual-member-report/new',
             },
           ]}
@@ -102,12 +104,12 @@ export const IndividualMemberReport = () => {
             />
             <Box w="50%" display="flex" gap="s10">
               <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
-                <Text>Member Name:</Text>
-                <Text>Membership No:</Text>
-                <Text>Address:</Text>
-                <Text>Contact:</Text>
-                <Text>Pan No:</Text>
-                <Text>Membership Date:</Text>
+                <Text>{t['reportsIndMemberProfileReportMemberName']}:</Text>
+                <Text>{t['reportsIndMemberProfileReportMembershipNo']}:</Text>
+                <Text>{t['reportsIndMemberProfileReportAddress']}:</Text>
+                <Text>{t['reportsIndMemberProfileReportContact']}:</Text>
+                <Text>{t['reportsIndMemberProfileReportPanNo']}:</Text>
+                <Text>{t['reportsIndMemberProfileReportMembershipDate']}:</Text>
               </Box>
 
               <Box display="flex" flexDir="column" fontSize="r1" fontWeight="500" color="gray.700">
@@ -127,11 +129,11 @@ export const IndividualMemberReport = () => {
             </Box>
             <Box w="50%" display="flex" gap="s10">
               <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
-                <Text>Share Certificate No:</Text>
-                <Text>Total Share Count:</Text>
-                <Text>KYM Risk Category:</Text>
-                <Text>KYM Status:</Text>
-                <Text>KYM Expiry Date:</Text>
+                <Text>{t['reportsIndMemberProfileReportShareCertificateNo']}:</Text>
+                <Text>{t['reportsIndMemberProfileReportTotalShareCount']}:</Text>
+                <Text>{t['reportsIndMemberProfileReportMemberKYMRiskCategory']}:</Text>
+                <Text>{t['reportsIndMemberProfileReportMemberKYMStatus']}:</Text>
+                <Text>{t['reportsIndMemberProfileReportMemberKYMExpiryDate']}:</Text>
               </Box>
 
               <Box display="flex" flexDir="column" fontSize="r1" fontWeight="500" color="gray.700">
@@ -155,7 +157,7 @@ export const IndividualMemberReport = () => {
           {individualMemberReportData?.shareDetail && (
             <Box display="flex" py="s8" flexDir="column">
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Share details
+                {t['reportsIndMemberProfileReportShareDetails']}
               </Text>
               <Report.Table<MemberShareDetail & { index: number }>
                 data={
@@ -164,9 +166,9 @@ export const IndividualMemberReport = () => {
                 showFooter
                 columns={[
                   {
-                    header: 'S.No.',
+                    header: t['sn'],
                     accessorKey: 'index',
-                    footer: () => 'Total',
+                    footer: () => t['reportsIndMemberProfileReportShareTotal'],
                     meta: {
                       width: '60px',
                       isNumeric: true,
@@ -176,7 +178,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Share Kitta(From - To)',
+                    header: t['reportsIndMemberProfileReportShareKittaFromTo'],
                     accessorKey: 'shareKitta',
                     meta: {
                       Footer: {
@@ -186,7 +188,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Share Count',
+                    header: t['reportsIndMemberProfileReportShareCount'],
                     accessorKey: 'count',
                     footer: () =>
                       quantityConverter(individualMemberReportHeader?.totalShareCount || 0),
@@ -195,7 +197,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Share Balance',
+                    header: t['reportsIndMemberProfileReportShareBalance'],
                     accessorFn: (row) => amountConverter(row?.shareBalance || 0),
 
                     footer: () =>
@@ -212,7 +214,7 @@ export const IndividualMemberReport = () => {
           {individualMemberReportData?.savingDetail && (
             <Box display="flex" py="s8" flexDir="column">
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Saving Account Details
+                {t['reportsIndMemberProfileReportSavingAccountDetails']}
               </Text>
 
               <Report.Table<MemberSavingDetail & { index: number }>
@@ -235,9 +237,9 @@ export const IndividualMemberReport = () => {
                   //   },
                   // },
                   {
-                    header: 'Saving Account No.',
+                    header: t['reportsIndMemberProfileReportSavingAccountNo'],
                     accessorKey: 'accountNo',
-                    footer: () => 'Total',
+                    footer: () => t['reportsIndMemberProfileReportSavingTotal'],
 
                     cell: (props) => (
                       <RouteToDetailsPage
@@ -253,7 +255,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Saving Account Name',
+                    header: t['reportsIndMemberProfileReportSavingAccountName'],
                     accessorKey: 'accountName',
                     cell: (props) => (
                       <Box whiteSpace="pre-line" my="s4" width="200px">
@@ -268,7 +270,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Guarantee Loan No.',
+                    header: t['reportsIndMemberProfileReportGuaranteeLoanNo'],
                     accessorKey: 'guaranteeLoanDetail',
                     cell: ({ row }) => (
                       <Box my="s8" display="flex" flexDir="column">
@@ -295,7 +297,7 @@ export const IndividualMemberReport = () => {
                     ),
                   },
                   {
-                    header: 'Guarantee Balance',
+                    header: t['reportsIndMemberProfileReportGuaranteeBalance'],
                     accessorKey: 'totalGuaranteeAmount',
                     footer: () =>
                       amountConverter(individualMemberReportData?.totalGuaranteeBalance || 0),
@@ -306,7 +308,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Balance',
+                    header: t['reportsIndMemberProfileReportBalance'],
                     accessorKey: 'balance',
                     footer: () =>
                       amountConverter(individualMemberReportData?.totalSavingBalance || 0),
@@ -318,7 +320,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Transaction Count',
+                    header: t['reportsIndMemberProfileReportTransactionCount'],
                     accessorKey: 'transactionCount',
                     meta: {
                       width: '15px',
@@ -332,7 +334,7 @@ export const IndividualMemberReport = () => {
           {individualMemberReportData?.loanDetail && (
             <Box display="flex" py="s8" flexDir="column">
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Loan Account Details
+                {t['reportsIndMemberProfileReportLoanAccountDetails']}
               </Text>
               <Report.Table<MemberLoanDetail & { index: number }>
                 showFooter
@@ -341,9 +343,9 @@ export const IndividualMemberReport = () => {
                 }
                 columns={[
                   {
-                    header: 'S.No.',
+                    header: t['sn'],
                     accessorKey: 'index',
-                    footer: () => 'Total',
+                    footer: () => t['reportsIndMemberProfileReportLoanTotal'],
                     meta: {
                       width: '60px',
                       isNumeric: true,
@@ -353,7 +355,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Loan Account No.',
+                    header: t['reportsIndMemberProfileReportLoanAccountNo'],
                     accessorKey: 'loanAccountNo',
                     cell: (props) => (
                       <RouteToDetailsPage
@@ -369,7 +371,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Loan Account Name',
+                    header: t['reportsIndMemberProfileReportLoanAccountName'],
                     accessorKey: 'loanAccountName',
                     cell: (props) => (
                       <Box whiteSpace="pre-line" my="s4" width="200px">
@@ -384,11 +386,11 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Issued Date',
+                    header: t['reportsIndMemberProfileReportIssuedDate'],
                     accessorFn: (row) => localizedDate(row?.issuedDate),
                   },
                   {
-                    header: 'Approved Amount',
+                    header: t['reportsIndMemberProfileReportApprovedAmount'],
                     accessorKey: 'approvedAmount',
                     footer: () =>
                       amountConverter(individualMemberReportData?.totalApprovedAmount || 0),
@@ -411,7 +413,7 @@ export const IndividualMemberReport = () => {
                   //   },
                   // },
                   {
-                    header: 'Last Payment Date',
+                    header: t['reportsIndMemberProfileReportLastPaymentDate'],
                     accessorFn: (row) => localizedDate(row?.issuedDate),
                     meta: {
                       width: '15px',
@@ -424,7 +426,7 @@ export const IndividualMemberReport = () => {
           {individualMemberReportData?.recentTransactions && (
             <Box display="flex" py="s8" flexDir="column">
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Recent Transaction (last 1 month)
+                {t['reportsIndMemberProfileReportRecentTransactionLastOneMonth']}
               </Text>
               <Report.Table<MemberRecentTransactions & { index: number }>
                 showFooter
@@ -434,9 +436,9 @@ export const IndividualMemberReport = () => {
                 }
                 columns={[
                   {
-                    header: 'S.No.',
+                    header: t['sn'],
                     accessorKey: 'index',
-                    footer: () => 'Total',
+                    footer: () => t['reportsIndMemberProfileReportTransactionTotal'],
                     meta: {
                       width: '60px',
                       isNumeric: true,
@@ -446,7 +448,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Transaction ID',
+                    header: t['reportsIndMemberProfileReportTransactionID'],
                     accessorKey: 'transactionId',
                     cell: (props) => (
                       <RouteToDetailsPage
@@ -463,7 +465,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Transaction Date',
+                    header: t['reportsIndMemberProfileReportTransactionDate'],
                     accessorFn: (row) => localizedDate(row?.transactionDate),
                     meta: {
                       Footer: {
@@ -473,7 +475,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Transaction Type',
+                    header: t['reportsIndMemberProfileReportTransactionType'],
                     accessorKey: 'transactionType',
                     meta: {
                       width: '80%',
@@ -484,7 +486,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Transaction Amount',
+                    header: t['reportsIndMemberProfileReportTransactionAmount'],
                     accessorKey: 'transactionAmount',
                     footer: () =>
                       amountConverter(individualMemberReportData?.totalTransactionAmount || 0),
@@ -500,7 +502,7 @@ export const IndividualMemberReport = () => {
           {individualMemberReportData?.closedAccountDetail && (
             <Box display="flex" py="s8" flexDir="column">
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Closed Accounts{' '}
+                {t['reportsIndMemberProfileReportClosedAccounts']}
               </Text>
               <Report.Table<MemberClosedAccounts & { index: number }>
                 data={
@@ -509,9 +511,9 @@ export const IndividualMemberReport = () => {
                 }
                 columns={[
                   {
-                    header: 'S.No.',
+                    header: t['sn'],
                     accessorKey: 'index',
-                    footer: () => 'Total',
+                    footer: () => t['reportsIndMemberProfileReportClosedTotal'],
                     meta: {
                       width: '60px',
                       isNumeric: true,
@@ -521,7 +523,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Account No',
+                    header: t['reportsIndMemberProfileReportAccountNo'],
                     accessorKey: 'accountNo',
                     meta: {
                       Footer: {
@@ -537,7 +539,7 @@ export const IndividualMemberReport = () => {
                     ),
                   },
                   {
-                    header: 'Close Date',
+                    header: t['reportsIndMemberProfileReportCloseDate'],
                     accessorFn: (row) => localizedDate(row?.closedDate),
                     meta: {
                       Footer: {
@@ -547,7 +549,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Account Type',
+                    header: t['reportsIndMemberProfileReportAccountType'],
                     accessorKey: 'accountType',
                     meta: {
                       Footer: {
@@ -556,7 +558,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Account Name',
+                    header: t['reportsIndMemberProfileReportAccountName'],
                     accessorKey: 'accountName',
                     meta: {
                       width: '80%',
@@ -569,7 +571,7 @@ export const IndividualMemberReport = () => {
           {individualMemberReportData?.withDrawSlipIssueStatus && (
             <Box display="flex" py="s8" flexDir="column">
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Withdraw Slip Issue Status{' '}
+                {t['reportsIndMemberProfileReportWithdrawSlipIssueStatus']}
               </Text>
               <Report.Table<MemberWithDrawSlipIssueStatus & { index: number }>
                 data={
@@ -578,7 +580,7 @@ export const IndividualMemberReport = () => {
                 }
                 columns={[
                   {
-                    header: 'S.No.',
+                    header: t['sn'],
                     accessorKey: 'index',
 
                     meta: {
@@ -587,7 +589,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Date',
+                    header: t['reportsIndMemberProfileReportWithdrawSlipDate'],
                     accessorKey: 'date',
 
                     accessorFn: (row) => localizedDate(row?.date),
@@ -600,7 +602,7 @@ export const IndividualMemberReport = () => {
                   },
 
                   {
-                    header: 'Account Type',
+                    header: t['reportsIndMemberProfileReportWithdrawSlipAccountType'],
                     accessorKey: 'accountType',
                     meta: {
                       Footer: {
@@ -609,7 +611,7 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Account Number',
+                    header: t['reportsIndMemberProfileReportWithdrawSlipAccountNumber'],
                     accessorKey: 'accNum',
                     cell: (props) => (
                       <RouteToDetailsPage
@@ -620,7 +622,7 @@ export const IndividualMemberReport = () => {
                     ),
                   },
                   {
-                    header: 'Type',
+                    header: t['reportsIndMemberProfileReportWithdrawSlipType'],
                     accessorKey: 'type',
                   },
                 ]}
@@ -630,18 +632,18 @@ export const IndividualMemberReport = () => {
           {individualMemberReportData?.kymStatusForMember && (
             <Box display="flex" py="s8" flexDir="column">
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                KYM Status
+                {t['reportsIndMemberProfileReportKYMStatus']}
               </Text>
               <Report.Table<MemberKymStatus>
                 data={individualMemberKymtable as MemberKymStatus[]}
                 columns={[
                   {
-                    header: 'Risk Category',
+                    header: t['reportsIndMemberProfileReportKYMRiskCategory'],
                     accessorKey: 'riskCategory',
                   },
 
                   {
-                    header: 'Last Updated Date',
+                    header: t['reportsIndMemberProfileReportLastUpdatedDate'],
                     accessorKey: 'lastUpdatedDate',
 
                     accessorFn: (row) => localizedDate(row?.lastUpdatedDate),
@@ -653,11 +655,11 @@ export const IndividualMemberReport = () => {
                     },
                   },
                   {
-                    header: 'Expiry Days',
+                    header: t['reportsIndMemberProfileReportExpiryDays'],
                     accessorKey: 'ExpiryDays',
                   },
                   {
-                    header: 'Status',
+                    header: t['reportsIndMemberProfileReportKYMStatusStatus'],
                     accessorKey: 'Status',
                   },
                 ]}

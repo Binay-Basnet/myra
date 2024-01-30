@@ -17,7 +17,7 @@ import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormSelect } from '@coop/shared/form';
-import { amountConverter, debitCreditConverter } from '@coop/shared/utils';
+import { amountConverter, debitCreditConverter, useTranslation } from '@coop/shared/utils';
 
 type LoanGuranteeData = Partial<{
   memberId: string;
@@ -49,6 +49,8 @@ type ReportFilter = Omit<MemberTransferFilter, 'fromBranchIds' | 'toBranchIds' |
 };
 
 export const MemberTransferReport = () => {
+  const { t } = useTranslation();
+
   const [filters, setFilters] = useState<ReportFilter | null>(null);
 
   const { data: userListData } = useGetSettingsUserListDataQuery({
@@ -59,15 +61,15 @@ export const MemberTransferReport = () => {
 
   const fromIds =
     filters?.fromBranchIds && filters?.fromBranchIds?.length !== 0
-      ? filters?.fromBranchIds?.map((t) => t.value)
+      ? filters?.fromBranchIds?.map((b) => b.value)
       : [];
   const toIds =
     filters?.toBranchIds && filters?.toBranchIds.length !== 0
-      ? filters?.toBranchIds?.map((t) => t.value)
+      ? filters?.toBranchIds?.map((b) => b.value)
       : [];
   const transfereedId =
     filters?.filter?.transferredBy && filters?.filter?.transferredBy?.length !== 0
-      ? filters?.filter?.transferredBy?.map((t) => t.value)
+      ? filters?.filter?.transferredBy?.map((b) => b.value)
       : [];
 
   const { data, isFetching } = useGetMemberTransferReportQuery(
@@ -89,6 +91,7 @@ export const MemberTransferReport = () => {
     ...d,
     children: combineArrays(d?.savingAccounts as ArrayType[], d?.loanAccounts as ArrayType[]),
   })) as LoanGuranteeData[];
+
   return (
     <Report
       data={loanReport as MemberTransferReportData[]}
@@ -101,9 +104,9 @@ export const MemberTransferReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Member Reports', link: '/cbs/reports/cbs-reports/members' },
+            { label: t['reportsSidebarMemberReports'], link: '/cbs/reports/cbs-reports/members' },
             {
-              label: 'Member Transfer Report',
+              label: t['reportsMemberTransferReport'],
               link: '/cbs/reports/cbs-reports/members/transfer/new',
             },
           ]}
@@ -115,7 +118,7 @@ export const MemberTransferReport = () => {
               showUserBranchesOnly
               isMulti
               name="fromBranchIds"
-              label="Select Source Service Center"
+              label={t['reportsMemberMemberTransferReportSelectSourceServiceCenter']}
             />
           </GridItem>
           <GridItem colSpan={1}>
@@ -123,7 +126,7 @@ export const MemberTransferReport = () => {
               showUserBranchesOnly
               isMulti
               name="toBranchIds"
-              label="Select Destination Service Center"
+              label={t['reportsMemberMemberTransferReportSelectDestinationServiceCenter']}
             />
           </GridItem>
           <GridItem colSpan={1}>
@@ -138,7 +141,12 @@ export const MemberTransferReport = () => {
           <Report.Table<LoanGuranteeData>
             columns={[
               {
-                header: ({ table }) => <ExpandedHeader table={table} value="Member Id" />,
+                header: ({ table }) => (
+                  <ExpandedHeader
+                    table={table}
+                    value={t['reportsMemberMemberTransferReportMemberId']}
+                  />
+                ),
                 id: 'MemberId',
                 accessorKey: 'memberId',
                 cell: (props) => (
@@ -155,22 +163,22 @@ export const MemberTransferReport = () => {
                 ),
               },
               {
-                header: 'Member Name',
+                header: t['reportsMemberMemberTransferReportMemberName'],
                 accessorKey: 'memberName',
                 cell: (props) => props.row?.original?.memberName ?? '-',
               },
               {
-                header: 'From Service Center',
+                header: t['reportsMemberMemberTransferReportFromServiceCenter'],
                 accessorKey: 'fromBranch',
                 cell: (props) => props.row?.original?.fromBranch?.name ?? '-',
               },
               {
-                header: 'To Service Center',
+                header: t['reportsMemberMemberTransferReportToServiceCenter'],
                 accessorKey: 'toBranch',
                 cell: (props) => props.row?.original?.toBranch?.name ?? '-',
               },
               {
-                header: 'Transferred Date',
+                header: t['reportsMemberMemberTransferReportTransferredDate'],
                 accessorKey: 'transferredDate',
                 cell: (props) =>
                   props?.row?.original?.transferredDate
@@ -181,7 +189,7 @@ export const MemberTransferReport = () => {
                 },
               },
               {
-                header: 'Share Balance',
+                header: t['reportsMemberMemberTransferReportShareBalance'],
                 accessorKey: 'shareBalance',
                 cell: (props) =>
                   props?.row?.original?.shareBalance
@@ -190,15 +198,15 @@ export const MemberTransferReport = () => {
               },
 
               {
-                header: 'Saving Information',
+                header: t['reportsMemberMemberTransferReportSavingInformation'],
                 columns: [
                   {
-                    header: 'Account No',
+                    header: t['reportsMemberMemberTransferReportSavingAccountNo'],
                     accessorKey: 'accNo',
                     cell: (row) => row.getValue() ?? '-',
                   },
                   {
-                    header: 'Balance',
+                    header: t['reportsMemberMemberTransferReportSavingBalance'],
                     accessorKey: 'balance',
                     cell: (props) =>
                       props.row?.original?.balance
@@ -212,7 +220,7 @@ export const MemberTransferReport = () => {
                     },
                   },
                   {
-                    header: 'Interest Accured',
+                    header: t['reportsMemberMemberTransferReportSavingInterestAccured'],
                     accessorKey: 'interestAccured',
                     cell: (row) =>
                       row.getValue() ? amountConverter(row.getValue() as string) : '',
@@ -232,15 +240,15 @@ export const MemberTransferReport = () => {
                 ],
               },
               {
-                header: 'Loan Information',
+                header: t['reportsMemberMemberTransferReportLoanInformation'],
                 columns: [
                   {
-                    header: 'Account No',
+                    header: t['reportsMemberMemberTransferReportLoanAccountNo'],
                     accessorKey: 'looanaccNo',
                     cell: (row) => row.getValue() ?? '-',
                   },
                   {
-                    header: 'Balance',
+                    header: t['reportsMemberMemberTransferReportLoanBalance'],
                     accessorKey: 'loanBalance',
                     cell: (props) =>
                       props.row?.original?.loanBalance
@@ -254,7 +262,7 @@ export const MemberTransferReport = () => {
                     },
                   },
                   {
-                    header: 'Interest Accured',
+                    header: t['reportsMemberMemberTransferReportLoanInterestAccured'],
                     accessorKey: 'loanInterestAccured',
                     cell: (row) =>
                       row.getValue() ? amountConverter(row.getValue() as string) : '',
@@ -263,7 +271,7 @@ export const MemberTransferReport = () => {
                     },
                   },
                   {
-                    header: 'Disbursed Amount',
+                    header: t['reportsMemberMemberTransferReportLoanDisbursedAmount'],
                     accessorKey: 'loanDisbursedAmount',
                     cell: (row) =>
                       row.getValue() ? amountConverter(row.getValue() as string) : '',
@@ -277,9 +285,9 @@ export const MemberTransferReport = () => {
           />
         </Report.Content>
         <Report.Filters>
-          <Report.Filter title="User Select">
+          <Report.Filter title={t['reportsMemberMemberTransferReportUserSelect']}>
             <FormSelect
-              label="Transferred By User"
+              label={t['reportsMemberMemberTransferReportTransferredByUser']}
               isMulti
               options={userList?.map((user) => ({
                 label: user.node?.name as string,

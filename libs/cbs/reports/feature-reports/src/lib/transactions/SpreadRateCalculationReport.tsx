@@ -11,7 +11,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, decimalAdjust } from '@coop/shared/utils';
 
 type Filter = {
   branchId: {
@@ -88,15 +88,15 @@ export const SpreadRateCalculationReport = () => {
   const spreadRateColumn = useMemo<Column<typeof spreadRateData[0]>[]>(
     () => [
       {
-        header: 'Loan Avg',
-        accessorFn: (row) => row?.loanAvg,
+        header: 'Loan Avg (%)',
+        accessorFn: (row) => decimalAdjust('round', Number(row?.loanAvg), -2),
       },
       {
-        header: 'Saving Avg',
-        accessorFn: (row) => row?.SavingAvg,
+        header: 'Saving Avg (%)',
+        accessorFn: (row) => decimalAdjust('round', Number(row?.SavingAvg), -2),
       },
       {
-        header: 'Spread Rate',
+        header: 'Spread Rate (%)',
         accessorFn: (row) => row?.SpreadRate,
       },
     ],
@@ -171,13 +171,19 @@ export const SpreadRateCalculationReport = () => {
                 accessorKey: 'savingWeight',
               },
               {
-                header: 'Interest Rate',
+                header: 'Interest Rate (%)',
                 accessorKey: 'savingInterestRate',
+                accessorFn: (row) => decimalAdjust('round', Number(row?.savingInterestRate), -2),
               },
               {
-                header: 'Avg. Rate',
+                header: 'Avg. Rate (%)',
                 accessorKey: 'savingEffectiveRate',
-                footer: spreadRateReportData?.savingData?.meta?.totalEffectiveRate as string,
+                footer: () =>
+                  decimalAdjust(
+                    'round',
+                    Number(spreadRateReportData?.savingData?.meta?.totalEffectiveRate),
+                    -2
+                  ),
                 meta: {
                   Footer: {
                     colspan: 1,
@@ -222,13 +228,19 @@ export const SpreadRateCalculationReport = () => {
                 accessorKey: 'loanWeight',
               },
               {
-                header: 'Interest Rate',
+                header: 'Interest Rate (%)',
                 accessorKey: 'loanInterestRate',
+                accessorFn: (row) => decimalAdjust('round', Number(row?.loanInterestRate), -2),
               },
               {
-                header: 'Avg. Rate',
+                header: 'Avg. Rate (%)',
                 accessorKey: 'loanEffectiveRate',
-                footer: spreadRateReportData?.loanData?.meta?.totalEffectiveRate as string,
+                footer: () =>
+                  decimalAdjust(
+                    'round',
+                    Number(spreadRateReportData?.loanData?.meta?.totalEffectiveRate),
+                    -2
+                  ),
                 meta: {
                   Footer: {
                     colspan: 1,

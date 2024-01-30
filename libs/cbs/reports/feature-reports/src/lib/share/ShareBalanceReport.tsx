@@ -12,7 +12,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { formatAddress, localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
+import { formatAddress, localizedDate, localizedText, RouteToDetailsPage } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
@@ -20,7 +20,7 @@ import {
   FormCheckboxGroup,
   FormInput,
 } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type ShareBalanceReportFilters = Omit<ShareBalanceReportFilter, 'branchId'> & {
   branchId: {
@@ -30,11 +30,13 @@ type ShareBalanceReportFilters = Omit<ShareBalanceReportFilter, 'branchId'> & {
 };
 
 export const ShareBalanceReport = () => {
+  const { t } = useTranslation();
+
   const [filters, setFilters] = useState<ShareBalanceReportFilters | null>(null);
 
   const branchIds =
     filters?.branchId && filters?.branchId.length !== 0
-      ? filters?.branchId?.map((t) => t.value)
+      ? filters?.branchId?.map((b) => b.value)
       : null;
   const genderIds = filters?.filter?.gender ?? null;
 
@@ -43,7 +45,7 @@ export const ShareBalanceReport = () => {
   });
 
   const genderOptions = genderFields?.form?.options?.predefined?.data?.map((g) => ({
-    label: String(g?.name?.local),
+    label: localizedText(g?.name) as string,
     value: g?.id as string,
   }));
 
@@ -76,13 +78,21 @@ export const ShareBalanceReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Share Reports', link: '/cbs/reports/cbs-reports/share' },
-            { label: 'Share Balance', link: '/cbs/reports/cbs-reports/share/balance/new' },
+            { label: t['reportsSidebarShareReports'], link: '/cbs/reports/cbs-reports/share' },
+            {
+              label: t['reportsShareBalanceReport'],
+              link: '/cbs/reports/cbs-reports/share/balance/new',
+            },
           ]}
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect
+              showUserBranchesOnly
+              isMulti
+              name="branchId"
+              label={t['serviceCenter']}
+            />
           </GridItem>
           <GridItem colSpan={1}>
             <FormCBSDatePicker name="period.from" label="Date" setInitialDate />
@@ -99,7 +109,7 @@ export const ShareBalanceReport = () => {
             showFooter
             columns={[
               {
-                header: 'Share Type',
+                header: t['reportsShareBalanceReportShareType'],
                 accessorKey: 'shareType',
                 footer: () => <Box textAlign="right"> Total</Box>,
                 meta: {
@@ -110,7 +120,7 @@ export const ShareBalanceReport = () => {
                 },
               },
               {
-                header: 'Share Certification Number',
+                header: t['reportsShareBalanceReportShareCertificateNumber'],
                 accessorKey: 'shareCertificateNo',
                 meta: {
                   Footer: {
@@ -119,7 +129,7 @@ export const ShareBalanceReport = () => {
                 },
               },
               {
-                header: 'Member ID',
+                header: t['reportsShareBalanceReportMemberID'],
                 accessorKey: 'memberCode',
                 cell: (props) => (
                   <RouteToDetailsPage
@@ -130,7 +140,7 @@ export const ShareBalanceReport = () => {
                 ),
               },
               {
-                header: 'Member Name',
+                header: t['reportsShareBalanceReportMemberName'],
                 accessorFn: (row) => row?.memberName?.local,
                 meta: {
                   Footer: {
@@ -139,7 +149,7 @@ export const ShareBalanceReport = () => {
                 },
               },
               {
-                header: 'Service Center',
+                header: t['serviceCenter'],
                 accessorFn: (row) => row?.branchName,
                 meta: {
                   Footer: {
@@ -148,7 +158,7 @@ export const ShareBalanceReport = () => {
                 },
               },
               {
-                header: 'Address',
+                header: t['reportsShareBalanceReportAddress'],
                 accessorKey: 'address',
                 cell: (props) => formatAddress(props.getValue() as Address),
                 meta: {
@@ -158,7 +168,7 @@ export const ShareBalanceReport = () => {
                 },
               },
               {
-                header: 'Contact No',
+                header: t['reportsShareBalanceReportContactNo'],
                 accessorKey: 'contactNo',
                 meta: {
                   Footer: {
@@ -168,7 +178,7 @@ export const ShareBalanceReport = () => {
                 },
               },
               {
-                header: 'Membership Date',
+                header: t['reportsShareBalanceReportMembershipDate'],
                 accessorKey: 'membershipDate',
                 accessorFn: (row) => localizedDate(row?.membershipDate),
                 meta: {
@@ -179,7 +189,7 @@ export const ShareBalanceReport = () => {
                 },
               },
               {
-                header: 'No. of Kitta',
+                header: t['reportsShareBalanceReportNoOfKitta'],
                 accessorKey: 'noOfKitta',
                 meta: {
                   Footer: {
@@ -188,7 +198,7 @@ export const ShareBalanceReport = () => {
                 },
               },
               {
-                header: 'Balance',
+                header: t['reportsShareBalanceReportBalance'],
                 footer: () => amountConverter(totalShareBalance as string),
                 accessorKey: 'balance',
                 cell: (props) => amountConverter(props.getValue() as string),
@@ -197,13 +207,13 @@ export const ShareBalanceReport = () => {
           />
         </Report.Content>
         <Report.Filters>
-          <Report.Filter title="Gender">
+          <Report.Filter title={t['reportsShareBalanceReportGender']}>
             <FormCheckboxGroup name="filter.gender" list={genderOptions} orientation="column" />
           </Report.Filter>
-          <Report.Filter title="Age">
+          <Report.Filter title={t['reportsShareBalanceReportAge']}>
             <FormInput name="filter.age" textAlign="right" color="gray.700" type="number" />
           </Report.Filter>
-          <Report.Filter title="Balance Range">
+          <Report.Filter title={t['reportsShareBalanceReportBalanceRange']}>
             <FormAmountFilter name="filter.balanceRange" />
           </Report.Filter>
         </Report.Filters>
