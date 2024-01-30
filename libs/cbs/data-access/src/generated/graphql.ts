@@ -17366,7 +17366,7 @@ export type MemberChequeDetails = {
 };
 
 export type MemberClassificationFilter = {
-  branch?: InputMaybe<Scalars['String']>;
+  branch?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   period: LocalizedDateFilter;
 };
 
