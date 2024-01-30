@@ -18068,6 +18068,7 @@ export type MemberTransferListEdges = {
 
 export type MemberTransferMutation = {
   action: MemberTransferSuccessResult;
+  beforeactivation: MemberTransferResult;
   initiate: MemberTransferResult;
 };
 
@@ -18075,6 +18076,11 @@ export type MemberTransferMutationActionArgs = {
   notes?: InputMaybe<Scalars['String']>;
   requestId: Scalars['ID'];
   state: MemberTransferState;
+};
+
+export type MemberTransferMutationBeforeactivationArgs = {
+  branchId: Scalars['ID'];
+  memberId: Scalars['ID'];
 };
 
 export type MemberTransferMutationInitiateArgs = {
@@ -28510,6 +28516,28 @@ export type BalanceCertificateMutationVariables = Exact<{
 }>;
 
 export type BalanceCertificateMutation = { members: { balanceCertificate: string } };
+
+export type UpdateBranchDuringActivationMutationVariables = Exact<{
+  memberId: Scalars['ID'];
+  branchId: Scalars['ID'];
+}>;
+
+export type UpdateBranchDuringActivationMutation = {
+  members: {
+    transfer: {
+      beforeactivation: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
 
 export type PayMembershipMutationVariables = Exact<{
   data?: InputMaybe<MembershipPaymentInput>;
@@ -39727,6 +39755,7 @@ export type GetMemberIndividualDataQuery = {
         name?: Record<'local' | 'en' | 'np', string> | null;
         profilePicUrl?: string | null;
         profilePic?: string | null;
+        branch?: string | null;
         contact?: string | null;
         dateJoined?: Record<'local' | 'en' | 'np', string> | null;
         signaturePicUrl?: string | null;
@@ -55103,6 +55132,40 @@ export const useBalanceCertificateMutation = <TError = unknown, TContext = unkno
     ),
     options
   );
+export const UpdateBranchDuringActivationDocument = `
+    mutation updateBranchDuringActivation($memberId: ID!, $branchId: ID!) {
+  members {
+    transfer {
+      beforeactivation(memberId: $memberId, branchId: $branchId) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateBranchDuringActivationMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateBranchDuringActivationMutation,
+    TError,
+    UpdateBranchDuringActivationMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateBranchDuringActivationMutation,
+    TError,
+    UpdateBranchDuringActivationMutationVariables,
+    TContext
+  >(
+    ['updateBranchDuringActivation'],
+    useAxios<UpdateBranchDuringActivationMutation, UpdateBranchDuringActivationMutationVariables>(
+      UpdateBranchDuringActivationDocument
+    ),
+    options
+  );
 export const PayMembershipDocument = `
     mutation payMembership($data: MembershipPaymentInput, $memberId: ID!) {
   members {
@@ -70256,6 +70319,7 @@ export const GetMemberIndividualDataDocument = `
           wardNo
           locality
         }
+        branch
         contact
         dateJoined
         signaturePicUrl
