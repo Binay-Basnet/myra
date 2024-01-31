@@ -5396,6 +5396,7 @@ export type DepositAccount = Base & {
   overDrawnBalance?: Maybe<Scalars['String']>;
   prematurePenalty?: Maybe<Scalars['String']>;
   product: DepositProduct;
+  serviceCenter?: Maybe<Scalars['String']>;
 };
 
 export type DepositAccountClose = {
@@ -22263,6 +22264,7 @@ export type ShareBalance = {
   id?: Maybe<Scalars['ID']>;
   member: Member;
   memberId?: Maybe<Scalars['ID']>;
+  serviceCenter?: Maybe<Scalars['String']>;
   shareCertificateNo?: Maybe<Scalars['String']>;
   totalIssued?: Maybe<Scalars['Int']>;
   totalReturned?: Maybe<Scalars['Int']>;
@@ -22706,6 +22708,7 @@ export type ShareRegister = {
   noOfShare?: Maybe<Scalars['String']>;
   otherCharge?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<SharePaymentMode>;
+  serviceCenter?: Maybe<Scalars['String']>;
   shareAmount?: Maybe<Scalars['String']>;
   shareCertificateCharge?: Maybe<Scalars['String']>;
   startNumber: Scalars['Int'];
@@ -32649,6 +32652,7 @@ export type GetAccountTableListMinimalQuery = {
             closedAt?: string | null;
             installmentAmount?: string | null;
             groupName?: string | null;
+            serviceCenter?: string | null;
             member?: {
               id: string;
               name?: Record<'local' | 'en' | 'np', string> | null;
@@ -49296,6 +49300,7 @@ export type GetShareBalanceListQuery = {
         node: {
           count: number;
           amount: number;
+          serviceCenter?: string | null;
           member: {
             id: string;
             code: string;
@@ -49330,6 +49335,7 @@ export type GetShareRegisterListQuery = {
           endNumber: number;
           credit?: number | null;
           debit?: number | null;
+          serviceCenter?: string | null;
           member?: {
             id: string;
             code: string;
@@ -61015,6 +61021,7 @@ export const GetAccountTableListMinimalDocument = `
             }
             installmentAmount
             groupName
+            serviceCenter
           }
         }
       }
@@ -83087,6 +83094,7 @@ export const GetShareBalanceListDocument = `
           }
           count
           amount
+          serviceCenter
         }
       }
     }
@@ -83126,6 +83134,7 @@ export const GetShareRegisterListDocument = `
           endNumber
           credit
           debit
+          serviceCenter
         }
         cursor
       }

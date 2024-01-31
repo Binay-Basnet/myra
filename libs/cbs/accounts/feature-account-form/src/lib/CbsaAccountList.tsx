@@ -1,14 +1,17 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
+import qs from 'qs';
 
 import { Avatar, Box, PageHeader, TablePopover, Text, toast, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import {
   ObjState,
+  useAppSelector,
   useGetAccountTableListMinimalExportQuery,
   useGetAccountTableListMinimalQuery,
+  useGetMemberFilterMappingQuery,
   useGetSavingFilterMappingQuery,
   useSetMakeDormantAccountActiveMutation,
 } from '@coop/cbs/data-access';
@@ -66,6 +69,8 @@ export const CBSAccountList = () => {
     ...filterParams,
     paginate: getPaginationQuery(),
   });
+
+  const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
   const rowData = useMemo(() => data?.account?.list?.data?.edges ?? [], [data]);
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -138,6 +143,17 @@ export const CBSAccountList = () => {
         ),
       },
       {
+        id: 'serviceCenter',
+        header: 'Service Center',
+        accessorFn: (row) => row?.node?.serviceCenter,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: memberFilterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
+      },
+      {
         header: 'MF Group',
         accessorFn: (row) => row?.node?.groupName,
       },
@@ -196,7 +212,13 @@ export const CBSAccountList = () => {
         },
       },
     ],
-    [savingFilterMapping?.account.filterMapping?.productID, objState, router, makeActiveHandler]
+    [
+      savingFilterMapping?.account.filterMapping?.productID,
+      objState,
+      router,
+      makeActiveHandler,
+      memberFilterMapping,
+    ]
   );
 
   useGetAccountTableListMinimalExportQuery(
@@ -215,6 +237,31 @@ export const CBSAccountList = () => {
       },
     }
   );
+
+  const user = useAppSelector((state) => state.auth?.user);
+
+  useEffect(() => {
+    const queryString = qs.stringify(
+      {
+        serviceCenter: {
+          value: user?.currentBranch?.id,
+          compare: '=',
+        },
+      },
+      { allowDots: true, arrayFormat: 'brackets', encode: false }
+    );
+
+    router.push(
+      {
+        query: {
+          ...router.query,
+          filter: queryString,
+        },
+      },
+      undefined,
+      { shallow: true }
+    );
+  }, []);
 
   return (
     <>

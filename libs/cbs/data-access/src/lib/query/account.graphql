@@ -380,6 +380,7 @@ query getAccountTableListMinimal($paginate: Pagination, $filter: Filter) {
             }
             installmentAmount
             groupName
+            serviceCenter
           }
         }
       }

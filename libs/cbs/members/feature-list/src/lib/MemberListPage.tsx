@@ -1,12 +1,14 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
+import qs from 'qs';
 
 import { PageHeader, TablePopover, toast } from '@myra-ui';
 import { AvatarCell, Column, Table } from '@myra-ui/table';
 
 import {
+  useAppSelector,
   useGetGeneralMemberSettingsDataQuery,
   useGetMemberFilterMappingQuery,
   useGetMemberListExportQuery,
@@ -156,8 +158,8 @@ export const MemberListPage = () => {
         },
       },
       {
-        id: t['memberListTableServiceCenter'],
-        header: 'Service Center',
+        id: 'serviceCenter',
+        header: t['memberListTableServiceCenter'],
         accessorFn: (row) => row?.node?.branch,
         enableColumnFilter: true,
         meta: {
@@ -311,6 +313,31 @@ export const MemberListPage = () => {
       },
     }
   );
+
+  const user = useAppSelector((state) => state.auth?.user);
+
+  useEffect(() => {
+    const queryString = qs.stringify(
+      {
+        serviceCenter: {
+          value: user?.currentBranch?.id,
+          compare: '=',
+        },
+      },
+      { allowDots: true, arrayFormat: 'brackets', encode: false }
+    );
+
+    router.push(
+      {
+        query: {
+          ...router.query,
+          filter: queryString,
+        },
+      },
+      undefined,
+      { shallow: true }
+    );
+  }, []);
 
   return (
     <>

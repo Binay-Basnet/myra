@@ -1,11 +1,14 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import qs from 'qs';
 
 import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import {
   Share_Transaction_Direction,
+  useAppSelector,
+  useGetMemberFilterMappingQuery,
   useGetShareFilterMappingQuery,
   useGetShareRegisterListQuery,
 } from '@coop/cbs/data-access';
@@ -24,6 +27,8 @@ export const ShareRegisterTable = () => {
   const router = useRouter();
 
   const { data: shareFilterMapping } = useGetShareFilterMappingQuery();
+
+  const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
   const { data, isFetching } = useGetShareRegisterListQuery({
     pagination: getPaginationQuery(),
@@ -139,6 +144,17 @@ export const ShareRegisterTable = () => {
         filterFn: 'amount',
       },
       {
+        id: 'serviceCenter',
+        header: 'Service Center',
+        accessorFn: (row) => row?.node?.serviceCenter,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: memberFilterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
+      },
+      {
         id: '_actions',
         header: '',
         cell: (props) => (
@@ -169,8 +185,33 @@ export const ShareRegisterTable = () => {
         },
       },
     ],
-    [t, shareFilterMapping?.share?.filterMapping?.transactionDirection, router]
+    [t, shareFilterMapping?.share?.filterMapping?.transactionDirection, router, memberFilterMapping]
   );
+
+  const user = useAppSelector((state) => state.auth?.user);
+
+  useEffect(() => {
+    const queryString = qs.stringify(
+      {
+        serviceCenter: {
+          value: user?.currentBranch?.id,
+          compare: '=',
+        },
+      },
+      { allowDots: true, arrayFormat: 'brackets', encode: false }
+    );
+
+    router.push(
+      {
+        query: {
+          ...router.query,
+          filter: queryString,
+        },
+      },
+      undefined,
+      { shallow: true }
+    );
+  }, []);
 
   return (
     <>
