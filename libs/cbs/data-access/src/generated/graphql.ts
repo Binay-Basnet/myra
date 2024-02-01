@@ -41155,6 +41155,7 @@ export type ListGroupMemberQuery = {
             gender?: string | null;
             age?: number | null;
             maritalStatus?: string | null;
+            contact?: string | null;
             address?: {
               state?: Record<'local' | 'en' | 'np', string> | null;
               district?: Record<'local' | 'en' | 'np', string> | null;
@@ -72090,6 +72091,7 @@ export const ListGroupMemberDocument = `
             gender
             age
             maritalStatus
+            contact
           }
           cursor
         }

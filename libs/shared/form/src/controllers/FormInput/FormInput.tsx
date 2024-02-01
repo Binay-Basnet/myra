@@ -8,10 +8,12 @@ interface IFormInputProps<T extends Record<string, unknown>> extends InputProps 
   name: string;
   control?: Control<T>;
   rules?: UseControllerProps['rules'];
+  onChangeAction?: (val: string) => void;
 }
 
 export const FormInput = <T extends Record<string, unknown>>({
   name,
+  onChangeAction,
   ...rest
 }: IFormInputProps<T>) => {
   const methods = useFormContext();
@@ -33,6 +35,7 @@ export const FormInput = <T extends Record<string, unknown>>({
           errorText={get(errors, name)?.message as string}
           onChange={(e) => {
             onChange(e);
+            onChangeAction && onChangeAction(e?.target?.value);
             if (errors[name]?.type === 'required') {
               clearErrors(name);
             }
