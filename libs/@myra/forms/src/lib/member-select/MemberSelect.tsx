@@ -13,21 +13,24 @@ import { Text } from '@myra-ui/foundations';
 import { components as customComponents } from './styles/selectComponents';
 import { chakraDefaultStyles } from './styles/selectStyles';
 
+export interface IMemberInfo {
+  image?: string;
+  code?: string;
+  memberName?: string;
+  memberId?: string;
+  gender?: string;
+  age?: number | null | undefined;
+  maritialStatus?: string;
+  address?: string;
+  profilePicUrl?: string | null | undefined;
+  branch?: string | null | undefined;
+  contact?: string | null | undefined;
+}
+
 export interface Option {
   label?: string;
   value: string;
-  memberInfo?: {
-    image?: string;
-    code?: string;
-    memberName?: string;
-    memberId?: string;
-    gender?: string;
-    age?: number | null | undefined;
-    maritialStatus?: string;
-    address?: string;
-    profilePicUrl?: string | null | undefined;
-    branch?: string | null | undefined;
-  };
+  memberInfo?: IMemberInfo;
 }
 
 export interface MemberSelectProps

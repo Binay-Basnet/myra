@@ -5,7 +5,17 @@ import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
-import { Alert, asyncToast, Box, Button, FormSection, GridItem, Icon, Text } from '@myra-ui';
+import {
+  Alert,
+  asyncToast,
+  Box,
+  Button,
+  FormSection,
+  GridItem,
+  Icon,
+  IMemberInfo,
+  Text,
+} from '@myra-ui';
 
 import {
   AlternativeChannelPaymentMode,
@@ -50,6 +60,8 @@ const ActivationChargeDict = {
 };
 
 export const ActivationForm = () => {
+  const [selectedMember, setSelectedMember] = useState<IMemberInfo>();
+
   const [mode, setMode] = useState<'form' | 'payment'>('form');
   // const [pin, setPin] = useState<number | null>(null);
   const queryClient = useQueryClient();
@@ -199,7 +211,22 @@ export const ActivationForm = () => {
           <Box display={mode === 'form' ? 'block' : 'none'}>
             <FormSection>
               <GridItem colSpan={2}>
-                <FormMemberSelect name="memberId" label={t['acMember']} />
+                <FormMemberSelect
+                  name="memberId"
+                  label={t['acMember']}
+                  onChangeAction={(newVal) => {
+                    setSelectedMember((newVal as { memberInfo: IMemberInfo })?.memberInfo);
+                    if ((newVal as { memberInfo: IMemberInfo })?.memberInfo?.contact) {
+                      methods.setValue(
+                        'phoneNumber',
+                        (newVal as unknown as { memberInfo: IMemberInfo }).memberInfo
+                          .contact as string
+                      );
+                    } else {
+                      methods.setValue('phoneNumber', '');
+                    }
+                  }}
+                />
               </GridItem>
 
               <FormSelect
@@ -237,6 +264,18 @@ export const ActivationForm = () => {
                 label={t['acPhoneNumber']}
                 isRequired
                 rules={{ required: 'Phone number is required' }}
+                onChangeAction={(val) => {
+                  if (selectedMember?.contact) {
+                    if (val !== selectedMember?.contact) {
+                      methods.setError('phoneNumber', {
+                        type: 'custom',
+                        message: `Phone number not matching with KYM phone number (${selectedMember?.contact})`,
+                      });
+                    } else {
+                      methods.clearErrors('phoneNumber');
+                    }
+                  }
+                }}
               />
               <FormInput name="email" label={t['acEmail']} />
             </FormSection>

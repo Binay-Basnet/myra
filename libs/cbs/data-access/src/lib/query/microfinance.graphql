@@ -180,6 +180,7 @@ query listGroupMember($pagination: Pagination, $filter: Filter, $groupID: String
             gender
             age
             maritalStatus
+            contact
           }
           cursor
         }
