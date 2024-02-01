@@ -19799,9 +19799,14 @@ export type PrematurePenaltyFormState = {
 
 export type PresignedUrlMutation = {
   upload: PresignedUrlOutput;
+  uploadPDF?: Maybe<PresignedUrlOutput>;
 };
 
 export type PresignedUrlMutationUploadArgs = {
+  contentType?: InputMaybe<Scalars['String']>;
+};
+
+export type PresignedUrlMutationUploadPdfArgs = {
   contentType?: InputMaybe<Scalars['String']>;
 };
 
@@ -28850,6 +28855,16 @@ export type GetPreSignedUrlMutationVariables = Exact<{
 export type GetPreSignedUrlMutation = {
   presignedUrl: {
     upload: { filename?: string | null; getUrl?: string | null; putUrl?: string | null };
+  };
+};
+
+export type GetPdfPreSignedUrlMutationVariables = Exact<{
+  contentType?: InputMaybe<Scalars['String']>;
+}>;
+
+export type GetPdfPreSignedUrlMutation = {
+  presignedUrl: {
+    uploadPDF?: { filename?: string | null; getUrl?: string | null; putUrl?: string | null } | null;
   };
 };
 
@@ -55579,6 +55594,32 @@ export const useGetPreSignedUrlMutation = <TError = unknown, TContext = unknown>
   useMutation<GetPreSignedUrlMutation, TError, GetPreSignedUrlMutationVariables, TContext>(
     ['getPreSignedUrl'],
     useAxios<GetPreSignedUrlMutation, GetPreSignedUrlMutationVariables>(GetPreSignedUrlDocument),
+    options
+  );
+export const GetPdfPreSignedUrlDocument = `
+    mutation getPDFPreSignedUrl($contentType: String) {
+  presignedUrl {
+    uploadPDF(contentType: $contentType) {
+      filename
+      getUrl
+      putUrl
+    }
+  }
+}
+    `;
+export const useGetPdfPreSignedUrlMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    GetPdfPreSignedUrlMutation,
+    TError,
+    GetPdfPreSignedUrlMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<GetPdfPreSignedUrlMutation, TError, GetPdfPreSignedUrlMutationVariables, TContext>(
+    ['getPDFPreSignedUrl'],
+    useAxios<GetPdfPreSignedUrlMutation, GetPdfPreSignedUrlMutationVariables>(
+      GetPdfPreSignedUrlDocument
+    ),
     options
   );
 export const SaveNewReportDocument = `
