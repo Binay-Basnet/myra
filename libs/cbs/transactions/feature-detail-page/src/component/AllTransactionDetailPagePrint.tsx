@@ -186,13 +186,12 @@ export const AllTransactionDetailPagePrint = ({
           <DetailCardContent title={t['transDetailStatus']} status />
         </DetailsCard>
 
-        {allTransactionsData?.note && <Note note={allTransactionsData?.note} />}
-
         <GlTransaction
           totalDebit={String(amountConverter(allTransactionsData?.totalDebit ?? 0))}
           totalCredit={String(amountConverter(allTransactionsData?.totalCredit ?? 0))}
           data={tableData ?? []}
         />
+        {allTransactionsData?.note && <Note note={allTransactionsData?.note} />}
       </Box>
 
       <Box
