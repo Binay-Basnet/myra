@@ -1,4 +1,4 @@
-import { AiOutlineArrowDown } from 'react-icons/ai';
+import { AiOutlineArrowUp } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { Box, Icon } from '@chakra-ui/react';
 import { flexRender, Header } from '@tanstack/react-table';
@@ -80,7 +80,7 @@ export const TableHeaderWithSorting = <T,>({ header }: TableHeaderWithSortingPro
         <motion.div animate={{ x: 4 }}>
           <Icon
             // as={sortParams['arrange'] === 'asc' ? AiOutlineArrowDown : AiOutlineArrowUp}
-            as={AiOutlineArrowDown}
+            as={AiOutlineArrowUp}
             w="s20"
             h="s20"
             p="s4"
