@@ -20,6 +20,7 @@ type SavingLoanReportEntry = {
   loanAccountNo?: string | null;
   interestIncome?: string | null;
   finePaid?: string | null;
+  panNumber?: string | null;
 };
 
 type Filter = {
