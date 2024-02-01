@@ -364,6 +364,7 @@ query getSavingLoanInterestReport($data: SavingLoanInterestReport!) {
             interestIncome
             finePaid
           }
+          panNumber
         }
         totalInterestPaid
         totalTds

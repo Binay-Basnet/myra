@@ -21680,6 +21680,7 @@ export type SavingLoanInterest = {
   memberCode: Scalars['String'];
   memberId: Scalars['ID'];
   memberName: Scalars['String'];
+  panNumber?: Maybe<Scalars['String']>;
   savingAccountEntry?: Maybe<Array<SavingInterest>>;
 };
 
@@ -43915,6 +43916,7 @@ export type GetSavingLoanInterestReportQuery = {
           memberId: string;
           memberCode: string;
           memberName: string;
+          panNumber?: string | null;
           savingAccountEntry?: Array<{
             accountNo?: string | null;
             interestPaid?: string | null;
@@ -75668,6 +75670,7 @@ export const GetSavingLoanInterestReportDocument = `
             interestIncome
             finePaid
           }
+          panNumber
         }
         totalInterestPaid
         totalTds

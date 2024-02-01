@@ -204,6 +204,10 @@ export const SavingLoanInterestReport = () => {
                         : '',
                     footer: () => amountConverter(grandTotalFinePaid || 0),
                   },
+                  {
+                    header: 'Pan Number',
+                    accessorKey: 'panNumber',
+                  },
                 ],
               },
             ]}
