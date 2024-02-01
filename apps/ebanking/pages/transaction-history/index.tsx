@@ -74,7 +74,7 @@ const TransactionHistoryPage = () => {
   });
 
   const accountOptions = accountListData?.eBanking?.account?.list?.accounts?.map((account) => ({
-    label: `${account?.name} - ${account.accountNumber.slice(0, 12)}`,
+    label: `${account?.name} - ${account.accountNumber}`,
     value: account?.id,
   }));
 

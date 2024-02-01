@@ -7,6 +7,7 @@ interface FormFileInputProps extends FileInputProps {
   name: string;
   label?: string;
   id?: string;
+  isPdf?: boolean;
 }
 
 export const FormFileInput = ({ name, label, ...rest }: FormFileInputProps) => {
