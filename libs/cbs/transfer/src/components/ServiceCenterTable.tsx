@@ -19,6 +19,7 @@ export const ServiceCenterTable = () => {
   const { data: branchListQueryData } = useGetBranchListQuery({
     paginate: {
       ...getPaginationQuery(),
+      first: -1,
       order: null,
     },
   });

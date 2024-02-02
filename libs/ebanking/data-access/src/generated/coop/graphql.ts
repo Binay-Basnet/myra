@@ -77,26 +77,15 @@ export const SetDefaultAccountDocument = `
   }
 }
     `;
-export const useSetDefaultAccountMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.SetDefaultAccountMutation,
-    TError,
-    Types.SetDefaultAccountMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    Types.SetDefaultAccountMutation,
-    TError,
-    Types.SetDefaultAccountMutationVariables,
-    TContext
-  >(
-    ['setDefaultAccount'],
-    useAxios<Types.SetDefaultAccountMutation, Types.SetDefaultAccountMutationVariables>(
-      SetDefaultAccountDocument
-    ),
-    options
-  );
+export const useSetDefaultAccountMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.SetDefaultAccountMutation, TError, Types.SetDefaultAccountMutationVariables, TContext>) =>
+    useMutation<Types.SetDefaultAccountMutation, TError, Types.SetDefaultAccountMutationVariables, TContext>(
+      ['setDefaultAccount'],
+      useAxios<Types.SetDefaultAccountMutation, Types.SetDefaultAccountMutationVariables>(SetDefaultAccountDocument),
+      options
+    );
 export const SavingExcelExportDocument = `
     mutation savingExcelExport($data: EbankingSavingFilter!) {
   eBanking {
@@ -111,26 +100,15 @@ export const SavingExcelExportDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSavingExcelExportMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.SavingExcelExportMutation,
-    TError,
-    Types.SavingExcelExportMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    Types.SavingExcelExportMutation,
-    TError,
-    Types.SavingExcelExportMutationVariables,
-    TContext
-  >(
-    ['savingExcelExport'],
-    useAxios<Types.SavingExcelExportMutation, Types.SavingExcelExportMutationVariables>(
-      SavingExcelExportDocument
-    ),
-    options
-  );
+export const useSavingExcelExportMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.SavingExcelExportMutation, TError, Types.SavingExcelExportMutationVariables, TContext>) =>
+    useMutation<Types.SavingExcelExportMutation, TError, Types.SavingExcelExportMutationVariables, TContext>(
+      ['savingExcelExport'],
+      useAxios<Types.SavingExcelExportMutation, Types.SavingExcelExportMutationVariables>(SavingExcelExportDocument),
+      options
+    );
 export const ChangeCoopPinDocument = `
     mutation changeCoopPin($oldPin: String!, $newPin: String!) {
   eBanking(source: EBANKING) {
@@ -145,21 +123,15 @@ export const ChangeCoopPinDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useChangeCoopPinMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.ChangeCoopPinMutation,
-    TError,
-    Types.ChangeCoopPinMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<Types.ChangeCoopPinMutation, TError, Types.ChangeCoopPinMutationVariables, TContext>(
-    ['changeCoopPin'],
-    useAxios<Types.ChangeCoopPinMutation, Types.ChangeCoopPinMutationVariables>(
-      ChangeCoopPinDocument
-    ),
-    options
-  );
+export const useChangeCoopPinMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.ChangeCoopPinMutation, TError, Types.ChangeCoopPinMutationVariables, TContext>) =>
+    useMutation<Types.ChangeCoopPinMutation, TError, Types.ChangeCoopPinMutationVariables, TContext>(
+      ['changeCoopPin'],
+      useAxios<Types.ChangeCoopPinMutation, Types.ChangeCoopPinMutationVariables>(ChangeCoopPinDocument),
+      options
+    );
 export const ChangeMyraPasswordDocument = `
     mutation changeMyraPassword($newPassword: String!, $oldPassword: String!) {
   eBanking(source: EBANKING) {
@@ -174,26 +146,15 @@ export const ChangeMyraPasswordDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useChangeMyraPasswordMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.ChangeMyraPasswordMutation,
-    TError,
-    Types.ChangeMyraPasswordMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    Types.ChangeMyraPasswordMutation,
-    TError,
-    Types.ChangeMyraPasswordMutationVariables,
-    TContext
-  >(
-    ['changeMyraPassword'],
-    useAxios<Types.ChangeMyraPasswordMutation, Types.ChangeMyraPasswordMutationVariables>(
-      ChangeMyraPasswordDocument
-    ),
-    options
-  );
+export const useChangeMyraPasswordMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.ChangeMyraPasswordMutation, TError, Types.ChangeMyraPasswordMutationVariables, TContext>) =>
+    useMutation<Types.ChangeMyraPasswordMutation, TError, Types.ChangeMyraPasswordMutationVariables, TContext>(
+      ['changeMyraPassword'],
+      useAxios<Types.ChangeMyraPasswordMutation, Types.ChangeMyraPasswordMutationVariables>(ChangeMyraPasswordDocument),
+      options
+    );
 export const SetChequeRequestDataDocument = `
     mutation setChequeRequestData($memberID: String!, $data: EBankingChequeRequestInput) {
   eBanking(source: EBANKING) {
@@ -210,26 +171,15 @@ export const SetChequeRequestDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetChequeRequestDataMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.SetChequeRequestDataMutation,
-    TError,
-    Types.SetChequeRequestDataMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    Types.SetChequeRequestDataMutation,
-    TError,
-    Types.SetChequeRequestDataMutationVariables,
-    TContext
-  >(
-    ['setChequeRequestData'],
-    useAxios<Types.SetChequeRequestDataMutation, Types.SetChequeRequestDataMutationVariables>(
-      SetChequeRequestDataDocument
-    ),
-    options
-  );
+export const useSetChequeRequestDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.SetChequeRequestDataMutation, TError, Types.SetChequeRequestDataMutationVariables, TContext>) =>
+    useMutation<Types.SetChequeRequestDataMutation, TError, Types.SetChequeRequestDataMutationVariables, TContext>(
+      ['setChequeRequestData'],
+      useAxios<Types.SetChequeRequestDataMutation, Types.SetChequeRequestDataMutationVariables>(SetChequeRequestDataDocument),
+      options
+    );
 export const SetWithdrawViaCollectorRequestDataDocument = `
     mutation setWithdrawViaCollectorRequestData($memberID: String!, $data: EBankingChequeWithdrawViaCollectorInput) {
   eBanking(source: EBANKING) {
@@ -243,27 +193,15 @@ export const SetWithdrawViaCollectorRequestDataDocument = `
   }
 }
     `;
-export const useSetWithdrawViaCollectorRequestDataMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.SetWithdrawViaCollectorRequestDataMutation,
-    TError,
-    Types.SetWithdrawViaCollectorRequestDataMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    Types.SetWithdrawViaCollectorRequestDataMutation,
-    TError,
-    Types.SetWithdrawViaCollectorRequestDataMutationVariables,
-    TContext
-  >(
-    ['setWithdrawViaCollectorRequestData'],
-    useAxios<
-      Types.SetWithdrawViaCollectorRequestDataMutation,
-      Types.SetWithdrawViaCollectorRequestDataMutationVariables
-    >(SetWithdrawViaCollectorRequestDataDocument),
-    options
-  );
+export const useSetWithdrawViaCollectorRequestDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.SetWithdrawViaCollectorRequestDataMutation, TError, Types.SetWithdrawViaCollectorRequestDataMutationVariables, TContext>) =>
+    useMutation<Types.SetWithdrawViaCollectorRequestDataMutation, TError, Types.SetWithdrawViaCollectorRequestDataMutationVariables, TContext>(
+      ['setWithdrawViaCollectorRequestData'],
+      useAxios<Types.SetWithdrawViaCollectorRequestDataMutation, Types.SetWithdrawViaCollectorRequestDataMutationVariables>(SetWithdrawViaCollectorRequestDataDocument),
+      options
+    );
 export const SetBlockChequeRequestDataDocument = `
     mutation setBlockChequeRequestData($memberID: String!, $data: EBankingChequeBlockInput) {
   eBanking(source: EBANKING) {
@@ -277,27 +215,15 @@ export const SetBlockChequeRequestDataDocument = `
   }
 }
     `;
-export const useSetBlockChequeRequestDataMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.SetBlockChequeRequestDataMutation,
-    TError,
-    Types.SetBlockChequeRequestDataMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    Types.SetBlockChequeRequestDataMutation,
-    TError,
-    Types.SetBlockChequeRequestDataMutationVariables,
-    TContext
-  >(
-    ['setBlockChequeRequestData'],
-    useAxios<
-      Types.SetBlockChequeRequestDataMutation,
-      Types.SetBlockChequeRequestDataMutationVariables
-    >(SetBlockChequeRequestDataDocument),
-    options
-  );
+export const useSetBlockChequeRequestDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.SetBlockChequeRequestDataMutation, TError, Types.SetBlockChequeRequestDataMutationVariables, TContext>) =>
+    useMutation<Types.SetBlockChequeRequestDataMutation, TError, Types.SetBlockChequeRequestDataMutationVariables, TContext>(
+      ['setBlockChequeRequestData'],
+      useAxios<Types.SetBlockChequeRequestDataMutation, Types.SetBlockChequeRequestDataMutationVariables>(SetBlockChequeRequestDataDocument),
+      options
+    );
 export const ApplyForLoanDocument = `
     mutation applyForLoan($memberId: String!, $data: EBankingApplyLoanInput) {
   eBanking(source: EBANKING) {
@@ -314,19 +240,15 @@ export const ApplyForLoanDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useApplyForLoanMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.ApplyForLoanMutation,
-    TError,
-    Types.ApplyForLoanMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<Types.ApplyForLoanMutation, TError, Types.ApplyForLoanMutationVariables, TContext>(
-    ['applyForLoan'],
-    useAxios<Types.ApplyForLoanMutation, Types.ApplyForLoanMutationVariables>(ApplyForLoanDocument),
-    options
-  );
+export const useApplyForLoanMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.ApplyForLoanMutation, TError, Types.ApplyForLoanMutationVariables, TContext>) =>
+    useMutation<Types.ApplyForLoanMutation, TError, Types.ApplyForLoanMutationVariables, TContext>(
+      ['applyForLoan'],
+      useAxios<Types.ApplyForLoanMutation, Types.ApplyForLoanMutationVariables>(ApplyForLoanDocument),
+      options
+    );
 export const AddNewComplaintDocument = `
     mutation addNewComplaint($memberId: String!, $data: EBankingRegisterComplaintInput) {
   eBanking(source: EBANKING) {
@@ -343,26 +265,15 @@ export const AddNewComplaintDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useAddNewComplaintMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.AddNewComplaintMutation,
-    TError,
-    Types.AddNewComplaintMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    Types.AddNewComplaintMutation,
-    TError,
-    Types.AddNewComplaintMutationVariables,
-    TContext
-  >(
-    ['addNewComplaint'],
-    useAxios<Types.AddNewComplaintMutation, Types.AddNewComplaintMutationVariables>(
-      AddNewComplaintDocument
-    ),
-    options
-  );
+export const useAddNewComplaintMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.AddNewComplaintMutation, TError, Types.AddNewComplaintMutationVariables, TContext>) =>
+    useMutation<Types.AddNewComplaintMutation, TError, Types.AddNewComplaintMutationVariables, TContext>(
+      ['addNewComplaint'],
+      useAxios<Types.AddNewComplaintMutation, Types.AddNewComplaintMutationVariables>(AddNewComplaintDocument),
+      options
+    );
 export const AccountTransferDocument = `
     mutation accountTransfer($data: EbankingAccountTransferInput) {
   eBanking(source: EBANKING) {
@@ -386,26 +297,15 @@ export const AccountTransferDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useAccountTransferMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.AccountTransferMutation,
-    TError,
-    Types.AccountTransferMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    Types.AccountTransferMutation,
-    TError,
-    Types.AccountTransferMutationVariables,
-    TContext
-  >(
-    ['accountTransfer'],
-    useAxios<Types.AccountTransferMutation, Types.AccountTransferMutationVariables>(
-      AccountTransferDocument
-    ),
-    options
-  );
+export const useAccountTransferMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.AccountTransferMutation, TError, Types.AccountTransferMutationVariables, TContext>) =>
+    useMutation<Types.AccountTransferMutation, TError, Types.AccountTransferMutationVariables, TContext>(
+      ['accountTransfer'],
+      useAxios<Types.AccountTransferMutation, Types.AccountTransferMutationVariables>(AccountTransferDocument),
+      options
+    );
 export const CheckForSendMoneyDocument = `
     mutation checkForSendMoney($data: EbankingSendMoneyInput) {
   eBanking(source: EBANKING) {
@@ -422,26 +322,15 @@ export const CheckForSendMoneyDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useCheckForSendMoneyMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.CheckForSendMoneyMutation,
-    TError,
-    Types.CheckForSendMoneyMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    Types.CheckForSendMoneyMutation,
-    TError,
-    Types.CheckForSendMoneyMutationVariables,
-    TContext
-  >(
-    ['checkForSendMoney'],
-    useAxios<Types.CheckForSendMoneyMutation, Types.CheckForSendMoneyMutationVariables>(
-      CheckForSendMoneyDocument
-    ),
-    options
-  );
+export const useCheckForSendMoneyMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.CheckForSendMoneyMutation, TError, Types.CheckForSendMoneyMutationVariables, TContext>) =>
+    useMutation<Types.CheckForSendMoneyMutation, TError, Types.CheckForSendMoneyMutationVariables, TContext>(
+      ['checkForSendMoney'],
+      useAxios<Types.CheckForSendMoneyMutation, Types.CheckForSendMoneyMutationVariables>(CheckForSendMoneyDocument),
+      options
+    );
 export const CompleteSendMoneyDocument = `
     mutation completeSendMoney($data: EbankingSendMoneyInput, $transactionPin: String!) {
   eBanking(source: EBANKING) {
@@ -469,26 +358,15 @@ export const CompleteSendMoneyDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useCompleteSendMoneyMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.CompleteSendMoneyMutation,
-    TError,
-    Types.CompleteSendMoneyMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    Types.CompleteSendMoneyMutation,
-    TError,
-    Types.CompleteSendMoneyMutationVariables,
-    TContext
-  >(
-    ['completeSendMoney'],
-    useAxios<Types.CompleteSendMoneyMutation, Types.CompleteSendMoneyMutationVariables>(
-      CompleteSendMoneyDocument
-    ),
-    options
-  );
+export const useCompleteSendMoneyMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.CompleteSendMoneyMutation, TError, Types.CompleteSendMoneyMutationVariables, TContext>) =>
+    useMutation<Types.CompleteSendMoneyMutation, TError, Types.CompleteSendMoneyMutationVariables, TContext>(
+      ['completeSendMoney'],
+      useAxios<Types.CompleteSendMoneyMutation, Types.CompleteSendMoneyMutationVariables>(CompleteSendMoneyDocument),
+      options
+    );
 export const UseUtilityDocument = `
     mutation useUtility($input: UtilityInput!) {
   eBanking {
@@ -504,19 +382,15 @@ export const UseUtilityDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useUseUtilityMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.UseUtilityMutation,
-    TError,
-    Types.UseUtilityMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<Types.UseUtilityMutation, TError, Types.UseUtilityMutationVariables, TContext>(
-    ['useUtility'],
-    useAxios<Types.UseUtilityMutation, Types.UseUtilityMutationVariables>(UseUtilityDocument),
-    options
-  );
+export const useUseUtilityMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.UseUtilityMutation, TError, Types.UseUtilityMutationVariables, TContext>) =>
+    useMutation<Types.UseUtilityMutation, TError, Types.UseUtilityMutationVariables, TContext>(
+      ['useUtility'],
+      useAxios<Types.UseUtilityMutation, Types.UseUtilityMutationVariables>(UseUtilityDocument),
+      options
+    );
 export const MakePaymentDocument = `
     mutation makePayment($input: UtilityInput!) {
   eBanking {
@@ -532,19 +406,15 @@ export const MakePaymentDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useMakePaymentMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    Types.MakePaymentMutation,
-    TError,
-    Types.MakePaymentMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<Types.MakePaymentMutation, TError, Types.MakePaymentMutationVariables, TContext>(
-    ['makePayment'],
-    useAxios<Types.MakePaymentMutation, Types.MakePaymentMutationVariables>(MakePaymentDocument),
-    options
-  );
+export const useMakePaymentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<Types.MakePaymentMutation, TError, Types.MakePaymentMutationVariables, TContext>) =>
+    useMutation<Types.MakePaymentMutation, TError, Types.MakePaymentMutationVariables, TContext>(
+      ['makePayment'],
+      useAxios<Types.MakePaymentMutation, Types.MakePaymentMutationVariables>(MakePaymentDocument),
+      options
+    );
 export const GetAccountListDocument = `
     query getAccountList($listFilter: EbankingAccountFilter, $transactionPagination: Pagination) {
   eBanking {
@@ -582,17 +452,18 @@ export const GetAccountListDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetAccountListQuery = <TData = Types.GetAccountListQuery, TError = unknown>(
-  variables?: Types.GetAccountListQueryVariables,
-  options?: UseQueryOptions<Types.GetAccountListQuery, TError, TData>
-) =>
-  useQuery<Types.GetAccountListQuery, TError, TData>(
-    variables === undefined ? ['getAccountList'] : ['getAccountList', variables],
-    useAxios<Types.GetAccountListQuery, Types.GetAccountListQueryVariables>(
-      GetAccountListDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetAccountListQuery = <
+      TData = Types.GetAccountListQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetAccountListQueryVariables,
+      options?: UseQueryOptions<Types.GetAccountListQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetAccountListQuery, TError, TData>(
+      variables === undefined ? ['getAccountList'] : ['getAccountList', variables],
+      useAxios<Types.GetAccountListQuery, Types.GetAccountListQueryVariables>(GetAccountListDocument).bind(null, variables),
+      options
+    );
 export const GetAccountSummaryDocument = `
     query getAccountSummary {
   eBanking {
@@ -605,17 +476,18 @@ export const GetAccountSummaryDocument = `
   }
 }
     `;
-export const useGetAccountSummaryQuery = <TData = Types.GetAccountSummaryQuery, TError = unknown>(
-  variables?: Types.GetAccountSummaryQueryVariables,
-  options?: UseQueryOptions<Types.GetAccountSummaryQuery, TError, TData>
-) =>
-  useQuery<Types.GetAccountSummaryQuery, TError, TData>(
-    variables === undefined ? ['getAccountSummary'] : ['getAccountSummary', variables],
-    useAxios<Types.GetAccountSummaryQuery, Types.GetAccountSummaryQueryVariables>(
-      GetAccountSummaryDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetAccountSummaryQuery = <
+      TData = Types.GetAccountSummaryQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetAccountSummaryQueryVariables,
+      options?: UseQueryOptions<Types.GetAccountSummaryQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetAccountSummaryQuery, TError, TData>(
+      variables === undefined ? ['getAccountSummary'] : ['getAccountSummary', variables],
+      useAxios<Types.GetAccountSummaryQuery, Types.GetAccountSummaryQueryVariables>(GetAccountSummaryDocument).bind(null, variables),
+      options
+    );
 export const GetTransactionListsDocument = `
     query getTransactionLists($listFilter: EbankingAccountFilter, $filter: EbankingTransactionFilter, $pagination: Pagination) {
   eBanking {
@@ -654,19 +526,17 @@ export const GetTransactionListsDocument = `
 }
     `;
 export const useGetTransactionListsQuery = <
-  TData = Types.GetTransactionListsQuery,
-  TError = unknown
->(
-  variables?: Types.GetTransactionListsQueryVariables,
-  options?: UseQueryOptions<Types.GetTransactionListsQuery, TError, TData>
-) =>
-  useQuery<Types.GetTransactionListsQuery, TError, TData>(
-    variables === undefined ? ['getTransactionLists'] : ['getTransactionLists', variables],
-    useAxios<Types.GetTransactionListsQuery, Types.GetTransactionListsQueryVariables>(
-      GetTransactionListsDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetTransactionListsQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetTransactionListsQueryVariables,
+      options?: UseQueryOptions<Types.GetTransactionListsQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetTransactionListsQuery, TError, TData>(
+      variables === undefined ? ['getTransactionLists'] : ['getTransactionLists', variables],
+      useAxios<Types.GetTransactionListsQuery, Types.GetTransactionListsQueryVariables>(GetTransactionListsDocument).bind(null, variables),
+      options
+    );
 export const GetAccountDetailsDocument = `
     query getAccountDetails($id: ID!, $transactionPagination: Pagination) {
   eBanking {
@@ -712,17 +582,18 @@ export const GetAccountDetailsDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetAccountDetailsQuery = <TData = Types.GetAccountDetailsQuery, TError = unknown>(
-  variables: Types.GetAccountDetailsQueryVariables,
-  options?: UseQueryOptions<Types.GetAccountDetailsQuery, TError, TData>
-) =>
-  useQuery<Types.GetAccountDetailsQuery, TError, TData>(
-    ['getAccountDetails', variables],
-    useAxios<Types.GetAccountDetailsQuery, Types.GetAccountDetailsQueryVariables>(
-      GetAccountDetailsDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetAccountDetailsQuery = <
+      TData = Types.GetAccountDetailsQuery,
+      TError = unknown
+    >(
+      variables: Types.GetAccountDetailsQueryVariables,
+      options?: UseQueryOptions<Types.GetAccountDetailsQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetAccountDetailsQuery, TError, TData>(
+      ['getAccountDetails', variables],
+      useAxios<Types.GetAccountDetailsQuery, Types.GetAccountDetailsQueryVariables>(GetAccountDetailsDocument).bind(null, variables),
+      options
+    );
 export const GetEbankingLoanAccountsDocument = `
     query getEbankingLoanAccounts {
   eBanking {
@@ -744,19 +615,17 @@ export const GetEbankingLoanAccountsDocument = `
 }
     `;
 export const useGetEbankingLoanAccountsQuery = <
-  TData = Types.GetEbankingLoanAccountsQuery,
-  TError = unknown
->(
-  variables?: Types.GetEbankingLoanAccountsQueryVariables,
-  options?: UseQueryOptions<Types.GetEbankingLoanAccountsQuery, TError, TData>
-) =>
-  useQuery<Types.GetEbankingLoanAccountsQuery, TError, TData>(
-    variables === undefined ? ['getEbankingLoanAccounts'] : ['getEbankingLoanAccounts', variables],
-    useAxios<Types.GetEbankingLoanAccountsQuery, Types.GetEbankingLoanAccountsQueryVariables>(
-      GetEbankingLoanAccountsDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetEbankingLoanAccountsQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetEbankingLoanAccountsQueryVariables,
+      options?: UseQueryOptions<Types.GetEbankingLoanAccountsQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetEbankingLoanAccountsQuery, TError, TData>(
+      variables === undefined ? ['getEbankingLoanAccounts'] : ['getEbankingLoanAccounts', variables],
+      useAxios<Types.GetEbankingLoanAccountsQuery, Types.GetEbankingLoanAccountsQueryVariables>(GetEbankingLoanAccountsDocument).bind(null, variables),
+      options
+    );
 export const GetEbankLoanAccountDetailsDocument = `
     query getEbankLoanAccountDetails($id: ID!, $transactionPagination: Pagination) {
   eBanking {
@@ -803,19 +672,17 @@ export const GetEbankLoanAccountDetailsDocument = `
 }
     ${PaginationFragmentDoc}`;
 export const useGetEbankLoanAccountDetailsQuery = <
-  TData = Types.GetEbankLoanAccountDetailsQuery,
-  TError = unknown
->(
-  variables: Types.GetEbankLoanAccountDetailsQueryVariables,
-  options?: UseQueryOptions<Types.GetEbankLoanAccountDetailsQuery, TError, TData>
-) =>
-  useQuery<Types.GetEbankLoanAccountDetailsQuery, TError, TData>(
-    ['getEbankLoanAccountDetails', variables],
-    useAxios<Types.GetEbankLoanAccountDetailsQuery, Types.GetEbankLoanAccountDetailsQueryVariables>(
-      GetEbankLoanAccountDetailsDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetEbankLoanAccountDetailsQuery,
+      TError = unknown
+    >(
+      variables: Types.GetEbankLoanAccountDetailsQueryVariables,
+      options?: UseQueryOptions<Types.GetEbankLoanAccountDetailsQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetEbankLoanAccountDetailsQuery, TError, TData>(
+      ['getEbankLoanAccountDetails', variables],
+      useAxios<Types.GetEbankLoanAccountDetailsQuery, Types.GetEbankLoanAccountDetailsQueryVariables>(GetEbankLoanAccountDetailsDocument).bind(null, variables),
+      options
+    );
 export const GetTotalExpenseDocument = `
     query getTotalExpense($listFilter: EbankingAccountFilter) {
   eBanking {
@@ -832,17 +699,18 @@ export const GetTotalExpenseDocument = `
   }
 }
     `;
-export const useGetTotalExpenseQuery = <TData = Types.GetTotalExpenseQuery, TError = unknown>(
-  variables?: Types.GetTotalExpenseQueryVariables,
-  options?: UseQueryOptions<Types.GetTotalExpenseQuery, TError, TData>
-) =>
-  useQuery<Types.GetTotalExpenseQuery, TError, TData>(
-    variables === undefined ? ['getTotalExpense'] : ['getTotalExpense', variables],
-    useAxios<Types.GetTotalExpenseQuery, Types.GetTotalExpenseQueryVariables>(
-      GetTotalExpenseDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetTotalExpenseQuery = <
+      TData = Types.GetTotalExpenseQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetTotalExpenseQueryVariables,
+      options?: UseQueryOptions<Types.GetTotalExpenseQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetTotalExpenseQuery, TError, TData>(
+      variables === undefined ? ['getTotalExpense'] : ['getTotalExpense', variables],
+      useAxios<Types.GetTotalExpenseQuery, Types.GetTotalExpenseQueryVariables>(GetTotalExpenseDocument).bind(null, variables),
+      options
+    );
 export const GetCoopMeDocument = `
     query getCoopMe {
   eBanking {
@@ -871,18 +739,18 @@ export const GetCoopMeDocument = `
   }
 }
     ${QueryErrorFragmentDoc}`;
-export const useGetCoopMeQuery = <TData = Types.GetCoopMeQuery, TError = unknown>(
-  variables?: Types.GetCoopMeQueryVariables,
-  options?: UseQueryOptions<Types.GetCoopMeQuery, TError, TData>
-) =>
-  useQuery<Types.GetCoopMeQuery, TError, TData>(
-    variables === undefined ? ['getCoopMe'] : ['getCoopMe', variables],
-    useAxios<Types.GetCoopMeQuery, Types.GetCoopMeQueryVariables>(GetCoopMeDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetCoopMeQuery = <
+      TData = Types.GetCoopMeQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetCoopMeQueryVariables,
+      options?: UseQueryOptions<Types.GetCoopMeQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetCoopMeQuery, TError, TData>(
+      variables === undefined ? ['getCoopMe'] : ['getCoopMe', variables],
+      useAxios<Types.GetCoopMeQuery, Types.GetCoopMeQueryVariables>(GetCoopMeDocument).bind(null, variables),
+      options
+    );
 export const GetCoopStatsDocument = `
     query getCoopStats {
   eBanking {
@@ -896,18 +764,18 @@ export const GetCoopStatsDocument = `
   }
 }
     `;
-export const useGetCoopStatsQuery = <TData = Types.GetCoopStatsQuery, TError = unknown>(
-  variables?: Types.GetCoopStatsQueryVariables,
-  options?: UseQueryOptions<Types.GetCoopStatsQuery, TError, TData>
-) =>
-  useQuery<Types.GetCoopStatsQuery, TError, TData>(
-    variables === undefined ? ['getCoopStats'] : ['getCoopStats', variables],
-    useAxios<Types.GetCoopStatsQuery, Types.GetCoopStatsQueryVariables>(GetCoopStatsDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetCoopStatsQuery = <
+      TData = Types.GetCoopStatsQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetCoopStatsQueryVariables,
+      options?: UseQueryOptions<Types.GetCoopStatsQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetCoopStatsQuery, TError, TData>(
+      variables === undefined ? ['getCoopStats'] : ['getCoopStats', variables],
+      useAxios<Types.GetCoopStatsQuery, Types.GetCoopStatsQueryVariables>(GetCoopStatsDocument).bind(null, variables),
+      options
+    );
 export const GetCoopChequeServicesDocument = `
     query getCoopChequeServices {
   eBanking {
@@ -923,19 +791,17 @@ export const GetCoopChequeServicesDocument = `
 }
     `;
 export const useGetCoopChequeServicesQuery = <
-  TData = Types.GetCoopChequeServicesQuery,
-  TError = unknown
->(
-  variables?: Types.GetCoopChequeServicesQueryVariables,
-  options?: UseQueryOptions<Types.GetCoopChequeServicesQuery, TError, TData>
-) =>
-  useQuery<Types.GetCoopChequeServicesQuery, TError, TData>(
-    variables === undefined ? ['getCoopChequeServices'] : ['getCoopChequeServices', variables],
-    useAxios<Types.GetCoopChequeServicesQuery, Types.GetCoopChequeServicesQueryVariables>(
-      GetCoopChequeServicesDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetCoopChequeServicesQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetCoopChequeServicesQueryVariables,
+      options?: UseQueryOptions<Types.GetCoopChequeServicesQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetCoopChequeServicesQuery, TError, TData>(
+      variables === undefined ? ['getCoopChequeServices'] : ['getCoopChequeServices', variables],
+      useAxios<Types.GetCoopChequeServicesQuery, Types.GetCoopChequeServicesQueryVariables>(GetCoopChequeServicesDocument).bind(null, variables),
+      options
+    );
 export const GetCoopLoanServicesDocument = `
     query getCoopLoanServices {
   eBanking {
@@ -952,19 +818,17 @@ export const GetCoopLoanServicesDocument = `
 }
     `;
 export const useGetCoopLoanServicesQuery = <
-  TData = Types.GetCoopLoanServicesQuery,
-  TError = unknown
->(
-  variables?: Types.GetCoopLoanServicesQueryVariables,
-  options?: UseQueryOptions<Types.GetCoopLoanServicesQuery, TError, TData>
-) =>
-  useQuery<Types.GetCoopLoanServicesQuery, TError, TData>(
-    variables === undefined ? ['getCoopLoanServices'] : ['getCoopLoanServices', variables],
-    useAxios<Types.GetCoopLoanServicesQuery, Types.GetCoopLoanServicesQueryVariables>(
-      GetCoopLoanServicesDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetCoopLoanServicesQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetCoopLoanServicesQueryVariables,
+      options?: UseQueryOptions<Types.GetCoopLoanServicesQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetCoopLoanServicesQuery, TError, TData>(
+      variables === undefined ? ['getCoopLoanServices'] : ['getCoopLoanServices', variables],
+      useAxios<Types.GetCoopLoanServicesQuery, Types.GetCoopLoanServicesQueryVariables>(GetCoopLoanServicesDocument).bind(null, variables),
+      options
+    );
 export const GetCoopComplaintServicesDocument = `
     query getCoopComplaintServices {
   eBanking {
@@ -981,21 +845,17 @@ export const GetCoopComplaintServicesDocument = `
 }
     `;
 export const useGetCoopComplaintServicesQuery = <
-  TData = Types.GetCoopComplaintServicesQuery,
-  TError = unknown
->(
-  variables?: Types.GetCoopComplaintServicesQueryVariables,
-  options?: UseQueryOptions<Types.GetCoopComplaintServicesQuery, TError, TData>
-) =>
-  useQuery<Types.GetCoopComplaintServicesQuery, TError, TData>(
-    variables === undefined
-      ? ['getCoopComplaintServices']
-      : ['getCoopComplaintServices', variables],
-    useAxios<Types.GetCoopComplaintServicesQuery, Types.GetCoopComplaintServicesQueryVariables>(
-      GetCoopComplaintServicesDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetCoopComplaintServicesQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetCoopComplaintServicesQueryVariables,
+      options?: UseQueryOptions<Types.GetCoopComplaintServicesQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetCoopComplaintServicesQuery, TError, TData>(
+      variables === undefined ? ['getCoopComplaintServices'] : ['getCoopComplaintServices', variables],
+      useAxios<Types.GetCoopComplaintServicesQuery, Types.GetCoopComplaintServicesQueryVariables>(GetCoopComplaintServicesDocument).bind(null, variables),
+      options
+    );
 export const GetCoopDownloadsDocument = `
     query getCoopDownloads {
   eBanking {
@@ -1011,17 +871,18 @@ export const GetCoopDownloadsDocument = `
   }
 }
     `;
-export const useGetCoopDownloadsQuery = <TData = Types.GetCoopDownloadsQuery, TError = unknown>(
-  variables?: Types.GetCoopDownloadsQueryVariables,
-  options?: UseQueryOptions<Types.GetCoopDownloadsQuery, TError, TData>
-) =>
-  useQuery<Types.GetCoopDownloadsQuery, TError, TData>(
-    variables === undefined ? ['getCoopDownloads'] : ['getCoopDownloads', variables],
-    useAxios<Types.GetCoopDownloadsQuery, Types.GetCoopDownloadsQueryVariables>(
-      GetCoopDownloadsDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetCoopDownloadsQuery = <
+      TData = Types.GetCoopDownloadsQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetCoopDownloadsQueryVariables,
+      options?: UseQueryOptions<Types.GetCoopDownloadsQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetCoopDownloadsQuery, TError, TData>(
+      variables === undefined ? ['getCoopDownloads'] : ['getCoopDownloads', variables],
+      useAxios<Types.GetCoopDownloadsQuery, Types.GetCoopDownloadsQueryVariables>(GetCoopDownloadsDocument).bind(null, variables),
+      options
+    );
 export const GetCoopPastChequeRequestsDocument = `
     query getCoopPastChequeRequests($memberId: ID!, $filter: EBankingCooperativeServiceFilter) {
   eBanking {
@@ -1051,19 +912,17 @@ export const GetCoopPastChequeRequestsDocument = `
 }
     `;
 export const useGetCoopPastChequeRequestsQuery = <
-  TData = Types.GetCoopPastChequeRequestsQuery,
-  TError = unknown
->(
-  variables: Types.GetCoopPastChequeRequestsQueryVariables,
-  options?: UseQueryOptions<Types.GetCoopPastChequeRequestsQuery, TError, TData>
-) =>
-  useQuery<Types.GetCoopPastChequeRequestsQuery, TError, TData>(
-    ['getCoopPastChequeRequests', variables],
-    useAxios<Types.GetCoopPastChequeRequestsQuery, Types.GetCoopPastChequeRequestsQueryVariables>(
-      GetCoopPastChequeRequestsDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetCoopPastChequeRequestsQuery,
+      TError = unknown
+    >(
+      variables: Types.GetCoopPastChequeRequestsQueryVariables,
+      options?: UseQueryOptions<Types.GetCoopPastChequeRequestsQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetCoopPastChequeRequestsQuery, TError, TData>(
+      ['getCoopPastChequeRequests', variables],
+      useAxios<Types.GetCoopPastChequeRequestsQuery, Types.GetCoopPastChequeRequestsQueryVariables>(GetCoopPastChequeRequestsDocument).bind(null, variables),
+      options
+    );
 export const GetComplaintsListDocument = `
     query getComplaintsList($memberId: ID!, $filter: EBankingCooperativeServiceFilter) {
   eBanking {
@@ -1081,17 +940,18 @@ export const GetComplaintsListDocument = `
   }
 }
     `;
-export const useGetComplaintsListQuery = <TData = Types.GetComplaintsListQuery, TError = unknown>(
-  variables: Types.GetComplaintsListQueryVariables,
-  options?: UseQueryOptions<Types.GetComplaintsListQuery, TError, TData>
-) =>
-  useQuery<Types.GetComplaintsListQuery, TError, TData>(
-    ['getComplaintsList', variables],
-    useAxios<Types.GetComplaintsListQuery, Types.GetComplaintsListQueryVariables>(
-      GetComplaintsListDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetComplaintsListQuery = <
+      TData = Types.GetComplaintsListQuery,
+      TError = unknown
+    >(
+      variables: Types.GetComplaintsListQueryVariables,
+      options?: UseQueryOptions<Types.GetComplaintsListQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetComplaintsListQuery, TError, TData>(
+      ['getComplaintsList', variables],
+      useAxios<Types.GetComplaintsListQuery, Types.GetComplaintsListQueryVariables>(GetComplaintsListDocument).bind(null, variables),
+      options
+    );
 export const GetDownloadCoopListDocument = `
     query getDownloadCoopList($filter: EBankingDownloadsFilter) {
   eBanking {
@@ -1111,19 +971,17 @@ export const GetDownloadCoopListDocument = `
 }
     `;
 export const useGetDownloadCoopListQuery = <
-  TData = Types.GetDownloadCoopListQuery,
-  TError = unknown
->(
-  variables?: Types.GetDownloadCoopListQueryVariables,
-  options?: UseQueryOptions<Types.GetDownloadCoopListQuery, TError, TData>
-) =>
-  useQuery<Types.GetDownloadCoopListQuery, TError, TData>(
-    variables === undefined ? ['getDownloadCoopList'] : ['getDownloadCoopList', variables],
-    useAxios<Types.GetDownloadCoopListQuery, Types.GetDownloadCoopListQueryVariables>(
-      GetDownloadCoopListDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetDownloadCoopListQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetDownloadCoopListQueryVariables,
+      options?: UseQueryOptions<Types.GetDownloadCoopListQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetDownloadCoopListQuery, TError, TData>(
+      variables === undefined ? ['getDownloadCoopList'] : ['getDownloadCoopList', variables],
+      useAxios<Types.GetDownloadCoopListQuery, Types.GetDownloadCoopListQueryVariables>(GetDownloadCoopListDocument).bind(null, variables),
+      options
+    );
 export const GetBranchListeBankingDocument = `
     query getBranchListeBanking {
   eBanking {
@@ -1142,19 +1000,17 @@ export const GetBranchListeBankingDocument = `
 }
     `;
 export const useGetBranchListeBankingQuery = <
-  TData = Types.GetBranchListeBankingQuery,
-  TError = unknown
->(
-  variables?: Types.GetBranchListeBankingQueryVariables,
-  options?: UseQueryOptions<Types.GetBranchListeBankingQuery, TError, TData>
-) =>
-  useQuery<Types.GetBranchListeBankingQuery, TError, TData>(
-    variables === undefined ? ['getBranchListeBanking'] : ['getBranchListeBanking', variables],
-    useAxios<Types.GetBranchListeBankingQuery, Types.GetBranchListeBankingQueryVariables>(
-      GetBranchListeBankingDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetBranchListeBankingQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetBranchListeBankingQueryVariables,
+      options?: UseQueryOptions<Types.GetBranchListeBankingQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetBranchListeBankingQuery, TError, TData>(
+      variables === undefined ? ['getBranchListeBanking'] : ['getBranchListeBanking', variables],
+      useAxios<Types.GetBranchListeBankingQuery, Types.GetBranchListeBankingQueryVariables>(GetBranchListeBankingDocument).bind(null, variables),
+      options
+    );
 export const GetCollectorListeBankingDocument = `
     query getCollectorListeBanking {
   eBanking {
@@ -1172,21 +1028,17 @@ export const GetCollectorListeBankingDocument = `
 }
     `;
 export const useGetCollectorListeBankingQuery = <
-  TData = Types.GetCollectorListeBankingQuery,
-  TError = unknown
->(
-  variables?: Types.GetCollectorListeBankingQueryVariables,
-  options?: UseQueryOptions<Types.GetCollectorListeBankingQuery, TError, TData>
-) =>
-  useQuery<Types.GetCollectorListeBankingQuery, TError, TData>(
-    variables === undefined
-      ? ['getCollectorListeBanking']
-      : ['getCollectorListeBanking', variables],
-    useAxios<Types.GetCollectorListeBankingQuery, Types.GetCollectorListeBankingQueryVariables>(
-      GetCollectorListeBankingDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetCollectorListeBankingQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetCollectorListeBankingQueryVariables,
+      options?: UseQueryOptions<Types.GetCollectorListeBankingQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetCollectorListeBankingQuery, TError, TData>(
+      variables === undefined ? ['getCollectorListeBanking'] : ['getCollectorListeBanking', variables],
+      useAxios<Types.GetCollectorListeBankingQuery, Types.GetCollectorListeBankingQueryVariables>(GetCollectorListeBankingDocument).bind(null, variables),
+      options
+    );
 export const GetLoanHistoryDocument = `
     query getLoanHistory($memberId: ID!, $filter: EBankingCooperativeServiceFilter) {
   eBanking {
@@ -1210,17 +1062,18 @@ export const GetLoanHistoryDocument = `
   }
 }
     `;
-export const useGetLoanHistoryQuery = <TData = Types.GetLoanHistoryQuery, TError = unknown>(
-  variables: Types.GetLoanHistoryQueryVariables,
-  options?: UseQueryOptions<Types.GetLoanHistoryQuery, TError, TData>
-) =>
-  useQuery<Types.GetLoanHistoryQuery, TError, TData>(
-    ['getLoanHistory', variables],
-    useAxios<Types.GetLoanHistoryQuery, Types.GetLoanHistoryQueryVariables>(
-      GetLoanHistoryDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetLoanHistoryQuery = <
+      TData = Types.GetLoanHistoryQuery,
+      TError = unknown
+    >(
+      variables: Types.GetLoanHistoryQueryVariables,
+      options?: UseQueryOptions<Types.GetLoanHistoryQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetLoanHistoryQuery, TError, TData>(
+      ['getLoanHistory', variables],
+      useAxios<Types.GetLoanHistoryQuery, Types.GetLoanHistoryQueryVariables>(GetLoanHistoryDocument).bind(null, variables),
+      options
+    );
 export const GetAnnouncementListDocument = `
     query getAnnouncementList {
   eBanking {
@@ -1239,19 +1092,17 @@ export const GetAnnouncementListDocument = `
 }
     `;
 export const useGetAnnouncementListQuery = <
-  TData = Types.GetAnnouncementListQuery,
-  TError = unknown
->(
-  variables?: Types.GetAnnouncementListQueryVariables,
-  options?: UseQueryOptions<Types.GetAnnouncementListQuery, TError, TData>
-) =>
-  useQuery<Types.GetAnnouncementListQuery, TError, TData>(
-    variables === undefined ? ['getAnnouncementList'] : ['getAnnouncementList', variables],
-    useAxios<Types.GetAnnouncementListQuery, Types.GetAnnouncementListQueryVariables>(
-      GetAnnouncementListDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetAnnouncementListQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetAnnouncementListQueryVariables,
+      options?: UseQueryOptions<Types.GetAnnouncementListQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetAnnouncementListQuery, TError, TData>(
+      variables === undefined ? ['getAnnouncementList'] : ['getAnnouncementList', variables],
+      useAxios<Types.GetAnnouncementListQuery, Types.GetAnnouncementListQueryVariables>(GetAnnouncementListDocument).bind(null, variables),
+      options
+    );
 export const GetEbankingDepositProductsDocument = `
     query getEbankingDepositProducts($filter: NatureOfDepositProduct!) {
   eBanking {
@@ -1267,19 +1118,17 @@ export const GetEbankingDepositProductsDocument = `
 }
     `;
 export const useGetEbankingDepositProductsQuery = <
-  TData = Types.GetEbankingDepositProductsQuery,
-  TError = unknown
->(
-  variables: Types.GetEbankingDepositProductsQueryVariables,
-  options?: UseQueryOptions<Types.GetEbankingDepositProductsQuery, TError, TData>
-) =>
-  useQuery<Types.GetEbankingDepositProductsQuery, TError, TData>(
-    ['getEbankingDepositProducts', variables],
-    useAxios<Types.GetEbankingDepositProductsQuery, Types.GetEbankingDepositProductsQueryVariables>(
-      GetEbankingDepositProductsDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetEbankingDepositProductsQuery,
+      TError = unknown
+    >(
+      variables: Types.GetEbankingDepositProductsQueryVariables,
+      options?: UseQueryOptions<Types.GetEbankingDepositProductsQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetEbankingDepositProductsQuery, TError, TData>(
+      ['getEbankingDepositProducts', variables],
+      useAxios<Types.GetEbankingDepositProductsQuery, Types.GetEbankingDepositProductsQueryVariables>(GetEbankingDepositProductsDocument).bind(null, variables),
+      options
+    );
 export const GetEbankingDepositProductDocument = `
     query getEbankingDepositProduct($id: ID!) {
   eBanking {
@@ -1435,19 +1284,17 @@ export const GetEbankingDepositProductDocument = `
 }
     `;
 export const useGetEbankingDepositProductQuery = <
-  TData = Types.GetEbankingDepositProductQuery,
-  TError = unknown
->(
-  variables: Types.GetEbankingDepositProductQueryVariables,
-  options?: UseQueryOptions<Types.GetEbankingDepositProductQuery, TError, TData>
-) =>
-  useQuery<Types.GetEbankingDepositProductQuery, TError, TData>(
-    ['getEbankingDepositProduct', variables],
-    useAxios<Types.GetEbankingDepositProductQuery, Types.GetEbankingDepositProductQueryVariables>(
-      GetEbankingDepositProductDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetEbankingDepositProductQuery,
+      TError = unknown
+    >(
+      variables: Types.GetEbankingDepositProductQueryVariables,
+      options?: UseQueryOptions<Types.GetEbankingDepositProductQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetEbankingDepositProductQuery, TError, TData>(
+      ['getEbankingDepositProduct', variables],
+      useAxios<Types.GetEbankingDepositProductQuery, Types.GetEbankingDepositProductQueryVariables>(GetEbankingDepositProductDocument).bind(null, variables),
+      options
+    );
 export const GetEbankingDepositProductCriteriaDocument = `
     query getEbankingDepositProductCriteria($id: ID!) {
   eBanking {
@@ -1472,20 +1319,17 @@ export const GetEbankingDepositProductCriteriaDocument = `
 }
     `;
 export const useGetEbankingDepositProductCriteriaQuery = <
-  TData = Types.GetEbankingDepositProductCriteriaQuery,
-  TError = unknown
->(
-  variables: Types.GetEbankingDepositProductCriteriaQueryVariables,
-  options?: UseQueryOptions<Types.GetEbankingDepositProductCriteriaQuery, TError, TData>
-) =>
-  useQuery<Types.GetEbankingDepositProductCriteriaQuery, TError, TData>(
-    ['getEbankingDepositProductCriteria', variables],
-    useAxios<
-      Types.GetEbankingDepositProductCriteriaQuery,
-      Types.GetEbankingDepositProductCriteriaQueryVariables
-    >(GetEbankingDepositProductCriteriaDocument).bind(null, variables),
-    options
-  );
+      TData = Types.GetEbankingDepositProductCriteriaQuery,
+      TError = unknown
+    >(
+      variables: Types.GetEbankingDepositProductCriteriaQueryVariables,
+      options?: UseQueryOptions<Types.GetEbankingDepositProductCriteriaQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetEbankingDepositProductCriteriaQuery, TError, TData>(
+      ['getEbankingDepositProductCriteria', variables],
+      useAxios<Types.GetEbankingDepositProductCriteriaQuery, Types.GetEbankingDepositProductCriteriaQueryVariables>(GetEbankingDepositProductCriteriaDocument).bind(null, variables),
+      options
+    );
 export const GetEbankingLoanProductTypeListDocument = `
     query getEbankingLoanProductTypeList {
   eBanking {
@@ -1500,22 +1344,17 @@ export const GetEbankingLoanProductTypeListDocument = `
 }
     `;
 export const useGetEbankingLoanProductTypeListQuery = <
-  TData = Types.GetEbankingLoanProductTypeListQuery,
-  TError = unknown
->(
-  variables?: Types.GetEbankingLoanProductTypeListQueryVariables,
-  options?: UseQueryOptions<Types.GetEbankingLoanProductTypeListQuery, TError, TData>
-) =>
-  useQuery<Types.GetEbankingLoanProductTypeListQuery, TError, TData>(
-    variables === undefined
-      ? ['getEbankingLoanProductTypeList']
-      : ['getEbankingLoanProductTypeList', variables],
-    useAxios<
-      Types.GetEbankingLoanProductTypeListQuery,
-      Types.GetEbankingLoanProductTypeListQueryVariables
-    >(GetEbankingLoanProductTypeListDocument).bind(null, variables),
-    options
-  );
+      TData = Types.GetEbankingLoanProductTypeListQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetEbankingLoanProductTypeListQueryVariables,
+      options?: UseQueryOptions<Types.GetEbankingLoanProductTypeListQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetEbankingLoanProductTypeListQuery, TError, TData>(
+      variables === undefined ? ['getEbankingLoanProductTypeList'] : ['getEbankingLoanProductTypeList', variables],
+      useAxios<Types.GetEbankingLoanProductTypeListQuery, Types.GetEbankingLoanProductTypeListQueryVariables>(GetEbankingLoanProductTypeListDocument).bind(null, variables),
+      options
+    );
 export const GetEbankingLoanProductSubTypeDocument = `
     query getEbankingLoanProductSubType {
   eBanking {
@@ -1530,22 +1369,17 @@ export const GetEbankingLoanProductSubTypeDocument = `
 }
     `;
 export const useGetEbankingLoanProductSubTypeQuery = <
-  TData = Types.GetEbankingLoanProductSubTypeQuery,
-  TError = unknown
->(
-  variables?: Types.GetEbankingLoanProductSubTypeQueryVariables,
-  options?: UseQueryOptions<Types.GetEbankingLoanProductSubTypeQuery, TError, TData>
-) =>
-  useQuery<Types.GetEbankingLoanProductSubTypeQuery, TError, TData>(
-    variables === undefined
-      ? ['getEbankingLoanProductSubType']
-      : ['getEbankingLoanProductSubType', variables],
-    useAxios<
-      Types.GetEbankingLoanProductSubTypeQuery,
-      Types.GetEbankingLoanProductSubTypeQueryVariables
-    >(GetEbankingLoanProductSubTypeDocument).bind(null, variables),
-    options
-  );
+      TData = Types.GetEbankingLoanProductSubTypeQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetEbankingLoanProductSubTypeQueryVariables,
+      options?: UseQueryOptions<Types.GetEbankingLoanProductSubTypeQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetEbankingLoanProductSubTypeQuery, TError, TData>(
+      variables === undefined ? ['getEbankingLoanProductSubType'] : ['getEbankingLoanProductSubType', variables],
+      useAxios<Types.GetEbankingLoanProductSubTypeQuery, Types.GetEbankingLoanProductSubTypeQueryVariables>(GetEbankingLoanProductSubTypeDocument).bind(null, variables),
+      options
+    );
 export const GetEbankingLoanProductsDocument = `
     query getEbankingLoanProducts($id: ID!) {
   eBanking {
@@ -1561,19 +1395,17 @@ export const GetEbankingLoanProductsDocument = `
 }
     `;
 export const useGetEbankingLoanProductsQuery = <
-  TData = Types.GetEbankingLoanProductsQuery,
-  TError = unknown
->(
-  variables: Types.GetEbankingLoanProductsQueryVariables,
-  options?: UseQueryOptions<Types.GetEbankingLoanProductsQuery, TError, TData>
-) =>
-  useQuery<Types.GetEbankingLoanProductsQuery, TError, TData>(
-    ['getEbankingLoanProducts', variables],
-    useAxios<Types.GetEbankingLoanProductsQuery, Types.GetEbankingLoanProductsQueryVariables>(
-      GetEbankingLoanProductsDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetEbankingLoanProductsQuery,
+      TError = unknown
+    >(
+      variables: Types.GetEbankingLoanProductsQueryVariables,
+      options?: UseQueryOptions<Types.GetEbankingLoanProductsQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetEbankingLoanProductsQuery, TError, TData>(
+      ['getEbankingLoanProducts', variables],
+      useAxios<Types.GetEbankingLoanProductsQuery, Types.GetEbankingLoanProductsQueryVariables>(GetEbankingLoanProductsDocument).bind(null, variables),
+      options
+    );
 export const GetEbankingLoanProductDocument = `
     query getEbankingLoanProduct($id: ID!) {
   eBanking {
@@ -1658,19 +1490,17 @@ export const GetEbankingLoanProductDocument = `
 }
     `;
 export const useGetEbankingLoanProductQuery = <
-  TData = Types.GetEbankingLoanProductQuery,
-  TError = unknown
->(
-  variables: Types.GetEbankingLoanProductQueryVariables,
-  options?: UseQueryOptions<Types.GetEbankingLoanProductQuery, TError, TData>
-) =>
-  useQuery<Types.GetEbankingLoanProductQuery, TError, TData>(
-    ['getEbankingLoanProduct', variables],
-    useAxios<Types.GetEbankingLoanProductQuery, Types.GetEbankingLoanProductQueryVariables>(
-      GetEbankingLoanProductDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetEbankingLoanProductQuery,
+      TError = unknown
+    >(
+      variables: Types.GetEbankingLoanProductQueryVariables,
+      options?: UseQueryOptions<Types.GetEbankingLoanProductQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetEbankingLoanProductQuery, TError, TData>(
+      ['getEbankingLoanProduct', variables],
+      useAxios<Types.GetEbankingLoanProductQuery, Types.GetEbankingLoanProductQueryVariables>(GetEbankingLoanProductDocument).bind(null, variables),
+      options
+    );
 export const GetEbankingLoanProductCriteriaDocument = `
     query getEbankingLoanProductCriteria($id: ID!) {
   eBanking {
@@ -1695,20 +1525,17 @@ export const GetEbankingLoanProductCriteriaDocument = `
 }
     `;
 export const useGetEbankingLoanProductCriteriaQuery = <
-  TData = Types.GetEbankingLoanProductCriteriaQuery,
-  TError = unknown
->(
-  variables: Types.GetEbankingLoanProductCriteriaQueryVariables,
-  options?: UseQueryOptions<Types.GetEbankingLoanProductCriteriaQuery, TError, TData>
-) =>
-  useQuery<Types.GetEbankingLoanProductCriteriaQuery, TError, TData>(
-    ['getEbankingLoanProductCriteria', variables],
-    useAxios<
-      Types.GetEbankingLoanProductCriteriaQuery,
-      Types.GetEbankingLoanProductCriteriaQueryVariables
-    >(GetEbankingLoanProductCriteriaDocument).bind(null, variables),
-    options
-  );
+      TData = Types.GetEbankingLoanProductCriteriaQuery,
+      TError = unknown
+    >(
+      variables: Types.GetEbankingLoanProductCriteriaQueryVariables,
+      options?: UseQueryOptions<Types.GetEbankingLoanProductCriteriaQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetEbankingLoanProductCriteriaQuery, TError, TData>(
+      ['getEbankingLoanProductCriteria', variables],
+      useAxios<Types.GetEbankingLoanProductCriteriaQuery, Types.GetEbankingLoanProductCriteriaQueryVariables>(GetEbankingLoanProductCriteriaDocument).bind(null, variables),
+      options
+    );
 export const GetMemberProfileDocument = `
     query getMemberProfile {
   eBanking {
@@ -1763,17 +1590,18 @@ export const GetMemberProfileDocument = `
   }
 }
     `;
-export const useGetMemberProfileQuery = <TData = Types.GetMemberProfileQuery, TError = unknown>(
-  variables?: Types.GetMemberProfileQueryVariables,
-  options?: UseQueryOptions<Types.GetMemberProfileQuery, TError, TData>
-) =>
-  useQuery<Types.GetMemberProfileQuery, TError, TData>(
-    variables === undefined ? ['getMemberProfile'] : ['getMemberProfile', variables],
-    useAxios<Types.GetMemberProfileQuery, Types.GetMemberProfileQueryVariables>(
-      GetMemberProfileDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetMemberProfileQuery = <
+      TData = Types.GetMemberProfileQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetMemberProfileQueryVariables,
+      options?: UseQueryOptions<Types.GetMemberProfileQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetMemberProfileQuery, TError, TData>(
+      variables === undefined ? ['getMemberProfile'] : ['getMemberProfile', variables],
+      useAxios<Types.GetMemberProfileQuery, Types.GetMemberProfileQueryVariables>(GetMemberProfileDocument).bind(null, variables),
+      options
+    );
 export const GetHomeServiceListDocument = `
     query getHomeServiceList {
   eBanking {
@@ -1787,17 +1615,18 @@ export const GetHomeServiceListDocument = `
   }
 }
     `;
-export const useGetHomeServiceListQuery = <TData = Types.GetHomeServiceListQuery, TError = unknown>(
-  variables?: Types.GetHomeServiceListQueryVariables,
-  options?: UseQueryOptions<Types.GetHomeServiceListQuery, TError, TData>
-) =>
-  useQuery<Types.GetHomeServiceListQuery, TError, TData>(
-    variables === undefined ? ['getHomeServiceList'] : ['getHomeServiceList', variables],
-    useAxios<Types.GetHomeServiceListQuery, Types.GetHomeServiceListQueryVariables>(
-      GetHomeServiceListDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetHomeServiceListQuery = <
+      TData = Types.GetHomeServiceListQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetHomeServiceListQueryVariables,
+      options?: UseQueryOptions<Types.GetHomeServiceListQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetHomeServiceListQuery, TError, TData>(
+      variables === undefined ? ['getHomeServiceList'] : ['getHomeServiceList', variables],
+      useAxios<Types.GetHomeServiceListQuery, Types.GetHomeServiceListQueryVariables>(GetHomeServiceListDocument).bind(null, variables),
+      options
+    );
 export const GetShareSummaryDocument = `
     query getShareSummary {
   eBanking {
@@ -1810,17 +1639,18 @@ export const GetShareSummaryDocument = `
   }
 }
     `;
-export const useGetShareSummaryQuery = <TData = Types.GetShareSummaryQuery, TError = unknown>(
-  variables?: Types.GetShareSummaryQueryVariables,
-  options?: UseQueryOptions<Types.GetShareSummaryQuery, TError, TData>
-) =>
-  useQuery<Types.GetShareSummaryQuery, TError, TData>(
-    variables === undefined ? ['getShareSummary'] : ['getShareSummary', variables],
-    useAxios<Types.GetShareSummaryQuery, Types.GetShareSummaryQueryVariables>(
-      GetShareSummaryDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetShareSummaryQuery = <
+      TData = Types.GetShareSummaryQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetShareSummaryQueryVariables,
+      options?: UseQueryOptions<Types.GetShareSummaryQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetShareSummaryQuery, TError, TData>(
+      variables === undefined ? ['getShareSummary'] : ['getShareSummary', variables],
+      useAxios<Types.GetShareSummaryQuery, Types.GetShareSummaryQueryVariables>(GetShareSummaryDocument).bind(null, variables),
+      options
+    );
 export const GetEbankingShareHistoryDocument = `
     query getEbankingShareHistory {
   eBanking {
@@ -1838,19 +1668,17 @@ export const GetEbankingShareHistoryDocument = `
 }
     `;
 export const useGetEbankingShareHistoryQuery = <
-  TData = Types.GetEbankingShareHistoryQuery,
-  TError = unknown
->(
-  variables?: Types.GetEbankingShareHistoryQueryVariables,
-  options?: UseQueryOptions<Types.GetEbankingShareHistoryQuery, TError, TData>
-) =>
-  useQuery<Types.GetEbankingShareHistoryQuery, TError, TData>(
-    variables === undefined ? ['getEbankingShareHistory'] : ['getEbankingShareHistory', variables],
-    useAxios<Types.GetEbankingShareHistoryQuery, Types.GetEbankingShareHistoryQueryVariables>(
-      GetEbankingShareHistoryDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.GetEbankingShareHistoryQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetEbankingShareHistoryQueryVariables,
+      options?: UseQueryOptions<Types.GetEbankingShareHistoryQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetEbankingShareHistoryQuery, TError, TData>(
+      variables === undefined ? ['getEbankingShareHistory'] : ['getEbankingShareHistory', variables],
+      useAxios<Types.GetEbankingShareHistoryQuery, Types.GetEbankingShareHistoryQueryVariables>(GetEbankingShareHistoryDocument).bind(null, variables),
+      options
+    );
 export const GetUtilityListDocument = `
     query getUtilityList {
   eBanking {
@@ -1864,17 +1692,18 @@ export const GetUtilityListDocument = `
   }
 }
     `;
-export const useGetUtilityListQuery = <TData = Types.GetUtilityListQuery, TError = unknown>(
-  variables?: Types.GetUtilityListQueryVariables,
-  options?: UseQueryOptions<Types.GetUtilityListQuery, TError, TData>
-) =>
-  useQuery<Types.GetUtilityListQuery, TError, TData>(
-    variables === undefined ? ['getUtilityList'] : ['getUtilityList', variables],
-    useAxios<Types.GetUtilityListQuery, Types.GetUtilityListQueryVariables>(
-      GetUtilityListDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetUtilityListQuery = <
+      TData = Types.GetUtilityListQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetUtilityListQueryVariables,
+      options?: UseQueryOptions<Types.GetUtilityListQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetUtilityListQuery, TError, TData>(
+      variables === undefined ? ['getUtilityList'] : ['getUtilityList', variables],
+      useAxios<Types.GetUtilityListQuery, Types.GetUtilityListQueryVariables>(GetUtilityListDocument).bind(null, variables),
+      options
+    );
 export const GetUtilityDocument = `
     query getUtility($slug: String!) {
   eBanking {
@@ -1919,18 +1748,18 @@ export const GetUtilityDocument = `
   }
 }
     `;
-export const useGetUtilityQuery = <TData = Types.GetUtilityQuery, TError = unknown>(
-  variables: Types.GetUtilityQueryVariables,
-  options?: UseQueryOptions<Types.GetUtilityQuery, TError, TData>
-) =>
-  useQuery<Types.GetUtilityQuery, TError, TData>(
-    ['getUtility', variables],
-    useAxios<Types.GetUtilityQuery, Types.GetUtilityQueryVariables>(GetUtilityDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetUtilityQuery = <
+      TData = Types.GetUtilityQuery,
+      TError = unknown
+    >(
+      variables: Types.GetUtilityQueryVariables,
+      options?: UseQueryOptions<Types.GetUtilityQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetUtilityQuery, TError, TData>(
+      ['getUtility', variables],
+      useAxios<Types.GetUtilityQuery, Types.GetUtilityQueryVariables>(GetUtilityDocument).bind(null, variables),
+      options
+    );
 export const ListUtilitiesDocument = `
     query listUtilities($pagination: Pagination, $filter: Filter) {
   eBanking {
@@ -1957,17 +1786,18 @@ export const ListUtilitiesDocument = `
   }
 }
     `;
-export const useListUtilitiesQuery = <TData = Types.ListUtilitiesQuery, TError = unknown>(
-  variables?: Types.ListUtilitiesQueryVariables,
-  options?: UseQueryOptions<Types.ListUtilitiesQuery, TError, TData>
-) =>
-  useQuery<Types.ListUtilitiesQuery, TError, TData>(
-    variables === undefined ? ['listUtilities'] : ['listUtilities', variables],
-    useAxios<Types.ListUtilitiesQuery, Types.ListUtilitiesQueryVariables>(
-      ListUtilitiesDocument
-    ).bind(null, variables),
-    options
-  );
+export const useListUtilitiesQuery = <
+      TData = Types.ListUtilitiesQuery,
+      TError = unknown
+    >(
+      variables?: Types.ListUtilitiesQueryVariables,
+      options?: UseQueryOptions<Types.ListUtilitiesQuery, TError, TData>
+    ) =>
+    useQuery<Types.ListUtilitiesQuery, TError, TData>(
+      variables === undefined ? ['listUtilities'] : ['listUtilities', variables],
+      useAxios<Types.ListUtilitiesQuery, Types.ListUtilitiesQueryVariables>(ListUtilitiesDocument).bind(null, variables),
+      options
+    );
 export const ListUtilityServiceTypeDocument = `
     query listUtilityServiceType($filter: ServiceTypeFilter) {
   eBanking {
@@ -1985,19 +1815,17 @@ export const ListUtilityServiceTypeDocument = `
 }
     `;
 export const useListUtilityServiceTypeQuery = <
-  TData = Types.ListUtilityServiceTypeQuery,
-  TError = unknown
->(
-  variables?: Types.ListUtilityServiceTypeQueryVariables,
-  options?: UseQueryOptions<Types.ListUtilityServiceTypeQuery, TError, TData>
-) =>
-  useQuery<Types.ListUtilityServiceTypeQuery, TError, TData>(
-    variables === undefined ? ['listUtilityServiceType'] : ['listUtilityServiceType', variables],
-    useAxios<Types.ListUtilityServiceTypeQuery, Types.ListUtilityServiceTypeQueryVariables>(
-      ListUtilityServiceTypeDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.ListUtilityServiceTypeQuery,
+      TError = unknown
+    >(
+      variables?: Types.ListUtilityServiceTypeQueryVariables,
+      options?: UseQueryOptions<Types.ListUtilityServiceTypeQuery, TError, TData>
+    ) =>
+    useQuery<Types.ListUtilityServiceTypeQuery, TError, TData>(
+      variables === undefined ? ['listUtilityServiceType'] : ['listUtilityServiceType', variables],
+      useAxios<Types.ListUtilityServiceTypeQuery, Types.ListUtilityServiceTypeQueryVariables>(ListUtilityServiceTypeDocument).bind(null, variables),
+      options
+    );
 export const GetCashBackChargesDocument = `
     query getCashBackCharges($input: CheckCashBackInfo) {
   eBanking {
@@ -2013,17 +1841,18 @@ export const GetCashBackChargesDocument = `
   }
 }
     `;
-export const useGetCashBackChargesQuery = <TData = Types.GetCashBackChargesQuery, TError = unknown>(
-  variables?: Types.GetCashBackChargesQueryVariables,
-  options?: UseQueryOptions<Types.GetCashBackChargesQuery, TError, TData>
-) =>
-  useQuery<Types.GetCashBackChargesQuery, TError, TData>(
-    variables === undefined ? ['getCashBackCharges'] : ['getCashBackCharges', variables],
-    useAxios<Types.GetCashBackChargesQuery, Types.GetCashBackChargesQueryVariables>(
-      GetCashBackChargesDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetCashBackChargesQuery = <
+      TData = Types.GetCashBackChargesQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetCashBackChargesQueryVariables,
+      options?: UseQueryOptions<Types.GetCashBackChargesQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetCashBackChargesQuery, TError, TData>(
+      variables === undefined ? ['getCashBackCharges'] : ['getCashBackCharges', variables],
+      useAxios<Types.GetCashBackChargesQuery, Types.GetCashBackChargesQueryVariables>(GetCashBackChargesDocument).bind(null, variables),
+      options
+    );
 export const ListEbankingUtilitiesDocument = `
     query listEbankingUtilities($pagination: Pagination, $filter: Filter) {
   eBanking {
@@ -2048,19 +1877,17 @@ export const ListEbankingUtilitiesDocument = `
 }
     ${PaginationFragmentDoc}`;
 export const useListEbankingUtilitiesQuery = <
-  TData = Types.ListEbankingUtilitiesQuery,
-  TError = unknown
->(
-  variables?: Types.ListEbankingUtilitiesQueryVariables,
-  options?: UseQueryOptions<Types.ListEbankingUtilitiesQuery, TError, TData>
-) =>
-  useQuery<Types.ListEbankingUtilitiesQuery, TError, TData>(
-    variables === undefined ? ['listEbankingUtilities'] : ['listEbankingUtilities', variables],
-    useAxios<Types.ListEbankingUtilitiesQuery, Types.ListEbankingUtilitiesQueryVariables>(
-      ListEbankingUtilitiesDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = Types.ListEbankingUtilitiesQuery,
+      TError = unknown
+    >(
+      variables?: Types.ListEbankingUtilitiesQueryVariables,
+      options?: UseQueryOptions<Types.ListEbankingUtilitiesQuery, TError, TData>
+    ) =>
+    useQuery<Types.ListEbankingUtilitiesQuery, TError, TData>(
+      variables === undefined ? ['listEbankingUtilities'] : ['listEbankingUtilities', variables],
+      useAxios<Types.ListEbankingUtilitiesQuery, Types.ListEbankingUtilitiesQueryVariables>(ListEbankingUtilitiesDocument).bind(null, variables),
+      options
+    );
 export const ListNeaOfficeDocument = `
     query listNeaOffice($vendor: String) {
   eBanking {
@@ -2073,17 +1900,18 @@ export const ListNeaOfficeDocument = `
   }
 }
     `;
-export const useListNeaOfficeQuery = <TData = Types.ListNeaOfficeQuery, TError = unknown>(
-  variables?: Types.ListNeaOfficeQueryVariables,
-  options?: UseQueryOptions<Types.ListNeaOfficeQuery, TError, TData>
-) =>
-  useQuery<Types.ListNeaOfficeQuery, TError, TData>(
-    variables === undefined ? ['listNeaOffice'] : ['listNeaOffice', variables],
-    useAxios<Types.ListNeaOfficeQuery, Types.ListNeaOfficeQueryVariables>(
-      ListNeaOfficeDocument
-    ).bind(null, variables),
-    options
-  );
+export const useListNeaOfficeQuery = <
+      TData = Types.ListNeaOfficeQuery,
+      TError = unknown
+    >(
+      variables?: Types.ListNeaOfficeQueryVariables,
+      options?: UseQueryOptions<Types.ListNeaOfficeQuery, TError, TData>
+    ) =>
+    useQuery<Types.ListNeaOfficeQuery, TError, TData>(
+      variables === undefined ? ['listNeaOffice'] : ['listNeaOffice', variables],
+      useAxios<Types.ListNeaOfficeQuery, Types.ListNeaOfficeQueryVariables>(ListNeaOfficeDocument).bind(null, variables),
+      options
+    );
 export const ListWalletServicesDocument = `
     query listWalletServices {
   eBanking {
@@ -2097,14 +1925,15 @@ export const ListWalletServicesDocument = `
   }
 }
     `;
-export const useListWalletServicesQuery = <TData = Types.ListWalletServicesQuery, TError = unknown>(
-  variables?: Types.ListWalletServicesQueryVariables,
-  options?: UseQueryOptions<Types.ListWalletServicesQuery, TError, TData>
-) =>
-  useQuery<Types.ListWalletServicesQuery, TError, TData>(
-    variables === undefined ? ['listWalletServices'] : ['listWalletServices', variables],
-    useAxios<Types.ListWalletServicesQuery, Types.ListWalletServicesQueryVariables>(
-      ListWalletServicesDocument
-    ).bind(null, variables),
-    options
-  );
+export const useListWalletServicesQuery = <
+      TData = Types.ListWalletServicesQuery,
+      TError = unknown
+    >(
+      variables?: Types.ListWalletServicesQueryVariables,
+      options?: UseQueryOptions<Types.ListWalletServicesQuery, TError, TData>
+    ) =>
+    useQuery<Types.ListWalletServicesQuery, TError, TData>(
+      variables === undefined ? ['listWalletServices'] : ['listWalletServices', variables],
+      useAxios<Types.ListWalletServicesQuery, Types.ListWalletServicesQueryVariables>(ListWalletServicesDocument).bind(null, variables),
+      options
+    );

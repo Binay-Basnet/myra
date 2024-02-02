@@ -3,6 +3,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlinePrinter } from 'react-icons/ai';
 import { IoFilter } from 'react-icons/io5';
 import ReactToPrint from 'react-to-print';
+import { useDeepCompareEffect } from 'react-use';
+import { useRouter } from 'next/router';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import { GridItem } from '@chakra-ui/react';
 
@@ -24,7 +26,6 @@ import {
 import { LocalizedDateFilter } from '@coop/cbs/data-access';
 import { InfoCard, TransactionCard, TransactionHeaderCard } from '@coop/ebanking/cards';
 import {
-  DateFilter,
   EbankingTransactionCrOrDr,
   EbankingTransactionFilter,
   useGetAccountListQuery,
@@ -36,7 +37,7 @@ import { amountConverter } from '@coop/shared/utils';
 
 type TransactionFormFilters = {
   accounts: { label: string; value: string }[];
-  date: DateFilter;
+  date: LocalizedDateFilter;
   transactionDirection: EbankingTransactionCrOrDr | 'All';
 };
 
@@ -55,6 +56,8 @@ type BalanceMap = Record<
 >;
 
 const TransactionHistoryPage = () => {
+  const router = useRouter();
+
   const componentRef = useRef<HTMLInputElement | null>(null);
 
   const [filter, setFilter] = useState<EbankingTransactionFilter | null>(null);
@@ -64,6 +67,9 @@ const TransactionHistoryPage = () => {
       transactionDirection: 'All',
     },
   });
+
+  const { getValues, reset } = methods;
+
   const { data, isFetching } = useGetTransactionListsQuery({
     pagination: { after: '', first: -1 },
     filter,
@@ -80,6 +86,40 @@ const TransactionHistoryPage = () => {
 
   const accountMap = data?.eBanking?.account?.list?.recentTransactions?.summary
     ?.accountBalanceMap as unknown as BalanceMap;
+
+  const redirectAccountId = router?.query?.['accountId'];
+  const redirectAccountName = router?.query?.['accountName'];
+  const redirectFrom = JSON.parse(router?.query?.['from'] as string);
+  const redirectTo = JSON.parse(router?.query?.['to'] as string);
+
+  useDeepCompareEffect(() => {
+    const tempValues = getValues();
+
+    const tempFilter = filter || {};
+
+    if (redirectAccountId && redirectAccountName) {
+      tempValues['accounts'] = [
+        { label: redirectAccountName as string, value: redirectAccountId as string },
+      ];
+
+      tempFilter['accounts'] = [redirectAccountId];
+    }
+
+    if (redirectFrom && redirectTo) {
+      tempValues['date'] = {
+        from: redirectFrom,
+        to: redirectTo,
+      };
+
+      tempFilter['date'] = {
+        from: redirectFrom,
+        to: redirectTo,
+      };
+    }
+
+    reset(tempValues);
+    setFilter(tempFilter as EbankingTransactionFilter);
+  }, [redirectAccountId, redirectAccountName, redirectFrom, redirectTo]);
 
   return (
     <Box display="flex" flexDir="column" gap="s16">
