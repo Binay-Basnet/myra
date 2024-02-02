@@ -1,9 +1,8 @@
-import { ReactElement, useRef, useState } from 'react';
+import { ReactElement, useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlinePrinter } from 'react-icons/ai';
 import { IoFilter } from 'react-icons/io5';
 import ReactToPrint from 'react-to-print';
-import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import { GridItem } from '@chakra-ui/react';
@@ -89,10 +88,10 @@ const TransactionHistoryPage = () => {
 
   const redirectAccountId = router?.query?.['accountId'];
   const redirectAccountName = router?.query?.['accountName'];
-  const redirectFrom = JSON.parse(router?.query?.['from'] as string);
-  const redirectTo = JSON.parse(router?.query?.['to'] as string);
+  const redirectFrom = router?.query?.['from'];
+  const redirectTo = router?.query?.['to'];
 
-  useDeepCompareEffect(() => {
+  useEffect(() => {
     const tempValues = getValues();
 
     const tempFilter = filter || {};
@@ -107,18 +106,21 @@ const TransactionHistoryPage = () => {
 
     if (redirectFrom && redirectTo) {
       tempValues['date'] = {
-        from: redirectFrom,
-        to: redirectTo,
+        from: JSON.parse(redirectFrom as string),
+        to: JSON.parse(redirectTo as string),
       };
 
       tempFilter['date'] = {
-        from: redirectFrom,
-        to: redirectTo,
+        from: JSON.parse(redirectFrom as string),
+        to: JSON.parse(redirectTo as string),
       };
     }
 
     reset(tempValues);
-    setFilter(tempFilter as EbankingTransactionFilter);
+
+    if (Object.keys(tempFilter)?.length) {
+      setFilter(tempFilter as EbankingTransactionFilter);
+    }
   }, [redirectAccountId, redirectAccountName, redirectFrom, redirectTo]);
 
   return (
