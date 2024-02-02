@@ -7,13 +7,3 @@ mutation getPreSignedUrl($contentType: String) {
     }
   }
 }
-
-mutation getPDFPreSignedUrl($contentType: String) {
-  presignedUrl {
-    uploadPDF(contentType: $contentType) {
-      filename
-      getUrl
-      putUrl
-    }
-  }
-}

@@ -13,10 +13,10 @@ export const ValuationDocuments = () => (
       </Text>
     </GridItem>
     <GridItem colSpan={2}>
-      <FormFileInput generateUrls name="collateralFiles" label="Collateral Files" size="lg" isPdf />
+      <FormFileInput generateUrls name="collateralFiles" label="Collateral Files" size="lg" />
     </GridItem>
     <GridItem colSpan={2}>
-      <FormFileInput generateUrls name="valuationFiles" label="Valuation Files" size="lg" isPdf />
+      <FormFileInput generateUrls name="valuationFiles" label="Valuation Files" size="lg" />
     </GridItem>
   </>
 );

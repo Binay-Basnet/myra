@@ -18,7 +18,7 @@ import { isEmpty, isEqual, xorWith } from 'lodash';
 
 import { Box, Button, Icon, Text } from '@myra-ui/foundations';
 
-import { useGetPdfPreSignedUrlMutation, useGetPreSignedUrlMutation } from '@coop/cbs/data-access';
+import { useGetPreSignedUrlMutation } from '@coop/cbs/data-access';
 
 import { dropdownStyles } from './styles/fileInputStyles';
 
@@ -47,7 +47,6 @@ export interface FileInputProps extends Omit<DropzoneOptions, 'maxFiles'> {
   maxFiles?: 'one' | 'many';
   generateUrls?: true | never;
   name?: string;
-  isPdf?: boolean;
 }
 
 export const FileInput = ({
@@ -58,7 +57,6 @@ export const FileInput = ({
   maxFiles = 'many',
   generateUrls,
   name,
-  isPdf,
   ...rest
 }: FileInputProps) => {
   const [files, setFiles] = useState<File[]>([]);
@@ -160,7 +158,6 @@ export const FileInput = ({
             generateFileUrls={generateUrls}
             setFileNames={setFileNames as any}
             remove={() => setFiles((prev) => prev.filter((f) => f.name !== file.name))}
-            isPdf={isPdf}
           />
         </Fragment>
       ))}
@@ -192,7 +189,6 @@ type FilePreviewProps =
       remove?: () => void;
       setFileNames?: React.Dispatch<React.SetStateAction<FileWithUrl[]>>;
       generateFileUrls?: true;
-      isPdf?: boolean;
     }
   | {
       file: File;
@@ -200,7 +196,6 @@ type FilePreviewProps =
       remove?: () => void;
       setFileNames?: React.Dispatch<React.SetStateAction<string[]>>;
       generateFileUrls?: false;
-      isPdf?: boolean;
     };
 
 export const FilePreview = ({
@@ -209,7 +204,6 @@ export const FilePreview = ({
   remove,
   setFileNames,
   generateFileUrls,
-  isPdf,
 }: FilePreviewProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -227,60 +221,19 @@ export const FilePreview = ({
     },
   });
 
-  const { mutateAsync: getPDFPreSignedUrl } = useGetPdfPreSignedUrlMutation({
-    onMutate: () => {
-      setFileUploadProgress(1);
-    },
-    onSuccess: () => {
-      setFileUploadProgress(2);
-    },
-  });
-
   useEffect(() => {
     const uploadFile = async () => {
       try {
-        let publicUrl = '';
-        let putUrl = '';
-        let filename = '';
-
-        if (isPdf) {
-          await getPDFPreSignedUrl(
-            {
-              contentType: file.type,
-            },
-            {
-              onSuccess: (res) => {
-                publicUrl = res?.presignedUrl?.uploadPDF?.getUrl as string;
-                putUrl = res?.presignedUrl?.uploadPDF?.putUrl as string;
-                filename = res?.presignedUrl?.uploadPDF?.filename as string;
-              },
-            }
-          );
-        } else {
-          await getPreSignedUrl(
-            {
-              contentType: file.type,
-            },
-            {
-              onSuccess: (res) => {
-                publicUrl = res?.presignedUrl?.upload?.getUrl as string;
-                putUrl = res?.presignedUrl?.upload?.putUrl as string;
-                filename = res?.presignedUrl?.upload?.filename as string;
-              },
-            }
-          );
-        }
-
-        // const {
-        //   presignedUrl: {
-        //     upload: { getUrl: publicUrl, putUrl, filename },
-        //   },
-        // } = await getPreSignedUrl(
-        //   {
-        //     contentType: file.type,
-        //   },
-        //   {}
-        // );
+        const {
+          presignedUrl: {
+            upload: { getUrl: publicUrl, putUrl, filename },
+          },
+        } = await getPreSignedUrl(
+          {
+            contentType: file.type,
+          },
+          {}
+        );
 
         if (typeof putUrl !== 'string' || !filename || !publicUrl) {
           setError(true);
