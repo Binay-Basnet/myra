@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { FormSection, GridItem } from '@myra-ui';
 
 import { useAppSelector, useGetBranchListQuery } from '@coop/cbs/data-access';
@@ -14,13 +16,18 @@ export type ServiceCenterTableProps = {
 export const ServiceCenterTable = () => {
   const user = useAppSelector((state) => state.auth?.user);
 
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
   // const { watch } = useFormContext();
 
-  const { data: branchListQueryData } = useGetBranchListQuery({
+  const { data: branchListQueryData, isFetching } = useGetBranchListQuery({
     paginate: {
       ...getPaginationQuery(),
       first: -1,
       order: null,
+    },
+    filter: {
+      query: searchTerm,
     },
   });
 
@@ -53,6 +60,10 @@ export const ServiceCenterTable = () => {
               fieldType: 'search',
               cellWidth: 'auto',
               searchOptions: serviceCenterOptions,
+              searchLoading: isFetching,
+              searchCallback: (newSearch) => {
+                setSearchTerm(newSearch);
+              },
               // getDisabled: () => branchEntries?.length >= 1,
             },
             {
