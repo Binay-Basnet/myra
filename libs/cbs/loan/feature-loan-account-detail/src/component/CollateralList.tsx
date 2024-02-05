@@ -14,7 +14,9 @@ import {
   Box,
   Button,
   Chips,
+  DetailCardContent,
   Grid,
+  GridItem,
   Modal,
   Text,
 } from '@myra-ui';
@@ -100,26 +102,6 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
 
   const landCollatList = [
     {
-      label: 'Owner Name',
-      value: collatDataList?.ownerName,
-    },
-    {
-      label: 'Relation with Owner',
-      value: collatDataList?.relation,
-    },
-    {
-      label: 'Sheet No.',
-      value: collatDataList?.sheetNo,
-    },
-    {
-      label: 'Kitta No.',
-      value: collatDataList?.kittaNo,
-    },
-    {
-      label: 'Area',
-      value: collatDataList?.area,
-    },
-    {
       label: 'Valuation Method',
       value: collatDataList?.valuationMethod,
     },
@@ -146,30 +128,6 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
   ];
 
   const landAndBuildingCollatList = [
-    {
-      label: 'Owner Name',
-      value: collatDataList?.ownerName,
-    },
-    {
-      label: 'Relation with Owner',
-      value: collatDataList?.relation,
-    },
-    {
-      label: 'Sheet No.',
-      value: collatDataList?.sheetNo,
-    },
-    {
-      label: 'Kitta No.',
-      value: collatDataList?.kittaNo,
-    },
-    {
-      label: 'Area',
-      value: collatDataList?.area,
-    },
-    {
-      label: 'Plot No.',
-      value: collatDataList?.plotNo,
-    },
     {
       label: 'Valuation Method',
       value: collatDataList?.valuationMethod,
@@ -367,10 +325,54 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
           <AccordionPanel>
             <Box borderBottom="1px solid" borderBottomColor="border.layout" mb="s16">
               {collatDataList?.collateralType === 'Land' && (
-                <AccordianListCardComponent accordionCardDetails={landCollatList} />
+                <Grid templateColumns="repeat(4,1fr)" gap="s20">
+                  <DetailCardContent title="Admin" subtitle={collatDataList?.ownerName} />
+                  <DetailCardContent
+                    title="Relation with Owner"
+                    subtitle={collatDataList?.relation}
+                  />
+                  <GridItem colSpan={2} />
+                  <GridItem colSpan={2}>
+                    <DetailCardContent title="Sheet No." subtitle={collatDataList?.sheetNo} />
+                  </GridItem>
+                  <GridItem colSpan={2}>
+                    <DetailCardContent title="Plot No." subtitle={collatDataList?.plotNo} />
+                  </GridItem>
+                  <GridItem colSpan={2}>
+                    <DetailCardContent title="Kitta No." subtitle={collatDataList?.kittaNo} />
+                  </GridItem>
+                  <GridItem colSpan={2}>
+                    <DetailCardContent title="Area" subtitle={collatDataList?.area} />
+                  </GridItem>
+                  {landCollatList?.map((item) => (
+                    <DetailCardContent title={item?.label} subtitle={item?.value} />
+                  ))}
+                </Grid>
               )}
               {collatDataList?.collateralType === 'Land and Building' && (
-                <AccordianListCardComponent accordionCardDetails={landAndBuildingCollatList} />
+                <Grid templateColumns="repeat(4,1fr)" gap="s20">
+                  <DetailCardContent title="Admin" subtitle={collatDataList?.ownerName} />
+                  <DetailCardContent
+                    title="Relation with Owner"
+                    subtitle={collatDataList?.relation}
+                  />
+                  <GridItem colSpan={2} />
+                  <GridItem colSpan={2}>
+                    <DetailCardContent title="Sheet No." subtitle={collatDataList?.sheetNo} />
+                  </GridItem>
+                  <GridItem colSpan={2}>
+                    <DetailCardContent title="Plot No." subtitle={collatDataList?.plotNo} />
+                  </GridItem>
+                  <GridItem colSpan={2}>
+                    <DetailCardContent title="Kitta No." subtitle={collatDataList?.kittaNo} />
+                  </GridItem>
+                  <GridItem colSpan={2}>
+                    <DetailCardContent title="Area" subtitle={collatDataList?.area} />
+                  </GridItem>
+                  {landAndBuildingCollatList?.map((item) => (
+                    <DetailCardContent title={item?.label} subtitle={item?.value} />
+                  ))}
+                </Grid>
               )}
               {collatDataList?.collateralType === 'Vehicle' && (
                 <AccordianListCardComponent accordionCardDetails={vehicleCollatList} />

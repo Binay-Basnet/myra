@@ -5427,6 +5427,15 @@ export type DepositAccountInstallmentResult = {
   recordId: Scalars['ID'];
 };
 
+export type DepositAccountProduct = {
+  InterestRate?: Maybe<Scalars['String']>;
+  OpenDate?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  member?: Maybe<Scalars['String']>;
+};
+
 export type DepositBankVoucher = {
   amount?: InputMaybe<Scalars['String']>;
   bankId?: InputMaybe<Scalars['String']>;
@@ -5702,6 +5711,17 @@ export type DepositLoanAccountMutationUpdateSignatureArgs = {
 
 export type DepositLoanAccountMutationUpdateTenureArgs = {
   data: SavingsTenureUpdateInput;
+};
+
+export type DepositLoanAccountProductConnection = {
+  edges?: Maybe<Array<DepositLoanAccountProductEdge>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type DepositLoanAccountProductEdge = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<DepositAccountProduct>;
 };
 
 export type DepositLoanAccountQuery = {
@@ -6163,6 +6183,7 @@ export type DepositProductSettingsQuery = {
   formState?: Maybe<DepositProductFormStateResult>;
   get?: Maybe<DepositProduct>;
   getAccountlist?: Maybe<DepositLoanAccountConnection>;
+  getAccountlistProduct?: Maybe<DepositLoanAccountProductConnection>;
   getCloseCharge: ProductAccountOpenCloseQueryResult;
   getOpenCharge: ProductAccountOpenCloseQueryResult;
   getPenaltyCharge: ProductPenaltyQueryResult;
@@ -6196,6 +6217,13 @@ export type DepositProductSettingsQueryGetArgs = {
 export type DepositProductSettingsQueryGetAccountlistArgs = {
   filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type DepositProductSettingsQueryGetAccountlistProductArgs = {
+  filter?: InputMaybe<Filter>;
+  loanProduct?: InputMaybe<Scalars['Boolean']>;
+  paginate?: InputMaybe<Pagination>;
+  productid: Scalars['ID'];
 };
 
 export type DepositProductSettingsQueryGetCloseChargeArgs = {
@@ -14469,7 +14497,7 @@ export type LoanAccount = {
 
 export type LoanAccountCollateral = {
   allDocuments?: Maybe<Array<Scalars['String']>>;
-  area?: Maybe<Scalars['Float']>;
+  area?: Maybe<Scalars['String']>;
   buildingType?: Maybe<BuildingType>;
   collateralDescription?: Maybe<Scalars['String']>;
   collateralFiles?: Maybe<Array<Scalars['String']>>;
@@ -14482,12 +14510,12 @@ export type LoanAccountCollateral = {
   documents?: Maybe<Array<Maybe<DocumentInfo>>>;
   dvMinAmount?: Maybe<Scalars['String']>;
   fmvMaxAmount?: Maybe<Scalars['Amount']>;
-  kittaNo?: Maybe<Scalars['Int']>;
+  kittaNo?: Maybe<Scalars['String']>;
   noOfStorey?: Maybe<Scalars['Int']>;
   ownerName?: Maybe<Scalars['String']>;
-  plotNo?: Maybe<Scalars['Int']>;
+  plotNo?: Maybe<Scalars['String']>;
   relation?: Maybe<Scalars['String']>;
-  sheetNo?: Maybe<Scalars['Int']>;
+  sheetNo?: Maybe<Scalars['String']>;
   status?: Maybe<GuaranteeStatus>;
   valuationAmount?: Maybe<Scalars['String']>;
   valuationFiles?: Maybe<Array<Scalars['String']>>;
@@ -14505,7 +14533,7 @@ export type LoanAccountCollateral = {
 };
 
 export type LoanAccountCollateralData = {
-  area?: InputMaybe<Scalars['Float']>;
+  area?: InputMaybe<Scalars['String']>;
   buildingType?: InputMaybe<BuildingType>;
   collateralDescription?: InputMaybe<Scalars['String']>;
   collateralFiles?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -14516,12 +14544,12 @@ export type LoanAccountCollateralData = {
   documentName?: InputMaybe<Scalars['String']>;
   dvMinAmount?: InputMaybe<Scalars['String']>;
   fmvMaxAmount?: InputMaybe<Scalars['Amount']>;
-  kittaNo?: InputMaybe<Scalars['Int']>;
+  kittaNo?: InputMaybe<Scalars['String']>;
   noOfStorey?: InputMaybe<Scalars['Int']>;
   ownerName?: InputMaybe<Scalars['String']>;
-  plotNo?: InputMaybe<Scalars['Int']>;
+  plotNo?: InputMaybe<Scalars['String']>;
   relation?: InputMaybe<Scalars['String']>;
-  sheetNo?: InputMaybe<Scalars['Int']>;
+  sheetNo?: InputMaybe<Scalars['String']>;
   valuationAmount?: InputMaybe<Scalars['String']>;
   valuationFiles?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   valuationMethod?: InputMaybe<ValuationMethod>;
@@ -38983,10 +39011,10 @@ export type GetLoanApplicationDetailsQuery = {
           collateralType?: string | null;
           ownerName?: string | null;
           relation?: string | null;
-          sheetNo?: number | null;
-          plotNo?: number | null;
-          kittaNo?: number | null;
-          area?: number | null;
+          sheetNo?: string | null;
+          plotNo?: string | null;
+          kittaNo?: string | null;
+          area?: string | null;
           buildingType?: BuildingType | null;
           constructionType?: ConstructionType | null;
           valuatorId?: string | null;
@@ -39478,10 +39506,10 @@ export type GetLoanAccountCollateralDetailsQuery = {
           collateralType?: string | null;
           ownerName?: string | null;
           relation?: string | null;
-          sheetNo?: number | null;
-          plotNo?: number | null;
-          kittaNo?: number | null;
-          area?: number | null;
+          sheetNo?: string | null;
+          plotNo?: string | null;
+          kittaNo?: string | null;
+          area?: string | null;
           buildingType?: BuildingType | null;
           constructionType?: ConstructionType | null;
           valuatorId?: string | null;
