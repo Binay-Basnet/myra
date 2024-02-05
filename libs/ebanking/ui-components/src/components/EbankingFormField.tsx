@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { SingleValue } from 'chakra-react-select';
 
@@ -17,14 +18,18 @@ export const EbankingFormField = (props: IEbankingFormFieldProps) => {
 
   const { setValue } = useFormContext();
 
-  const handleRenewalPlans = (newVal: SingleValue<SelectOption>) => {
+  const prevField = useMemo(
+    () =>
+      schema?.sequence?.[currentSequence - 2]?.responseFieldMapping?.find(
+        (prev) => prev?.mapField === fieldName
+      ),
+    [schema, currentSequence]
+  );
+
+  const populateAmountField = (newVal: SingleValue<SelectOption>) => {
     if (!('amount' in options[0])) {
       return;
     }
-
-    const prevField = schema?.sequence?.[currentSequence - 2]?.responseFieldMapping?.find(
-      (prev) => prev?.mapField === fieldName
-    );
 
     const selectedOption = (options as Record<string, string>[])?.find(
       (opt) => opt?.[prevField?.options?.key as string] === newVal?.value
@@ -43,6 +48,7 @@ export const EbankingFormField = (props: IEbankingFormFieldProps) => {
           label={fieldLabel as string}
           isRequired={isRequired === 'Y'}
           rules={isRequired === 'Y' ? { required: `${fieldLabel} is required` } : {}}
+          isDisabled={!!prevField?.mapField}
         />
       );
 
@@ -53,7 +59,7 @@ export const EbankingFormField = (props: IEbankingFormFieldProps) => {
           label={fieldLabel as string}
           options={options}
           isRequired={isRequired === 'Y'}
-          onChangeAction={handleRenewalPlans}
+          onChangeAction={populateAmountField}
           rules={isRequired === 'Y' ? { required: `${fieldLabel} is required` } : {}}
         />
       );
@@ -64,6 +70,7 @@ export const EbankingFormField = (props: IEbankingFormFieldProps) => {
           label={fieldLabel as string}
           isRequired={isRequired === 'Y'}
           rules={isRequired === 'Y' ? { required: `${fieldLabel} is required` } : {}}
+          isDisabled={!!prevField?.mapField}
         />
       );
   }

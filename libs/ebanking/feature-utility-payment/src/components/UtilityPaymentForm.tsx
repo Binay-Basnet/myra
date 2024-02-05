@@ -7,7 +7,7 @@ import { asyncToast, Box, Button, Grid, Icon, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { InfoCard } from '@coop/ebanking/cards';
-import { EbankingFormField } from '@coop/ebanking/components';
+import { EbankingFormField, GoBack } from '@coop/ebanking/components';
 import { useListNeaOfficeQuery, useUseUtilityMutation, Utility } from '@coop/ebanking/data-access';
 import { CardContent } from '@coop/ebanking/ui-layout';
 
@@ -148,6 +148,39 @@ export const UtilityPaymentForm = ({
     [neaOfficeData]
   );
 
+  const clearForm = () => {
+    const temp = methods.getValues();
+
+    currentSequenceObj?.requiredFields?.forEach((f) => {
+      const prevField = schema?.sequence?.[currentSequence - 2]?.responseFieldMapping?.find(
+        (prev) => prev?.mapField === f?.fieldName
+      );
+
+      // only clear field if its value in not mapped from previous sequence response
+      if (prevField?.mapField && !prevField?.options) {
+        return;
+      }
+
+      if (f?.fieldType === 'OPTION') {
+        temp[f?.fieldName as string] = null;
+      } else {
+        temp[f?.fieldName as string] = '';
+      }
+    });
+
+    methods.reset(temp);
+  };
+
+  const fieldsToDisplay = useMemo(
+    () => currentSequenceInfo?.filter((i) => typeof i.value === 'string'),
+    [currentSequenceInfo]
+  );
+
+  const handleBack = () => {
+    clearForm();
+    setCurrentSequence((seq) => seq - 1);
+  };
+
   return (
     <InfoCard
       title={ServiceTitle[serviceName]}
@@ -158,14 +191,16 @@ export const UtilityPaymentForm = ({
         </Button>
       }
     >
+      <GoBack handleGoBack={handleBack} />
+
       <Box p="s16" display="flex" flexDir="column" gap="s32">
-        <Grid templateColumns="repeat(3, 1fr)" gap="s16">
-          {currentSequenceInfo
-            ?.filter((i) => typeof i.value === 'string')
-            ?.map((info) => (
+        {fieldsToDisplay?.length ? (
+          <Grid templateColumns="repeat(3, 1fr)" gap="s16">
+            {fieldsToDisplay.map((info) => (
               <CardContent title={info.label} subtitle={info.value} />
             ))}
-        </Grid>
+          </Grid>
+        ) : null}
 
         {currentSequenceInfo
           ?.filter((i) => Array.isArray(i.value))
@@ -211,6 +246,7 @@ export const UtilityPaymentForm = ({
               }
               schema={schema}
               currentSequence={currentSequence}
+              key={field?.fieldName}
             />
           );
         })}
@@ -233,9 +269,7 @@ export const UtilityPaymentForm = ({
             colorScheme="gray"
             w="100px"
             cursor="pointer"
-            onClick={() => {
-              methods.reset();
-            }}
+            onClick={clearForm}
           >
             Clear
           </Button>
