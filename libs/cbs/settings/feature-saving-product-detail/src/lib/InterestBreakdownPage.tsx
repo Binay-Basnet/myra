@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
+import qs from 'qs';
 
 import { Box, Column, Scrollable, Table, TablePopover, Text } from '@myra-ui';
 
@@ -92,6 +93,24 @@ export const InterestBreakdownPage = () => {
                   onClick: (row) => {
                     setSelectedBreakdown(row);
                     onUpdateModalToggle();
+                  },
+                },
+                {
+                  title: 'View Accounts',
+                  onClick: (row) => {
+                    const queryString = qs.stringify(
+                      {
+                        interestrate: {
+                          value: row?.effectiveInterestRate,
+                          compare: '=',
+                        },
+                      },
+                      { allowDots: true, arrayFormat: 'brackets', encode: false }
+                    );
+
+                    router.push({
+                      query: { id, tab: 'active accounts', filter: queryString },
+                    });
                   },
                 },
               ]}

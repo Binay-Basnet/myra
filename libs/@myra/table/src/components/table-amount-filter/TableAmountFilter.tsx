@@ -14,9 +14,10 @@ type Condition = '=' | '<' | '>' | '< >';
 
 export interface TableAmountFilterProps {
   column: string;
+  placeholder?: string;
 }
 
-export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
+export const TableAmountFilter = ({ column, placeholder }: TableAmountFilterProps) => {
   const router = useRouter();
   const initialFocusRef = React.useRef<HTMLSelectElement | null>(null);
 
@@ -134,6 +135,7 @@ export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
                     { shallow: true }
                   );
                 }}
+                placeholder={placeholder}
               />
             </PopoverContent>
           </Portal>
@@ -152,6 +154,7 @@ export interface TableAmountFilterContentProps {
     max: string | undefined;
     condition: Condition;
   }) => void;
+  placeholder?: string;
 }
 
 export default TableAmountFilter;
@@ -174,7 +177,7 @@ const isButtonDisabled = (
 
 export const TableAmountFilterContent = React.forwardRef(
   (
-    { onClose, value, onChange }: TableAmountFilterContentProps,
+    { onClose, value, onChange, placeholder }: TableAmountFilterContentProps,
     ref: ForwardedRef<HTMLSelectElement>
   ) => {
     const [min, setMin] = useState<string | undefined>(value?.min || undefined);
@@ -212,6 +215,7 @@ export const TableAmountFilterContent = React.forwardRef(
             setMin(newValue.min);
             setMax(newValue.max);
           }}
+          placeholder={placeholder}
         />
 
         <Flex alignItems="center" fontSize="r1">

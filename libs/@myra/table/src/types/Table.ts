@@ -31,6 +31,7 @@ declare module '@tanstack/table-core' {
     };
     skipExcelFormatting?: boolean;
     orderId?: string;
+    filterPlaceholder?: string;
   }
 
   interface FilterFns {
