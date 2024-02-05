@@ -79,15 +79,20 @@ export const CbsMembersFeatureActivate = () => {
   const branchIdWatch = watch('branchId');
 
   useEffect(() => {
-    asyncToast({
-      id: 'update-member-branch',
-      msgs: {
-        loading: 'Upading member branch',
-        success: 'Member branch updated successfully',
-      },
-      promise: updateMemberBranch({ memberId: memberInfo?.id as string, branchId: branchIdWatch }),
-      onSuccess: () => refetchMemberDetails(),
-    });
+    if (branchIdWatch) {
+      asyncToast({
+        id: 'update-member-branch',
+        msgs: {
+          loading: 'Upading member branch',
+          success: 'Member branch updated successfully',
+        },
+        promise: updateMemberBranch({
+          memberId: memberInfo?.id as string,
+          branchId: branchIdWatch,
+        }),
+        onSuccess: () => refetchMemberDetails(),
+      });
+    }
   }, [branchIdWatch]);
 
   return (
