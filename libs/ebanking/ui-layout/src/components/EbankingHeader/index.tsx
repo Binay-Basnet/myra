@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BiBell } from 'react-icons/bi';
 import { IoCheckmark } from 'react-icons/io5';
 import { VscDebugDisconnect } from 'react-icons/vsc';
@@ -19,17 +20,37 @@ import {
   Text,
 } from '@myra-ui';
 
-import { logout, useAppDispatch, useAppSelector } from '@coop/ebanking/data-access';
+import {
+  logout,
+  setEbankingPreference,
+  useAppDispatch,
+  useAppSelector,
+} from '@coop/ebanking/data-access';
 
 const languageList = [
   { label: 'EN', value: 'en' },
   { label: 'ने', value: 'ne' },
 ];
 
+const calendarList = [
+  { label: 'AD', value: 'AD' },
+  { label: 'BS', value: 'BS' },
+];
+
 export const EbankingHeader = () => {
   const router = useRouter();
   const user = useAppSelector((state) => state?.auth?.user);
   const coopUser = useAppSelector((state) => state?.auth?.cooperative?.user);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const calendarType = localStorage.getItem('calendarType');
+
+    if (calendarType) {
+      dispatch(setEbankingPreference({ preference: { date: calendarType } }));
+    }
+  }, []);
 
   return (
     <Box
@@ -170,6 +191,7 @@ export const HeaderRightSection = () => {
   // const userId = useAppSelector((state) => state?.auth?.user?.id);
   const user = useAppSelector((state) => state.auth?.user);
   const coopUser = useAppSelector((state) => state.auth?.cooperative);
+
   return (
     <Box pr="s16" display="flex" justifyContent="end" gap="s16">
       <IconButton
@@ -295,6 +317,33 @@ export const HeaderRightSection = () => {
                       //     },
                       //   });
                       // }}
+                    />
+                  </Box>
+
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="space-between"
+                    p="s8"
+                    borderBottom="1px solid "
+                    borderColor="border.layout"
+                  >
+                    <Text
+                      mb="4px"
+                      fontWeight="Medium"
+                      fontSize="s3"
+                      color="neutralColorLight.Gray-80"
+                    >
+                      Calendar
+                    </Text>
+                    <SwitchTabs
+                      value={user?.preference?.date || 'AD'}
+                      options={calendarList}
+                      name="calenderSwitcher"
+                      onChange={(value) => {
+                        localStorage.setItem('calendarType', value);
+                        dispatch(setEbankingPreference({ preference: { date: value } }));
+                      }}
                     />
                   </Box>
 
