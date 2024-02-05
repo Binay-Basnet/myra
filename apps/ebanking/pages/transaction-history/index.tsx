@@ -6,6 +6,8 @@ import ReactToPrint from 'react-to-print';
 import { useRouter } from 'next/router';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import { GridItem } from '@chakra-ui/react';
+import subDays from 'date-fns/subDays';
+import { CalendarBuilderDate } from 'libs/@myra/date-picker/src/types/date';
 
 import {
   Accordion,
@@ -21,6 +23,7 @@ import {
   Loader,
   Text,
 } from '@myra-ui';
+import { convertDate, convertValueToDate, getTodayDate } from '@myra-ui/date-picker';
 
 import { LocalizedDateFilter } from '@coop/cbs/data-access';
 import { InfoCard, TransactionCard, TransactionHeaderCard } from '@coop/ebanking/cards';
@@ -54,16 +57,47 @@ type BalanceMap = Record<
   }
 >;
 
+const todayDate = convertDate(getTodayDate().ad as unknown as CalendarBuilderDate);
+
+const oneWeekBeforeDate = convertDate(
+  convertValueToDate({ date: subDays(new Date(), 7) })?.ad as unknown as CalendarBuilderDate
+);
+
 const TransactionHistoryPage = () => {
   const router = useRouter();
 
   const componentRef = useRef<HTMLInputElement | null>(null);
 
-  const [filter, setFilter] = useState<EbankingTransactionFilter | null>(null);
+  const [filter, setFilter] = useState<EbankingTransactionFilter | null>({
+    date: {
+      from: {
+        en: oneWeekBeforeDate?.en,
+        np: oneWeekBeforeDate?.np,
+        local: '',
+      },
+      to: {
+        en: todayDate?.en,
+        np: todayDate?.np,
+        local: '',
+      },
+    },
+  });
 
   const methods = useForm<TransactionFormFilters>({
     defaultValues: {
       transactionDirection: 'All',
+      date: {
+        from: {
+          en: oneWeekBeforeDate?.en,
+          np: oneWeekBeforeDate?.np,
+          local: '',
+        },
+        to: {
+          en: todayDate?.en,
+          np: todayDate?.np,
+          local: '',
+        },
+      },
     },
   });
 
@@ -222,7 +256,11 @@ const TransactionHistoryPage = () => {
                       shade="neutral"
                       variant="outline"
                       onClick={() => {
-                        methods.reset();
+                        methods.reset({
+                          accounts: [],
+                          date: { from: null, to: null },
+                          transactionDirection: 'All',
+                        });
                         setFilter(null);
                       }}
                     >

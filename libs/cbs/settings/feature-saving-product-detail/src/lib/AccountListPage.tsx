@@ -4,43 +4,29 @@ import { useRouter } from 'next/router';
 
 import { Box, Button, Column, Icon, Scrollable, Table, Text } from '@myra-ui';
 
-import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
-import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
+import { ObjState, useGetAccountListProductQuery } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { amountConverter, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 import { SideBar } from '../components';
 
 export const AccountListPage = () => {
   const router = useRouter();
-  const { id, search } = router.query;
+  const { id } = router.query;
 
-  const { data, isLoading } = useGetAccountTableListQuery({
+  const { data, isLoading } = useGetAccountListProductQuery({
     paginate: {
       ...getPaginationQuery(),
 
       order: null,
     },
-    filter: {
-      query: search as string,
-      orConditions: [
-        {
-          andConditions: [
-            {
-              column: 'objState',
-              comparator: 'EqualTo',
-              value: ObjState.Active,
-            },
-            {
-              column: 'productId',
-              comparator: 'EqualTo',
-              value: id,
-            },
-          ],
-        },
-      ],
-    },
+    filter: getFilterQuery({ objState: { value: ObjState.Active, compare: '=' } }),
+    productId: id as string,
   });
-  const rowData = useMemo(() => data?.account?.list?.data?.edges ?? [], [data]);
+  const rowData = useMemo(
+    () => data?.settings?.general?.depositProduct?.getAccountlistProduct?.edges ?? [],
+    [data]
+  );
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -61,15 +47,25 @@ export const AccountListPage = () => {
       },
       {
         header: 'Member',
-        accessorFn: (row) => row?.node?.member?.name?.local,
+        accessorFn: (row) => row?.node?.member,
       },
       {
         header: 'Balance',
-        accessorFn: (row) => amountConverter(row?.node?.availableBalance ?? 0),
+        accessorFn: (row) => amountConverter(row?.node?.balance ?? 0),
       },
       {
         header: 'Open Date',
-        accessorFn: (row) => localizedDate(row?.node?.accountOpenedDate),
+        accessorFn: (row) => row?.node?.OpenDate,
+      },
+      {
+        id: 'interestrate',
+        header: 'Effective Interest Rate',
+        accessorFn: (row) => row?.node?.InterestRate,
+        enableColumnFilter: true,
+        filterFn: 'amount',
+        meta: {
+          filterPlaceholder: 'Rate',
+        },
       },
       //   {
       //     id: '_actions',
@@ -117,8 +113,10 @@ export const AccountListPage = () => {
             data={rowData}
             columns={columns}
             pagination={{
-              total: data?.account?.list?.data?.totalCount ?? 'Many',
-              pageInfo: data?.account?.list?.data?.pageInfo,
+              total:
+                data?.settings?.general?.depositProduct?.getAccountlistProduct?.totalCount ??
+                'Many',
+              pageInfo: data?.settings?.general?.depositProduct?.getAccountlistProduct?.pageInfo,
             }}
           />
         </Box>

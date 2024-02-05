@@ -2,11 +2,8 @@ import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Skeleton, useDisclosure } from '@chakra-ui/react';
-import subDays from 'date-fns/subDays';
-import { CalendarBuilderDate } from 'libs/@myra/date-picker/src/types/date';
 
 import { Box, Button, Collapse, Divider, Grid, GridItem, Icon, Text } from '@myra-ui';
-import { convertDate, convertValueToDate, getTodayDate } from '@myra-ui/date-picker';
 
 import { AccountCard, InfoCard, TransactionCard, UtilityHomeCard } from '@coop/ebanking/cards';
 import { EmptyState } from '@coop/ebanking/components';
@@ -24,12 +21,6 @@ import {
 } from '@coop/ebanking/utils';
 
 import { SERVICE_ICON_DICT, SERVICE_LINK_DICT } from '../constants/SERVICE_ICON';
-
-const todayDate = convertDate(getTodayDate().ad as unknown as CalendarBuilderDate);
-
-const oneWeekBeforeDate = convertDate(
-  convertValueToDate({ date: subDays(new Date(), 7) })?.ad as unknown as CalendarBuilderDate
-);
 
 export const EbankingHomePage = () => {
   const router = useRouter();
@@ -239,19 +230,7 @@ export const EbankingHomePage = () => {
             variant="link"
             w="auto"
             px="0"
-            onClick={() =>
-              router.push(
-                `/transaction-history?from=${JSON.stringify({
-                  en: oneWeekBeforeDate?.en,
-                  np: oneWeekBeforeDate?.np,
-                  local: '',
-                })}&to=${JSON.stringify({
-                  en: todayDate?.en,
-                  np: todayDate?.np,
-                  local: '',
-                })}`
-              )
-            }
+            onClick={() => router.push(`/transaction-history`)}
           >
             View All Transactions
             <Icon as={ChevronRightIcon} color="priamry.500" />

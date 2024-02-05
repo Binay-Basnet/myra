@@ -19827,14 +19827,9 @@ export type PrematurePenaltyFormState = {
 
 export type PresignedUrlMutation = {
   upload: PresignedUrlOutput;
-  uploadPDF?: Maybe<PresignedUrlOutput>;
 };
 
 export type PresignedUrlMutationUploadArgs = {
-  contentType?: InputMaybe<Scalars['String']>;
-};
-
-export type PresignedUrlMutationUploadPdfArgs = {
   contentType?: InputMaybe<Scalars['String']>;
 };
 
@@ -33177,6 +33172,37 @@ export type GetAllAccountsFilterMappingQuery = {
     filterMapping?: {
       accountType: Array<OptionTypeFragment>;
       productName: Array<OptionTypeFragment>;
+    } | null;
+  };
+};
+
+export type GetAccountListProductQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+  productId: Scalars['ID'];
+  loanProduct?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type GetAccountListProductQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        getAccountlistProduct?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node?: {
+              id: string;
+              accountName?: string | null;
+              member?: string | null;
+              balance?: string | null;
+              OpenDate?: string | null;
+              InterestRate?: string | null;
+            } | null;
+          }> | null;
+          pageInfo?: PaginationFragment | null;
+        } | null;
+      } | null;
     } | null;
   };
 };
@@ -61746,6 +61772,49 @@ export const useGetAllAccountsFilterMappingQuery = <
       : ['getAllAccountsFilterMapping', variables],
     useAxios<GetAllAccountsFilterMappingQuery, GetAllAccountsFilterMappingQueryVariables>(
       GetAllAccountsFilterMappingDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountListProductDocument = `
+    query getAccountListProduct($paginate: Pagination, $filter: Filter, $productId: ID!, $loanProduct: Boolean) {
+  settings {
+    general {
+      depositProduct {
+        getAccountlistProduct(
+          paginate: $paginate
+          filter: $filter
+          productid: $productId
+          loanProduct: $loanProduct
+        ) {
+          totalCount
+          edges {
+            node {
+              id
+              accountName
+              member
+              balance
+              OpenDate
+              InterestRate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetAccountListProductQuery = <TData = GetAccountListProductQuery, TError = unknown>(
+  variables: GetAccountListProductQueryVariables,
+  options?: UseQueryOptions<GetAccountListProductQuery, TError, TData>
+) =>
+  useQuery<GetAccountListProductQuery, TError, TData>(
+    ['getAccountListProduct', variables],
+    useAxios<GetAccountListProductQuery, GetAccountListProductQueryVariables>(
+      GetAccountListProductDocument
     ).bind(null, variables),
     options
   );

@@ -2,12 +2,9 @@ import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';
-import subDays from 'date-fns/subDays';
 import dayjs from 'dayjs';
-import { CalendarBuilderDate } from 'libs/@myra/date-picker/src/types/date';
 
 import { Box, Button, Divider, Grid, Icon, PathBar } from '@myra-ui';
-import { convertDate, convertValueToDate, getTodayDate } from '@myra-ui/date-picker';
 
 import { AccountLargeCard, InfoCard, TransactionCard } from '@coop/ebanking/cards';
 import { EmptyState } from '@coop/ebanking/components';
@@ -20,12 +17,6 @@ import {
 import { amountConverter } from '@coop/shared/utils';
 
 import { AccountDetail } from '../components/AccountDetail';
-
-const todayDate = convertDate(getTodayDate().ad as unknown as CalendarBuilderDate);
-
-const oneWeekBeforeDate = convertDate(
-  convertValueToDate({ date: subDays(new Date(), 7) })?.ad as unknown as CalendarBuilderDate
-);
 
 export const EbankingAccountDetailPage = () => {
   const router = useRouter();
@@ -127,17 +118,7 @@ export const AccountDetails = ({ account, isLoading }: IAccountDetailsProps) => 
               variant="ghost"
               onClick={() =>
                 router.push(
-                  `/transaction-history?accountId=${account?.id}&accountName=${
-                    account?.name
-                  }&from=${JSON.stringify({
-                    en: oneWeekBeforeDate?.en,
-                    np: oneWeekBeforeDate?.np,
-                    local: '',
-                  })}&to=${JSON.stringify({
-                    en: todayDate?.en,
-                    np: todayDate?.np,
-                    local: '',
-                  })}`
+                  `/transaction-history?accountId=${account?.id}&accountName=${account?.name}`
                 )
               }
             >
