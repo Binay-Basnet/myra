@@ -5,6 +5,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { asyncToast, Box, Button, Column, Grid, GridItem, Icon, Table, Text } from '@myra-ui';
 
 import { InfoCard } from '@coop/ebanking/cards';
+import { GoBack } from '@coop/ebanking/components';
 import { useUseUtilityMutation, Utility } from '@coop/ebanking/data-access';
 import { CardContent } from '@coop/ebanking/ui-layout';
 import { FormAmountInput } from '@coop/shared/form';
@@ -164,9 +165,14 @@ export const ElectricityBill = ({
     []
   );
 
+  const handleBack = () => {
+    methods.setValue('amount', '');
+    setCurrentSequence((seq) => seq - 1);
+  };
+
   return (
     <InfoCard
-      title="Electricity"
+      title="Electricity Payment"
       btn={
         <Button variant="ghost" gap="s4">
           <Icon as={AiOutlinePlus} color="priamry.500" />
@@ -174,6 +180,8 @@ export const ElectricityBill = ({
         </Button>
       }
     >
+      <GoBack handleGoBack={handleBack} />
+
       <Box p="s16" display="flex" flexDir="column" gap="s32">
         <Grid templateColumns="repeat(3, 1fr)" gap="s16">
           {currentSequenceInfo?.map(
@@ -230,7 +238,7 @@ export const ElectricityBill = ({
             w="100px"
             cursor="pointer"
             onClick={() => {
-              methods.reset();
+              methods.setValue('amount', '');
             }}
           >
             Clear

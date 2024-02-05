@@ -10,7 +10,10 @@ export const EbankingFeatureUtilityPayment = () => {
     filter: { isActive: true },
   });
 
-  const utilityServices = utilityServicesData?.eBanking?.utility?.listServiceType?.data ?? [];
+  const utilityServices =
+    utilityServicesData?.eBanking?.utility?.listServiceType?.data?.filter(
+      (service) => service?.slug !== 'qr_payment'
+    ) ?? [];
 
   return (
     <>
