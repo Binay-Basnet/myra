@@ -126,12 +126,11 @@ export const ShareStatementReport = () => {
                 header: t['reportsShareStatementReportParticular'],
                 accessorKey: 'particular',
                 cell: (row) => (
-                  <Box whiteSpace="pre-line" w="100%" my="s4">
+                  <Box whiteSpace="pre-line" w="200px" my="s4">
                     {row?.row?.original?.particular}
                   </Box>
                 ),
                 meta: {
-                  width: '40%',
                   Footer: {
                     display: 'none',
                   },
