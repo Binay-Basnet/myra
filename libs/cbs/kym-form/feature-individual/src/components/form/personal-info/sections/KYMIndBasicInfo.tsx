@@ -92,7 +92,7 @@ export const KYMIndBasicInfo = () => {
         options={getFieldOption(religionFields)}
       />
 
-      <FormInput name={t['kymIndPanNo']} label="Pan No" />
+      <FormInput name="panNo" label={t['kymIndPanNo']} />
     </FormSection>
   );
 };
