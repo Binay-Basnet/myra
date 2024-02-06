@@ -61,9 +61,19 @@ export const MemberListPage = () => {
     filter: getFilterQuery({ objState: { value: 'APPROVED', compare: '=' } }),
   };
 
+  const sortParams = router.query['sort'] as string;
+
   const { data, isFetching } = useGetMemberListQuery({
     ...filterParams,
-    pagination: getPaginationQuery(),
+    pagination: sortParams
+      ? getPaginationQuery()
+      : {
+          ...getPaginationQuery(),
+          order: {
+            column: objState === 'DRAFT' || objState === 'VALIDATED' ? 'id' : 'activeDate',
+            arrange: 'DESC',
+          },
+        },
   });
 
   const { data: memberFilterData } = useGetMemberFilterMappingQuery();
