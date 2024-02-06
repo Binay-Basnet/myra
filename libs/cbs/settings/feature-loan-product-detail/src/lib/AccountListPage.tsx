@@ -75,6 +75,16 @@ export const AccountListPage = () => {
         header: 'Open Date',
         accessorFn: (row) => row?.node?.approvedDate?.local || '-',
       },
+      // {
+      //   id: 'interestrate',
+      //   header: 'Effective Interest Rate',
+      //   accessorFn: (row) => row?.node?.InterestRate,
+      //   enableColumnFilter: true,
+      //   filterFn: 'amount',
+      //   meta: {
+      //     filterPlaceholder: 'Rate',
+      //   },
+      // },
       //   {
       //     id: '_actions',
       //     header: '',

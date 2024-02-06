@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Box, Button, Column, Icon, Scrollable, Table, Text } from '@myra-ui';
 
 import { ObjState, useGetAccountListProductQuery } from '@coop/cbs/data-access';
-import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, localizedText, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 import { SideBar } from '../components';
@@ -47,15 +47,18 @@ export const AccountListPage = () => {
       },
       {
         header: 'Member',
-        accessorFn: (row) => row?.node?.member,
+        accessorFn: (row) => localizedText(row?.node?.memberName),
       },
       {
         header: 'Balance',
         accessorFn: (row) => amountConverter(row?.node?.balance ?? 0),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Open Date',
-        accessorFn: (row) => row?.node?.OpenDate,
+        accessorFn: (row) => localizedDate(row?.node?.OpenDate),
       },
       {
         id: 'interestrate',

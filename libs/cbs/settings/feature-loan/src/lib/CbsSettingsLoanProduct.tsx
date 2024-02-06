@@ -147,7 +147,7 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
         },
       },
       {
-        header: 'Account Premium',
+        header: 'Default Account Premium',
         accessorFn: (row) => row?.node.accountPremiumInterest,
         cell: (props) => <span>{props?.row?.original?.node?.accountPremiumInterest} %</span>,
         meta: {

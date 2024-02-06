@@ -831,7 +831,7 @@ query getAccountListProduct(
             node {
               id
               accountName
-              member
+              memberName
               balance
               OpenDate
               InterestRate

@@ -5429,11 +5429,11 @@ export type DepositAccountInstallmentResult = {
 
 export type DepositAccountProduct = {
   InterestRate?: Maybe<Scalars['String']>;
-  OpenDate?: Maybe<Scalars['String']>;
+  OpenDate?: Maybe<Scalars['Localized']>;
   accountName?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
   id: Scalars['String'];
-  member?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
 };
 
 export type DepositBankVoucher = {
@@ -17146,6 +17146,7 @@ export type Member = Base & {
   address?: Maybe<Address>;
   age?: Maybe<Scalars['Int']>;
   branch?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
   citizenship?: Maybe<KymIndIdentification>;
   citizenshipPicUrl?: Maybe<Scalars['String']>;
   code: Scalars['String'];
@@ -33199,9 +33200,9 @@ export type GetAccountListProductQuery = {
             node?: {
               id: string;
               accountName?: string | null;
-              member?: string | null;
+              memberName?: Record<'local' | 'en' | 'np', string> | null;
               balance?: string | null;
-              OpenDate?: string | null;
+              OpenDate?: Record<'local' | 'en' | 'np', string> | null;
               InterestRate?: string | null;
             } | null;
           }> | null;
@@ -61796,7 +61797,7 @@ export const GetAccountListProductDocument = `
             node {
               id
               accountName
-              member
+              memberName
               balance
               OpenDate
               InterestRate
