@@ -15238,11 +15238,14 @@ export type LoanCloseResponse = {
   accountID?: Maybe<Scalars['ID']>;
   accountName?: Maybe<Scalars['String']>;
   closedDate?: Maybe<Scalars['Localized']>;
+  destinationAccount?: Maybe<Scalars['String']>;
+  discountAmount?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<AccountClosePaymentMode>;
   totalAmount?: Maybe<Scalars['String']>;
   totalFine?: Maybe<Scalars['String']>;
   totalInterest?: Maybe<Scalars['String']>;
   totalPrincipal?: Maybe<Scalars['String']>;
+  totalRebate?: Maybe<Scalars['String']>;
 };
 
 export type LoanCloseResult = {
@@ -28255,6 +28258,9 @@ export type SetLoanCloseMutation = {
         totalFine?: string | null;
         paymentMode?: AccountClosePaymentMode | null;
         totalAmount?: string | null;
+        totalRebate?: string | null;
+        destinationAccount?: string | null;
+        discountAmount?: string | null;
       } | null;
     } | null;
   };
@@ -54591,6 +54597,7 @@ export const SetLoanRepaymentDocument = `
         totalRemainingPrincipal
         totalRemainingInterest
         destinationAccount
+        discountAmount
       }
       recordId
     }
@@ -54761,6 +54768,9 @@ export const SetLoanCloseDocument = `
         totalFine
         paymentMode
         totalAmount
+        totalRebate
+        destinationAccount
+        discountAmount
       }
     }
   }
