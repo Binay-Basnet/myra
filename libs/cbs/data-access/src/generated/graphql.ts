@@ -14469,6 +14469,7 @@ export type LoanAccount = {
   closedDate?: Maybe<Scalars['Localized']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
+  effectiveInterestRate?: Maybe<Scalars['String']>;
   groupId?: Maybe<Scalars['String']>;
   groupName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -16122,6 +16123,7 @@ export type LoanProductsQueryFormStateArgs = {
 export type LoanProductsQueryGetLoanAccountlistArgs = {
   filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
+  productId: Scalars['ID'];
 };
 
 export type LoanProductsQueryGetPenaltyChargeArgs = {
@@ -47310,6 +47312,7 @@ export type GetLoanProductDetailQuery = {
 export type GetLoanAccountListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
+  productId: Scalars['ID'];
 }>;
 
 export type GetLoanAccountListQuery = {
@@ -47332,6 +47335,7 @@ export type GetLoanAccountListQuery = {
               productType: string;
               LoanAccountName?: string | null;
               appliedLoanAmount: string;
+              effectiveInterestRate?: string | null;
               member: { code: string; name?: Record<'local' | 'en' | 'np', string> | null };
               productSubType: {
                 id?: string | null;
@@ -80238,11 +80242,11 @@ export const useGetLoanProductDetailQuery = <TData = GetLoanProductDetailQuery, 
     options
   );
 export const GetLoanAccountListDocument = `
-    query getLoanAccountList($paginate: Pagination, $filter: Filter) {
+    query getLoanAccountList($paginate: Pagination, $filter: Filter, $productId: ID!) {
   settings {
     general {
       loanProducts {
-        getLoanAccountlist(paginate: $paginate, filter: $filter) {
+        getLoanAccountlist(paginate: $paginate, filter: $filter, productId: $productId) {
           totalCount
           pageInfo {
             hasNextPage
@@ -80268,6 +80272,7 @@ export const GetLoanAccountListDocument = `
               LoanAccountName
               appliedLoanAmount
               approvedDate
+              effectiveInterestRate
             }
           }
         }
@@ -80277,11 +80282,11 @@ export const GetLoanAccountListDocument = `
 }
     `;
 export const useGetLoanAccountListQuery = <TData = GetLoanAccountListQuery, TError = unknown>(
-  variables?: GetLoanAccountListQueryVariables,
+  variables: GetLoanAccountListQueryVariables,
   options?: UseQueryOptions<GetLoanAccountListQuery, TError, TData>
 ) =>
   useQuery<GetLoanAccountListQuery, TError, TData>(
-    variables === undefined ? ['getLoanAccountList'] : ['getLoanAccountList', variables],
+    ['getLoanAccountList', variables],
     useAxios<GetLoanAccountListQuery, GetLoanAccountListQueryVariables>(
       GetLoanAccountListDocument
     ).bind(null, variables),

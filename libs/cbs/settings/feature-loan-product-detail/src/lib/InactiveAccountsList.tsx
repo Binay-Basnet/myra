@@ -36,6 +36,7 @@ export const InactiveLoanAccountListPage = () => {
         },
       ],
     },
+    productId: id,
   });
   const rowData = useMemo(
     () => data?.settings?.general?.loanProducts?.getLoanAccountlist?.edges ?? [],

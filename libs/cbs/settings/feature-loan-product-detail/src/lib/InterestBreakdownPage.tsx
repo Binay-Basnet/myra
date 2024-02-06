@@ -98,7 +98,7 @@ export const InterestBreakdownPage = () => {
                   onClick: (row) => {
                     const queryString = qs.stringify(
                       {
-                        interestrate: {
+                        effectiveInterestRate: {
                           value: row?.effectiveInterestRate,
                           compare: '=',
                         },

@@ -7,14 +7,12 @@ import { Column, Table } from '@myra-ui/table';
 
 import { LoanObjState, useGetLoanAccountListQuery } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
+import { amountConverter, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 import { SideBar } from '../components';
 
 export const AccountListPage = () => {
   const router = useRouter();
-  const searchTerm = router?.query['search'] as string;
-  const searchText = searchTerm ?? '';
   const id = router?.query['id'] as string;
 
   const { data, isLoading } = useGetLoanAccountListQuery({
@@ -23,20 +21,8 @@ export const AccountListPage = () => {
 
       order: null,
     },
-    filter: {
-      query: `${searchText} ${id}`,
-      orConditions: [
-        {
-          andConditions: [
-            {
-              column: 'objState',
-              comparator: 'EqualTo',
-              value: LoanObjState?.Disbursed,
-            },
-          ],
-        },
-      ],
-    },
+    filter: getFilterQuery({ objState: { value: LoanObjState.Disbursed, compare: '=' } }),
+    productId: id,
   });
   const rowData = useMemo(
     () => data?.settings?.general?.loanProducts?.getLoanAccountlist?.edges ?? [],
@@ -75,16 +61,17 @@ export const AccountListPage = () => {
         header: 'Open Date',
         accessorFn: (row) => row?.node?.approvedDate?.local || '-',
       },
-      // {
-      //   id: 'interestrate',
-      //   header: 'Effective Interest Rate',
-      //   accessorFn: (row) => row?.node?.InterestRate,
-      //   enableColumnFilter: true,
-      //   filterFn: 'amount',
-      //   meta: {
-      //     filterPlaceholder: 'Rate',
-      //   },
-      // },
+      {
+        id: 'effectiveInterestRate',
+        header: 'Effective Interest Rate',
+        accessorFn: (row) => row?.node?.effectiveInterestRate,
+        enableColumnFilter: true,
+        filterFn: 'amount',
+        meta: {
+          filterPlaceholder: 'Rate',
+          isNumeric: true,
+        },
+      },
       //   {
       //     id: '_actions',
       //     header: '',

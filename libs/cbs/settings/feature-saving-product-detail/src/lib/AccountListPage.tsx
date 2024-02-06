@@ -68,6 +68,7 @@ export const AccountListPage = () => {
         filterFn: 'amount',
         meta: {
           filterPlaceholder: 'Rate',
+          isNumeric: true,
         },
       },
       //   {
