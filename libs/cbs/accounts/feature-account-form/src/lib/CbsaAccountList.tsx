@@ -65,9 +65,13 @@ export const CBSAccountList = () => {
     filter: getFilterQuery({ objState: { value: 'ACTIVE', compare: '=' } }),
   };
 
+  const sortParams = router.query['sort'] as string;
+
   const { data, isFetching } = useGetAccountTableListMinimalQuery({
     ...filterParams,
-    paginate: getPaginationQuery(),
+    paginate: sortParams
+      ? getPaginationQuery()
+      : { ...getPaginationQuery(), order: { column: 'accountOpenedDate', arrange: 'DESC' } },
   });
 
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();

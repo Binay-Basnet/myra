@@ -19827,9 +19827,14 @@ export type PrematurePenaltyFormState = {
 
 export type PresignedUrlMutation = {
   upload: PresignedUrlOutput;
+  uploadPDF?: Maybe<PresignedUrlOutput>;
 };
 
 export type PresignedUrlMutationUploadArgs = {
+  contentType?: InputMaybe<Scalars['String']>;
+};
+
+export type PresignedUrlMutationUploadPdfArgs = {
   contentType?: InputMaybe<Scalars['String']>;
 };
 

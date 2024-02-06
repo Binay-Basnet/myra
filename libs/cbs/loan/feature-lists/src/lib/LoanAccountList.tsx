@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 import { PageHeader, toast } from '@myra-ui';
 
@@ -17,15 +18,21 @@ export const LoanAccountList = () => {
   const [isExportPDF, setIsExportPDF] = useState(false);
   const [isExportExcel, setIsExportExcel] = useState(false);
 
+  const router = useRouter();
+
   const filterParams = {
     filter: getFilterQuery({
       objState: { value: LoanObjState.Disbursed, compare: '=' },
     }),
   };
 
+  const sortParams = router.query['sort'] as string;
+
   const { data, isFetching } = useGetLoanListQuery({
     ...filterParams,
-    paginate: getPaginationQuery(),
+    paginate: sortParams
+      ? getPaginationQuery()
+      : { ...getPaginationQuery(), order: { column: 'approvedDate', arrange: 'DESC' } },
   });
 
   useGetLoanListExportQuery(

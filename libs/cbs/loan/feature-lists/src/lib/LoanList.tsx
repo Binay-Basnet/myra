@@ -29,8 +29,13 @@ export const LoanList = () => {
   const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
 
   const objState = getFilter('objState');
+
+  const sortParams = router.query['sort'] as string;
+
   const { data, isFetching } = useGetLoanListQuery({
-    paginate: getPaginationQuery(),
+    paginate: sortParams
+      ? getPaginationQuery()
+      : { ...getPaginationQuery(), order: { column: 'appliedDate', arrange: 'DESC' } },
     filter: getFilterQuery({
       objState: { value: 'APPROVED', compare: '=' },
       branchId: { value: branchId as string, compare: '=' },
