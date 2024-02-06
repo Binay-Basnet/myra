@@ -40,7 +40,7 @@ export const CbsMembersFeatureActivate = () => {
   const [skipAccounts, setSkipAccounts] = useState(false);
 
   const methods = useForm();
-  const { watch } = methods;
+  const { setValue, getValues } = methods;
 
   const { data } = useGetMemberCheckQuery({ memberID: id }, { enabled: !!id, staleTime: 0 });
 
@@ -76,24 +76,26 @@ export const CbsMembersFeatureActivate = () => {
 
   const { mutateAsync: updateMemberBranch } = useUpdateBranchDuringActivationMutation();
 
-  const branchIdWatch = watch('branchId');
-
   useEffect(() => {
-    if (branchIdWatch) {
-      asyncToast({
-        id: 'update-member-branch',
-        msgs: {
-          loading: 'Upading member branch',
-          success: 'Member branch updated successfully',
-        },
-        promise: updateMemberBranch({
-          memberId: memberInfo?.id as string,
-          branchId: branchIdWatch,
-        }),
-        onSuccess: () => refetchMemberDetails(),
-      });
+    if (memberInfo?.branchId) {
+      setValue('branchId', memberInfo?.branchId);
     }
-  }, [branchIdWatch]);
+  }, [memberInfo?.branchId]);
+
+  const updateBranch = () => {
+    asyncToast({
+      id: 'update-member-branch',
+      msgs: {
+        loading: 'Upading member branch',
+        success: 'Member branch updated successfully',
+      },
+      promise: updateMemberBranch({
+        memberId: memberInfo?.id as string,
+        branchId: getValues()?.['branchId'],
+      }),
+      onSuccess: () => refetchMemberDetails(),
+    });
+  };
 
   return (
     <>
@@ -144,11 +146,11 @@ export const CbsMembersFeatureActivate = () => {
                   <Text fontSize="r1" fontWeight="600" color="gray.800">
                     Update Branch
                   </Text>
-                  <Text fontSize="r1" color="gray.800">
-                    Current Branch: {memberInfo?.branch}
-                  </Text>
                   <FormProvider {...methods}>
                     <FormBranchSelect label="Select Branch" name="branchId" />
+                    <Button onClick={updateBranch} w="-webkit-fit-content" mt="s8">
+                      Update Branch
+                    </Button>
                   </FormProvider>
                 </Box>
               </Box>

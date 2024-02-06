@@ -39830,6 +39830,7 @@ export type GetMemberIndividualDataQuery = {
         profilePicUrl?: string | null;
         profilePic?: string | null;
         branch?: string | null;
+        branchId?: string | null;
         contact?: string | null;
         dateJoined?: Record<'local' | 'en' | 'np', string> | null;
         signaturePicUrl?: string | null;
@@ -70445,6 +70446,7 @@ export const GetMemberIndividualDataDocument = `
           locality
         }
         branch
+        branchId
         contact
         dateJoined
         signaturePicUrl

@@ -108,6 +108,7 @@ query getMemberIndividualData($id: ID!) {
           locality
         }
         branch
+        branchId
         contact
         dateJoined
         signaturePicUrl
