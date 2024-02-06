@@ -7,7 +7,7 @@ export const ValuatorSelect = () => {
   const { data: valuatorData } = useGetValuatorListQuery({
     paginate: {
       after: '',
-      first: 10,
+      first: -1,
     },
   });
 
