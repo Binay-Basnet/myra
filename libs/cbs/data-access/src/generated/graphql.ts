@@ -12347,6 +12347,7 @@ export type JournalVoucherDetail = {
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
   transactionCode?: Maybe<Scalars['String']>;
+  txnUserName?: Maybe<Scalars['String']>;
 };
 
 export type JournalVoucherDetailResult = {
@@ -25071,6 +25072,7 @@ export type ValuatorSettingsMutationAddArgs = {
 export type ValuatorSettingsQuery = {
   formState?: Maybe<ValuatorFormStateResult>;
   list?: Maybe<ValuatorConnection>;
+  listValuator?: Maybe<ValuatorConnection>;
 };
 
 export type ValuatorSettingsQueryFormStateArgs = {
@@ -25079,6 +25081,11 @@ export type ValuatorSettingsQueryFormStateArgs = {
 
 export type ValuatorSettingsQueryListArgs = {
   filter?: InputMaybe<ValuatorSearchFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type ValuatorSettingsQueryListValuatorArgs = {
+  filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -33588,6 +33595,7 @@ export type GetJournalVoucherDetailQuery = {
           reference?: string | null;
           note?: string | null;
           transactionCode?: string | null;
+          txnUserName?: string | null;
           branchName?: string | null;
           totalDebit?: string | null;
           totalCredit?: string | null;
@@ -49979,6 +49987,7 @@ export type TransactionAccountTransferDetailQuery = {
         withdrawnBy?: string | null;
         withdrawnSlipNo?: string | null;
         transactionBranch?: string | null;
+        txnUserName?: string | null;
         objState?: ObjState | null;
         teller?: string | null;
         totalDebit?: string | null;
@@ -50035,6 +50044,7 @@ export type LoanRepaymentDetailQuery = {
         depositedBy?: string | null;
         depositedDate?: Record<'local' | 'en' | 'np', string> | null;
         transactionBranch?: string | null;
+        txnUserName?: string | null;
         teller?: string | null;
         totalDebit?: string | null;
         totalCredit?: string | null;
@@ -50164,6 +50174,7 @@ export type GetAllTransactionsDetailQuery = {
         status?: string | null;
         totalDebit?: string | null;
         totalCredit?: string | null;
+        txnUserName?: string | null;
         member?: {
           id: string;
           code: string;
@@ -62320,6 +62331,7 @@ export const GetJournalVoucherDetailDocument = `
           reference
           note
           transactionCode
+          txnUserName
           branchName
           glTransaction {
             ledgerId
@@ -84030,8 +84042,8 @@ export const TransactionAccountTransferDetailDocument = `
         withdrawnBy
         withdrawnSlipNo
         transactionBranch
+        txnUserName
         objState
-        transactionBranch
         teller
         glTransaction {
           account
@@ -84097,6 +84109,7 @@ export const LoanRepaymentDetailDocument = `
         depositedBy
         depositedDate
         transactionBranch
+        txnUserName
         teller
         glTransaction {
           account
@@ -84299,6 +84312,7 @@ export const GetAllTransactionsDetailDocument = `
           charges
           paymentMode
         }
+        txnUserName
       }
     }
   }

@@ -51,7 +51,7 @@ export const AccountTransferDetailPage = () => {
             <TransactionDetails detailPage="accountTransfer" />
             <OtherDetails
               branch={accountTransferDetailData?.transactionBranch as string}
-              teller={accountTransferDetailData?.teller as string}
+              teller={accountTransferDetailData?.txnUserName as string}
             />
             <GlTransaction
               totalDebit={String(amountConverter(accountTransferDetailData?.totalDebit ?? 0))}

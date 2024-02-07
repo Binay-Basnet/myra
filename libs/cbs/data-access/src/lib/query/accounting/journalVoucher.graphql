@@ -38,6 +38,7 @@ query getJournalVoucherDetail($entryId: ID!) {
           reference
           note
           transactionCode
+          txnUserName
           branchName
           glTransaction {
             ledgerId

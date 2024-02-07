@@ -105,7 +105,7 @@ export const AllTransactionDetailPage = ({
                 title="Transaction Branch"
                 subtitle={allTransactionsData?.branch}
               />
-              <DetailCardContent title="User" subtitle={allTransactionsData?.user} />
+              <DetailCardContent title="User" subtitle={allTransactionsData?.txnUserName} />
               <DetailCardContent title={t['transDetailStatus']} status />
               <DetailCardContent
                 title="Year End Adjustment"

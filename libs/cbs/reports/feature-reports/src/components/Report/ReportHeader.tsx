@@ -186,7 +186,7 @@ export const ReportHeader = ({
                         onClick={onExportPDF}
                       >
                         <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                          {t['exportPdf']}
+                          {t['exportPDF']}
                         </Text>
                       </GridItem>
                     )}

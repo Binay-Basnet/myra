@@ -172,6 +172,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           </Text>
         ),
         Date: localizedDate(depositDetailData?.transactionDate),
+        'Transaction Branch': depositDetailData?.transactionBranch,
       };
     }
 
@@ -230,6 +231,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
             : withdrawDetailData?.withdrawnBy === 'OTHER'
             ? `Others ${withdrawDetailData?.txnUserName}`
             : withdrawDetailData?.withdrawnBy,
+        'Transaction Branch': withdrawDetailData?.transactionBranch,
       };
     }
 
@@ -278,6 +280,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           ? transferTypeObj[accountTransferDetailData?.transferType]
           : '',
         'Transfer Amount': amountConverter(accountTransferDetailData?.transferAmount || 0),
+        'Transaction Branch': accountTransferDetailData?.transactionBranch,
       };
       tempDublicate = true;
       tempTotal = accountTransferDetailData?.transferAmount as string;
@@ -327,6 +330,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
 
       tempVoucherDetails = {
         Date: localizedDate(loanRepaymentDetailData?.repaymentDate),
+        'Transaction Branch': loanRepaymentDetailData?.transactionBranch,
       };
 
       tempExtraDetails = {
@@ -358,6 +362,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         refrence: voucherData?.reference,
         totalDebit: voucherData?.amount,
         transactionId: voucherData?.transactionCode,
+        transactionBranch: voucherData?.branchName,
+        txnUserName: voucherData?.txnUserName,
       };
     }
 
@@ -432,6 +438,11 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
               accountId,
               accountName,
               member: memberDetail?.name,
+              txnUserName:
+                depositDetailData?.txnUserName ||
+                withdrawDetailData?.txnUserName ||
+                accountTransferDetailData?.txnUserName ||
+                loanRepaymentDetailData?.txnUserName,
             }}
             total={amountConverter(total)}
             totalWords={amountToWordsConverter(Number(total || '0'))}
@@ -460,6 +471,11 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
             accountId,
             accountName,
             member: memberDetail?.name,
+            txnUserName:
+              depositDetailData?.txnUserName ||
+              withdrawDetailData?.txnUserName ||
+              accountTransferDetailData?.txnUserName ||
+              loanRepaymentDetailData?.txnUserName,
           }}
           total={amountConverter(total)}
           totalWords={amountToWordsConverter(total)}

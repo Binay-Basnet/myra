@@ -383,7 +383,7 @@ export const MemberListPage = () => {
         }}
         handleExportCSV={() => {
           setTriggerExport(true);
-          setIsExportPDF(false);
+          setIs(false);
           setIsExportExcel(true);
         }}
       />
