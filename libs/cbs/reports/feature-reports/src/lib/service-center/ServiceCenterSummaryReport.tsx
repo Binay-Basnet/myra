@@ -78,35 +78,68 @@ export const ServiceCenterSummaryReport = () => {
               },
               {
                 header: 'Total Share',
-                accessorFn: (row) => amountConverter(row?.totalShare || 0),
+                accessorKey: 'totalShare',
+                cell: (props) => {
+                  const totalShare = Number(props?.row?.original?.totalShare) || 0;
+
+                  return totalShare < 0
+                    ? amountConverter(-totalShare)
+                    : amountConverter(totalShare);
+                },
                 meta: {
                   isNumeric: true,
                 },
               },
               {
                 header: 'Total Savings',
-                accessorFn: (row) => amountConverter(row?.totalSavings || 0),
+                accessorKey: 'totalSavings',
+                cell: (props) => {
+                  const totalSavings = Number(props?.row?.original?.totalSavings) || 0;
+
+                  return totalSavings < 0
+                    ? amountConverter(-totalSavings)
+                    : amountConverter(totalSavings);
+                },
                 meta: {
                   isNumeric: true,
                 },
               },
               {
                 header: 'Total Loan',
-                accessorFn: (row) => amountConverter(row?.totalLoan || 0),
+                accessorKey: 'totalLoan',
+                cell: (props) => {
+                  const totalLoan = Number(props?.row?.original?.totalLoan) || 0;
+
+                  return totalLoan < 0 ? amountConverter(-totalLoan) : amountConverter(totalLoan);
+                },
                 meta: {
                   isNumeric: true,
                 },
               },
               {
                 header: 'Total Asset',
-                accessorFn: (row) => amountConverter(row?.totalAsset || 0),
+                accessorKey: 'totalAsset',
+                cell: (props) => {
+                  const totalAsset = Number(props?.row?.original?.totalAsset) || 0;
+
+                  return totalAsset < 0
+                    ? amountConverter(-totalAsset)
+                    : amountConverter(totalAsset);
+                },
                 meta: {
                   isNumeric: true,
                 },
               },
               {
                 header: 'Total Liability',
-                accessorFn: (row) => amountConverter(row?.totalLiability || 0),
+                accessorKey: 'totalLiability',
+                cell: (props) => {
+                  const totalLiability = Number(props?.row?.original?.totalLiability) || 0;
+
+                  return totalLiability < 0
+                    ? amountConverter(-totalLiability)
+                    : amountConverter(totalLiability);
+                },
                 meta: {
                   isNumeric: true,
                 },
