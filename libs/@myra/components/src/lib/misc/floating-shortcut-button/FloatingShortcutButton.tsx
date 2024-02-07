@@ -31,32 +31,50 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Download center added in the member register report,  member list, saving account list, and loan account list.',
-      'Summary Voucher Report.',
-      'IBT approval allowed for the Branch Manager',
-      'Search in the withdraw slip section. ( slip book, requests, block slip requests.)',
-      'Bulk account premium rate update available on both loan and saving product details page.',
-      'Search implementation in teller - vault, teller - bank, teller - teller, cash in transit, and IBT sections.',
-      'Wallet load (Prabhu pay, cell pay, eSewa, namaste pay) in e-banking.',
+      'Branch Wise Summary report.',
+      'Update Branch while activating Member',
+      'Multiple branch selection in Member Classification Report',
+      'Default user branch filter in member, share, savings, and loan list page',
+      'Interest Breakdown View and Update bulk account premium on the product detail page',
+      'Custom Date Selection in Adjusted Charkhata report',
+      'Sheet no., Plot no., Kitta no, and Area field now accept text instead of the number',
+      'Support PDF in collateral file upload',
+      'If the account is in guaranteed of another account, show the thunder icon on the detail page of the account and link to those accounts',
+      'Add the Pan number column in the Saving and Loan interest report. ',
+      'Account signature added in the withdraw section of account transfer. ',
+      'Validate phone number during service activation as per KYM phone number',
+      'Added permission for the head teller to update collateral and guarantee.',
+      'Fine and rebate should be available and editable in the Loan account close.',
+      'PDF Account Statement download in e-banking ',
+      'Date in Account Statement as per user preference in e-banking',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Account total balance in deposit bill print',
-      'Date and member ID sorted in the bulk transfer table',
-      'Future Date not to be accepted for payment via bank',
-      'Interest rate (0% shown) in Saving Balance report',
-      'The date filter should be as per the system date by default, instead of the calendar date.',
-      'Sanctioned amount instead of applied amount in loan application "approved" section.',
-      'Error when updating a user with a previously uploaded profile image.',
-      "Automatically remove an inactive member and closed saving accounts from the MR collection list and today's list.",
-      'print data for account transfer which includes LOC loan account.',
-      'Force logout after the day-end process is completed',
-      'Share ledger name format ( member name + member code ) for new ledgers',
-      'Account number if payment mode is "account transfer" in loan repayment success card reprint.',
-      'Disclaimer text break for second page in Balance Certificate Print',
-      'Bank filter in Bank GL report  as per branch',
+      'Issue during saving Draft Member',
+      'Disable adjusting transactions of date before the last fiscal year',
+      'Account name duplication error during account opening',
+      'Default Sorting in the share, saving, loan, and transactions with date ',
+      'DR. CR.  Balance & date Sorting issue in the share statement.',
+      'Share statement Print view issue while in portrait view',
+      'Disclaimer text break in member balance certificate.',
+      'Service center update with proper error message on validation',
+      'Transaction date added in the voucher of loan repayment section. ',
+      'Remaining Interest column in the Loan aging report as per the date filtered',
+      'Allow updates in the product for inactive as well.',
+      'Show Close account in the dropdown with an indicator in the Loan statement report',
+      'LOC Loan added transaction print voucher showed 0, same on withdraw too. ',
+      'Clicking View all transactions navigated to the transaction list page with the last 7-day filter in e-banking',
+      'Voucher narration is shifted to the bottom section. ',
+      'Bank Account as per Branch selected in the Bank GL statement report. ',
+      'Column name in Account List of Product updated: "Account Premium"->"Default Account Premium"',
+      'Show more than 10 valuators in the collateral form list.',
+      "The cutoff issue of the last rows of the table in the print preview of Mr. Today's list",
+      'In Bank Transfer transactions, notes are not fetched in the statement reports. ',
+      'Clear Button on utility payment not working in e-banking',
+      'On completion of the transaction, redirect to the home page for e-banking',
+      'Branch search not working in inter-service center transaction',
     ],
   },
 };
@@ -95,8 +113,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.105</Text>
-          <Text fontSize="s3">Jan 24, 2024</Text>
+          <Text fontSize="r2">Version 1.0.106</Text>
+          <Text fontSize="s3">Feb 7, 2024</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>

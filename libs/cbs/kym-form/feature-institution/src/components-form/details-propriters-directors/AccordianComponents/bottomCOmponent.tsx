@@ -33,7 +33,6 @@ export const DirectorsWithAffliation = ({ index }: IAddDirector) => {
               bg="white"
               name={`director.${index}.firmDetails.directorName`}
               label={t['kymInsNameofDirector']}
-              __placeholder={t['kymInsEnterNameofDirector']}
             />
             <FormInput
               id="DirectorInstitutionAffiliationId"
@@ -41,7 +40,6 @@ export const DirectorsWithAffliation = ({ index }: IAddDirector) => {
               bg="white"
               name={`director.${index}.firmDetails.institutionName`}
               label={t['kymInsNameofInstitution']}
-              __placeholder={t['kymInsEnterNameofInstitution']}
             />
           </Grid>
           <InputGroupContainer mt="s16">
@@ -51,7 +49,6 @@ export const DirectorsWithAffliation = ({ index }: IAddDirector) => {
               bg="white"
               name={`director.${index}.firmDetails.address`}
               label={t['kymInsAddressofInstitution']}
-              __placeholder={t['kymInsEnterAddressofInstitution']}
             />
             <FormInput
               id="DirectorInstitutionAffiliationId"
@@ -59,14 +56,12 @@ export const DirectorsWithAffliation = ({ index }: IAddDirector) => {
               bg="white"
               name={`director.${index}.firmDetails.designation`}
               label={t['kymInsDesignation']}
-              __placeholder={t['kymInsEnterDesignation']}
             />
             <FormAmountInput
               id="DirectorInstitutionAffiliationId"
               bg="white"
               name={`director.${index}.firmDetails.yearlyIncome`}
               label={t['kymInsYearlyIncome']}
-              __placeholder="0.00"
             />
           </InputGroupContainer>
         </Box>

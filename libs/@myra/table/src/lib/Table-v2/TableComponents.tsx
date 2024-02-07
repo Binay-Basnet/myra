@@ -225,7 +225,12 @@ export const TableHeadCell = <T,>({
             return <TableDateFilter column={header.column.id} />;
           }
           if (header.column.columnDef.filterFn === 'amount') {
-            return <TableAmountFilter column={header.column.id} />;
+            return (
+              <TableAmountFilter
+                column={header.column.id}
+                placeholder={header?.column?.columnDef?.meta?.filterPlaceholder}
+              />
+            );
           }
           return (
             <TableListFilter

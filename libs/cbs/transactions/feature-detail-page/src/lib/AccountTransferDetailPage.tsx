@@ -51,15 +51,14 @@ export const AccountTransferDetailPage = () => {
             <TransactionDetails detailPage="accountTransfer" />
             <OtherDetails
               branch={accountTransferDetailData?.transactionBranch as string}
-              teller={accountTransferDetailData?.teller as string}
+              teller={accountTransferDetailData?.txnUserName as string}
             />
-            {accountTransferDetailData?.note && <Note note={accountTransferDetailData?.note} />}
-
             <GlTransaction
               totalDebit={String(amountConverter(accountTransferDetailData?.totalDebit ?? 0))}
               totalCredit={String(amountConverter(accountTransferDetailData?.totalCredit ?? 0))}
               data={tableData}
             />
+            {accountTransferDetailData?.note && <Note note={accountTransferDetailData?.note} />}
           </Box>
         </Scrollable>
       </Box>

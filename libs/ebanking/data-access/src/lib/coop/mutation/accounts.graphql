@@ -20,3 +20,16 @@ mutation savingExcelExport($data: EbankingSavingFilter!) {
     }
   }
 }
+
+mutation savingPDFExport($data: EbankingSavingFilterPlusDate!) {
+  eBanking {
+    account {
+      savingPDFExport(data: $data) {
+        url
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

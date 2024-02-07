@@ -1,20 +1,20 @@
-import { Text } from '@myra-ui';
+import { GridItem } from '@myra-ui';
 
 import { FormInput } from '@coop/shared/form';
 
 export const LandDetails = () => (
   <>
-    <FormInput name="sheetNo" label="Sheet No" />
-    <FormInput name="plotNo" label="Plot No" />
-    <FormInput name="kittaNo" label="Kitta No" />
-    <FormInput
-      name="area"
-      label="Area"
-      rightElement={
-        <Text fontWeight="Medium" noOfLines={1} fontSize="r1" color="primary.500">
-          sq. km
-        </Text>
-      }
-    />
+    <GridItem colSpan={2}>
+      <FormInput name="sheetNo" label="Sheet No" />
+    </GridItem>
+    <GridItem colSpan={2}>
+      <FormInput name="plotNo" label="Plot No" />
+    </GridItem>
+    <GridItem colSpan={2}>
+      <FormInput name="kittaNo" label="Kitta No" />
+    </GridItem>
+    <GridItem colSpan={2}>
+      <FormInput name="area" label="Area" />
+    </GridItem>
   </>
 );

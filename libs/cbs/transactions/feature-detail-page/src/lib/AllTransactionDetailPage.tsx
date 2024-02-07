@@ -105,21 +105,19 @@ export const AllTransactionDetailPage = ({
                 title="Transaction Branch"
                 subtitle={allTransactionsData?.branch}
               />
-              <DetailCardContent title="User" subtitle={allTransactionsData?.user} />
+              <DetailCardContent title="User" subtitle={allTransactionsData?.txnUserName} />
               <DetailCardContent title={t['transDetailStatus']} status />
               <DetailCardContent
                 title="Year End Adjustment"
                 subtitle={allTransactionsData?.isYearEndAdjustment}
               />
             </DetailsCard>
-
-            {allTransactionsData?.note && <Note note={allTransactionsData?.note} />}
-
             <GlTransaction
               totalDebit={String(amountConverter(allTransactionsData?.totalDebit ?? 0))}
               totalCredit={String(amountConverter(allTransactionsData?.totalCredit ?? 0))}
               data={tableData ?? []}
             />
+            {allTransactionsData?.note && <Note note={allTransactionsData?.note} />}
           </Box>
         </Box>
       </Scrollable>

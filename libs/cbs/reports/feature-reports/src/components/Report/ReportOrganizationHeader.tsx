@@ -2,9 +2,12 @@ import { Avatar, Box, Text } from '@myra-ui';
 
 import { useAppSelector } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports/list';
+import { useTranslation } from '@coop/shared/utils';
 
-export const ReportOrganizationHeader = ({ reportType }: { reportType: Report }) => {
+export const ReportOrganizationHeader = ({ reportType }: { reportType: Report | string }) => {
   const user = useAppSelector((state) => state.auth.user);
+
+  const { t } = useTranslation();
 
   return (
     <Box px="s16" py="s16" display="flex" alignItems="center" justifyContent="space-between">
@@ -32,7 +35,7 @@ export const ReportOrganizationHeader = ({ reportType }: { reportType: Report })
 
       <Box>
         <Text fontSize="l1" fontWeight="500" color="gray.800">
-          {reportType}
+          {t[reportType]}
         </Text>
       </Box>
     </Box>

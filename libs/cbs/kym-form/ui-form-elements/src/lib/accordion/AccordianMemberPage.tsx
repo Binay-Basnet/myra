@@ -155,7 +155,7 @@ export const AccorrdianAddMember = (props: AccordianProps) => {
         minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="Semibold">
-          {t['kymAccInd3COOPMembership']}
+          {t['kymAccInd3CoopMembership']}
         </Text>
         {!isOpenCoopMemberShip ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>

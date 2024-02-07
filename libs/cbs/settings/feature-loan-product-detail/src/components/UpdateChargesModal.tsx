@@ -49,7 +49,7 @@ export const UpdateChargesModal = ({ isOpen, onClose, methods }: IUpdateChargesM
   useEffect(() => {
     if (chargesEditData) {
       methods.reset({
-        payload: chargesEditData?.payload?.map((charge) => omit(charge, ['percentage'])),
+        payload: chargesEditData?.payload?.map((charge) => charge),
         additionalData: omit(chargesEditData?.additionalData, ['id', 'createdAt']),
       });
     }

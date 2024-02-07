@@ -53,7 +53,7 @@ export const DepositDetailPage = () => {
             <PaymentDetails detailPage="deposit" />
             <OtherDetails
               branch={depositDetailData?.transactionBranch as string}
-              teller={depositDetailData?.teller as string}
+              teller={depositDetailData?.txnUserName as string}
             />
 
             {depositDetailData?.note && <Note note={depositDetailData?.note} />}

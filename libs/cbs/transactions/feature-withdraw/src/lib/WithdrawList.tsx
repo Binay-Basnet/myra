@@ -1,10 +1,12 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import qs from 'qs';
 
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import {
+  useAppSelector,
   useGetMemberFilterMappingQuery,
   useGetWithdrawFilterMappingQuery,
   useGetWithdrawListDataQuery,
@@ -162,6 +164,31 @@ export const WithdrawList = () => {
     ],
     [t, rowData, memberFilterMapping?.members?.filterMapping?.serviceCenter]
   );
+
+  const user = useAppSelector((state) => state.auth?.user);
+
+  useEffect(() => {
+    const queryString = qs.stringify(
+      {
+        branchId: {
+          value: user?.currentBranch?.id,
+          compare: '=',
+        },
+      },
+      { allowDots: true, arrayFormat: 'brackets', encode: false }
+    );
+
+    router.push(
+      {
+        query: {
+          ...router.query,
+          filter: queryString,
+        },
+      },
+      undefined,
+      { shallow: true }
+    );
+  }, []);
 
   return (
     <>

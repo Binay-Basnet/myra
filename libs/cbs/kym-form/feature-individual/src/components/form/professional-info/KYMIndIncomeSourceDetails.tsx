@@ -34,20 +34,20 @@ export const KYMIndIncomeSourceDetails = () => {
   return (
     <FormSection
       templateColumns={1}
-      header="kymIndINCOMESOURCEDETAILS"
+      header="kymIndIncomeSourceDetails"
       id="kymAccIndIncomeSourceDetails"
     >
       <FormRadioGroup
         isRequired
         id="annualIncomeSourceId"
         name="annualIncomeSourceId"
-        label={t['kynIndAnnualFamilyIncome']}
+        label={t['kymIndAnnualFamilyIncome']}
         options={getFieldOption(familyIncomeData)}
       />
 
       <Box display="flex" gap="s16" flexDirection="column">
         <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-70" mb="s4">
-          {t['kynIndIncomegreater']}
+          {t['kymIndIncomegreater']}
         </Text>
 
         {fields.map((field, index) => (
@@ -65,7 +65,7 @@ export const KYMIndIncomeSourceDetails = () => {
                 <FormAmountInput
                   bg="white"
                   name={`incomeSource.${index}.amount`}
-                  label={t['kymIndAmount']}
+                  label={t['kymIndIncomeAmount']}
                 />
               </GridItem>
             </DynamicBoxGroupContainer>
@@ -80,7 +80,7 @@ export const KYMIndIncomeSourceDetails = () => {
           variant="outline"
           onClick={() => append({})}
         >
-          {t['kynIndNewEntry']}
+          {t['kymIndIncomeNewEntry']}
         </Button>
       </Box>
     </FormSection>

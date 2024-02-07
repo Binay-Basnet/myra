@@ -55,7 +55,7 @@ export const AllTransactionDetailPagePrint = ({
       position="relative"
       sx={{
         '@media print': {
-          display: 'flex',
+          display: 'block',
         },
         '@page': {
           size: 'auto !important',
@@ -106,6 +106,10 @@ export const AllTransactionDetailPagePrint = ({
               </Text>
               <Text fontSize="s2" color="gray.700" as="span">
                 Printed Date: {dayjs(new Date()).format('YYYY-MM-DD')}
+              </Text>
+              <Text fontSize="s2" color="gray.700" as="span">
+                Printed By: {user?.firstName?.local} {user?.middleName?.local}
+                {user?.lastName?.local}
               </Text>
             </Box>
 
@@ -182,17 +186,16 @@ export const AllTransactionDetailPagePrint = ({
             subtitle={amountConverter(allTransactionsData?.amount ?? 0)}
           />
           <DetailCardContent title="Transaction Branch" subtitle={allTransactionsData?.branch} />
-          <DetailCardContent title="User" subtitle={allTransactionsData?.user} />
+          {/* <DetailCardContent title="User" subtitle={allTransactionsData?.txnUserName} /> */}
           <DetailCardContent title={t['transDetailStatus']} status />
         </DetailsCard>
-
-        {allTransactionsData?.note && <Note note={allTransactionsData?.note} />}
 
         <GlTransaction
           totalDebit={String(amountConverter(allTransactionsData?.totalDebit ?? 0))}
           totalCredit={String(amountConverter(allTransactionsData?.totalCredit ?? 0))}
           data={tableData ?? []}
         />
+        {allTransactionsData?.note && <Note note={allTransactionsData?.note} />}
       </Box>
 
       <Box
@@ -205,11 +208,12 @@ export const AllTransactionDetailPagePrint = ({
         gap="s32"
         px="s32"
         pt="s64"
+        sx={{ pageBreakInside: 'avoid' }}
       >
         <Box display="flex" flexDir="column" alignItems="center" gap="s12">
           <Divider borderTop="1px dotted black" />
           <Text fontSize="s2" color="gray.800" fontWeight="500">
-            Prepared By
+            Prepared By ({allTransactionsData?.txnUserName})
           </Text>
         </Box>
         <Box display="flex" flexDir="column" alignItems="center" gap="s12">

@@ -22,7 +22,7 @@ import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { FormLayout, FormMemberSelect, FormSelect, FormTextArea } from '@coop/shared/form';
 import { amountConverter, amountToWordsConverter } from '@coop/shared/utils';
 
-import { LoanProductCard, Payment } from '../components';
+import { LoanFine, LoanProductCard, LoanRebate, Payment } from '../components';
 import { OutstandingPayments } from '../components/OutStandingPayments';
 
 export type LoanRepaymentInputType = Omit<LoanRepaymentInput, 'cash'> & {
@@ -150,13 +150,25 @@ export const LoanCloseForm = () => {
   };
   const handleSubmit = () => {
     const values = getValues();
-    let filteredValues = {
-      ...values,
-      amountPaid:
-        values.paymentMethod === LoanRepaymentMethod.Cash
-          ? String(totalCashPaid)
-          : String(totalPayableAmount || '0'),
-    };
+    let filteredValues = omit(
+      {
+        ...values,
+        amountPaid:
+          values.paymentMethod === LoanRepaymentMethod.Cash
+            ? String(totalCashPaid)
+            : String(netPayableAmount || '0'),
+      },
+      ['isFinePaid', 'isRebateApplied']
+    );
+
+    if (!values?.penalty?.amount) {
+      filteredValues = omit(filteredValues, ['penalty']);
+    }
+
+    if (!values?.rebate?.amount) {
+      filteredValues = omit(filteredValues, ['rebate']);
+    }
+
     // if (values.paymentMethod === LoanRepaymentMethod.LocSaving) {
     //   filteredValues = omit({ ...filteredValues }, ['account', 'bankVoucher', 'cash']);
     // }
@@ -246,6 +258,19 @@ export const LoanCloseForm = () => {
   const isLocLoan =
     loanDataPreview?.data?.loanAccount?.loanPreview?.data?.loanDetails?.loanRepaymentScheme;
 
+  const penaltyAmount = watch('penalty.amount');
+  const rebateAmount = watch('rebate.amount');
+
+  const totalPrincipal = loanPreview?.data?.loanAccount?.remainingPayments?.data?.totalPrincipal;
+
+  const totalInterest = loanPreview?.data?.loanAccount?.remainingPayments?.data?.totalInterest;
+
+  const netPayableAmount =
+    (Number(totalPrincipal) || 0) +
+    (Number(totalInterest) || 0) +
+    (Number(penaltyAmount) || 0) -
+    (Number(rebateAmount) || 0);
+
   // const isLocLoan = true;
   return (
     <FormLayout methods={methods} hasSidebar={Boolean(memberId)}>
@@ -277,13 +302,19 @@ export const LoanCloseForm = () => {
                 />
               )}
               {memberId && loanAccountId && (
-                <OutstandingPayments loanAccountId={loanAccountId as string} />
+                <>
+                  <OutstandingPayments loanAccountId={loanAccountId as string} />
+
+                  <LoanFine />
+
+                  <LoanRebate />
+                </>
               )}
               {memberId && loanAccountId && <FormTextArea name="closeNotes" />}
             </Box>
 
             <Box display={mode === '1' ? 'flex' : 'none'}>
-              <Payment amountPaid={totalPayableAmount ?? '0'} />
+              <Payment amountPaid={String(netPayableAmount)} />
             </Box>
           </Box>
         </FormLayout.Form>
@@ -319,6 +350,16 @@ export const LoanCloseForm = () => {
       </FormLayout.Content>
       {mode === '0' && (
         <FormLayout.Footer
+          status={
+            <Box display="flex" gap="s32">
+              <Text fontSize="r1" fontWeight={600} color="gray.500">
+                Total Payable Amount
+              </Text>
+              <Text fontSize="r1" fontWeight={600} color="gray.700">
+                {amountConverter(netPayableAmount || 0)}
+              </Text>
+            </Box>
+          }
           mainButtonLabel="Close Account"
           mainButtonHandler={proceedButtonHandler}
           isMainButtonDisabled={!memberId || !loanAccountId || (!totalPayableAmount && !isLocLoan)}
@@ -331,7 +372,7 @@ export const LoanCloseForm = () => {
             <ResponseDialog
               onSuccess={() => {
                 queryClient.invalidateQueries(['getLoanPreview']);
-                router.push(ROUTES.CBS_LOAN_REPAYMENTS_LIST);
+                router.push(ROUTES.CBS_LOAN_CLOSED_ACCOUNTS);
               }}
               promise={() => mutateAsync({ data: handleSubmit() })}
               successCardProps={(response) => {
@@ -352,10 +393,12 @@ export const LoanCloseForm = () => {
                     ),
                     'Account Close Date': localizedDate(result?.closedDate),
                     'Account Name': result?.accountName,
-                    'Total Principal': result?.totalPrincipal,
-                    'Total Interest': result?.totalInterest,
-                    'Total Fine': result?.totalFine,
+                    'Total Principal': amountConverter(result?.totalPrincipal || 0),
+                    'Total Interest': amountConverter(result?.totalInterest || 0),
+                    'Total Fine': amountConverter(result?.totalFine || 0),
+                    'Total Rebate': amountConverter(result?.totalRebate || 0),
                     'Payment Mode': result?.paymentMode,
+                    'Source Account': result?.destinationAccount || 'N/A',
                   },
                   subTitle: 'Account closed successfully. Details of the account is listed below.',
                   dublicate: true,

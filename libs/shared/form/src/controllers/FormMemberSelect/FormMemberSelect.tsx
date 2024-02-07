@@ -213,6 +213,7 @@ export const FormMemberSelect = ({
                   maritialStatus: curVal?.node?.maritalStatus || 'N/A',
                   profilePicUrl: curVal?.node?.profilePicUrl,
                   branch: curVal?.node?.branch,
+                  contact: curVal?.node?.contact,
                 },
               },
             ];
@@ -243,6 +244,7 @@ export const FormMemberSelect = ({
               maritialStatus: curVal?.node?.maritalStatus || 'N/A',
               profilePicUrl: curVal?.node?.profilePicUrl,
               branch: curVal?.node?.branch,
+              contact: curVal?.node?.contact,
             },
           },
         ];

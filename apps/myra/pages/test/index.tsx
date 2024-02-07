@@ -180,22 +180,6 @@ const Test = () => {
                     isRequired
                   />
                   <FormInput name="link" label="Link" />
-
-                  {/* 
-                <Box display="flex" flexDir="column" gap="s4">
-                  <Text variant="formLabel" color="gray.800">
-                    Location
-                  </Text>
-                  <MapComponent
-                    currentLoc={methods.watch('latLong') ?? undefined}
-                    setCurrentLoc={(e) => {
-                      methods.setValue('latLong', e);
-                    }}
-                    setCurrentAddr={(e) => {
-                      methods.setValue('location', e);
-                    }}
-                  />
-                </Box> */}
                 </Box>
               </FormProvider>
             </Box>

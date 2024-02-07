@@ -1,10 +1,25 @@
+import { FiZap } from 'react-icons/fi';
 import { IoCopyOutline, IoQrCodeOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
+import isEmpty from 'lodash/isEmpty';
 
-import { AccountQRModal, Box, DetailPageMemberCard, DetailPageTabs, Icon, Text } from '@myra-ui';
+import {
+  AccountQRModal,
+  AssociatedGuaranteeAccounts,
+  Box,
+  DetailPageMemberCard,
+  DetailPageTabs,
+  GuaranteeAccountsHoverCard,
+  Icon,
+  Text,
+} from '@myra-ui';
 
-import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
+import {
+  NatureOfDepositProduct,
+  useAccountDetails,
+  useListAssociatedGuaranteeAccountsQuery,
+} from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter, copyToClipboard } from '@coop/shared/utils';
 
@@ -20,6 +35,14 @@ export const AccountDetailsSidebar = () => {
   const { accountDetails } = useAccountDetails();
 
   const { onClose: modalOnClose, isOpen, onToggle } = useDisclosure();
+  const { data: associatedGuaranteeAccountsData } = useListAssociatedGuaranteeAccountsQuery({
+    accountId: router?.query?.['id'] as string,
+  });
+
+  const guaranteeAccountsList =
+    associatedGuaranteeAccountsData?.account?.listAssociatedGuaranteeAccounts?.data?.map(
+      (item) => ({ loanAccountName: item?.accountName, loanId: item?.loanAccountId })
+    );
 
   return (
     <>
@@ -27,9 +50,19 @@ export const AccountDetailsSidebar = () => {
         <Box display="flex" flexDirection="column" gap="s8" width="100%">
           <Box display="flex" flexDirection="column">
             <Box display="flex" justifyContent="space-between">
-              <Text fontSize="r1" fontWeight={600} color="primary.500">
-                {accountDetails?.accountName}
-              </Text>
+              <Box display="flex" gap="s4">
+                <Text fontSize="r1" fontWeight={600} color="primary.500">
+                  {accountDetails?.accountName}
+                </Text>
+                {!isEmpty(guaranteeAccountsList) && (
+                  <GuaranteeAccountsHoverCard
+                    trigger={<Icon as={FiZap} color="warning.500" />}
+                    associatedGuaranteeAccounts={
+                      guaranteeAccountsList as AssociatedGuaranteeAccounts
+                    }
+                  />
+                )}
+              </Box>
 
               <Icon
                 as={IoQrCodeOutline}

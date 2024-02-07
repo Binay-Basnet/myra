@@ -19,6 +19,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormAmountFilter, FormCheckboxGroup, FormSelect } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type DosariLoanReportFilters = Omit<DosariReportInput, 'committeeId'> & {
   committeeId: {
@@ -35,12 +36,14 @@ type ReportData = LoanAgingStatementReport & {
 };
 
 export const DosariMemberReport = () => {
+  const { t } = useTranslation();
+
   const [filters, setFilters] = useState<DosariLoanReportFilters | null>(null);
   const { data: committeeListData } = useGetCommitteeListQuery();
 
   const committeeIds =
     filters?.committeeId && filters?.committeeId.length !== 0
-      ? filters?.committeeId?.map((t) => t.value)
+      ? filters?.committeeId?.map((b) => b.value)
       : null;
 
   const { data, isFetching } = useGetDosariReportQuery(
@@ -82,9 +85,9 @@ export const DosariMemberReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Member Reports', link: '/cbs/reports/cbs-reports/members' },
+            { label: t['reportsSidebarMemberReports'], link: '/cbs/reports/cbs-reports/members' },
             {
-              label: 'Dosari Member Report ',
+              label: t['reportsDosariMemberReport'],
               link: '/cbs/reports/cbs-reports/members/dosari-members/new',
             },
           ]}
@@ -95,7 +98,7 @@ export const DosariMemberReport = () => {
               isMulti
               name="committeeId"
               options={committeeList}
-              label="Select Committee"
+              label={t['reportsMemberDosariMemberReportSelectCommittee']}
             />
           </GridItem>
 
@@ -112,22 +115,22 @@ export const DosariMemberReport = () => {
           <Report.Table<ReportData>
             columns={[
               {
-                header: 'Type',
+                header: t['reportsMemberDosariMemberReportType'],
                 accessorKey: 'type',
                 accessorFn: (row) => row.type,
               },
               {
-                header: 'Full Name',
+                header: t['reportsMemberDosariMemberReportFullName'],
                 accessorKey: 'fullName',
                 accessorFn: (row) => row.fullName,
               },
               {
-                header: 'Designation',
+                header: t['reportsMemberDosariMemberReportDesignation'],
                 accessorKey: 'designation',
                 accessorFn: (row) => row.designation,
               },
               {
-                header: 'Phone No.',
+                header: t['reportsMemberDosariMemberReportPhoneNo'],
                 accessorFn: (row) => row.phoneNumber,
                 meta: {
                   skipExcelFormatting: true,
@@ -135,7 +138,7 @@ export const DosariMemberReport = () => {
               },
 
               {
-                header: 'Member Id',
+                header: t['reportsMemberDosariMemberReportMemberId'],
                 accessorKey: 'memberNo',
 
                 meta: {
@@ -145,7 +148,7 @@ export const DosariMemberReport = () => {
                 },
               },
               {
-                header: 'Member Name',
+                header: t['reportsMemberDosariMemberReportMemberName'],
                 accessorKey: 'name',
                 meta: {
                   Footer: {
@@ -166,6 +169,8 @@ export const DosariMemberReport = () => {
 };
 
 const ReportFilter = () => {
+  const { t } = useTranslation();
+
   const { watch } = useFormContext<LoanBalanceFilterData>();
   const productTypeIds = watch('filter.productTypes');
 
@@ -181,21 +186,36 @@ const ReportFilter = () => {
   return (
     <>
       {' '}
-      <Report.Filter title="Product Type">
+      <Report.Filter title={t['reportsMemberDosariMemberReportFilterNatureOfTransactions']}>
         <FormCheckboxGroup
           name="filter.natureOfTransactions"
           list={[
-            { label: 'All', value: LoanAgingPaymentMode.All },
-            { label: 'Monthly', value: LoanAgingPaymentMode.Monthly },
-            { label: 'Quaterly', value: LoanAgingPaymentMode.Quarterly },
+            {
+              label: t['reportsMemberDosariMemberReportFilterNatureOfTransactionsAll'],
+              value: LoanAgingPaymentMode.All,
+            },
+            {
+              label: t['reportsMemberDosariMemberReportFilterNatureOfTransactionsMonthly'],
+              value: LoanAgingPaymentMode.Monthly,
+            },
+            {
+              label: t['reportsMemberDosariMemberReportFilterNatureOfTransactionsQuaterly'],
+              value: LoanAgingPaymentMode.Quarterly,
+            },
 
-            { label: 'Half Yearly', value: LoanAgingPaymentMode.HalfYearly },
-            { label: 'Yearly', value: LoanAgingPaymentMode.Yearly },
+            {
+              label: t['reportsMemberDosariMemberReportFilterNatureOfTransactionsHalfYearly'],
+              value: LoanAgingPaymentMode.HalfYearly,
+            },
+            {
+              label: t['reportsMemberDosariMemberReportFilterNatureOfTransactionsYearly'],
+              value: LoanAgingPaymentMode.Yearly,
+            },
           ]}
           orientation="column"
         />
       </Report.Filter>
-      <Report.Filter title="Product Type">
+      <Report.Filter title={t['reportsMemberDosariMemberReportFilterProductType']}>
         <FormCheckboxGroup
           name="filter.productTypes"
           list={loanProductType?.map((product) => ({
@@ -206,7 +226,7 @@ const ReportFilter = () => {
         />
       </Report.Filter>
       {loanSubProductType && loanSubProductType?.length !== 0 && (
-        <Report.Filter title="Product Sub Type">
+        <Report.Filter title={t['reportsMemberDosariMemberReportFilterProductSubType']}>
           <FormCheckboxGroup
             name="filter.productSubTypes"
             list={loanSubProductType?.map((product) => ({
@@ -217,10 +237,10 @@ const ReportFilter = () => {
           />
         </Report.Filter>
       )}
-      <Report.Filter title="Disburse Principal">
+      <Report.Filter title={t['reportsMemberDosariMemberReportFilterDisbursePrincipal']}>
         <FormAmountFilter name="filter.disbursePrincipal" />
       </Report.Filter>
-      <Report.Filter title="Remaining Principal">
+      <Report.Filter title={t['reportsMemberDosariMemberReportFilterRemainingPrincipal']}>
         <FormAmountFilter name="filter.remainingPrincipal" />
       </Report.Filter>
     </>

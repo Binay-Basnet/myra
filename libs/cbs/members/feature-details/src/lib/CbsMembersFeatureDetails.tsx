@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { Box, Scrollable } from '@myra-ui';
+import { asyncToast, Box, Scrollable } from '@myra-ui';
 
 import {
   CooperativeBasicMinInfo,
@@ -105,9 +105,15 @@ export const MemberDetails = ({
   }
 
   const getCertificate = () => {
-    mutateAsync({ id: router?.query?.['id'] as string }).then((res) =>
-      window.open(res?.members?.issueCertificate, '_blank')
-    );
+    asyncToast({
+      id: 'member-share-certificate-issue',
+      msgs: {
+        loading: 'Issuing Certificate',
+        success: 'Certificate Issued',
+      },
+      promise: mutateAsync({ id: router?.query?.['id'] as string }),
+      onSuccess: (res) => window.open(res?.members?.issueCertificate, '_blank'),
+    });
   };
 
   return (

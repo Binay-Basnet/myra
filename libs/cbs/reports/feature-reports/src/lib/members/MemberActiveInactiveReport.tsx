@@ -15,6 +15,7 @@ import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type MemberActiveInactiveReportFilters = Omit<ActiveInactiveMemberReportData, 'branchId'> & {
   branchId: {
@@ -24,11 +25,13 @@ type MemberActiveInactiveReportFilters = Omit<ActiveInactiveMemberReportData, 'b
 };
 
 export const MemberActiveInactiveReport = () => {
+  const { t } = useTranslation();
+
   const [filters, setFilters] = useState<MemberActiveInactiveReportFilters | null>(null);
 
   const branchIds =
     filters?.branchId && filters?.branchId.length !== 0
-      ? filters?.branchId?.map((t) => t.value)
+      ? filters?.branchId?.map((b) => b.value)
       : null;
 
   const { data: memberActiveInactiveReportData, isFetching } =
@@ -68,19 +71,24 @@ export const MemberActiveInactiveReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Member Reports', link: '/cbs/reports/cbs-reports/members' },
+            { label: t['reportsSidebarMemberReports'], link: '/cbs/reports/cbs-reports/members' },
             {
-              label: 'Active/Inactive Member',
+              label: t['reportsActiveInactiveReport'],
               link: '/cbs/reports/cbs-reports/members/activations/new',
             },
           ]}
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect
+              showUserBranchesOnly
+              isMulti
+              name="branchId"
+              label={t['serviceCenter']}
+            />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange label="Member Registration Date Period" />
+            <ReportDateRange label={t['reportsMemberActiveInactiveReportMemberRegdDatePeriod']} />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
@@ -93,24 +101,24 @@ export const MemberActiveInactiveReport = () => {
             {individualReport?.length !== 0 ? (
               <Box pt="s16">
                 <Text px="s16" fontSize="r2" color="gray.800" fontWeight={500}>
-                  Individual
+                  {t['reportsMemberActiveInactiveReportIndividual']}
                 </Text>
                 <Report.Table<ActiveInactiveMemberStatement & { index: number }>
                   data={individualReport?.map((r, index) => ({ ...r, index: index + 1 }))}
                   columns={[
                     {
-                      header: 'S.No.',
+                      header: t['sn'],
                       accessorKey: 'index',
                       meta: {
                         width: '60px',
                       },
                     },
                     {
-                      header: 'Service Center',
+                      header: t['serviceCenter'],
                       accessorKey: 'branchName',
                     },
                     {
-                      header: 'Member ID',
+                      header: t['reportsMemberActiveInactiveReportIndMemberID'],
                       accessorKey: 'memberId',
                       cell: (props) => (
                         <RouteToDetailsPage
@@ -121,61 +129,61 @@ export const MemberActiveInactiveReport = () => {
                       ),
                     },
                     {
-                      header: 'Member Name',
+                      header: t['reportsMemberActiveInactiveReportIndMemberName'],
                       accessorFn: (row) => row?.memberName,
                     },
                     {
-                      header: 'District',
+                      header: t['reportsMemberActiveInactiveReportIndDistrict'],
                       accessorFn: (row) => row?.district,
                     },
                     {
-                      header: 'Ward No',
+                      header: t['reportsMemberActiveInactiveReportIndWardNo'],
                       accessorFn: (row) => row?.wardNo,
                     },
                     {
-                      header: 'Address',
+                      header: t['reportsMemberActiveInactiveReportIndAddress'],
                       accessorFn: (row) => row?.address,
                     },
                     {
-                      header: 'DOB',
+                      header: t['reportsMemberActiveInactiveReportIndDOB'],
                       accessorFn: (row) => localizedDate(row?.dob),
                       meta: {
                         skipExcelFormatting: true,
                       },
                     },
                     {
-                      header: 'Age',
+                      header: t['reportsMemberActiveInactiveReportIndAge'],
                       accessorFn: (row) => row?.age,
                     },
                     {
-                      header: 'Gender',
+                      header: t['reportsMemberActiveInactiveReportIndGender'],
                       accessorFn: (row) => row?.gender,
                     },
                     {
-                      header: 'PAN No.',
+                      header: t['reportsMemberActiveInactiveReportIndPANNo'],
                       accessorFn: (row) => row?.pan,
                       meta: {
                         skipExcelFormatting: true,
                       },
                     },
                     {
-                      header: 'Occupation',
+                      header: t['reportsMemberActiveInactiveReportIndOccupation'],
                       accessorFn: (row) => row?.occupation,
                     },
                     {
-                      header: 'Member Registration Date',
+                      header: t['reportsMemberActiveInactiveReportIndMemberRegistrationDate'],
                       accessorFn: (row) => localizedDate(row?.memberRegistrationDate),
                       meta: {
                         skipExcelFormatting: true,
                       },
                     },
                     {
-                      header: 'Status',
+                      header: t['reportsMemberActiveInactiveReportIndStatus'],
                       accessorFn: (row) => row?.status,
                       cell: (props) => (props.getValue() === 'APPROVED' ? 'Active' : 'Inactive'),
                     },
                   ]}
-                  tableTitle="Individual"
+                  tableTitle={t['reportsMemberActiveInactiveReportIndTableTitle']}
                 />
               </Box>
             ) : null}
@@ -183,24 +191,24 @@ export const MemberActiveInactiveReport = () => {
             {otherReport?.length !== 0 ? (
               <Box pt="s16">
                 <Text px="s16" fontSize="r2" color="gray.800" fontWeight={500}>
-                  Institutional, Cooperative, Cooperative Union
+                  {t['reportsMemberActiveInactiveReportInstCoopCoopUnion']}
                 </Text>
                 <Report.Table<ActiveInactiveMemberStatement & { index: number }>
                   data={otherReport?.map((r, index) => ({ ...r, index: index + 1 }))}
                   columns={[
                     {
-                      header: 'S.No.',
+                      header: t['sn'],
                       accessorKey: 'index',
                       meta: {
                         width: '60px',
                       },
                     },
                     {
-                      header: 'Service Center',
+                      header: t['serviceCenter'],
                       accessorKey: 'branchName',
                     },
                     {
-                      header: 'Member ID',
+                      header: t['reportsMemberActiveInactiveReportInstCoopCoopUnionMemberID'],
                       accessorKey: 'memberId',
                       cell: (props) => (
                         <RouteToDetailsPage
@@ -211,71 +219,77 @@ export const MemberActiveInactiveReport = () => {
                       ),
                     },
                     {
-                      header: 'Member Name',
+                      header: t['reportsMemberActiveInactiveReportInstCoopCoopUnionMemberName'],
                       accessorFn: (row) => row?.memberName,
                     },
                     {
-                      header: 'District',
+                      header: t['reportsMemberActiveInactiveReportInstCoopCoopUnionDistrict'],
                       accessorFn: (row) => row?.district,
                     },
                     {
-                      header: 'Ward No',
+                      header: t['reportsMemberActiveInactiveReportInstCoopCoopUnionWardNo'],
                       accessorFn: (row) => row?.wardNo,
                     },
                     {
-                      header: 'Address',
+                      header: t['reportsMemberActiveInactiveReportInstCoopCoopUnionAddress'],
                       accessorFn: (row) => row?.address,
                     },
                     {
-                      header: 'DOE',
+                      header: t['reportsMemberActiveInactiveReportInstCoopCoopUnionDOE'],
                       accessorFn: (row) => localizedDate(row?.dob),
                       meta: {
                         skipExcelFormatting: true,
                       },
                     },
                     {
-                      header: 'Age',
+                      header: t['reportsMemberActiveInactiveReportInstCoopCoopUnionAge'],
                       accessorFn: (row) => row?.age,
                     },
                     {
-                      header: 'Member Type',
+                      header: t['reportsMemberActiveInactiveReportInstCoopCoopUnionMemberType'],
                       accessorFn: (row) => row?.gender?.toLowerCase()?.replace('_', ' '),
                       cell: (props) => (
                         <Box textTransform="capitalize">{props.getValue() as string}</Box>
                       ),
                     },
                     {
-                      header: 'PAN No.',
+                      header: t['reportsMemberActiveInactiveReportInstCoopCoopUnionPanNo'],
                       accessorFn: (row) => row?.pan,
                       meta: {
                         skipExcelFormatting: true,
                       },
                     },
                     {
-                      header: 'Nature',
+                      header: t['reportsMemberActiveInactiveReportInstCoopCoopUnionNature'],
                       accessorFn: (row) => row?.occupation,
                     },
                     {
-                      header: 'Member Registration Date',
+                      header:
+                        t[
+                          'reportsMemberActiveInactiveReportInstCoopCoopUnionMemberRegistrationDate'
+                        ],
                       accessorFn: (row) => localizedDate(row?.memberRegistrationDate),
                       meta: {
                         skipExcelFormatting: true,
                       },
                     },
                     {
-                      header: 'Status',
+                      header: t['reportsMemberActiveInactiveReportInstCoopCoopUnionStatus'],
                       accessorFn: (row) => row?.status,
-                      cell: (props) => (props.getValue() === 'APPROVED' ? 'Active' : 'Inactive'),
+                      cell: (props) =>
+                        props.getValue() === 'APPROVED'
+                          ? t['reportsMemberActiveInactiveReportInstCoopCoopUnionStatusActive']
+                          : t['reportsMemberActiveInactiveReportInstCoopCoopUnionStatusInactive'],
                     },
                   ]}
-                  tableTitle="Other"
+                  tableTitle={t['reportsMemberActiveInactiveReportInstCoopCoopUnionTableTitle']}
                 />
               </Box>
             ) : null}
           </Box>
           <Box>
             <Text fontSize="r2" px="s16" pb="s16" color="gray.800" fontWeight={500}>
-              Active/Inactive Summary
+              {t['reportsMemberActiveInactiveReportActiveInactiveSummary']}
             </Text>
             <Box
               display="flex"
@@ -299,7 +313,7 @@ export const MemberActiveInactiveReport = () => {
                   fontWeight={600}
                   color="gray.700"
                 >
-                  Active Total
+                  {t['reportsMemberActiveInactiveReportActiveTotal']}
                 </Box>
                 <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
                   {summary?.activeTotal || 0}
@@ -319,7 +333,7 @@ export const MemberActiveInactiveReport = () => {
                   fontWeight={600}
                   color="gray.700"
                 >
-                  Inactive Total
+                  {t['reportsMemberActiveInactiveReportInactiveTotal']}
                 </Box>
                 <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
                   {summary?.inactiveTotal || 0}
@@ -339,7 +353,7 @@ export const MemberActiveInactiveReport = () => {
                   fontWeight={600}
                   color="gray.700"
                 >
-                  Total Member
+                  {t['reportsMemberActiveInactiveReportTotalMember']}
                 </Box>
                 <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
                   {summary?.totalMember || 0}
@@ -349,34 +363,49 @@ export const MemberActiveInactiveReport = () => {
           </Box>
         </Report.Content>
         <Report.Filters>
-          <Report.Filter title="Status">
+          <Report.Filter title={t['reportsMemberActiveInactiveReportFilterStatus']}>
             <FormRadioGroup
               name="filter.status"
               options={[
                 {
-                  label: 'All',
+                  label: t['reportsMemberActiveInactiveReportFilterStatusAll'],
                   value: MemberStatus.All,
                 },
                 {
-                  label: 'Active',
+                  label: t['reportsMemberActiveInactiveReportFilterStatusActive'],
                   value: MemberStatus.Active,
                 },
                 {
-                  label: 'Inactive',
+                  label: t['reportsMemberActiveInactiveReportFilterStatusInactive'],
                   value: MemberStatus.Inactive,
                 },
               ]}
             />
           </Report.Filter>
-          <Report.Filter title="Member Type">
+          <Report.Filter title={t['reportsMemberActiveInactiveReportFilterMemberType']}>
             <FormRadioGroup
               name="filter.memberType"
               options={[
-                { label: 'All', value: MemberType.All },
-                { label: 'Individual', value: MemberType.Individual },
-                { label: 'Institution', value: MemberType.Institution },
-                { label: 'Cooperative', value: MemberType.Cooperative },
-                { label: 'Cooperative Union', value: MemberType.CooperativeUnion },
+                {
+                  label: t['reportsMemberActiveInactiveReportFilterMemberTypeAll'],
+                  value: MemberType.All,
+                },
+                {
+                  label: t['reportsMemberActiveInactiveReportFilterMemberTypeIndividual'],
+                  value: MemberType.Individual,
+                },
+                {
+                  label: t['reportsMemberActiveInactiveReportFilterMemberTypeInstitution'],
+                  value: MemberType.Institution,
+                },
+                {
+                  label: t['reportsMemberActiveInactiveReportFilterMemberTypeCooperative'],
+                  value: MemberType.Cooperative,
+                },
+                {
+                  label: t['reportsMemberActiveInactiveReportFilterMemberTypeCooperativeUnion'],
+                  value: MemberType.CooperativeUnion,
+                },
               ]}
             />
           </Report.Filter>

@@ -5,19 +5,21 @@ import { Box, FormSection } from '@myra-ui';
 import { KymIndMemberInput } from '@coop/cbs/data-access';
 import { KYMSection } from '@coop/cbs/kym-form/formElements';
 import { FormCheckboxGroup } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 import { Citizenship, DrivingLicense, NationalID, Passport, VoterCard } from '../identifications';
 
-const identificationOptions = [
-  { value: 'citizenship', label: 'Citizenship' },
-  { value: 'drivingLicense', label: 'Driving License' },
-  { value: 'passport', label: 'Passport' },
-  { value: 'voterCard', label: 'Voter Card' },
-  { value: 'nationalId', label: 'National ID' },
-];
-
 export const KYMIndIdentificationDetails = () => {
+  const { t } = useTranslation();
   const { watch } = useFormContext<KymIndMemberInput>();
+
+  const identificationOptions = [
+    { value: 'citizenship', label: t['kymIndIdentificationCitizenship'] },
+    { value: 'drivingLicense', label: t['kymIndIdentificationDrivingLicense'] },
+    { value: 'passport', label: t['kymIndIdentificationPassport'] },
+    { value: 'voterCard', label: t['kymIndVoterCard'] },
+    { value: 'nationalId', label: t['kymIndNationalID'] },
+  ];
 
   const identificationValues = watch('identificationSelection');
 
@@ -27,7 +29,7 @@ export const KYMIndIdentificationDetails = () => {
         id={KYMSection.INDIVIDUAL_IDENTIFICATION_DETAILS}
         flexLayout
         isRequired
-        header="kymIndIDENTIFICATIONDETAILS"
+        header="kymIndIdentificationDetails"
         subHeader="kymIndChooseidentificationdetails"
       >
         <FormCheckboxGroup

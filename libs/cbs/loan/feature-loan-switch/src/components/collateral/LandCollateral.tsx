@@ -7,7 +7,7 @@ import { ValuationInputs } from './ValuationInputs';
 import { ValuatorSelect } from './ValuatorSelect';
 
 export const LandCollateral = () => (
-  <FormSection templateColumns={2}>
+  <FormSection templateColumns={4}>
     <LandDetails />
     <ValuatorSelect />
     <GridItem />

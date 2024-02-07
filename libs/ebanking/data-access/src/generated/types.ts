@@ -25,6 +25,12 @@ export type Scalars = {
   Time: string;
 };
 
+export const Adbs = {
+  Ad: 'AD',
+  Bs: 'BS',
+} as const;
+
+export type Adbs = typeof Adbs[keyof typeof Adbs];
 export type AbbsTransaction = {
   abbsStatus?: Maybe<Scalars['Boolean']>;
   payableAccountId?: Maybe<Scalars['String']>;
@@ -550,11 +556,16 @@ export type DormantSetupFormState = {
 
 export type EBankingAccountMutation = {
   savingExcelExport?: Maybe<EbankingSavingStatementExportData>;
+  savingPDFExport?: Maybe<EbankingSavingStatementExportData>;
   setDefaultAccount?: Maybe<EbankingSetDefaultAccountResult>;
 };
 
 export type EBankingAccountMutationSavingExcelExportArgs = {
   data: EbankingSavingFilter;
+};
+
+export type EBankingAccountMutationSavingPdfExportArgs = {
+  data: EbankingSavingFilterPlusDate;
 };
 
 export type EBankingAccountMutationSetDefaultAccountArgs = {
@@ -1209,6 +1220,11 @@ export type EbankingSavingFilter = {
   accountId: Scalars['ID'];
   memberId?: InputMaybe<Scalars['ID']>;
   period: LocalizedDateFilter;
+};
+
+export type EbankingSavingFilterPlusDate = {
+  data?: InputMaybe<EbankingSavingFilter>;
+  preferredDate?: InputMaybe<Adbs>;
 };
 
 export type EbankingSavingStatementExportData = {
@@ -2762,6 +2778,31 @@ export type SavingExcelExportMutation = {
   eBanking: {
     account?: {
       savingExcelExport?: {
+        url?: string | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SavingPdfExportMutationVariables = Exact<{
+  data: EbankingSavingFilterPlusDate;
+}>;
+
+export type SavingPdfExportMutation = {
+  eBanking: {
+    account?: {
+      savingPDFExport?: {
         url?: string | null;
         error?:
           | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }

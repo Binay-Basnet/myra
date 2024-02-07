@@ -160,7 +160,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
         },
       },
       {
-        header: 'Account Premium',
+        header: 'Default Account Premium',
         accessorFn: (row) => row?.node?.accountPremium,
         cell: (props) => (
           <span>{Number(props?.row?.original?.node?.accountPremium || 0).toFixed(2)} %</span>

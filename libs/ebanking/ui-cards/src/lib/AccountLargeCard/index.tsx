@@ -22,14 +22,15 @@ import {
 } from '@myra-ui';
 
 import {
+  Adbs,
   EbankingAccount,
   updateDefaultAccountInCoop,
   useAppDispatch,
   useAppSelector,
-  useSavingExcelExportMutation,
+  useSavingPdfExportMutation,
   useSetDefaultAccountMutation,
 } from '@coop/ebanking/data-access';
-import { FormDatePicker } from '@coop/shared/form';
+import { FormEbankingDatePicker } from '@coop/shared/form';
 
 import { AccountQRModal } from '../AccountQRModal';
 
@@ -243,7 +244,9 @@ export const DownloadCertificateModal = ({
 }: IDownloadCertificateModalProps) => {
   const methods = useForm();
 
-  const { mutateAsync } = useSavingExcelExportMutation();
+  const user = useAppSelector((state) => state?.auth?.user);
+
+  const { mutateAsync } = useSavingPdfExportMutation();
 
   const handleSave = async () => {
     const values = methods.getValues();
@@ -255,15 +258,18 @@ export const DownloadCertificateModal = ({
       },
       promise: mutateAsync({
         data: {
-          accountId,
-          period: {
-            from: values?.['from'],
-            to: values?.['to'],
+          preferredDate: user?.preference?.date as Adbs,
+          data: {
+            accountId,
+            period: {
+              from: values?.['from'],
+              to: values?.['to'],
+            },
           },
         },
       }),
       onSuccess: (res) => {
-        window.open(res?.eBanking?.account?.savingExcelExport?.url as string, '_blank');
+        window.open(res?.eBanking?.account?.savingPDFExport?.url as string, '_blank');
       },
     });
   };
@@ -283,8 +289,8 @@ export const DownloadCertificateModal = ({
     >
       <FormProvider {...methods}>
         <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-          <FormDatePicker name="from" id="fromDate" label="From" />
-          <FormDatePicker name="to" id="toDate" label="To" />
+          <FormEbankingDatePicker name="from" id="fromDate" label="From" />
+          <FormEbankingDatePicker name="to" id="toDate" label="To" />
         </Grid>
       </FormProvider>
     </Modal>

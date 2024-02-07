@@ -18,7 +18,7 @@ export const KYMIndPersonalInfo = () => {
   return (
     <SectionContainer>
       <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-        {t['kymInd1PersonalInformation']}
+        {t['kymAccInd1PersonalDetails']}
       </Text>
       <KYMIndBasicInfo />
       <KYMIndContactDetails />

@@ -11,6 +11,7 @@ export const ClosedLoanList = () => {
     paginate: getPaginationQuery(),
     filter: getFilterQuery({ objState: { value: LoanObjState.Completed, compare: '=' } }),
   });
+
   return (
     <>
       <PageHeader heading={`Closed Account List - ${featureCode?.loanClosedAccountList}`} />

@@ -44,7 +44,7 @@ query getServiceCenterCOABalanceReport($data: ServiceCenterCOAWiseBalanceFilter!
   }
 }
 
-query getBranchReadinessReport{
+query getBranchReadinessReport {
   report {
     branchReport {
       branchReadinessReport {
@@ -52,6 +52,28 @@ query getBranchReadinessReport{
           branchName
           branchCode
           status
+        }
+      }
+    }
+  }
+}
+
+query getServiceCenterSummaryReport($data: BranchWiseFilter!) {
+  report {
+    otherReport {
+      BranchWiseReport(data: $data) {
+        data {
+          branchWiseReportNode {
+            branchName
+            totalMember
+            totalShare
+            totalSavings
+            totalLoan
+            totalAsset
+            totalLiability
+          }
+          userId
+          userName
         }
       }
     }

@@ -34,11 +34,11 @@ export const KYMIndAddress = () => {
       </FormSection>
 
       <FormSection
-        header="kymIndINCASERESIDINGINRENTEDHOUSE"
+        header="kymAccIndInCaseOfResidingInRentedHouse"
         id={KYMSection.INDIVIDUAL_IN_CASE_OF_RESIDING_IN_RENTED_HOUSE}
       >
         <FormInput type="text" name="landlordName" label={t['kymIndLandlordName']} />
-        <FormInput type="number" name="landlordContact" label={t['kymIndContactNo']} />
+        <FormInput type="number" name="landlordContact" label={t['kymIndLandlordContactNo']} />
       </FormSection>
     </>
   );

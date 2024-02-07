@@ -9,9 +9,10 @@ const URLComparatorMap = {
   '>': 'GreaterThan',
   '< >': 'BETWEEN',
   CONTAINS: 'CONTAINS',
+  IN: 'IN',
 } as const;
 
-type URLFilterComparator = '=' | '<' | '>' | '< >' | 'CONTAINS';
+type URLFilterComparator = '=' | '<' | '>' | '< >' | 'CONTAINS' | 'IN';
 type URLFilterValue = string | string[] | { from: string; to: string };
 
 export type URLFilter = Record<

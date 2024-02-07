@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { RangedDatePicker } from '@myra-ui/date-picker';
 
 import { useAppSelector, useGetEndOfDayDateDataQuery } from '@coop/cbs/data-access';
+import { useTranslation } from '@coop/shared/utils';
 
 interface IReportDateRange {
   label?: string;
@@ -14,11 +15,13 @@ interface IReportDateRange {
 }
 
 export const ReportDateRange = ({
-  label = 'Select Period',
+  label = 'reportsSelectPeriod',
   name = 'period',
   setInitialDate = true,
   baseDate,
 }: IReportDateRange) => {
+  const { t } = useTranslation();
+
   const { control, setValue, watch } = useFormContext();
   const { locale } = useRouter();
   const { data } = useGetEndOfDayDateDataQuery();
@@ -42,7 +45,7 @@ export const ReportDateRange = ({
     <Controller
       render={({ field: { onChange, value } }) => (
         <RangedDatePicker
-          label={label}
+          label={t[label] || label}
           locale={locale === 'ne' ? 'ne' : 'en'}
           calendarType={calendarType || 'BS'}
           value={value}

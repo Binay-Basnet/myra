@@ -12,7 +12,7 @@ export const MEMBER_TAB_ITEMS = [
     key: 'DRAFT',
   },
   {
-    title: 'Dormant',
+    title: 'memberNavDormant',
     key: 'DORMANT',
   },
 ];

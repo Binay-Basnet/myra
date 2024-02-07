@@ -7,7 +7,7 @@ import { asyncToast, FormSection, GridItem } from '@myra-ui';
 import {
   CollateralUpdateType,
   useGetLoanAccountCollateralDetailsQuery,
-  useGetLoanAccountListQuery,
+  useGetLoanListQuery,
   useSetUpdateCollateralMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -32,7 +32,7 @@ export const CollateralManagementAdd = () => {
   const memberIdWatch = watch('memberId');
 
   const { mutateAsync } = useSetUpdateCollateralMutation();
-  const { data } = useGetLoanAccountListQuery(
+  const { data } = useGetLoanListQuery(
     {
       paginate: {
         ...getPaginationQuery(),
@@ -58,7 +58,8 @@ export const CollateralManagementAdd = () => {
       enabled: !!memberIdWatch,
     }
   );
-  const loanAccountData = data?.settings?.general?.loanProducts?.getLoanAccountlist?.edges;
+  // const loanAccountData = data?.settings?.general?.loanProducts?.getLoanAccountlist?.edges;
+  const loanAccountData = data?.loanAccount?.list?.data?.edges;
 
   const loanAccountIdWatch = watch('loanAccount');
 

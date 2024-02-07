@@ -245,6 +245,7 @@ export const AllTransactionDetails = () => {
           </Text>
         ),
         Date: localizedDate(depositDetailData?.transactionDate),
+        'Transaction Branch': depositDetailData?.transactionBranch,
       };
     }
 
@@ -305,6 +306,7 @@ export const AllTransactionDetails = () => {
             : withdrawDetailData?.withdrawnBy === 'OTHER'
             ? `Others ${withdrawDetailData?.txnUserName}`
             : withdrawDetailData?.withdrawnBy,
+        'Transaction Branch': withdrawDetailData?.transactionBranch,
       };
     }
 
@@ -352,6 +354,7 @@ export const AllTransactionDetails = () => {
         })`,
         'Transfer Type': accountTransferDetailData?.transferType ? txnTypefromRouter : '',
         'Transfer Amount': amountConverter(accountTransferDetailData?.transferAmount || 0),
+        'Transaction Branch': accountTransferDetailData?.transactionBranch,
       };
       tempDublicate = true;
       tempTotal = accountTransferDetailData?.transferAmount as string;
@@ -405,6 +408,10 @@ export const AllTransactionDetails = () => {
       tempExtraDetails = {
         'Remaining Principal': amountConverter(loanRepaymentDetailData?.totalRemainingPrincipal),
         'Remaining Interest': amountConverter(loanRepaymentDetailData?.totalRemainingInterest),
+      };
+      tempVoucherDetails = {
+        'Transaction Date': localizedDate(loanRepaymentDetailData?.repaymentDate),
+        'Transaction Branch': loanRepaymentDetailData?.transactionBranch,
       };
 
       tempTotal = Number(loanRepaymentDetailData?.totalRepaymentAmount).toFixed(2);
@@ -464,6 +471,7 @@ export const AllTransactionDetails = () => {
         'Transaction Date': localizedDate(loanDisbursmentPrintData?.disbursedDate),
 
         'Disbursed Amount': loanDisbursmentPrintData?.disbursedAmount,
+        'Transaction Branch': allTransactionsData?.branch,
       };
     }
 
@@ -534,6 +542,7 @@ export const AllTransactionDetails = () => {
         'Transaction Date': localizedDate(accountcloseprintData?.accCloseDate),
 
         Amount: amountConverter(accountcloseprintData?.amount || '0'),
+        'Transaction Branch': allTransactionsData?.branch,
       };
     }
     if (
@@ -552,7 +561,14 @@ export const AllTransactionDetails = () => {
         refrence: voucherData?.reference,
         totalDebit: voucherData?.amount,
         transactionId: voucherData?.transactionCode,
+        transactionBranch: voucherData?.branchName,
+        txnUserName: voucherData?.txnUserName,
       };
+
+      // tempVoucherDetails = {
+      //   'Transaction Date': localizedDate(accountcloseprintData?.accCloseDate),
+      //   'Transaction Branch': allTransactionsData?.branch,
+      // };
     }
     if (
       router?.asPath?.includes(AllTransactionType?.LedgerBalanceTransfer) ||
@@ -598,6 +614,8 @@ export const AllTransactionDetails = () => {
         'Total Source Ledger Accounts': tempSrcAccounts,
         'Destination Ledger': destinationLedger,
         'Total Transfer Balance': amountConverter(allTransactionsData?.amount || 0),
+        'Transaction Date': localizedDate(allTransactionsData?.transactionDate),
+        'Transaction Branch': allTransactionsData?.branch,
       };
 
       tempGLTransactions = allTransactionsData?.glTransaction;
@@ -780,6 +798,12 @@ export const AllTransactionDetails = () => {
               accountId,
               accountName,
               member: memberDetail?.name,
+              txnUserName:
+                depositDetailData?.txnUserName ||
+                withdrawDetailData?.txnUserName ||
+                accountTransferDetailData?.txnUserName ||
+                loanRepaymentDetailData?.txnUserName ||
+                allTransactionsData?.txnUserName,
             }}
             total={amountConverter(total)}
             totalWords={amountToWordsConverter(Number(total || '0'))}
@@ -808,6 +832,12 @@ export const AllTransactionDetails = () => {
             accountId,
             accountName,
             member: memberDetail?.name,
+            txnUserName:
+              depositDetailData?.txnUserName ||
+              withdrawDetailData?.txnUserName ||
+              accountTransferDetailData?.txnUserName ||
+              loanRepaymentDetailData?.txnUserName ||
+              allTransactionsData?.txnUserName,
           }}
           total={amountConverter(total)}
           totalWords={amountToWordsConverter(total)}

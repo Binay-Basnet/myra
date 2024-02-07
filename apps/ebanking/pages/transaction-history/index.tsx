@@ -1,10 +1,13 @@
-import { ReactElement, useRef, useState } from 'react';
+import { ReactElement, useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlinePrinter } from 'react-icons/ai';
 import { IoFilter } from 'react-icons/io5';
 import ReactToPrint from 'react-to-print';
+import { useRouter } from 'next/router';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import { GridItem } from '@chakra-ui/react';
+import subDays from 'date-fns/subDays';
+import { CalendarBuilderDate } from 'libs/@myra/date-picker/src/types/date';
 
 import {
   Accordion,
@@ -20,23 +23,23 @@ import {
   Loader,
   Text,
 } from '@myra-ui';
+import { convertDate, convertValueToDate, getTodayDate } from '@myra-ui/date-picker';
 
 import { LocalizedDateFilter } from '@coop/cbs/data-access';
 import { InfoCard, TransactionCard, TransactionHeaderCard } from '@coop/ebanking/cards';
 import {
-  DateFilter,
   EbankingTransactionCrOrDr,
   EbankingTransactionFilter,
   useGetAccountListQuery,
   useGetTransactionListsQuery,
 } from '@coop/ebanking/data-access';
 import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
-import { FormDatePicker, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { FormEbankingDatePicker, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type TransactionFormFilters = {
   accounts: { label: string; value: string }[];
-  date: DateFilter;
+  date: LocalizedDateFilter;
   transactionDirection: EbankingTransactionCrOrDr | 'All';
 };
 
@@ -54,16 +57,52 @@ type BalanceMap = Record<
   }
 >;
 
+const todayDate = convertDate(getTodayDate().ad as unknown as CalendarBuilderDate);
+
+const oneWeekBeforeDate = convertDate(
+  convertValueToDate({ date: subDays(new Date(), 7) })?.ad as unknown as CalendarBuilderDate
+);
+
 const TransactionHistoryPage = () => {
+  const router = useRouter();
+
   const componentRef = useRef<HTMLInputElement | null>(null);
 
-  const [filter, setFilter] = useState<EbankingTransactionFilter | null>(null);
+  const [filter, setFilter] = useState<EbankingTransactionFilter | null>({
+    date: {
+      from: {
+        en: oneWeekBeforeDate?.en,
+        np: oneWeekBeforeDate?.np,
+        local: '',
+      },
+      to: {
+        en: todayDate?.en,
+        np: todayDate?.np,
+        local: '',
+      },
+    },
+  });
 
   const methods = useForm<TransactionFormFilters>({
     defaultValues: {
       transactionDirection: 'All',
+      date: {
+        from: {
+          en: oneWeekBeforeDate?.en,
+          np: oneWeekBeforeDate?.np,
+          local: '',
+        },
+        to: {
+          en: todayDate?.en,
+          np: todayDate?.np,
+          local: '',
+        },
+      },
     },
   });
+
+  const { getValues, reset } = methods;
+
   const { data, isFetching } = useGetTransactionListsQuery({
     pagination: { after: '', first: -1 },
     filter,
@@ -74,12 +113,49 @@ const TransactionHistoryPage = () => {
   });
 
   const accountOptions = accountListData?.eBanking?.account?.list?.accounts?.map((account) => ({
-    label: `${account?.name} - ${account.accountNumber.slice(0, 12)}`,
+    label: `${account?.name} - ${account.accountNumber}`,
     value: account?.id,
   }));
 
   const accountMap = data?.eBanking?.account?.list?.recentTransactions?.summary
     ?.accountBalanceMap as unknown as BalanceMap;
+
+  const redirectAccountId = router?.query?.['accountId'];
+  const redirectAccountName = router?.query?.['accountName'];
+  const redirectFrom = router?.query?.['from'];
+  const redirectTo = router?.query?.['to'];
+
+  useEffect(() => {
+    const tempValues = getValues();
+
+    const tempFilter = filter || {};
+
+    if (redirectAccountId && redirectAccountName) {
+      tempValues['accounts'] = [
+        { label: redirectAccountName as string, value: redirectAccountId as string },
+      ];
+
+      tempFilter['accounts'] = [redirectAccountId];
+    }
+
+    if (redirectFrom && redirectTo) {
+      tempValues['date'] = {
+        from: JSON.parse(redirectFrom as string),
+        to: JSON.parse(redirectTo as string),
+      };
+
+      tempFilter['date'] = {
+        from: JSON.parse(redirectFrom as string),
+        to: JSON.parse(redirectTo as string),
+      };
+    }
+
+    reset(tempValues);
+
+    if (Object.keys(tempFilter)?.length) {
+      setFilter(tempFilter as EbankingTransactionFilter);
+    }
+  }, [redirectAccountId, redirectAccountName, redirectFrom, redirectTo]);
 
   return (
     <Box display="flex" flexDir="column" gap="s16">
@@ -145,8 +221,8 @@ const TransactionHistoryPage = () => {
                           },
                         ]}
                       />
-                      <FormDatePicker name="date.from" label="From Date" />
-                      <FormDatePicker name="date.to" label="To Date" />
+                      <FormEbankingDatePicker name="date.from" label="From Date" />
+                      <FormEbankingDatePicker name="date.to" label="To Date" />
                     </Grid>
                   </FormProvider>
                   <Box display="flex" gap="s8" pt="s32">
@@ -180,7 +256,11 @@ const TransactionHistoryPage = () => {
                       shade="neutral"
                       variant="outline"
                       onClick={() => {
-                        methods.reset();
+                        methods.reset({
+                          accounts: [],
+                          date: { from: null, to: null },
+                          transactionDirection: 'All',
+                        });
                         setFilter(null);
                       }}
                     >
