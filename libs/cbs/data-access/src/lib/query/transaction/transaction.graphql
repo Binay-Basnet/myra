@@ -172,7 +172,7 @@ query transactionDepositDetail($transactionId: ID!) {
         depositedDate
         paymentFile
         transactionBranch
-        teller
+        txnUserName
         glTransaction {
           account
           debit
@@ -224,7 +224,7 @@ query transactionWithdrawDetail($transactionId: ID!) {
         marketRepId
         marketRepName
         transactionBranch
-        teller
+        txnUserName
         glTransaction {
           account
           debit

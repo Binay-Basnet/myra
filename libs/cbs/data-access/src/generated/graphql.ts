@@ -450,6 +450,7 @@ export type AccountTransferView = {
   transactionDate?: Maybe<Scalars['Localized']>;
   transferAmount?: Maybe<Scalars['String']>;
   transferType?: Maybe<TransferType>;
+  txnUserName?: Maybe<Scalars['String']>;
   withdrawnBy?: Maybe<Scalars['String']>;
   withdrawnSlipNo?: Maybe<Scalars['String']>;
 };
@@ -1506,6 +1507,7 @@ export type AllTransactionResult = {
   transactionMode?: Maybe<Scalars['String']>;
   transactionTime?: Maybe<Scalars['String']>;
   txnType?: Maybe<AllTransactionType>;
+  txnUserName?: Maybe<Scalars['String']>;
   user?: Maybe<Scalars['String']>;
 };
 
@@ -3211,6 +3213,31 @@ export type BranchSearchFilter = {
   filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
   query?: InputMaybe<Scalars['String']>;
+};
+
+export type BranchWiseFilter = {
+  date?: InputMaybe<Scalars['Localized']>;
+};
+
+export type BranchWiseReportNode = {
+  branchName?: Maybe<Scalars['String']>;
+  totalAsset?: Maybe<Scalars['String']>;
+  totalLiability?: Maybe<Scalars['String']>;
+  totalLoan?: Maybe<Scalars['String']>;
+  totalMember?: Maybe<Scalars['String']>;
+  totalSavings?: Maybe<Scalars['String']>;
+  totalShare?: Maybe<Scalars['String']>;
+};
+
+export type BranchWiseReportResult = {
+  branchWiseReportNode?: Maybe<Array<Maybe<BranchWiseReportNode>>>;
+  userId?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
+};
+
+export type BranchWiseReportWithError = {
+  data?: Maybe<BranchWiseReportResult>;
+  error?: Maybe<QueryError>;
 };
 
 export const BuildingType = {
@@ -6471,6 +6498,7 @@ export type DepositTransactionView = {
   centerName?: Maybe<Scalars['String']>;
   depositedBy?: Maybe<DepositedBy>;
   depositedDate?: Maybe<Scalars['Localized']>;
+  depositorName?: Maybe<Scalars['String']>;
   fine?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   groupId?: Maybe<Scalars['String']>;
@@ -6483,7 +6511,6 @@ export type DepositTransactionView = {
   rebate?: Maybe<Scalars['String']>;
   sourceOfFund?: Maybe<Scalars['String']>;
   status?: Maybe<ObjState>;
-  teller?: Maybe<Scalars['String']>;
   totalBalance?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
@@ -16358,6 +16385,7 @@ export type LoanRepaymentView = {
   totalRepaymentAmount?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
   transactionCode?: Maybe<Scalars['String']>;
+  txnUserName?: Maybe<Scalars['String']>;
 };
 
 export type LoanRepaymentViewResult = {
@@ -19292,9 +19320,14 @@ export type OrganizationStatisticsInput = {
 };
 
 export type OtherReport = {
+  BranchWiseReport: BranchWiseReportWithError;
   generalLedgerReport: GenderLedgerReportResult;
   savingLoanInterestReport: SavingLoanInterestReportResult;
   savingsBalanceReport: SavingsBalanceReportResult;
+};
+
+export type OtherReportBranchWiseReportArgs = {
+  data: BranchWiseFilter;
 };
 
 export type OtherReportGeneralLedgerReportArgs = {
@@ -20445,6 +20478,7 @@ export const Resource = {
   ReportsSavingsThresholdTransaction: 'REPORTS_SAVINGS_THRESHOLD_TRANSACTION',
   ReportsScAbbsReport: 'REPORTS_SC_ABBS_REPORT',
   ReportsScBranchReadinessReport: 'REPORTS_SC_BRANCH_READINESS_REPORT',
+  ReportsScBranchWiseBalanceReport: 'REPORTS_SC_BRANCH_WISE_BALANCE_REPORT',
   ReportsScServiceCenterBalance: 'REPORTS_SC_SERVICE_CENTER_BALANCE',
   ReportsScServiceCenterCoaHeadWiseBalance: 'REPORTS_SC_SERVICE_CENTER_COA_HEAD_WISE_BALANCE',
   ReportsScServiceCenterList: 'REPORTS_SC_SERVICE_CENTER_LIST',
@@ -25437,7 +25471,6 @@ export type WithdrawTransactionView = {
   paymentFile?: Maybe<Array<Maybe<Scalars['String']>>>;
   paymentMode?: Maybe<WithdrawPaymentType>;
   status?: Maybe<ObjState>;
-  teller?: Maybe<Scalars['String']>;
   totalBalance?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
@@ -25445,6 +25478,7 @@ export type WithdrawTransactionView = {
   transactionBranch?: Maybe<Scalars['String']>;
   transactionCode?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['Localized']>;
+  txnHandler?: Maybe<Scalars['String']>;
   txnUserName?: Maybe<Scalars['String']>;
   withdrawAmount?: Maybe<Scalars['String']>;
   withdrawSlipNo?: Maybe<Scalars['String']>;
@@ -41577,6 +41611,32 @@ export type GetBranchReadinessReportQuery = {
   };
 };
 
+export type GetServiceCenterSummaryReportQueryVariables = Exact<{
+  data: BranchWiseFilter;
+}>;
+
+export type GetServiceCenterSummaryReportQuery = {
+  report: {
+    otherReport: {
+      BranchWiseReport: {
+        data?: {
+          userId?: string | null;
+          userName?: string | null;
+          branchWiseReportNode?: Array<{
+            branchName?: string | null;
+            totalMember?: string | null;
+            totalShare?: string | null;
+            totalSavings?: string | null;
+            totalLoan?: string | null;
+            totalAsset?: string | null;
+            totalLiability?: string | null;
+          } | null> | null;
+        } | null;
+      };
+    };
+  };
+};
+
 export type GetCashLedgerReportQueryVariables = Exact<{
   data?: InputMaybe<CashLedgerReportFilterData>;
 }>;
@@ -49816,11 +49876,10 @@ export type TransactionDepositDetailQuery = {
         depositedDate?: Record<'local' | 'en' | 'np', string> | null;
         paymentFile?: Array<string | null> | null;
         transactionBranch?: string | null;
-        teller?: string | null;
+        txnUserName?: string | null;
         totalDebit?: string | null;
         totalCredit?: string | null;
         note?: string | null;
-        txnUserName?: string | null;
         groupName?: string | null;
         groupId?: string | null;
         centerName?: string | null;
@@ -49875,11 +49934,10 @@ export type TransactionWithdrawDetailQuery = {
         marketRepId?: string | null;
         marketRepName?: string | null;
         transactionBranch?: string | null;
-        teller?: string | null;
+        txnUserName?: string | null;
         totalDebit?: string | null;
         totalCredit?: string | null;
         note?: string | null;
-        txnUserName?: string | null;
         groupName?: string | null;
         groupId?: string | null;
         centerName?: string | null;
@@ -72681,6 +72739,43 @@ export const useGetBranchReadinessReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetServiceCenterSummaryReportDocument = `
+    query getServiceCenterSummaryReport($data: BranchWiseFilter!) {
+  report {
+    otherReport {
+      BranchWiseReport(data: $data) {
+        data {
+          branchWiseReportNode {
+            branchName
+            totalMember
+            totalShare
+            totalSavings
+            totalLoan
+            totalAsset
+            totalLiability
+          }
+          userId
+          userName
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetServiceCenterSummaryReportQuery = <
+  TData = GetServiceCenterSummaryReportQuery,
+  TError = unknown
+>(
+  variables: GetServiceCenterSummaryReportQueryVariables,
+  options?: UseQueryOptions<GetServiceCenterSummaryReportQuery, TError, TData>
+) =>
+  useQuery<GetServiceCenterSummaryReportQuery, TError, TData>(
+    ['getServiceCenterSummaryReport', variables],
+    useAxios<GetServiceCenterSummaryReportQuery, GetServiceCenterSummaryReportQueryVariables>(
+      GetServiceCenterSummaryReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetCashLedgerReportDocument = `
     query getCashLedgerReport($data: CashLedgerReportFilterData) {
   report {
@@ -83799,7 +83894,7 @@ export const TransactionDepositDetailDocument = `
         depositedDate
         paymentFile
         transactionBranch
-        teller
+        txnUserName
         glTransaction {
           account
           debit
@@ -83866,7 +83961,7 @@ export const TransactionWithdrawDetailDocument = `
         marketRepId
         marketRepName
         transactionBranch
-        teller
+        txnUserName
         glTransaction {
           account
           debit

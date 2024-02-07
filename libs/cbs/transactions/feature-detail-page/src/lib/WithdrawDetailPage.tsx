@@ -56,7 +56,7 @@ export const WithdrawDetailPage = () => {
 
             <OtherDetails
               branch={withdrawDetailData?.transactionBranch as string}
-              teller={withdrawDetailData?.teller as string}
+              teller={withdrawDetailData?.txnUserName as string}
             />
 
             {withdrawDetailData?.note && <Note note={withdrawDetailData?.note} />}

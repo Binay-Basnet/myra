@@ -87,10 +87,7 @@ export enum Report {
   TRANSACTION_TELLER_DAY_BOOK_REPORT = 'Teller Day Book Report',
 
   TRANSACTION_BALANCE_SHEET_REPORT = 'Balance Sheet Report',
-  TRANSACTION_SERVICE_CENTER_BALANCE_REPORT = 'Service Center Balance',
-  TRANSACTION_SERVICE_CENTER_COA_WISE_BALANCE = 'Service Center COA Head Wise Balance',
   TRANSACTION_BANK_GL_BALANCE_REPORT = 'Bank GL Balance Report',
-  TRANSACTION_ABBS_STATUS_REPORT = 'ABBS Report',
   TRANSACTION_ABBS_TRANSACTION_REPORT = 'ABBS Transaction Report',
   TRANSACTION_CHAR_KHATA_REPORT = 'Charkhata Ledger Report',
   TRANSACTION_ADJUSTED_CHAR_KHATA_REPORT = 'Adjusted Charkhata Ledger Report',
@@ -108,7 +105,12 @@ export enum Report {
   MB_SMS_USAGE_REPORT = 'SMS Usage Report',
 
   SERVICE_CENTER_LIST_REPORT = 'Service Center List Report',
+  TRANSACTION_ABBS_STATUS_REPORT = 'ABBS Report',
+  TRANSACTION_SERVICE_CENTER_BALANCE_REPORT = 'Service Center Balance',
+  TRANSACTION_SERVICE_CENTER_COA_WISE_BALANCE = 'Service Center COA Head Wise Balance',
   BRANCH_READINESS_REPORT = 'Branch Readiness Report',
+  SERVICE_CENTER_SUMMARY_REPORT = 'Service Center Summary Report',
+
   USER_LIST_REPORT = 'User List Report',
   COPOMIS_IMPORT_MEMBER_REPORT = 'Copomis Import Member Report',
   COPOMIS_FINANCIAL_REPORT = 'Copomis Financial Report',
@@ -691,6 +693,13 @@ export const REPORTS: ReportType = {
       link: 'branch-readiness',
       component: <Reports.BranchReadinessReport />,
       acl: 'REPORTS_SC_BRANCH_READINESS_REPORT',
+    },
+    {
+      id: '7.2.3',
+      report: Report.SERVICE_CENTER_SUMMARY_REPORT,
+      link: 'service-center-summmary-report',
+      component: <Reports.ServiceCenterSummaryReport />,
+      acl: 'REPORTS_SC_BRANCH_WISE_BALANCE_REPORT',
     },
   ],
 
