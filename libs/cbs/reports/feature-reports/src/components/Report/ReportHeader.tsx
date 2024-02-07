@@ -169,7 +169,7 @@ export const ReportHeader = ({
                   py="s8"
                   _hover={{ bg: 'gray.100' }}
                   cursor="pointer"
-                  onClick={() => exportVisibleTableToExcel(t[report])}
+                  onClick={() => exportVisibleTableToExcel(t[report] || report)}
                 >
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
                     {t['exportVisible']}
