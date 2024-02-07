@@ -130,20 +130,20 @@ export const ServiceCenterSummaryReport = () => {
                   isNumeric: true,
                 },
               },
-              {
-                header: 'Total Liability',
-                accessorKey: 'totalLiability',
-                cell: (props) => {
-                  const totalLiability = Number(props?.row?.original?.totalLiability) || 0;
+              // {
+              //   header: 'Total Liability',
+              //   accessorKey: 'totalLiability',
+              //   cell: (props) => {
+              //     const totalLiability = Number(props?.row?.original?.totalLiability) || 0;
 
-                  return totalLiability < 0
-                    ? amountConverter(-totalLiability)
-                    : amountConverter(totalLiability);
-                },
-                meta: {
-                  isNumeric: true,
-                },
-              },
+              //     return totalLiability < 0
+              //       ? amountConverter(-totalLiability)
+              //       : amountConverter(totalLiability);
+              //   },
+              //   meta: {
+              //     isNumeric: true,
+              //   },
+              // },
             ]}
           />
         </Report.Content>
