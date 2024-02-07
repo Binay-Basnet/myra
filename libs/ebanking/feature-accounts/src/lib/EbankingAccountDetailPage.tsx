@@ -114,7 +114,14 @@ export const AccountDetails = ({ account, isLoading }: IAccountDetailsProps) => 
         <InfoCard
           title="Recent Transactions"
           btn={
-            <Button variant="ghost">
+            <Button
+              variant="ghost"
+              onClick={() =>
+                router.push(
+                  `/transaction-history?accountId=${account?.id}&accountName=${account?.name}`
+                )
+              }
+            >
               View All Transactions
               <Icon as={ChevronRightIcon} color="priamry.500" />
             </Button>

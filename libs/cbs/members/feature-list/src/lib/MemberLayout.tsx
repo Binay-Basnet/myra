@@ -18,25 +18,25 @@ export type Page = {
 
 export const forms: Record<string, Page> = {
   individual: {
-    label: 'New Individual',
+    label: 'newIndividual',
     aclKey: 'CBS_MEMBERS_MEMBER',
     route: ROUTES.CBS_MEMBER_IND_ADD,
     idType: Id_Type.Kymindividual,
   },
   institution: {
-    label: 'New Institution',
+    label: 'newInstitution',
     aclKey: 'CBS_MEMBERS_MEMBER',
     route: ROUTES.CBS_MEMBER_INS_ADD,
     idType: Id_Type.Kyminstitutions,
   },
   cooperative: {
-    label: 'New Cooperative',
+    label: 'newCooperative',
     aclKey: 'CBS_MEMBERS_MEMBER',
     route: ROUTES.CBS_MEMBER_COOP_ADD,
     idType: Id_Type.Kymcooperative,
   },
   cooperativeUnion: {
-    label: 'New Cooperative Union',
+    label: 'newCooperativeUnion',
     aclKey: 'CBS_MEMBERS_MEMBER',
     route: ROUTES.CBS_MEMBER_COOP_UNION_ADD,
     idType: Id_Type.Kymcooperativeunion,

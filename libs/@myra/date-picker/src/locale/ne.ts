@@ -30,8 +30,8 @@ export const ne: Record<string, string> = {
   Ashwin: 'आश्विन',
   Kartik: 'कार्तिक',
   Mangsir: 'मंसिर',
-  Paush: 'पौष',
-  Mangh: 'माघ',
+  Poush: 'पौष',
+  Magh: 'माघ',
   Falgun: 'फाल्गुन',
   Chaitra: 'चैत्र',
 };

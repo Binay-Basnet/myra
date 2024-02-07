@@ -9,7 +9,7 @@ export const Citizenship = () => {
   return (
     <Box>
       <Text fontSize="r1" p="s20" pb="0" fontWeight="medium" color="neutralColorLight.Gray-70">
-        {t['kynIndCitizenship']}
+        {t['kymIndCitizenship']}
       </Text>
 
       <FormSection>
@@ -17,20 +17,20 @@ export const Citizenship = () => {
           isRequired
           type="text"
           name="identification.0.identificationNo"
-          label={t['kynIndCitizenshipNo']}
+          label={t['kymIndCitizenshipNo']}
         />
 
         <FormInput
           isRequired
           type="text"
           name="identification.0.place"
-          label={t['kynIndCitizenshipIssuePlace']}
+          label={t['kymIndCitizenshipIssuePlace']}
         />
 
         <FormDatePicker
           isRequired
           name="identification.0.date"
-          label={t['kynIndCitizenshipIssueDate']}
+          label={t['kymIndCitizenshipIssueDate']}
           maxToday
         />
       </FormSection>

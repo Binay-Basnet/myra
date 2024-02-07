@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { Box, PageHeader, Scrollable } from '@myra-ui';
 
-import { featureCode } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { ReportsInnerSidebar } from '../components/ReportsInnerSidebar';
 
@@ -14,10 +14,12 @@ interface ReportsCbsLayoutProps {
 export const ReportsCbsLayout = ({ children }: ReportsCbsLayoutProps) => {
   const router = useRouter();
 
+  const { t } = useTranslation();
+
   return (
     <>
       <PageHeader
-        heading={`Core Banking System Reports - ${featureCode?.cbsReports}`}
+        heading={`${t['reportsCoreBankingSystemReports']} - ${featureCode?.cbsReports}`}
         tabItems={[
           {
             title: 'reportsListView',

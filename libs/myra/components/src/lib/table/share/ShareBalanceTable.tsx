@@ -1,9 +1,14 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import qs from 'qs';
 
 import { Avatar, Box, Column, Table, TablePopover } from '@myra-ui';
 
-import { useGetShareBalanceListQuery } from '@coop/cbs/data-access';
+import {
+  useAppSelector,
+  useGetMemberFilterMappingQuery,
+  useGetShareBalanceListQuery,
+} from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { TableListPageHeader } from '@coop/myra/components';
 import {
@@ -22,6 +27,8 @@ export const ShareBalanceTable = () => {
     pagination: getPaginationQuery(),
     filter: getFilterQuery(),
   });
+
+  const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
   const rowData = useMemo(() => data?.share?.balance?.edges ?? [], [data]);
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -66,6 +73,18 @@ export const ShareBalanceTable = () => {
       },
 
       {
+        id: 'serviceCenter',
+        header: 'Service Center',
+        accessorFn: (row) => row?.node?.serviceCenter,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: memberFilterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
+      },
+
+      {
         id: '_actions',
         header: '',
         cell: (props) => (
@@ -85,8 +104,33 @@ export const ShareBalanceTable = () => {
         ),
       },
     ],
-    [router, t]
+    [router, t, memberFilterMapping]
   );
+
+  const user = useAppSelector((state) => state.auth?.user);
+
+  useEffect(() => {
+    const queryString = qs.stringify(
+      {
+        serviceCenter: {
+          value: user?.currentBranch?.id,
+          compare: '=',
+        },
+      },
+      { allowDots: true, arrayFormat: 'brackets', encode: false }
+    );
+
+    router.push(
+      {
+        query: {
+          ...router.query,
+          filter: queryString,
+        },
+      },
+      undefined,
+      { shallow: true }
+    );
+  }, []);
 
   return (
     <>

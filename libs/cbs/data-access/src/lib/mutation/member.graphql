@@ -128,3 +128,16 @@ mutation balanceCertificate($id: ID!, $date: Localized!) {
     balanceCertificate(id: $id, date: $date)
   }
 }
+
+mutation updateBranchDuringActivation($memberId: ID!, $branchId: ID!) {
+  members {
+    transfer {
+      beforeactivation(memberId: $memberId, branchId: $branchId) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

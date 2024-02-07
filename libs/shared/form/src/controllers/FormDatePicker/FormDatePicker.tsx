@@ -17,6 +17,7 @@ export interface IFormDatePickerProps extends InputProps {
   isRequired?: boolean;
   helperText?: string;
   baseDate?: Date;
+  calendarType?: 'AD' | 'BS';
 }
 
 export const FormDatePicker = ({
@@ -28,6 +29,7 @@ export const FormDatePicker = ({
   isRequired,
   helperText,
   baseDate,
+  calendarType,
   // isTransactionBaseDate,
   ...rest
 }: IFormDatePickerProps) => {
@@ -75,7 +77,7 @@ export const FormDatePicker = ({
             value={value ? { ad: value.en } : undefined}
             isRequired={isRequired}
             isInvalid={!!errors[name]?.message}
-            calendarType={preference?.date || 'AD'}
+            calendarType={calendarType || preference?.date || 'AD'}
             // value={value ? (preference?.date === 'AD' ? { ad: value } : { bs: value }) : undefined}
             maxDate={maxToday ? new Date() : maxDate}
             minDate={minDate}

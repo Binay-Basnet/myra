@@ -107,6 +107,8 @@ query getMemberIndividualData($id: ID!) {
           wardNo
           locality
         }
+        branch
+        branchId
         contact
         dateJoined
         signaturePicUrl

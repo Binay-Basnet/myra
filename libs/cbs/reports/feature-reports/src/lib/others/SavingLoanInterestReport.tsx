@@ -20,6 +20,7 @@ type SavingLoanReportEntry = {
   loanAccountNo?: string | null;
   interestIncome?: string | null;
   finePaid?: string | null;
+  panNumber?: string | null;
 };
 
 type Filter = {
@@ -203,6 +204,10 @@ export const SavingLoanInterestReport = () => {
                         ? amountConverter(props?.row?.original?.finePaid || 0)
                         : '',
                     footer: () => amountConverter(grandTotalFinePaid || 0),
+                  },
+                  {
+                    header: 'Pan Number',
+                    accessorKey: 'panNumber',
                   },
                 ],
               },

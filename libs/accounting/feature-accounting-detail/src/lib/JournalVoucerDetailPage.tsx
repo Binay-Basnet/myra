@@ -61,13 +61,14 @@ export const JournalVoucerDetailPage = () => {
               Overview
             </Text>
             <TransactionDetails detailData={detailData} />
-            {voucherData?.note && <Note note={voucherData?.note} />}
+
             <OtherDetails otherData={otherData} />
             <GlTransaction
               data={voucherData?.glTransaction}
               totalDebit={voucherData?.totalDebit ?? '-'}
               totalCredit={voucherData?.totalCredit ?? '-'}
             />
+            {voucherData?.note && <Note note={voucherData?.note} />}
           </Box>
         </Scrollable>
       </Box>

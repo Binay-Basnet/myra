@@ -165,8 +165,14 @@ export const KYMInstitutionPage = () => {
       await asyncToast({
         id: 'individual-add',
         msgs: {
-          loading: action === 'edit' ? 'Editing Member' : 'Adding Member',
-          success: action === 'edit' ? 'Member Edited Successfully' : 'Member Added Successfully',
+          loading:
+            action === 'edit'
+              ? `${t['membersFormEditingMembers']}`
+              : `${t['membersFormAddingMembers']}`,
+          success:
+            action === 'edit'
+              ? `${t['memberEditedSuccessfull']}`
+              : `${t['memberAddedSuccessfull']}`,
         },
         promise: mutateAsync({
           id: router.query['id'] as string,
@@ -203,8 +209,8 @@ export const KYMInstitutionPage = () => {
         <FormHeader
           title={
             action === 'edit' || action === 'update'
-              ? `Update Member - ${featureCode?.newMemberInstitution}`
-              : `Add New Member - ${featureCode?.newMemberInstitution}`
+              ? `${t['membersFormUpdateMembers']}  - ${featureCode?.newMemberInstitution}`
+              : `${t['membersFormAddNewMembers']}  - ${featureCode?.newMemberInstitution}`
           }
           closeLink={ROUTES.CBS_MEMBER_LIST}
         />

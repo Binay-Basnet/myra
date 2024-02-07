@@ -1,11 +1,14 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import qs from 'qs';
 
 import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import {
+  useAppSelector,
   useGetAccountTableListMinimalQuery,
+  useGetMemberFilterMappingQuery,
   useGetSavingFilterMappingQuery,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -27,6 +30,7 @@ export const CBSAccountCloseList = () => {
   });
 
   const { data: savingFilterMapping } = useGetSavingFilterMappingQuery();
+  const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
   const rowData = useMemo(() => data?.account?.list?.data?.edges ?? [], [data]);
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -66,6 +70,17 @@ export const CBSAccountCloseList = () => {
         enableColumnFilter: true,
       },
       {
+        id: 'serviceCenter',
+        header: 'Service Center',
+        accessorFn: (row) => row?.node?.serviceCenter,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: memberFilterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
+      },
+      {
         header: 'Member',
         accessorFn: (row) => row?.node?.member?.name?.local,
         cell: (props) => (
@@ -103,8 +118,33 @@ export const CBSAccountCloseList = () => {
         ),
       },
     ],
-    [router, savingFilterMapping?.account.filterMapping?.productID]
+    [router, savingFilterMapping?.account.filterMapping?.productID, memberFilterMapping]
   );
+
+  const user = useAppSelector((state) => state.auth?.user);
+
+  useEffect(() => {
+    const queryString = qs.stringify(
+      {
+        serviceCenter: {
+          value: user?.currentBranch?.id,
+          compare: '=',
+        },
+      },
+      { allowDots: true, arrayFormat: 'brackets', encode: false }
+    );
+
+    router.push(
+      {
+        query: {
+          ...router.query,
+          filter: queryString,
+        },
+      },
+      undefined,
+      { shallow: true }
+    );
+  }, []);
 
   return (
     <>

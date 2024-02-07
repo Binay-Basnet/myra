@@ -2,31 +2,31 @@ import type { NavType } from '../NAV';
 import { ROUTES } from '../ROUTES';
 
 export const CBS: NavType = {
-  label: 'Core Banking System',
+  label: 'coreBankingSystem',
   menus: {
     MEMBERS: {
-      label: 'Members',
+      label: 'members',
       aclKey: 'CBS_MEMBERS_MEMBER',
       pages: [
         {
-          label: 'Active Members',
+          label: 'activeMembers',
           aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.CBS_MEMBER_LIST,
         },
         {
-          label: 'Inactive Members',
+          label: 'inactiveMembers',
           aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.CBS_MEMBER_INACTIVE_LIST,
         },
         {
-          label: 'Minor Members',
+          label: 'minorMembers',
           aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.CBS_MEMBER_MINOR_LIST,
         },
       ],
       settingPages: [
         {
-          label: 'Member Settings',
+          label: 'memberSettings',
           aclKey: 'SETTINGS_MEMBER',
           route: ROUTES.SETTINGS_GENERAL_MEMBERS,
         },

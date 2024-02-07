@@ -172,7 +172,7 @@ query transactionDepositDetail($transactionId: ID!) {
         depositedDate
         paymentFile
         transactionBranch
-        teller
+        txnUserName
         glTransaction {
           account
           debit
@@ -224,7 +224,7 @@ query transactionWithdrawDetail($transactionId: ID!) {
         marketRepId
         marketRepName
         transactionBranch
-        teller
+        txnUserName
         glTransaction {
           account
           debit
@@ -279,8 +279,8 @@ query transactionAccountTransferDetail($transactionId: ID!) {
         withdrawnBy
         withdrawnSlipNo
         transactionBranch
+        txnUserName
         objState
-        transactionBranch
         teller
         glTransaction {
           account
@@ -331,6 +331,7 @@ query loanRepaymentDetail($paymentId: ID!) {
         depositedBy
         depositedDate
         transactionBranch
+        txnUserName
         teller
         glTransaction {
           account
@@ -494,6 +495,7 @@ query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
           charges
           paymentMode
         }
+        txnUserName
       }
     }
   }

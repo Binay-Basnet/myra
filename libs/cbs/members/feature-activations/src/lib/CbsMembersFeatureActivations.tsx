@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { AiFillCheckCircle, AiOutlinePlus } from 'react-icons/ai';
 import { IoCheckmarkDone } from 'react-icons/io5';
 import { useRouter } from 'next/router';
@@ -24,8 +25,10 @@ import {
   useGetMemberAccountsQuery,
   useGetMemberCheckQuery,
   useGetMemberIndividualDataQuery,
+  useUpdateBranchDuringActivationMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
+import { FormBranchSelect } from '@coop/shared/form';
 
 import { MembershipPayment } from '../components/MembershipPayment';
 
@@ -35,6 +38,9 @@ export const CbsMembersFeatureActivate = () => {
   const id = router.query['id'] as string;
   const [mode, setMode] = useState<'details' | 'payment'>('details');
   const [skipAccounts, setSkipAccounts] = useState(false);
+
+  const methods = useForm();
+  const { setValue, getValues } = methods;
 
   const { data } = useGetMemberCheckQuery({ memberID: id }, { enabled: !!id, staleTime: 0 });
 
@@ -49,7 +55,10 @@ export const CbsMembersFeatureActivate = () => {
   );
 
   const accounts = memberAccountsData?.members?.getAllAccounts?.data?.depositAccount;
-  const { data: memberDetails } = useGetMemberIndividualDataQuery({ id });
+  const { data: memberDetails, refetch: refetchMemberDetails } = useGetMemberIndividualDataQuery({
+    id,
+  });
+  const memberInfo = memberDetails?.members?.details?.data;
 
   const { mutateAsync: activateSharePurchase } = useActivateMemberWithoutSharePurchaseMutation();
 
@@ -62,6 +71,29 @@ export const CbsMembersFeatureActivate = () => {
       },
       promise: activateSharePurchase({ memberId: id }),
       onSuccess: () => queryClient.invalidateQueries(['getMemberCheck']),
+    });
+  };
+
+  const { mutateAsync: updateMemberBranch } = useUpdateBranchDuringActivationMutation();
+
+  useEffect(() => {
+    if (memberInfo?.branchId) {
+      setValue('branchId', memberInfo?.branchId);
+    }
+  }, [memberInfo?.branchId]);
+
+  const updateBranch = () => {
+    asyncToast({
+      id: 'update-member-branch',
+      msgs: {
+        loading: 'Upading member branch',
+        success: 'Member branch updated successfully',
+      },
+      promise: updateMemberBranch({
+        memberId: memberInfo?.id as string,
+        branchId: getValues()?.['branchId'],
+      }),
+      onSuccess: () => refetchMemberDetails(),
     });
   };
 
@@ -93,7 +125,7 @@ export const CbsMembersFeatureActivate = () => {
             <Text fontSize="r2" color="gray.800" fontWeight="600">
               Member
               <Text as="span" color="primary.500">
-                #{memberDetails?.members?.details?.data?.code}
+                #{memberInfo?.code}
               </Text>{' '}
               Created Successfully
             </Text>
@@ -106,6 +138,24 @@ export const CbsMembersFeatureActivate = () => {
           </Box>
 
           <Box px="s16" display="flex" flexDir="column" gap="s24">
+            <Box display="flex" gap="s16">
+              <NumberStatus active number={0} />
+
+              <Box display="flex" flexDir="column" gap="s16">
+                <Box display="flex" flexDir="column" gap="s4">
+                  <Text fontSize="r1" fontWeight="600" color="gray.800">
+                    Update Branch
+                  </Text>
+                  <FormProvider {...methods}>
+                    <FormBranchSelect label="Select Branch" name="branchId" />
+                    <Button onClick={updateBranch} w="-webkit-fit-content" mt="s8">
+                      Update Branch
+                    </Button>
+                  </FormProvider>
+                </Box>
+              </Box>
+            </Box>
+            <Divider />
             <Box display="flex" gap="s16">
               <NumberStatus active={!hasPaidMemberFee} number={1} />
 

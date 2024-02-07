@@ -55,31 +55,31 @@ export const MemberKYMHusbandWifeOccupation = () => {
           type="text"
           name="spouseOccupation.orgName"
           id="spouseOrgName"
-          label={t['kymIndOrgFirmName']}
+          label={t['kymIndOccupationOrgFirmName']}
         />
       </GridItem>
       <FormInput
         type="number"
         name="spouseOccupation.panVatNo"
         id="spousePanVatNo"
-        label={t['kymIndPanVATNo']}
+        label={t['kymIndOccupationPanVATNo']}
       />
       <FormInput
         type="text"
         name="spouseOccupation.address"
         id="spouseAddress"
-        label={t['kymIndAddress']}
+        label={t['kymIndOccupationAddress']}
       />
       <FormAmountInput
         type="number"
         id="spouseEstimatedAnnualIncome"
         name="spouseOccupation.estimatedAnnualIncome"
-        label={t['kymIndEstimatedAnnualIncome']}
+        label={t['kymIndOccupationEstimatedAnnualIncome']}
       />
 
       <GridItem colSpan={3} display="flex" gap="9px" alignItems="center">
         <FormCheckbox name="spouseOccupation.isOwner" id="spouseIsOwner" />
-        <Text variant="formLabel">{t['kymIndAreyouowner']}</Text>
+        <Text variant="formLabel">{t['kymIndOccupationAreyouowner']}</Text>
       </GridItem>
 
       {isOwner && (
@@ -87,19 +87,19 @@ export const MemberKYMHusbandWifeOccupation = () => {
           <FormDatePicker
             id="spouseEstablishedDate"
             name="spouseOccupation.establishedDate"
-            label={t['kymIndEstablishedDate']}
+            label={t['kymIndOccupationEstablishedDate']}
           />
           <FormInput
             type="number"
             id="spouseRegistrationNo"
             name="spouseOccupation.registrationNo"
-            label={t['kymIndRegistrationNo']}
+            label={t['kymIndOccupationRegistrationNo']}
           />
           <FormPhoneNumber
             type="number"
             id="spouseContact"
             name="spouseOccupation.contact"
-            label={t['kymIndContactNo']}
+            label={t['kymIndOccupationContactNo']}
           />
         </>
       )}

@@ -2,8 +2,10 @@ import { FormSection } from '@myra-ui';
 
 import { useGetBankListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KYMBankDetails = () => {
+  const { t } = useTranslation();
   const { data } = useGetBankListQuery();
 
   const bankList =
@@ -14,9 +16,9 @@ export const KYMBankDetails = () => {
     }));
 
   return (
-    <FormSection id="kymAccIndFinancialTransactionDetails" header="Bank Details" subHeader="">
-      <FormSelect name="bankId" label="Bank" options={bankList} />
-      <FormInput name="bankAccountId" label="Account Number" />
+    <FormSection id="kymAccIndFinancialTransactionDetails" header={t['kymIndbankDetails']}>
+      <FormSelect name="bankId" label={t['kymIndbankDetailsBank']} options={bankList} />
+      <FormInput name="bankAccountId" label={t['kymIndbankDetailsAccountNumber']} />
     </FormSection>
   );
 };

@@ -40,7 +40,7 @@ export const MemberKYMMainOccupation = () => {
 
   return (
     <Box id="kymAccIndMainProfession" scrollMarginTop="200px">
-      <FormSection header="Main Occupation">
+      <FormSection header={t['kymIndMainOccupation']}>
         <FormSelect
           name="mainOccupation.occupationId"
           label={t['kymIndOccupation']}
@@ -54,30 +54,41 @@ export const MemberKYMMainOccupation = () => {
           }
         />
         <GridItem colSpan={2}>
-          <FormInput type="text" name="mainOccupation.orgName" label={t['kymIndOrgFirmName']} />
+          <FormInput
+            type="text"
+            name="mainOccupation.orgName"
+            label={t['kymIndOccupationOrgFirmName']}
+          />
         </GridItem>
 
-        <FormInput type="number" name="mainOccupation.panVatNo" label={t['kymIndPanVATNo']} />
-        <FormInput type="text" name="mainOccupation.address" label={t['kymIndAddress']} />
+        <FormInput
+          type="number"
+          name="mainOccupation.panVatNo"
+          label={t['kymIndOccupationPanVATNo']}
+        />
+        <FormInput type="text" name="mainOccupation.address" label={t['kymIndOccupationAddress']} />
         <FormAmountInput
           type="number"
           name="mainOccupation.estimatedAnnualIncome"
-          label={t['kymIndEstimatedAnnualIncome']}
+          label={t['kymIndOccupationEstimatedAnnualIncome']}
         />
 
         <GridItem colSpan={3} display="flex" gap="9px" alignItems="center">
           <FormCheckbox name="mainOccupation.isOwner" />
-          <Text variant="formLabel">{t['kymIndAreyouowner']}</Text>
+          <Text variant="formLabel">{t['kymIndOccupationAreyouowner']}</Text>
         </GridItem>
 
         {isOwner && (
           <>
             <FormDatePicker
               name="mainOccupation.establishedDate"
-              label={t['kymIndEstablishedDate']}
+              label={t['kymIndOccupationEstablishedDate']}
             />
-            <FormInput name="mainOccupation.registrationNo" label={t['kymIndRegistrationNo']} />
-            <FormPhoneNumber name="mainOccupation.contact" label={t['kymIndContactNo']} />
+            <FormInput
+              name="mainOccupation.registrationNo"
+              label={t['kymIndOccupationRegistrationNo']}
+            />
+            <FormPhoneNumber name="mainOccupation.contact" label={t['kymIndOccupationContactNo']} />
           </>
         )}
       </FormSection>

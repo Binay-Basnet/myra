@@ -19,6 +19,7 @@ query getShareBalanceList($pagination: Pagination, $filter: Filter) {
           }
           count
           amount
+          serviceCenter
         }
       }
     }
@@ -46,6 +47,7 @@ query getShareRegisterList($pagination: Pagination, $filter: Filter) {
           endNumber
           credit
           debit
+          serviceCenter
         }
         cursor
       }
@@ -178,7 +180,6 @@ query getShareFilterMapping {
         label
         value
       }
-      
     }
   }
 }

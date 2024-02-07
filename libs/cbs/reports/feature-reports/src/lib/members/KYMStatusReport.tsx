@@ -15,13 +15,7 @@ import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { formatTableAddress, localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
-
-const riskCategory = [
-  { label: 'All', value: RiskCategoryFilter.All },
-  { label: 'Low Risk', value: RiskCategoryFilter.Low },
-  { label: 'Medium Risk', value: RiskCategoryFilter.Medium },
-  { label: 'High Risk', value: RiskCategoryFilter.High },
-];
+import { useTranslation } from '@coop/shared/utils';
 
 type KYMStatusReportFilters = Omit<KymStatusReportFilter, 'branchId'> & {
   branchId: {
@@ -31,11 +25,13 @@ type KYMStatusReportFilters = Omit<KymStatusReportFilter, 'branchId'> & {
 };
 
 export const KYMStatusReport = () => {
+  const { t } = useTranslation();
+
   const [filters, setFilters] = useState<KYMStatusReportFilters | null>(null);
 
   const branchIds =
     filters?.branchId && filters?.branchId.length !== 0
-      ? filters?.branchId?.map((t) => t.value)
+      ? filters?.branchId?.map((b) => b.value)
       : null;
 
   const { data, isFetching } = useGetKymStatusReportQuery(
@@ -45,6 +41,25 @@ export const KYMStatusReport = () => {
     { enabled: !!filters }
   );
   const mobileBankingReport = data?.report?.memberReport?.kymStatusReport?.data;
+
+  const riskCategory = [
+    {
+      label: t['reportsMemberKYMStatusReportFilterRiskCategoryAll'],
+      value: RiskCategoryFilter.All,
+    },
+    {
+      label: t['reportsMemberKYMStatusReportFilterRiskCategoryLowRisk'],
+      value: RiskCategoryFilter.Low,
+    },
+    {
+      label: t['reportsMemberKYMStatusReportFilterRiskCategoryMediumRisk'],
+      value: RiskCategoryFilter.Medium,
+    },
+    {
+      label: t['reportsMemberKYMStatusReportFilterRiskCategoryHighRisk'],
+      value: RiskCategoryFilter.High,
+    },
+  ];
 
   return (
     <Report
@@ -63,19 +78,24 @@ export const KYMStatusReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Members Reports', link: '/cbs/reports/cbs-reports/members' },
+            { label: t['reportsSidebarMemberReports'], link: '/cbs/reports/cbs-reports/members' },
             {
-              label: 'KYM Status Report',
+              label: t['reportsKymStatusReport'],
               link: '/cbs/reports/cbs-reports/members/kym-status/new',
             },
           ]}
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect showUserBranchesOnly isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect
+              showUserBranchesOnly
+              isMulti
+              name="branchId"
+              label={t['serviceCenter']}
+            />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange label="Member Registration Date Period" />
+            <ReportDateRange label={t['reportsMemberKYMStatusReportMemberRegdDatePeriod']} />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
@@ -87,19 +107,19 @@ export const KYMStatusReport = () => {
           <Report.Table<KymStatusReport & { index: number }>
             columns={[
               {
-                header: 'S.No.',
+                header: t['sn'],
                 accessorKey: 'index',
                 meta: {
                   width: '60px',
                 },
               },
               {
-                header: 'Service Center',
+                header: t['serviceCenter'],
                 accessorKey: 'branchName',
               },
 
               {
-                header: 'Member ID',
+                header: t['reportsMemberKYMStatusReportMemberID'],
                 accessorKey: 'memberId',
                 cell: (props) => (
                   <RouteToDetailsPage
@@ -110,46 +130,46 @@ export const KYMStatusReport = () => {
                 ),
               },
               {
-                header: 'Member Name',
+                header: t['reportsMemberKYMStatusReportMemberName'],
                 accessorFn: (row) => row?.memberName,
                 meta: {
                   width: '40%',
                 },
               },
               {
-                header: 'District',
+                header: t['reportsMemberKYMStatusReportDistrict'],
                 accessorFn: (row) => row?.address?.district?.local,
               },
               {
-                header: 'Ward No.',
+                header: t['reportsMemberKYMStatusReportWardNo'],
                 accessorFn: (row) => row?.address?.wardNo,
               },
               {
-                header: 'Address',
+                header: t['reportsMemberKYMStatusReportAddress'],
                 accessorFn: (row) => row?.address,
                 cell: (props) => formatTableAddress(props.row.original?.address),
               },
               {
-                header: 'Contact',
+                header: t['reportsMemberKYMStatusReportContact'],
                 accessorFn: (row) => row?.contact,
                 meta: {
                   skipExcelFormatting: true,
                 },
               },
               {
-                header: 'Member Registration Date',
+                header: t['reportsMemberKYMStatusReportMemberRegistrationDate'],
                 accessorFn: (row) => localizedDate(row?.regDate),
                 meta: {
                   skipExcelFormatting: true,
                 },
               },
               {
-                header: 'Risk Category',
+                header: t['reportsMemberKYMStatusReportRiskCategory'],
                 accessorFn: (row) =>
                   riskCategory?.find((risk) => risk.value === row?.riskCategory)?.label ?? '-',
               },
               {
-                header: 'Last KYM Update',
+                header: t['reportsMemberKYMStatusReportLastKYMUpdate'],
                 accessorFn: (row) => localizedDate(row?.lastKymUpdatedDate),
                 meta: {
                   skipExcelFormatting: true,
@@ -157,12 +177,12 @@ export const KYMStatusReport = () => {
               },
 
               {
-                header: 'KYM Expire Days',
+                header: t['reportsMemberKYMStatusReportKYMExpireDays'],
                 accessorFn: (row) => row?.kymExpireDays,
                 cell: (props) => (!props.getValue() ? '-' : `${props.getValue()} days`),
               },
               {
-                header: 'KYM Status',
+                header: t['reportsMemberKYMStatusReportKYMStatus'],
                 accessorFn: (row) => row?.kymStatus,
               },
             ]}
@@ -190,7 +210,7 @@ export const KYMStatusReport = () => {
                 fontWeight={600}
                 color="gray.700"
               >
-                Updated Total
+                {t['reportsMemberKYMStatusReportUpdatedTotal']}
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
                 {
@@ -213,7 +233,7 @@ export const KYMStatusReport = () => {
                 fontWeight={600}
                 color="gray.700"
               >
-                Not Updated Total
+                {t['reportsMemberKYMStatusReportNotUpdatedTotal']}
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
                 {
@@ -236,7 +256,7 @@ export const KYMStatusReport = () => {
                 fontWeight={600}
                 color="gray.700"
               >
-                Total Member
+                {t['reportsMemberKYMStatusReportTotalMember']}
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
                 {data?.report?.memberReport?.kymStatusReport?.data?.length ?? 0}
@@ -245,16 +265,25 @@ export const KYMStatusReport = () => {
           </Box>
         </Report.Content>
         <Report.Filters>
-          <Report.Filter title="Risk Category">
+          <Report.Filter title={t['reportsMemberKYMStatusReportFilterRiskCategory']}>
             <FormRadioGroup name="filter.riskCategory" options={riskCategory} direction="column" />
           </Report.Filter>
-          <Report.Filter title="Expiry Status">
+          <Report.Filter title={t['reportsMemberKYMStatusReportFilterExpiryStatus']}>
             <FormRadioGroup
               name="filter.status"
               options={[
-                { label: 'All', value: ExpiryStatusFilter.All },
-                { label: 'Not Expired', value: ExpiryStatusFilter.NotExpired },
-                { label: 'Expired', value: ExpiryStatusFilter.Expired },
+                {
+                  label: t['reportsMemberActiveInactiveReportFilterExpiryStatusAll'],
+                  value: ExpiryStatusFilter.All,
+                },
+                {
+                  label: t['reportsMemberActiveInactiveReportFilterExpiryStatusNotExpired'],
+                  value: ExpiryStatusFilter.NotExpired,
+                },
+                {
+                  label: t['reportsMemberActiveInactiveReportFilterExpiryStatusExpired'],
+                  value: ExpiryStatusFilter.Expired,
+                },
               ]}
               direction="column"
             />

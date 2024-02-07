@@ -380,6 +380,7 @@ query getAccountTableListMinimal($paginate: Pagination, $filter: Filter) {
             }
             installmentAmount
             groupName
+            serviceCenter
           }
         }
       }
@@ -805,6 +806,42 @@ query getAllAccountsFilterMapping {
       }
       productName {
         ...OptionType
+      }
+    }
+  }
+}
+
+query getAccountListProduct(
+  $paginate: Pagination
+  $filter: Filter
+  $productId: ID!
+  $loanProduct: Boolean
+) {
+  settings {
+    general {
+      depositProduct {
+        getAccountlistProduct(
+          paginate: $paginate
+          filter: $filter
+          productid: $productId
+          loanProduct: $loanProduct
+        ) {
+          totalCount
+          edges {
+            node {
+              id
+              accountName
+              memberName
+              balance
+              OpenDate
+              InterestRate
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
       }
     }
   }

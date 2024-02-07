@@ -31,6 +31,8 @@ export interface SuccessCardProps {
     memberId?: string | null;
     accountName?: string | null;
     accountId?: string | null;
+    transactionBranch?: string | null;
+    txnUserName?: string | null;
   };
   receiptTitle?: string;
   showSignatures?: boolean;
@@ -290,6 +292,8 @@ interface SuccessPrintProps {
     memberId?: string | null;
     accountName?: string | null;
     accountId?: string | null;
+    transactionBranch?: string | null;
+    txnUserName?: string | null;
   };
   details: Record<string, React.ReactNode>;
   extraDetails?: Record<string, React.ReactNode>;
@@ -392,10 +396,14 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
             <Box display="flex" alignItems="start" justifyContent="space-between">
               <Box display="flex" flexDir="column">
                 <Text fontSize="s2" color="gray.700" as="span">
-                  Branch: {user?.currentBranch?.name}
+                  Branch: {meta?.transactionBranch || user?.currentBranch?.name}
                 </Text>
                 <Text fontSize="s2" color="gray.700" as="span">
                   Printed Date: {dayjs(new Date()).format('YYYY-MM-DD')}
+                </Text>
+                <Text fontSize="s2" color="gray.700" as="span">
+                  Printed By: {user?.firstName?.local} {user?.middleName?.local}{' '}
+                  {user?.lastName?.local}
                 </Text>
               </Box>
 
@@ -574,11 +582,12 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
             gap="s32"
             px="s32"
             pt="s64"
+            sx={{ pageBreakInside: 'avoid' }}
           >
             <Box display="flex" flexDir="column" alignItems="center" gap="s12">
               <Divider borderTop="1px dotted black" />
               <Text fontSize="s2" color="gray.800" fontWeight="500">
-                {`Prepared By [${user?.firstName?.en}]`}
+                {`Prepared By [${meta?.txnUserName}]`}
               </Text>
             </Box>
             <Box display="flex" flexDir="column" alignItems="center" gap="s12">
@@ -649,6 +658,10 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                     </Text>
                     <Text fontSize="s2" color="gray.700" as="span">
                       Printed Date: {dayjs(new Date()).format('YYYY-MM-DD')}
+                    </Text>
+                    <Text fontSize="s2" color="gray.700" as="span">
+                      Printed By: {user?.firstName?.local} {user?.middleName?.local}{' '}
+                      {user?.lastName?.local}
                     </Text>
                   </Box>
 
@@ -840,11 +853,15 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                 gridTemplateColumns="repeat(3, 1fr)"
                 gap="s32"
                 px="s32"
+                sx={{ pageBreakInside: 'avoid' }}
               >
                 <Box display="flex" flexDir="column" alignItems="center" gap="s12">
                   <Divider borderTop="1px dotted black" />
                   <Text fontSize="s2" color="gray.800" fontWeight="500">
-                    {`Prepared By [${user?.firstName?.en}]`}
+                    {`Prepared By [${
+                      meta?.txnUserName ||
+                      `${user?.firstName} ${user?.middleName} ${user?.lastName}`
+                    }]`}
                   </Text>
                 </Box>
                 <Box display="flex" flexDir="column" alignItems="center" gap="s12">
@@ -886,6 +903,8 @@ interface SuccessPrintJVProps {
         } | null)[]
       | null
       | undefined;
+    txnUserName?: string;
+    transactionBranch?: string;
   };
   totalWords?: string;
   showSignatures?: boolean;
@@ -959,6 +978,9 @@ export const SuccessPrintJornalVoucher = React.forwardRef<HTMLInputElement, Succ
                 <Text fontSize="s2" color="gray.700" as="span">
                   Printed Date: {dayjs(new Date()).format('YYYY-MM-DD')}
                 </Text>
+                <Text fontSize="s2" color="gray.700" as="span">
+                  Printed By: {user?.firstName?.local} {user?.middleName?.local}{' '}
+                </Text>
               </Box>
 
               <Box>
@@ -992,9 +1014,7 @@ export const SuccessPrintJornalVoucher = React.forwardRef<HTMLInputElement, Succ
             </Box>
           </Box>
         </Box>
-
         <Divider mb={0} borderTop="1px solid" borderTopColor="background.500" />
-
         <Box display="flex" flexDirection="column" gap="s4">
           <Box display="flex" gap="s4">
             <Text fontSize="s1" fontWeight="400" color="gray.600">
@@ -1002,6 +1022,14 @@ export const SuccessPrintJornalVoucher = React.forwardRef<HTMLInputElement, Succ
             </Text>
             <Text fontSize="s1" fontWeight="600" color="gray.800">
               #{jVPrint?.transactionId}
+            </Text>
+          </Box>
+          <Box display="flex" gap="s4">
+            <Text fontSize="s1" fontWeight="400" color="gray.600">
+              Transaction Branch:
+            </Text>
+            <Text fontSize="s1" fontWeight="600" color="gray.800">
+              {jVPrint?.transactionBranch}
             </Text>
           </Box>
           {jVPrint?.transactionTime && (
@@ -1032,16 +1060,6 @@ export const SuccessPrintJornalVoucher = React.forwardRef<HTMLInputElement, Succ
           </Box>
         </Box>
 
-        <Box py="s16">
-          <Box display="flex" flexDirection="column" gap="s4">
-            <Text fontSize="s1" fontWeight="400" color="gray.600">
-              Note
-            </Text>
-            <Text fontSize="s1" fontWeight="600" color="gray.800">
-              {jVPrint?.note}
-            </Text>
-          </Box>
-        </Box>
         <Text fontSize="s1" fontWeight="600">
           GL Transactions
         </Text>
@@ -1049,7 +1067,6 @@ export const SuccessPrintJornalVoucher = React.forwardRef<HTMLInputElement, Succ
           data={jVPrint?.glTransactions}
           total={jVPrint?.totalDebit}
         />
-
         {totalWords && (
           <Box display="flex" py="s8" justifyContent="space-between">
             <Box display="flex" flexDir="column" gap="s4" alignItems="start" justifyContent="start">
@@ -1062,7 +1079,16 @@ export const SuccessPrintJornalVoucher = React.forwardRef<HTMLInputElement, Succ
             </Box>
           </Box>
         )}
-
+        <Box py="s16">
+          <Box display="flex" flexDirection="column" gap="s4">
+            <Text fontSize="s1" fontWeight="400" color="gray.600">
+              Note
+            </Text>
+            <Text fontSize="s1" fontWeight="600" color="gray.800">
+              {jVPrint?.note}
+            </Text>
+          </Box>
+        </Box>
         {showSignatures && (
           <Box
             // position="fixed"
@@ -1074,11 +1100,12 @@ export const SuccessPrintJornalVoucher = React.forwardRef<HTMLInputElement, Succ
             gridTemplateColumns="repeat(3, 1fr)"
             gap="s32"
             px="s32"
+            sx={{ pageBreakInside: 'avoid' }}
           >
             <Box display="flex" flexDir="column" alignItems="center" gap="s12">
               <Divider borderTop="1px dotted black" />
               <Text fontSize="s2" color="gray.800" fontWeight="500">
-                Prepared By
+                Prepared By ({jVPrint?.txnUserName})
               </Text>
             </Box>
             <Box display="flex" flexDir="column" alignItems="center" gap="s12">

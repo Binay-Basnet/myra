@@ -10,6 +10,7 @@ import {
   useGetBranchListQuery,
 } from '@coop/cbs/data-access';
 import { formatAddress, getLocalizedTodaysDate, localizedDate } from '@coop/cbs/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 type SelectType = {
   label: string;
@@ -20,6 +21,8 @@ interface IReportOranizationProps {
 }
 
 export const ReportOrganization = ({ ledgerName }: IReportOranizationProps) => {
+  const { t } = useTranslation();
+
   const { getValues } = useFormContext();
   const [showAllBranch, setShowAllBranch] = useState<boolean>(false);
   // const [hideAllBranch,setHideAllBranch]=useState(true)
@@ -87,7 +90,7 @@ export const ReportOrganization = ({ ledgerName }: IReportOranizationProps) => {
       <Box>
         <Box display="flex" gap="s4">
           <Text fontSize="r1" color="gray.700">
-            Address:
+            {t['reportsOrgAddress']}:
           </Text>
           <Text fontSize="r1" color="gray.700" fontWeight="500">
             {formatAddress(user?.organization?.address)}
@@ -96,7 +99,7 @@ export const ReportOrganization = ({ ledgerName }: IReportOranizationProps) => {
 
         <Box display="flex" gap="s4">
           <Text fontSize="r1" color="gray.700">
-            Regd No:
+            {t['reportsOrgRegdNo']}:
           </Text>
           <Text fontSize="r1" color="gray.700" fontWeight="500">
             {user?.organization?.registrationDetails?.regdNo ?? 'N/A'}
@@ -105,7 +108,7 @@ export const ReportOrganization = ({ ledgerName }: IReportOranizationProps) => {
 
         <Box display="flex" gap="s4">
           <Text fontSize="r1" color="gray.700">
-            Pan:
+            {t['reportsOrgPan']}:
           </Text>
           <Text fontSize="r1" color="gray.700" fontWeight="500">
             {user?.organization?.registrationDetails?.panOrVat ?? 'N/A'}
@@ -114,7 +117,7 @@ export const ReportOrganization = ({ ledgerName }: IReportOranizationProps) => {
         {branchId && (
           <Box display="flex" gap="s4">
             <Text fontSize="r1" color="gray.700">
-              Service Center:
+              {t['reportsOrgServiceCenter']}:
             </Text>
             {singleName?.length && (
               <Text fontSize="r1" color="gray.700" fontWeight="500">
@@ -155,7 +158,7 @@ export const ReportOrganization = ({ ledgerName }: IReportOranizationProps) => {
                 </Text>
                 {nameList?.length !== 1 && (
                   <Button variant="link" onClick={() => setShowAllBranch(false)} p="0">
-                    Show Less
+                    {t['reportsOrgShowLess']}
                   </Button>
                 )}
               </Box>
@@ -165,7 +168,7 @@ export const ReportOrganization = ({ ledgerName }: IReportOranizationProps) => {
         {ledgerName && (
           <Box display="flex" gap="s4">
             <Text fontSize="r1" color="gray.700">
-              Ledger Name:
+              {t['reportsOrgLedgerName']}:
             </Text>
             <Text fontSize="r1" color="gray.700" fontWeight="500">
               {ledgerName as string}
@@ -178,14 +181,14 @@ export const ReportOrganization = ({ ledgerName }: IReportOranizationProps) => {
         {period?.to ? (
           <Box display="flex" gap="s4">
             <Text fontSize="r1" color="gray.700">
-              Statement from:
+              {t['reportsOrgStatementFrom']}:
             </Text>
 
             <Text fontSize="r1" color="gray.700" fontWeight="500">
               {localizedDate(period?.from)}
             </Text>
             <Text fontSize="r1" color="gray.700">
-              to
+              {t['reportsOrgStatementTo']}
             </Text>
             <Text fontSize="r1" color="gray.700" fontWeight="500">
               {localizedDate(period?.to)}
@@ -194,7 +197,7 @@ export const ReportOrganization = ({ ledgerName }: IReportOranizationProps) => {
         ) : (
           <Box display="flex" gap="s4">
             <Text fontSize="r1" color="gray.700">
-              Statement at:
+              {t['reportsOrgStatementAt']}:
             </Text>
 
             <Text fontSize="r1" color="gray.700" fontWeight="500">
@@ -205,7 +208,7 @@ export const ReportOrganization = ({ ledgerName }: IReportOranizationProps) => {
 
         <Box display="flex" gap="s4">
           <Text fontSize="r1" color="gray.700">
-            Printed Date:
+            {t['reportsOrgPrintedDate']}:
           </Text>
           <Text fontSize="r1" color="gray.700" fontWeight="500">
             {getLocalizedTodaysDate()}

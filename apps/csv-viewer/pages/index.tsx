@@ -130,7 +130,6 @@ export const Index = () => {
                   alignItems="center"
                   gap="s8"
                   position="relative"
-                  // bg={selectedTab.value === tab.value ? '#e6e6e6' : 'transparent'}
                   color={selectedTab?.value === tab.value ? 'gray.900' : 'gray.600'}
                   key={tab.value}
                 >

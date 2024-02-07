@@ -131,6 +131,40 @@ export const useSavingExcelExportMutation = <TError = unknown, TContext = unknow
     ),
     options
   );
+export const SavingPdfExportDocument = `
+    mutation savingPDFExport($data: EbankingSavingFilterPlusDate!) {
+  eBanking {
+    account {
+      savingPDFExport(data: $data) {
+        url
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSavingPdfExportMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    Types.SavingPdfExportMutation,
+    TError,
+    Types.SavingPdfExportMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    Types.SavingPdfExportMutation,
+    TError,
+    Types.SavingPdfExportMutationVariables,
+    TContext
+  >(
+    ['savingPDFExport'],
+    useAxios<Types.SavingPdfExportMutation, Types.SavingPdfExportMutationVariables>(
+      SavingPdfExportDocument
+    ),
+    options
+  );
 export const ChangeCoopPinDocument = `
     mutation changeCoopPin($oldPin: String!, $newPin: String!) {
   eBanking(source: EBANKING) {

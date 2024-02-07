@@ -296,11 +296,11 @@ query getLoanProductDetail($id: ID!) {
   }
 }
 
-query getLoanAccountList($paginate: Pagination, $filter: Filter) {
+query getLoanAccountList($paginate: Pagination, $filter: Filter, $productId: ID!) {
   settings {
     general {
       loanProducts {
-        getLoanAccountlist(paginate: $paginate, filter: $filter) {
+        getLoanAccountlist(paginate: $paginate, filter: $filter, productId: $productId) {
           totalCount
           pageInfo {
             hasNextPage
@@ -326,6 +326,7 @@ query getLoanAccountList($paginate: Pagination, $filter: Filter) {
               LoanAccountName
               appliedLoanAmount
               approvedDate
+              effectiveInterestRate
             }
           }
         }

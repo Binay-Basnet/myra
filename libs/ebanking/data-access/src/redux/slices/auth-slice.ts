@@ -4,8 +4,14 @@ import { EbankingCooperative, EbankingUser } from '@coop/ebanking/data-access';
 
 import type { RootState } from '../store';
 
+type CustomEbankingUser = EbankingUser & {
+  preference: {
+    date: string;
+  };
+};
+
 interface AuthenticatePayload {
-  user: Partial<EbankingUser>;
+  user: Partial<CustomEbankingUser>;
   token: string;
 }
 
@@ -18,7 +24,7 @@ interface CoopAuthenticatePayload {
 interface AuthState {
   currentToken: 'MYRA' | 'COOP';
 
-  user: Partial<EbankingUser> | null;
+  user: Partial<CustomEbankingUser> | null;
   isLogged: boolean | null;
   token: string | null;
 
@@ -119,6 +125,10 @@ export const authSlice = createSlice({
     setSelectedCoop: (state, action) => {
       state.selectedCoop = action.payload.selectedCoop;
     },
+
+    setEbankingPreference: (state, action: PayloadAction<{ preference: { date: string } }>) => {
+      state.user = { ...state.user, preference: action.payload.preference };
+    },
   },
 });
 
@@ -134,6 +144,7 @@ export const {
   setCurrentToken,
   updateDefaultAccountInCoop,
   setSelectedCoop,
+  setEbankingPreference,
 } = authSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

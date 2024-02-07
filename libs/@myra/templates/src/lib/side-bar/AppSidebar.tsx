@@ -64,7 +64,7 @@ export const AppSidebar = ({ module = 'CBS', menu, forms }: ISidebarProps) => {
           px="s16"
         >
           <Text fontSize="s2" fontWeight="600" color="primary.500">
-            {appNav.label}
+            {t[appNav.label] || appNav.label}
           </Text>
 
           <Link href={link}>
@@ -108,7 +108,6 @@ export const AppSidebar = ({ module = 'CBS', menu, forms }: ISidebarProps) => {
                     )
                 )}
               </PopOverComponentForButtonList>
-
               <Divider my="s16" />
             </>
           )}

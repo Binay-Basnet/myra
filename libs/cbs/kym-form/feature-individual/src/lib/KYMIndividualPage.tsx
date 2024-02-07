@@ -166,8 +166,14 @@ export const KYMIndividualPage = () => {
       await asyncToast({
         id: 'individual-add',
         msgs: {
-          loading: action === 'edit' ? 'Editing Member' : 'Adding Member',
-          success: action === 'edit' ? 'Member Edited Successfully' : 'Member Added Successfully',
+          loading:
+            action === 'edit'
+              ? `${t['membersFormEditingMembers']}`
+              : `${t['membersFormAddingMembers']}`,
+          success:
+            action === 'edit'
+              ? `${t['memberEditedSuccessfull']}`
+              : `${t['memberAddedSuccessfull']}`,
         },
         promise: mutateAsync({
           id: router.query['id'] as string,
@@ -206,8 +212,8 @@ export const KYMIndividualPage = () => {
         <FormHeader
           title={
             action === 'edit' || action === 'update'
-              ? `Update Member - ${featureCode?.newMemberIndiviual}`
-              : `Add New Member - ${featureCode?.newMemberIndiviual}`
+              ? `${t['membersFormUpdateMembers']} - ${featureCode?.newMemberIndiviual}`
+              : `${t['membersFormAddNewMembers']} - ${featureCode?.newMemberIndiviual}`
           }
           closeLink={ROUTES.CBS_MEMBER_LIST}
         />
@@ -227,7 +233,7 @@ export const KYMIndividualPage = () => {
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                {t['kymInd2ProfessionalInformation']}
+                {t['kymAccInd2ProfessionalDetails']}
               </Text>
               <MemberKYMProfession />
               <MemberKYMMainOccupation />
@@ -237,7 +243,7 @@ export const KYMIndividualPage = () => {
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                {t['kymInd3COOPmembership']}
+                {t['kymAccInd3CoopMembership']}
               </Text>
               <KYMIndCoopBasicDetails />
               <KYMIndCoopDetailsFamilyMember />
@@ -248,7 +254,7 @@ export const KYMIndividualPage = () => {
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                {t['kymInd4Declaration']}
+                {t['kymAccInd4Declaration']}
               </Text>
               <KYMDeclaration />
               <KYMDocumentDeclaration />

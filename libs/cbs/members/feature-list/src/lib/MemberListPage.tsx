@@ -1,12 +1,14 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
+import qs from 'qs';
 
 import { PageHeader, TablePopover, toast } from '@myra-ui';
 import { AvatarCell, Column, Table } from '@myra-ui/table';
 
 import {
+  useAppSelector,
   useGetGeneralMemberSettingsDataQuery,
   useGetMemberFilterMappingQuery,
   useGetMemberListExportQuery,
@@ -59,9 +61,19 @@ export const MemberListPage = () => {
     filter: getFilterQuery({ objState: { value: 'APPROVED', compare: '=' } }),
   };
 
+  const sortParams = router.query['sort'] as string;
+
   const { data, isFetching } = useGetMemberListQuery({
     ...filterParams,
-    pagination: getPaginationQuery(),
+    pagination: sortParams
+      ? getPaginationQuery()
+      : {
+          ...getPaginationQuery(),
+          order: {
+            column: objState === 'DRAFT' || objState === 'VALIDATED' ? 'id' : 'activeDate',
+            arrange: 'DESC',
+          },
+        },
   });
 
   const { data: memberFilterData } = useGetMemberFilterMappingQuery();
@@ -157,7 +169,7 @@ export const MemberListPage = () => {
       },
       {
         id: 'serviceCenter',
-        header: 'Service Center',
+        header: t['memberListTableServiceCenter'],
         accessorFn: (row) => row?.node?.branch,
         enableColumnFilter: true,
         meta: {
@@ -181,14 +193,14 @@ export const MemberListPage = () => {
                 objState === 'DORMANT'
                   ? [
                       {
-                        title: 'Edit Dormancy',
+                        title: t['memberListEditDormancy'],
                         onClick: (node) => {
                           setMemberId(node?.id);
                           onDormancyEditModalToggle();
                         },
                       },
                       {
-                        title: 'Make Active',
+                        title: t['memberListTableMakeActive'],
                         onClick: (node) => {
                           setMemberId(node?.id);
                           onActivationModalToggle();
@@ -279,7 +291,7 @@ export const MemberListPage = () => {
                         },
                       },
                       {
-                        title: 'Make Dormant',
+                        title: t['memberListTableMakeDormant'],
                         onClick: (node) =>
                           router.push(`${ROUTES.CBS_MEMBER_DORMANCY}?id=${node?.id}`),
                       },
@@ -312,11 +324,36 @@ export const MemberListPage = () => {
     }
   );
 
+  const user = useAppSelector((state) => state.auth?.user);
+
+  useEffect(() => {
+    const queryString = qs.stringify(
+      {
+        serviceCenter: {
+          value: user?.currentBranch?.id,
+          compare: '=',
+        },
+      },
+      { allowDots: true, arrayFormat: 'brackets', encode: false }
+    );
+
+    router.push(
+      {
+        query: {
+          ...router.query,
+          filter: queryString,
+        },
+      },
+      undefined,
+      { shallow: true }
+    );
+  }, []);
+
   return (
     <>
       <PageHeader
         showTabsInFilter
-        heading={`Active Members - ${featureCode?.memberList}`}
+        heading={`${t['activeMembers']} - ${featureCode?.memberList}`}
         tabItems={MEMBER_TAB_ITEMS}
       />
 
@@ -346,7 +383,7 @@ export const MemberListPage = () => {
         }}
         handleExportCSV={() => {
           setTriggerExport(true);
-          setIsExportPDF(false);
+          setIs(false);
           setIsExportExcel(true);
         }}
       />

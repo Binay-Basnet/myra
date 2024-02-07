@@ -6,6 +6,7 @@ import { Table } from '@myra-ui/table';
 
 import { Can } from '@coop/cbs/utils';
 import { PopoverComponent } from '@coop/myra/components';
+import { useTranslation } from '@coop/shared/utils';
 
 import { REPORTS } from '../constants/REPORTS';
 
@@ -19,6 +20,9 @@ type ModulesType = {
 export const ShareReportList = ({ module }: ModulesType) => {
   const router = useRouter();
   const listName = router.query['report-group'] as keyof typeof REPORTS;
+
+  const { t } = useTranslation();
+
   return (
     <Box display="flex" flexDir="column" p="s16" gap="s16">
       <Text fontSize="r3" color="gray.800" fontWeight="600" py="s16" textTransform="capitalize">
@@ -37,7 +41,7 @@ export const ShareReportList = ({ module }: ModulesType) => {
             }
           >
             {/* {report.id} -  */}
-            {report.report}
+            {t[report.report] || report.report}
           </ReportLinkText>
         </Can>
       ))}

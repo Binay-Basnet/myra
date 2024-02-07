@@ -63,6 +63,7 @@ export * from './lib/others/SavingsBalanceReport';
 export * from './lib/others/ShareCertificatePrintReport';
 export * from './lib/service-center/BranchReadinessReport';
 export * from './lib/service-center/ServiceCenterListReport';
+export * from './lib/service-center/ServiceCenterSummaryReport';
 export * from './lib/share/ShareBalanceReport';
 export * from './lib/share/ShareRegisterReport';
 export * from './lib/share/ShareStatementReport';

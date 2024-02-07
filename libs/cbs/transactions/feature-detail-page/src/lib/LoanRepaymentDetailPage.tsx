@@ -54,7 +54,7 @@ export const LoanRepaymentDetailPage = () => {
             <PaymentDetails detailPage="loanRepayment" />
             <OtherDetails
               branch={loanRepaymentDetailData?.transactionBranch as string}
-              teller={loanRepaymentDetailData?.teller as string}
+              teller={loanRepaymentDetailData?.txnUserName as string}
             />
             {loanRepaymentDetailData?.note && <Note note={loanRepaymentDetailData?.note} />}
             <GlTransaction

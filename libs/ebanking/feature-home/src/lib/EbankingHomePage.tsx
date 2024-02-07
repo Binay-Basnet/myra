@@ -40,7 +40,10 @@ export const EbankingHomePage = () => {
     filter: { isActive: true },
   });
 
-  const utilityServices = utilityServicesData?.eBanking?.utility?.listServiceType?.data ?? [];
+  const utilityServices =
+    utilityServicesData?.eBanking?.utility?.listServiceType?.data?.filter(
+      (service) => service?.slug !== 'qr_payment'
+    ) ?? [];
 
   const transactions = accountList?.eBanking?.account?.list?.recentTransactions?.edges;
 
@@ -223,7 +226,12 @@ export const EbankingHomePage = () => {
       <InfoCard
         title="Recent Transactions"
         btn={
-          <Button variant="link" w="auto" px="0">
+          <Button
+            variant="link"
+            w="auto"
+            px="0"
+            onClick={() => router.push(`/transaction-history`)}
+          >
             View All Transactions
             <Icon as={ChevronRightIcon} color="priamry.500" />
           </Button>
