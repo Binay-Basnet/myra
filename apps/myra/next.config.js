@@ -16,14 +16,14 @@ const securityHeaders = [
     key: 'X-Frame-Options',
     value: 'SAMEORIGIN',
   },
-  {
-    key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
-  },
-  {
-    key: 'X-Content-Type-Options',
-    value: 'nosniff',
-  },
+  // {
+  //   key: 'Content-Security-Policy',
+  //   value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+  // },
+  // {
+  //   key: 'X-Content-Type-Options',
+  //   value: 'nosniff',
+  // },
   {
     key: 'Permissions-Policy',
     value: 'camera=(); battery=(); geolocation=(self); microphone=()',
