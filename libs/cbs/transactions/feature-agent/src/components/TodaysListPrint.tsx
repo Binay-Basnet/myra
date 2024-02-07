@@ -138,7 +138,7 @@ export const TodaysListPrint = React.forwardRef<HTMLInputElement>((props, ref) =
       display="none"
       sx={{
         '@media print': {
-          display: 'flex',
+          display: 'block',
         },
         '@page': {
           size: 'auto !important',

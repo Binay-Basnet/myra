@@ -55,7 +55,7 @@ export const AllTransactionDetailPagePrint = ({
       position="relative"
       sx={{
         '@media print': {
-          display: 'flex',
+          display: 'block',
         },
         '@page': {
           size: 'auto !important',
