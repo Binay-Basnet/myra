@@ -103,6 +103,7 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
       },
       bankDeposit: {
         amount: String(totalAmount ?? 0),
+        depositedBy: PaymentDepositedBy.Self,
       },
     },
   });
