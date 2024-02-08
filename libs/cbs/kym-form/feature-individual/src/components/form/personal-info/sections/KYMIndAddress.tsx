@@ -21,6 +21,7 @@ export const KYMIndAddress = () => {
         sectionId={KYMSection.INDIVIDUAL_PERMANENT_ADDRESS}
         sectionHeader="kymIndPermanentAddress"
         name="permanentAddress"
+        isRequired
       />
 
       <FormSection id={KYMSection.INDIVIDUAL_TEMPORARY_ADDRESS} header="kymIndTemporaryAddress">

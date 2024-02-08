@@ -52,12 +52,14 @@ export const MemberKYMMainOccupation = () => {
               value: data as string,
             })) ?? []
           }
+          isRequired
         />
         <GridItem colSpan={2}>
           <FormInput
             type="text"
             name="mainOccupation.orgName"
             label={t['kymIndOccupationOrgFirmName']}
+            isRequired
           />
         </GridItem>
 

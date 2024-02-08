@@ -5,5 +5,6 @@ export const KymCoopRegdAddress = () => (
     sectionId="kymCoopAccRegisteredAddress"
     sectionHeader="kymCoopRegisteredAddress"
     name="registeredAddress"
+    isRequired
   />
 );

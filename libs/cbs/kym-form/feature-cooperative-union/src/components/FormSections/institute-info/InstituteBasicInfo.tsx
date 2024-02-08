@@ -40,8 +40,13 @@ export const InstituteBasicInfo = () => {
         label={t['kymCoopUnionNatureOfBusiness']}
       />
 
-      <FormDatePicker name="regdDate" label={t['kymCoopUnionRegistrationDate']} maxToday />
-      <FormInput isRequired type="number" name="vatOrPan" label={t['kymCoopUnionVATPanNo']} />
+      <FormDatePicker
+        name="regdDate"
+        label={t['kymCoopUnionRegistrationDate']}
+        maxToday
+        isRequired
+      />
+      <FormInput type="number" name="vatOrPan" label={t['kymCoopUnionVATPanNo']} />
 
       <FormInput type="text" name="noOfBranches" label={t['serviceCenterNoOfServiceCenter']} />
     </FormSection>

@@ -112,7 +112,6 @@ const AddDirector = ({ removeDirector, index }: IAddDirectorProps) => {
                   label={t['kymCoopUnionFullName']}
                 />
                 <FormInput
-                  isRequired
                   type="text"
                   name={`directors.${index}.designationEn`}
                   id="boardOfDirectors.designationEn"
@@ -165,7 +164,6 @@ const AddDirector = ({ removeDirector, index }: IAddDirectorProps) => {
                   label={t['kymCoopUnionMobileNo']}
                 />
                 <FormEmailInput
-                  isRequired
                   type="text"
                   name={`directors.${index}.email`}
                   id="boardOfDirectors.email"

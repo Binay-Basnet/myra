@@ -23,7 +23,7 @@ export const RegisteredDetailsInstitution = () => {
           label={t['kymInsIssuingOffice']}
         />
       </GridItem>
-      <FormAddress name="registeredAddress" />
+      <FormAddress name="registeredAddress" isRequired />
     </FormSection>
   );
 };

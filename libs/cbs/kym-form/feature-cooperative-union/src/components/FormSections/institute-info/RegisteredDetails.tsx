@@ -22,7 +22,7 @@ export const RegisteredDetails = () => {
         />
       </GridItem>
 
-      <FormAddress name="regdAddress" />
+      <FormAddress name="regdAddress" isRequired />
     </FormSection>
   );
 };

@@ -86,7 +86,6 @@ export const AddRepresentative = () => {
                       label={t['kymCoopUnionDirFullName']}
                     />
                     <FormInput
-                      isRequired
                       type="text"
                       name="centralRepresentative.designationEn"
                       id="centralRepresentative.designationEn"
@@ -155,6 +154,7 @@ export const AddRepresentative = () => {
                       name="centralRepresentative.citizenshipNo"
                       id="centralRepresentative.citizenshipNo"
                       label={t['kymCoopUnionDirCitizenshipPassportDrivingLicenseNo']}
+                      isRequired
                     />
 
                     <FormInput
@@ -162,6 +162,7 @@ export const AddRepresentative = () => {
                       name="centralRepresentative.panNo"
                       id="centralRepresentative.panNo"
                       label={t['kymCoopUnionPANNo']}
+                      isRequired
                     />
                   </InputGroupContainer>
 

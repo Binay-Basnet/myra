@@ -10,7 +10,7 @@ export const KymCoopDate = () => {
     <FormSection id="kymCoopAccCooperativeDate">
       <FormDatePicker name="lastAuditDate" label={t['kymCoopLastAuditDate']} maxToday />
 
-      <FormDatePicker name="lastAgmDate" label={t['kymCoopLastAGMDate']} maxToday />
+      <FormDatePicker name="lastAgmDate" label={t['kymCoopLastAGMDate']} maxToday isRequired />
     </FormSection>
   );
 };

@@ -36,8 +36,13 @@ export const BasicDetailsInstitution = () => {
         name="natureOfBusiness"
         label={t['kymInsNatureofBusiness']}
       />
-      <FormDatePicker name="registrationDate" label={t['kymInsRegistrationDate']} maxToday />
-      <FormInput isRequired type="number" name="vatOrPanNo" label={t['kymInsVATPanNo']} />
+      <FormDatePicker
+        name="registrationDate"
+        label={t['kymInsRegistrationDate']}
+        maxToday
+        isRequired
+      />
+      <FormInput type="number" name="vatOrPanNo" label={t['kymInsVATPanNo']} />
       <FormInput type="text" name="noOfBranches" label={t['serviceCenterNoOfServiceCenter']} />
     </FormSection>
   );

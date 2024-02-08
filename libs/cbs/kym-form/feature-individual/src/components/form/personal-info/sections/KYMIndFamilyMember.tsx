@@ -60,6 +60,7 @@ export const KYMIndFamilyMember = () => {
               name={`familyMembers.${index}.relationshipId`}
               label={t['kymIndFamilyRelationship']}
               options={getFieldOption(relationshipData)}
+              isRequired
             />
 
             <FormInput

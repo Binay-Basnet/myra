@@ -84,7 +84,6 @@ export const DirectorTopPart = ({ index }: IAddDirector) => {
           label={t['kymInsMobileNo']}
         />
         <FormInput
-          isRequired
           id="DirectorInstitutionId"
           type="text"
           name={`director.${index}.email`}

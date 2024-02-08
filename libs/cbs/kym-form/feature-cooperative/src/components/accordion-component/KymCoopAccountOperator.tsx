@@ -95,7 +95,6 @@ export const AddOperator = ({ removeDirector, index }: IAddDirector) => {
               label={t['kymCoopFullName']}
             />
             <FormInput
-              isRequired
               id="accountOperatorCoop"
               type="text"
               name={`accountOperator.${index}.designation`}
@@ -142,7 +141,6 @@ export const AddOperator = ({ removeDirector, index }: IAddDirector) => {
               label={t['kymCoopMobileNo']}
             />
             <FormInput
-              isRequired
               id="accountOperatorCoop"
               type="text"
               name={`accountOperator.${index}.email`}

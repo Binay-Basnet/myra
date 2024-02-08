@@ -139,11 +139,22 @@ export const asyncToast = async <T extends Record<string, unknown>>({
             });
           } else {
             onError && onError(errorKeys[0], response);
-            toast({
-              id,
-              type: 'error',
-              message: 'Some fields are empty or invalid',
-            });
+            if (errorKeys[0].__typename === 'ValidationError') {
+              toast({
+                id,
+                type: 'error',
+                message:
+                  errorKeys[0].validationErrorMsg[
+                    Object.keys(errorKeys[0].validationErrorMsg)[0]
+                  ][0],
+              });
+            } else {
+              toast({
+                id,
+                type: 'error',
+                message: 'Some fields are empty or invalid',
+              });
+            }
           }
         } else {
           onSuccess && onSuccess(response);

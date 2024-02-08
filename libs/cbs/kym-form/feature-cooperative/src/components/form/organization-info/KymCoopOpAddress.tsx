@@ -5,5 +5,6 @@ export const KymCoopOpAddress = () => (
     sectionId="kymCoopAccOperatingAddress"
     sectionHeader="kymCoopOperatingAddress"
     name="operatingAddress"
+    isRequired
   />
 );

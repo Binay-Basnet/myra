@@ -99,7 +99,6 @@ export const AddDirector = ({ removeDirector, index }: ICOOPDirector) => {
               label={t['kymCoopFullName']}
             />
             <FormInput
-              isRequired
               id="boardDirectorCoop"
               type="text"
               name={`directorDetails.${index}.designation`}
@@ -148,7 +147,6 @@ export const AddDirector = ({ removeDirector, index }: ICOOPDirector) => {
               label={t['kymCoopMobileNo']}
             />
             <FormInput
-              isRequired
               id="boardDirectorCoop"
               type="text"
               name={`directorDetails.${index}.email`}

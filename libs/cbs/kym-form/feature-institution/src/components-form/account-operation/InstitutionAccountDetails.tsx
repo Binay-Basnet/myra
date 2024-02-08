@@ -108,7 +108,6 @@ const AddAccountDetails = ({ removeDirector, index }: IAddDirector) => {
                 label={t['kymInsContactNo']}
               />
               <FormInput
-                isRequired
                 id="AccountOperatorInstitution"
                 type="text"
                 name={`accountOperator.${index}.email`}
@@ -153,7 +152,6 @@ const AddAccountDetails = ({ removeDirector, index }: IAddDirector) => {
             <Box display="flex" flexDirection="row" justifyContent="flex-start" gap="s16">
               <Box px="s20" py="s16" display="grid" gridTemplateColumns="repeat(3, 1fr)" gap="s20">
                 <FormSelect
-                  isRequired
                   id="AccountOperatorInstitution"
                   name={`accountOperator.${index}.designation`}
                   label={t['kymInsDesignation']}

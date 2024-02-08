@@ -110,7 +110,6 @@ const AddDirector = ({ removeAccount, index }: IAddDirectorProps) => {
                     label={t['kymCoopUnionOpFullName']}
                   />
                   <FormInput
-                    isRequired
                     type="text"
                     name={`accountOperators.${index}.designationEn`}
                     id="accountOperators.designationEn"

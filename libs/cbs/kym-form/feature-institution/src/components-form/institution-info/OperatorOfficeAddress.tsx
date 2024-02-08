@@ -5,5 +5,6 @@ export const OperatorOfficeAddress = () => (
     sectionId="kymInsoperatingOfficeAddress"
     sectionHeader="kymInsOperatorOfficeAddress"
     name="operatingOfficeAddress"
+    isRequired
   />
 );

@@ -14,21 +14,29 @@ export interface IFormAddressProps {
   sectionHeader?: string;
   name: string;
   noBorder?: boolean;
+  isRequired?: boolean;
 }
 
-export const FormAddress = ({ sectionId, sectionHeader, name, noBorder }: IFormAddressProps) => {
+export const FormAddress = ({
+  sectionId,
+  sectionHeader,
+  name,
+  noBorder,
+  isRequired,
+}: IFormAddressProps) => {
   if (sectionId && sectionHeader) {
     return (
       <FormSection id={sectionId} header={sectionHeader} divider={!noBorder}>
-        <AddressGroup name={name} />
+        <AddressGroup name={name} isRequired={isRequired} />
       </FormSection>
     );
   }
-  return <AddressGroup name={name} />;
+  return <AddressGroup name={name} isRequired={isRequired} />;
 };
 
 interface IAddressGroupProps {
   name: string;
+  isRequired?: boolean;
 }
 
 type AddressFormType<T extends string> = Record<
@@ -43,7 +51,7 @@ type AddressFormType<T extends string> = Record<
   }
 >;
 
-const AddressGroup = ({ name }: IAddressGroupProps) => {
+const AddressGroup = ({ name, isRequired }: IAddressGroupProps) => {
   const { t } = useTranslation();
   const {
     formState: { errors },
@@ -56,14 +64,14 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
   return (
     <>
       <FormSelect
-        isRequired
+        isRequired={!!isRequired}
         name={`${name}.provinceId`}
         label={t['province']}
         options={provinceList}
         errorText={errors?.[name]?.provinceId?.message}
       />
       <FormSelect
-        isRequired
+        isRequired={!!isRequired}
         name={`${name}.districtId`}
         label={t['district']}
         errorText={errors?.[name]?.districtId?.message}
@@ -73,7 +81,7 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
         }))}
       />
       <FormSelect
-        isRequired
+        isRequired={!!isRequired}
         name={`${name}.localGovernmentId`}
         label={t['localGovernment']}
         errorText={errors?.[name]?.localGovernmentId?.message}
@@ -83,7 +91,7 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
         }))}
       />
       <FormSelect
-        isRequired
+        isRequired={!!isRequired}
         name={`${name}.wardNo`}
         label={t['wardNo']}
         errorText={errors?.[name]?.wardNo?.message}

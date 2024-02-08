@@ -5,5 +5,6 @@ export const BranchOfficeAddress = () => (
     sectionId="Branch Office Address"
     sectionHeader="serviceCenterOfficeAddress"
     name="branchOfficeAddress"
+    isRequired
   />
 );
