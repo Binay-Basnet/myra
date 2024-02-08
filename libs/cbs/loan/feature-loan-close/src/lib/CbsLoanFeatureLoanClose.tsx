@@ -20,7 +20,7 @@ import {
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { FormLayout, FormMemberSelect, FormSelect, FormTextArea } from '@coop/shared/form';
-import { amountConverter, amountToWordsConverter } from '@coop/shared/utils';
+import { amountConverter, amountToWordsConverter, decimalAdjust } from '@coop/shared/utils';
 
 import { LoanFine, LoanProductCard, LoanRebate, Payment } from '../components';
 import { OutstandingPayments } from '../components/OutStandingPayments';
@@ -153,10 +153,7 @@ export const LoanCloseForm = () => {
     let filteredValues = omit(
       {
         ...values,
-        amountPaid:
-          values.paymentMethod === LoanRepaymentMethod.Cash
-            ? String(totalCashPaid)
-            : String(netPayableAmount || '0'),
+        amountPaid: String(netPayableAmount || '0'),
       },
       ['isFinePaid', 'isRebateApplied']
     );
@@ -265,11 +262,14 @@ export const LoanCloseForm = () => {
 
   const totalInterest = loanPreview?.data?.loanAccount?.remainingPayments?.data?.totalInterest;
 
-  const netPayableAmount =
+  const netPayableAmount = decimalAdjust(
+    'round',
     (Number(totalPrincipal) || 0) +
-    (Number(totalInterest) || 0) +
-    (Number(penaltyAmount) || 0) -
-    (Number(rebateAmount) || 0);
+      (Number(totalInterest) || 0) +
+      (Number(penaltyAmount) || 0) -
+      (Number(rebateAmount) || 0),
+    -2
+  );
 
   // const isLocLoan = true;
   return (
