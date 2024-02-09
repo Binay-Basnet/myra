@@ -100,7 +100,6 @@ export const TableAmountFilter = ({ column, placeholder }: TableAmountFilterProp
                       {
                         query: {
                           ...omit(router.query, ['paginate', 'filter']),
-                          filter: [],
                         },
                       },
                       undefined,

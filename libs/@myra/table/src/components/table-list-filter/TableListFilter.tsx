@@ -137,7 +137,6 @@ export const TableListFilter = ({ data, column, comparator }: TableListFilterPro
                           {
                             query: {
                               ...omit(router.query, ['paginate', 'filter']),
-                              filter: [],
                             },
                           },
                           undefined,
