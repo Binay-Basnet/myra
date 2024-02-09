@@ -51,7 +51,11 @@ export const DetailPageTabs = ({ tabs }: DetailPageTabsProps) => {
                 onClick={() =>
                   router.push(
                     {
-                      query: omit({ ...router.query, tab: tab.toLowerCase() }, ['subTab']),
+                      query: omit({ ...router.query, tab: tab.toLowerCase() }, [
+                        'subTab',
+                        'filter',
+                        'paginate',
+                      ]),
                     },
                     undefined,
                     { shallow: true }

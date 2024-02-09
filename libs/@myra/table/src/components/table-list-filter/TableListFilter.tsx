@@ -113,16 +113,36 @@ export const TableListFilter = ({ data, column, comparator }: TableListFilterPro
                         { shallow: true }
                       );
                     } else {
-                      router.push(
-                        {
-                          query: {
-                            ...omit(router.query, 'paginate'),
-                            filter: [],
+                      const omittedFilter = omit(parsedQuery, [column]);
+
+                      if (Object.keys(omittedFilter)?.length) {
+                        const queryString = qs.stringify(omittedFilter, {
+                          allowDots: true,
+                          arrayFormat: 'brackets',
+                          encode: false,
+                        });
+
+                        router.push(
+                          {
+                            query: {
+                              ...omit(router.query, 'paginate'),
+                              filter: queryString,
+                            },
                           },
-                        },
-                        undefined,
-                        { shallow: true }
-                      );
+                          undefined,
+                          { shallow: true }
+                        );
+                      } else {
+                        router.push(
+                          {
+                            query: {
+                              ...omit(router.query, ['paginate', 'filter']),
+                            },
+                          },
+                          undefined,
+                          { shallow: true }
+                        );
+                      }
                     }
                   }}
                   filterValue={
