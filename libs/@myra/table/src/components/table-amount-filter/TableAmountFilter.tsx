@@ -74,6 +74,40 @@ export const TableAmountFilter = ({ column, placeholder }: TableAmountFilterProp
                 }
                 onClose={onClose}
                 onChange={(newValue) => {
+                  if (!newValue) {
+                    const omittedFilter = omit(parsedQuery, [column]);
+
+                    if (Object.keys(omittedFilter)?.length) {
+                      const queryString = qs.stringify(omittedFilter, {
+                        allowDots: true,
+                        arrayFormat: 'brackets',
+                        encode: false,
+                      });
+
+                      return router.push(
+                        {
+                          query: {
+                            ...omit(router.query, 'paginate'),
+                            filter: queryString,
+                          },
+                        },
+                        undefined,
+                        { shallow: true }
+                      );
+                    }
+
+                    return router.push(
+                      {
+                        query: {
+                          ...omit(router.query, ['paginate', 'filter']),
+                          filter: [],
+                        },
+                      },
+                      undefined,
+                      { shallow: true }
+                    );
+                  }
+
                   let queryString;
                   if (newValue.condition === '=') {
                     queryString = qs.stringify(
@@ -124,7 +158,7 @@ export const TableAmountFilter = ({ column, placeholder }: TableAmountFilterProp
                     );
                   }
 
-                  router.push(
+                  return router.push(
                     {
                       query: {
                         ...omit(router.query, 'paginate'),
@@ -149,7 +183,7 @@ export interface TableAmountFilterContentProps {
   onClose?: () => void;
 
   value: { min: string | undefined; max: string | undefined; condition: Condition } | undefined;
-  onChange: (newValue: {
+  onChange: (newValue?: {
     min: string | undefined;
     max: string | undefined;
     condition: Condition;
@@ -225,6 +259,7 @@ export const TableAmountFilterContent = React.forwardRef(
             paddingX="s8"
             cursor="pointer"
             onClick={() => {
+              onChange();
               onClose && onClose();
             }}
           >
