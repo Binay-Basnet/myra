@@ -34,6 +34,8 @@ const ACCOUNT_TAB_ITEMS = [
 ];
 
 export const CBSAccountList = () => {
+  const [triggerQuery, setTriggerQuery] = useState(false);
+
   const [triggerExport, setTriggerExport] = useState(false);
   const [isExportPDF, setIsExportPDF] = useState(false);
   const [isExportExcel, setIsExportExcel] = useState(false);
@@ -67,12 +69,15 @@ export const CBSAccountList = () => {
 
   const sortParams = router.query['sort'] as string;
 
-  const { data, isFetching } = useGetAccountTableListMinimalQuery({
-    ...filterParams,
-    paginate: sortParams
-      ? getPaginationQuery()
-      : { ...getPaginationQuery(), order: { column: 'accountOpenedDate', arrange: 'DESC' } },
-  });
+  const { data, isFetching } = useGetAccountTableListMinimalQuery(
+    {
+      ...filterParams,
+      paginate: sortParams
+        ? getPaginationQuery()
+        : { ...getPaginationQuery(), order: { column: 'accountOpenedDate', arrange: 'DESC' } },
+    },
+    { enabled: triggerQuery }
+  );
 
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
@@ -255,16 +260,18 @@ export const CBSAccountList = () => {
       { allowDots: true, arrayFormat: 'brackets', encode: false }
     );
 
-    router.push(
-      {
-        query: {
-          ...router.query,
-          filter: queryString,
+    router
+      .push(
+        {
+          query: {
+            ...router.query,
+            filter: queryString,
+          },
         },
-      },
-      undefined,
-      { shallow: true }
-    );
+        undefined,
+        { shallow: true }
+      )
+      .then(() => setTriggerQuery(true));
   }, []);
 
   return (
@@ -278,7 +285,7 @@ export const CBSAccountList = () => {
       </Box>
 
       <Table
-        isLoading={isFetching}
+        isLoading={triggerQuery ? isFetching : true}
         data={rowData}
         columns={columns}
         rowOnClick={(row) => {

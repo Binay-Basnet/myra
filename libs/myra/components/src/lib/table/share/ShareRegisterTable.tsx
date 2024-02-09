@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import qs from 'qs';
 
@@ -26,14 +26,19 @@ export const ShareRegisterTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
+  const [triggerQuery, setTriggerQuery] = useState(false);
+
   const { data: shareFilterMapping } = useGetShareFilterMappingQuery();
 
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
-  const { data, isFetching } = useGetShareRegisterListQuery({
-    pagination: getPaginationQuery(),
-    filter: getFilterQuery(),
-  });
+  const { data, isFetching } = useGetShareRegisterListQuery(
+    {
+      pagination: getPaginationQuery(),
+      filter: getFilterQuery(),
+    },
+    { enabled: triggerQuery }
+  );
 
   const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -201,16 +206,18 @@ export const ShareRegisterTable = () => {
       { allowDots: true, arrayFormat: 'brackets', encode: false }
     );
 
-    router.push(
-      {
-        query: {
-          ...router.query,
-          filter: queryString,
+    router
+      .push(
+        {
+          query: {
+            ...router.query,
+            filter: queryString,
+          },
         },
-      },
-      undefined,
-      { shallow: true }
-    );
+        undefined,
+        { shallow: true }
+      )
+      .then(() => setTriggerQuery(true));
   }, []);
 
   return (
@@ -221,7 +228,7 @@ export const ShareRegisterTable = () => {
         />
       </Box>
       <Table
-        isLoading={isFetching}
+        isLoading={triggerQuery ? isFetching : true}
         data={rowData}
         columns={columns}
         rowOnClick={(row) =>

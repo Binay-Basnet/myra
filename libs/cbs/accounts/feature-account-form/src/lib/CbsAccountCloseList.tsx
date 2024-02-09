@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import qs from 'qs';
 
@@ -24,10 +24,15 @@ export const CBSAccountCloseList = () => {
 
   const { t } = useTranslation();
 
-  const { data, isLoading } = useGetAccountTableListMinimalQuery({
-    paginate: getPaginationQuery(),
-    filter: getFilterQuery({ objState: { value: 'INACTIVE', compare: '=' } }),
-  });
+  const [triggerQuery, setTriggerQuery] = useState(false);
+
+  const { data, isFetching } = useGetAccountTableListMinimalQuery(
+    {
+      paginate: getPaginationQuery(),
+      filter: getFilterQuery({ objState: { value: 'INACTIVE', compare: '=' } }),
+    },
+    { enabled: triggerQuery }
+  );
 
   const { data: savingFilterMapping } = useGetSavingFilterMappingQuery();
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
@@ -134,16 +139,18 @@ export const CBSAccountCloseList = () => {
       { allowDots: true, arrayFormat: 'brackets', encode: false }
     );
 
-    router.push(
-      {
-        query: {
-          ...router.query,
-          filter: queryString,
+    router
+      .push(
+        {
+          query: {
+            ...router.query,
+            filter: queryString,
+          },
         },
-      },
-      undefined,
-      { shallow: true }
-    );
+        undefined,
+        { shallow: true }
+      )
+      .then(() => setTriggerQuery(true));
   }, []);
 
   return (
@@ -151,7 +158,7 @@ export const CBSAccountCloseList = () => {
       <PageHeader heading={`${t['accountClose']} - ${featureCode?.savingCloseAccountList}`} />
 
       <Table
-        isLoading={isLoading}
+        isLoading={triggerQuery ? isFetching : true}
         data={rowData}
         columns={columns}
         rowOnClick={(row) => {

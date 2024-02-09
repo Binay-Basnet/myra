@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import qs from 'qs';
 
@@ -24,6 +24,8 @@ import {
 export const CBSLoanRepaymentList = () => {
   const router = useRouter();
 
+  const [triggerQuery, setTriggerQuery] = useState(false);
+
   const { t } = useTranslation();
   const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
@@ -39,6 +41,7 @@ export const CBSLoanRepaymentList = () => {
     },
     {
       staleTime: 0,
+      enabled: triggerQuery,
     }
   );
 
@@ -184,16 +187,18 @@ export const CBSLoanRepaymentList = () => {
       { allowDots: true, arrayFormat: 'brackets', encode: false }
     );
 
-    router.push(
-      {
-        query: {
-          ...router.query,
-          filter: queryString,
+    router
+      .push(
+        {
+          query: {
+            ...router.query,
+            filter: queryString,
+          },
         },
-      },
-      undefined,
-      { shallow: true }
-    );
+        undefined,
+        { shallow: true }
+      )
+      .then(() => setTriggerQuery(true));
   }, []);
 
   return (
@@ -203,7 +208,7 @@ export const CBSLoanRepaymentList = () => {
       </Box>
 
       <Table
-        isLoading={isFetching}
+        isLoading={triggerQuery ? isFetching : true}
         data={rowData}
         columns={columns}
         rowOnClick={(row) => {

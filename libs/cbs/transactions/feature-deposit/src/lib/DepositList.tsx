@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import qs from 'qs';
 
@@ -35,12 +35,17 @@ export const DepositList = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
+  const [triggerQuery, setTriggerQuery] = useState(false);
+
   const { data: depositFilterMapping } = useGetDepositFilterMappingQuery();
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
-  const { data, isFetching } = useGetDepositListDataQuery({
-    pagination: getPaginationQuery(),
-    filter: getFilterQuery(),
-  });
+  const { data, isFetching } = useGetDepositListDataQuery(
+    {
+      pagination: getPaginationQuery(),
+      filter: getFilterQuery(),
+    },
+    { enabled: triggerQuery }
+  );
 
   const rowData = useMemo(() => data?.transaction?.listDeposit?.edges ?? [], [data]);
 
@@ -190,16 +195,18 @@ export const DepositList = () => {
       { allowDots: true, arrayFormat: 'brackets', encode: false }
     );
 
-    router.push(
-      {
-        query: {
-          ...router.query,
-          filter: queryString,
+    router
+      .push(
+        {
+          query: {
+            ...router.query,
+            filter: queryString,
+          },
         },
-      },
-      undefined,
-      { shallow: true }
-    );
+        undefined,
+        { shallow: true }
+      )
+      .then(() => setTriggerQuery(true));
   }, []);
 
   return (
@@ -212,7 +219,7 @@ export const DepositList = () => {
       <Table
         data={rowData}
         getRowId={(row) => String(row?.node?.ID)}
-        isLoading={isFetching}
+        isLoading={triggerQuery ? isFetching : true}
         columns={columns}
         rowOnClick={(row) =>
           router.push(`${ROUTES.CBS_TRANS_DEPOSIT_DETAILS}?id=${row?.node?.transactionCode}`)

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import qs from 'qs';
 
@@ -34,13 +34,18 @@ export const AccountTransferList = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
+  const [triggerQuery, setTriggerQuery] = useState(false);
+
   const { data: accountTransferFilterMapping } = useGetAccountTransferFilterMappingQuery();
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
-  const { data, isFetching } = useGetAccountTransferListDataQuery({
-    pagination: getPaginationQuery(),
-    filter: getFilterQuery(),
-  });
+  const { data, isFetching } = useGetAccountTransferListDataQuery(
+    {
+      pagination: getPaginationQuery(),
+      filter: getFilterQuery(),
+    },
+    { enabled: triggerQuery }
+  );
 
   const rowData = useMemo(() => data?.transaction?.listTransfer?.edges ?? [], [data]);
 
@@ -147,16 +152,18 @@ export const AccountTransferList = () => {
       { allowDots: true, arrayFormat: 'brackets', encode: false }
     );
 
-    router.push(
-      {
-        query: {
-          ...router.query,
-          filter: queryString,
+    router
+      .push(
+        {
+          query: {
+            ...router.query,
+            filter: queryString,
+          },
         },
-      },
-      undefined,
-      { shallow: true }
-    );
+        undefined,
+        { shallow: true }
+      )
+      .then(() => setTriggerQuery(true));
   }, []);
 
   return (
@@ -171,7 +178,7 @@ export const AccountTransferList = () => {
       <Table
         data={rowData}
         getRowId={(row) => String(row?.node?.ID)}
-        isLoading={isFetching}
+        isLoading={triggerQuery ? isFetching : true}
         columns={columns}
         rowOnClick={(row) =>
           router.push(

@@ -36,6 +36,8 @@ const memberTypeSlug = {
 };
 
 export const MemberListPage = () => {
+  const [triggerQuery, setTriggerQuery] = useState(false);
+
   const [triggerExport, setTriggerExport] = useState(false);
   const [isExportPDF, setIsExportPDF] = useState(false);
   const [isExportExcel, setIsExportExcel] = useState(false);
@@ -63,18 +65,21 @@ export const MemberListPage = () => {
 
   const sortParams = router.query['sort'] as string;
 
-  const { data, isFetching } = useGetMemberListQuery({
-    ...filterParams,
-    pagination: sortParams
-      ? getPaginationQuery()
-      : {
-          ...getPaginationQuery(),
-          order: {
-            column: objState === 'DRAFT' || objState === 'VALIDATED' ? 'id' : 'activeDate',
-            arrange: 'DESC',
+  const { data, isFetching } = useGetMemberListQuery(
+    {
+      ...filterParams,
+      pagination: sortParams
+        ? getPaginationQuery()
+        : {
+            ...getPaginationQuery(),
+            order: {
+              column: objState === 'DRAFT' || objState === 'VALIDATED' ? 'id' : 'activeDate',
+              arrange: 'DESC',
+            },
           },
-        },
-  });
+    },
+    { enabled: !!triggerQuery }
+  );
 
   const { data: memberFilterData } = useGetMemberFilterMappingQuery();
   const { data: memberTypeData } = useGetGeneralMemberSettingsDataQuery();
@@ -337,16 +342,18 @@ export const MemberListPage = () => {
       { allowDots: true, arrayFormat: 'brackets', encode: false }
     );
 
-    router.push(
-      {
-        query: {
-          ...router.query,
-          filter: queryString,
+    router
+      .push(
+        {
+          query: {
+            ...router.query,
+            filter: queryString,
+          },
         },
-      },
-      undefined,
-      { shallow: true }
-    );
+        undefined,
+        { shallow: true }
+      )
+      .then(() => setTriggerQuery(true));
   }, []);
 
   return (
@@ -367,7 +374,7 @@ export const MemberListPage = () => {
             router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${row?.['node']?.id}`);
           }
         }}
-        isLoading={isFetching}
+        isLoading={triggerQuery ? isFetching : true}
         noDataTitle={t['member']}
         pagination={{
           total: data?.members?.list?.data?.totalCount ?? 'Many',
@@ -383,7 +390,7 @@ export const MemberListPage = () => {
         }}
         handleExportCSV={() => {
           setTriggerExport(true);
-          setIs(false);
+          setIsExportPDF(false);
           setIsExportExcel(true);
         }}
       />

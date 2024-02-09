@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import qs from 'qs';
 
@@ -32,13 +32,18 @@ export const WithdrawList = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
+  const [triggerQuery, setTriggerQuery] = useState(false);
+
   const { data: withdrawFilterMapping } = useGetWithdrawFilterMappingQuery();
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
-  const { data, isFetching } = useGetWithdrawListDataQuery({
-    pagination: getPaginationQuery(),
-    filter: getFilterQuery(),
-  });
+  const { data, isFetching } = useGetWithdrawListDataQuery(
+    {
+      pagination: getPaginationQuery(),
+      filter: getFilterQuery(),
+    },
+    { enabled: triggerQuery }
+  );
 
   const rowData = useMemo(() => data?.transaction?.listWithdraw?.edges ?? [], [data]);
 
@@ -178,16 +183,18 @@ export const WithdrawList = () => {
       { allowDots: true, arrayFormat: 'brackets', encode: false }
     );
 
-    router.push(
-      {
-        query: {
-          ...router.query,
-          filter: queryString,
+    router
+      .push(
+        {
+          query: {
+            ...router.query,
+            filter: queryString,
+          },
         },
-      },
-      undefined,
-      { shallow: true }
-    );
+        undefined,
+        { shallow: true }
+      )
+      .then(() => setTriggerQuery(true));
   }, []);
 
   return (
@@ -200,7 +207,7 @@ export const WithdrawList = () => {
       <Table
         data={rowData}
         getRowId={(row) => String(row?.node?.ID)}
-        isLoading={isFetching}
+        isLoading={triggerQuery ? isFetching : true}
         columns={columns}
         rowOnClick={(row) =>
           router.push(`${ROUTES.CBS_TRANS_WITHDRAW_DETAILS}?id=${row?.node?.transactionCode}`)

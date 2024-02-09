@@ -1,6 +1,5 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import qs from 'qs';
 
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -9,7 +8,6 @@ import {
   GetLoanListQuery,
   LoanAccountEdge,
   LoanObjState,
-  useAppSelector,
   useGetLoanFilterMappingQuery,
   useGetMemberFilterMappingQuery,
 } from '@coop/cbs/data-access';
@@ -162,30 +160,6 @@ export const LoanClosedAccountTable = ({
     ],
     [router, loanFilterMapping, memberFilterMapping]
   );
-  const user = useAppSelector((state) => state.auth?.user);
-
-  useEffect(() => {
-    const queryString = qs.stringify(
-      {
-        branchId: {
-          value: user?.currentBranch?.id,
-          compare: '=',
-        },
-      },
-      { allowDots: true, arrayFormat: 'brackets', encode: false }
-    );
-
-    router.push(
-      {
-        query: {
-          ...router.query,
-          filter: queryString,
-        },
-      },
-      undefined,
-      { shallow: true }
-    );
-  }, []);
 
   return (
     <Table

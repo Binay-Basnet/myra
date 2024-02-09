@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import qs from 'qs';
 
 import { PageHeader, toast } from '@myra-ui';
 
 import {
   LoanObjState,
+  useAppSelector,
   useGetLoanListExportQuery,
   useGetLoanListQuery,
 } from '@coop/cbs/data-access';
@@ -18,6 +20,8 @@ export const LoanAccountList = () => {
   const [isExportPDF, setIsExportPDF] = useState(false);
   const [isExportExcel, setIsExportExcel] = useState(false);
 
+  const [triggerQuery, setTriggerQuery] = useState(false);
+
   const router = useRouter();
 
   const filterParams = {
@@ -28,12 +32,15 @@ export const LoanAccountList = () => {
 
   const sortParams = router.query['sort'] as string;
 
-  const { data, isFetching } = useGetLoanListQuery({
-    ...filterParams,
-    paginate: sortParams
-      ? getPaginationQuery()
-      : { ...getPaginationQuery(), order: { column: 'approvedDate', arrange: 'DESC' } },
-  });
+  const { data, isFetching } = useGetLoanListQuery(
+    {
+      ...filterParams,
+      paginate: sortParams
+        ? getPaginationQuery()
+        : { ...getPaginationQuery(), order: { column: 'approvedDate', arrange: 'DESC' } },
+    },
+    { enabled: triggerQuery }
+  );
 
   useGetLoanListExportQuery(
     { ...filterParams, paginate: { after: '', first: -1 }, isExportExcel, isExportPDF },
@@ -52,12 +59,39 @@ export const LoanAccountList = () => {
     }
   );
 
+  const user = useAppSelector((state) => state.auth?.user);
+
+  useEffect(() => {
+    const queryString = qs.stringify(
+      {
+        branchId: {
+          value: user?.currentBranch?.id,
+          compare: '=',
+        },
+      },
+      { allowDots: true, arrayFormat: 'brackets', encode: false }
+    );
+
+    router
+      .push(
+        {
+          query: {
+            ...router.query,
+            filter: queryString,
+          },
+        },
+        undefined,
+        { shallow: true }
+      )
+      .then(() => setTriggerQuery(true));
+  }, []);
+
   return (
     <>
       <PageHeader heading={`Loan Account - ${featureCode.loanAccountList} `} />
       <LoanAccTable
         data={data}
-        isLoading={isFetching}
+        isLoading={triggerQuery ? isFetching : true}
         type={LoanObjState.Disbursed}
         viewLink={ROUTES.CBS_LOAN_ACCOUNT_DETAILS}
         canExport

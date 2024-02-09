@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import qs from 'qs';
 
@@ -23,10 +23,15 @@ export const ShareBalanceTable = () => {
   const router = useRouter();
   const { t } = useTranslation();
 
-  const { data, isFetching } = useGetShareBalanceListQuery({
-    pagination: getPaginationQuery(),
-    filter: getFilterQuery(),
-  });
+  const [triggerQuery, setTriggerQuery] = useState(false);
+
+  const { data, isFetching } = useGetShareBalanceListQuery(
+    {
+      pagination: getPaginationQuery(),
+      filter: getFilterQuery(),
+    },
+    { enabled: triggerQuery }
+  );
 
   const { data: memberFilterMapping } = useGetMemberFilterMappingQuery();
 
@@ -120,16 +125,18 @@ export const ShareBalanceTable = () => {
       { allowDots: true, arrayFormat: 'brackets', encode: false }
     );
 
-    router.push(
-      {
-        query: {
-          ...router.query,
-          filter: queryString,
+    router
+      .push(
+        {
+          query: {
+            ...router.query,
+            filter: queryString,
+          },
         },
-      },
-      undefined,
-      { shallow: true }
-    );
+        undefined,
+        { shallow: true }
+      )
+      .then(() => setTriggerQuery(true));
   }, []);
 
   return (
@@ -140,7 +147,7 @@ export const ShareBalanceTable = () => {
         />
       </Box>
       <Table
-        isLoading={isFetching}
+        isLoading={triggerQuery ? isFetching : true}
         data={rowData}
         columns={columns}
         rowOnClick={(row) =>
