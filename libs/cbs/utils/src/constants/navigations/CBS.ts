@@ -51,17 +51,17 @@ export const CBS: NavType = {
     },
 
     SHARE: {
-      label: 'Share',
+      label: 'share',
       aclKey: 'CBS_SHARE',
 
       forms: [
         {
-          label: 'New Share Issue',
+          label: 'shareNewShareIssue',
           aclKey: 'CBS_SHARE_SHARE_ISSUE',
           route: ROUTES.CBS_SHARE_ISSUE_ADD,
         },
         {
-          label: 'New Share Return',
+          label: 'shareNewShareReturn',
           aclKey: 'CBS_SHARE_SHARE_RETURN',
           route: ROUTES.CBS_SHARE_RETURN_ADD,
         },
@@ -69,19 +69,19 @@ export const CBS: NavType = {
 
       pages: [
         {
-          label: 'Share Balance',
+          label: 'shareBalance',
           aclKey: 'CBS_SHARE_SHARE_BALANCE',
           route: ROUTES.CBS_SHARE_BALANCE,
         },
         {
-          label: 'Share Register',
+          label: 'shareRegister',
           aclKey: 'CBS_SHARE_SHARE_REGISTER',
           route: ROUTES.CBS_SHARE_REGISTER,
         },
       ],
       settingPages: [
         {
-          label: 'Share Settings',
+          label: 'shareSettings',
           aclKey: 'SETTINGS_SHARE',
           route: ROUTES.SETTINGS_GENERAL_SHARE,
         },

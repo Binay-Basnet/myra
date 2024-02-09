@@ -26,6 +26,7 @@ const PreviousExportCard = (props: PreviousExportCardProps) => {
       borderRadius={6}
       border="1px"
       borderColor="border.layout"
+      // flexWrap="wrap"
     >
       <Box display="flex" alignItems="center" gap="s16">
         {item?.node?.downloadType === 'REPORT' ? (
@@ -35,7 +36,7 @@ const PreviousExportCard = (props: PreviousExportCardProps) => {
         )}
 
         <Box>
-          <Text fontSize="r1" fontWeight="medium">
+          <Text fontSize="r1" fontWeight="medium" wordBreak="break-all">
             {item?.node?.title}
           </Text>
           <Text fontSize="s2" color="gray.600">

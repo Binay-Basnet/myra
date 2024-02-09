@@ -1,4 +1,4 @@
-const ne: Record<string, string> = {
+const en: Record<string, string> = {
   // global
   home: 'Home',
   dashboard: 'Dashboard',
@@ -90,15 +90,24 @@ const ne: Record<string, string> = {
   today: 'TODAY',
   deposits: 'Deposits',
   withdraws: 'Withdraws',
-  loan: 'Loan',
-  transactions: 'Transactions',
   tasks: 'Tasks',
 
   // cbs
   coreBankingSystem: 'Core Banking System',
+  members: 'Members',
+  share: 'Share',
+  savings: 'Savings',
+  loan: 'Loan',
+  transactions: 'Transactions',
+  transfer: 'Transfers',
+  requests: 'Requests',
+  withdrawSlip: 'Withdraw Slip',
+  microfinance: 'Microfinance',
+  reports: 'Reports',
+  others: 'Others',
 
   // member page
-  members: 'Members',
+
   activeMembers: 'Active Members',
   inactiveMembers: 'Inactive Members',
   minorMembers: 'Minor Members',
@@ -508,6 +517,17 @@ const ne: Record<string, string> = {
   kymInsAccountHolderName: "Account Holder's Name",
   kymInsAccountHolderAddress: "Account Holder's Address",
 
+  // share
+  // sidebar
+  shareNewShareIssue: 'New Share Issue',
+  shareNewShareReturn: 'New Share Return',
+  shareBalance: 'Share Balance',
+  shareRegister: 'Share Register',
+  shareSettings: 'Share Settings',
+  shareLayoutRegisterReport: 'Share Register Report',
+  shareLayoutStateReport: 'Share Statement (Individual) Report',
+  shareLayoutTransactionReport: 'Share Transaction Report',
+
   kymInsReset: 'Reset',
   kymInsContactNo__placeholder: 'Enter Contact No',
   kymInsPanNo__placeholder: 'Enter PAN No',
@@ -549,14 +569,11 @@ const ne: Record<string, string> = {
   kymIndEnterDetails: 'Enter Details',
 
   // SHARE PAGE
-  share: 'Share',
   shareActive: 'Active',
   shareSubmitted: 'Submitted',
   shareDraft: 'Draft',
 
-  shareBalance: 'Share Balance',
   shareReport: 'Share Reports',
-  shareRegister: 'Share Register',
 
   // share purchase
 
@@ -630,7 +647,6 @@ const ne: Record<string, string> = {
   accounts: 'Accounts',
 
   // Report Page
-  reports: 'Reports',
   reportsHeading: 'Reports',
   reportsCbsReports: 'CBS reports',
   reportsSavedReports: 'Saved reports',
@@ -1148,10 +1164,6 @@ const ne: Record<string, string> = {
   shareLayoutShareReturn: 'Share Return',
   shareLayoutShareSettings: 'Share Settings',
   shareLayoutShareDistribution: 'Share Distribution',
-
-  shareLayoutRegisterReport: 'Share Register Report',
-  shareLayoutStateReport: 'Share Statement (Individual) Report',
-  shareLayoutTransactionReport: 'Share Transaction Report',
 
   // account layout
   accountLayout: 'Account',
@@ -2000,7 +2012,6 @@ const ne: Record<string, string> = {
   kymCoopAcc4DetailsofAccountOperators: '4. Details of Account Operators',
   kymCoopAcc5Declaration: '5. Declaration',
   // Settings Share
-  shareSettings: 'Share Settings',
 
   // SIDEBAR
   settingsShareGeneral: 'General',
@@ -4153,7 +4164,6 @@ const ne: Record<string, string> = {
 
   complainceManagement: 'Compliance Management',
   businessProcessManagement: 'Business Process Management',
-  microfinance: 'Microfinance',
 
   fixedAssetManagement: 'Fixed Asset Management',
   otherApplications: 'OTHER APPLICATIONS',
@@ -4192,7 +4202,6 @@ const ne: Record<string, string> = {
   // transfer
   navbarTransfer: 'Transfers',
   newTransfer: 'New Transfer',
-  transfer: 'Transfers',
   transferVaultTransfer: 'Teller - Vault',
   transferTellerTransfer: 'Teller - Teller',
   transferBranchTransfer: 'Branch Transfer',
@@ -4279,10 +4288,6 @@ const ne: Record<string, string> = {
 
   loanRepaymentDepositedBy: 'Deposited By',
   prematurePenaltyEnable: 'Premature Penalty',
-
-  /* Requests Start */
-
-  requests: 'Requests',
 
   /* Requests Start */
 
@@ -4385,7 +4390,6 @@ const ne: Record<string, string> = {
   loanProductMaxInstallmentPrincipal: 'Maximum Installment Number for Principal',
   loanProductMaxInstallmentInterest: 'Maximum Installment Number for Interest',
   // savings
-  savings: 'Savings',
 
   savingsDepositSettings: 'Saving Settings',
   savingsProductSettings: 'Saving Products Settings',
@@ -4396,7 +4400,6 @@ const ne: Record<string, string> = {
   savingProducts: 'Saving Products',
 
   // withdraw slip
-  withdrawSlip: 'Withdraw Slip',
   withdrawSlipBook: 'Withdraw Slip',
   withdrawSlipRequests: 'Withdraw Slip Requests',
   withdrawSlipBlockRequests: 'Block Withdraw Slip Requests',
@@ -4417,7 +4420,6 @@ const ne: Record<string, string> = {
   memberSettingssCorePreview: 'Core Preview',
 
   // others page
-  others: 'Others',
   kymCoopLastAuditDate: 'Last Audit FY',
   serviceCenterServiceCenterContactNumber: 'Service Center Contact Number',
 
@@ -4454,4 +4456,4 @@ const ne: Record<string, string> = {
   settingsAccessLog: 'Access Log',
 };
 
-export default ne;
+export default en;
