@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+
 import { Box, Button, Divider, Text, toast } from '@myra-ui';
 
 import {
@@ -13,6 +16,8 @@ import {
 import { Can } from '@coop/cbs/utils';
 
 const Indexing = () => {
+  const [lastInternalSearchIndexResetDate, setLastInternalSearchIndexResetDate] = useState('');
+
   const { mutateAsync: resetSearchIndexMutation, isLoading: resetSearchIndexLoading } =
     useSearchIndexingMutation({});
   const {
@@ -34,6 +39,11 @@ const Indexing = () => {
 
   const resetInternalSearchIndexHandler = () => {
     resetInternalSearchIndexMutation({}).then((res) => {
+      const currentResetDate = dayjs().format('YYYY-MM-DD');
+
+      setLastInternalSearchIndexResetDate(currentResetDate);
+      localStorage.setItem('lastInternalSearchIndexResetDate', currentResetDate);
+
       toast({
         id: 'internal-indexing',
         type: 'success',
@@ -59,6 +69,15 @@ const Indexing = () => {
         });
       });
   };
+
+  useEffect(() => {
+    const lastResetDate = localStorage.getItem('lastInternalSearchIndexResetDate');
+
+    if (lastResetDate) {
+      setLastInternalSearchIndexResetDate(lastResetDate);
+    }
+  }, []);
+
   return (
     <Can I="SHOW_IN_MENU" a="SETTINGS_INDEXING" showError isErrorCentered>
       <SettingsPageHeader heading="Indexing" />
@@ -92,17 +111,22 @@ const Indexing = () => {
               Reset
             </Button>
           </Box>
-          <Divider />
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Text>Reset Internal Search Index</Text>
-            <Button
-              w={100}
-              onClick={resetInternalSearchIndexHandler}
-              isLoading={resetInternalSearchIndexLoading}
-            >
-              Reset
-            </Button>
-          </Box>
+
+          {lastInternalSearchIndexResetDate !== dayjs().format('YYYY-MM-DD') && (
+            <>
+              <Divider />
+              <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Text>Reset Internal Search Index</Text>
+                <Button
+                  w={100}
+                  onClick={resetInternalSearchIndexHandler}
+                  isLoading={resetInternalSearchIndexLoading}
+                >
+                  Reset
+                </Button>
+              </Box>
+            </>
+          )}
         </Box>
       </Box>
     </Can>
