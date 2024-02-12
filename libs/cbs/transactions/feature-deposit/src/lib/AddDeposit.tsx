@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
-import { Box, Button, Divider, Grid, MemberCard, ResponseDialog, Text } from '@myra-ui';
+import { Box, Button, Divider, Grid, GridItem, MemberCard, ResponseDialog, Text } from '@myra-ui';
 
 import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
@@ -468,17 +468,34 @@ export const AddDeposit = () => {
 
                         <Box />
 
-                        <FormNumberInput
-                          isRequired
-                          name="noOfInstallments"
-                          label={t['addDepositNoOfInstallments']}
-                        />
+                        <GridItem colSpan={2}>
+                          <Grid
+                            templateColumns="repeat(2, 1fr)"
+                            gap="s24"
+                            alignItems={
+                              methods.formState?.errors?.noOfInstallments ? 'center' : 'flex-end'
+                            }
+                          >
+                            <FormNumberInput
+                              isRequired
+                              name="noOfInstallments"
+                              label={t['addDepositNoOfInstallments']}
+                              max={100}
+                              rules={{
+                                validate: {
+                                  max: (value) =>
+                                    value > 100 ? 'Maximum allowed installments is 100' : true,
+                                },
+                              }}
+                            />
 
-                        <Box>
-                          <Button variant="outline" onClick={handleModalOpen}>
-                            {t['addDepositViewAllInstallments']}
-                          </Button>
-                        </Box>
+                            <Box>
+                              <Button variant="outline" onClick={handleModalOpen}>
+                                {t['addDepositViewAllInstallments']}
+                              </Button>
+                            </Box>
+                          </Grid>
+                        </GridItem>
                       </Grid>
 
                       <FormCheckbox name="isFinePaid" label="Fine to be paid" />
@@ -779,7 +796,7 @@ export const AddDeposit = () => {
           }
           mainButtonLabel={mode === 0 ? t['addDepositProceedPayment'] : t['addDepositSubmit']}
           isMainButtonDisabled={checkIsSubmitButtonDisabled()}
-          mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
+          mainButtonHandler={mode === 0 ? methods.handleSubmit(() => setMode(1)) : handleSubmit}
         />
       </FormLayout>
 

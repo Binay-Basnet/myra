@@ -8089,6 +8089,12 @@ export const ExternalLoanType = {
 } as const;
 
 export type ExternalLoanType = typeof ExternalLoanType[keyof typeof ExternalLoanType];
+export type ExtraData = {
+  merchantExtraInfo?: Maybe<Scalars['String']>;
+  purpose?: Maybe<Scalars['String']>;
+  remark?: Maybe<Scalars['String']>;
+};
+
 export type ExtraDetailListed = {
   deductions?: Maybe<Scalars['String']>;
   employeeName?: Maybe<Scalars['String']>;
@@ -24861,6 +24867,7 @@ export type UtilititesListEdges = {
 export type UtilityAdditionalJournalData = {
   Service?: Maybe<Scalars['String']>;
   destinationId?: Maybe<Scalars['String']>;
+  extraData?: Maybe<ExtraData>;
   sourceAccount?: Maybe<Scalars['String']>;
   sourceId?: Maybe<Scalars['String']>;
 };
