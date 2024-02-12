@@ -12832,6 +12832,7 @@ export type KymCoopUnionAddFormStatus = {
   nonCurrentAssetsTarget?: Maybe<Scalars['Float']>;
   nonCurrentLiabilitiesCurrent?: Maybe<Scalars['Float']>;
   nonCurrentLiabilitiesTarget?: Maybe<Scalars['Float']>;
+  objState?: Maybe<Scalars['String']>;
   operatingOfficeAddress?: Maybe<KymAddress>;
   otherIncome?: Maybe<Scalars['Float']>;
   otherNonCurrentAssetsCurrent?: Maybe<Scalars['Float']>;
@@ -13101,6 +13102,7 @@ export type KymCooperativeFormData = {
   noOfOtherMembers?: Maybe<Scalars['Int']>;
   nonCurrentAssets?: Maybe<Scalars['Float']>;
   nonCurrentLiabilities?: Maybe<Scalars['Float']>;
+  objState?: Maybe<Scalars['String']>;
   operatingAddress?: Maybe<KymAddress>;
   otherNonCurrentAssets?: Maybe<Scalars['Float']>;
   permanentRepresentativeAddress?: Maybe<KymAddress>;
@@ -13425,6 +13427,7 @@ export type KymIndFormData = {
   middleName?: Maybe<Scalars['Localized']>;
   mobileNumber?: Maybe<Scalars['String']>;
   nationalityId?: Maybe<Scalars['String']>;
+  objState?: Maybe<Scalars['String']>;
   otherCoopBranchId?: Maybe<Scalars['String']>;
   otherCoopMemberId?: Maybe<Scalars['String']>;
   otherCoopName?: Maybe<Scalars['String']>;
@@ -13741,6 +13744,7 @@ export type KymInsFormData = {
   natureOfTransaction?: Maybe<Scalars['String']>;
   noOfBranches?: Maybe<Scalars['Int']>;
   numberOfEmployee?: Maybe<Scalars['Int']>;
+  objState?: Maybe<Scalars['String']>;
   operatingOfficeAddress?: Maybe<KymAddress>;
   phone?: Maybe<Scalars['String']>;
   postBoxNo?: Maybe<Scalars['String']>;
@@ -35356,6 +35360,7 @@ export type GetCooperativeUnionKymEditDataQuery = {
           financialCost?: number | null;
           riskManagementCost?: number | null;
           deferredTaxExpense?: number | null;
+          objState?: string | null;
           regdAddress?: {
             provinceId?: number | null;
             districtId?: number | null;
@@ -37582,6 +37587,7 @@ export type GetInstitutionKymEditDataQuery = {
           accountHolderEmail?: string | null;
           accountHolderSignature?: string | null;
           accountHolderStamp?: string | null;
+          objState?: string | null;
           operatingOfficeAddress?: {
             provinceId?: number | null;
             districtId?: number | null;
@@ -38473,6 +38479,7 @@ export type GetKymCooperativeFormDataQuery = {
           accountHoldersName?: string | null;
           hasTCAccepted?: boolean | null;
           vatNo?: string | null;
+          objState?: string | null;
           documents?: Array<{
             fieldId?: string | null;
             identifiers: Array<{ identifier: string; url: string } | null>;
@@ -38654,6 +38661,7 @@ export type GetKymIndividualFormDataQuery = {
           identificationSelection?: Array<string | null> | null;
           bankId?: string | null;
           bankAccountId?: string | null;
+          objState?: string | null;
           mainOccupation?: {
             registrationNo?: string | null;
             address?: string | null;
@@ -64806,6 +64814,7 @@ export const GetCooperativeUnionKymEditDataDocument = `
               url
             }
           }
+          objState
         }
       }
     }
@@ -67670,6 +67679,7 @@ export const GetInstitutionKymEditDataDocument = `
               url
             }
           }
+          objState
         }
       }
     }
@@ -68924,6 +68934,7 @@ export const GetKymCooperativeFormDataDocument = `
               trainingOrganization
             }
           }
+          objState
         }
       }
     }
@@ -69093,6 +69104,7 @@ export const GetKymIndividualFormDataDocument = `
             }
             fieldId
           }
+          objState
         }
       }
     }

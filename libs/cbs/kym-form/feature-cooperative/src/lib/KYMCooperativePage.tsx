@@ -17,6 +17,7 @@ import { ROUTES } from '@coop/cbs/utils';
 import { useDisclosure } from '@chakra-ui/react';
 import { FormLayout } from '@coop/shared/form';
 import { useForm } from 'react-hook-form';
+import omit from 'lodash/omit';
 import {
   KymAccountHolderDeclaration,
   KymCoopAccountOperatorDetail,
@@ -71,7 +72,7 @@ const getCooperativeData = (data: GetKymCooperativeFormDataQuery | undefined) =>
   const temporaryAddressLocality = editValueData?.temporaryRepresentativeAddress?.locality?.local;
 
   return {
-    ...editValueData,
+    ...omit(editValueData, 'objState'),
 
     documents: documentMap?.map((document) => ({
       fieldId: document,
@@ -308,24 +309,28 @@ export const KYMCooperativePage = () => {
 
         <FormLayout.Footer
           draftButton={
-            <Button
-              variant="ghost"
-              onClick={(e) => {
-                e.preventDefault();
-                submitForm(true);
-              }}
-            >
-              <Icon as={BiSave} color="primary.500" />
-              <Text
-                alignSelf="center"
-                color="primary.500"
-                fontWeight="Medium"
-                fontSize="s2"
-                ml="5px"
+            !['APPROVED', 'VALIDATED']?.includes(
+              editData?.members?.cooperative?.formState?.data?.objState || ''
+            ) && (
+              <Button
+                variant="ghost"
+                onClick={(e) => {
+                  e.preventDefault();
+                  submitForm(true);
+                }}
               >
-                {t['saveDraft']}
-              </Text>
-            </Button>
+                <Icon as={BiSave} color="primary.500" />
+                <Text
+                  alignSelf="center"
+                  color="primary.500"
+                  fontWeight="Medium"
+                  fontSize="s2"
+                  ml="5px"
+                >
+                  {t['saveDraft']}
+                </Text>
+              </Button>
+            )
           }
           mainButtonLabel={action === 'update' ? 'Update' : t['next']}
           isMainButtonDisabled={!(totalAssets === totalEquity)}

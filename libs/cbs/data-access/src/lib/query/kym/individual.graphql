@@ -167,6 +167,7 @@ query getKYMIndividualFormData($id: String!) {
             }
             fieldId
           }
+          objState
         }
       }
     }

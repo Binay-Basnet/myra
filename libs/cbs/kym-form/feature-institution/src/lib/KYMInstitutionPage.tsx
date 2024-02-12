@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
+import omit from 'lodash/omit';
 
 import { asyncToast, Box, Button, FormHeader, Icon, Text } from '@myra-ui';
 
@@ -54,7 +55,7 @@ const getInstitutionData = (data: GetInstitutionKymEditDataQuery | undefined) =>
   if (!editData) return {};
 
   return {
-    ...editData,
+    ...omit(editData, 'objState'),
     registeredAddress: {
       ...editData?.registeredAddress,
       locality: editData?.registeredAddress?.locality?.local,
@@ -270,18 +271,22 @@ export const KYMInstitutionPage = () => {
 
         <FormLayout.Footer
           draftButton={
-            <Button variant="ghost" onClick={() => submitForm(true)}>
-              <Icon as={BiSave} color="primary.500" />
-              <Text
-                alignSelf="center"
-                color="primary.500"
-                fontWeight="Medium"
-                fontSize="s2"
-                ml="5px"
-              >
-                {t['saveDraft']}
-              </Text>
-            </Button>
+            !['APPROVED', 'VALIDATED']?.includes(
+              institutionEditData?.members?.institution?.formState?.data?.objState || ''
+            ) && (
+              <Button variant="ghost" onClick={() => submitForm(true)}>
+                <Icon as={BiSave} color="primary.500" />
+                <Text
+                  alignSelf="center"
+                  color="primary.500"
+                  fontWeight="Medium"
+                  fontSize="s2"
+                  ml="5px"
+                >
+                  {t['saveDraft']}
+                </Text>
+              </Button>
+            )
           }
           // isMainButtonDisabled={!isFormDirty}
           mainButtonLabel={action === 'update' ? 'Update' : t['next']}

@@ -17,6 +17,7 @@ import {
   useGetKymIndividualFormDataQuery,
   useSetKymIndividualDataMutation,
 } from '@coop/cbs/data-access';
+import omit from 'lodash/omit';
 import {
   KYMDeclaration,
   KYMDeclarationAgree,
@@ -52,7 +53,7 @@ const getIndividualEditData = (data: GetKymIndividualFormDataQuery | undefined) 
   }
 
   return {
-    ...editValues,
+    ...omit(editValues, 'objState'),
     firstName: editValues?.firstName?.local,
     middleName: editValues?.middleName?.local,
     lastName: editValues?.lastName?.local,
@@ -266,18 +267,22 @@ export const KYMIndividualPage = () => {
 
         <FormLayout.Footer
           draftButton={
-            <Button variant="ghost" onClick={() => submitForm(true)}>
-              <Icon as={BiSave} color="primary.500" />
-              <Text
-                alignSelf="center"
-                color="primary.500"
-                fontWeight="Medium"
-                fontSize="s2"
-                ml="5px"
-              >
-                {t['saveDraft']}
-              </Text>
-            </Button>
+            !['APPROVED', 'VALIDATED']?.includes(
+              editData?.members?.individual?.formState?.data?.objState || ''
+            ) && (
+              <Button variant="ghost" onClick={() => submitForm(true)}>
+                <Icon as={BiSave} color="primary.500" />
+                <Text
+                  alignSelf="center"
+                  color="primary.500"
+                  fontWeight="Medium"
+                  fontSize="s2"
+                  ml="5px"
+                >
+                  {t['saveDraft']}
+                </Text>
+              </Button>
+            )
           }
           // isMainButtonDisabled={!isFormDirty}
           mainButtonLabel={action === 'update' ? 'Update' : t['next']}

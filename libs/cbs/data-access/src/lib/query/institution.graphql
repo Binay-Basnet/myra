@@ -231,6 +231,7 @@ query getInstitutionKymEditData($id: ID!, $hasPressedNext: Boolean) {
               url
             }
           }
+          objState
         }
       }
     }

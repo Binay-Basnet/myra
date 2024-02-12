@@ -296,6 +296,7 @@ query getCooperativeUnionKymEditData($id: ID!, $includeRequiredErrors: Boolean) 
               url
             }
           }
+          objState
         }
         #sectionStatus {
         # id

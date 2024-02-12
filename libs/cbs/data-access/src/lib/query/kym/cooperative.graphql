@@ -203,6 +203,7 @@ query getKYMCooperativeFormData($id: ID!) {
               trainingOrganization
             }
           }
+          objState
         }
       }
     }
