@@ -219,7 +219,7 @@ export const KYMCooperativeUnionPage = () => {
     })();
   };
 
-  const { data: coopUnionEditData } = useGetCooperativeUnionKymEditDataQuery(
+  const { data: coopUnionEditData, isFetching } = useGetCooperativeUnionKymEditDataQuery(
     { id: id as string },
     { enabled: !!id }
   );
@@ -269,6 +269,7 @@ export const KYMCooperativeUnionPage = () => {
 
           <FormLayout.Footer
             draftButton={
+              coopUnionEditData?.members?.cooperativeUnion?.formState?.data?.objState &&
               !['APPROVED', 'VALIDATED']?.includes(
                 coopUnionEditData?.members?.cooperativeUnion?.formState?.data?.objState || ''
               ) && (
@@ -286,7 +287,7 @@ export const KYMCooperativeUnionPage = () => {
                 </Button>
               )
             }
-            // isMainButtonDisabled={!(isCurrentEqual && isTargetEqual)}
+            isMainButtonDisabled={isFetching}
             mainButtonLabel={action === 'update' ? 'Update' : t['next']}
             mainButtonHandler={async () => {
               if (action === 'update') {

@@ -309,6 +309,7 @@ export const KYMCooperativePage = () => {
 
         <FormLayout.Footer
           draftButton={
+            editData?.members?.cooperative?.formState?.data?.objState &&
             !['APPROVED', 'VALIDATED']?.includes(
               editData?.members?.cooperative?.formState?.data?.objState || ''
             ) && (
@@ -333,7 +334,7 @@ export const KYMCooperativePage = () => {
             )
           }
           mainButtonLabel={action === 'update' ? 'Update' : t['next']}
-          isMainButtonDisabled={!(totalAssets === totalEquity)}
+          isMainButtonDisabled={!(totalAssets === totalEquity) || isFetching}
           mainButtonHandler={() => {
             if (action === 'update') {
               onOpen();

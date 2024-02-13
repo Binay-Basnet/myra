@@ -98,7 +98,7 @@ const getIndividualEditData = (data: GetKymIndividualFormDataQuery | undefined) 
 export const KYMIndividualPage = () => {
   const router = useRouter();
 
-  const { data: editData } = useGetKymIndividualFormDataQuery(
+  const { data: editData, isFetching } = useGetKymIndividualFormDataQuery(
     {
       id: router.query['id'] as string,
     },
@@ -267,6 +267,7 @@ export const KYMIndividualPage = () => {
 
         <FormLayout.Footer
           draftButton={
+            editData?.members?.individual?.formState?.data?.objState &&
             !['APPROVED', 'VALIDATED']?.includes(
               editData?.members?.individual?.formState?.data?.objState || ''
             ) && (
@@ -284,7 +285,7 @@ export const KYMIndividualPage = () => {
               </Button>
             )
           }
-          // isMainButtonDisabled={!isFormDirty}
+          isMainButtonDisabled={isFetching}
           mainButtonLabel={action === 'update' ? 'Update' : t['next']}
           mainButtonHandler={() => {
             if (action === 'update') {
