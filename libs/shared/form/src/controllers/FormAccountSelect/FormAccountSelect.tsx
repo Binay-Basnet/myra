@@ -123,7 +123,7 @@ export const FormAccountSelect = ({
           }
         : null,
     },
-    { enabled: !!memberId }
+    { enabled: !!(memberId && groupId) }
   );
 
   const linkedAccountsOptions: Option[] =

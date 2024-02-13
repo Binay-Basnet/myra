@@ -36,25 +36,28 @@ export const CenterAdd = () => {
   const allowedServiceCenterWatch = watch('serviceCenterIds');
   const coordinatorServiceCenterWatch = watch('coordinatorServiceCenter');
 
-  const { data: userListQueryData } = useGetSettingsUserListDataQuery({
-    paginate: {
-      ...getPaginationQuery(),
-      first: -1,
-      order: {
-        arrange: 'ASC',
-        column: 'ID',
+  const { data: userListQueryData } = useGetSettingsUserListDataQuery(
+    {
+      paginate: {
+        ...getPaginationQuery(),
+        first: -1,
+        order: {
+          arrange: 'ASC',
+          column: 'ID',
+        },
+      },
+      filter: {
+        orConditions: [
+          {
+            andConditions: [
+              { column: 'branchId', comparator: 'EqualTo', value: coordinatorServiceCenterWatch },
+            ],
+          },
+        ],
       },
     },
-    filter: {
-      orConditions: [
-        {
-          andConditions: [
-            { column: 'branchId', comparator: 'EqualTo', value: coordinatorServiceCenterWatch },
-          ],
-        },
-      ],
-    },
-  });
+    { enabled: !!coordinatorServiceCenterWatch }
+  );
 
   const { mutateAsync } = useAddMfCenterMutation();
 
