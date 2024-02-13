@@ -251,7 +251,11 @@ export const LoanCloseForm = () => {
   }, [redirectloanAccountId, redirectMemberId]);
 
   // to check if it is LOC type loan for not disabling close button
-  const loanDataPreview = useGetLoanPreviewQuery({ id: loanAccountId as string });
+  const loanDataPreview = useGetLoanPreviewQuery(
+    { id: loanAccountId as string },
+    { enabled: !!loanAccountId }
+  );
+
   const isLocLoan =
     loanDataPreview?.data?.loanAccount?.loanPreview?.data?.loanDetails?.loanRepaymentScheme;
 

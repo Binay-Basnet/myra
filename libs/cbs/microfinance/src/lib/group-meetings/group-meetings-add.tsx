@@ -42,23 +42,26 @@ export const GroupMeetingsAdd = () => {
     },
   });
 
-  const { data: groupListData } = useListGroupQuery({
-    pagination: {
-      ...getPaginationQuery(),
-      first: -1,
-      order: {
-        arrange: 'ASC',
-        column: 'ID',
+  const { data: groupListData } = useListGroupQuery(
+    {
+      pagination: {
+        ...getPaginationQuery(),
+        first: -1,
+        order: {
+          arrange: 'ASC',
+          column: 'ID',
+        },
+      },
+      filter: {
+        orConditions: [
+          {
+            andConditions: [{ column: 'centerId', comparator: 'EqualTo', value: centerIdWatch }],
+          },
+        ],
       },
     },
-    filter: {
-      orConditions: [
-        {
-          andConditions: [{ column: 'centerId', comparator: 'EqualTo', value: centerIdWatch }],
-        },
-      ],
-    },
-  });
+    { enabled: !!centerIdWatch }
+  );
 
   const groupIdWatch = watch('groupId');
 

@@ -150,7 +150,7 @@ export const KYMInstitutionPage = () => {
 
   const id = router?.query?.['id'];
 
-  const { data: institutionEditData } = useGetInstitutionKymEditDataQuery(
+  const { data: institutionEditData, isFetching } = useGetInstitutionKymEditDataQuery(
     { id: id as string },
     { enabled: !!id }
   );
@@ -271,6 +271,7 @@ export const KYMInstitutionPage = () => {
 
         <FormLayout.Footer
           draftButton={
+            institutionEditData?.members?.institution?.formState?.data?.objState &&
             !['APPROVED', 'VALIDATED']?.includes(
               institutionEditData?.members?.institution?.formState?.data?.objState || ''
             ) && (
@@ -288,7 +289,7 @@ export const KYMInstitutionPage = () => {
               </Button>
             )
           }
-          // isMainButtonDisabled={!isFormDirty}
+          isMainButtonDisabled={isFetching}
           mainButtonLabel={action === 'update' ? 'Update' : t['next']}
           mainButtonHandler={() => {
             if (action === 'update') {
