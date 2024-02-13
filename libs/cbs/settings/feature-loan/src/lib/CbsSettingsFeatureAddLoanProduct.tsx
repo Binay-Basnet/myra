@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader, Loader, Text } from '@myra-ui';
+import { asyncToast, Box, Loader, Text } from '@myra-ui';
 
 import {
   Collateral,
@@ -19,6 +19,7 @@ import {
   useSetLoanProductMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
+import { FormLayout } from '@coop/shared/form';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import {
@@ -446,27 +447,23 @@ export const SettingsLoanProductForm = () => {
   const typeOfLoan = watch('loanType');
 
   return (
-    <>
-      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-        <Container minW="container.lg" height="fit-content" paddingInline="0">
-          <FormHeader
-            title={
-              router?.asPath?.includes('/edit')
-                ? 'Edit Loan Product'
-                : `${t['loanProductAddLoanProduct']} - ${featureCode.newloanProduct}`
-            }
-          />
-        </Container>
-      </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header
+        title={
+          router?.asPath?.includes('/edit')
+            ? 'Edit Loan Product'
+            : `${t['loanProductAddLoanProduct']} - ${featureCode.newloanProduct}`
+        }
+      />
 
-      <Container minW="container.lg" height="fit-content" bg="gray.0" pb="55px" paddingInline="0">
-        {editValueLoading && router.pathname.includes('edit') ? (
-          <Box display="flex" bg="white" h="100vh" justifyContent="center" pt="100px">
-            <Loader />
-          </Box>
-        ) : (
-          <FormProvider {...methods}>
-            <form>
+      <FormLayout.Content>
+        <FormLayout.Form>
+          {editValueLoading && router.pathname.includes('edit') ? (
+            <Box display="flex" bg="white" h="100vh" justifyContent="center" pt="100px">
+              <Loader />
+            </Box>
+          ) : (
+            <>
               <GeneralSetup />
               <ProductCode />
               <TypesOfMember />
@@ -495,28 +492,22 @@ export const SettingsLoanProductForm = () => {
               <CollateralForm />
               <AllowGaurantee />
               <RequiredDocumentSetup />
-            </form>
-          </FormProvider>
-        )}
-      </Container>
+            </>
+          )}
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.lg" height="fit-content" p="0">
-            <FormFooter
-              status={
-                <Box display="flex" gap="s8">
-                  <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
-                    {t['loanProductPressCompletetoSaveForm']}
-                  </Text>
-                </Box>
-              }
-              mainButtonLabel={t['complete']}
-              mainButtonHandler={() => submitForm()}
-            />
-          </Container>
-        </Box>
-      </Box>
-    </>
+      <FormLayout.Footer
+        status={
+          <Box display="flex" gap="s8">
+            <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
+              {t['loanProductPressCompletetoSaveForm']}
+            </Text>
+          </Box>
+        }
+        mainButtonLabel={t['complete']}
+        mainButtonHandler={() => submitForm()}
+      />
+    </FormLayout>
   );
 };
