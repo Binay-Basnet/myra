@@ -528,6 +528,115 @@ const en: Record<string, string> = {
   shareLayoutStateReport: 'Share Statement (Individual) Report',
   shareLayoutTransactionReport: 'Share Transaction Report',
 
+  // savings
+  // sidebar
+  newAccountOpen: 'New Account Open',
+  newAccountClose: 'New Account Close',
+  accountList: 'Saving Accounts',
+
+  savingProducts: 'Saving Products',
+  accountClose: 'Closed Accounts',
+  savingsDepositSettings: 'Saving Settings',
+  savingsProductSettings: 'Saving Products Settings',
+  savingsDepositStatementReport: 'Saving / Deposit Statement Report',
+  savingsIntrestTaxReport: 'Interest Tax Report',
+  savingsIntrestStatement: 'Interest Statement (Individual) Report',
+
+  // loan
+  // sidebar
+  newLoanApplication: 'New Loan Application',
+  newLoanRepayment: 'New Loan Repayment',
+  newCloseLoanAccount: 'New Close Loan Account',
+  newLoanLossProvision: 'New Loan Loss Provision',
+  loanAccounts: 'Loan Accounts',
+  loanApplications: 'Loan Applications',
+  loanRepayment: 'Loan Repayment',
+  loanProducts: 'Loan Products',
+  declinedLoan: 'Declined Loan',
+  closedAccounts: 'Closed Accounts',
+  loanLossProvision: 'Loan Loss Provision',
+  loanWriteOff: 'Loan Write Off',
+
+  loanLayoutSettings: 'Loan Settings',
+  loanLayoutProductsSettings: 'Loan Product Settings',
+  loanAccountStatementReport: 'Loan Account Statement Report',
+  loanLayoutAgeingReport: 'Loan Aging Report',
+
+  // transaction
+  // sidebar
+  transactionSidebarNewDeposit: 'New Deposit',
+  transactionSidebarNewWithdraw: 'New Withdraw',
+  transactionSidebarNewAccountTransfer: 'New Account Transfer',
+  transactionSidebarNewLoanPayment: 'New Loan Repayment',
+  transactionSidebarNewJournalVoucher: 'New Journal Voucher',
+
+  transactionsSidebarDeposit: 'Deposit',
+  transactionsSidebarWithdraw: 'Withdraw',
+  transactionsSidebarAccountTransfer: 'Account Transfer',
+  transactionsSidebarLoanPayment: 'Loan Repayment',
+  transactionsSidebarAgentTransaction: 'Market Representative Transactions',
+  transactionsSidebarAgentList: 'Market Representative List',
+  transactionsSidebarJournalVoucher: 'Journal Voucher',
+  transactionsSidebarAllTransactions: 'All Transactions',
+  transactionsSidebarAdjustedTransaction: 'Adjusted Transactions',
+  transactionsSidebarAllLedger: 'All Ledger',
+  transactionsSidebarAllUserAccounts: 'All User Accounts',
+  transactionsSidebarAllHoldingAccounts: 'All Holding Accounts',
+
+  transactionLayoutBalanceSheet: 'Trial Balance',
+  transactionLayoutCashFlowStament: 'Cash Ledger',
+  transactionLayoutBankGLStatement: 'Bank GL Statement',
+
+  // transfer
+  // sidebar
+  transferVaultTransfer: 'Teller - Vault',
+  transferBankTransfer: 'Teller - Bank',
+  transferTellerTransfer: 'Teller - Teller',
+  transCashTransitTransfer: 'Cash in Transit Transfer',
+  transServiceCenterTransfer: 'Inter Service Center Transaction',
+
+  transferVaultBalanceReport: 'Vault Balance Report',
+  transferTellerReport: 'Teller Report',
+  transferCashLedgerReport: 'Cash Ledger Report',
+  transferDayBookReport: 'Day Book Report',
+
+  // request
+  // sidebar
+  requestMember: 'Member Request',
+  requestWithdraw: 'Withdraw Request',
+  requestLoan: 'Loan Request',
+  requestMemberTransfer: 'Member Transfer Request',
+
+  // withdrawslip
+  // sidebar
+  withdrawSlipBook: 'Withdraw Slip Book',
+  withdrawSlipRequests: 'Withdraw Slip Requests',
+  withdrawSlipBlockRequests: 'Block Withdraw Slip Requests',
+
+  // microfinance
+  // sidebar
+  mfAddMFCenter: 'Add Mf Center',
+  mfAddMFGroup: 'Add Mf Group',
+  mfAddGroupMeetings: 'Add Mf Group Meetings',
+  mfCenter: 'Mf Center',
+  mfGroup: 'Mf Group',
+  mfGroupMeetings: 'Mf Group Meetings',
+
+  // reports
+  // sidebar
+  reportsCbsReports: 'CBS reports',
+
+  // others
+  othersMRList: 'Market Representatives List',
+  othersMRTransaction: 'Market Representatives Transaction',
+  othersProfitToFundManagement: 'Profit to Fund Management',
+  othersShareDividendPosting: 'Share Divident Posting',
+  othersBulkTransfer: 'Bulk Transfers',
+  othersMRCollection: 'Market Representative Collection',
+  othersNewProfitToFundManagement: 'New Profit to Fund Management',
+  othersNewShareDividendPosting: 'New Share Dividend Posting',
+  othersNewBulkTransfer: 'New Bulk Transfer',
+
   kymInsReset: 'Reset',
   kymInsContactNo__placeholder: 'Enter Contact No',
   kymInsPanNo__placeholder: 'Enter PAN No',
@@ -634,7 +743,6 @@ const en: Record<string, string> = {
   accountNavSubmitted: 'Submitted',
   accountNavDraft: 'Draft',
 
-  accountList: 'Saving Accounts',
   accountReport: 'Account Reports',
 
   // Inventory Page TODO ( Update Translations )
@@ -648,7 +756,7 @@ const en: Record<string, string> = {
 
   // Report Page
   reportsHeading: 'Reports',
-  reportsCbsReports: 'CBS reports',
+
   reportsSavedReports: 'Saved reports',
   reportsSettings: 'Report Settings',
   reportsTableView: 'Table View',
@@ -2134,7 +2242,6 @@ const en: Record<string, string> = {
   // account list
 
   // account open
-  newAccountOpen: 'New Account Open',
   accountOpenMemberId: 'Member ID',
   accProductName: 'Product Name',
   accSelectProduct: 'Select Product',
@@ -3608,14 +3715,6 @@ const en: Record<string, string> = {
   loanProductTypeNatureofProduct: 'Nature of Product',
   loanProductTypeDescription: 'Description',
 
-  transactionsSidebarDeposit: 'Deposit',
-  transactionsSidebarWithdraw: 'Withdraw',
-  transactionsSidebarAccountTransfer: 'Account Transfer',
-  transactionsSidebarLoanPayment: 'Loan Repayment',
-  transactionsSidebarAgentList: 'Market Representative List',
-  transactionsSidebarJournalVoucher: 'Journal Voucher',
-  transactionsSidebarAllTransactions: 'All Transactions',
-  transactionsSidebarAgentTransaction: 'Market Representative Transactions',
   depositProductMinimumRate: 'Minimum Rate',
 
   depositProductMinimumAmount: 'Minimum Amount',
@@ -3918,18 +4017,14 @@ const en: Record<string, string> = {
   transactionSidebarTransaction: 'Transactions',
   transactionSidebarNewTransaction: 'New',
   transactionSidebarTransactionSettings: 'Transaction Settings',
-  transactionSidebarNewDeposit: 'New Deposit',
-  transactionSidebarNewWithdraw: 'New Withdraw',
-  transactionSidebarNewAccountTransfer: 'New Account Transfer',
-  transactionSidebarNewLoanPayment: 'New Loan Repayment',
+
   transactionSidebarNewMarketRepresentativeTransaction: 'New Market Representative Transaction',
 
   transactionLayoutIncomeStatement: 'Income Statement',
-  transactionLayoutCashFlowStament: 'Cash Ledger',
+
   transactionLayoutChangeOfEquity: 'Change of Equity',
   transactionLayoutAppropriationOfProfit: 'Appropriation of Profit',
   transactionLayoutBankGLBalance: 'Bank GL Balance',
-  transactionLayoutBankGLStatement: 'Bank GL Statement',
 
   // deposit list
   depositListDeposit: 'Deposit',
@@ -4190,11 +4285,7 @@ const en: Record<string, string> = {
   loanLayoutTopButton: 'New',
   loanProductRebateRate: 'Rebate Rate',
 
-  loanLayoutSettings: 'Loan Settings',
-  loanLayoutProductsSettings: 'Loan Product Settings',
-
   loanLayoutStatementReport: 'Loan Statement Report',
-  loanLayoutAgeingReport: 'Loan Aging Report',
 
   // account deposit product
   accountDepositProduct: 'Deposit Product',
@@ -4202,12 +4293,8 @@ const en: Record<string, string> = {
   // transfer
   navbarTransfer: 'Transfers',
   newTransfer: 'New Transfer',
-  transferVaultTransfer: 'Teller - Vault',
-  transferTellerTransfer: 'Teller - Teller',
-  transferBranchTransfer: 'Branch Transfer',
 
-  transferVaultBalanceReport: 'Vault Balance Report',
-  transferTellerReport: 'Teller Report',
+  transferBranchTransfer: 'Branch Transfer',
 
   memberSettingsNewMemberCharges: 'New Member Charges',
   memberSettingsDifferentCharges: 'Different charges for different member type.',
@@ -4391,18 +4478,7 @@ const en: Record<string, string> = {
   loanProductMaxInstallmentInterest: 'Maximum Installment Number for Interest',
   // savings
 
-  savingsDepositSettings: 'Saving Settings',
-  savingsProductSettings: 'Saving Products Settings',
-
-  savingsDepositStatementReport: 'Saving / Deposit Statement Report',
-  savingsIntrestTaxReport: 'Interest Tax Report',
-  savingsIntrestStatement: 'Interest Statement (Individual) Report',
-  savingProducts: 'Saving Products',
-
   // withdraw slip
-  withdrawSlipBook: 'Withdraw Slip',
-  withdrawSlipRequests: 'Withdraw Slip Requests',
-  withdrawSlipBlockRequests: 'Block Withdraw Slip Requests',
 
   loanProductRemainingPrincipal: 'Remaining Principal',
   loanProductPenalInterest: 'Penal Interest',
@@ -4443,14 +4519,11 @@ const en: Record<string, string> = {
   settingsDocumentsLoan: 'Loan',
   settingsDocumentsDeposit: 'Deposit',
   settingsDocumentsTransaction: 'Transaction',
-  accountClose: 'Closed Accounts',
   bankAccountCurrent: 'Current',
   bankAccountSaving: 'Saving',
 
-  transactionLayoutBalanceSheet: 'Trial Balance',
   transDetailAmountDeposited: 'Deposit Amount',
-  transCashTransitTransfer: 'Cash in Transit Transfer',
-  transServiceCenterTransfer: 'Inter Service Center Transaction',
+
   viewDetails: 'View Details',
   settingsTabMenuMonitor: 'Monitor',
   settingsAccessLog: 'Access Log',

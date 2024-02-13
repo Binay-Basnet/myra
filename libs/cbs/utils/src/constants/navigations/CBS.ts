@@ -5,7 +5,7 @@ export const CBS: NavType = {
   label: 'coreBankingSystem',
   menus: {
     MEMBERS: {
-      label: 'members',
+      label: 'Members',
       aclKey: 'CBS_MEMBERS_MEMBER',
       pages: [
         {
@@ -51,7 +51,7 @@ export const CBS: NavType = {
     },
 
     SHARE: {
-      label: 'share',
+      label: 'Share',
       aclKey: 'CBS_SHARE',
 
       forms: [
@@ -115,7 +115,7 @@ export const CBS: NavType = {
           route: ROUTES.CBS_ACCOUNT_OPEN_ADD,
         },
         {
-          label: 'New Account Close',
+          label: 'newAccountClose',
           aclKey: 'CBS_SAVINGS_SAVING_ACCOUNT_CLOSE',
           route: ROUTES.CBS_ACCOUNT_CLOSE_ADD,
         },
@@ -192,23 +192,23 @@ export const CBS: NavType = {
       aclKey: 'CBS_LOAN',
       forms: [
         {
-          label: 'New Loan Application',
+          label: 'newLoanApplication',
           aclKey: 'CBS_LOAN_LOAN_APPLICATION',
           route: ROUTES.CBS_LOAN_APPLICATIONS_ADD,
         },
         {
-          label: 'Loan Repayment',
+          label: 'newLoanRepayment',
           aclKey: 'CBS_TRANSACTIONS_LOAN_REPAYMENT',
           route: ROUTES.CBS_LOAN_REPAYMENTS_ADD,
         },
         {
-          label: 'Close Loan Account',
+          label: 'newCloseLoanAccount',
           // route: ROUTES.CBS_LOAN_CLOSED_ACCOUNTS,
           aclKey: 'CBS_LOAN_LOAN_ACCOUNT_CLOSE',
           route: ROUTES.CBS_LOAN_CLOSED_ACCOUNTS_ADD,
         },
         {
-          label: 'Loan Loss Provision',
+          label: 'newLoanLossProvision',
           // route: ROUTES.CBS_LOAN_CLOSED_ACCOUNTS,
           aclKey: 'CBS_LOAN_LOAN_ACCOUNT_CLOSE',
           route: ROUTES.CBS_LOAN_LOSS_PROVISION_ADD,
@@ -216,46 +216,46 @@ export const CBS: NavType = {
       ],
       pages: [
         {
-          label: 'Loan Accounts',
+          label: 'loanAccounts',
           aclKey: 'CBS_LOAN_LOAN_ACCOUNT',
           route: ROUTES.CBS_LOAN_ACCOUNTS_LIST,
         },
         {
-          label: 'Loan Applications',
+          label: 'loanApplications',
           route: ROUTES.CBS_LOAN_APPLICATIONS_LIST,
           aclKey: 'CBS_LOAN_LOAN_APPLICATION',
           addRoute: ROUTES.CBS_LOAN_APPLICATIONS_ADD,
         },
         {
-          label: 'Loan Repayment',
+          label: 'loanRepayment',
           aclKey: 'CBS_TRANSACTIONS_LOAN_REPAYMENT',
           route: ROUTES.CBS_LOAN_REPAYMENTS_LIST,
           addRoute: ROUTES.CBS_LOAN_REPAYMENTS_ADD,
         },
         {
-          label: 'Loan Products',
+          label: 'loanProducts',
           aclKey: 'SETTINGS_LOAN_PRODUCTS',
           route: ROUTES.CBS_LOAN_PRODUCTS_LIST,
         },
         {
-          label: 'Declined Loan',
+          label: 'declinedLoan',
           route: ROUTES.CBS_LOAN_DECLINED_LIST,
           aclKey: 'CBS_LOAN_DECLINED_LOAN',
         },
         {
-          label: 'Closed Accounts',
+          label: 'closedAccounts',
           route: ROUTES.CBS_LOAN_CLOSED_ACCOUNTS,
           aclKey: 'CBS_LOAN_LOAN_ACCOUNT_CLOSE',
           addRoute: ROUTES.CBS_LOAN_CLOSED_ACCOUNTS_ADD,
         },
         {
-          label: 'Loan Loss Provision',
+          label: 'loanLossProvision',
           route: ROUTES.CBS_LOAN_LOSS_PROVISION_LIST,
           aclKey: 'CBS_LOAN_LOAN_ACCOUNT_CLOSE',
           addRoute: ROUTES.CBS_LOAN_LOSS_PROVISION_ADD,
         },
         {
-          label: 'Loan Write Off',
+          label: 'loanWriteOff',
           route: ROUTES.CBS_LOAN_WRITE_OFF_LIST,
           aclKey: 'CBS_LOAN_LOAN_ACCOUNT_CLOSE',
         },
@@ -274,7 +274,7 @@ export const CBS: NavType = {
       ],
       reportPages: [
         {
-          label: 'Loan Account Statement Report',
+          label: 'loanAccountStatementReport',
           route: ROUTES.CBS_REPORTS_LOAN_ACCOUNT_STATEMENT_REPORT,
           aclKey: 'REPORTS_LOAN_LOAN_ACCOUNT_STATEMENT',
         },
@@ -317,7 +317,7 @@ export const CBS: NavType = {
         //   aclKey: 'CBS_TRANSACTIONS_MARKET_REPRESENTATIVE_COLLECTION',
         // },
         {
-          label: 'New Journal Voucher',
+          label: 'transactionSidebarNewJournalVoucher',
           route: ROUTES.CBS_TRANS_JOURNAL_VOUCHER_ADD,
           aclKey: 'CBS_TRANSACTIONS_JOURNAL_VOUCHER',
         },
@@ -371,22 +371,22 @@ export const CBS: NavType = {
           aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
         },
         {
-          label: 'Adjusted Transactions',
+          label: 'transactionsSidebarAdjustedTransaction',
           route: ROUTES.CBS_TRANS_ADJUSTED_TRANSACTIONS_LIST,
           aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
         },
         {
-          label: 'All Ledgers',
+          label: 'transactionsSidebarAllLedger',
           route: ROUTES.CBS_TRANS_ALL_LEDGERS_LIST,
           aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
         },
         {
-          label: 'All User Accounts',
+          label: 'transactionsSidebarAllUserAccounts',
           route: ROUTES.CBS_TRANS_ALL_ACCOUNTS_LIST,
           aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
         },
         {
-          label: 'All Holding Accounts',
+          label: 'transactionsSidebarAllHoldingAccounts',
           route: ROUTES.CBS_TRANS_ALL_HOLDING_ACCOUNTS_LIST,
           aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
         },
@@ -410,7 +410,7 @@ export const CBS: NavType = {
       ],
     },
     TRANSFERS: {
-      label: 'Transfers',
+      label: 'Transfer',
       aclKey: 'CBS_TRANSFERS',
       forms: [
         {
@@ -419,7 +419,7 @@ export const CBS: NavType = {
           aclKey: 'CBS_TRANSFERS_VAULT_TRANSFER',
         },
         {
-          label: 'Teller - Bank',
+          label: 'transferBankTransfer',
           route: ROUTES.CBS_TRANSFER_BANK_ADD,
           aclKey: 'CBS_TRANSFERS_BANK_TRANSFER',
         },
@@ -448,7 +448,7 @@ export const CBS: NavType = {
           addRoute: ROUTES.CBS_TRANSFER_VAULT_ADD,
         },
         {
-          label: 'Teller - Bank',
+          label: 'transferBankTransfer',
           route: ROUTES.CBS_TRANSFER_BANK_LIST,
           aclKey: 'CBS_TRANSFERS_BANK_TRANSFER',
           addRoute: ROUTES.CBS_TRANSFER_BANK_ADD,
@@ -460,7 +460,7 @@ export const CBS: NavType = {
           addRoute: ROUTES.CBS_TRANSFER_TELLER_ADD,
         },
         {
-          label: 'Cash in Transit Transfer',
+          label: 'transCashTransitTransfer',
           route: ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_LIST,
           aclKey: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
           addRoute: ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_ADD,
@@ -484,12 +484,12 @@ export const CBS: NavType = {
           aclKey: 'REPORTS_TXN_TELLER_REPORT',
         },
         {
-          label: 'Cash Ledger Report',
+          label: 'transferCashLedgerReport',
           route: ROUTES.CBS_REPORTS_TRANS_CASH_LEDGER,
           aclKey: 'REPORTS_TXN_CASH_LEDGER',
         },
         {
-          label: 'Day Book Report',
+          label: 'transferDayBookReport',
           route: ROUTES.CBS_REPORTS_DAY_BOOK_REPORT,
           aclKey: 'REPORTS_TXN_DAYBOOK',
         },
@@ -497,26 +497,26 @@ export const CBS: NavType = {
     },
 
     REQUESTS: {
-      label: 'Requests',
+      label: 'request',
       aclKey: 'CBS_REQUESTS',
       pages: [
         {
-          label: 'Member Request',
+          label: 'requestMember',
           aclKey: 'CBS_REQUESTS_MEMBER_REQUESTS',
           route: ROUTES.CBS_REQUESTS_MEMBER_LIST,
         },
         {
-          label: 'Withdraw Request',
+          label: 'requestWithdraw',
           aclKey: 'CBS_REQUESTS_WITHDRAW_REQUEST',
           route: ROUTES.CBS_REQUESTS_WITHDRAW_VIA_COLLECTOR_LIST,
         },
         {
-          label: 'Loan Request',
+          label: 'requestLoan',
           aclKey: 'CBS_REQUESTS_LOAN_REQUESTS',
           route: ROUTES.CBS_REQUESTS_LOAN_LIST,
         },
         {
-          label: 'Member Transfer Request',
+          label: 'requestMemberTransfer',
           aclKey: 'CBS_REQUESTS_LOAN_REQUESTS',
           route: ROUTES.CBS_REQUESTS_MEMBER_TRANSFER_LIST,
         },
@@ -528,7 +528,7 @@ export const CBS: NavType = {
       aclKey: 'CBS_WITHDRAW_SLIPS',
       pages: [
         {
-          label: 'Withdraw Slip Book',
+          label: 'withdrawSlipBook',
           route: ROUTES.CBS_WITHDRAW_SLIP_BOOK_LIST,
           aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_ISSUE',
           addRoute: ROUTES.CBS_WITHDRAW_SLIP_BOOK_ADD,
@@ -547,12 +547,12 @@ export const CBS: NavType = {
       ],
       forms: [
         {
-          label: 'Withdraw Slip Book',
+          label: 'withdrawSlipBook',
           route: ROUTES.CBS_WITHDRAW_SLIP_BOOK_ADD,
           aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_ISSUE',
         },
         {
-          label: 'Block Withdraw Slip Requests',
+          label: 'withdrawSlipBlockRequests',
           route: ROUTES.CBS_BLOCK_WITHDRAW_SLIP_REQUEST_ADD,
           aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK',
         },
@@ -563,36 +563,36 @@ export const CBS: NavType = {
       aclKey: 'CBS_SHARE',
       forms: [
         {
-          label: 'Add MF Center',
+          label: 'mfAddMFCenter',
           route: ROUTES.CBS_MICRO_FINANCE_CENTER_ADD,
           aclKey: 'MICROFINANCE_MF_MF',
         },
         {
-          label: 'Add MF Group',
+          label: 'mfAddMFGroup',
           route: ROUTES.CBS_MICRO_FINANCE_GROUP_ADD,
           aclKey: 'MICROFINANCE_MF_MF',
         },
         {
-          label: 'Add MF Group Meetings',
+          label: 'mfAddGroupMeetings',
           route: ROUTES.CBS_MICRO_FINANCE_GROUP_MEETINGS_ADD,
           aclKey: 'MICROFINANCE_MF_MF',
         },
       ],
       pages: [
         {
-          label: 'MF Center',
+          label: 'mfCenter',
           route: ROUTES?.CBS_MICRO_FINANCE_CENTER_LIST,
           aclKey: 'MICROFINANCE_MF_MF',
           addRoute: ROUTES.CBS_MICRO_FINANCE_CENTER_ADD,
         },
         {
-          label: 'MF Group',
+          label: 'mfGroup',
           route: ROUTES?.CBS_MICRO_FINANCE_GROUP_LIST,
           aclKey: 'MICROFINANCE_MF_MF',
           addRoute: ROUTES.CBS_MICRO_FINANCE_GROUP_ADD,
         },
         {
-          label: 'MF Group Meetings',
+          label: 'mfGroupMeetings',
           route: ROUTES?.CBS_MICRO_FINANCE_GROUP_MEETINGS_LIST,
           aclKey: 'MICROFINANCE_MF_MF',
           addRoute: ROUTES.CBS_MICRO_FINANCE_GROUP_MEETINGS_ADD,
@@ -623,36 +623,36 @@ export const CBS: NavType = {
       aclKey: 'CBS_OTHERS',
       pages: [
         {
-          label: 'Market Representatives List',
+          label: 'othersMRList',
           route: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_LIST,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
         },
         {
-          label: 'Market Representative Transactions',
+          label: 'othersMRTransaction',
           route: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_TRANSACTIONS_LIST,
           aclKey: 'CBS_TRANSACTIONS_MARKET_REPRESENTATIVE_COLLECTION',
           // addRoute: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_TRANSACTIONS_ADD,
         },
         {
-          label: 'Profit to Fund Management',
+          label: 'othersProfitToFundManagement',
           route: ROUTES.CBS_OTHERS_FUND_MANAGEMENT_LIST,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_PROFIT_TO_FUND_MANAGEMENT',
           addRoute: ROUTES.CBS_OTHERS_FUND_MANAGEMENT_ADD,
         },
         {
-          label: 'Share Dividend Posting',
+          label: 'othersShareDividendPosting',
           route: ROUTES.CBS_OTHERS_SHARE_DIVIDEND_POSTING_LIST,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
           addRoute: ROUTES.CBS_OTHERS_SHARE_DIVIDEND_POSTING_ADD,
         },
         {
-          label: 'Bulk Tansfers',
+          label: 'othersBulkTransfer',
           route: ROUTES.CBS_OTHERS_BULK_TRANSFERS_LIST,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
           addRoute: ROUTES.CBS_OTHERS_BULK_TRANSFERS_ADD,
         },
         {
-          label: 'Market Representative Collection',
+          label: 'othersMRCollection',
           route: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_LIST,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
           // addRoute: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_ADD,
@@ -665,19 +665,19 @@ export const CBS: NavType = {
         //   aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
         // },
         {
-          label: 'New Profit to Fund Management',
+          label: 'othersNewProfitToFundManagement',
           route: ROUTES.CBS_OTHERS_FUND_MANAGEMENT_ADD,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_PROFIT_TO_FUND_MANAGEMENT',
           prod: false,
         },
         {
-          label: 'New Share Dividend Posting',
+          label: 'othersNewShareDividendPosting',
           route: ROUTES.CBS_OTHERS_SHARE_DIVIDEND_POSTING_ADD,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
           prod: false,
         },
         {
-          label: 'New Bulk Transfer',
+          label: 'othersNewBulkTransfer',
           route: ROUTES.CBS_OTHERS_BULK_TRANSFERS_ADD,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
         },
