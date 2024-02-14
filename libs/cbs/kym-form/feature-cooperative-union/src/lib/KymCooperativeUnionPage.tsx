@@ -269,7 +269,6 @@ export const KYMCooperativeUnionPage = () => {
 
           <FormLayout.Footer
             draftButton={
-              coopUnionEditData?.members?.cooperativeUnion?.formState?.data?.objState &&
               !['APPROVED', 'VALIDATED']?.includes(
                 coopUnionEditData?.members?.cooperativeUnion?.formState?.data?.objState || ''
               ) && (

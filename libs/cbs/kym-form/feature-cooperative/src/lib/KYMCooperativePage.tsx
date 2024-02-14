@@ -309,7 +309,6 @@ export const KYMCooperativePage = () => {
 
         <FormLayout.Footer
           draftButton={
-            editData?.members?.cooperative?.formState?.data?.objState &&
             !['APPROVED', 'VALIDATED']?.includes(
               editData?.members?.cooperative?.formState?.data?.objState || ''
             ) && (
