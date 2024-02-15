@@ -267,6 +267,7 @@ export const KYMIndividualPage = () => {
 
         <FormLayout.Footer
           draftButton={
+            !isFetching &&
             !['APPROVED', 'VALIDATED']?.includes(
               editData?.members?.individual?.formState?.data?.objState || ''
             ) && (

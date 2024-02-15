@@ -269,6 +269,7 @@ export const KYMCooperativeUnionPage = () => {
 
           <FormLayout.Footer
             draftButton={
+              !isFetching &&
               !['APPROVED', 'VALIDATED']?.includes(
                 coopUnionEditData?.members?.cooperativeUnion?.formState?.data?.objState || ''
               ) && (

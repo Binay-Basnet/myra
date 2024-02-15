@@ -271,6 +271,7 @@ export const KYMInstitutionPage = () => {
 
         <FormLayout.Footer
           draftButton={
+            !isFetching &&
             !['APPROVED', 'VALIDATED']?.includes(
               institutionEditData?.members?.institution?.formState?.data?.objState || ''
             ) && (
