@@ -210,9 +210,9 @@ export const CbsCloseDay = () => {
       return true;
     }
 
-    if (!eodStatus?.states?.currentBranchesReady) {
-      return true;
-    }
+    // if (!eodStatus?.states?.currentBranchesReady) {
+    //   return true;
+    // }
 
     if (eodStatus?.stage === 'PRE') {
       if (eodStatus?.overAllStatus === 'ONGOING') {
