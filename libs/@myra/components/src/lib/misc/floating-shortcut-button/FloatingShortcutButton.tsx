@@ -31,50 +31,26 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Branch Wise Summary report.',
-      'Update Branch while activating Member',
-      'Multiple branch selection in Member Classification Report',
-      'Default user branch filter in member, share, savings, and loan list page',
-      'Interest Breakdown View and Update bulk account premium on the product detail page',
-      'Custom Date Selection in Adjusted Charkhata report',
-      'Sheet no., Plot no., Kitta no, and Area field now accept text instead of the number',
-      'Support PDF in collateral file upload',
-      'If the account is in guaranteed of another account, show the thunder icon on the detail page of the account and link to those accounts',
-      'Add the Pan number column in the Saving and Loan interest report. ',
-      'Account signature added in the withdraw section of account transfer. ',
-      'Validate phone number during service activation as per KYM phone number',
-      'Added permission for the head teller to update collateral and guarantee.',
-      'Fine and rebate should be available and editable in the Loan account close.',
-      'PDF Account Statement download in e-banking ',
-      'Date in Account Statement as per user preference in e-banking',
+      'Max 100 installment allowed during installment deposit',
+      'Nepali translation in menu items and some sub-menus',
+      'Allow Internal Search Index button once a day',
+      'Added extra field for remark and purpose in utility and QR payment',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Issue during saving Draft Member',
-      'Disable adjusting transactions of date before the last fiscal year',
-      'Account name duplication error during account opening',
-      'Default Sorting in the share, saving, loan, and transactions with date ',
-      'DR. CR.  Balance & date Sorting issue in the share statement.',
-      'Share statement Print view issue while in portrait view',
-      'Disclaimer text break in member balance certificate.',
-      'Service center update with proper error message on validation',
-      'Transaction date added in the voucher of loan repayment section. ',
-      'Remaining Interest column in the Loan aging report as per the date filtered',
-      'Allow updates in the product for inactive as well.',
-      'Show Close account in the dropdown with an indicator in the Loan statement report',
-      'LOC Loan added transaction print voucher showed 0, same on withdraw too. ',
-      'Clicking View all transactions navigated to the transaction list page with the last 7-day filter in e-banking',
-      'Voucher narration is shifted to the bottom section. ',
-      'Bank Account as per Branch selected in the Bank GL statement report. ',
-      'Column name in Account List of Product updated: "Account Premium"->"Default Account Premium"',
-      'Show more than 10 valuators in the collateral form list.',
-      "The cutoff issue of the last rows of the table in the print preview of Mr. Today's list",
-      'In Bank Transfer transactions, notes are not fetched in the statement reports. ',
-      'Clear Button on utility payment not working in e-banking',
-      'On completion of the transaction, redirect to the home page for e-banking',
-      'Branch search not working in inter-service center transaction',
+      "Hide the 'Save Draft' button when editing an approved member's KYM",
+      'Enable COOP and COOP union to save in draft',
+      'Filter for member classification report',
+      'Disable auto active of an inactive product when editing',
+      'E-banking Statement overlap issue for multiple pages',
+      'Optimize member register report by reducing loop query',
+      ' Default Self Deposit form filled during deposit of Membership payment',
+      'Table filter reset to default will remove the filter of that column in the table',
+      'Disable multi-query in the list page when the default service center is filtered',
+      'Validation of Collateral Type when adding Collateral',
+      'KYM form validation for required fields and show proper message',
     ],
   },
 };
@@ -113,8 +89,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.106</Text>
-          <Text fontSize="s3">Feb 7, 2024</Text>
+          <Text fontSize="r2">Version 1.0.107</Text>
+          <Text fontSize="s3">Feb 15, 2024</Text>
         </Box>
         {!isEmpty(whatsNewData.features.data) && (
           <Box>
