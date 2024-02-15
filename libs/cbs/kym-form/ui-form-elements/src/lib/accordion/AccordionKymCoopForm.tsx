@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 import { Box, Collapse, Text } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 const OrganizationInformation = [

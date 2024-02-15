@@ -250,7 +250,7 @@ export const KYMCooperativePage = () => {
           <FormLayout.Form>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                {t['kymCoop1InformationofOrganization']}
+                {t['kymCoopAcc1OrganizationDetails']}
               </Text>
               <KymCoopBasicInfo />
 
@@ -267,7 +267,7 @@ export const KYMCooperativePage = () => {
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                {t['kymCoop2EconomicDetails']}
+                {t['kymCoopAcc2EconomicDetails']}
               </Text>
               <KymEquityLiabilities />
               <KymCoopAssets />
@@ -275,14 +275,14 @@ export const KYMCooperativePage = () => {
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                {t['kymCoop3DetailsofBoardDirectors']}
+                {t['kymCoopAcc3DetailsofBoardDirectors']}
               </Text>
               <KymCoopBoardDirectorDetail />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                {t['kymCoop4DetailsofAccountOperators']}
+                {t['kymCoopAcc4DetailsofAccountOperators']}
               </Text>
               <KymCoopAccountOperatorDetail />
             </SectionContainer>

@@ -137,9 +137,9 @@ export const CbsMembersFeatureActivate = () => {
             </Text>
           </Box>
 
-          <Box px="s16" display="flex" flexDir="column" gap="s24">
+          <Box px="s16" display="flex" flexDir="column" gap="s24" mb="s64">
             <Box display="flex" gap="s16">
-              <NumberStatus active number={0} />
+              <NumberStatus active={!hasPaidMemberFee} number={0} />
 
               <Box display="flex" flexDir="column" gap="s16">
                 <Box display="flex" flexDir="column" gap="s4">
@@ -147,8 +147,17 @@ export const CbsMembersFeatureActivate = () => {
                     Update Branch
                   </Text>
                   <FormProvider {...methods}>
-                    <FormBranchSelect label="Select Branch" name="branchId" />
-                    <Button onClick={updateBranch} w="-webkit-fit-content" mt="s8">
+                    <FormBranchSelect
+                      label="Select Branch"
+                      name="branchId"
+                      isDisabled={hasPaidMemberFee}
+                    />
+                    <Button
+                      onClick={updateBranch}
+                      w="-webkit-fit-content"
+                      mt="s8"
+                      isDisabled={hasPaidMemberFee}
+                    >
                       Update Branch
                     </Button>
                   </FormProvider>

@@ -13,8 +13,8 @@ export const KymCoopBasicInfo = () => {
         name="nameOfOrganization"
         label={t['kymCoopNameofOrganization']}
       />
-      <FormInput name="regdNumber" label={t['kymCoopRegisrationNo']} isRequired />
-      <FormInput name="vatNo" label="VAT/PAN No" isRequired />
+      <FormInput name="regdNumber" label={t['kymCoopRegistrationNo']} isRequired />
+      <FormInput name="vatNo" label={t['kymCoopPanVatNo']} isRequired />
 
       <FormInput isRequired type="text" name="regdOffice" label={t['kymCoopRegistrationoffice']} />
       <FormDatePicker name="regdDate" label={t['kymCoopRegistrationDate']} maxToday isRequired />

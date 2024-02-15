@@ -1,56 +1,56 @@
 const en: Record<string, string> = {
   // global
-  home: 'Home',
-  dashboard: 'Dashboard',
-  yes: 'Yes',
-  no: 'No',
-  rs: 'Rs.',
-  sn: 'SN',
-  next: 'Next',
-  save: 'Save',
-  saveDraft: 'Save Draft',
-  formDetails: 'Form details saved to draft',
-  pinOnMap: 'Pin on Map',
-  id: 'ID',
-  memberSince: 'Member since',
-  branch: 'Branch',
-  complete: 'Complete',
-  submit: 'Submit',
-  applyChanges: 'Apply Changes',
-  done: 'Done',
-  saveAccount: 'Save Account',
-  generate: 'Generate',
-  day: 'Day',
-  week: 'Week',
-  month: 'Month',
-  year: 'Year',
-  enable: 'Enable',
-  disable: 'Disable',
-  new: 'New',
-  quaterly: 'Quarterly',
-  halfYearly: 'Half-Yearly',
-  daily: 'Daily',
-  weekly: 'Weekly',
-  monthly: 'Monthly',
-  yearly: 'Yearly',
-  edit: 'Edit',
-  saveChanges: 'Save Changes',
-  settings: 'Settings',
-  days: 'days',
-  weeks: 'weeks',
-  months: 'months',
-  years: 'years',
-  province: 'Province',
-  district: 'District',
-  localGovernment: 'Local Government',
-  wardNo: 'Ward No',
-  locality: 'Locality',
-  houseNo: 'House No',
-  serviceCenter: 'Service Center',
-  print: 'Print',
+  home: 'गृहपृष्ठ',
+  dashboard: 'ड्यासबोर्ड',
+  yes: 'हो',
+  no: 'होईन',
+  rs: 'रु',
+  sn: 'नं',
+  next: 'अर्को',
+  save: 'सुरक्षित गर्नुहोस',
+  saveDraft: 'मस्यौदा सुरक्षित गर्नुहोस',
+  formDetails: 'फारम विवरणको मस्यौदा',
+  pinOnMap: 'नक्सामा पिन गर्नुहोस',
+  id: 'नं',
+  memberSince: 'सदस्य अवधि',
+  branch: 'सेवा केन्द्र',
+  complete: 'पूर्ण',
+  submit: 'पेश गर्नुहोस्',
+  applyChanges: 'परिवर्तनहरू लागू गर्नुहोस्',
+  done: 'सकियो',
+  saveAccount: 'खाता बचत गर्नुहोस्',
+  generate: 'उत्पन्न गर्नुहोस्',
+  day: 'दिन',
+  week: 'हप्ता',
+  month: 'दैनिक',
+  year: 'वर्ष',
+  enable: 'सक्षम गर्नुहोस्',
+  disable: 'असक्षम पार्नुहोस्',
+  new: 'नयाँ',
+  quaterly: 'त्रैमासिक',
+  halfYearly: 'अर्धवार्षिक',
+  daily: 'दैनिक',
+  weekly: 'साप्ताहिक',
+  monthly: 'मासिक',
+  yearly: 'वार्षिक',
+  edit: 'सम्पादन गर्नुहोस्',
+  settings: 'सेटिङ',
+  days: 'दिनहरू',
+  weeks: 'हप्ताहरू',
+  months: 'महिना',
+  years: 'वर्ष',
+  province: 'प्रदेश',
+  district: 'जिल्ला',
+  localGovernment: 'स्थानीय निकाय',
+  wardNo: 'वडा नं',
+  locality: 'टोल',
+  houseNo: 'घर नं',
+  serviceCenter: 'सर्वीस सेन्टर',
+  print: 'छाप्नुहोस्',
   exportVisible: 'Export Visible',
   exportPDF: 'Export PDF',
   exportCSV: 'Export CSV',
+  saveChanges: 'Save Changes',
 
   // navbar
   searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',
@@ -516,6 +516,127 @@ const en: Record<string, string> = {
   // account holder declaration
   kymInsAccountHolderName: "Account Holder's Name",
   kymInsAccountHolderAddress: "Account Holder's Address",
+  // cooperative
+  // cooperative kym form
+  // used in accordian and form
+
+  kymCoopAcc1OrganizationDetails: '1. Organization Details',
+  kymCoopAccBasicInformation: 'Basic Information',
+  kymCoopAccRegisteredAddress: 'Registered Address',
+  kymCoopAccOperatingAddress: 'Operating Address',
+  kymCoopAccCurrentMembers: 'Current Members',
+  kymCoopAccCooperativeDate: 'Cooperative Date',
+  kymCoopAccRepresentative: 'Representative',
+  kymCoopAccAdditionalCoorperativeDetails: 'Additional Coorperative Details',
+  kymCoopAccNumberofEmployee: 'Number of Employee',
+
+  kymCoopAcc2EconomicDetails: '2. Economic Details',
+  kymCoopAccEquityandLiabilities: 'Equity and Liabilities',
+  kymCoopAccAssets: 'Assets',
+
+  kymCoopAcc3DetailsofBoardDirectors: '3. Details of Board Directors',
+  kymCoopAccBoardOfDirectorDetails: 'Board Of Director Details',
+
+  kymCoopAcc4DetailsofAccountOperators: '4. Details of Account Operators',
+  kymCoopAccAccountOperatorDetail: 'Account Operator Detail',
+
+  kymCoopAcc5Declaration: '5. Declaration',
+  kymCoopAccAccountHolderDeclaration: 'Account Holder Declaration',
+  kymCoopAccDocumentDeclaration: 'Document Declaration',
+
+  // information of organization
+  kymCoopNameofOrganization: 'Name of Organization',
+  kymCoopRegistrationNo: 'Registration No',
+  kymCoopPanVatNo: 'VAT/PAN No',
+  kymCoopRegistrationoffice: 'Registration Office',
+  kymCoopRegistrationDate: 'Registration Date',
+
+  // registered address
+  kymCoopRegisteredAddress: 'Registered Address',
+
+  // operating address
+  kymCoopOperatingAddress: 'Operating Address',
+
+  // contact details
+  kymCoopContactDetails: 'Contact Details',
+  kymCoopOfficialEmail: 'Official Email',
+  kymCoopWebsiteLink: 'Website Link',
+  kymCoopPhoneno: 'Phone no.',
+
+  // current members
+  kymCoopCurrentMembers: 'Current Members',
+  kymCoopNoofMalemembers: 'No. of Male members',
+  kymCoopNoofFemalemembers: 'No. of Female members',
+  kymCoopNoofOthermembers: 'No. of Other members',
+
+  // audit and agm date
+  kymCoopLastAuditDate: 'Last Audit FY',
+  kymCoopLastAGMDate: 'Last AGM Date',
+
+  // Representative Details
+  kymCoopRepresentative: 'Representative Details',
+  kymCoopName: 'Name',
+
+  kymCoopRepresentativePhone: 'Contact No',
+  kymCoopRepresentativeEmail: 'Email Address',
+  kymCoopRepresentativePanOrVat: 'PAN No',
+
+  kymCoopRepresentativePermanentAddress: 'Permanent Address',
+  kymCoopRepresentativeTemporaryAddress: 'Temporary Address',
+  kymCoopRepresentativeTemporaryAddressPermanent: 'Temporary Address same as permanent',
+
+  // Additional cooperative details
+  kymCoopAdditionalCoorperativeDetails: 'Additional Coorperative Details',
+  kymCoopType: 'Coorperative Type',
+  kymCoopMainServiceProduct: 'Main Service/Product',
+
+  // number of employee
+  kymCoopNumberofEmployee: 'Number of Employee',
+  kymCoopMale: 'Male',
+  kymCoopFemale: 'Female',
+
+  // Economic details
+  kymCoopEquityandLiabilities: 'Equity and Liabilities',
+  kymCoopAmount: 'Amount',
+  kymCoopShareCapital: 'Share Capital',
+  kymCoopReserveandsurplus: 'Reserve and Surplus',
+  kymCoopSavingDeposit: 'Saving/Deposit',
+  kymCoopLoanAccount: 'Loan Account (External Loan)',
+  kymCoopCapitalGrant: 'Capital Grant',
+  kymCoopCurrentLiabilitiesandpayable: 'Current Liabilities and Payable',
+  kymCoopNoncurrentliabilities: 'Non-current liabilities',
+  kymCoopTotal: 'Total',
+
+  kymCoopAssets: 'Assets',
+  kymCoopCashandcashequivalents: 'Cash and cash equivalents',
+  kymCoopBank: 'Bank',
+  kymCoopInvestments: 'Investments',
+  kymCoopLoan: 'Loan (investment)',
+  kymCoopNoncurrentassets: 'Non current assets',
+  kymCoopOthernoncurrentassets: 'Other non current assets',
+
+  // details of board director
+  kymCoopBoardofdirectordetails: 'Board of director details',
+  kymCoopDirector: 'Director',
+  kymCoopFullName: 'Full Name',
+  kymCoopDesignation: 'Designation',
+  kymCoopPermanentAddress: 'Permanent Address',
+  kymCoopTemporaryAddress: 'Temporary Address',
+  kymCoopTemporaryAddressPermanent: 'Temporary Address same as permanent',
+  kymCoopDateOfMembership: 'Date of membership',
+  kymCoopHighestQualification: 'Highest Qualification',
+  kymCoopMobileNo: 'Mobile No',
+  kymCoopEmail: 'Enter Email',
+  kymCoopCitizenshipPassportDrivingLicenseNo: 'Citizenship No',
+  kymCoopPanOrVatNo: 'PAN No',
+  kymCoopPhotograph: 'Photograph',
+  kymCoopPhotographOfIdentityProofDocument: 'Photograph of identity proof document',
+  kymCoopSignature: 'Signature',
+  kymCoopAddDirector: 'Add Director',
+
+  // details of account operator
+  kymCoopDetailsofAccountOperators: 'Details of Account Operators',
+  kymCoopAccountOperator: 'Account Operator',
 
   // share
   // sidebar
@@ -544,23 +665,21 @@ const en: Record<string, string> = {
 
   // loan
   // sidebar
-  newLoanApplication: 'New Loan Application',
-  newLoanRepayment: 'New Loan Repayment',
-  newCloseLoanAccount: 'New Close Loan Account',
-  newLoanLossProvision: 'New Loan Loss Provision',
-  loanAccounts: 'Loan Accounts',
-  loanApplications: 'Loan Applications',
-  loanRepayment: 'Loan Repayment',
-  loanProducts: 'Loan Products',
-  declinedLoan: 'Declined Loan',
-  closedAccounts: 'Closed Accounts',
-  loanLossProvision: 'Loan Loss Provision',
-  loanWriteOff: 'Loan Write Off',
-
-  loanLayoutSettings: 'Loan Settings',
-  loanLayoutProductsSettings: 'Loan Product Settings',
-  loanAccountStatementReport: 'Loan Account Statement Report',
-  loanLayoutAgeingReport: 'Loan Aging Report',
+  newLoanRepayment: 'ऋण भुक्तानी',
+  newCloseLoanAccount: 'ऋण खाता बन्द',
+  newLoanLossProvision: 'ऋण सुरक्षण कोषको प्रविष्टि',
+  loanAccounts: 'ऋणका खाताहरु',
+  loanApplications: ' ऋण आवेदनहरु',
+  loanRepayment: 'भुक्तानी भएका ऋणहरु',
+  loanProducts: 'ऋणका प्रकारहरु',
+  declinedLoan: ' रद्द गर्ने',
+  closedAccounts: 'बन्द भएका ऋण खाताहरु',
+  loanLossProvision: 'ऋण सुरक्षण कोष',
+  loanWriteOff: 'ऋणको अपलेखन',
+  loanLayoutSettings: ' ऋण सेटअप',
+  loanLayoutProductsSettings: ' ऋण प्रकारहरुको सेटअप',
+  loanAccountStatementReport: 'ऋणको व्यक्तिगत प्रतिवेदन',
+  loanLayoutAgeingReport: 'विस्तृत ऋण प्रतिवेदन (एजिङ)',
 
   // transaction
   // sidebar
@@ -1599,7 +1718,6 @@ const en: Record<string, string> = {
   kymCoopAccountHolderDeclaration: 'Account Holder Declaration',
   kymCoopAccountHolderName: "Account Holder's Name",
   kymCoopEnterAccountHolderName: "Enter Account Holder's Name",
-  kymCoopSignature: 'Signature',
   kymCoopStamp: 'Stamp',
 
   kymCoopAGMDecisionDocument: 'AGM/BOD Decision Document',
@@ -1610,15 +1728,10 @@ const en: Record<string, string> = {
   kymCoopMinuteofCentralRep: 'Minute of Central Rep',
   kymCoopLogo: 'Logo',
 
-  kymCoopDetailsofAccountOperators: 'Details of Account Operators',
   kymCoopAddOperator: 'Add Operator',
 
-  kymCoopBoardofdirectordetails: 'Board of director details',
-  kymCoopAddDirector: 'Add Director',
-
-  kymCoopFullName: 'Full Name',
   kymCoopEnterFullName: 'Enter Full Name',
-  kymCoopPermanentAddress: 'Permanent Address',
+
   kymCoopState: 'Province',
   kymCoopSelectState: 'Select Province',
   kymCoopDistrict: 'District',
@@ -1628,16 +1741,10 @@ const en: Record<string, string> = {
   kymCoopEnterWardNo: 'Enter Ward No',
   kymCoopLocality: 'Locality',
   kymCoopEnterLocality: 'Enter Locality',
-  kymCoopTemporaryAddress: 'Temporary Address',
-  kymCoopTemporaryAddressPermanent: 'Temporary Address same as permanent',
-  kymCoopDateOfMembership: 'Date of membership',
-  kymCoopHighestQualification: 'Highest Qualification',
   kymCoopEnterHigestQualification: 'Enter Higest Qualification',
-  kymCoopMobileNo: 'Mobile No',
   kymCoopEnterMobileNo: 'Enter Mobile No',
-  kymCoopEmail: 'Enter Email',
   kymCoopEnterEmail: 'Enter Email',
-  kymCoopCitizenshipPassportDrivingLicenseNo: 'Citizenship No',
+
   kymCoopEnterNo: 'Enter No',
   kymCoopTrainingRelatedToCoop: 'Training related to Co-operatives',
   kymCoopTrainingRelatedToCoopsubText: 'Training Attended',
@@ -1647,77 +1754,39 @@ const en: Record<string, string> = {
   kymCoopEnterDateOfTraining: 'Enter date of Training',
   kymCoopTrainingOrganization: 'Training Organization',
   kymCoopEnterTrainingOrganization: 'Enter Training Organization',
-  kymCoopPanOrVatNo: 'PAN No',
-  kymCoopEnterPanOrVat: 'Enter Pan No',
-  kymCoopPhotograph: 'Photograph',
-  kymCoopPhotographOfIdentityProofDocument: 'Photograph of identity proof document',
 
-  kymCoopAssets: 'Assets',
-  kymCoopAmount: 'Amount',
-  kymCoopCashandcashequivalents: 'Cash and cash equivalents',
-  kymCoopBank: 'Bank',
-  kymCoopInvestments: 'Investments',
-  kymCoopLoan: 'Loan (investment)',
-  kymCoopNoncurrentassets: 'Non current assets',
-  kymCoopOthernoncurrentassets: 'Other non current assets',
-  kymCoopTotal: 'Total',
+  kymCoopEnterPanOrVat: 'Enter Pan No',
+
   kymCoopTotalassets: 'Total assets',
 
-  kymCoopEquityandLiabilities: 'Equity and Liabilities',
-  kymCoopShareCapital: 'Share Capital',
-  kymCoopReserveandsurplus: 'Reserve and Surplus',
-  kymCoopSavingDeposit: 'Saving/Deposit',
-  kymCoopLoanAccount: 'Loan Account (External Loan)',
-  kymCoopCapitalGrant: 'Capital Grant',
-  kymCoopCurrentLiabilitiesandpayable: 'Current Liabilities and Payable',
-  kymCoopNoncurrentliabilities: 'Non-current liabilities',
   kymCoopEnterTotalEquityandliabilities: 'Enter Total Equity and liabilities',
 
-  kymCoopNameofOrganization: 'Name of Organization',
   kymCoopEnterNameofOrganization: 'Enter Name of Organization',
   kymCoopRegisrationNo: 'Registration No',
   kymCoopEnterRegisteredNumber: 'Enter Registered Number',
-  kymCoopRegistrationoffice: 'Registration Office',
   kymCoopEnterRegisteredAddress: 'Enter Registered Address',
-  kymCoopRegistrationDate: 'Registration Date',
 
-  kymCoopRegisteredAddress: 'Registered Address',
   kymCoopProvince: 'Province',
   kymCoopMuncipality: 'Muncipality',
   kymCoopSelectMunicipality: 'Select Municipality',
   kymCoopLocalGovernment: 'Local Government',
   kymCoopSelectLocal: 'Select Local Government',
-  kymCoopOperatingAddress: 'Operating Address',
-  kymCoopOfficialEmail: 'Official Email',
+
   kymCoopEnterEmailAddress: 'Enter Email Address',
-  kymCoopWebsiteLink: 'Website Link',
+
   kymCoopEnterWebsiteURL: 'Enter Website URL',
-  kymCoopPhoneno: 'Phone no.',
 
   kymCoopEnterPhoneNumber: 'Enter Phone Number',
 
-  kymCoopCurrentMembers: 'Current Members',
-  kymCoopNoofMalemembers: 'No. of Male members',
   kymCoopEnternumberofMaleMembers: 'Enter number of Male Members',
-  kymCoopNoofFemalemembers: 'No. of Female members',
   kymCoopEnternumberofFemaleMembers: 'Enter number of Female Members',
-  kymCoopNoofOthermembers: 'No. of Other members',
   kymCoopEnternumberofOthermembers: 'Enter number of Other members',
 
-  kymCoopLastAGMDate: 'Last AGM Date',
-
-  kymCoopRepresentative: 'Representative Details',
-  kymCoopName: 'Name',
   kymCoopEnterName: 'Enter Name',
-  kymCoopDesignation: 'Designation',
   kymCoopEnterDesignation: 'Enter Designation',
-  kymCoopRepresentativePhone: 'Contact No',
   kymCoopRepresentativeEnterPhone: 'Enter Contact No',
-  kymCoopRepresentativeEmail: 'Email Address',
   kymCoopRepresentativeEnterEmail: 'Enter Email Address',
-  kymCoopRepresentativePanOrVat: 'PAN No',
   kymCoopRepresentativeEnterPan: 'Enter Pan Number',
-  kymCoopRepresentativePermanentAddress: 'Permanent Address',
   kymCoopRepresentativeProvince: 'Province',
   kymCoopRepresentativeSelectProvince: 'Select Province',
   kymCoopRepresentativeDistrict: 'District',
@@ -1731,20 +1800,11 @@ const en: Record<string, string> = {
   kymCoopRepresentativeHouseNo: 'House No',
 
   kymCoopRepresentativeEnterHouseNo: 'Enter House No',
-  kymCoopRepresentativeTemporaryAddress: 'Temporary Address',
-  kymCoopRepresentativeTemporaryAddressPermanent: 'Temporary Address same as permanent',
   kymCoopRepresentativeLandlordName: "Landlord's Name",
   kymCoopRepresentativeContactNo: 'Contact No',
 
-  kymCoopAdditionalCoorperativeDetails: 'Additional Coorperative Details',
-  kymCoopType: 'Coorperative Type',
   kymCoopSelectType: 'Select Type',
-  kymCoopMainServiceProduct: 'Main Service/Product',
   kymCoopEnterMainServiceProduct: 'Enter Main Service/Product',
-
-  kymCoopNumberofEmployee: 'Number of Employee',
-  kymCoopMale: 'Male',
-  kymCoopFemale: 'Female',
 
   // kym coop union
   kymCoopUnionAddNewMembers: 'Add New Member',
@@ -2102,23 +2162,6 @@ const en: Record<string, string> = {
   kymAccIndNexttoKin: 'Next to Kin',
 
   // kym coop
-  kymCoopAccRegisteredAddress: 'Registered Address',
-  kymCoopAccOperatingAddress: 'Operating Address',
-  kymCoopAccCurrentMembers: 'Current Members',
-  kymCoopAccCooperativeDate: 'Cooperative Date',
-  kymCoopAccRepresentative: 'Representative',
-  kymCoopAccAdditionalCoorperativeDetails: 'Additional Coorperative Details',
-  kymCoopAccNumberofEmployee: 'Number of Employee',
-  kymCoopAccEquityandLiabilities: 'Equity and Liabilities',
-  kymCoopAccAssets: 'Assets',
-  kymCoopAccBoardOfDirectorDetails: 'Board Of Director Details',
-  kymCoopAccAccountOperatorDetail: 'Account Operator Detail',
-  kymCoopAccAccountHolderDeclaration: 'Account Holder Declaration',
-  kymCoopAcc1OrganizationDetails: '1. Organization Details',
-  kymCoopAcc2EconomicDetails: '2. Economic Details',
-  kymCoopAcc3DetailsofBoardDirectors: '3. Details of Board Directors',
-  kymCoopAcc4DetailsofAccountOperators: '4. Details of Account Operators',
-  kymCoopAcc5Declaration: '5. Declaration',
   // Settings Share
 
   // SIDEBAR
@@ -3839,7 +3882,6 @@ const en: Record<string, string> = {
 
   kymCoopDOCUMENTDECLARATION: 'Document Declaration',
 
-  kymCoopAccDocumentDeclaration: 'Document Declaration',
   settingsCoopUnionApplicantDocumentDeclaration: 'Document Declaration',
   settingsCooperativeDocumentDeclaration: 'Document Declaration',
   settingsCoopDocumentDeclaration: 'Document Declaration',
@@ -3860,9 +3902,7 @@ const en: Record<string, string> = {
   kymCoopUnionAccContactDetails: 'Contact Details',
 
   kymCoopUnionContactDetails: 'Contact Details',
-  kymCoopContactDetails: 'Contact Details',
   settingsOrganizationContactDetails: 'Contact Details',
-  kymCoopAccBasicInformation: 'Basic Information',
   kymAccIndBasicInformation: 'Basic Information',
 
   kymCoopUnionAccBasicInformation: 'Basic Information',
@@ -4496,7 +4536,6 @@ const en: Record<string, string> = {
   memberSettingssCorePreview: 'Core Preview',
 
   // others page
-  kymCoopLastAuditDate: 'Last Audit FY',
   serviceCenterServiceCenterContactNumber: 'Service Center Contact Number',
 
   bankAccountBankInformation: 'Bank Information',

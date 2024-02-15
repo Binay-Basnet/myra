@@ -46,7 +46,7 @@ export const AddDirector = ({ removeDirector, index }: ICOOPDirector) => {
           onClick={() => setIsOpen(!isOpen)}
           h="60px"
         >
-          <Text fontSize="r1">{`Director `}</Text>
+          <Text fontSize="r1">{t['kymCoopDirector']}</Text>
           <Box>
             {isOpen ? (
               <IconButton
