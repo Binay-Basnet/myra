@@ -4,9 +4,10 @@ import { Checkbox, CheckboxProps } from '@myra-ui';
 
 interface IFormCheckboxProps<T> extends CheckboxProps {
   name: Path<T>;
+  onChangeAction?: (val: boolean) => void;
 }
 
-export const FormCheckbox = <T,>({ name, ...rest }: IFormCheckboxProps<T>) => {
+export const FormCheckbox = <T,>({ name, onChangeAction, ...rest }: IFormCheckboxProps<T>) => {
   const methods = useFormContext();
 
   const {
@@ -22,7 +23,10 @@ export const FormCheckbox = <T,>({ name, ...rest }: IFormCheckboxProps<T>) => {
         <Checkbox
           isInvalid={!!errors[name]?.message}
           id={name}
-          onChange={onChange}
+          onChange={(e) => {
+            onChange(e);
+            onChangeAction && onChangeAction(e.target.checked);
+          }}
           isChecked={value}
           {...fieldProps}
           {...rest}
