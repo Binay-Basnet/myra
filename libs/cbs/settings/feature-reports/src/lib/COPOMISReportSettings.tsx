@@ -74,15 +74,18 @@ export const COPOMISReportSettings = ({ indicator }: ReportSettingsProps) => {
                 <Box display="flex" flexDir="column">
                   {Object.values(formula.variables).map((variables) => (
                     <>
-                      {variables.split(',').map((v) => (
-                        <Box fontSize="r1" color="gray.800">
-                          {`${v} -  ${
-                            coaView?.settings?.chartsOfAccount?.fullView.data?.find(
-                              (d) => d?.id === v
-                            )?.name?.local
-                          }`}
-                        </Box>
-                      ))}
+                      {variables.split(',').map(
+                        (v) =>
+                          v && (
+                            <Box fontSize="r1" color="gray.800">
+                              {`${v} -  ${
+                                coaView?.settings?.chartsOfAccount?.fullView.data?.find(
+                                  (d) => d?.id === v
+                                )?.name?.local
+                              }`}
+                            </Box>
+                          )
+                      )}
                     </>
                   ))}
                 </Box>
