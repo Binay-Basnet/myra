@@ -11,7 +11,7 @@ export const Declaration = () => {
   return (
     <SectionContainer>
       <Text p="s20" fontSize="r3" fontWeight="600">
-        {t['kymCoopUnionDec7Declaration']}
+        {t['kymCoopUnionAcc7Declaration']}
       </Text>
       <DocumentDeclarationInstitutionCOOPUnion />
     </SectionContainer>

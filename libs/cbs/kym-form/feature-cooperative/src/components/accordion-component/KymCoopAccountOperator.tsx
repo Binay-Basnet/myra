@@ -47,7 +47,7 @@ export const AddOperator = ({ removeDirector, index }: IAddDirector) => {
           cursor="pointer"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <Text fontSize="r1">{`Account Operator `}</Text>
+          <Text fontSize="r1">{t['kymCoopAccountOperator']}</Text>
           <Box>
             {isOpen ? (
               <IconButton

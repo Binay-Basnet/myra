@@ -18,23 +18,23 @@ export const CooperativeMemberInformation = () => {
 
   const { watch } = useFormContext();
 
-  const noOfMaleMemberCurrent = isNaN(watch('noOfMaleMemberCurrent'))
+  const noOfMaleMemberCurrent = Number.isNaN(watch('noOfMaleMemberCurrent'))
     ? 0
     : watch('noOfMaleMemberCurrent');
-  const noOfFemaleMemberCurrent = isNaN(watch('noOfFemaleMemberCurrent'))
+  const noOfFemaleMemberCurrent = Number.isNaN(watch('noOfFemaleMemberCurrent'))
     ? 0
     : watch('noOfFemaleMemberCurrent');
-  const noOfInstitutionalMemberCurrent = isNaN(watch('noOfInstitutionalMemberCurrent'))
+  const noOfInstitutionalMemberCurrent = Number.isNaN(watch('noOfInstitutionalMemberCurrent'))
     ? 0
     : watch('noOfInstitutionalMemberCurrent');
 
-  const noOfMaleMemberTarget = isNaN(watch('noOfMaleMemberTarget'))
+  const noOfMaleMemberTarget = Number.isNaN(watch('noOfMaleMemberTarget'))
     ? 0
     : watch('noOfMaleMemberTarget');
-  const noOfFemaleMemberTarget = isNaN(watch('noOfFemaleMemberTarget'))
+  const noOfFemaleMemberTarget = Number.isNaN(watch('noOfFemaleMemberTarget'))
     ? 0
     : watch('noOfFemaleMemberTarget');
-  const noOfInstitutionalMemberTarget = isNaN(watch('noOfInstitutionalMemberTarget'))
+  const noOfInstitutionalMemberTarget = Number.isNaN(watch('noOfInstitutionalMemberTarget'))
     ? 0
     : watch('noOfInstitutionalMemberTarget');
 

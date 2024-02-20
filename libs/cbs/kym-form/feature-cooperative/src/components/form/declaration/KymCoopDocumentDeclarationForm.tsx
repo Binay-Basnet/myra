@@ -19,7 +19,7 @@ export const KymCoopDocumentDeclarationForm = () => {
         label={t['kymCoopRegisteredCertificate']}
         name="documents.1.identifiers"
       />
-      <FormFileInput size="lg" label="MOA/AOA" name="documents.2.identifiers" />
+      <FormFileInput size="lg" label={t['kymCoopMoaAoa']} name="documents.2.identifiers" />
       <FormFileInput size="lg" label={t['kymCoopPANCertificate']} name="documents.3.identifiers" />
       <FormFileInput size="lg" label={t['kymCoopTaxClearance']} name="documents.4.identifiers" />
       <FormFileInput

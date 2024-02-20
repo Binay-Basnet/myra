@@ -1,3 +1,5 @@
+import { memberEn } from './english/cbs/member';
+
 const en: Record<string, string> = {
   // global
   home: 'Home',
@@ -106,539 +108,7 @@ const en: Record<string, string> = {
   reports: 'Reports',
   others: 'Others',
 
-  // member page
-
-  activeMembers: 'Active Members',
-  inactiveMembers: 'Inactive Members',
-  minorMembers: 'Minor Members',
-  membersAddNewMembers: 'Add New Members',
-  memberList: 'Members',
-  balanceReport: 'Member Reports',
-  memberDetails: 'Member Details',
-  memberSettings: 'Member Settings',
-  newIndividual: 'New Individual',
-  newInstitution: 'New Institution',
-  newCooperative: 'New Cooperative',
-  newCooperativeUnion: 'New Cooperative Union',
-
-  // member list table
-  memberListTableMemberId: 'Member Id',
-  memberListTableActiveDate: 'Active Date',
-  memberListTableMemberCode: 'Member Code',
-  memberListTableName: 'Name',
-  memberListTableAddress: 'Address',
-  memberListTablePhoneNo: 'Phone No.',
-  memberListTableServiceCenter: 'Service Center',
-  memberListTableViewMemberProfile: 'View Member Profile',
-  memberListTableEditMember: 'Edit Member',
-  memberListTableMakeInactive: 'Make Inactive',
-  memberListTableMakeDormant: 'Make Dormant',
-  memberListTableMakeActive: 'Make Active',
-  memberListDateJoined: 'Date Joined',
-  memberListActiveDate: 'Active Date',
-  memberListDeleteMember: 'Delete member',
-  memberListDeleteConfirm: 'Are you sure you want to delete this member?',
-  memberListEditDormancy: 'Edit Dormancy',
-
-  navMemberList: 'Member List',
-  memberNavActive: 'Active',
-  memberNavInactive: 'Submitted',
-  memberNavWip: 'WIP',
-  memberNavDraft: 'Draft',
-  memberNavDormant: 'Dormant',
-  searchMembers: 'Search Members',
-
-  // member add form page
-  membersFormAddNewMembers: 'Add New Member',
-  membersFormUpdateMembers: 'Update Member',
-  membersFormAddingMembers: 'Adding Member',
-  membersFormEditingMembers: 'Editing Member',
-  memberAddedSuccessfull: 'Member Added Successfully',
-  memberEditedSuccessfull: 'Member Edited Successfully',
-
-  memberPersonalInformation: 'Personal Information',
-  memberFirstName: 'First Name',
-  memberMiddleName: 'Middle Name',
-  memberLastName: 'Last Name',
-  memberGender: 'Gender',
-  memberTitle: 'Title',
-  memberDateOfBirth: 'Date of Birth',
-  memberNationality: 'Nationality',
-  memberCitizenshipNo: 'Citizenship No.',
-  memberPlaceOfIssue: 'Place of Issue',
-  memberCitizenshipIssueDate: 'Citizenship Issue Date',
-  memberOccupation: 'Occupation',
-  memberPanNumber: 'PAN Number',
-
-  memberFamilyInformation: 'Family Information',
-  memberFatherName: 'Father Name',
-  memberMotherName: 'Mother Name',
-  memberGrandfatherName: 'Grandfather Name',
-  memberGrandmotherName: 'Grandmother Name',
-  memberSpouseName: 'Spouse Name',
-
-  memberPermanentAddress: 'Permanent Address',
-  memberState: 'Province',
-  memberDistrict: 'District',
-  memberVdcMuncipality: 'VDC Muncipality',
-  memberWardNo: 'Ward No.',
-  memberLocality: 'Locality',
-
-  memberContactInformation: 'Contact Information',
-  memberOfficeNo: 'Office No.',
-  memberResidenceNo: 'Residence No.',
-  memberMobileNo: 'Mobile No.',
-
-  memberNomineeInformation: 'Nominee Information',
-  memberRelation: 'Relation',
-  memberContactNumber: 'Contact Number',
-
-  memberPhoto: 'Photo',
-  memberPhotoUpload: 'Member Photo',
-  memberSignature: 'Member Signature',
-  memberDropOrClickToUploadPhoto: 'Drop or Click to upload photo',
-  saveMember: 'Save Member',
-
-  // individual kym form
-
-  // used in accordian and form
-  kymAccInd1PersonalDetails: '1. Personal Details',
-
-  kymAccInd2ProfessionalDetails: '2. Professional Details',
-  kymAccIndProfession: 'Profession',
-  kymAccIndMainProfession: 'Main Profession',
-  kymAccIndMainOccupationofHusabandWife: 'Main Occupation of Husaband/Wife',
-  kymAccIndIncomeSourceDetails: 'Income Source Details',
-
-  kymAccInd3CoopMembership: '3. COOP Membership',
-  kymAccIndMainPurposeofBecomingMember: 'Main Purpose of Becoming a Member',
-  kymAccIndMemberofAnothercooperative: 'Member of Another Cooperative',
-  kymAccIndFamilyMemberinthisinstitution: 'Family Member in this institution',
-  kymAccIndFinancialTransactionDetails: 'Financial Transaction Details',
-  kymAccIndEstimatedWithdrawDepositAmountintheInstitureion:
-    'Estimated Withdraw/Deposit Amount in the Institution',
-
-  kymAccInd4Declaration: '4. Declaration',
-  kymAccIndBeneficialOwner: 'Beneficial Owner',
-  kymAccIndFamilymembersinpolitics: 'Family members in politics',
-  kymAccIndConvictedNonconvictedStatus: 'Convicted/Non-convicted Status',
-  kymAccIndResidentialpermitofforeigncountry: 'Residential permit of foreign country',
-
-  // basic information
-  kymIndBasicInformation: 'Basic Information',
-  kymIndFirstName: 'First Name',
-  kymIndMiddleName: 'Middle Name',
-  kymIndLastName: 'Last Name',
-  kymIndGender: 'Gender',
-  kymIndSelectGender: 'Select Gender',
-  kymIndDateofBirthBS: 'Date of Birth',
-  kymIndEthnicity: 'Ethnicity',
-  kymIndNationality: 'Nationality',
-  kymIndEnterNationality: 'Enter Nationality',
-  kymIndEducationalQualification: 'Educational Qualification',
-  kymIndReligion: 'Religion',
-  kymIndPanNo: 'Pan No',
-
-  // contact details
-  kymIndContactDetails: 'Contact Details',
-  kymIndMobileNo: 'Mobile No',
-  kymIndPhoneNo: 'Phone No',
-  kymIndEmail: 'Email',
-
-  // indentification details
-  kymIndIdentificationDetails: 'Identification Details',
-  kymIndChooseidentificationdetails: 'Choose identification details',
-  kymIndIdentificationCitizenship: 'Citizenship',
-  kymIndIdentificationDrivingLicense: 'Driving License',
-  kymIndIdentificationPassport: 'Passport',
-  kymIndIdentificationVoterCard: 'Voter Card',
-  kymIndIdentificationNationalID: 'National ID',
-
-  // citizen
-  kymIndCitizenship: 'Citizenship',
-  kymIndCitizenshipNo: 'Citizenship No',
-  kymIndCitizenshipIssuePlace: 'Place of Issue',
-  kymIndCitizenshipIssueDate: 'Issued Date',
-
-  // driving license
-  kymIndDrivingLicense: 'Driving License',
-  kymIndDrivingLicenseNo: 'Driving License No',
-  kymIndDrivingLicenseIssuePlace: 'Place of Issue',
-  kymIndDrivingLicenseIssueDate: 'Issued Date',
-
-  // passport
-  kymIndPassport: 'Passport',
-  kymIndPassportNo: 'Passport No',
-  kymIndPassportIssuePlace: 'Place of Issue',
-  kymIndPassportIssueDate: 'Issued Date',
-
-  // voter card
-  kymIndVoterCard: 'Voter Card',
-  kymIndVoterCardNo: 'Voter Card No',
-  kymIndVoterCardPollingStation: 'Polling Station',
-
-  // national ID
-  kymIndNationalID: 'National ID',
-  kymIndNationalIDNo: 'National ID No',
-
-  // address
-  kymIndPermanentAddress: 'Permanent Address',
-  kymIndTemporaryAddressPermanent: 'Temporary Address same as permanent',
-  kymIndTemporaryAddress: 'Temporary Address',
-  kymAccIndInCaseOfResidingInRentedHouse: 'Incase of residing in Rented House',
-  kymIndLandlordName: "Landlord's Name",
-  kymIndLandlordContactNo: 'Contact No',
-
-  // family Details
-  kymIndMartialStatus: 'Martial Status',
-  kymIndFamilymembers: 'Family Members',
-  kymIndFamilyRelationship: 'Relationship',
-  kymIndFamilyFullName: 'Full Name',
-  kymIndfamilyDateofBirthBS: 'Date of Birth',
-  kymIndFamilyPhoto: 'Photo',
-  kymIndFamilyAddMembers: 'Add Family Members',
-
-  // Professional Details
-  // Profession
-  kymIndProfession: 'Profession',
-
-  // main profession
-  kymIndMainOccupation: 'Main Occupation',
-  kymIndOccupation: 'Occupation',
-  kymIndOccupationOrgFirmName: 'Org/Firm Name',
-  kymIndOccupationPanVATNo: 'Pan / VAT No',
-  kymIndOccupationAddress: 'Address',
-  kymIndOccupationEstimatedAnnualIncome: 'Estimated Annual Income',
-  kymIndOccupationAreyouowner: 'I own this business.',
-  kymIndOccupationEstablishedDate: 'Established Date',
-  kymIndOccupationRegistrationNo: 'Registration No.',
-  kymIndOccupationContactNo: 'Contact No.',
-
-  // income source details
-  kymIndIncomeSourceDetails: 'Income Source Details',
-  kymIndAnnualFamilyIncome: 'Annual Family Income',
-  kymIndIncomegreater: 'Income greater than 4 lakhs in the previous fiscal year',
-  kymIndIncomeSource: 'Income Source',
-  kymIndIncomeAmount: 'Amount',
-  kymIndIncomeNewEntry: 'New Entry',
-
-  // Coop membership
-  kymIndMainpurposeofbecomingmember: 'Main purpose of becoming a member',
-  kymIndMemberofAnothercooperative: 'Member of Another cooperative',
-  kymIndCooperativeName: 'Cooperative Name',
-  kymIndCooperativeMemberID: 'Member ID',
-
-  // Introducers
-  kymIndIntroducers: 'Introducers',
-  kymIndFirstIntroducer: 'First Introducer',
-  kymIndSecondIntroducer: 'Second Introducer',
-  kymIndFamilyMemberinthisinstitution: 'Family Member in this institution',
-  kymIndFamilyMemberinthisinstitutionInfoOne: 'Find Family Members With Name',
-  kymIndFamilyMemberinthisinstitutionInfoTwo:
-    'Multiple Members Can Be Selected With FInd Member Search',
-  kymIndFamilyMemberinthisinstitutionMemberSearch: 'Member Search',
-
-  // financial transaction details
-  kymIndFinancialTransactionDetails: 'Financial Transaction Details',
-  kymIndDetailsoftheamount:
-    'Details of the amount initially deposited in the instituion or  deposited till now',
-  kymIndFinancialShare: 'Share',
-  kymIndFinancialSavings: 'Savings',
-  kymIndFinancialLoan: 'Loan',
-  kymIndFinancialOther: 'Other',
-
-  // bank details
-  kymIndbankDetails: 'Bank Details',
-  kymIndbankDetailsBank: 'Bank',
-  kymIndbankDetailsAccountNumber: 'Account Number',
-
-  // Estimated Withdraw / Deposit Amount In The Institution
-  kymIndEstimatedWithdrawDepositAmountInTheInstitution:
-    'Estimated Withdraw / Deposit Amount In The Institution',
-  kymIndEstimatedannualaccounttransaction: 'Estimated annual account transaction',
-  kymIndEstimatednoofAnnualTransaction: 'Estimated no. of Annual Transaction',
-  kymIndEstimatedAnnualDeposit: 'Estimated Annual Deposit',
-  kymIndEstimatedAnnualLoan: 'Estimated Annual Loan',
-
-  // declarations
-  // nominee
-  kymIndNominee: 'Nominee',
-
-  // benificial owner
-  kymIndDoyouhavebeneficialowner: 'Do you have a beneficial owner?',
-  kymIndBeneficialOwnerRelationship: 'If yes, please write name and relationship',
-  kymIndBeneficialOwnerName: 'Name',
-
-  // politically exposed
-  kymIndPoliticallyexposedperson: 'Are you or any of your family politically exposed person',
-  kymIndPleasespecify: 'Please specify',
-
-  // convited
-  kymIndDeclarationofconvicted: 'Declaration of convicted/Non-convicted for any crimes in Past',
-
-  // residental permit
-  kymIndForeignCountry: 'Do you hold residential permit of foreign country?',
-  kymIndSpecifyfollowingdetails: 'Specify following details',
-
-  // document declaration
-  kymIndDocumentDeclaration: 'Document Declaration',
-  kymIndDocumentDeclarationPassportSizePhoto: 'Passport Size Photo',
-  kymIndDocumentDeclarationSignature: 'Signature',
-  kymIndDocumentDeclarationCitizenshipPhoto: 'Citizenship Photo',
-  kymIndDocumentDeclarationFingerprintPhoto: 'Fingerprint Photo',
-
-  // agreement
-  kymIndAgree: 'I/We agree to the',
-  kymIndAgreeLink: 'Terms and condition.',
-
-  // institution kym form
-  // institution
-
-  // used in accordian and form
-  kymIns1InformationofInstitution: '1. COOP - Institution',
-  kymInsBasicInformation: 'Basic Information',
-  kymInsRegisteredDetails: 'Registered Details',
-  kymInsOperatorOfficeAddress: 'Operating Office Address',
-  kymInsBranchOfficeAddress: 'Branch Office Address',
-  kymInsContactDetails: 'Contact Details',
-  kymInsBankAccountDetails: 'Bank Account Details',
-  kymInsDetailsofsisterconcern: 'Details of sister concern',
-
-  kymIns2TransactionProfile: '2. Transaction Profile',
-  kymInsTransactionProfile: 'Transaction Profile',
-  kymInsExpectedMonthlyTurnover: 'Expected Monthly Turnover',
-  kymInsExpectedMonthlyTransaction: 'Expected Monthly Transaction',
-
-  kymIns3DetailsofProprietorpartnersDirectors: '3. Details of Proprietor, partners, Directors',
-  kymInsDetailsofProprietorPartnersDirectors: 'Details of Proprietor, Partners, Directors.',
-  kymInsDetailsofdirectorsaffiliatedwithotherFirms:
-    'Details of directors affiliated with other Firms',
-
-  kymIns4AccountOperations: '4. Account Operators',
-  kymInsDetailsofAccountOperators: 'Details of Account Operators',
-  kymInsAccountOperationInstruction: 'Account Operation Instruction',
-
-  kymIns5Declaration: '5. Declaration',
-  kymInsDocumentsDeclaration: 'Documents Declaration',
-  kymInsAccountHolderDeclaration: 'Account Holder Declaration',
-
-  // basic information
-  kymInsNameofInstitution: 'Name of Institution',
-  kymInsOrganizationType: 'Institution Type',
-
-  kymInsRegistrationDate: 'Registration Date',
-  kymInsVATPanNo: 'VAT/Pan No.',
-  serviceCenterNoOfServiceCenter: 'No of Service Center',
-
-  // registered details
-
-  kymInsRegisteredNumber: 'Registered Number',
-  kymInsIssuingOffice: 'Issuing Office',
-
-  // operating office address
-
-  // branch office address
-  kymInsbranchOfficeAddress: 'Branch Office Address',
-
-  // contact details
-  kymInsPhone: 'Phone',
-  kymInsFax: 'Fax',
-  kymInsEmail: 'Email',
-  kymInsWebsiteLinkany: 'Website Link (if any)',
-  kymInsPostBoxNo: 'Post Box. No.',
-  kymInsNumberofEmployees: 'Number of Employees',
-  kymInsAGMDetailsDate: 'AGM Details (Date of Last AGM)',
-
-  // bank accounts
-  kymInsNameofBank: 'Name of Bank',
-  kymInsAccountNumber: 'Account Number',
-  kymInsAccountName: 'Account Name',
-
-  // details of sister concern
-
-  kymInsNameofSisterConcern: 'Name of Sister Concern',
-  kymInsNatureofBusiness: 'Nature of Business',
-  kymInsAddress: 'Address',
-  kymInsPhoneNo: 'Phone No.',
-  kymInsNewDetail: 'New Detail',
-
-  // Transaction Profile
-  kymInsNatureofTransaction: 'Nature of Transaction',
-  kymInsAnnualTurnover: 'Annual Turnover',
-  kymInsInitialDepositAmount: 'Initial Deposit Amount',
-
-  // Detail of Proprietor, partners, Directors
-  kymInsFullName: 'Full Name',
-  kymInsDesignation: 'Designation',
-  kymInsPermanentAddress: 'Permanent Address',
-  kymInsTemporaryAddress: 'Temporary Address',
-  kymInsTemporaryAddressPermanent: 'Temporary Address same as permanent',
-
-  kymInsDateOfMembership: 'Date of membership',
-  kymInsHighestQualification: 'Highest Qualification',
-  kymInsMobileNo: 'Mobile No.',
-  kymInsCitizenshipPassportDrivingLicenseNo: 'Citizenship No.',
-  kymInsPanNo: 'PAN No',
-
-  kymInsPhotograph: 'Photograph',
-  kymInsPhotographOfIdentityProofDocument: 'Photograph of identity proof document',
-
-  kymInsIsaffiliatedwithotherfirms: 'Is affiliated with other firms?',
-  kymInsNameofDirector: 'Name of Director',
-  kymInsAddressofInstitution: 'Address of Institution',
-  kymInsYearlyIncome: 'Yearly Income',
-
-  kymInsAddDirector: 'Add Director',
-
-  // Account Operator
-  kymInsNewOperator: 'New Operator',
-  kymInsContactNo: 'Contact No',
-  kymInsPresident: 'President',
-  kymInsVicePresident: 'Vice-President',
-  kymInsSecretary: 'Secretary',
-  kymInsTreasurer: 'Treasurer',
-  kymInsSpecimenSignature: 'Specimen Signature',
-
-  // account operation instruction
-  kymInsSingle: 'Single',
-  kymInsJoint: 'Joint',
-  kymInsCompanyStampCompulsory: 'Company Stamp Compulsory',
-
-  // declaration
-  // document declaration
-  kymInsAGMDecisionDocument: 'AGM/BOD Decision Document',
-  kymInsRegisteredCertificate: 'Registered Certificate',
-  kymInsMoaAoa: 'Moa/Aoa',
-  kymInsPANCertificate: 'PAN Certificate',
-  kymInsTaxClearance: 'Tax Clearance',
-  kymInsLatestAuditReport: 'Latest Audit Report',
-
-  // account holder declaration
-  kymInsAccountHolderName: "Account Holder's Name",
-  kymInsAccountHolderAddress: "Account Holder's Address",
-
-  // cooperative
-  // cooperative kym form
-  // used in accordian and form
-
-  kymCoopAcc1OrganizationDetails: '1. Organization Details',
-  kymCoopAccBasicInformation: 'Basic Information',
-  kymCoopAccRegisteredAddress: 'Registered Address',
-  kymCoopAccOperatingAddress: 'Operating Address',
-  kymCoopAccCurrentMembers: 'Current Members',
-  kymCoopAccCooperativeDate: 'Cooperative Date',
-  kymCoopAccRepresentative: 'Representative',
-  kymCoopAccAdditionalCoorperativeDetails: 'Additional Coorperative Details',
-  kymCoopAccNumberofEmployee: 'Number of Employee',
-
-  kymCoopAcc2EconomicDetails: '2. Economic Details',
-  kymCoopAccEquityandLiabilities: 'Equity and Liabilities',
-  kymCoopAccAssets: 'Assets',
-
-  kymCoopAcc3DetailsofBoardDirectors: '3. Details of Board Directors',
-  kymCoopAccBoardOfDirectorDetails: 'Board Of Director Details',
-
-  kymCoopAcc4DetailsofAccountOperators: '4. Details of Account Operators',
-  kymCoopAccAccountOperatorDetail: 'Account Operator Detail',
-
-  kymCoopAcc5Declaration: '5. Declaration',
-  kymCoopAccAccountHolderDeclaration: 'Account Holder Declaration',
-  kymCoopAccDocumentDeclaration: 'Document Declaration',
-
-  // information of organization
-  kymCoopNameofOrganization: 'Name of Organization',
-  kymCoopRegistrationNo: 'Registration No',
-  kymCoopPanVatNo: 'VAT/PAN No',
-  kymCoopRegistrationoffice: 'Registration Office',
-  kymCoopRegistrationDate: 'Registration Date',
-
-  // registered address
-  kymCoopRegisteredAddress: 'Registered Address',
-
-  // operating address
-  kymCoopOperatingAddress: 'Operating Address',
-
-  // contact details
-  kymCoopContactDetails: 'Contact Details',
-  kymCoopOfficialEmail: 'Official Email',
-  kymCoopWebsiteLink: 'Website Link',
-  kymCoopPhoneno: 'Phone no.',
-
-  // current members
-  kymCoopCurrentMembers: 'Current Members',
-  kymCoopNoofMalemembers: 'No. of Male members',
-  kymCoopNoofFemalemembers: 'No. of Female members',
-  kymCoopNoofOthermembers: 'No. of Other members',
-
-  // audit and agm date
-  kymCoopLastAuditDate: 'Last Audit FY',
-  kymCoopLastAGMDate: 'Last AGM Date',
-
-  // Representative Details
-  kymCoopRepresentative: 'Representative Details',
-  kymCoopName: 'Name',
-
-  kymCoopRepresentativePhone: 'Contact No',
-  kymCoopRepresentativeEmail: 'Email Address',
-  kymCoopRepresentativePanOrVat: 'PAN No',
-
-  kymCoopRepresentativePermanentAddress: 'Permanent Address',
-  kymCoopRepresentativeTemporaryAddress: 'Temporary Address',
-  kymCoopRepresentativeTemporaryAddressPermanent: 'Temporary Address same as permanent',
-
-  // Additional cooperative details
-  kymCoopAdditionalCoorperativeDetails: 'Additional Coorperative Details',
-  kymCoopType: 'Coorperative Type',
-  kymCoopMainServiceProduct: 'Main Service/Product',
-
-  // number of employee
-  kymCoopNumberofEmployee: 'Number of Employee',
-  kymCoopMale: 'Male',
-  kymCoopFemale: 'Female',
-
-  // Economic details
-  kymCoopEquityandLiabilities: 'Equity and Liabilities',
-  kymCoopAmount: 'Amount',
-  kymCoopShareCapital: 'Share Capital',
-  kymCoopReserveandsurplus: 'Reserve and Surplus',
-  kymCoopSavingDeposit: 'Saving/Deposit',
-  kymCoopLoanAccount: 'Loan Account (External Loan)',
-  kymCoopCapitalGrant: 'Capital Grant',
-  kymCoopCurrentLiabilitiesandpayable: 'Current Liabilities and Payable',
-  kymCoopNoncurrentliabilities: 'Non-current liabilities',
-  kymCoopTotal: 'Total',
-
-  kymCoopAssets: 'Assets',
-  kymCoopCashandcashequivalents: 'Cash and cash equivalents',
-  kymCoopBank: 'Bank',
-  kymCoopInvestments: 'Investments',
-  kymCoopLoan: 'Loan (investment)',
-  kymCoopNoncurrentassets: 'Non current assets',
-  kymCoopOthernoncurrentassets: 'Other non current assets',
-
-  // details of board director
-  kymCoopBoardofdirectordetails: 'Board of director details',
-  kymCoopDirector: 'Director',
-  kymCoopFullName: 'Full Name',
-  kymCoopDesignation: 'Designation',
-  kymCoopPermanentAddress: 'Permanent Address',
-  kymCoopTemporaryAddress: 'Temporary Address',
-  kymCoopTemporaryAddressPermanent: 'Temporary Address same as permanent',
-  kymCoopDateOfMembership: 'Date of membership',
-  kymCoopHighestQualification: 'Highest Qualification',
-  kymCoopMobileNo: 'Mobile No',
-  kymCoopEmail: 'Enter Email',
-  kymCoopCitizenshipPassportDrivingLicenseNo: 'Citizenship No',
-  kymCoopPanOrVatNo: 'PAN No',
-  kymCoopPhotograph: 'Photograph',
-  kymCoopPhotographOfIdentityProofDocument: 'Photograph of identity proof document',
-  kymCoopSignature: 'Signature',
-  kymInsDelete: 'Delete',
-  kymCoopAddDirector: 'Add Director',
-
-  // details of account operator
-  kymCoopDetailsofAccountOperators: 'Details of Account Operators',
-  kymCoopAccountOperator: 'Account Operator',
+  ...memberEn,
 
   // here
 
@@ -1737,16 +1207,6 @@ const en: Record<string, string> = {
   kymCoopAccountHolderName: "Account Holder's Name",
   kymCoopEnterAccountHolderName: "Enter Account Holder's Name",
 
-  kymCoopStamp: 'Stamp',
-
-  kymCoopAGMDecisionDocument: 'AGM/BOD Decision Document',
-  kymCoopRegisteredCertificate: 'Registered Certificate',
-  kymCoopPANCertificate: 'PAN Certificate',
-  kymCoopTaxClearance: 'Tax Clearance',
-  kymCoopLatestAuditReport: 'Latest Audit Report',
-  kymCoopMinuteofCentralRep: 'Minute of Central Rep',
-  kymCoopLogo: 'Logo',
-
   kymCoopAddOperator: 'Add Operator',
 
   kymCoopEnterFullName: 'Enter Full Name',
@@ -1804,64 +1264,18 @@ const en: Record<string, string> = {
 
   // kym coop union
   kymCoopUnionAddNewMembers: 'Add New Member',
-  kymCoopUnionNameOfInstitution: 'Name of Institution',
-  kymCoopUnionInstitutionType: 'Institution Type',
-  kymCoopUnionSelectInstitutionType: 'Select Institution Type',
-  kymCoopUnionNatureOfBusiness: 'Nature of Business',
-  kymCoopUnionRegistrationDate: 'Registration Date',
-  kymCoopUnionVATPanNo: 'VAT/Pan No.',
-  kymCoopUnionEnterVATPanNo: 'Enter VAT/Pan No',
   kymCoopUnionOperatingOfficeAddress: 'Operating Office Address',
 
-  kymCoopUnionRegisteredDetails: 'Registered Details',
   kymCoopUnionEnterRegisteredAddress: 'Enter Registered Address',
   kymCoopUnionRegisteredAddress: 'Registered Address',
   kymCoopUnionRegisteredAddressChanged: 'Registered Address (if changed)',
-  kymCoopUnionRegisteredNumber: 'Registered Number',
-  kymCoopUnionEnterRegisteredNumber: 'Enter Registered Number',
-  kymCoopUnionIssuingOffice: 'Issuing Office',
-  kymCoopUnionEnterIssuingOffice: 'Enter Issuing Office',
-
-  kymCoopUnionOperatorOfficeAddress: 'Operating Office Address',
 
   kymCoopUnionOperatorBranchAddress: 'Branch Office Address',
 
-  kymCoopUnionPhone: 'Phone',
-  kymCoopUnionEnterPhoneNumber: 'Enter Phone Number',
-  kymCoopUnionFax: 'Fax',
-  kymCoopUnionEnterFax: 'Enter Fax',
-  kymCoopUnionEmail: 'Email',
-  kymCoopUnionEnterEmailAddress: 'Enter Email Address',
-  kymCoopUnionWebsiteLinkAny: 'Website Link (if any)',
-  kymCoopUnionEnterWebsiteURL: 'Enter Website URL',
-  kymCoopUnionPostBoxNo: 'Post Box No',
-  kymCoopUnionEnterPostBoxNo: 'Enter Post Box No',
-  kymCoopUnionNumberOfEmployees: 'Number of Employees',
-  kymCoopUnionEnterNumberOfEmployees: 'Enter Number of Employees',
-  kymCoopUnionAGMDetailsDate: 'AGM Details (Date of Last AGM)',
-
-  kymCoopUnionBankAccountDetails: 'Bank Account Details',
-  kymCoopUnionNameOfBank: 'Name of Bank',
-  kymCoopUnionSelectBank: 'Select Bank',
-  kymCoopUnionAccountNumber: 'Account Number',
-  kymCoopUnionEnterAccountNumber: 'Enter Account Number',
-  kymCoopUnionAccountName: 'Account Name',
-  kymCoopUnionEnterAccountName: 'Enter Account Name',
-
-  kymCoopUnionApplicant: 'Applicant',
-  kymCoopUnionName: 'Name',
-  kymCoopUnionEnterName: 'Enter Name',
-  kymCoopUnionDesignation: 'Designation',
-  kymCoopUnionEnterDesignation: 'Enter Designation',
-  kymCoopUnionSignature: 'Signature',
-  kymCoopUnionStamp: 'Stamp',
-
   kymCoopUnionDetailsOfBoardDirectors: '2. Details of Board Directors',
-  kymCoopUnionBoardOfDirectorDetails: 'Board of Director Details',
+
   kymCoopUnionAddDirector: 'Add Director',
-  kymCoopUnionFullName: 'Full Name',
-  kymCoopUnionEnterFullName: 'Enter Full Name',
-  kymCoopUnionPermanentAddress: 'Permanent Address',
+
   kymCoopUnionState: 'Province',
   kymCoopUnionSelectState: 'Select Province',
   kymCoopUnionDistrict: 'District',
@@ -1872,34 +1286,13 @@ const en: Record<string, string> = {
   kymCoopUnionEnterWardNo: 'Enter Ward No',
   kymCoopUnionLocality: 'Locality',
   kymCoopUnionEnterLocality: 'Enter Locality',
-  kymCoopUnionTemporaryAddress: 'Temporary Address',
-  kymCoopUnionTemporaryAddressPermanent: 'Temporary Address same as permanent',
-  kymCoopUnionDateOfMembership: 'Date of membership',
-  kymCoopUnionHighestQualification: 'Highest Qualification',
-  kymCoopUnionEnterHigestQualification: 'Enter Higest Qualification',
-  kymCoopUnionMobileNo: 'Mobile No',
-  kymCoopUnionEnterMobileNo: 'Enter Mobile No',
-  kymCoopUnionEnterEmail: 'Enter Email',
-  kymCoopUnionCitizenshipPassportDrivingLicenseNo: 'Citizenship No',
+
   kymCoopUnionEnterNo: 'Enter No',
-  kymCoopUnionTrainingRelatedToCoop: 'Training related to Co-operatives',
-  kymCoopUnionSubjectOfTraining: 'Subject of Training',
-  kymCoopUnionEnterSubjectOfTraining: 'Enter Subject of Training',
-  kymCoopUnionDateOfTraining: 'Date of Training',
-  kymCoopUnionEnterDateOfTraining: 'Enter date of Training',
-  kymCoopUnionTrainingOrganization: 'Training Organization',
-  kymCoopUnionEnterTrainingOrganization: 'Enter Training Organization',
-  kymCoopUnionPhotograph: 'Photograph',
-  kymCoopUnionPhotographOfIdentityProofDocument: 'Photograph of identity proof document',
 
   kymCoopUnion3DetailsofAccountOperators: '3. Details of Account Operators',
   kymCoopUnionDetailsOfAccountOperators: 'Details of Account Operators',
   kymCoopUnionAddOperator: 'Add Operator',
-  kymCoopUnionOpFullName: 'Full Name',
-  kymCoopUnionOpEnterFullName: 'Enter Full Name',
-  kymCoopUnionOpDesignation: 'Designation',
-  kymCoopUnionOpEnterDesignation: 'Enter Designation',
-  kymCoopUnionOpPermanentAddress: 'Permanent Address',
+
   kymCoopUnionOpState: 'Province',
   kymCoopUnionOpSelectState: 'Select Province',
   kymCoopUnionOpDistrict: 'District',
@@ -1910,16 +1303,7 @@ const en: Record<string, string> = {
   kymCoopUnionOpEnterWardNo: 'Enter Ward No',
   kymCoopUnionOpLocality: 'Locality',
   kymCoopUnionOpEnterLocality: 'Enter Locality',
-  kymCoopUnionOpTemporaryAddress: 'Temporary Address',
-  kymCoopUnionOpTemporaryAddressPermanent: 'Temporary Address same as permanent',
-  kymCoopUnionOpDateOfMembership: 'Date of membership',
-  kymCoopUnionOpHighestQualification: 'Highest Qualification',
-  kymCoopUnionOpEnterHighestQualification: 'Enter Highest Qualification',
-  kymCoopUnionOpMobileNo: 'Mobile No',
-  kymCoopUnionOpEnterMobileNo: 'Enter Mobile No',
-  kymCoopUnionOpEmail: 'Email',
-  kymCoopUnionOpEnterEmail: 'Enter Email',
-  kymCoopUnionOpCitizenshipPassportDrivingLicenseNo: 'Citizenship No',
+
   kymCoopUnionOpEnterCitizenshipNo: 'Enter No',
   kymCoopUnionOpTrainingRelatedToCoop: 'Training related to Co-operatives',
   kymCoopUnionOpSubjectofTraining: 'Subject of Training',
@@ -1928,18 +1312,11 @@ const en: Record<string, string> = {
   kymCoopUnionOpEnterDateofTraining: 'Enter date of Training',
   kymCoopUnionOpTrainingOrganization: 'Training Organization',
   kymCoopUnionOpEnterTrainingOrganization: 'Enter Training Organization',
-  kymCoopUnionOpPhotograph: 'Photograph',
-  kymCoopUnionOpPhotographOfIdentityProofDocument: 'Photograph of identity proof document',
-  kymCoopUnionOpSpecimenSignature: 'Specimen Signature',
 
   kymCoopUnionOp4DetailsofCentralRepresentative: '4. Details of Central Representative',
   kymCoopUnionOpCentralRepresentativeisnotamongDirectors:
     'Central Representative is not among Directors',
-  kymCoopUnionDirFullName: 'Full Name',
-  kymCoopUnionDirEnterFullName: 'Enter Full Name',
-  kymCoopUnionDirDesignation: 'Designation',
-  kymCoopUnionDirEnterDesignation: 'Enter Designation',
-  kymCoopUnionDirPermanentAddress: 'Permanent Address',
+
   kymCoopUnionDirState: 'Province',
   kymCoopUnionDirSelectState: 'Select Province',
   kymCoopUnionDirDistrict: 'District',
@@ -1950,16 +1327,7 @@ const en: Record<string, string> = {
   kymCoopUnionDirEnterWardNo: 'Enter Ward No',
   kymCoopUnionDirLocality: 'Locality',
   kymCoopUnionDirEnterLocality: 'Enter Locality',
-  kymCoopUnionDirTemporaryAddress: 'Temporary Address',
-  kymCoopUnionDirTemporaryAddressPermanent: 'Temporary Address same as permanent',
-  kymCoopUnionDirDateofMembership: 'Date of Membership',
-  kymCoopUnionDirHighestQualification: 'Highest Qualification',
-  kymCoopUnionDirEnterHigestQualification: 'Enter higest qualification',
-  kymCoopUnionDirMobileNo: 'Mobile No',
-  kymCoopUnionDirEnterMobileNo: 'Enter Mobile No',
-  kymCoopUnionDirEmail: 'Email',
-  kymCoopUnionDirEnterEmail: 'Enter Email',
-  kymCoopUnionDirCitizenshipPassportDrivingLicenseNo: 'Citizenship No',
+
   keyCoopUnionDirEnterNo: 'Enter No',
   kymCoopUnionDirTrainingRelatedtoCoop: 'Training related to Co-operatives',
   kymCoopUnionDirSubjectOfTraining: 'Subject of Training',
@@ -1968,9 +1336,6 @@ const en: Record<string, string> = {
   kymCoopUnionDirEnterDateOfTraining: 'Enter date of Training',
   kymCoopUnionDirTrainingOrganization: 'Training Organization',
   kymCoopUnionDirEnterTrainingOrganization: 'Enter Training Organization',
-  kymCoopUnionDirPhotograph: 'Photograph',
-  kymCoopUnionDirPhotographOfIdentityProofDocument: 'Photograph of identity proof document',
-  kymCoopUnionDirSpecimenSignature: 'Specimen Signature',
 
   kymCoopUnionRep5DetailsofMember: '5. Details of member',
   kymCoopUnionRepMemberDetails: 'Member Details',
@@ -1984,101 +1349,18 @@ const en: Record<string, string> = {
   kymCoopUnionRepEnterNoOfInstitutionalMembers: 'Enter No. of Institutional Members',
   kymCoopUnionRepTotalCurrentMembers: 'Total Current Members',
   kymCoopUnionRepTotalAssets: 'Total assets',
-  kymCoopUnionRepTotal: 'Total',
-
-  kymCoopUnionEco6EconomicDetails: '5. Economic Details',
-  kymCoopUnionEcoAssets: 'Assets',
-  kymCoopUnionEcoCurrent: 'Current',
-  kymCoopUnionEcoTarget: 'Target for next fiscal year',
-  kymCoopUnionEcoCashAndCashEquivalents: 'Cash and cash equivalents',
-  kymCoopUnionEcoBank: 'Bank',
-  kymCoopUnionEcoInvestments: 'Investments',
-  kymCoopUnionEcoLoanInv: 'Loan (investment)',
-  kymCoopUnionEcoNonCurrentAssets: 'Non current assets',
-  kymCoopUnionEcootherNonCurrentAssets: 'Other non current assets',
-  kymCoopUnionEcoTotalAssets: 'Total assets',
   kymCoopUnionEcoTotal: 'Total',
 
-  kymCoopUnionExpExpenseDetails: 'Expense Details',
-  kymCoopUnionExpAmount: 'Amount',
-  kymCoopUnionExpPurchase: 'Purchase',
-  kymCoopUnionExpDirectExpense: 'Direct Expense',
-  kymCoopUnionExpAdministrativeExpense: ' Administrative Expense',
-  kymCoopUnionExpFinancialCost: 'Financial Cost',
-  kymCoopUnionExpRiskManagementExpense: 'Risk Management Expense',
-  kymCoopUnionExpDefferedTaxExpense: 'Deffered tax Expense',
-  kymCoopUnionExpTotalAssets: 'Total assets',
-  kymCoopUnionExpTotal: 'Total',
-
-  kymCoopUnionIncIncomeDetails: 'Income Details',
-  kymCoopUnionIncAmount: 'Amount',
-  kymCoopUnionIncIncomeFromFinancialInvestment: 'Income from financial investment',
-  kymCoopUnionIncIncomeFromNonFinancialInvestment: 'Income from non financial investment',
-  kymCoopUnionIncIncomeFromInvestment: 'Income from investment',
-  kymCoopUnionIncIncomeFromServiceOperations: 'Income from service operations',
-  kymCoopUnionIncIncomeFromSales: 'Income from sales',
-  kymCoopUnionIncOtherIncome: 'Other income',
-  kymCoopUnionIncMiscellanousIncome: 'Miscellanous income',
-  kymCoopUnionIncTotal: 'Total',
-  kymCoopUnionIncTotalIncome: 'Total income',
-
-  kymCoopUnionEqtEquityandLiailibities: 'Equity and Liailibities',
-  kymCoopUnionEqtCurrent: 'Current',
-  kymCoopUnionEqtTargetfornextfiscalyear: 'Target for next fiscal year',
-  kymCoopUnionEqtShareCapital: 'Share Capital',
-  kymCoopUnionEqtReserveandSurplus: 'Reserve and surplus',
-  kymCoopUnionEqtSavingDeposit: 'Saving/Deposit',
-  kymCoopUnionEqtLoanAccount: 'Loan Account (External Loan)',
-  kymCoopUnionEqtCapitalGrant: 'Capital Grant',
-  kymCoopUnionEqtCurrentLiabilitiesandpayable: 'Current Liabilities and payable',
-  kymCoopUnionEqtNoncurrentliabilities: 'Non-current liabilities',
-  kymCoopUnionEqtTotal: 'Total',
-  kymCoopUnionEqtTotalassets: 'Total assets',
-
   kymCoopUnionDec7Declaration: ' 6. Declaration',
-  kymCoopUnionDecDocumentsDeclaration: 'Documents Declaration',
-  kymCoopUnionDecAGMDecisionDocument: 'AGM/BOD Decision Document',
-  kymCoopUnionDecRegisteredCertificate: 'Registered Certificate',
-  kymCoopUnionDecMOAAOA: 'MOA/AOA',
-  kymCoopUnionDecPANCertificate: 'PAN Certificate',
-  kymCoopUnionDecTaxClearance: 'Tax Clearance',
-  kymCoopUnionDecLatestAuditReport: 'Latest Audit Report',
-  kymCoopUnionDecMinuteofCentralRep: 'Minute of Central Rep',
-  kymCoopUnionTrainingAttended: 'Training Attended',
 
-  kymCoopUnionEmailAddress: 'Email Address',
-  kymCoopUnionEmailAddress__placeholder: 'Enter Email Address',
-  kymCoopUnionContactNo: 'Contact No',
-  kymCoopUnionContactNo__placeholder: 'Enter Contact No',
-  kymCoopUnionPANNo: 'PAN No',
-  kymCoopUnionPANNo__placeholder: 'Enter PAN No',
+  kymCoopUnionTrainingAttended: 'Training Attended',
 
   // accordion
 
   // kym coop union
-  kymCoopUnionAccRegisteredDetails: 'Registered Details',
-  kymCoopUnionAccBankAccountDetails: 'Bank Account Details',
-  kymCoopUnionAccDetailsofProprietor: 'Details of Proprietor, Partners, Directors',
-  kymCoopUnionAccDetailsofAccountOperators: 'Details of Account Operators',
-  kymCoopUnionAccDetailsofdirectorsaffiliatedwithotherFirms:
-    'Details of directors affiliated with other Firms',
+
   kymCoopUnionAccCurrentMembers: 'Current Members',
   kymCoopUnionAccTargetfornextfiscalyear: 'Target for next fiscal year',
-  kymCoopUnionAccAssets: 'Assets',
-  kymCoopUnionAccEquityandLiailibities: 'Equity and Liailibities',
-  kymCoopUnionAccIncomeDetails: 'Income Details',
-  kymCoopUnionAccExpenseDetails: 'Expense Details',
-  kymCoopUnionAccDocumentsDeclaration: 'Documents Declaration',
-  kymCoopUnionAccAccountHolderDeclaration: 'Account Holder Declaration',
-
-  kymCoopUnionAcc1InstitutionInformation: '1. Institution Information',
-  kymCoopUnionAcc2Detailsofdirectorsboardmemberspartners:
-    '2. Details of directors/boardmembers/partners',
-  kymCoopUnionAcc3AccountOperators: '3. Account Operators',
-  kymCoopUnionAcc4DetailsofCentralRepresentative: '4. Details of Central Representative',
-  kymCoopUnionAcc5Detailsofmember: '5. Details of member',
-  kymCoopUnionAcc6EconomicDetails: '5. Economic Details',
-  kymCoopUnionAcc7Declaration: '6. Declaration',
 
   kymCoopUnionCurrentMembers: 'Current Members',
   kymCoopUnionNoofMalemembers: 'No. of Male members',
@@ -2089,8 +1371,6 @@ const en: Record<string, string> = {
   kymCoopUnionEnternoofInstitutuionalMembers: 'Enter no of Institutuional Members',
   kymCoopUnionTotalcurrentmembers: 'Total current members',
   kymCoopUnionEntertotalcurrentmembers: 'Enter total current members',
-  kymCoopUnionCRDecisionDocument: 'CR Decision Document',
-  kymCoopUnionCRNotDir: 'Central Representative is not among Directors',
 
   // kym ins
 
@@ -3730,24 +3010,9 @@ const en: Record<string, string> = {
   depositProductMinAge: 'Minimum Age',
   depositProductMaxAge: 'Maximum Age',
 
-  kymCoopUnionAccOperatingOfficeAddress: 'Operating Office Address',
   kymCoopUnionAccBranchOfficeAddress: 'Branch Office Address',
-  kymCoopUnionAccApplicant: 'Applicant',
-  kymCoopUnionAccCooperativeMemberInformation: 'Cooperative Member Information',
 
   settingsBranchContactNumber: 'Contact No',
-
-  kymCoopUnionCooperativeMemberInformation: 'Cooperative Member Information',
-  kymCoopUnionMemberDetails: 'Member Details',
-  kymCoopUnionCurrent: 'Current',
-  kymCoopUnionTargetFiscalYear: 'Target for next fiscal year',
-  kymCoopUnionNoMaleMembers: 'No. of Male Members',
-  kymCoopUnionEnterNoMaleMembers: 'Enter No. of Male Members',
-  kymCoopUnionNoFemaleMembers: 'No. of Female Members',
-  kymCoopUnionEnterNoFemaleMembers: 'Enter No. of Female Members',
-  kymCoopUnionNoInstitutionalMembers: 'No. of Institutional Members',
-  kymCoopUnionEnterNoInstitutionalMembers: 'Enter No. of Institutional Members',
-  kymCoopUnionTotalCurrentMembers: 'Total Current Members',
 
   loanPaymentType: 'Payment Type',
   loanProductTypeProductType: 'Product Type',
@@ -3862,7 +3127,6 @@ const en: Record<string, string> = {
   serviceCenterAdd: 'Add Service Center',
   serviceCenterAddress: 'Service Center Address',
   serviceCenterStatus: 'Service Center Status',
-  serviceCenterOfficeAddress: 'Service Center Office Address',
 
   serviceCenterEnterNoOfServiceCenter: 'Enter No of Service Center',
 
@@ -3896,15 +3160,9 @@ const en: Record<string, string> = {
   kymCoopAccContactDetails: 'Contact Details',
   kymAccIndContactDetails: 'Contact Details',
 
-  kymCoopUnionAccContactDetails: 'Contact Details',
-
-  kymCoopUnionContactDetails: 'Contact Details',
-
   settingsOrganizationContactDetails: 'Contact Details',
 
   kymAccIndBasicInformation: 'Basic Information',
-
-  kymCoopUnionAccBasicInformation: 'Basic Information',
 
   kymCoopUnionBasicInformation: 'Basic Information',
   kymCoopBASICINFORMATION: 'Basic Information',
@@ -4310,8 +3568,6 @@ const en: Record<string, string> = {
   crm: 'CRM',
   // NEOSYS-END
 
-  kymCoopUnionSelectCentralRepresentativeamongDirectors:
-    'Select Central Representative among Directors',
   depositProductPressCompletetosaveform: 'Press Complete to save form',
   loanProductPenaltyOn: 'Penalty On',
   loanProductLinkedAccounts: 'Linked Accounts',

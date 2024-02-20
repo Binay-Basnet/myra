@@ -18,7 +18,7 @@ export const InstituteInfo = () => {
   return (
     <SectionContainer>
       <Text p="s20" fontSize="r3" fontWeight="600">
-        {t['kymCoopUnionInstitutionInformation']}
+        {t['kymCoopUnionAcc1InstitutionInformation']}
       </Text>
       <InstituteBasicInfo />
       <RegisteredDetails />

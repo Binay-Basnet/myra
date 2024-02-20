@@ -289,7 +289,7 @@ export const KYMCooperativePage = () => {
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                {t['kymCoop5Declaration']}
+                {t['kymIns5Declaration']}
               </Text>
               <KymAccountHolderDeclaration />
               <KymCoopDocumentDeclarationForm />
@@ -298,9 +298,9 @@ export const KYMCooperativePage = () => {
             <Box p="s20" display="flex" gap="s16" alignItems="start">
               <Checkbox fontSize="s3" />
               <Text variant="formInput" mt="-6px">
-                I/We agree to the&nbsp;
+                {t['kymIndAgree']}&nbsp;
                 <Text as="span" variant="link">
-                  Terms and condition.
+                  {t['kymIndAgreeLink']}
                 </Text>
               </Text>
             </Box>

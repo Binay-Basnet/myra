@@ -11,7 +11,7 @@ export const CentralRepresentativeDetails = () => {
   return (
     <SectionContainer>
       <Text p="s20" fontSize="r3" fontWeight="600">
-        {t['kymCoopUnionOp4DetailsofCentralRepresentative']}
+        {t['kymCoopUnionAcc4DetailsofCentralRepresentative']}
       </Text>
       <AddRepresentative />
     </SectionContainer>

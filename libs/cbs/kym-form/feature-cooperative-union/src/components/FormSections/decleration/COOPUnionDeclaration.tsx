@@ -28,7 +28,7 @@ export const DocumentDeclarationInstitutionCOOPUnion = () => {
       <FormFileInput name="documents.5.identifiers" label={t['kymCoopUnionDecPANCertificate']} />
       <FormFileInput name="documents.6.identifiers" label={t['kymCoopUnionDecTaxClearance']} />
       <FormFileInput name="documents.7.identifiers" label={t['kymCoopUnionDecLatestAuditReport']} />
-      <FormFileInput name="documents.8.identifiers" label="Logo" />
+      <FormFileInput name="documents.8.identifiers" label={t['kymCoopUnionDecLogo']} />
       <FormFileInput
         name="documents.9.identifiers"
         label={t['kymCoopUnionDecMinuteofCentralRep']}
@@ -44,9 +44,9 @@ export const DocumentDeclarationInstitutionCOOPUnion = () => {
         <Box p="s20" display="flex" gap="s16" alignItems="center">
           <FormCheckbox name="declarationAgreement" fontSize="s3" />
           <Text variant="formInput" mt="-6px">
-            I/We agree to the&nbsp;
+            {t['kymIndAgree']}&nbsp;
             <Text as="span" variant="link">
-              Terms and condition.
+              {t['kymIndAgreeLink']}
             </Text>
           </Text>
         </Box>

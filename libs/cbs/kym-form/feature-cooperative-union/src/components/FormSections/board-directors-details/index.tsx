@@ -11,7 +11,7 @@ export const DirectorDetails = () => {
   return (
     <SectionContainer>
       <Text p="s20" fontSize="r3" fontWeight="600">
-        {t['kymCoopUnionDetailsOfBoardDirectors']}
+        {t['kymCoopUnionAcc2Detailsofdirectorsboardmemberspartners']}
       </Text>
       <BoardDirectorInfo />
     </SectionContainer>

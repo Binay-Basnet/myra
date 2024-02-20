@@ -14,7 +14,7 @@ export const EconomicDetails = () => {
   return (
     <SectionContainer p="s20" borderBottom="1px solid" borderBottomColor="border.layout" gap="s32">
       <Text fontSize="r3" fontWeight="600">
-        {t['kymCoopUnionEco6EconomicDetails']}
+        {t['kymCoopUnionAcc6EconomicDetails']}
       </Text>
       <KymAssestsAndtarget />
       <KymEquilities />

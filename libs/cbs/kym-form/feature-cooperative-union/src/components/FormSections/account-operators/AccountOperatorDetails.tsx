@@ -282,7 +282,7 @@ export const AccountOperatorInfo = () => {
   return (
     <FormSection
       id="kymCoopUnionAccDetailsofAccountOperators"
-      header="kymCoopUnionDetailsOfAccountOperators"
+      header="kymCoopUnionAcc3AccountOperators"
     >
       <GridItem colSpan={3}>
         <Grid gap="s16">
