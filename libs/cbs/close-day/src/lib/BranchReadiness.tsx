@@ -10,7 +10,6 @@ import {
   setBranchReadinessErrors,
   useAppDispatch,
   useAppSelector,
-  useGetEodStatusQuery,
   useReadyBranchEodMutation,
 } from '@coop/cbs/data-access';
 
@@ -49,7 +48,7 @@ export const BranchReadiness = () => {
       } else {
         dispatch(clearBranchReadinessErrors());
 
-        refetch();
+        // refetch();
         queryClient.invalidateQueries(['getEndOfDayDateData']);
       }
     },
@@ -59,7 +58,7 @@ export const BranchReadiness = () => {
     readyBranch({});
   }, []);
 
-  const { refetch } = useGetEodStatusQuery();
+  // const { refetch } = useGetEodStatusQuery();
 
   return (
     <>

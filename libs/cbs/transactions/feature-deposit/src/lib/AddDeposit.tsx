@@ -146,6 +146,14 @@ export const AddDeposit = () => {
 
   const FINE = useMemo(() => selectedAccount?.dues?.fine ?? '0', [selectedAccount]);
 
+  useEffect(() => {
+    if (Number(FINE)) {
+      methods.reset({ ...getValues(), isFinePaid: true, fine: FINE });
+    } else {
+      methods.reset({ ...getValues(), fine: FINE });
+    }
+  }, [FINE]);
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const [mode, setMode] = useState<number>(0); // 0: form 1: payment
@@ -283,10 +291,7 @@ export const AddDeposit = () => {
   );
 
   const totalPayable = useMemo(
-    () =>
-      amountToBeDeposited
-        ? Number(amountToBeDeposited) + Number(isFinePaid ? payableFine : FINE)
-        : 0,
+    () => (amountToBeDeposited ? Number(amountToBeDeposited) + Number(payableFine) : 0),
     [amountToBeDeposited, isFinePaid, payableFine, FINE, rebate, REBATE]
   );
 
@@ -300,7 +305,7 @@ export const AddDeposit = () => {
     const values = getValues();
     let filteredValues = {
       ...omit(values, ['isFinePaid', 'memberOrGroup', 'groupId']),
-      fine: String(isFinePaid ? payableFine : FINE),
+      fine: String(payableFine),
       rebate: String(rebate ?? REBATE),
     };
 
@@ -498,7 +503,17 @@ export const AddDeposit = () => {
                         </GridItem>
                       </Grid>
 
-                      <FormCheckbox name="isFinePaid" label="Fine to be paid" />
+                      <FormCheckbox
+                        name="isFinePaid"
+                        label="Fine to be paid"
+                        onChangeAction={(val) => {
+                          if (!val) {
+                            methods.setValue('fine', '');
+                          } else {
+                            methods.setValue('fine', FINE);
+                          }
+                        }}
+                      />
 
                       {isFinePaid && (
                         <Box
@@ -599,7 +614,7 @@ export const AddDeposit = () => {
                           </Text>
 
                           <Text fontSize="s3" fontWeight={500} color="danger.500">
-                            {`+ ${amountConverter(isFinePaid ? payableFine : FINE)}`}
+                            {`+ ${amountConverter(payableFine)}`}
                           </Text>
                         </Box>
                       )}
