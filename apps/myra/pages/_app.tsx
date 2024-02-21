@@ -1,8 +1,9 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useEffect } from 'react';
 import { Provider } from 'react-redux';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -46,7 +47,19 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   const getLayout = Component.getLayout || ((page) => page);
 
-  if (isLoading) {
+  const router = useRouter();
+
+  const lang = store.getState().auth?.preference?.languageCode;
+
+  useEffect(() => {
+    if (lang === 'np' && router.locale !== 'ne') {
+      router.push(`/${router.asPath}`, undefined, {
+        locale: 'ne',
+      });
+    }
+  }, [router.locale, lang, router.asPath]);
+
+  if (isLoading || (lang === 'np' && router.locale !== 'ne')) {
     return (
       <Box h="100vh" bg="white" display="flex" alignItems="center" justifyContent="center">
         <Loader height={300} />
