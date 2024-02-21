@@ -1,4 +1,14 @@
+import { loanEn } from './english/cbs/loan';
 import { memberEn } from './english/cbs/member';
+import { mfEn } from './english/cbs/mf';
+import { otherEn } from './english/cbs/other';
+import { reportEn } from './english/cbs/report';
+import { requestEn } from './english/cbs/request';
+import { savingEn } from './english/cbs/saving';
+import { shareEn } from './english/cbs/share';
+import { transactionEn } from './english/cbs/transaction';
+import { transferEn } from './english/cbs/transfer';
+import { withdrawSlipEn } from './english/cbs/withdraw-slip';
 
 const en: Record<string, string> = {
   // global
@@ -109,140 +119,16 @@ const en: Record<string, string> = {
   others: 'Others',
 
   ...memberEn,
-
-  // here
-
-  kymCoopRepresentativeProvince: 'Province',
-  kymCoopRepresentativeSelectProvince: 'Select Province',
-  kymCoopRepresentativeDistrict: 'District',
-  kymCoopRepresentativeSelectDistrict: 'Select District',
-  kymCoopRepresentativeLocalGovernment: 'Local Government',
-  kymCoopRepresentativeSelectLocalGovernment: 'Select Local Government',
-  kymCoopRepresentativeWardNo: 'Ward No',
-  kymCoopRepresentativeEnterWardNo: 'Enter Ward No',
-  kymCoopRepresentativeLocality: 'Locality',
-  kymCoopRepresentativeEnterLocality: 'Enter Locality',
-  kymCoopRepresentativeHouseNo: 'House No',
-
-  // share
-  // sidebar
-  shareNewShareIssue: 'New Share Issue',
-  shareNewShareReturn: 'New Share Return',
-  shareBalance: 'Share Balance',
-  shareRegister: 'Share Register',
-  shareSettings: 'Share Settings',
-  shareLayoutRegisterReport: 'Share Register Report',
-  shareLayoutStateReport: 'Share Statement (Individual) Report',
-  shareLayoutTransactionReport: 'Share Transaction Report',
-
-  // savings
-  // sidebar
-  newAccountOpen: 'New Account Open',
-  newAccountClose: 'New Account Close',
-  accountList: 'Saving Accounts',
-
-  savingProducts: 'Saving Products',
-  accountClose: 'Closed Accounts',
-  savingsDepositSettings: 'Saving Settings',
-  savingsProductSettings: 'Saving Products Settings',
-  savingsDepositStatementReport: 'Saving / Deposit Statement Report',
-  savingsIntrestTaxReport: 'Interest Tax Report',
-  savingsIntrestStatement: 'Interest Statement (Individual) Report',
-
-  // loan
-  // sidebar
-  newLoanApplication: 'New Loan Application',
-  newLoanRepayment: 'New Loan Repayment',
-  newCloseLoanAccount: 'New Close Loan Account',
-  newLoanLossProvision: 'New Loan Loss Provision',
-  loanAccounts: 'Loan Accounts',
-  loanApplications: 'Loan Applications',
-  loanRepayment: 'Loan Repayment',
-  loanProducts: 'Loan Products',
-  declinedLoan: 'Declined Loan',
-  closedAccounts: 'Closed Accounts',
-  loanLossProvision: 'Loan Loss Provision',
-  loanWriteOff: 'Loan Write Off',
-
-  loanLayoutSettings: 'Loan Settings',
-  loanLayoutProductsSettings: 'Loan Product Settings',
-  loanAccountStatementReport: 'Loan Account Statement Report',
-  loanLayoutAgeingReport: 'Loan Aging Report',
-
-  // transaction
-  // sidebar
-  transactionSidebarNewDeposit: 'New Deposit',
-  transactionSidebarNewWithdraw: 'New Withdraw',
-  transactionSidebarNewAccountTransfer: 'New Account Transfer',
-  transactionSidebarNewLoanPayment: 'New Loan Repayment',
-  transactionSidebarNewJournalVoucher: 'New Journal Voucher',
-
-  transactionsSidebarDeposit: 'Deposit',
-  transactionsSidebarWithdraw: 'Withdraw',
-  transactionsSidebarAccountTransfer: 'Account Transfer',
-  transactionsSidebarLoanPayment: 'Loan Repayment',
-  transactionsSidebarAgentTransaction: 'Market Representative Transactions',
-  transactionsSidebarAgentList: 'Market Representative List',
-  transactionsSidebarJournalVoucher: 'Journal Voucher',
-  transactionsSidebarAllTransactions: 'All Transactions',
-  transactionsSidebarAdjustedTransaction: 'Adjusted Transactions',
-  transactionsSidebarAllLedger: 'All Ledger',
-  transactionsSidebarAllUserAccounts: 'All User Accounts',
-  transactionsSidebarAllHoldingAccounts: 'All Holding Accounts',
-
-  transactionLayoutBalanceSheet: 'Trial Balance',
-  transactionLayoutCashFlowStament: 'Cash Ledger',
-  transactionLayoutBankGLStatement: 'Bank GL Statement',
-
-  // transfer
-  // sidebar
-  transferVaultTransfer: 'Teller - Vault',
-  transferBankTransfer: 'Teller - Bank',
-  transferTellerTransfer: 'Teller - Teller',
-  transCashTransitTransfer: 'Cash in Transit Transfer',
-  transServiceCenterTransfer: 'Inter Service Center Transaction',
-
-  transferVaultBalanceReport: 'Vault Balance Report',
-  transferTellerReport: 'Teller Report',
-  transferCashLedgerReport: 'Cash Ledger Report',
-  transferDayBookReport: 'Day Book Report',
-
-  // request
-  // sidebar
-  requestMember: 'Member Request',
-  requestWithdraw: 'Withdraw Request',
-  requestLoan: 'Loan Request',
-  requestMemberTransfer: 'Member Transfer Request',
-
-  // withdrawslip
-  // sidebar
-  withdrawSlipBook: 'Withdraw Slip Book',
-  withdrawSlipRequests: 'Withdraw Slip Requests',
-  withdrawSlipBlockRequests: 'Block Withdraw Slip Requests',
-
-  // microfinance
-  // sidebar
-  mfAddMFCenter: 'Add Mf Center',
-  mfAddMFGroup: 'Add Mf Group',
-  mfAddGroupMeetings: 'Add Mf Group Meetings',
-  mfCenter: 'Mf Center',
-  mfGroup: 'Mf Group',
-  mfGroupMeetings: 'Mf Group Meetings',
-
-  // reports
-  // sidebar
-  reportsCbsReports: 'CBS reports',
-
-  // others
-  othersMRList: 'Market Representatives List',
-  othersMRTransaction: 'Market Representatives Transaction',
-  othersProfitToFundManagement: 'Profit to Fund Management',
-  othersShareDividendPosting: 'Share Divident Posting',
-  othersBulkTransfer: 'Bulk Transfers',
-  othersMRCollection: 'Market Representative Collection',
-  othersNewProfitToFundManagement: 'New Profit to Fund Management',
-  othersNewShareDividendPosting: 'New Share Dividend Posting',
-  othersNewBulkTransfer: 'New Bulk Transfer',
+  ...shareEn,
+  ...savingEn,
+  ...loanEn,
+  ...transactionEn,
+  ...transferEn,
+  ...requestEn,
+  ...withdrawSlipEn,
+  ...mfEn,
+  ...reportEn,
+  ...otherEn,
 
   kymInsReset: 'Reset',
   kymInsContactNo__placeholder: 'Enter Contact No',

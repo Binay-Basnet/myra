@@ -1,4 +1,14 @@
+import { loanNp } from './nepali/cbs/loan';
 import { memberNp } from './nepali/cbs/member';
+import { mfNp } from './nepali/cbs/mf';
+import { otherNp } from './nepali/cbs/other';
+import { reportNp } from './nepali/cbs/report';
+import { requestNp } from './nepali/cbs/request';
+import { savingNp } from './nepali/cbs/saving';
+import { shareNp } from './nepali/cbs/share';
+import { transactionNp } from './nepali/cbs/transaction';
+import { transferNp } from './nepali/cbs/transfer';
+import { withdrawSlipNp } from './nepali/cbs/withdraw-slip';
 
 const en: Record<string, string> = {
   // global
@@ -109,122 +119,16 @@ const en: Record<string, string> = {
   others: 'अन्य',
 
   ...memberNp,
-
-  // share
-  // sidebar
-  shareNewShareIssue: 'नयाँ शेयर जारी',
-  shareNewShareReturn: 'नयाँ शेयर फिर्ता',
-  shareBalance: 'शेयर मौज्दात',
-  shareRegister: 'शेयर रजिस्टर',
-  shareSettings: 'शेयर सेटिङ',
-  shareLayoutRegisterReport: 'शेयर रजिस्टर प्रतिवेदन',
-  shareLayoutStateReport: 'Share Statement (Individual) Report',
-  shareLayoutTransactionReport: 'Share Transaction Report',
-
-  // savings
-  // sidebar
-  newAccountClose: 'खाता बन्द',
-  accountList: 'बचत खाताहरु',
-  savingProducts: 'बचतका प्रकारहरु',
-  accountClose: 'बन्द भएका खाताहरु',
-  savingsDepositSettings: 'बचतको सेटअप',
-  savingsProductSettings: 'बचतका प्रकारहरुको सेटअप',
-  savingsDepositStatementReport: 'बचतको व्यक्तिगत प्रतिवेदन',
-  savingsIntrestTaxReport: 'ब्याज कर प्रतिवेदन',
-  savingsIntrestStatement: 'यक्तिगत ब्याज प्रतिवेदन',
-
-  // loan
-  // sidebar
-  newLoanRepayment: 'ऋण भुक्तानी',
-  newCloseLoanAccount: 'ऋण खाता बन्द',
-  newLoanLossProvision: 'ऋण सुरक्षण कोषको प्रविष्टि',
-  loanAccounts: 'ऋणका खाताहरु',
-  loanApplications: ' ऋण आवेदनहरु',
-  loanRepayment: 'भुक्तानी भएका ऋणहरु',
-  loanProducts: 'ऋणका प्रकारहरु',
-  declinedLoan: ' रद्द गर्ने',
-  closedAccounts: 'बन्द भएका ऋण खाताहरु',
-  loanLossProvision: 'ऋण सुरक्षण कोष',
-  loanWriteOff: 'ऋणको अपलेखन',
-  loanLayoutSettings: ' ऋण सेटअप',
-  loanLayoutProductsSettings: ' ऋण प्रकारहरुको सेटअप',
-  loanAccountStatementReport: 'ऋणको व्यक्तिगत प्रतिवेदन',
-  loanLayoutAgeingReport: 'विस्तृत ऋण प्रतिवेदन (एजिङ)',
-
-  // transaction
-  // sidebar
-  transactionSidebarNewDeposit: 'नयाँ बचत जम्मा',
-  transactionSidebarNewWithdraw: 'नयाँ बचत फिर्ता',
-  transactionSidebarNewAccountTransfer: 'खाता रकमान्तर',
-  transactionSidebarNewLoanPayment: 'ऋण भुक्तानी',
-  transactionSidebarNewJournalVoucher: ' नयाँ गोश्वारा भौचर',
-
-  transactionsSidebarDeposit: ' बचत जम्मा',
-  transactionsSidebarWithdraw: 'बचत फिर्ता',
-  transactionsSidebarAccountTransfer: 'खाता रकमान्तर',
-  transactionsSidebarLoanPayment: 'ऋण भुक्तानी',
-  transactionsSidebarAgentTransaction: 'बजार प्रतिनिधि कारोबार',
-  transactionsSidebarAgentList: 'बजार प्रतिनिधि सूची',
-  transactionsSidebarJournalVoucher: 'गोश्वारा भौचर',
-  transactionsSidebarAllTransactions: 'सबै कारोबारहरु',
-  transactionsSidebarAdjustedTransaction: 'समायोजन भएकाे काराेबार',
-  transactionsSidebarAllLedger: 'सबै लेजरहरु (खाताहरु)',
-  transactionsSidebarAllUserAccounts: 'प्रयोगकर्ताका सबै खाताहरु',
-  transactionsSidebarAllHoldingAccounts: 'रोक्का गरिएका खाताहरु',
-
-  transactionLayoutBalanceSheet: ' सन्तुलन परीक्षण',
-  transactionLayoutCashFlowStament: 'नगदी खाता प्रतिवेदन',
-  transactionLayoutBankGLStatement: 'बैंक खाताको प्रतिवेदन',
-
-  // transfer
-  // sidebar
-  transferVaultTransfer: 'Teller - Vault',
-  transferBankTransfer: 'Teller - Bank',
-  transferTellerTransfer: 'Teller - Teller',
-  transCashTransitTransfer: 'Cash in Transit Transfer',
-  transServiceCenterTransfer: 'Inter Service Center Transaction',
-
-  transferVaultBalanceReport: 'Vault Balance Report',
-  transferTellerReport: 'Teller Report',
-  transferCashLedgerReport: 'Cash Ledger Report',
-  transferDayBookReport: 'Day Book Report',
-
-  // request
-  // sidebar
-  requestMember: 'Member Request',
-  requestWithdraw: 'Withdraw Request',
-  requestLoan: 'Loan Request',
-  requestMemberTransfer: 'Member Transfer Request',
-
-  // withdrawslip
-  // sidebar
-  withdrawSlipBook: 'Withdraw Slip Book',
-  withdrawSlipRequests: 'Withdraw Slip Requests',
-  withdrawSlipBlockRequests: 'Block Withdraw Slip Requests',
-
-  // microfinance
-  // sidebar
-  mfAddMFCenter: 'Add Mf Center',
-  mfAddMFGroup: 'Add Mf Group',
-  mfAddGroupMeetings: 'Add Mf Group Meetings',
-  mfCenter: 'Mf Center',
-  mfGroup: 'Mf Group',
-  mfGroupMeetings: 'Mf Group Meetings',
-
-  // reports
-  // sidebar
-  reportsCbsReports: 'CBS reports',
-
-  // others
-  othersMRList: 'Market Representatives List',
-  othersMRTransaction: 'Market Representatives Transaction',
-  othersProfitToFundManagement: 'Profit to Fund Management',
-  othersShareDividendPosting: 'Share Divident Posting',
-  othersBulkTransfer: 'Bulk Transfers',
-  othersMRCollection: 'Market Representative Collection',
-  othersNewProfitToFundManagement: 'New Profit to Fund Management',
-  othersNewShareDividendPosting: 'New Share Dividend Posting',
-  othersNewBulkTransfer: 'New Bulk Transfer',
+  ...shareNp,
+  ...savingNp,
+  ...loanNp,
+  ...transactionNp,
+  ...transferNp,
+  ...requestNp,
+  ...withdrawSlipNp,
+  ...mfNp,
+  ...reportNp,
+  ...otherNp,
 
   kymInsReset: 'Reset',
   kymInsContactNo__placeholder: 'Enter Contact No',
