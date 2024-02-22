@@ -64,6 +64,7 @@ export type AccountMinimal = {
   id: Scalars['String'];
   interestRate: Scalars['Float'];
   isDefault: Scalars['Boolean'];
+  mobileBankingAllowed?: Maybe<Scalars['Boolean']>;
   name: Scalars['String'];
   productName: Scalars['String'];
 };
@@ -1329,6 +1330,7 @@ export type EbankingTransaction = {
   currentBalance: Scalars['String'];
   date: Scalars['Localized'];
   debit?: Maybe<Scalars['String']>;
+  extraData?: Maybe<ExtraData>;
   id: Scalars['String'];
   month: Scalars['Localized'];
   name: Scalars['String'];
@@ -1412,6 +1414,12 @@ export type EbankingWithdrawQueryGetAvailableSlipsArgs = {
 
 export type EbankingWithdrawSlipResult = {
   data?: Maybe<Array<SlipEntry>>;
+};
+
+export type ExtraData = {
+  merchantExtraInfo?: Maybe<Scalars['String']>;
+  purpose?: Maybe<Scalars['String']>;
+  remark?: Maybe<Scalars['String']>;
 };
 
 export type Filter = {
@@ -2549,6 +2557,14 @@ export type Utility = {
   slug: Scalars['String'];
   totalProcessingSequence: Scalars['String'];
   vendorUrl1: Scalars['String'];
+};
+
+export type UtilityAdditionalJournalData = {
+  Service?: Maybe<Scalars['String']>;
+  destinationId?: Maybe<Scalars['String']>;
+  extraData?: Maybe<ExtraData>;
+  sourceAccount?: Maybe<Scalars['String']>;
+  sourceId?: Maybe<Scalars['String']>;
 };
 
 export type UtilityInfoResult = {

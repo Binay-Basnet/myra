@@ -104,7 +104,7 @@ const TransactionHistoryPage = () => {
   const { getValues, reset } = methods;
 
   const { data, isFetching } = useGetTransactionListsQuery({
-    pagination: { after: '', first: -1 },
+    pagination: { after: '', first: -1, order: { column: 'date', arrange: 'DESC' } },
     filter,
   });
 

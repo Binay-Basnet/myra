@@ -28,7 +28,7 @@ export const EbankingHomePage = () => {
 
   const { data: servicesList, isLoading } = useGetHomeServiceListQuery();
   const { data: accountList, isLoading: accountsLoading } = useGetAccountListQuery({
-    transactionPagination: { first: 10, after: '' },
+    transactionPagination: { first: 10, after: '', order: { column: 'date', arrange: 'DESC' } },
   });
   const accounts = accountList?.eBanking?.account?.list?.accounts;
 
