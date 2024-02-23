@@ -187,9 +187,9 @@ const useTabChange = () => {
     return;
   }
 
-  if (window) {
-    window.onfocus = () => {
+  document.onvisibilitychange = () => {
+    if (document.visibilityState === 'visible') {
       getRefreshToken();
-    };
-  }
+    }
+  };
 };

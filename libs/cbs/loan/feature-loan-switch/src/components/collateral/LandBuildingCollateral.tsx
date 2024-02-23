@@ -37,7 +37,7 @@ export const LandBuildingCollateral = () => (
             value: ConstructionType.JoistedOrLoadBearingMasonry,
           },
           { label: 'Steel Frame', value: ConstructionType.SteelFrame },
-          { label: 'Concrete Frame', value: ConstructionType.SteelFrame },
+          { label: 'Concrete Frame', value: ConstructionType.ConcreteFrame },
           { label: 'Pre Enginnered', value: ConstructionType.PreEngineered },
         ]}
       />
