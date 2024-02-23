@@ -3,125 +3,125 @@ export const institutionNp: Record<string, string> = {
   // institution
 
   // used in accordian and form
-  kymIns1InformationofInstitution: '1. COOP - Institution',
-  kymInsBasicInformation: 'Basic Information',
-  kymInsRegisteredDetails: 'Registered Details',
-  kymInsOperatorOfficeAddress: 'Operating Office Address',
-  kymInsBranchOfficeAddress: 'Branch Office Address',
-  kymInsContactDetails: 'Contact Details',
-  kymInsBankAccountDetails: 'Bank Account Details',
-  kymInsDetailsofsisterconcern: 'Details of sister concern',
+  kymIns1InformationofInstitution: '१. सहकारी - संस्था',
+  kymInsBasicInformation: 'मूख्य जानकारी',
+  kymInsRegisteredDetails: 'दर्ता विवरण',
+  kymInsOperatorOfficeAddress: 'सञ्चालन कार्यालय ठेगाना',
+  kymInsBranchOfficeAddress: 'सेवा केन्द्र कार्यालय ठेगाना',
+  kymInsContactDetails: 'सम्पर्क विवरण',
+  kymInsBankAccountDetails: 'बैंक खाता विवरण',
+  kymInsDetailsofsisterconcern: 'सहायक संस्था को विवरण',
 
-  kymIns2TransactionProfile: '2. Transaction Profile',
-  kymInsTransactionProfile: 'Transaction Profile',
-  kymInsExpectedMonthlyTurnover: 'Expected Monthly Turnover',
-  kymInsExpectedMonthlyTransaction: 'Expected Monthly Transaction',
+  kymIns2TransactionProfile: '२. कारोबार विवरण',
+  kymInsTransactionProfile: 'कारोबार विवरण',
+  kymInsExpectedMonthlyTurnover: 'अपेक्षित मासिक कारोबार',
+  kymInsExpectedMonthlyTransaction: 'अपेक्षित मासिक लेनदेन',
 
   kymIns3DetailsofProprietorpartnersDirectors: '3. Details of Proprietor, partners, Directors',
   kymInsDetailsofProprietorPartnersDirectors: 'Details of Proprietor, Partners, Directors.',
   kymInsDetailsofdirectorsaffiliatedwithotherFirms:
     'Details of directors affiliated with other Firms',
 
-  kymIns4AccountOperations: '4. Account Operators',
-  kymInsDetailsofAccountOperators: 'Details of Account Operators',
-  kymInsAccountOperationInstruction: 'Account Operation Instruction',
+  kymIns4AccountOperations: '४. खाता संचालक',
+  kymInsDetailsofAccountOperators: 'खाता संचालकको विवरण',
+  kymInsAccountOperationInstruction: 'खाता सन्चालन निर्देशन',
 
-  kymIns5Declaration: '5. Declaration',
-  kymInsDocumentsDeclaration: 'Documents Declaration',
-  kymInsAccountHolderDeclaration: 'Account Holder Declaration',
+  kymIns5Declaration: '५. स्वघोषणा',
+  kymInsDocumentsDeclaration: 'कागजात स्वघोषणा',
+  kymInsAccountHolderDeclaration: 'खातावाला सम्बन्धी घोषणा',
 
   // basic information
-  kymInsNameofInstitution: 'Name of Institution',
-  kymInsOrganizationType: 'Institution Type',
+  kymInsNameofInstitution: 'संस्थाको नाम',
+  kymInsOrganizationType: 'संस्था प्रकार',
 
-  kymInsRegistrationDate: 'Registration Date',
-  kymInsVATPanNo: 'VAT/Pan No.',
-  serviceCenterNoOfServiceCenter: 'No of Service Center',
+  kymInsRegistrationDate: 'दर्ता मिति',
+  kymInsVATPanNo: 'भ्याट/पान नं',
+  serviceCenterNoOfServiceCenter: 'सेवा केन्द्रको संख्या',
 
   // registered details
 
-  kymInsRegisteredNumber: 'Registered Number',
-  kymInsIssuingOffice: 'Issuing Office',
+  kymInsRegisteredNumber: 'दर्ता नं',
+  kymInsIssuingOffice: 'जारी गर्ने कार्यालय',
 
   // operating office address
 
   // branch office address
-  kymInsbranchOfficeAddress: 'Branch Office Address',
+  kymInsbranchOfficeAddress: 'सेवा केन्द्र कार्यालय ठेगाना',
 
   // contact details
-  kymInsPhone: 'Phone',
-  kymInsFax: 'Fax',
-  kymInsEmail: 'Email',
-  kymInsWebsiteLinkany: 'Website Link (if any)',
-  kymInsPostBoxNo: 'Post Box. No.',
-  kymInsNumberofEmployees: 'Number of Employees',
-  kymInsAGMDetailsDate: 'AGM Details (Date of Last AGM)',
+  kymInsPhone: 'फोन',
+  kymInsFax: 'फ्याक्स',
+  kymInsEmail: 'ईमेल',
+  kymInsWebsiteLinkany: 'वेबसाइट लिंक',
+  kymInsPostBoxNo: 'पोस्ट बक्स् नं',
+  kymInsNumberofEmployees: 'कर्मचारीको संख्या',
+  kymInsAGMDetailsDate: 'वार्षिक साधारण सभाको विवरण ( गएको वार्षिक साधारण सभाको मिति)',
 
   // bank accounts
-  kymInsNameofBank: 'Name of Bank',
-  kymInsAccountNumber: 'Account Number',
-  kymInsAccountName: 'Account Name',
+  kymInsNameofBank: 'बैंकको नाम',
+  kymInsAccountNumber: 'खाता नं',
+  kymInsAccountName: 'खाता नाम',
 
   // details of sister concern
 
-  kymInsNameofSisterConcern: 'Name of Sister Concern',
-  kymInsNatureofBusiness: 'Nature of Business',
-  kymInsAddress: 'Address',
-  kymInsPhoneNo: 'Phone No.',
-  kymInsNewDetail: 'New Detail',
+  kymInsNameofSisterConcern: 'नाम of सहायक संस्था',
+  kymInsNatureofBusiness: 'व्यवसायको प्रवृती',
+  kymInsAddress: 'ठेगाना',
+  kymInsPhoneNo: 'फोन नं',
+  kymInsNewDetail: 'नयाँ विवरण',
 
   // Transaction Profile
-  kymInsNatureofTransaction: 'Nature of Transaction',
-  kymInsAnnualTurnover: 'Annual Turnover',
-  kymInsInitialDepositAmount: 'Initial Deposit Amount',
+  kymInsNatureofTransaction: 'कारोबार प्रकृति',
+  kymInsAnnualTurnover: 'बार्षिक कारोबार',
+  kymInsInitialDepositAmount: 'प्रारम्भिक बचत जम्मा रकम',
 
   // Detail of Proprietor, partners, Directors
-  kymInsFullName: 'Full Name',
-  kymInsDesignation: 'Designation',
-  kymInsPermanentAddress: 'Permanent Address',
-  kymInsTemporaryAddress: 'Temporary Address',
-  kymInsTemporaryAddressPermanent: 'Temporary Address same as permanent',
+  kymInsFullName: 'पुरा नाम',
+  kymInsDesignation: 'पद',
+  kymInsPermanentAddress: 'स्थाही ठेगाना',
+  kymInsTemporaryAddress: 'अस्थाही ठेगाना',
+  kymInsTemporaryAddressPermanent: 'अस्थाही ठेगाना छैन',
 
-  kymInsDateOfMembership: 'Date of membership',
-  kymInsHighestQualification: 'Highest Qualification',
-  kymInsMobileNo: 'Mobile No.',
-  kymInsCitizenshipPassportDrivingLicenseNo: 'Citizenship No.',
-  kymInsPanNo: 'PAN No',
+  kymInsDateOfMembership: 'सदस्यताको मिति',
+  kymInsHighestQualification: 'माथ्थिलो योग्यता',
+  kymInsMobileNo: 'मोबाइल नं',
+  kymInsCitizenshipPassportDrivingLicenseNo: 'नागरिकता नं',
+  kymInsPanNo: 'पान नं',
 
-  kymInsPhotograph: 'Photograph',
+  kymInsPhotograph: 'फोटो',
   kymInsPhotographOfIdentityProofDocument: 'Photograph of identity proof document',
 
   kymInsIsaffiliatedwithotherfirms: 'Is affiliated with other firms?',
-  kymInsNameofDirector: 'Name of Director',
-  kymInsAddressofInstitution: 'Address of Institution',
-  kymInsYearlyIncome: 'Yearly Income',
+  kymInsNameofDirector: 'संचालकको नाम',
+  kymInsAddressofInstitution: 'संस्थाको ठेगाना',
+  kymInsYearlyIncome: 'बार्षिक आय',
 
-  kymInsAddDirector: 'Add Director',
+  kymInsAddDirector: 'संचालक थप्नुहोस',
 
   // Account Operator
-  kymInsNewOperator: 'New Operator',
-  kymInsContactNo: 'Contact No',
-  kymInsPresident: 'President',
-  kymInsVicePresident: 'Vice-President',
-  kymInsSecretary: 'Secretary',
-  kymInsTreasurer: 'Treasurer',
-  kymInsSpecimenSignature: 'Specimen Signature',
+  kymInsNewOperator: 'नयाँ संचालक',
+  kymInsContactNo: 'सम्पर्क नं',
+  kymInsPresident: 'अध्यक्ष',
+  kymInsVicePresident: 'उपाध्यक्ष',
+  kymInsSecretary: 'सचिव',
+  kymInsTreasurer: 'कोषाध्यक्ष',
+  kymInsSpecimenSignature: 'नमूना हस्ताक्षर',
 
   // account operation instruction
-  kymInsSingle: 'Single',
-  kymInsJoint: 'Joint',
-  kymInsCompanyStampCompulsory: 'Company Stamp Compulsory',
+  kymInsSingle: 'एकल',
+  kymInsJoint: 'संयुक्त',
+  kymInsCompanyStampCompulsory: 'संस्थाको छाप अनिवार्य',
 
   // declaration
   // document declaration
-  kymInsAGMDecisionDocument: 'AGM/BOD Decision Document',
-  kymInsRegisteredCertificate: 'Registered Certificate',
-  kymInsMoaAoa: 'Moa/Aoa',
-  kymInsPANCertificate: 'PAN Certificate',
-  kymInsTaxClearance: 'Tax Clearance',
-  kymInsLatestAuditReport: 'Latest Audit Report',
+  kymInsAGMDecisionDocument: ' वार्षिक साधारण सभा/सन्चालक समिती निर्णय कागजात',
+  kymInsRegisteredCertificate: 'दर्ता प्रमाण-पत्र',
+  kymInsMoaAoa: 'प्रबन्ध पत्र/नियमावली',
+  kymInsPANCertificate: 'पान प्रमाण-पत्र',
+  kymInsTaxClearance: 'कर चुक्ता कागजात',
+  kymInsLatestAuditReport: 'पछिल्लो लेखापरीक्षण प्रतिवेदन',
 
   // account holder declaration
-  kymInsAccountHolderName: "Account Holder's Name",
-  kymInsAccountHolderAddress: "Account Holder's Address",
+  kymInsAccountHolderName: 'खाता वालाको नाम',
+  kymInsAccountHolderAddress: 'खाता वालाको ठेगाना',
 };
