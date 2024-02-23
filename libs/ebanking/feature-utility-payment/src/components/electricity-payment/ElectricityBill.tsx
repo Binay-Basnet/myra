@@ -89,9 +89,7 @@ export const ElectricityBill = ({
       promise: utilityProceed({
         input: {
           slug: values?.['slug'],
-          totalProcessingSequence: schema?.totalProcessingSequence,
           processSeq: String(currentSequence),
-          sourceAccount: values?.['sourceAccount'],
           inputData: inputDataObj,
         },
       }),
@@ -116,11 +114,9 @@ export const ElectricityBill = ({
         setCurrentSequence((val) => val + 1);
 
         setIsLoading(false);
-        // setPaymentStatus('form');
       },
       onError: () => {
         setIsLoading(false);
-        // setPaymentStatus('form');
       },
     });
   };
@@ -227,7 +223,6 @@ export const ElectricityBill = ({
                 ? () => setPaymentStatus('review')
                 : handleProceed
             )}
-            // isDisabled={isActionDisabled}
           >
             Proceed
           </Button>

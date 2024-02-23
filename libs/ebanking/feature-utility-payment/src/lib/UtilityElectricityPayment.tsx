@@ -9,7 +9,6 @@ import {
   useGetUtilityQuery,
   useMakePaymentMutation,
   Utility,
-  UtilityInput,
 } from '@coop/ebanking/data-access';
 
 import { UtilityPaymentForm, UtilityPaymentResult, UtilityPaymentReview } from '../components';
@@ -36,7 +35,7 @@ export const UtilityElectricityPayment = () => {
   const [transactionCode, setTransactionCode] = useState<string>('');
   const [mutationMsg, setMutationMsg] = useState<string>('');
 
-  const methods = useForm<UtilityInput & Record<string, string>>({
+  const methods = useForm<Record<string, string>>({
     defaultValues: {
       sourceAccount,
     },
@@ -84,8 +83,6 @@ export const UtilityElectricityPayment = () => {
     const submitResponse = await utilitySubmit({
       input: {
         slug: values?.['slug'],
-        totalProcessingSequence: schema?.totalProcessingSequence as string,
-        processSeq: String(currentSequence),
         sourceAccount: values?.['sourceAccount'],
         inputData: inputDataObj,
         txnPin: values?.['txnPin'],

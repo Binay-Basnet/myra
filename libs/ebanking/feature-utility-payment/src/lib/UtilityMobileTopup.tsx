@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Box, getError, MutationError } from '@myra-ui';
 
 import { EbankingPathBar, LoaderOverlay } from '@coop/ebanking/components';
-import { useAppSelector, useMakePaymentMutation, UtilityInput } from '@coop/ebanking/data-access';
+import { useAppSelector, useMakePaymentMutation } from '@coop/ebanking/data-access';
 import { getMobileServiceProvider } from '@coop/ebanking/utils';
 
 import { MobileTopup, MobileTopupPaymentReview, MobileTopupResult } from '../components';
@@ -31,7 +31,7 @@ export const UtilityMobileTopup = () => {
 
   const [mutationMsg, setMutationMsg] = useState('');
 
-  const methods = useForm<UtilityInput & Record<string, string>>({
+  const methods = useForm<Record<string, string>>({
     defaultValues: {
       sourceAccount,
     },
@@ -51,8 +51,6 @@ export const UtilityMobileTopup = () => {
     const response = await mutateAsync({
       input: {
         slug: (serviceProvider as string) || 'ntc',
-        processSeq: '1',
-        totalProcessingSequence: '1',
         sourceAccount: values?.['sourceAccount'],
         inputData: {
           mobileNumber: values?.['mobileNumber'],

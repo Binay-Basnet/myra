@@ -1939,6 +1939,14 @@ export type LocationCoordinate = {
   longitude?: Maybe<Scalars['Float']>;
 };
 
+export type MakePaymentInput = {
+  inputData: Scalars['Map'];
+  slug: Scalars['String'];
+  sourceAccount: Scalars['String'];
+  txnPin: Scalars['String'];
+  vendor?: InputMaybe<Scalars['String']>;
+};
+
 export type MeCooperativeUserResult = {
   data?: Maybe<EbankingCooperative>;
   error?: Maybe<QueryError>;
@@ -2498,6 +2506,13 @@ export type UploadedDocumentData = {
   url: Scalars['String'];
 };
 
+export type UseUtilityInput = {
+  inputData: Scalars['Map'];
+  processSeq: Scalars['String'];
+  slug: Scalars['String'];
+  vendor?: InputMaybe<Scalars['String']>;
+};
+
 export const UserGender = {
   Female: 'FEMALE',
   Male: 'MALE',
@@ -2572,27 +2587,17 @@ export type UtilityInfoResult = {
   utility?: Maybe<Utility>;
 };
 
-export type UtilityInput = {
-  inputData: Scalars['Map'];
-  processSeq: Scalars['String'];
-  slug: Scalars['String'];
-  sourceAccount: Scalars['String'];
-  totalProcessingSequence: Scalars['String'];
-  txnPin?: InputMaybe<Scalars['String']>;
-  vendor?: InputMaybe<Scalars['String']>;
-};
-
 export type UtilityMutation = {
   makePayment: UtilityResponseResult;
   useUtility: UtilityResponseResult;
 };
 
 export type UtilityMutationMakePaymentArgs = {
-  input: UtilityInput;
+  input: MakePaymentInput;
 };
 
 export type UtilityMutationUseUtilityArgs = {
-  input: UtilityInput;
+  input: UseUtilityInput;
 };
 
 export type UtilityPayemntMutation = {
@@ -3097,7 +3102,7 @@ export type CompleteSendMoneyMutation = {
 };
 
 export type UseUtilityMutationVariables = Exact<{
-  input: UtilityInput;
+  input: UseUtilityInput;
 }>;
 
 export type UseUtilityMutation = {
@@ -3123,7 +3128,7 @@ export type UseUtilityMutation = {
 };
 
 export type MakePaymentMutationVariables = Exact<{
-  input: UtilityInput;
+  input: MakePaymentInput;
 }>;
 
 export type MakePaymentMutation = {

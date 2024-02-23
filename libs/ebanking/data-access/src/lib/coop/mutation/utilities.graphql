@@ -61,7 +61,7 @@ mutation completeSendMoney($data: EbankingSendMoneyInput, $transactionPin: Strin
   }
 }
 
-mutation useUtility($input: UtilityInput!) {
+mutation useUtility($input: UseUtilityInput!) {
   eBanking {
     utility {
       useUtility(input: $input) {
@@ -75,7 +75,7 @@ mutation useUtility($input: UtilityInput!) {
   }
 }
 
-mutation makePayment($input: UtilityInput!) {
+mutation makePayment($input: MakePaymentInput!) {
   eBanking {
     utility {
       makePayment(input: $input) {

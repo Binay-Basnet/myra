@@ -524,7 +524,7 @@ export const useCompleteSendMoneyMutation = <TError = unknown, TContext = unknow
     options
   );
 export const UseUtilityDocument = `
-    mutation useUtility($input: UtilityInput!) {
+    mutation useUtility($input: UseUtilityInput!) {
   eBanking {
     utility {
       useUtility(input: $input) {
@@ -552,7 +552,7 @@ export const useUseUtilityMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const MakePaymentDocument = `
-    mutation makePayment($input: UtilityInput!) {
+    mutation makePayment($input: MakePaymentInput!) {
   eBanking {
     utility {
       makePayment(input: $input) {

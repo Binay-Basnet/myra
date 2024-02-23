@@ -9,7 +9,6 @@ import {
   useGetUtilityQuery,
   useMakePaymentMutation,
   Utility,
-  UtilityInput,
 } from '@coop/ebanking/data-access';
 
 import {
@@ -40,7 +39,7 @@ export const UtilityInternetPayment = () => {
   const [transactionCode, setTransactionCode] = useState<string>('');
   const [mutationMsg, setMutationMsg] = useState<string>('');
 
-  const methods = useForm<UtilityInput & Record<string, string>>({
+  const methods = useForm<Record<string, string>>({
     defaultValues: {
       sourceAccount,
     },
@@ -88,8 +87,6 @@ export const UtilityInternetPayment = () => {
     const submitResponse = await utilitySubmit({
       input: {
         slug: values?.['slug'],
-        totalProcessingSequence: schema?.totalProcessingSequence as string,
-        processSeq: String(currentSequence),
         sourceAccount: values?.['sourceAccount'],
         inputData: inputDataObj,
         txnPin: values?.['txnPin'],
@@ -102,8 +99,6 @@ export const UtilityInternetPayment = () => {
       !submitResponse?.eBanking?.utility?.makePayment?.error &&
       submitResponse?.eBanking?.utility?.makePayment?.data?.transactionId
     ) {
-      // queryClient.invalidateQueries(['getAccountList']);
-      // queryClient.invalidateQueries(['getTransactionLists']);
       setTransactionCode(
         submitResponse?.eBanking?.utility?.makePayment?.data?.transactionId as string
       );
@@ -123,12 +118,6 @@ export const UtilityInternetPayment = () => {
 
       setMutationMsg(errMsg as string);
       setPaymentStatus('failure');
-      // if (errMsg) {
-      //   // methods.setError('mobileNumber', { message: errMsg });
-      //   setPaymentStatus('form');
-      // } else {
-      //   setPaymentStatus('failure');
-      // }
     }
   };
 

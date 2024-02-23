@@ -99,9 +99,7 @@ export const UtilityPaymentForm = ({
       promise: utilityProceed({
         input: {
           slug: values?.['slug'],
-          totalProcessingSequence: schema?.totalProcessingSequence,
           processSeq: String(currentSequence),
-          sourceAccount: values?.['sourceAccount'],
           inputData: inputDataObj,
         },
       }),
