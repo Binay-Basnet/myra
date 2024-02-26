@@ -66,7 +66,10 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const lang = store.getState().auth?.preference?.languageCode;
 
   useEffect(() => {
-    if (lang === 'np' && router.locale !== 'ne') {
+    if (
+      (lang === 'np' && router.locale !== 'ne' && !router.asPath.includes('login')) ||
+      router.asPath.includes('password-recovery')
+    ) {
       router.push(`/${router.asPath}`, undefined, {
         locale: 'ne',
       });
