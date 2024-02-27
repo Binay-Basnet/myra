@@ -15,11 +15,14 @@ export const Documents = (props: { data?: Organization | null }) => {
             <Text variant="formLabel" color="gray.700">
               Documents
             </Text>
-            {data?.documents?.map((file) => (
-              <Box w="50%">
-                <FileViewer fileName={file as string} fileUrl={file as string} />
-              </Box>
-            ))}
+            {data?.documents?.map(
+              (file) =>
+                file && (
+                  <Box w="50%">
+                    <FileViewer fileName={file as string} fileUrl={file as string} />
+                  </Box>
+                )
+            )}
           </Box>
         </Grid>
       </Box>

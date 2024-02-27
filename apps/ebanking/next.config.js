@@ -66,6 +66,7 @@ const nextConfig = {
   },
   images: {
     domains: ['images.unsplash.com', 'cdn.raralabs.live'],
+    // unoptimized: true,
   },
 
   i18n: {
