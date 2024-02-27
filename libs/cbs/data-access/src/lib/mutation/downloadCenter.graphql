@@ -8,3 +8,14 @@ mutation getElementUrl($id: ID!) {
     }
   }
 }
+
+mutation getUrlFromFileKey($fileKey: String!) {
+  downloadCentre {
+    getUrlFromFileKey(fileKey: $fileKey) {
+      url
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

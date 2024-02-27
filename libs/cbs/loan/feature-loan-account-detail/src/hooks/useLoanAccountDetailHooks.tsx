@@ -43,6 +43,7 @@ export const useLoanAccountDetailHooks = () => {
   const gauranteeData = loanAccountGuaranteeDetailsData?.loanAccount?.loanAccountDetails?.guarantee;
   const collatData = loanAccountCollateralDetailsData?.loanAccount?.loanAccountDetails?.collateral;
   const overviewData = loanAccountDetailsQueryData?.loanAccount?.loanAccountDetails?.overView;
+  const documentData = loanAccountDetailsQueryData?.loanAccount?.loanAccountDetails?.documents;
   const generalInfo = overviewData?.generalInformation;
   const additionalInfo = overviewData?.additionalFeatures;
   const txnListInfo = overviewData?.transactions?.edges;
@@ -258,5 +259,6 @@ export const useLoanAccountDetailHooks = () => {
     paymentAllList,
     refetch,
     ledgerLoading,
+    documentData,
   };
 };

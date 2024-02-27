@@ -13,6 +13,7 @@ export const SideBar = () => (
         'Ledger',
         'Account Premium Update',
         'General Updates',
+        'Documents',
       ]}
     />
   </>

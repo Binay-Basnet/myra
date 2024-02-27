@@ -6785,10 +6785,15 @@ export type DownloadCenterDataEdges = {
 
 export type DownloadCenterMutation = {
   getElementUrl?: Maybe<StringWithError>;
+  getUrlFromFileKey?: Maybe<StringWithError>;
 };
 
 export type DownloadCenterMutationGetElementUrlArgs = {
   id: Scalars['ID'];
+};
+
+export type DownloadCenterMutationGetUrlFromFileKeyArgs = {
+  fileKey: Scalars['String'];
 };
 
 export type DownloadCenterNode = {
@@ -14632,6 +14637,7 @@ export type LoanAccountConnectionWithError = {
 
 export type LoanAccountDetailsResult = {
   collateral?: Maybe<LoanAccountCollateralDetails>;
+  documents?: Maybe<LoanAccountDocumentsDetailsWithError>;
   guarantee?: Maybe<LoanAccountGuaranteeDetails>;
   loanAccountId?: Maybe<Scalars['String']>;
   memberInfo?: Maybe<MemberOverview>;
@@ -14641,6 +14647,16 @@ export type LoanAccountDetailsResult = {
 export type LoanAccountDisbursement = {
   destinationAccount: Scalars['ID'];
   note?: InputMaybe<Scalars['String']>;
+};
+
+export type LoanAccountDocumentDetails = {
+  field?: Maybe<Scalars['String']>;
+  fileKey?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type LoanAccountDocumentsDetailsWithError = {
+  data?: Maybe<Array<Maybe<LoanAccountDocumentDetails>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type LoanAccountEdge = {
@@ -27234,6 +27250,24 @@ export type GetElementUrlMutation = {
   };
 };
 
+export type GetUrlFromFileKeyMutationVariables = Exact<{
+  fileKey: Scalars['String'];
+}>;
+
+export type GetUrlFromFileKeyMutation = {
+  downloadCentre: {
+    getUrlFromFileKey?: {
+      url?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type AddProfitToFundManagementDataMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data: FundManagementInput;
@@ -39553,6 +39587,18 @@ export type GetLoanAccountDetailsQuery = {
           supportMultipleAccount?: boolean | null;
           overrideInterest?: boolean | null;
         } | null;
+      } | null;
+      documents?: {
+        data?: Array<{
+          field?: string | null;
+          fileKey?: Array<string | null> | null;
+        } | null> | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
       } | null;
     } | null;
   };
@@ -53343,6 +53389,33 @@ export const useGetElementUrlMutation = <TError = unknown, TContext = unknown>(
   useMutation<GetElementUrlMutation, TError, GetElementUrlMutationVariables, TContext>(
     ['getElementUrl'],
     useAxios<GetElementUrlMutation, GetElementUrlMutationVariables>(GetElementUrlDocument),
+    options
+  );
+export const GetUrlFromFileKeyDocument = `
+    mutation getUrlFromFileKey($fileKey: String!) {
+  downloadCentre {
+    getUrlFromFileKey(fileKey: $fileKey) {
+      url
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetUrlFromFileKeyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    GetUrlFromFileKeyMutation,
+    TError,
+    GetUrlFromFileKeyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<GetUrlFromFileKeyMutation, TError, GetUrlFromFileKeyMutationVariables, TContext>(
+    ['getUrlFromFileKey'],
+    useAxios<GetUrlFromFileKeyMutation, GetUrlFromFileKeyMutationVariables>(
+      GetUrlFromFileKeyDocument
+    ),
     options
   );
 export const AddProfitToFundManagementDataDocument = `
@@ -70020,10 +70093,19 @@ export const GetLoanAccountDetailsDocument = `
           overrideInterest
         }
       }
+      documents {
+        data {
+          field
+          fileKey
+        }
+        error {
+          ...MutationError
+        }
+      }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useGetLoanAccountDetailsQuery = <TData = GetLoanAccountDetailsQuery, TError = unknown>(
   variables: GetLoanAccountDetailsQueryVariables,
   options?: UseQueryOptions<GetLoanAccountDetailsQuery, TError, TData>

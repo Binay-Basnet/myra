@@ -809,6 +809,15 @@ query getLoanAccountDetails(
           overrideInterest
         }
       }
+      documents {
+        data {
+          field
+          fileKey
+        }
+        error {
+          ...MutationError
+        }
+      }
     }
   }
 }
