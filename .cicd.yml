@@ -38,7 +38,7 @@ steps:
       # - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/myra/.env
       # - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/ebanking/.env
       # - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/neosys-admin/.env
-      - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/dhadda-migration/.env
+      # - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/dhadda-migration/.env
       - yarn --pure-lockfile
       - cp -r /build/neosys/dist /drone/src/apps/neosys/ || true
       # - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
