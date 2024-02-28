@@ -40,11 +40,14 @@ steps:
       # - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/neosys-admin/.env
       # - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/dhadda-migration/.env
       - yarn --pure-lockfile
+      - mkdir -p /drone/src/neosys/
+      - mkdir -p /drone/src/neosys/dist
       - cp -r /drone/src/neosys/dist /drone/src/apps/neosys/dist || true
       # - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
       - npx nx run neosys-admin:build --verbose
-      - cp -rf /drone/src/apps/neosys/dist /drone/src/neosys/ 
-
+      - cp -rf /drone/src/apps/neosys/dist /drone/src/neosys/ || true
+      - sleep 5000
+ 
 
 volumes:
   - name: node_modules
