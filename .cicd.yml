@@ -31,7 +31,7 @@ steps:
       - name: myra-app
         path: /drone/src/apps/myra/dist
       - name: neosys-admin-app
-        path: /drone/build/neosys/
+        path: /drone/src/neosys/
       - name: dhadda-migration-app
         path: /drone/src/apps/dhadda-migration/dist
     commands:
@@ -40,10 +40,10 @@ steps:
       # - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/neosys-admin/.env
       # - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/dhadda-migration/.env
       - yarn --pure-lockfile
-      - cp -r /drone/build/neosys/dist /drone/src/apps/neosys/dist || true
+      - cp -r /drone/src/neosys/dist /drone/src/apps/neosys/dist || true
       # - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
       - npx nx run neosys-admin:build --verbose
-      - cp -rf /drone/src/apps/neosys/dist /drone/build/neosys/ 
+      - cp -rf /drone/src/apps/neosys/dist /drone/src/neosys/ 
 
 
 volumes:
