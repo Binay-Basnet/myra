@@ -41,7 +41,8 @@ steps:
       # - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/dhadda-migration/.env
       - yarn --pure-lockfile
       # - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
-      - npx nx run --target=build neosys-admin --verbose
+      - npx nx run neosys-admin:build --verbose
+
 
 volumes:
   - name: node_modules
