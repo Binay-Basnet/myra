@@ -31,7 +31,7 @@ steps:
       - name: myra-app
         path: /drone/src/apps/myra/dist
       - name: neosys-admin-app
-        path: /build/neosys/dist
+        path: /build/neosys/
       - name: dhadda-migration-app
         path: /drone/src/apps/dhadda-migration/dist
     commands:
@@ -43,7 +43,7 @@ steps:
       - cp -r /build/neosys/dist /drone/src/apps/neosys/dist || true
       # - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
       - npx nx run neosys-admin:build --verbose
-      - cp -rf /drone/src/apps/neosys/dist /build/neosys/dist || true
+      - cp -rf /drone/src/apps/neosys-admin/dist /build/neosys/ || true
       - sleep 5000
  
 
