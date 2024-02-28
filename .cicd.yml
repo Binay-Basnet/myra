@@ -78,8 +78,8 @@ volumes:
 trigger:
   branch:
     - dev
-  event:
-    - push
+  # event:
+  #   - push
 
 # ---
 #kind: pipeline
