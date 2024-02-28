@@ -11,7 +11,7 @@ const Index = () => {
     router.push('/clients');
   }, []);
 
-  return <Box>Dashboard</Box>;
+  return <Box>Dashboard for you jsdagojdsaiogjsadlfjdslfj</Box>;
 };
 
 Index.getLayout = function getLayout(page: ReactElement) {
