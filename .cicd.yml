@@ -35,9 +35,9 @@ steps:
       - name: dhadda-migration-app
         path: /drone/src/apps/dhadda-migration/dist
     commands:
-      - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/myra/.env
-      - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/ebanking/.env
-      - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/neosys-admin/.env
+      # - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/myra/.env
+      # - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/ebanking/.env
+      # - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/neosys-admin/.env
       # - echo NX_APP_VERSION=${DRONE_BRANCH} >> ./apps/dhadda-migration/.env
       - yarn --pure-lockfile
       # - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
