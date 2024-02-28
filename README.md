@@ -6,7 +6,7 @@ This project was generated using [Nx](https://nx.dev).
 
 Learn about workspace structure from [here](https://nx.dev/structure/applications-and-libraries)
 
-Also understand carefully about library [types](https://nx.dev/structure/library-types), [grouping libraries](https://nx.dev/structure/grouping-libraries) and what goes in apps and libs folder. Explore all the sub topics from WORKSPACE STRUCTURE group within the [nx](https://nx.dev) documentation.
+Also, understand carefully about library [types](https://nx.dev/structure/library-types), [grouping libraries](https://nx.dev/structure/grouping-libraries) and what goes in apps and libs folder. Explore all the sub topics from WORKSPACE STRUCTURE group within the [nx](https://nx.dev) documentation.
 
 The actual working directory for now is here:
 
